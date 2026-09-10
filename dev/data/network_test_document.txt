@@ -1,0 +1,328 @@
+NETWORKING FUNDAMENTALS TEST CORPUS
+=================================
+
+Purpose
+-------
+This document is a synthetic but technically grounded test corpus for evaluating
+semantic chunking, text embeddings, vector similarity, and retrieval in a local
+RAG pipeline. It is intentionally divided into multiple networking topics so
+that retrieval queries can be tested against clearly different concepts.
+
+The technical concepts are based on widely used Internet and networking
+standards and terminology. This document is not an official RFC or vendor
+manual. Suggested primary references include RFC 9293 (TCP), RFC 768 (UDP),
+RFC 791 (IPv4), RFC 8200 (IPv6), RFC 1034/RFC 1035 (DNS), RFC 2131 (DHCP),
+RFC 826 (ARP), RFC 9110 (HTTP semantics), and IEEE 802.1Q/802.3 terminology.
+
+1. TRANSMISSION CONTROL PROTOCOL (TCP)
+--------------------------------------
+
+TCP is a transport-layer protocol designed to provide reliable, ordered
+delivery of a byte stream between applications. Before application data is
+normally exchanged, TCP establishes a connection using a three-way handshake.
+The endpoints exchange SYN and ACK control information so that both sides can
+establish the state required for the connection.
+
+TCP uses sequence numbers and acknowledgements to track transmitted data.
+When data is lost, the sender can retransmit it. TCP also uses mechanisms for
+flow control and congestion control. Flow control helps prevent a sender from
+overwhelming the receiving endpoint, while congestion control attempts to
+adapt transmission behavior to conditions in the network.
+
+TCP does not preserve application message boundaries. An application writes a
+stream of bytes, and TCP transports that stream reliably. Applications such as
+web services, remote login, and file transfer have traditionally used TCP when
+reliable ordered delivery is important.
+
+Key ideas: connection-oriented transport, reliable delivery, sequence
+numbers, acknowledgements, retransmission, flow control, and congestion
+control.
+
+Reference: IETF RFC 9293, Transmission Control Protocol (TCP).
+
+2. USER DATAGRAM PROTOCOL (UDP)
+-------------------------------
+
+UDP is a transport-layer protocol that provides a minimal connectionless
+datagram service. Unlike TCP, UDP does not establish a connection before
+sending datagrams and does not itself provide TCP-style reliable delivery,
+ordering, retransmission, or congestion control.
+
+A UDP datagram contains source and destination port information, a length,
+and a checksum. Because UDP has relatively little protocol machinery, it is
+often selected when an application wants low overhead or needs to implement
+its own reliability and timing behavior.
+
+Common examples include DNS queries, streaming or real-time applications,
+and protocols where avoiding a connection setup is useful. The choice
+between TCP and UDP depends on the application's requirements rather than
+one protocol being universally better.
+
+Key ideas: connectionless transport, datagrams, low overhead, ports, and
+application-managed reliability when required.
+
+Reference: IETF RFC 768, User Datagram Protocol.
+
+3. INTERNET PROTOCOL VERSION 4 (IPv4)
+-------------------------------------
+
+IPv4 provides packet addressing and routing at the Internet layer. An IPv4
+address is 32 bits long and is commonly written in dotted-decimal notation,
+such as 192.168.1.20. An address can be divided into a network portion and a
+host portion according to the network prefix.
+
+Routers use destination IP addresses and routing tables to determine where
+packets should be forwarded. IPv4 supports fragmentation under defined
+conditions, although modern network designs commonly rely on path MTU
+discovery and appropriate packet sizes to reduce fragmentation.
+
+Private IPv4 address ranges are widely used inside local networks. These
+addresses are not globally routable on the public Internet and are commonly
+used together with Network Address Translation (NAT) at network boundaries.
+
+Key ideas: 32-bit addresses, network prefixes, routing, private addressing,
+and packet forwarding.
+
+Reference: IETF RFC 791, Internet Protocol.
+
+4. INTERNET PROTOCOL VERSION 6 (IPv6)
+-------------------------------------
+
+IPv6 was designed to provide a much larger address space than IPv4. IPv6
+addresses are 128 bits and are normally written using hexadecimal groups,
+for example 2001:db8::1. The larger address space allows networks to assign
+globally unique addresses to a very large number of interfaces.
+
+IPv6 uses a simplified base header compared with IPv4 and supports extension
+headers for additional functions. Routers forward IPv6 packets according to
+the destination address and their routing information. IPv6 also defines
+Neighbor Discovery mechanisms that perform functions associated with address
+resolution and router discovery in IPv4-based networks.
+
+Key ideas: 128-bit addresses, hexadecimal notation, routing, extension
+headers, and Neighbor Discovery.
+
+Reference: IETF RFC 8200, Internet Protocol, Version 6 (IPv6) Specification.
+
+5. DOMAIN NAME SYSTEM (DNS)
+----------------------------
+
+The Domain Name System translates human-readable domain names into
+information that network applications can use. A common example is mapping a
+hostname such as www.example.com to an IP address.
+
+DNS uses a distributed hierarchical namespace. A resolver may query DNS
+servers to obtain records such as A records for IPv4 addresses, AAAA records
+for IPv6 addresses, MX records for mail routing, and CNAME records for
+aliases. DNS responses can be cached according to the time-to-live (TTL)
+associated with records.
+
+DNS commonly uses UDP for ordinary queries because of its low overhead. DNS
+also supports TCP, including situations where TCP is required by the
+protocol or where a response cannot be handled appropriately through the
+usual UDP exchange.
+
+Key ideas: names, resolvers, authoritative servers, A records, AAAA records,
+MX records, CNAME records, caching, and TTL.
+
+References: IETF RFC 1034 and RFC 1035.
+
+6. DYNAMIC HOST CONFIGURATION PROTOCOL (DHCP)
+----------------------------------------------
+
+DHCP allows hosts on an IP network to obtain configuration information
+automatically. A DHCP server can provide a client with an IP address and
+other configuration parameters such as a subnet mask, default gateway, and
+DNS server addresses.
+
+A common DHCP exchange is described using the terms Discover, Offer,
+Request, and Acknowledgement. The client initially broadcasts a DHCP
+Discover message when it needs configuration. A server may respond with an
+Offer, after which the client can request the offered configuration. The
+server then acknowledges the assignment.
+
+DHCP uses UDP and commonly involves port 67 on the server and port 68 on the
+client for IPv4 DHCP. DHCP leases can expire and may be renewed according to
+the protocol's procedures.
+
+Key ideas: automatic IP configuration, leases, DHCP server, DHCP client,
+Discover, Offer, Request, and Acknowledge.
+
+Reference: IETF RFC 2131, Dynamic Host Configuration Protocol.
+
+7. ADDRESS RESOLUTION PROTOCOL (ARP)
+------------------------------------
+
+ARP is used on IPv4 Ethernet networks to discover the link-layer hardware
+address associated with an IPv4 address on the local network. A host that
+needs to send an Ethernet frame to a local IPv4 destination may first need
+to determine the destination's MAC address.
+
+An ARP request is typically broadcast on the local Ethernet segment. The
+device that owns the requested IPv4 address can respond with an ARP reply
+containing its MAC address. Hosts commonly maintain an ARP cache so that
+recently learned mappings do not have to be discovered for every packet.
+
+ARP resolves an IPv4 address to a link-layer address. It is therefore
+different from DNS, which resolves names into DNS records, and different
+from routing, which determines where IP packets should be forwarded.
+
+Key ideas: IPv4-to-MAC resolution, ARP request, ARP reply, broadcast,
+Ethernet, and ARP cache.
+
+Reference: IETF RFC 826, An Ethernet Address Resolution Protocol.
+
+8. ETHERNET AND MAC ADDRESSES
+-----------------------------
+
+Ethernet is a family of technologies used extensively for local and
+metropolitan networking. Ethernet frames are exchanged over physical and
+data-link network interfaces. A MAC address identifies a network interface
+at the link layer and is used when delivering Ethernet frames within the
+relevant Layer 2 domain.
+
+An Ethernet frame contains source and destination MAC addresses along with
+other fields required by the Ethernet frame format. Switches learn source
+MAC addresses by observing incoming frames and can then use their forwarding
+tables to decide which interface should receive a frame.
+
+Ethernet and IP operate at different layers. A device can therefore use
+Ethernet for local frame delivery while carrying IPv4 or IPv6 packets inside
+those frames.
+
+Key ideas: frames, MAC addresses, switches, Layer 2 forwarding, and
+encapsulation of IP packets.
+
+Reference: IEEE 802.3 Ethernet terminology and specifications.
+
+9. SWITCHING AND ROUTING
+------------------------
+
+A network switch primarily forwards Layer 2 frames using information such as
+MAC addresses. A switch can learn which MAC addresses are reachable through
+which ports. When the destination is known, the switch can forward the
+frame toward the appropriate port. VLANs can divide a switched network into
+separate logical Layer 2 broadcast domains.
+
+A router operates at the network layer and makes forwarding decisions based
+on network-layer addresses such as IPv4 or IPv6 destination addresses.
+Routers connect different IP networks and use routing information to select
+next hops.
+
+Switching and routing are therefore related but distinct operations.
+Switching generally concerns forwarding frames within a Layer 2 domain,
+while routing concerns forwarding packets between different Layer 3
+networks.
+
+Key ideas: MAC address learning, Layer 2 forwarding, VLANs, IP networks,
+routing tables, next hops, and Layer 3 forwarding.
+
+10. VIRTUAL LAN (VLAN)
+----------------------
+
+A VLAN allows a physical switched infrastructure to be divided into
+multiple logical Layer 2 networks. Devices in different VLANs are normally
+placed in different broadcast domains, even when they are connected to the
+same physical switch infrastructure.
+
+IEEE 802.1Q defines VLAN tagging used in Ethernet networks. A trunk link can
+carry traffic for multiple VLANs between network devices, while an access
+port is typically associated with a particular VLAN for an attached
+endpoint.
+
+Communication between different IP subnets or VLANs generally requires a
+Layer 3 routing function. This can be provided by a router or by a
+Layer 3-capable switch.
+
+Key ideas: VLAN IDs, broadcast domains, access ports, trunk links, tagging,
+and inter-VLAN routing.
+
+Reference: IEEE 802.1Q terminology and specifications.
+
+11. HYPERTEXT TRANSFER PROTOCOL (HTTP)
+--------------------------------------
+
+HTTP is an application-layer protocol used for transferring resources and
+representing interactions between clients and servers. An HTTP client can
+send a request containing a method, target, headers, and optionally a
+content body. The server responds with a status code, headers, and
+optionally a response body.
+
+Common HTTP methods include GET, POST, PUT, PATCH, and DELETE. Status codes
+are grouped into classes such as 2xx for successful requests, 3xx for
+redirection, 4xx for client-related errors, and 5xx for server-related
+errors.
+
+HTTPS refers to HTTP being used with a secure transport mechanism, commonly
+TLS. TLS provides cryptographic protections such as confidentiality and
+integrity for the HTTP exchange and can authenticate the server using
+certificates.
+
+Key ideas: requests, responses, methods, status codes, headers, resources,
+TLS, and HTTPS.
+
+Reference: IETF RFC 9110, HTTP Semantics.
+
+12. FIREWALLS AND NETWORK SECURITY
+-----------------------------------
+
+A firewall controls network traffic according to a security policy. Rules
+can evaluate properties such as source and destination addresses, protocol,
+source and destination ports, connection state, and direction of traffic.
+
+A packet-filtering firewall can make decisions using network and transport
+header information. A stateful firewall can additionally track the state of
+connections and use that information when evaluating subsequent packets.
+
+Firewalls are commonly placed at network boundaries, but host-based
+firewalls can also protect individual computers. A firewall is not the same
+as an intrusion detection or prevention system, although these technologies
+may be deployed together as part of a broader security architecture.
+
+Key ideas: security policy, filtering rules, ports, connection state,
+network boundaries, and host-based protection.
+
+13. ROUTING TABLES AND DEFAULT GATEWAYS
+---------------------------------------
+
+A routing table contains information that a host or router uses to decide
+where packets should be sent. A route commonly includes a destination
+network, a prefix length, and a next-hop or outgoing interface.
+
+When a host wants to communicate with an address outside its directly
+connected subnet, it commonly sends the packet to a configured default
+gateway. The default gateway is a router that can forward the packet toward
+other networks.
+
+Routers may learn routes through directly connected networks, static
+configuration, or dynamic routing protocols. When multiple routes match a
+destination, routing systems use defined selection rules, including the
+specificity of the destination prefix.
+
+Key ideas: routing table, destination prefix, next hop, outgoing interface,
+default gateway, static routes, and dynamic routing.
+
+14. HOW THESE PROTOCOLS WORK TOGETHER
+-------------------------------------
+
+A typical web request can involve many networking technologies at the same
+time. A user may enter a hostname into a browser. DNS can resolve the
+hostname to an IP address. The host then determines whether the destination
+is local or remote and uses its routing information to select the next hop.
+
+If the destination is on the local Ethernet network, address-resolution
+mechanisms can help determine the appropriate Layer 2 destination. If the
+destination is remote, the packet is normally sent to the default gateway.
+Switches forward Ethernet frames within the local Layer 2 domain, while
+routers forward IP packets between networks.
+
+At the transport layer, an application may use TCP when reliable ordered
+delivery is required. At the application layer, HTTP can carry the web
+request and response. If HTTPS is used, TLS provides cryptographic
+protection for the application traffic.
+
+This layered design allows Ethernet, IP, TCP or UDP, TLS, HTTP, DNS, DHCP,
+and other protocols to perform specialized functions while cooperating as
+part of an end-to-end network communication process.
+
+END OF TEST CORPUS

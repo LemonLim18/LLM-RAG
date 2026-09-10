@@ -1,0 +1,4 @@
+set routing-options autonomous-system {{ local_as }}
+set protocols bgp group {{ description or "EBGP-PEER" }} type external
+set protocols bgp group {{ description or "EBGP-PEER" }} peer-as {{ remote_as }}
+set protocols bgp group {{ description or "EBGP-PEER" }} neighbor {{ neighbor_ip }}

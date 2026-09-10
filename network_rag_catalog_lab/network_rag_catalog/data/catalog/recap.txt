@@ -1,0 +1,42 @@
+/data/catalog/ is used as the category and operation classification
+
+categories.json answers "What broad types of network operations does the system support"
+It allows the category classifier to look at the user's prompt like
+"Configure OSPF on R1" and look at the categories.json list, like
+[
+    {
+        "category_id": "vlan",
+        "description": "Virtual LAN configuration"
+    },
+    {
+        "category_id": "ospf",
+        "description": "OSPF routing configuration"
+    },
+    {
+        "category_id": "bgp",
+        "description": "BGP routing configuration"
+    }
+]
+to decide it's of OSPF category
+
+operation.json answers "What specific operations do I support inside those categories?"
+After determining the category, it uses this field as the filter for the operations that are under the category
+And then using the embedded prompt and the embedded filtered result, it finds the closest match for the operation for the prompt
+{
+    "operation_id": "configure_ospf",
+    "category": "ospf",
+    "name": "Configure OSPF",
+    "description": "Configure OSPF routing on a device"
+}
+
+
+/data/operations/<operation-name>/schema.json is used to 
+to let the LLM to know what property fields are required
+and what fields are required
+
+/data/templates/<vendor/<operation_name>/template.j2
+is used to declare the syntax for each vendor's operation
+
+/data/inventory/devices.json is used to list all the devices
+
+/storage/chroma is the vector database

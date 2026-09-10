@@ -1,0 +1,17 @@
+# OSPF Basics
+
+OSPF is a link-state routing protocol used within an autonomous system.
+It uses link-state advertisements to build a topology database.
+Routers then calculate the shortest path using the SPF algorithm.
+
+# OSPF Troubleshooting
+
+Check the OSPF neighbor state first.
+If the neighbor is stuck in EXSTART, check for an MTU mismatch.
+Authentication mismatches can also prevent adjacency formation.
+
+# BGP Basics
+
+BGP is a path-vector routing protocol.
+It exchanges routing information between autonomous systems.
+BGP uses AS numbers to identify autonomous systems.

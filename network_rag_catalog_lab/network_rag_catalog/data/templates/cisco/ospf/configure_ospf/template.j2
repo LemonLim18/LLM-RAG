@@ -1,0 +1,5 @@
+router ospf {{ process_id }}
+{% if router_id %} router-id {{ router_id }}{% endif %}
+{% for x in interfaces %} interface {{ x.name }}
+  ip ospf {{ process_id }} area {{ x.area }}
+{% endfor %}

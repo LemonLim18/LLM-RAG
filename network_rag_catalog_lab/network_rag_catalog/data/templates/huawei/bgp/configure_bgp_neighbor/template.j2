@@ -1,0 +1,3 @@
+bgp {{ local_as }}
+ peer {{ neighbor_ip }} as-number {{ remote_as }}
+{% if description %} peer {{ neighbor_ip }} description {{ description }}{% endif %}

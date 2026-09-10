@@ -1,0 +1,20 @@
+[
+  {
+    "hostname": "R1",
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "version": "17.9"
+  },
+  {
+    "hostname": "R2",
+    "vendor": "huawei",
+    "platform": "vrp",
+    "version": "8"
+  },
+  {
+    "hostname": "R3",
+    "vendor": "juniper",
+    "platform": "junos",
+    "version": "23.4"
+  }
+]

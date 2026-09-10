@@ -1,0 +1,2 @@
+{% for x in interfaces %}set protocols ospf area {{ x.area }} interface {{ x.name }}
+{% endfor %}{% if router_id %}set routing-options router-id {{ router_id }}{% endif %}

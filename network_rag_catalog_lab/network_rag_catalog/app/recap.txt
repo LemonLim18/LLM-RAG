@@ -1,0 +1,110 @@
+main.py is the main entrance. It leads to the pipeline.property
+
+main.py --> pipeline.py
+
+app/pipeline.py tells the other workers:
+1. classify category
+2. retrieve operations
+3. select operation
+4. load schema
+5. extract parameters
+6. validate
+7. identify device
+8. select template
+9. render configuration
+It basically serves as the orchestra
+
+app/category_classifier.py uses Qwen LLM to determine which category does the prompt belong to
+Prompt -> Qwen -> ospf
+
+app/operation_retriever.py is where the RAG lives. It receives the category of the prompt from the classifier
+and asks ChromaDB which OSPF operations are semantically closest to this prompt? It just retrieves the candidates,
+maybe like Top-K.
+
+app/operation_selector.py uses Qwen again gets the retrieved candidates and asks which of the following retrieved
+operations actually matches the user's request?
+User prompt -> ChromaDB -> Candidate -> Qwen -> configure_ospf
+
+Thus, architecture is two-stage:
+1st stage:
+Prompt -> Category (LLM)
+
+2nd stage:
+Prompt + Category -> ChromaDB -> candidate operations -> LLM Selection -> operation
+
+app/schema_loader.py loads the corresponding schema.json using the operation_id
+
+app/parameter_extractor.py uses the LLM to extract the parameters specified by the schema.json from the user prompt
+
+If user says:
+Configure OSPF process 100 on Gi0/0 in area 0.
+
+Schema says:
+process_id → required
+router_id → optional
+interfaces → required
+
+Qwen extracts:
+
+{
+    "process_id": 100,
+    "interfaces": [
+        {
+            "name": "Gi0/0",
+            "area": 0
+        }
+    ]
+}
+
+app/validator.py checks against the schema and provides deterministic validation.
+app/inventory.py helps checks against the device inventory information
+app/template_selector.py deterministically finds the correct operation and vendor template.j2 using the info provided
+app/renderer.py fill in the parameters deduced into the template
+
+Other files like:
+1. catalog.py = Reads categories.json and operations.json instead of making every Python file manually open JSON files
+2. config.py = Central configuration specifying directory
+3. embeddings.py = Creates the Nomic embedding connection
+4. llm.py = Creates the Qwen connection
+5. vectorstore.py = Creates connection to ChromaDB
+6. ingest.py = Offline ingestion process that turns every operation inside the document: operations.json as one Document and using nomic-embed-text to turn it into embeddings and store inside the ChromaDB
+
+
+
+
+Question 1
+
+What kind of network thing is the user asking for?
+
+Category classifier
+Question 2
+
+Which operation in my catalog matches it?
+
+ChromaDB + operation selector
+Question 3
+
+What information does that operation require?
+
+Schema
+Question 4
+
+What values did the user provide?
+
+Parameter extractor
+Question 5
+
+Are those values valid?
+
+JSON Schema validator
+Question 6
+
+How do I translate those valid values into the correct vendor syntax?
+
+Inventory
+   ↓
+Template selector
+   ↓
+Jinja2
+
+That's your entire system.

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "interface",
+    "address",
+    "prefix_length"
+  ],
+  "properties": {
+    "interface": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "prefix_length": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 32
+    },
+    "admin_up": {
+      "type": "boolean"
+    }
+  }
+}
