@@ -12,7 +12,8 @@
       "type": "string"
     },
     "address": {
-      "type": "string"
+      "type": "string",
+      "format": "ipv4"
     },
     "prefix_length": {
       "type": "integer",

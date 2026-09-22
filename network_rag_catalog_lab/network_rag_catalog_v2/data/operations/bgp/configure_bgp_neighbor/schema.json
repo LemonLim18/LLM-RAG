@@ -14,7 +14,8 @@
       "maximum": 4294967295
     },
     "neighbor_ip": {
-      "type": "string"
+      "type": "string",
+      "format": "ipv4"
     },
     "remote_as": {
       "type": "integer",

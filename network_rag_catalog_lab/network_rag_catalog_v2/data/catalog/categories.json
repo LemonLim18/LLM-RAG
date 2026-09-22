@@ -1,32 +1,38 @@
 [
   {
     "category_id": "vlan",
-    "name": "VLAN",
-    "description": "Layer-2 VLAN creation, deletion and switchport operations."
+    "display_name": "VLAN",
+    "aliases": ["vlan", "layer 2 vlan", "layer-2 vlan"],
+    "description": "Layer-2 VLAN creation, removal, and related VLAN operations."
   },
   {
     "category_id": "ospf",
-    "name": "OSPF",
-    "description": "OSPF routing process, areas, interfaces and network advertisement."
+    "display_name": "OSPF",
+    "aliases": ["ospf", "open shortest path first"],
+    "description": "OSPF routing processes, areas, and interface participation."
   },
   {
     "category_id": "bgp",
-    "name": "BGP",
-    "description": "BGP autonomous systems, neighbors, peering and policy."
+    "display_name": "BGP",
+    "aliases": ["bgp", "border gateway protocol", "bgp peer", "bgp neighbor"],
+    "description": "BGP autonomous systems, peers, and neighbor relationships."
   },
   {
     "category_id": "isis",
-    "name": "ISIS",
-    "description": "IS-IS routing process, levels, interfaces and adjacency."
+    "display_name": "IS-IS",
+    "aliases": ["isis", "is-is", "intermediate system to intermediate system"],
+    "description": "IS-IS processes, levels, and interface participation."
   },
   {
     "category_id": "static_routing",
-    "name": "Static Routing",
-    "description": "Static IPv4 route configuration and removal."
+    "display_name": "Static Routing",
+    "aliases": ["static route", "static routing", "ip route"],
+    "description": "Static IPv4 route creation and removal."
   },
   {
     "category_id": "ip_address",
-    "name": "IP Address",
-    "description": "IPv4 interface address configuration."
+    "display_name": "Interface IPv4 Addressing",
+    "aliases": ["ip address", "ipv4 address", "interface address", "assign ip"],
+    "description": "IPv4 address assignment and removal on an interface."
   }
 ]

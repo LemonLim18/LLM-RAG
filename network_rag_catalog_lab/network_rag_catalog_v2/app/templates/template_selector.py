@@ -3,7 +3,7 @@ from ..catalog import get_operation
 
 
 def select_template(device: dict, operation_id: str):
-    category = get_operation(operation_id)["category"]
+    category = get_operation(operation_id)["category_id"]
     path = TEMPLATES_DIR / device["vendor"] / category / operation_id / "template.j2"
     if not path.exists():
         raise FileNotFoundError(

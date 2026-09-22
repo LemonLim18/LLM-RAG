@@ -11,7 +11,8 @@
       "type": "string"
     },
     "next_hop": {
-      "type": "string"
+      "type": "string",
+      "format": "ipv4"
     },
     "preference": {
       "type": "integer",

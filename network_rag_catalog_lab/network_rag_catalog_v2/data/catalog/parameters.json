@@ -1,0 +1,22 @@
+[
+  {"parameter_id": "vlan_id", "display_name": "VLAN ID", "value_type": "integer", "aliases": ["vlan", "vlan id"], "clarification": "What VLAN ID should be used?"},
+  {"parameter_id": "name", "display_name": "VLAN name", "value_type": "string", "aliases": ["vlan name", "name", "named"], "clarification": "What VLAN name should be used?"},
+  {"parameter_id": "process_id", "display_name": "OSPF process ID", "value_type": "integer", "aliases": ["ospf process", "ospf process id", "process id"], "clarification": "What OSPF process ID should be used?"},
+  {"parameter_id": "router_id", "display_name": "router ID", "value_type": "string", "aliases": ["router id"], "clarification": "What router ID should be used?"},
+  {"parameter_id": "interfaces", "display_name": "OSPF interfaces and areas", "value_type": "array", "aliases": ["interfaces", "ospf interfaces"], "clarification": "Which interfaces and OSPF areas should be configured? For example: Ethernet1/1 in area 0."},
+  {"parameter_id": "interface", "display_name": "interface", "value_type": "string", "aliases": ["interface", "port"], "clarification": "Which interface should be used?"},
+  {"parameter_id": "area", "display_name": "OSPF area", "value_type": "string", "aliases": ["area", "ospf area"], "clarification": "What OSPF area should be used?"},
+  {"parameter_id": "local_as", "display_name": "local AS number", "value_type": "integer", "aliases": ["local as", "local autonomous system", "as number"], "clarification": "What local BGP AS number should be used?"},
+  {"parameter_id": "neighbor_ip", "display_name": "BGP neighbor IP", "value_type": "string", "aliases": ["neighbor", "peer", "neighbor ip", "peer ip"], "clarification": "What BGP neighbor IP address should be used?"},
+  {"parameter_id": "remote_as", "display_name": "remote AS number", "value_type": "integer", "aliases": ["remote as", "peer as", "remote autonomous system"], "clarification": "What remote BGP AS number should be used?"},
+  {"parameter_id": "description", "display_name": "description", "value_type": "string", "aliases": ["description", "desc"], "clarification": "What description should be used?"},
+  {"parameter_id": "peer_group", "display_name": "BGP peer group", "value_type": "string", "aliases": ["peer group", "bgp group", "group"], "clarification": "What BGP peer group should be used?"},
+  {"parameter_id": "process_name", "display_name": "IS-IS process name", "value_type": "string", "aliases": ["isis process", "is-is process", "process name"], "clarification": "What IS-IS process name should be used?"},
+  {"parameter_id": "level", "display_name": "IS-IS level", "value_type": "string", "aliases": ["isis level", "is-is level", "level"], "clarification": "Which IS-IS level should be used: level-1, level-2, or level-1-2?"},
+  {"parameter_id": "destination", "display_name": "destination prefix", "value_type": "string", "aliases": ["destination", "destination prefix", "route prefix"], "clarification": "What destination prefix should be used?"},
+  {"parameter_id": "next_hop", "display_name": "next-hop IP", "value_type": "string", "aliases": ["next hop", "next-hop", "via", "through"], "clarification": "What next-hop IP address should be used?"},
+  {"parameter_id": "preference", "display_name": "route preference", "value_type": "integer", "aliases": ["preference", "administrative distance", "metric"], "clarification": "What route preference should be used?"},
+  {"parameter_id": "address", "display_name": "IPv4 address", "value_type": "string", "aliases": ["ip address", "ipv4 address", "address"], "clarification": "What IPv4 address should be configured?"},
+  {"parameter_id": "prefix_length", "display_name": "prefix length", "value_type": "integer", "aliases": ["prefix length", "prefix", "cidr", "netmask", "subnet mask"], "normalizer": "ipv4_prefix_length", "clarification": "What prefix length or netmask should be used?"},
+  {"parameter_id": "admin_up", "display_name": "administrative state", "value_type": "boolean", "aliases": ["admin up", "enable", "disable", "shutdown", "no shutdown"], "clarification": "Should the interface be administratively enabled or disabled?"}
+]

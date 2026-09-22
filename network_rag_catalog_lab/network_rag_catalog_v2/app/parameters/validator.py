@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
+import ipaddress
 from typing import Any
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
 
 
 @dataclass
@@ -63,7 +64,10 @@ def validate_parameter_result(params: dict, schema: dict) -> ValidationResult:
     if issues:
         return ValidationResult(valid=False, issues=issues)
 
-    errors = sorted(Draft202012Validator(schema).iter_errors(params), key=lambda e: list(e.path))
+    errors = sorted(
+        Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(params),
+        key=lambda error: list(error.path),
+    )
     for error in errors:
         path = ".".join(map(str, error.path)) or "<root>"
         issues.append(
@@ -73,7 +77,32 @@ def validate_parameter_result(params: dict, schema: dict) -> ValidationResult:
                 message=error.message,
             )
         )
+    issues.extend(_network_value_issues(params))
     return ValidationResult(valid=not issues, issues=issues)
+
+
+def _network_value_issues(params: dict) -> list[ValidationIssue]:
+    """Validate network literals independently of LLM output and templates."""
+    issues = []
+    for field in ("address", "neighbor_ip", "next_hop", "router_id"):
+        value = params.get(field)
+        if value in (None, ""):
+            continue
+        try:
+            ipaddress.ip_address(value)
+        except ValueError:
+            issues.append(ValidationIssue("NETWORK_VALUE", field, f"'{value}' is not a valid IPv4 address."))
+    destination = params.get("destination")
+    if destination not in (None, ""):
+        try:
+            network = ipaddress.ip_network(destination, strict=False)
+            if network.version != 4 or "/" not in str(destination):
+                raise ValueError
+        except ValueError:
+            issues.append(
+                ValidationIssue("NETWORK_VALUE", "destination", f"'{destination}' is not a valid IPv4 prefix.")
+            )
+    return issues
 
 
 def validate_parameters(params: dict, schema: dict) -> None:

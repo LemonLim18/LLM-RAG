@@ -2,11 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "process_name",
-    "interface",
-    "level"
-  ],
+  "required": ["interface", "level"],
+  "x-required-by-vendor": {
+    "cisco": ["process_name"],
+    "huawei": ["process_name"]
+  },
   "properties": {
     "process_name": {
       "type": "string"

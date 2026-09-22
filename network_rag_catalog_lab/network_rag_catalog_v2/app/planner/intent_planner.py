@@ -1,12 +1,15 @@
 import json
 import re
-from ..catalog import load_operations
+from ..catalog import load_operations, operation_terms
 from ..llm import llm
 from ..planner.models import OperationIntent
 
 
 def _known_operation_words() -> str:
-    return "\n".join(f"- {x['operation_id']}: {x['name']} — {x['description']}" for x in load_operations())
+    return "\n".join(
+        f"- {x['operation_id']}: {x['display_name']} ({', '.join(x.get('aliases', []))}) - {x['description']}"
+        for x in load_operations()
+    )
 
 
 def _parse_json(raw: str) -> dict:
@@ -26,23 +29,18 @@ def _fallback_plan(prompt: str) -> list[OperationIntent]:
     keyword appears after a conjunction. Ambiguous text is kept as one intent so
     the normal pipeline can reject/clarify it rather than inventing work.
     """
-    operation_terms = [
-        "create vlan", "configure vlan", "configure ospf", "enable ospf",
-        "configure bgp", "bgp neighbor", "configure isis", "enable is-is",
-        "static route", "configure static route", "configure interface ip",
-        "assign ip", "configure ip address", "set ip address",
-    ]
     lower = prompt.lower()
-    positions = []
-    for term in operation_terms:
+    starts: dict[int, str] = {}
+    for term, _ in operation_terms():
         start = 0
         while True:
             i = lower.find(term, start)
             if i < 0:
                 break
-            positions.append((i, term))
+            if i not in starts or len(term) > len(starts[i]):
+                starts[i] = term
             start = i + len(term)
-    positions.sort()
+    positions = sorted(starts.items())
     if len(positions) <= 1:
         return [OperationIntent("intent-1", prompt.strip(), [])]
 
@@ -68,8 +66,22 @@ def _fallback_plan(prompt: str) -> list[OperationIntent]:
     return intents or [OperationIntent("intent-1", prompt.strip(), [])]
 
 
+def _has_explicit_catalog_operation(prompt: str) -> bool:
+    lower = prompt.lower()
+    return any(
+        re.search(rf"(?<![a-z0-9]){re.escape(term)}(?![a-z0-9])", lower)
+        for term, _ in operation_terms()
+    )
+
+
 # list[OperationIntent] should return a list of OperationIntent objects
 def plan_intents(prompt: str) -> list[OperationIntent]:
+    # Known catalog phrases do not need an LLM to preserve their boundaries.
+    # Target discovery and parameter extraction remain downstream, so the raw
+    # request text is a safer source of truth than a small model rewrite.
+    if _has_explicit_catalog_operation(prompt):
+        return _fallback_plan(prompt)
+
     # List of known operations from the catalog
     operations = _known_operation_words()
     system = f"""You are the planning layer of a network automation system.

@@ -134,12 +134,11 @@ produces a ready VLAN task, but the OSPF task asks for `process_id` and `interfa
 
 ## Run
 
-Create a virtual environment and install dependencies:
+Use the existing Python environment with the project dependencies installed. In
+this Windows workspace, from the v2 folder, that is:
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+```powershell
+..\..\.venv\Scripts\python.exe -m app.ingest
 ```
 
 Make sure Ollama has:
@@ -149,25 +148,70 @@ qwen2.5:1.5b
 nomic-embed-text
 ```
 
-Build the operation catalog index:
+Otherwise, rebuild the index whenever `data/catalog/operations.json` changes:
 
 ```bash
 python -m app.ingest
 ```
 
-Then run a single-operation request:
+Run a single operation:
 
 ```bash
 python main.py "Create VLAN 100 named STAFF on Core Router 1."
 ```
 
-A multi-operation, multi-device example:
+### Terminal clarification mode
+
+The terminal uses a persisted clarification session, so its state model can later
+be exposed by a web UI without changing the core pipeline.
 
 ```bash
-python main.py "Create VLAN 100 named STAFF on R1 and R2, configure OSPF process 100 on Gi0/0 in area 0 on Core Router 1, and add a static route to 10.20.0.0/16 through 192.168.1.1 on Edge Router 1."
+python main.py "Configure OSPF on R2" --interactive
 ```
 
-The final output is a structured JSON execution plan. It is deliberately not sent to any network device.
+The system asks only for missing fields and does not render until they are
+validated. A reply such as this completes the pending task:
+
+```text
+Use process 100 on GigabitEthernet0/0/0 in area 0.
+```
+
+For an interface or device correction, terminal suggestions can be selected by
+their number. To leave and resume later:
+
+```bash
+python main.py --resume SESSION_ID --interactive
+```
+
+Use `--no-interactive` to print the session JSON without waiting for input.
+The final output is structured session data; it is deliberately not sent to any
+network device.
+
+### Included operation catalog
+
+Each category now has at least two safe planning/rendering operations:
+
+| Category | Operations |
+|---|---|
+| VLAN | create, delete |
+| OSPF | configure, remove from interface |
+| BGP | configure, remove neighbor |
+| IS-IS | configure, disable interface |
+| Static routing | configure, remove route |
+| Interface IPv4 | configure, remove address |
+
+Catalog terminology is centralized in:
+
+- `data/catalog/categories.json`
+- `data/catalog/operations.json`
+- `data/catalog/parameters.json`
+
+Stable IDs are used in code and schemas. A senior engineer can change display
+names, aliases, and clarification wording in these catalog files without
+renaming the internal IDs.
+
+See `docs/CATALOG_GOVERNANCE.md` for the add/change/retire workflow and
+`docs/TEST_PROMPTS.md` for ready-made terminal tests.
 
 ## Test target resolution without the LLM
 

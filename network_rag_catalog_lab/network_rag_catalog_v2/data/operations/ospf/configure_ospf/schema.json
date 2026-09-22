@@ -2,10 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "process_id",
-    "interfaces"
-  ],
+  "required": ["interfaces"],
+  "x-required-by-vendor": {
+    "cisco": ["process_id"],
+    "huawei": ["process_id"]
+  },
   "properties": {
     "process_id": {
       "type": "integer",
@@ -13,7 +14,8 @@
       "maximum": 65535
     },
     "router_id": {
-      "type": "string"
+      "type": "string",
+      "format": "ipv4"
     },
     "interfaces": {
       "type": "array",

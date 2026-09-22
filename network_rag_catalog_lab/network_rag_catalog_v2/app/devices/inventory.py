@@ -4,6 +4,14 @@ from difflib import SequenceMatcher
 from ..config import INVENTORY_FILE
 
 
+class TargetResolutionError(ValueError):
+    def __init__(self, code: str, reference: str, message: str, suggestions: list[str] | None = None):
+        super().__init__(message)
+        self.code = code
+        self.reference = reference
+        self.suggestions = suggestions or []
+
+
 def load_inventory() -> list[dict]:
     return json.loads(INVENTORY_FILE.read_text())
 
@@ -23,7 +31,9 @@ def _index_device(device: dict) -> list[str]:
 def _group_match(ref: str, inventory: list[dict]) -> list[dict]:
     query = _norm(ref)
     query_tokens = set(query.split())
-    if not query_tokens:
+    generic_tokens = {"device", "devices", "router", "routers", "switch", "switches", "firewall", "firewalls"}
+    meaningful_tokens = query_tokens - generic_tokens
+    if not meaningful_tokens:
         return []
 
     matches = []
@@ -42,9 +52,82 @@ def _group_match(ref: str, inventory: list[dict]) -> list[dict]:
 
         plural_role = f"{device.get('role', '').lower()} routers"
         plural_vendor = f"{device.get('vendor', '').lower()} routers"
-        if query in {_norm(plural_role), _norm(plural_vendor)} or query_tokens <= device_tokens:
+        if (
+            query in {_norm(plural_role), _norm(plural_vendor)}
+            or meaningful_tokens <= device_tokens
+        ):
             matches.append(device)
     return matches
+
+
+def _suggest_devices(ref: str, inventory: list[dict], limit: int = 3) -> list[str]:
+    query = _norm(ref)
+    scored: dict[str, float] = {}
+    for device in inventory:
+        best = 0.0
+        for candidate in _index_device(device):
+            ratio = SequenceMatcher(None, query, candidate).ratio()
+            query_tokens = set(query.split())
+            candidate_tokens = set(candidate.split())
+            overlap = len(query_tokens & candidate_tokens) / max(1, len(query_tokens | candidate_tokens))
+            best = max(best, ratio, overlap)
+        scored[device["hostname"]] = best
+    return [hostname for hostname, _ in sorted(scored.items(), key=lambda item: item[1], reverse=True)[:limit]]
+
+
+def find_explicit_target_references(text: str, inventory: list[dict] | None = None) -> list[str]:
+    """Find only inventory aliases literally present in text; never fuzzy guess."""
+    inventory = inventory or load_inventory()
+    normalized = _norm(text)
+    matches = []
+    for device in inventory:
+        for candidate in _index_device(device):
+            if candidate and re.search(rf"(?<![a-z0-9]){re.escape(candidate)}(?![a-z0-9])", normalized):
+                matches.append(device["hostname"])
+                break
+    return list(dict.fromkeys(matches))
+
+
+def find_explicit_group_references(text: str, inventory: list[dict] | None = None) -> list[str]:
+    """Find supported inventory group phrases literally present in user text."""
+    inventory = inventory or load_inventory()
+    normalized = _norm(text)
+    groups = set()
+    for device in inventory:
+        role = _norm(str(device.get("role", "")))
+        vendor = _norm(str(device.get("vendor", "")))
+        site = _norm(str(device.get("site", "")))
+        location = _norm(str(device.get("location", "")))
+        if role:
+            groups.add(f"{role} routers")
+        if vendor:
+            groups.add(f"{vendor} routers")
+        if site and role:
+            groups.add(f"{site} {role} routers")
+        if location and role:
+            groups.add(f"{location} {role} routers")
+    return [
+        group
+        for group in sorted(groups)
+        if re.search(rf"(?<![a-z0-9]){re.escape(group)}(?![a-z0-9])", normalized)
+    ]
+
+
+def find_user_target_candidates(text: str) -> list[str]:
+    """Find explicit device-shaped references, including unknown inventory names.
+
+    This is intentionally a narrow parser. It preserves ``Router 9`` or ``R9``
+    long enough for the resolver to offer authoritative suggestions, but it does
+    not treat arbitrary capitalized words as devices.
+    """
+    candidates = []
+    patterns = (
+        r"\b(?:core\s+|edge\s+)?(?:router|switch|firewall)\s+\d+\b",
+        r"\b(?:r|sw|fw)\d+\b",
+    )
+    for pattern in patterns:
+        candidates.extend(match.group(0) for match in re.finditer(pattern, text, re.I))
+    return list(dict.fromkeys(candidates))
 
 
 def resolve_targets(target_refs: list[str], inventory: list[dict] | None = None) -> list[dict]:
@@ -63,33 +146,26 @@ def resolve_targets(target_refs: list[str], inventory: list[dict] | None = None)
             continue
         if len(exact) > 1:
             names = ", ".join(d["hostname"] for d in exact)
-            raise ValueError(f"Ambiguous target '{ref}'. Matching devices: {names}")
+            raise TargetResolutionError(
+                "AMBIGUOUS_TARGET",
+                ref,
+                f"Ambiguous target '{ref}'. Matching devices: {names}",
+                [device["hostname"] for device in exact],
+            )
 
         group = _group_match(ref, inventory)
         if group:
             resolved.extend(group)
             continue
 
-        scored = []
-        q_tokens = set(query.split())
-        for d in inventory:
-            for candidate in _index_device(d):
-                ratio = SequenceMatcher(None, query, candidate).ratio()
-                c_tokens = set(candidate.split())
-                token_score = len(q_tokens & c_tokens) / max(1, len(q_tokens | c_tokens))
-                score = max(ratio, token_score)
-                scored.append((score, d))
-        scored.sort(key=lambda x: x[0], reverse=True)
-        if not scored or scored[0][0] < 0.62:
-            known = ", ".join(d["hostname"] for d in inventory)
-            raise KeyError(f"Cannot resolve target '{ref}'. Known devices: {known}")
-        best_score = scored[0][0]
-        tied = [d for score, d in scored if score >= best_score - 0.03]
-        unique = {d["hostname"]: d for d in tied}
-        if len(unique) > 1:
-            names = ", ".join(unique)
-            raise ValueError(f"Ambiguous target '{ref}'. Possible devices: {names}")
-        resolved.append(scored[0][1])
+        suggestions = _suggest_devices(ref, inventory)
+        suggestion_text = ", ".join(suggestions) if suggestions else "none"
+        raise TargetResolutionError(
+            "TARGET_NOT_FOUND",
+            ref,
+            f"Cannot resolve target '{ref}'. Did you mean: {suggestion_text}?",
+            suggestions,
+        )
 
     # De-duplicate while preserving user order.
     result = []

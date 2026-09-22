@@ -1,78 +1,134 @@
 [
   {
     "operation_id": "create_vlan",
-    "category": "vlan",
-    "name": "Create VLAN",
-    "description": "Create a VLAN with a VLAN ID and optional name",
-    "use_cases": [
-      "create vlan",
-      "add a VLAN",
-      "create VLAN 100",
-      "configure a new Layer-2 VLAN"
-    ],
+    "status": "active",
+    "version": 1,
+    "category_id": "vlan",
+    "display_name": "Create VLAN",
+    "aliases": ["create vlan", "add vlan", "configure new vlan"],
+    "description": "Create a VLAN with a VLAN ID and optional name.",
+    "use_cases": ["create VLAN 100", "add VLAN 200 named STAFF"],
     "schema_path": "data/operations/vlan/create_vlan/schema.json"
   },
   {
+    "operation_id": "delete_vlan",
+    "status": "active",
+    "version": 1,
+    "category_id": "vlan",
+    "display_name": "Delete VLAN",
+    "aliases": ["delete vlan", "remove vlan"],
+    "description": "Remove a VLAN. A VLAN name is required to support a deterministic Junos deletion.",
+    "use_cases": ["delete VLAN 100 named STAFF", "remove VLAN 200 named GUEST"],
+    "schema_path": "data/operations/vlan/delete_vlan/schema.json"
+  },
+  {
     "operation_id": "configure_ospf",
-    "category": "ospf",
-    "name": "Configure OSPF",
-    "description": "Configure an OSPF routing process and enable OSPF on one or more interfaces in an area.",
-    "use_cases": [
-      "configure OSPF",
-      "enable OSPF",
-      "create an OSPF process",
-      "configure OSPF area"
-    ],
+    "status": "active",
+    "version": 1,
+    "category_id": "ospf",
+    "display_name": "Configure OSPF",
+    "aliases": ["configure ospf", "enable ospf", "create ospf process", "create ospf routing", "configure ospf routing"],
+    "description": "Configure an OSPF process and enable OSPF on one or more interfaces in an area.",
+    "use_cases": ["configure OSPF process 100", "enable OSPF on Ethernet1/1 in area 0"],
     "schema_path": "data/operations/ospf/configure_ospf/schema.json"
   },
   {
+    "operation_id": "remove_ospf_interface",
+    "status": "active",
+    "version": 1,
+    "category_id": "ospf",
+    "display_name": "Remove OSPF From Interface",
+    "aliases": ["remove ospf from interface", "disable ospf on interface", "delete ospf interface"],
+    "description": "Remove OSPF participation from one interface and area.",
+    "use_cases": ["remove OSPF process 100 from Ethernet1/1 in area 0"],
+    "schema_path": "data/operations/ospf/remove_ospf_interface/schema.json"
+  },
+  {
     "operation_id": "configure_bgp_neighbor",
-    "category": "bgp",
-    "name": "Configure BGP Neighbor",
-    "description": "Configure a BGP local autonomous system and establish a neighbor relationship with a remote autonomous system.",
-    "use_cases": [
-      "configure BGP neighbor",
-      "create BGP peer",
-      "configure BGP peering",
-      "add a BGP neighbor"
-    ],
+    "status": "active",
+    "version": 1,
+    "category_id": "bgp",
+    "display_name": "Configure BGP Neighbor",
+    "aliases": ["configure bgp neighbor", "create bgp peer", "add bgp neighbor", "configure bgp peer"],
+    "description": "Configure a BGP local AS and a neighbor relationship with a remote AS.",
+    "use_cases": ["configure BGP neighbor 192.0.2.2", "add BGP peer with remote AS 65001"],
     "schema_path": "data/operations/bgp/configure_bgp_neighbor/schema.json"
   },
   {
+    "operation_id": "remove_bgp_neighbor",
+    "status": "active",
+    "version": 1,
+    "category_id": "bgp",
+    "display_name": "Remove BGP Neighbor",
+    "aliases": ["remove bgp neighbor", "delete bgp peer", "remove bgp peer"],
+    "description": "Remove a BGP neighbor relationship using its local AS, neighbor IP, remote AS, and peer group.",
+    "use_cases": ["remove BGP neighbor 192.0.2.2 in peer group EBGP-PEER"],
+    "schema_path": "data/operations/bgp/remove_bgp_neighbor/schema.json"
+  },
+  {
     "operation_id": "configure_isis_interface",
-    "category": "isis",
-    "name": "Configure IS-IS Interface",
+    "status": "active",
+    "version": 1,
+    "category_id": "isis",
+    "display_name": "Configure IS-IS Interface",
+    "aliases": ["configure isis interface", "enable is-is", "enable isis on interface", "configure is-is interface"],
     "description": "Enable IS-IS on an interface and configure its routing level.",
-    "use_cases": [
-      "configure ISIS interface",
-      "enable IS-IS",
-      "enable ISIS on an interface",
-      "configure IS-IS level"
-    ],
+    "use_cases": ["enable IS-IS process CORE on ge-0/0/0 at level-2"],
     "schema_path": "data/operations/isis/configure_isis_interface/schema.json"
   },
   {
+    "operation_id": "disable_isis_interface",
+    "status": "active",
+    "version": 1,
+    "category_id": "isis",
+    "display_name": "Disable IS-IS Interface",
+    "aliases": ["disable isis interface", "remove is-is from interface", "remove isis interface"],
+    "description": "Disable IS-IS participation on one interface.",
+    "use_cases": ["disable IS-IS process CORE on ge-0/0/0"],
+    "schema_path": "data/operations/isis/disable_isis_interface/schema.json"
+  },
+  {
     "operation_id": "configure_static_route",
-    "category": "static_routing",
-    "name": "Configure Static Route",
+    "status": "active",
+    "version": 1,
+    "category_id": "static_routing",
+    "display_name": "Configure Static Route",
+    "aliases": ["configure static route", "add static route", "route prefix via next hop"],
     "description": "Configure an IPv4 static route toward a destination prefix through a next-hop address.",
-    "use_cases": [
-      "configure static route",
-      "add static route",
-      "route a prefix via a next hop"
-    ],
+    "use_cases": ["add static route to 10.20.0.0/16 via 192.0.2.1"],
     "schema_path": "data/operations/static_routing/configure_static_route/schema.json"
   },
   {
+    "operation_id": "remove_static_route",
+    "status": "active",
+    "version": 1,
+    "category_id": "static_routing",
+    "display_name": "Remove Static Route",
+    "aliases": ["remove static route", "delete static route"],
+    "description": "Remove an IPv4 static route using its destination prefix and next-hop address.",
+    "use_cases": ["remove static route to 10.20.0.0/16 via 192.0.2.1"],
+    "schema_path": "data/operations/static_routing/remove_static_route/schema.json"
+  },
+  {
     "operation_id": "configure_interface_ip",
-    "category": "ip_address",
-    "name": "Configure Interface IPv4 Address",
+    "status": "active",
+    "version": 1,
+    "category_id": "ip_address",
+    "display_name": "Configure Interface IPv4 Address",
+    "aliases": ["configure interface ip", "configure interface ip address", "configure ip address", "assign ip address", "assign ipv4 address", "set interface address"],
     "description": "Configure an IPv4 address and prefix length on a network interface.",
-    "use_cases": [
-      "configure interface IP",
-      "assign IPv4 address",
-      "set an interface address"
-    ],
+    "use_cases": ["assign 192.0.2.1/24 to Ethernet1/1"],
     "schema_path": "data/operations/ip_address/configure_interface_ip/schema.json"
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "status": "active",
+    "version": 1,
+    "category_id": "ip_address",
+    "display_name": "Remove Interface IPv4 Address",
+    "aliases": ["remove interface ip", "remove interface ip address", "delete ip address", "remove ipv4 address"],
+    "description": "Remove an IPv4 address and prefix length from a network interface.",
+    "use_cases": ["remove 192.0.2.1/24 from Ethernet1/1"],
+    "schema_path": "data/operations/ip_address/remove_interface_ip/schema.json"
   }
 ]
