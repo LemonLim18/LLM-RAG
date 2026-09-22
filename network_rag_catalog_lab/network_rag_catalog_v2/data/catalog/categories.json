@@ -1,0 +1,32 @@
+[
+  {
+    "category_id": "vlan",
+    "name": "VLAN",
+    "description": "Layer-2 VLAN creation, deletion and switchport operations."
+  },
+  {
+    "category_id": "ospf",
+    "name": "OSPF",
+    "description": "OSPF routing process, areas, interfaces and network advertisement."
+  },
+  {
+    "category_id": "bgp",
+    "name": "BGP",
+    "description": "BGP autonomous systems, neighbors, peering and policy."
+  },
+  {
+    "category_id": "isis",
+    "name": "ISIS",
+    "description": "IS-IS routing process, levels, interfaces and adjacency."
+  },
+  {
+    "category_id": "static_routing",
+    "name": "Static Routing",
+    "description": "Static IPv4 route configuration and removal."
+  },
+  {
+    "category_id": "ip_address",
+    "name": "IP Address",
+    "description": "IPv4 interface address configuration."
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "destination",
+    "next_hop"
+  ],
+  "properties": {
+    "destination": {
+      "type": "string"
+    },
+    "next_hop": {
+      "type": "string"
+    },
+    "preference": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 255
+    }
+  }
+}

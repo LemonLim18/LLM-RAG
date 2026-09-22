@@ -1,0 +1,38 @@
+[
+  {
+    "hostname": "R1",
+    "display_name": "Core Router 1",
+    "aliases": ["router 1", "core router 1", "core-r1"],
+    "role": "core",
+    "site": "KL",
+    "location": "Main Campus",
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "version": "17.9",
+    "management_ip": "10.0.0.11"
+  },
+  {
+    "hostname": "R2",
+    "display_name": "Core Router 2",
+    "aliases": ["router 2", "core router 2", "core-r2"],
+    "role": "core",
+    "site": "KL",
+    "location": "Main Campus",
+    "vendor": "huawei",
+    "platform": "vrp",
+    "version": "8",
+    "management_ip": "10.0.0.12"
+  },
+  {
+    "hostname": "R3",
+    "display_name": "Edge Router 1",
+    "aliases": ["router 3", "edge router 1", "edge-r1"],
+    "role": "edge",
+    "site": "Penang",
+    "location": "Branch Campus",
+    "vendor": "juniper",
+    "platform": "junos",
+    "version": "23.4",
+    "management_ip": "10.0.0.13"
+  }
+]

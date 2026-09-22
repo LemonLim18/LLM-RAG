@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "process_name",
+    "interface",
+    "level"
+  ],
+  "properties": {
+    "process_name": {
+      "type": "string"
+    },
+    "interface": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "level-1",
+        "level-2",
+        "level-1-2"
+      ]
+    }
+  }
+}

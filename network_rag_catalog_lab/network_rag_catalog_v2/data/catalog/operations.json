@@ -1,0 +1,78 @@
+[
+  {
+    "operation_id": "create_vlan",
+    "category": "vlan",
+    "name": "Create VLAN",
+    "description": "Create a VLAN with a VLAN ID and optional name",
+    "use_cases": [
+      "create vlan",
+      "add a VLAN",
+      "create VLAN 100",
+      "configure a new Layer-2 VLAN"
+    ],
+    "schema_path": "data/operations/vlan/create_vlan/schema.json"
+  },
+  {
+    "operation_id": "configure_ospf",
+    "category": "ospf",
+    "name": "Configure OSPF",
+    "description": "Configure an OSPF routing process and enable OSPF on one or more interfaces in an area.",
+    "use_cases": [
+      "configure OSPF",
+      "enable OSPF",
+      "create an OSPF process",
+      "configure OSPF area"
+    ],
+    "schema_path": "data/operations/ospf/configure_ospf/schema.json"
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "category": "bgp",
+    "name": "Configure BGP Neighbor",
+    "description": "Configure a BGP local autonomous system and establish a neighbor relationship with a remote autonomous system.",
+    "use_cases": [
+      "configure BGP neighbor",
+      "create BGP peer",
+      "configure BGP peering",
+      "add a BGP neighbor"
+    ],
+    "schema_path": "data/operations/bgp/configure_bgp_neighbor/schema.json"
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "category": "isis",
+    "name": "Configure IS-IS Interface",
+    "description": "Enable IS-IS on an interface and configure its routing level.",
+    "use_cases": [
+      "configure ISIS interface",
+      "enable IS-IS",
+      "enable ISIS on an interface",
+      "configure IS-IS level"
+    ],
+    "schema_path": "data/operations/isis/configure_isis_interface/schema.json"
+  },
+  {
+    "operation_id": "configure_static_route",
+    "category": "static_routing",
+    "name": "Configure Static Route",
+    "description": "Configure an IPv4 static route toward a destination prefix through a next-hop address.",
+    "use_cases": [
+      "configure static route",
+      "add static route",
+      "route a prefix via a next hop"
+    ],
+    "schema_path": "data/operations/static_routing/configure_static_route/schema.json"
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "category": "ip_address",
+    "name": "Configure Interface IPv4 Address",
+    "description": "Configure an IPv4 address and prefix length on a network interface.",
+    "use_cases": [
+      "configure interface IP",
+      "assign IPv4 address",
+      "set an interface address"
+    ],
+    "schema_path": "data/operations/ip_address/configure_interface_ip/schema.json"
+  }
+]
