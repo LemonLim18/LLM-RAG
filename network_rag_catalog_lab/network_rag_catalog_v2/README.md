@@ -40,6 +40,8 @@ The target resolver maps:
 
 Inventory contains hostname, display name, aliases, role, site, location, vendor, platform, version and management IP.
 
+The sample inventory is deliberately shaped like a future source-of-truth record. It includes stable device IDs, external source references, Ansible connection fields, monitoring labels, capabilities and interface records. It is still local JSON, but it can later be backed by NetBox, PostgreSQL, Redis cache, Ansible inventory or monitoring APIs without changing the pipeline contract.
+
 ### 3. Vendor selection is deterministic
 
 The target resolver returns canonical devices. Their inventory records determine vendor/platform/version. The template selector then selects:
@@ -110,12 +112,25 @@ INTENT PLANNER
 | Operation selector | Choose one operation only from retrieved candidates |
 | JSON Schema | Define the formal parameter contract |
 | Parameter extractor | Map natural language into structured parameters |
-| Validator | Deterministically reject invalid/missing values |
+| Validator | Deterministically reject invalid/missing values before rendering |
 | Target resolver | Map human device references to canonical inventory devices |
-| Inventory | Authoritative vendor/platform/version/device metadata |
+| Inventory | Authoritative device, capability and interface metadata |
+| Context validator | Reject unsupported operations and device/interface mismatches |
 | Template selector | Select the exact known template |
 | Jinja2 | Render vendor-specific configuration |
 | Future approval/Ansible layer | Diff, approve and execute |
+
+## Missing information behavior
+
+The LLM is treated as an untrusted parser. Parameter extraction may only keep values that are explicitly grounded in the user's request. If required values are missing, the task is returned as `needs_clarification` and no Jinja template is rendered.
+
+For example:
+
+```text
+Create VLAN 100 named STAFF on R1 and configure OSPF on R2
+```
+
+produces a ready VLAN task, but the OSPF task asks for `process_id` and `interfaces` instead of inventing them.
 
 ## Run
 

@@ -117,6 +117,40 @@ or:
 
 Those should come from authoritative tools/APIs. The same principle should be used later for NetBox, CLI/Netmiko, InfluxDB and syslog.
 
+## Validation boundary
+
+LLM output is treated as untrusted. Extraction keeps only values grounded in the user's request and required-but-missing parameters become `null`. The deterministic validator then decides whether the task is renderable or requires clarification.
+
+```text
+parameter extraction
+       |
+       v
+grounding/completeness validation
+       |
+   +---+---+
+   |       |
+missing  complete
+   |       |
+clarify  context validation
+           |
+        template rendering
+```
+
+No template should render on the missing branch.
+
+## Inventory shape
+
+The local JSON inventory is a stand-in for future authoritative sources. Records now include:
+
+- stable internal IDs and external source references;
+- NetBox-like role, site, platform and status fields;
+- Ansible connection variables;
+- monitoring labels suitable for InfluxDB-style tags;
+- device capabilities;
+- interface records with aliases, roles and neighbor hints.
+
+Future adapters should translate NetBox/PostgreSQL/Redis/API records into this same in-memory shape, so the planner, resolver, validator and renderer do not need to care where facts came from.
+
 ## Future approval layer
 
 The next architectural layer should consume `ExecutionPlan`:

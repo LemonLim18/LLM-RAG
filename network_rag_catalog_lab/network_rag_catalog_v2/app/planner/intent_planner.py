@@ -46,6 +46,12 @@ def _fallback_plan(prompt: str) -> list[OperationIntent]:
     if len(positions) <= 1:
         return [OperationIntent("intent-1", prompt.strip(), [])]
 
+    def clean(text: str) -> str:
+        text = text.strip(" ,;")
+        text = re.sub(r"\s+(?:and|then)\s*$", "", text, flags=re.I)
+        text = re.sub(r"^(?:and|then)\s+", "", text, flags=re.I)
+        return text.strip(" ,;")
+
     # Use operation starts as conservative boundaries. The first intent begins
     # at the beginning of the request; later intents begin at their operation
     # keyword. This works well for "... and configure OSPF ..." style requests.
@@ -55,7 +61,8 @@ def _fallback_plan(prompt: str) -> list[OperationIntent]:
             text = prompt[:positions[1][0]] if len(positions) > 1 else prompt
         else:
             end = positions[idx + 1][0] if idx + 1 < len(positions) else len(prompt)
-            text = prompt[start:end].strip(" ,; and")
+            text = prompt[start:end]
+        text = clean(text)
         if text:
             intents.append(OperationIntent(f"intent-{idx + 1}", text, []))
     return intents or [OperationIntent("intent-1", prompt.strip(), [])]

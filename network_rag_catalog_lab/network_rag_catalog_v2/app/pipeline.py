@@ -8,9 +8,10 @@ from .retrieval.operation_retriever import retrieve_operation_candidates
 from .retrieval.operation_selector import select_operation
 from .parameters.schema_loader import load_schema
 from .parameters.parameter_extractor import extract_parameters
-from .parameters.validator import validate_parameters
+from .parameters.validator import ValidationIssue, validate_parameter_result
 from .devices.inventory import load_inventory
 from .devices.target_resolver import resolve_intent_targets
+from .devices.context_validator import normalize_parameters_for_device, validate_device_context
 from .templates.renderer import render
 
 
@@ -35,6 +36,24 @@ def _discover_explicit_targets(text: str) -> list[str]:
                 matches.append(device["hostname"])
                 break
     return list(dict.fromkeys(matches))
+
+
+def _issue_to_dict(issue: ValidationIssue) -> dict:
+    return {
+        "type": issue.type,
+        "field": issue.field,
+        "message": issue.message,
+    }
+
+
+def _clarification_question(issue: dict) -> str:
+    if issue["type"] == "MISSING_TARGET":
+        return "Which target device or device group should this operation use?"
+    if issue["type"] == "TARGET_RESOLUTION":
+        return issue["message"]
+    if issue["type"] == "MISSING":
+        return f"What value should I use for {issue['field']}?"
+    return f"Please correct {issue['field']}: {issue['message']}"
 
 
 def _process_intent(intent, index: int) -> PlannedTask:
@@ -63,29 +82,68 @@ def _process_intent(intent, index: int) -> PlannedTask:
     params = extract_parameters(intent.request_text, schema)
     print("    ", json.dumps(params, indent=2))
 
-    print("\n[6] SCHEMA VALIDATION")
-    validate_parameters(params, schema)
-    print("    PASSED")
-
     target_refs = intent.target_refs or _discover_explicit_targets(intent.request_text)
-    print("\n[7] TARGET RESOLUTION")
+    print("\n[6] TARGET RESOLUTION")
     print("    references:", target_refs)
-    devices = resolve_intent_targets(target_refs)
-    for device in devices:
-        print(
-            f"    {device['hostname']} -> "
-            f"{device['vendor']}/{device['platform']}/{device['version']}"
+    devices = []
+    issues = []
+    if not target_refs:
+        issues.append({
+            "type": "MISSING_TARGET",
+            "field": "target_refs",
+            "message": "No target device was specified.",
+        })
+    else:
+        try:
+            devices = resolve_intent_targets(target_refs)
+            for device in devices:
+                print(
+                    f"    {device['hostname']} -> "
+                    f"{device['vendor']}/{device['platform']}/{device['version']}"
+                )
+        except Exception as exc:
+            issues.append({
+                "type": "TARGET_RESOLUTION",
+                "field": "target_refs",
+                "message": str(exc),
+            })
+
+    print("\n[7] COMPLETENESS + SCHEMA VALIDATION")
+    validation = validate_parameter_result(params, schema)
+    issues.extend(_issue_to_dict(issue) for issue in validation.issues)
+    if not issues and devices:
+        issues.extend(validate_device_context(operation, category, params, devices))
+    if issues:
+        print("    NEEDS CLARIFICATION")
+        for issue in issues:
+            print(f"    - {issue['field']}: {issue['message']}")
+        questions = list(dict.fromkeys(_clarification_question(issue) for issue in issues))
+        return PlannedTask(
+            intent_id=intent.intent_id,
+            request_text=intent.request_text,
+            category=category,
+            operation_id=operation,
+            parameters=params,
+            target_refs=target_refs,
+            status="needs_clarification",
+            issues=issues,
+            clarification_questions=questions,
+            target_devices=devices,
+            configs=[],
         )
+    print("    PASSED")
 
     print("\n[8] DETERMINISTIC TEMPLATE SELECTION + RENDERING")
     configs = []
     for device in devices:
-        config = render(device, operation, params)
+        device_params = normalize_parameters_for_device(params, device)
+        config = render(device, operation, device_params)
         configs.append({
             "device_id": device["hostname"],
             "vendor": device["vendor"],
             "platform": device["platform"],
             "version": device["version"],
+            "parameters": device_params,
             "configuration": config,
         })
         print(f"\n--- {device['hostname']} ({device['vendor']}) ---\n{config}")
@@ -97,6 +155,7 @@ def _process_intent(intent, index: int) -> PlannedTask:
         operation_id=operation,
         parameters=params,
         target_refs=target_refs,
+        status="ready",
         target_devices=devices,
         configs=configs,
     )
@@ -144,7 +203,7 @@ def run(prompt: str) -> ExecutionPlan:
     # The final output is an ExecutionPlan object with the PlannedTask object for each intent appended as the task list.
 
     print("\n" + "#" * 72)
-    print("EXECUTION PLAN READY — NO DEVICE CHANGES HAVE BEEN MADE")
+    print("EXECUTION PLAN READY - NO DEVICE CHANGES HAVE BEEN MADE")
     print("#" * 72)
     print(json.dumps(plan_to_dict(plan), indent=2))
     return plan

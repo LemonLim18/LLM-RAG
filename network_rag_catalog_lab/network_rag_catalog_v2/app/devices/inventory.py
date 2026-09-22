@@ -20,6 +20,33 @@ def _index_device(device: dict) -> list[str]:
     return [_norm(str(v)) for v in values if v]
 
 
+def _group_match(ref: str, inventory: list[dict]) -> list[dict]:
+    query = _norm(ref)
+    query_tokens = set(query.split())
+    if not query_tokens:
+        return []
+
+    matches = []
+    for device in inventory:
+        group_values = [
+            device.get("role", ""),
+            device.get("site", ""),
+            device.get("location", ""),
+            device.get("vendor", ""),
+            device.get("platform", ""),
+        ]
+        group_values += device.get("tags", [])
+        device_tokens = set()
+        for value in group_values:
+            device_tokens.update(_norm(str(value)).split())
+
+        plural_role = f"{device.get('role', '').lower()} routers"
+        plural_vendor = f"{device.get('vendor', '').lower()} routers"
+        if query in {_norm(plural_role), _norm(plural_vendor)} or query_tokens <= device_tokens:
+            matches.append(device)
+    return matches
+
+
 def resolve_targets(target_refs: list[str], inventory: list[dict] | None = None) -> list[dict]:
     inventory = inventory or load_inventory()
     if not target_refs:
@@ -37,6 +64,11 @@ def resolve_targets(target_refs: list[str], inventory: list[dict] | None = None)
         if len(exact) > 1:
             names = ", ".join(d["hostname"] for d in exact)
             raise ValueError(f"Ambiguous target '{ref}'. Matching devices: {names}")
+
+        group = _group_match(ref, inventory)
+        if group:
+            resolved.extend(group)
+            continue
 
         scored = []
         q_tokens = set(query.split())

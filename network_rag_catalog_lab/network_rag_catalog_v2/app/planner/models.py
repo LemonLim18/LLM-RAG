@@ -15,6 +15,9 @@ class PlannedTask:
     operation_id: str
     parameters: dict[str, Any]
     target_refs: list[str]
+    status: str = "ready"
+    issues: list[dict[str, Any]] = field(default_factory=list)
+    clarification_questions: list[str] = field(default_factory=list)
     target_devices: list[dict[str, Any]] = field(default_factory=list)
     configs: list[dict[str, Any]] = field(default_factory=list)
 

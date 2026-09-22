@@ -17,5 +17,11 @@ Never invent an operation."""
         operation = m.group(1) if m else ""
     allowed = {x["operation_id"] for x in candidates}
     if operation not in allowed:
+        if len(candidates) == 1:
+            return candidates[0]["operation_id"]
+        for candidate in candidates:
+            candidate_id = candidate["operation_id"]
+            if operation.startswith(candidate_id) or candidate_id.startswith(operation):
+                return candidate_id
         raise ValueError(f"Invalid operation selection: {raw}")
     return operation

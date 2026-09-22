@@ -1,5 +1,6 @@
 [
   {
+    "id": "dev-r1",
     "hostname": "R1",
     "display_name": "Core Router 1",
     "aliases": ["router 1", "core router 1", "core-r1"],
@@ -9,9 +10,55 @@
     "vendor": "cisco",
     "platform": "iosxe",
     "version": "17.9",
-    "management_ip": "10.0.0.11"
+    "management_ip": "10.0.0.11",
+    "primary_ip4": "10.0.0.11/32",
+    "status": "active",
+    "tags": ["core", "routing", "kl"],
+    "source_refs": {
+      "netbox_device_id": 101,
+      "netbox_url": null,
+      "postgres_key": "dev-r1"
+    },
+    "ansible": {
+      "inventory_hostname": "R1",
+      "ansible_host": "10.0.0.11",
+      "ansible_network_os": "cisco.ios.ios",
+      "connection": "network_cli"
+    },
+    "monitoring": {
+      "influx_measurement": "network_device",
+      "labels": {
+        "device": "R1",
+        "site": "KL",
+        "role": "core",
+        "vendor": "cisco"
+      }
+    },
+    "capabilities": {
+      "features": ["vlan", "ospf", "bgp", "static_routing", "ip_address"],
+      "interface_name_style": "cisco_iosxe"
+    },
+    "interfaces": [
+      {
+        "name": "Ethernet1/1",
+        "aliases": ["Eth1/1", "E1/1"],
+        "type": "ethernet",
+        "enabled": true,
+        "role": "inter_router",
+        "neighbor": {"device": "R2", "interface": "GigabitEthernet0/0/0"}
+      },
+      {
+        "name": "Loopback0",
+        "aliases": ["Lo0"],
+        "type": "loopback",
+        "enabled": true,
+        "role": "routing_id",
+        "neighbor": null
+      }
+    ]
   },
   {
+    "id": "dev-r2",
     "hostname": "R2",
     "display_name": "Core Router 2",
     "aliases": ["router 2", "core router 2", "core-r2"],
@@ -21,9 +68,63 @@
     "vendor": "huawei",
     "platform": "vrp",
     "version": "8",
-    "management_ip": "10.0.0.12"
+    "management_ip": "10.0.0.12",
+    "primary_ip4": "10.0.0.12/32",
+    "status": "active",
+    "tags": ["core", "routing", "kl"],
+    "source_refs": {
+      "netbox_device_id": 102,
+      "netbox_url": null,
+      "postgres_key": "dev-r2"
+    },
+    "ansible": {
+      "inventory_hostname": "R2",
+      "ansible_host": "10.0.0.12",
+      "ansible_network_os": "community.network.ce",
+      "connection": "network_cli"
+    },
+    "monitoring": {
+      "influx_measurement": "network_device",
+      "labels": {
+        "device": "R2",
+        "site": "KL",
+        "role": "core",
+        "vendor": "huawei"
+      }
+    },
+    "capabilities": {
+      "features": ["vlan", "ospf", "bgp", "static_routing", "ip_address"],
+      "interface_name_style": "huawei_vrp"
+    },
+    "interfaces": [
+      {
+        "name": "GigabitEthernet0/0/0",
+        "aliases": ["GE0/0/0", "Gig0/0/0"],
+        "type": "ethernet",
+        "enabled": true,
+        "role": "inter_router",
+        "neighbor": {"device": "R1", "interface": "Ethernet1/1"}
+      },
+      {
+        "name": "GigabitEthernet0/0/1",
+        "aliases": ["GE0/0/1", "Gig0/0/1"],
+        "type": "ethernet",
+        "enabled": true,
+        "role": "inter_router",
+        "neighbor": {"device": "R3", "interface": "ge-0/0/0"}
+      },
+      {
+        "name": "LoopBack0",
+        "aliases": ["Loopback0", "Lo0"],
+        "type": "loopback",
+        "enabled": true,
+        "role": "routing_id",
+        "neighbor": null
+      }
+    ]
   },
   {
+    "id": "dev-r3",
     "hostname": "R3",
     "display_name": "Edge Router 1",
     "aliases": ["router 3", "edge router 1", "edge-r1"],
@@ -33,6 +134,51 @@
     "vendor": "juniper",
     "platform": "junos",
     "version": "23.4",
-    "management_ip": "10.0.0.13"
+    "management_ip": "10.0.0.13",
+    "primary_ip4": "10.0.0.13/32",
+    "status": "active",
+    "tags": ["edge", "routing", "penang"],
+    "source_refs": {
+      "netbox_device_id": 103,
+      "netbox_url": null,
+      "postgres_key": "dev-r3"
+    },
+    "ansible": {
+      "inventory_hostname": "R3",
+      "ansible_host": "10.0.0.13",
+      "ansible_network_os": "junipernetworks.junos.junos",
+      "connection": "netconf"
+    },
+    "monitoring": {
+      "influx_measurement": "network_device",
+      "labels": {
+        "device": "R3",
+        "site": "Penang",
+        "role": "edge",
+        "vendor": "juniper"
+      }
+    },
+    "capabilities": {
+      "features": ["vlan", "ospf", "bgp", "isis", "static_routing", "ip_address"],
+      "interface_name_style": "juniper_junos"
+    },
+    "interfaces": [
+      {
+        "name": "ge-0/0/0",
+        "aliases": ["GE0", "ge0"],
+        "type": "ethernet",
+        "enabled": true,
+        "role": "inter_router",
+        "neighbor": {"device": "R2", "interface": "GigabitEthernet0/0/1"}
+      },
+      {
+        "name": "lo0",
+        "aliases": ["Loopback0", "Lo0"],
+        "type": "loopback",
+        "enabled": true,
+        "role": "routing_id",
+        "neighbor": null
+      }
+    ]
   }
 ]
