@@ -3,13 +3,14 @@ import re
 
 from .llm import llm
 
-
+# No use of vector database or RAG catalog
+# catalog is a list of category or operation descriptions
 def select_operation(prompt, category, candidates):
     if not candidates:
         raise ValueError("No operation candidates were retrieved.")
-
+    # Create a list of allowed operation IDs from the candidates
     allowed = [x["operation_id"] for x in candidates]
-
+    # Create a listing of candidates(op_id and description) for the system prompt
     listing = "\n".join(
         f"{i + 1}. {x['operation_id']} — {x['description']}"
         for i, x in enumerate(candidates)
@@ -56,6 +57,7 @@ Then the answer must be exactly:
 
     # Try normal JSON first
     try:
+        # Parse the raws response as JSON and extract the final operation_id.
         result = json.loads(raw)
         operation_id = result["operation_id"].strip()
     except Exception:

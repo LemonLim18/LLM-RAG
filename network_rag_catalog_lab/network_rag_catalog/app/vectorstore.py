@@ -1,3 +1,4 @@
+# ChromaDB wrapper and config
 from langchain_chroma import Chroma
 from .config import CHROMA_DIR,CHROMA_COLLECTION
 from .embeddings import embeddings
