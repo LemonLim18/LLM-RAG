@@ -20,7 +20,10 @@ against inventory, and renders only tasks with complete validated context.
 - `app/catalog.py`: catalog loading and consistency checks.
 - `app/parameters/parameter_extractor.py`: untrusted LLM output plus explicit-value fallback.
 - `app/parameters/normalizer.py`: deterministic netmask/CIDR and literal parameter normalization.
-- `app/devices/inventory.py`: authoritative device/group resolution and suggestions.
+- `app/devices/inventory.py`: inventory loading and compatible resolution API.
+- `app/devices/target_query.py`: original-text descriptions and grounded attribute extraction.
+- `app/devices/target_resolver.py`: all-constraint matching, ranked suggestions, and descriptive correction.
+- `data/inventory/attributes.json`: attribute paths, labels, weights, and approved value aliases.
 - `app/devices/context_validator.py`: capability/interface checks and suggestions.
 
 ## Catalog Rules
@@ -45,6 +48,14 @@ Cisco/Huawei OSPF requires `process_id`; Junos does not.
 - Ground planner target references against the original user text.
 - Ask clarification for missing, ambiguous, invalid, or unsupported context.
 - Normalize known aliases such as `Eth1/1`; do not guess unknown interfaces.
+- Never use a ranking score to waive a contradictory device attribute.
+- Singular ambiguous descriptions ask; explicit plural groups may select many.
+- Preserve `target_queries` and `target_resolution` through session roundtrips.
+- Target replies bypass parameter extraction; each interactive turn asks one field of one task.
+- Device management/version evidence must not become operation parameter values.
+
+See `docs/DEVICE_RESOLUTION.md` for supported phrases, refinement semantics, and
+known language limits. Inventory edits do not need a RAG-index rebuild.
 
 ## Terminal Usage
 

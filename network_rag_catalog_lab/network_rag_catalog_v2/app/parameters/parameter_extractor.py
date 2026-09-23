@@ -85,13 +85,20 @@ def _filter_value(prompt: str, value: Any, schema: dict, field: str) -> tuple[An
     return normalized, source
 
 
-def _filter_to_schema(prompt: str, raw_params: dict, schema: dict) -> tuple[dict, dict[str, str]]:
+def _filter_to_schema(
+    prompt: str,
+    raw_params: dict,
+    schema: dict,
+    allowed_fields: set[str] | None = None,
+) -> tuple[dict, dict[str, str]]:
     properties = schema.get("properties", {})
     canonical = canonicalize_parameter_keys(raw_params, schema)
     params: dict[str, Any] = {}
     provenance: dict[str, str] = {}
     fallback = deterministic_values(prompt, schema)
     for field, field_schema in properties.items():
+        if allowed_fields is not None and field not in allowed_fields:
+            continue
         candidate = canonical.get(field)
         value, source = _filter_value(prompt, candidate, field_schema, field)
         if value is None and field in fallback:
@@ -99,7 +106,7 @@ def _filter_to_schema(prompt: str, raw_params: dict, schema: dict) -> tuple[dict
         if value is not None:
             params[field] = value
             provenance[field] = source or "user"
-        elif field in schema.get("required", []):
+        elif allowed_fields is None and field in schema.get("required", []):
             params[field] = None
     return params, provenance
 
@@ -146,13 +153,14 @@ Fields currently requested: {json.dumps(requested)}
         try:
             raw = llm.invoke([("system", system), ("human", prompt)]).content.strip()
             data = _parse_json(raw)
-            candidate = data.get("parameters", data)
+            candidate = data.get("parameters", data) if isinstance(data, dict) else {}
             if isinstance(candidate, dict):
                 raw_params = candidate
         except Exception as exc:
             print(f"[parameters] LLM extraction unavailable; using explicit-value fallback: {exc}")
 
-    params, provenance = _filter_to_schema(prompt, raw_params, schema)
+    allowed_fields = set(requested_fields) if requested_fields else None
+    params, provenance = _filter_to_schema(prompt, raw_params, schema, allowed_fields)
     required = schema.get("required", [])
     return ExtractionResult(
         parameters=params,

@@ -42,7 +42,8 @@ def _fallback_plan(prompt: str) -> list[OperationIntent]:
             start = i + len(term)
     positions = sorted(starts.items())
     if len(positions) <= 1:
-        return [OperationIntent("intent-1", prompt.strip(), [])]
+        clauses = re.split(r"\s+(?:and|then)\s+(?=(?:configure|create|delete|remove|add|enable|disable|assign|set)\b)", prompt, flags=re.I)
+        return [OperationIntent(f"intent-{index}", clause.strip(), []) for index, clause in enumerate(clauses, 1)]
 
     def clean(text: str) -> str:
         text = text.strip(" ,;")
@@ -117,12 +118,20 @@ Rules:
         # Parse the json into a dictionary
         data = _parse_json(raw)
         # Extract the intents from the dictionary and create raw intent objects, each containing an intent_id, request_text, and target_refs.
-        raw_intents = data.get("intents", [])
+        raw_intents = data.get("intents", []) if isinstance(data, dict) else []
         intents = []
         for i, item in enumerate(raw_intents, 1):
+            if not isinstance(item, dict):
+                return _fallback_plan(prompt)
             text = str(item.get("request_text", "")).strip()
             if not text:
                 continue
+            # Generated rewrites lose device qualifiers and parameter evidence.
+            # Only original, non-overlapping user clauses may reach extraction.
+            position = prompt.casefold().find(text.casefold())
+            if position < 0 or (intents and position < prompt.casefold().find(intents[-1].request_text.casefold()) + len(intents[-1].request_text)):
+                return _fallback_plan(prompt)
+            text = prompt[position:position + len(text)]
             refs = item.get("target_refs", [])
             if isinstance(refs, str):
                 refs = re.split(r"\s*(?:,|\band\b|&)\s*", refs, flags=re.I)
@@ -134,7 +143,14 @@ Rules:
         # into one intent, prefer the conservative deterministic splitter.
         if intents and len(intents) == 1 and len(_fallback_plan(prompt)) > 1:
             return _fallback_plan(prompt)
+        if len(intents) == 1:
+            return [OperationIntent("intent-1", prompt.strip(), [])]
         if intents:
+            remaining = prompt
+            for intent in intents:
+                remaining = remaining.replace(intent.request_text, " ", 1)
+            if re.sub(r"\b(and|then)\b|[\s,;.]", "", remaining, flags=re.I):
+                return _fallback_plan(prompt)
             return intents
     except Exception as exc:
         print(f"[planner] LLM planning failed, using conservative fallback: {exc}")

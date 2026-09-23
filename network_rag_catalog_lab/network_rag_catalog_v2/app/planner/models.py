@@ -22,6 +22,8 @@ class PlannedTask:
     clarification_history: list[dict[str, Any]] = field(default_factory=list)
     target_devices: list[dict[str, Any]] = field(default_factory=list)
     configs: list[dict[str, Any]] = field(default_factory=list)
+    target_queries: list[dict[str, Any]] = field(default_factory=list)
+    target_resolution: list[dict[str, Any]] = field(default_factory=list)
 
 @dataclass
 class ExecutionPlan:

@@ -1,6 +1,7 @@
 """Planning pipeline with deterministic validation before rendering."""
 
 from dataclasses import asdict
+import ipaddress
 import json
 import re
 
@@ -10,13 +11,9 @@ from .devices.context_validator import (
     normalize_parameters_for_device,
     validate_device_context,
 )
-from .devices.inventory import (
-    TargetResolutionError,
-    find_explicit_group_references,
-    find_explicit_target_references,
-    find_user_target_candidates,
-)
-from .devices.target_resolver import resolve_intent_targets
+from .devices.inventory import load_inventory
+from .devices.target_query import extract_target_queries, parameter_request, parse_description
+from .devices.target_resolver import TARGET_ISSUES, refine_queries, resolve_queries
 from .parameters.parameter_extractor import (
     extract_parameter_result,
     merge_parameters,
@@ -49,11 +46,12 @@ def _clarification_question(issue: dict) -> str:
     field = _top_level_field(issue["field"])
     if issue_type == "MISSING_TARGET":
         return "Which target device or inventory group should this operation use?"
-    if issue_type in {"TARGET_NOT_FOUND", "AMBIGUOUS_TARGET", "TARGET_RESOLUTION"}:
+    if issue_type in TARGET_ISSUES:
         suggestions = issue.get("suggestions", [])
         if suggestions:
-            numbered = "; ".join(f"{index + 1}. {name}" for index, name in enumerate(suggestions))
-            return f"{issue['message']} Choose one target: {numbered}."
+            labels = {candidate["hostname"]: candidate["label"] for candidate in issue.get("candidates", [])}
+            numbered = "; ".join(f"{index + 1}. {labels.get(name, name)}" for index, name in enumerate(suggestions))
+            return f"{issue['message']} Choose a device or refine the description: {numbered}."
         return issue["message"]
     if issue_type == "MISSING":
         try:
@@ -69,54 +67,22 @@ def _clarification_question(issue: dict) -> str:
     return f"Please correct {field}: {issue['message']}"
 
 
-def _resolve_task_devices(target_refs: list[str]) -> tuple[list[dict], list[dict]]:
-    if not target_refs:
-        return [], [{
-            "type": "MISSING_TARGET",
-            "field": "target_refs",
-            "message": "No target device was specified.",
-        }]
-    try:
-        return resolve_intent_targets(target_refs), []
-    except TargetResolutionError as exc:
-        return [], [{
-            "type": exc.code,
-            "field": "target_refs",
-            "message": str(exc),
-            "suggestions": exc.suggestions,
-        }]
-    except Exception as exc:
-        return [], [{
-            "type": "TARGET_RESOLUTION",
-            "field": "target_refs",
-            "message": str(exc),
-        }]
+def next_clarification(task: PlannedTask) -> dict | None:
+    """Return the single issue the user should answer next.
 
-
-def _phrase_in_text(phrase: str, text: str) -> bool:
-    normalized_phrase = re.sub(r"[^a-z0-9]+", " ", phrase.lower()).strip()
-    normalized_text = re.sub(r"[^a-z0-9]+", " ", text.lower()).strip()
-    return bool(
-        normalized_phrase
-        and re.search(rf"(?<![a-z0-9]){re.escape(normalized_phrase)}(?![a-z0-9])", normalized_text)
-    )
-
-
-def _ground_target_refs(request_text: str, planner_refs: list[str]) -> list[str]:
-    """Keep only target references present in the user request.
-
-    Canonical hostnames are recovered from exact inventory aliases; textual group
-    references such as ``core routers`` are retained only when the user wrote
-    that exact group phrase. This prevents a weak planner from inventing a
-    target that later passes inventory resolution by coincidence.
+    Target grounding comes first because device-specific schemas and interface
+    validation are meaningless until the target is authoritative.
     """
-    exact = find_explicit_target_references(request_text)
-    groups = [
-        *find_explicit_group_references(request_text),
-        *(reference for reference in planner_refs if _phrase_in_text(reference, request_text)),
-    ]
-    candidates = find_user_target_candidates(request_text)
-    return list(dict.fromkeys([*exact, *groups, *candidates]))
+    if not task.issues:
+        return None
+    return next((issue for issue in task.issues if issue["type"] in TARGET_ISSUES), task.issues[0])
+
+
+def next_clarification_prompt(task: PlannedTask) -> tuple[str, str]:
+    issue = next_clarification(task)
+    if not issue:
+        return "", ""
+    return _top_level_field(issue["field"]), _clarification_question(issue)
 
 
 def _finalize_task(
@@ -128,10 +94,15 @@ def _finalize_task(
     parameters: dict,
     parameter_provenance: dict[str, str],
     target_refs: list[str],
+    target_queries: list[dict] | None = None,
     clarification_history: list[dict] | None = None,
     verbose: bool = False,
 ) -> PlannedTask:
-    devices, issues = _resolve_task_devices(target_refs)
+    if target_queries is None:
+        inventory = load_inventory()
+        target_queries = [parse_description(ref, inventory) for ref in target_refs]
+    resolution = resolve_queries(target_queries)
+    devices, issues = resolution["devices"], resolution["issues"]
     schema = load_schema(operation_id, devices=devices)
     validation = validate_parameter_result(parameters, schema)
     issues.extend(_issue_to_dict(issue) for issue in validation.issues)
@@ -157,6 +128,8 @@ def _finalize_task(
             clarification_history=clarification_history or [],
             target_devices=devices,
             configs=[],
+            target_queries=target_queries,
+            target_resolution=resolution["evidence"],
         )
 
     configs = []
@@ -186,6 +159,8 @@ def _finalize_task(
         clarification_history=clarification_history or [],
         target_devices=devices,
         configs=configs,
+        target_queries=target_queries,
+        target_resolution=resolution["evidence"],
     )
 
 
@@ -206,12 +181,14 @@ def _process_intent(intent, index: int, verbose: bool) -> PlannedTask:
     operation_id = select_operation(intent.request_text, category, candidates)
     _log(verbose, f"    {operation_id}")
 
-    schema = load_schema(operation_id)
+    target_queries = extract_target_queries(intent.request_text, load_inventory(), allow_llm=True)
+    resolved = resolve_queries(target_queries)
+    schema = load_schema(operation_id, devices=resolved["devices"])
     _log(verbose, f"\n[4] PARAMETER EXTRACTION ({schema.get('title', operation_id)})")
-    extraction = extract_parameter_result(intent.request_text, schema)
+    extraction = extract_parameter_result(parameter_request(intent.request_text, target_queries), schema)
     _log(verbose, json.dumps(extraction.parameters, indent=2))
 
-    target_refs = _ground_target_refs(intent.request_text, intent.target_refs)
+    target_refs = [query["text"] for query in target_queries]
     _log(verbose, f"\n[5] TARGET REFERENCES: {target_refs or '[none]'}")
     _log(verbose, "\n[6] VALIDATION + CONTEXT CHECK")
     return _finalize_task(
@@ -222,16 +199,40 @@ def _process_intent(intent, index: int, verbose: bool) -> PlannedTask:
         parameters=extraction.parameters,
         parameter_provenance=extraction.provenance,
         target_refs=target_refs,
+        target_queries=target_queries,
         verbose=verbose,
     )
 
 
-def _requested_fields(task: PlannedTask) -> list[str]:
-    return list(dict.fromkeys(
-        _top_level_field(issue["field"])
-        for issue in task.issues
-        if issue["type"] in {"MISSING", "SCHEMA", "INVALID_INTERFACE"}
-    ))
+def _strict_reply_value(reply: str, field: str) -> dict:
+    """Parse scalar clarification answers only for the field currently asked."""
+    value = reply.strip()
+    if field == "prefix_length":
+        from .parameters.normalizer import prefix_length_from_text
+        prefix = prefix_length_from_text(value, allow_bare_netmask=True)
+        return {field: prefix} if prefix is not None else {}
+    if field in {"address", "neighbor_ip", "next_hop", "router_id"}:
+        # A next hop/address must be a host address, never a CIDR or netmask.
+        if "/" in value:
+            return {}
+        try:
+            address = ipaddress.IPv4Address(value)
+        except ipaddress.AddressValueError:
+            return {}
+        if str(address) in {"0.0.0.0", "255.255.255.255"} or value in {
+            "255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.128",
+            "255.255.255.192", "255.255.255.224", "255.255.255.240", "255.255.255.248",
+            "255.255.255.252", "255.255.255.254",
+        }:
+            return {}
+        return {field: str(address)}
+    if field == "destination":
+        try:
+            network = ipaddress.IPv4Network(value, strict=False)
+        except ValueError:
+            return {}
+        return {field: str(network)} if "/" in value else {}
+    return {}
 
 
 def _contextual_clarification_values(
@@ -261,33 +262,40 @@ def resume_task(task: PlannedTask, reply: str, *, verbose: bool = False) -> Plan
         return task
 
     schema = load_schema(task.operation_id)
-    requested_fields = _requested_fields(task)
-    reply, selected_target = _resolve_numbered_selection(reply, task)
-    extraction = extract_parameter_result(
-        reply,
-        schema,
-        existing_parameters=task.parameters,
-        requested_fields=requested_fields,
-    )
+    current_issue = next_clarification(task)
+    current_field = _top_level_field(current_issue["field"]) if current_issue else ""
+    reply, _ = _resolve_numbered_selection(reply, task)
+    target_queries = task.target_queries or [parse_description(ref, load_inventory()) for ref in task.target_refs]
+    if current_issue and current_issue["type"] in TARGET_ISSUES:
+        queries = refine_queries(target_queries, current_issue, reply, allow_llm=True)
+        return _finalize_task(
+            intent_id=task.intent_id, request_text=task.request_text, category=task.category,
+            operation_id=task.operation_id, parameters=dict(task.parameters),
+            parameter_provenance=dict(task.parameter_provenance),
+            target_refs=[query["text"] for query in queries], target_queries=queries,
+            clarification_history=[*task.clarification_history, {
+                "reply": reply, "field": "target_refs", "updated_fields": ["target_refs"],
+            }], verbose=verbose,
+        )
+    extraction = extract_parameter_result(reply, schema, existing_parameters=task.parameters, requested_fields=[current_field])
     parameters = merge_parameters(task.parameters, extraction.parameters, schema)
     target_refs = list(task.target_refs)
 
-    target_issue_types = {"MISSING_TARGET", "TARGET_NOT_FOUND", "AMBIGUOUS_TARGET", "TARGET_RESOLUTION"}
-    if any(issue["type"] in target_issue_types for issue in task.issues):
-        reply_targets = [selected_target] if selected_target else find_explicit_target_references(reply)
-        if reply_targets:
-            target_refs = reply_targets
-
-    devices, _ = _resolve_task_devices(target_refs)
-    contextual = _contextual_clarification_values(reply, task, devices, requested_fields)
-    parameters = merge_parameters(parameters, contextual, schema)
+    devices = resolve_queries(target_queries)["devices"]
+    contextual = _contextual_clarification_values(reply, task, devices, [current_field])
+    strict_value = _strict_reply_value(reply, current_field)
+    # Inventory-normalized interface selections and strict scalar values are the
+    # only reply values allowed to cross the clarification boundary.
+    parameters = merge_parameters(parameters, {**contextual, **strict_value}, schema)
 
     provenance = dict(task.parameter_provenance)
     provenance.update({field: f"clarification_{source}" for field, source in extraction.provenance.items()})
     provenance.update({field: "clarification_inventory_alias" for field in contextual})
+    provenance.update({field: "clarification_user" for field in strict_value})
     history = [*task.clarification_history, {
         "reply": reply,
-        "updated_fields": sorted(set(extraction.provided_fields) | set(contextual)),
+        "field": current_field,
+        "updated_fields": sorted(set(extraction.provided_fields) | set(contextual) | set(strict_value)),
     }]
     return _finalize_task(
         intent_id=task.intent_id,
@@ -297,6 +305,7 @@ def resume_task(task: PlannedTask, reply: str, *, verbose: bool = False) -> Plan
         parameters=parameters,
         parameter_provenance=provenance,
         target_refs=target_refs,
+        target_queries=target_queries,
         clarification_history=history,
         verbose=verbose,
     )
@@ -307,14 +316,14 @@ def _resolve_numbered_selection(reply: str, task: PlannedTask) -> tuple[str, str
     if not reply.strip().isdigit():
         return reply, None
     index = int(reply.strip()) - 1
-    suggestion_issues = [issue for issue in task.issues if issue.get("suggestions")]
-    if len(suggestion_issues) != 1:
+    current_issue = next_clarification(task)
+    if not current_issue or not current_issue.get("suggestions"):
         return reply, None
-    suggestions = suggestion_issues[0]["suggestions"]
+    suggestions = current_issue["suggestions"]
     if not 0 <= index < len(suggestions):
         return reply, None
     selected = suggestions[index]
-    if suggestion_issues[0]["type"] in {"TARGET_NOT_FOUND", "AMBIGUOUS_TARGET"}:
+    if current_issue["type"] in TARGET_ISSUES:
         return selected, selected
     return selected, None
 

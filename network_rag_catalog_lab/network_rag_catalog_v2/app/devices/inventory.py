@@ -131,47 +131,6 @@ def find_user_target_candidates(text: str) -> list[str]:
 
 
 def resolve_targets(target_refs: list[str], inventory: list[dict] | None = None) -> list[dict]:
-    inventory = inventory or load_inventory()
-    if not target_refs:
-        raise ValueError("No target device was specified. Please name one or more target devices.")
-
-    resolved = []
-    for ref in target_refs:
-        query = _norm(ref)
-        if not query:
-            continue
-        exact = [d for d in inventory if query in _index_device(d)]
-        if len(exact) == 1:
-            resolved.append(exact[0])
-            continue
-        if len(exact) > 1:
-            names = ", ".join(d["hostname"] for d in exact)
-            raise TargetResolutionError(
-                "AMBIGUOUS_TARGET",
-                ref,
-                f"Ambiguous target '{ref}'. Matching devices: {names}",
-                [device["hostname"] for device in exact],
-            )
-
-        group = _group_match(ref, inventory)
-        if group:
-            resolved.extend(group)
-            continue
-
-        suggestions = _suggest_devices(ref, inventory)
-        suggestion_text = ", ".join(suggestions) if suggestions else "none"
-        raise TargetResolutionError(
-            "TARGET_NOT_FOUND",
-            ref,
-            f"Cannot resolve target '{ref}'. Did you mean: {suggestion_text}?",
-            suggestions,
-        )
-
-    # De-duplicate while preserving user order.
-    result = []
-    seen = set()
-    for d in resolved:
-        if d["hostname"] not in seen:
-            result.append(d)
-            seen.add(d["hostname"])
-    return result
+    # Preserve the public API while using the same authority as the pipeline.
+    from .target_resolver import resolve_intent_targets
+    return resolve_intent_targets(target_refs, inventory)

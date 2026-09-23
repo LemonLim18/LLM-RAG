@@ -2,6 +2,7 @@
   {
     "id": "dev-r1",
     "hostname": "R1",
+    "kind": "router",
     "display_name": "Core Router 1",
     "aliases": ["router 1", "core router 1", "core-r1"],
     "role": "core",
@@ -60,6 +61,7 @@
   {
     "id": "dev-r2",
     "hostname": "R2",
+    "kind": "router",
     "display_name": "Core Router 2",
     "aliases": ["router 2", "core router 2", "core-r2"],
     "role": "core",
@@ -126,6 +128,7 @@
   {
     "id": "dev-r3",
     "hostname": "R3",
+    "kind": "router",
     "display_name": "Edge Router 1",
     "aliases": ["router 3", "edge router 1", "edge-r1"],
     "role": "edge",

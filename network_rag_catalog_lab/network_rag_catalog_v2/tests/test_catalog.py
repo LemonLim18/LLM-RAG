@@ -98,6 +98,9 @@ class CatalogTests(unittest.TestCase):
 
     def test_prefix_normalization_accepts_explicit_netmask(self):
         self.assertEqual(prefix_length_from_text("Use netmask 255.255.255.0"), 24)
+        self.assertIsNone(prefix_length_from_text("Ethernet1/1"))
+        self.assertEqual(prefix_length_from_text("/24"), 24)
+        self.assertEqual(prefix_length_from_text("255.255.255.0", allow_bare_netmask=True), 24)
 
     def test_address_normalization_splits_cidr_host_value(self):
         value, _ = normalize_value(
@@ -174,6 +177,33 @@ class CatalogTests(unittest.TestCase):
             resumed = resume_task(task, "1")
         self.assertEqual(resumed.status, "ready")
         self.assertEqual(resumed.parameters["interface"], "Ethernet1/1")
+
+    def test_clarification_updates_only_the_current_field(self):
+        task = _finalize_task(
+            intent_id="intent-1",
+            request_text="Configure an interface IP on Router 1",
+            category="ip_address",
+            operation_id="configure_interface_ip",
+            parameters={"interface": "Ethernet1/1", "address": None, "prefix_length": None},
+            parameter_provenance={},
+            target_refs=["R1"],
+        )
+        empty = ExtractionResult(parameters={}, provided_fields=[], missing_fields=[], provenance={})
+        with patch("app.pipeline.extract_parameter_result", return_value=empty):
+            rejected_mask = resume_task(task, "255.255.255.0")
+            addressed = resume_task(rejected_mask, "192.168.1.1")
+            complete = resume_task(addressed, "255.255.255.0")
+        self.assertIsNone(rejected_mask.parameters["address"])
+        self.assertEqual(addressed.parameters["address"], "192.168.1.1")
+        self.assertEqual(complete.parameters["prefix_length"], 24)
+        self.assertEqual(complete.status, "ready")
+
+    def test_verified_planner_target_is_retained_from_original_prompt(self):
+        from app.devices.target_query import extract_target_queries
+        from app.devices.target_resolver import resolve_queries
+        from app.devices.inventory import load_inventory
+        queries = extract_target_queries("Help configure an IP interface on Router 1", load_inventory())
+        self.assertEqual([device["hostname"] for device in resolve_queries(queries)["devices"]], ["R1"])
 
 
 if __name__ == "__main__":

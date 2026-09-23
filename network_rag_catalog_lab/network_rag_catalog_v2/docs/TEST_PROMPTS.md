@@ -34,8 +34,34 @@ Create VLAN 300 named TEST on Router 9
 ```
 
 For the second prompt, reply `1` in terminal mode to choose the first offered
-interface. For the OSPF prompt, reply:
+interface. Answer each OSPF field when requested: `GigabitEthernet0/0/0 in area 0`
+for interfaces, then `process 100` for the process ID.
+
+## Inventory-context targets
+
+| Prompt | Expected outcome / follow-up |
+|---|---|
+| Create VLAN 20 on the Penang edge Juniper router | R3, ready |
+| Create VLAN 20 on the KL core router | Ask; answer `the Huawei one` -> R2 |
+| Create VLAN 20 on KL core routers | R1 and R2, ready |
+| Create VLAN 20 on the router in Kuala Lumpur running IOS-XE | R1, ready |
+| Create VLAN 20 on the branch router | R3, ready |
+| Create VLAN 20 on Cisco R2 | Conflict; choose a displayed device to correct |
+| Create VLAN 20 on the Cisco router in Penang | Conflict; answer `Juniper` -> R3 |
+| Create VLAN 20 on Router 9 | Unknown device; choose a suggestion |
+| Create VLAN 20 on the London Cisco router | Unknown qualifier; never silently select R1 |
+| Create VLAN 20 | Missing target; answer `Penang edge Juniper router` |
+| Create VLAN 20 on the router with management IP 10.0.0.12 | R2 |
+| Create VLAN 20 on routers with management subnet 10.0.0.0/24 | R1, R2, R3 |
+| Create VLAN 20 on routers supporting IS-IS | R3 |
+| Create VLAN 20 on the router with GigabitEthernet0/0/1 | R2 |
+
+Mixed tasks:
 
 ```text
-Use process 100 on GigabitEthernet0/0/0 in area 0.
+Create VLAN 20 on the Penang edge Juniper router and create VLAN 30 on the KL Cisco router
+Create VLAN 20 on R3 and create VLAN 30 on the KL core router
 ```
+
+The second request keeps R3 ready and asks only about the second task's target.
+See `DEVICE_RESOLUTION.md` for attribute governance and limits.

@@ -40,6 +40,13 @@ The target resolver maps:
 
 Inventory contains hostname, display name, aliases, role, site, location, vendor, platform, version and management IP.
 
+Descriptions such as `the Penang edge Juniper router` now resolve using those
+attributes together. `the KL core router` asks which device; `KL core routers`
+selects the explicitly requested group. Conflicting attributes block rendering.
+The terminal accepts refinements such as `the Huawei one` and shows the matching
+inventory facts. See [DEVICE_RESOLUTION.md](docs/DEVICE_RESOLUTION.md) for the
+data contract, centrally governed aliases, supported examples, and limits.
+
 The sample inventory is deliberately shaped like a future source-of-truth record. It includes stable device IDs, external source references, Ansible connection fields, monitoring labels, capabilities and interface records. It is still local JSON, but it can later be backed by NetBox, PostgreSQL, Redis cache, Ansible inventory or monitoring APIs without changing the pipeline contract.
 
 ### 3. Vendor selection is deterministic
@@ -169,12 +176,14 @@ be exposed by a web UI without changing the core pipeline.
 python main.py "Configure OSPF on R2" --interactive
 ```
 
-The system asks only for missing fields and does not render until they are
-validated. A reply such as this completes the pending task:
+The system asks one field of one task at a time and does not render until its
+values are validated. For the interfaces question, reply:
 
 ```text
-Use process 100 on GigabitEthernet0/0/0 in area 0.
+GigabitEthernet0/0/0 in area 0
 ```
+
+For the subsequent process-ID question, reply `process 100`.
 
 For an interface or device correction, terminal suggestions can be selected by
 their number. To leave and resume later:

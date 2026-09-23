@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "attributes": {
+    "name": {"label": "Device name", "paths": ["hostname", "display_name", "aliases"], "weight": 10},
+    "site": {"label": "Site", "paths": ["site"], "weight": 4, "aliases": {"KL": ["Kuala Lumpur"]}},
+    "role": {"label": "Role", "paths": ["role"], "weight": 3},
+    "vendor": {"label": "Vendor", "paths": ["vendor"], "weight": 4},
+    "platform": {"label": "Platform", "paths": ["platform"], "weight": 3, "aliases": {"iosxe": ["IOS-XE", "IOS XE"], "junos": ["Junos OS"]}},
+    "location": {"label": "Location", "paths": ["location"], "weight": 3, "aliases": {"Main Campus": ["main campus"], "Branch Campus": ["branch", "branch campus"]}},
+    "status": {"label": "Status", "paths": ["status"], "weight": 1},
+    "kind": {"label": "Device type", "paths": ["kind"], "weight": 1, "aliases": {"router": ["routers"], "switch": ["switches"], "firewall": ["firewalls"]}},
+    "tags": {"label": "Tag", "paths": ["tags"], "weight": 2},
+    "features": {"label": "Capability", "paths": ["capabilities.features"], "weight": 2, "aliases": {"isis": ["IS-IS"], "static_routing": ["static routing"], "ip_address": ["IP addressing"]}},
+    "version": {"label": "Software version", "paths": ["version"], "weight": 2, "explicit_only": true},
+    "management_ip": {"label": "Management address or subnet", "paths": ["management_ip"], "weight": 4, "explicit_only": true},
+    "interface": {"label": "Interface", "paths": ["interfaces.name", "interfaces.aliases"], "weight": 2}
+  }
+}

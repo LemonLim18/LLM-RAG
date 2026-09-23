@@ -31,9 +31,15 @@ def canonicalize_parameter_keys(raw_params: dict, schema: dict) -> dict:
     return canonical
 
 
-def prefix_length_from_text(text: str) -> int | None:
+def prefix_length_from_text(text: str, *, allow_bare_netmask: bool = False) -> int | None:
     """Return a prefix only when CIDR, prefix, or netmask is explicit in text."""
-    for match in re.finditer(r"/(\d{1,2})(?!\d)", text):
+    # A slash in an interface name (for example Ethernet1/1) is not CIDR.
+    # Accept a bare /24 only when it is the complete clarification response.
+    cidr_match = re.search(r"\b\d{1,3}(?:\.\d{1,3}){3}/(\d{1,2})(?!\d)", text)
+    bare_match = re.fullmatch(r"\s*/(\d{1,2})\s*", text)
+    for match in (cidr_match, bare_match):
+        if not match:
+            continue
         value = int(match.group(1))
         if 0 <= value <= 32:
             return value
@@ -45,6 +51,8 @@ def prefix_length_from_text(text: str) -> int | None:
             return value
 
     match = re.search(r"\b(?:netmask|subnet mask)\s*(?:is|=|:)?\s*(\d{1,3}(?:\.\d{1,3}){3})\b", text, re.I)
+    if not match and allow_bare_netmask:
+        match = re.fullmatch(r"\s*(\d{1,3}(?:\.\d{1,3}){3})\s*", text)
     if not match:
         return None
     try:
