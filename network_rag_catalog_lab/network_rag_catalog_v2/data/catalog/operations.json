@@ -46,7 +46,7 @@
   {
     "operation_id": "configure_bgp_neighbor",
     "status": "active",
-    "version": 1,
+    "version": 2,
     "category_id": "bgp",
     "display_name": "Configure BGP Neighbor",
     "aliases": ["configure bgp neighbor", "create bgp peer", "add bgp neighbor", "configure bgp peer"],

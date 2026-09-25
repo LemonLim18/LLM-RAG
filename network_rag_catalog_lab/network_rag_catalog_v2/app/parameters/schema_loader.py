@@ -9,7 +9,7 @@ def _add_catalog_metadata(schema: dict) -> dict:
     enriched = deepcopy(schema)
     for field, property_schema in enriched.get("properties", {}).items():
         try:
-            metadata = get_parameter(field)
+            metadata = get_parameter(property_schema.get("x-parameter-id", field))
         except KeyError:
             metadata = None
         if metadata:

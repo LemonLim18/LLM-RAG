@@ -1,10 +1,11 @@
 from copy import deepcopy
 from difflib import SequenceMatcher
+import re
 from typing import Any
 
 
 def _norm(value: str) -> str:
-    return "".join(ch.lower() for ch in value if ch.isalnum())
+    return value.strip().casefold()
 
 
 def _interface_index(device: dict) -> dict[str, str]:
@@ -39,10 +40,9 @@ def suggest_interfaces(device: dict, requested_name: str, limit: int = 3) -> lis
 
 
 def find_explicit_interface_names(device: dict, text: str) -> list[str]:
-    normalized_text = _norm(text)
     matches = []
     for candidate, canonical in _interface_index(device).items():
-        if candidate and candidate in normalized_text:
+        if candidate and re.search(rf"(?<![\w/.-]){re.escape(candidate)}(?![\w/.-])", text, re.I):
             matches.append(canonical)
     return list(dict.fromkeys(matches))
 

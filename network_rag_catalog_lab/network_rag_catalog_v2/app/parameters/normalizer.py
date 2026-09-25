@@ -127,12 +127,13 @@ def deterministic_values(prompt: str, schema: dict) -> dict[str, tuple[Any, str]
     match(r"\b(?:destination(?:\s+prefix)?|route\s+to)\s+(\d{1,3}(?:\.\d{1,3}){3}/\d{1,2})\b", "destination")
     match(r"\b(?:via|through|next[-\s]?hop)\s+(\d{1,3}(?:\.\d{1,3}){3})\b", "next_hop")
     match(r"\b(?:preference|administrative\s+distance|metric)\s+(\d+)\b", "preference", int)
-    match(r"\b(?:interface|on|from)\s+((?:GigabitEthernet|Ethernet|Eth|GE|ge-|Loopback|Lo|lo)\d[\w/.-]*)", "interface")
+    match(r"\b(?:interface|on|from|using|to)\s+((?:GigabitEthernet|Gig|Ethernet|Eth|E|GE|ge-|Loopback|Lo|lo)\d[\w/.-]*)", "interface")
 
     if "address" in fields:
-        found = re.search(r"\b(\d{1,3}(?:\.\d{1,3}){3})(?:/\d{1,2})?\b", prompt)
-        if found:
-            values["address"] = (found.group(1), "deterministic_user")
+        found = list(re.finditer(r"\b(\d{1,3}(?:\.\d{1,3}){3})(?:/\d{1,2})?\b", prompt))
+        addresses = [hit.group(1) for hit in found if not re.search(r"(?:netmask|subnet mask|management IP|router id)\s*$", prompt[:hit.start()], re.I)]
+        if len(set(addresses)) == 1:
+            values["address"] = (addresses[0], "deterministic_user")
 
     if "prefix_length" in fields:
         prefix = prefix_length_from_text(prompt)
@@ -148,14 +149,61 @@ def deterministic_values(prompt: str, schema: dict) -> dict[str, tuple[Any, str]
             values["admin_up"] = (False, "deterministic_user")
 
     if "interfaces" in fields:
-        area = re.search(r"\barea\s+([0-9.]+)\b", prompt, re.I)
-        interface_names = re.findall(
-            r"\b(?:GigabitEthernet|Ethernet|Eth|GE|ge-|Loopback|Lo|lo)\d[\w/.-]*",
-            prompt,
-        )
-        if area and interface_names:
-            values["interfaces"] = (
-                [{"name": name, "area": area.group(1)} for name in dict.fromkeys(interface_names)],
-                "deterministic_user",
-            )
+        hits = list(re.finditer(r"\b(?:GigabitEthernet|Gig|Ethernet|Eth|E|GE|ge-|Loopback|Lo)\d[\w/.-]*", prompt, re.I))
+        areas = list(re.finditer(r"\barea\s+([0-9.]+)\b", prompt, re.I))
+        items = []
+        for index, hit in enumerate(hits):
+            item = {"name": hit.group().rstrip(".")}
+            end = hits[index + 1].start() if index + 1 < len(hits) else len(prompt)
+            local = [area.group(1).rstrip(".") for area in areas if hit.end() <= area.start() < end]
+            if len(local) == 1:
+                item["area"] = local[0]
+            elif len(areas) == 1 and len(hits) == 1:
+                item["area"] = areas[0].group(1).rstrip(".")
+            elif len(areas) == 1 and re.search(r"\b(?:both|all)\s+(?:in\s+)?area\b", prompt, re.I):
+                item["area"] = areas[0].group(1).rstrip(".")
+            if item not in items:
+                items.append(item)
+        if items:
+            values["interfaces"] = (items, "deterministic_user")
     return values
+
+
+def explicit_alternatives(prompt: str, schema: dict) -> dict:
+    """Conflicting scalar alternatives stay candidates, never first-match values."""
+    alternatives = {}
+    for clause in re.split(r"\bor\b", prompt, flags=re.I):
+        for field, (value, _) in deterministic_values(clause, schema).items():
+            if not isinstance(value, (list, dict)):
+                alternatives.setdefault(field, [])
+                if value not in alternatives[field]:
+                    alternatives[field].append(value)
+    if "address" in schema.get("properties", {}):
+        hits = list(re.finditer(r"\b\d{1,3}(?:\.\d{1,3}){3}\b", prompt))
+        addresses = [hit.group() for hit in hits if not re.search(r"(?:netmask|subnet mask|management IP|router id)\s*$", prompt[:hit.start()], re.I)]
+        alternatives["address"] = list(dict.fromkeys(addresses))
+    if "interface" in schema.get("properties", {}):
+        names = re.findall(r"\b(?:GigabitEthernet|Gig|Ethernet|Eth|E|GE|ge-|Loopback|Lo)\d[\w/.-]*", prompt, re.I)
+        alternatives["interface"] = list(dict.fromkeys(names))
+    # Repeated labelled literals also conflict, even without an 'or'.
+    for field in schema.get("properties", {}):
+        try:
+            aliases = get_parameter(field).get("aliases", [])
+        except KeyError:
+            continue
+        kind = schema["properties"][field].get("type")
+        pattern = "|".join(re.escape(alias) for alias in sorted(aliases, key=len, reverse=True))
+        if pattern:
+            value_pattern = r"-?\d+" if kind == "integer" else r"[A-Za-z0-9_./-]+"
+            if kind not in {"integer", "string"} or field in {"address", "interface"}:
+                continue
+            hits = re.findall(rf"\b(?:{pattern})\s+({value_pattern})(?![\w./-])", prompt, re.I)
+            short_or = re.search(rf"\b(?:{pattern})\s+({value_pattern})\s+or\s+({value_pattern})(?![\w./-])", prompt, re.I)
+            if short_or:
+                hits.extend(short_or.groups())
+            for hit in hits:
+                alternatives.setdefault(field, [])
+                value = int(hit) if kind == "integer" else hit
+                if value not in alternatives[field]:
+                    alternatives[field].append(value)
+    return {field: values for field, values in alternatives.items() if len(values) > 1}

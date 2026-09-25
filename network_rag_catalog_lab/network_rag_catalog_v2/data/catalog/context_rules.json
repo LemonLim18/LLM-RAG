@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "operations": {
+    "create_vlan": {"planned_fields": ["vlan_id", "name"], "resource_keys": ["vlan_id"], "conflicts_with": ["delete_vlan"], "allow_plan_override": true},
+    "delete_vlan": {"planned_fields": ["vlan_id", "name"], "resource_keys": ["vlan_id"], "conflicts_with": ["create_vlan"]},
+    "configure_ospf": {"inventory_fields": ["interfaces", "interfaces[].name"], "planned_fields": ["process_id", "router_id", "interfaces[].area"], "resource_keys": ["interfaces[].name"], "conflicts_with": ["remove_ospf_interface"], "allow_plan_override": true},
+    "remove_ospf_interface": {"inventory_fields": ["interface"], "planned_fields": ["process_id", "area"], "resource_keys": ["interface"], "conflicts_with": ["configure_ospf"]},
+    "configure_bgp_neighbor": {"planned_fields": ["local_as", "neighbor_ip", "remote_as", "peer_group"], "resource_keys": ["neighbor_ip"], "conflicts_with": ["remove_bgp_neighbor"], "allow_plan_override": true},
+    "remove_bgp_neighbor": {"planned_fields": ["local_as", "neighbor_ip", "remote_as", "peer_group"], "resource_keys": ["neighbor_ip"], "conflicts_with": ["configure_bgp_neighbor"]},
+    "configure_isis_interface": {"inventory_fields": ["interface"], "planned_fields": ["process_name", "level"], "resource_keys": ["interface"], "conflicts_with": ["disable_isis_interface"], "allow_plan_override": true},
+    "disable_isis_interface": {"inventory_fields": ["interface"], "planned_fields": ["process_name"], "resource_keys": ["interface"], "conflicts_with": ["configure_isis_interface"]},
+    "configure_interface_ip": {"inventory_fields": ["interface"], "planned_fields": ["address", "prefix_length"], "resource_keys": ["interface"], "conflicts_with": ["remove_interface_ip"], "allow_plan_override": true},
+    "remove_interface_ip": {"inventory_fields": ["interface"], "planned_fields": ["address", "prefix_length"], "resource_keys": ["interface"], "conflicts_with": ["configure_interface_ip"]},
+    "configure_static_route": {"planned_fields": ["destination", "next_hop", "preference"], "resource_keys": ["destination"], "conflicts_with": ["remove_static_route"], "allow_plan_override": true},
+    "remove_static_route": {"planned_fields": ["destination", "next_hop"], "resource_keys": ["destination"], "conflicts_with": ["configure_static_route"]}
+  }
+}

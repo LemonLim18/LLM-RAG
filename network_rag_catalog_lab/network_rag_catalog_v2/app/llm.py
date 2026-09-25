@@ -1,3 +1,3 @@
 from langchain_ollama import ChatOllama
 from .config import OLLAMA_LLM_MODEL
-llm=ChatOllama(model=OLLAMA_LLM_MODEL,temperature=0)
+llm = ChatOllama(model=OLLAMA_LLM_MODEL, temperature=0, client_kwargs={"timeout": 30.0})

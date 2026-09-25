@@ -1,352 +1,446 @@
-"""Planning pipeline with deterministic validation before rendering."""
+"""Collect and validate per-device bindings; render only a complete request."""
 
+from copy import deepcopy
 from dataclasses import asdict
-import ipaddress
 import json
-import re
 
-from .catalog import get_parameter, validate_catalog
-from .devices.context_validator import (
-    find_explicit_interface_names,
-    normalize_parameters_for_device,
-    validate_device_context,
-)
+from .catalog import get_operation, load_operations, reload_catalog, validate_catalog
+from .context import context_conflicts, rules, source_revision, validate_context_catalog
+from .devices.context_validator import normalize_parameters_for_device, validate_device_context
 from .devices.inventory import load_inventory
 from .devices.target_query import extract_target_queries, parameter_request, parse_description
 from .devices.target_resolver import TARGET_ISSUES, refine_queries, resolve_queries
-from .parameters.parameter_extractor import (
-    extract_parameter_result,
-    merge_parameters,
-)
+from .parameters.fields import get_value, leaf_values, parse_answer, schema_at, set_value
+from .parameters.parameter_extractor import extract_parameter_result
 from .parameters.schema_loader import load_schema
-from .parameters.validator import ValidationIssue, validate_parameter_result
+from .parameters.validator import validate_parameter_result
 from .planner.intent_planner import plan_intents
-from .planner.models import ExecutionPlan, PlannedTask
+from .planner.models import ClarificationAnswer, ExecutionPlan, PlannedTask
+from .questions import answer_from_text, build_questions, selected_options
 from .retrieval.category_classifier import classify_category
 from .retrieval.operation_retriever import retrieve_operation_candidates
-from .retrieval.operation_selector import select_operation
+from .retrieval.operation_selector import _explicit_operation, select_operation
 from .templates.renderer import render
+from .templates.template_selector import select_template
 
 
-def _log(verbose: bool, message: str = "") -> None:
-    if verbose:
-        print(message)
+def _validation(task, params, schema):
+    issues = [vars(issue) for issue in validate_parameter_result(params, schema).issues]
+    issues += validate_device_context(task.operation_id, task.category, params, task.target_devices)
+    return issues
 
 
-def _issue_to_dict(issue: ValidationIssue) -> dict:
-    return {"type": issue.type, "field": issue.field, "message": issue.message}
+def _record_candidate(task, issue, value):
+    task.candidates = [candidate for candidate in task.candidates if candidate["field"] != issue["field"]]
+    task.candidates.append({**issue, "value": value, "source": "user", "evidence": task.request_text,
+                            "device_id": task.device_id, "operation_id": task.operation_id, "validation": "rejected"})
 
 
-def _top_level_field(field: str) -> str:
-    return re.split(r"[.\[]", field, maxsplit=1)[0]
+def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask:
+    revision = revision or source_revision()
+    task.configs = []
+    if task.source_revision and task.source_revision != revision:
+        task.revision += 1
+        task.confirmations = {}
+        for candidate in task.candidates:
+            if candidate["type"] == "CONTEXT_CONFLICT":
+                task.parameters = set_value(task.parameters, candidate["field"], candidate["value"])
+        task.candidates = [candidate for candidate in task.candidates if candidate["type"] != "CONTEXT_CONFLICT"]
+        # Context-derived decisions require reconfirmation after source changes.
+        for path, provenance in list(task.parameter_provenance.items()):
+            if provenance.startswith("context:") and not provenance.startswith(("context:inventory:", "context:schema:")):
+                task.parameters = set_value(task.parameters, path, None)
+                task.parameter_provenance.pop(path, None)
+    task.source_revision = revision
+    if not task.target_queries and task.target_refs:
+        task.target_queries = [parse_description(ref, load_inventory()) for ref in task.target_refs]
+    resolution = resolve_queries(task.target_queries)
+    task.target_resolution = resolution["evidence"]
+    devices = resolution["devices"]
+    target_issues = resolution["issues"]
+    membership = sorted(device["id"] for device in devices)
+    if task.scope_device_ids and membership and membership != task.scope_device_ids and task.device_id:
+        target_issues = [{"type": "TARGET_CONFLICT", "field": "target_refs",
+                          "message": "Inventory group membership changed. Confirm the target(s) for this binding before proceeding."}]
+    elif not task.scope_device_ids and membership:
+        task.scope_device_ids = membership
+    if task.device_id and devices:
+        devices = [device for device in devices if device["id"] == task.device_id]
+        if not devices:
+            target_issues = [{"type": "TARGET_CONFLICT", "field": "target_refs", "message": "The previously selected device no longer matches this binding. Confirm a target."}]
+    task.target_devices = devices
+    if len(devices) == 1:
+        task.device_id = devices[0]["id"]
+        task.target_resolution = [
+            {**evidence, "selected": [candidate for candidate in evidence["selected"] if candidate["device_id"] == task.device_id]}
+            for evidence in resolution["evidence"]
+            if any(candidate["device_id"] == task.device_id for candidate in evidence["selected"])
+        ]
+    issues = [*task.planning_issues, *target_issues]
+    try:
+        operation = get_operation(task.operation_id)
+        task.category = operation["category_id"]
+        schema = load_schema(task.operation_id, devices)
+    except (KeyError, ValueError, OSError) as exc:
+        task.operation_id = ""
+        issues.insert(0, {"type": "UNRESOLVED_OPERATION", "field": "operation_id", "message": "Choose a supported operation. " + str(exc)})
+        schema = None
+    if schema:
+        for field in list(task.parameters):
+            if task.parameters[field] is None and field not in schema.get("required", []):
+                task.parameters.pop(field)
+        if len(devices) == 1:
+            normalized = normalize_parameters_for_device(task.parameters, devices[0])
+            for path, value in leaf_values(normalized):
+                if value != get_value(task.parameters, path):
+                    task.parameter_provenance[path] = "inventory_normalization"
+            task.parameters = normalized
+        validation = _validation(task, task.parameters, schema)
+        for issue in validation:
+            if issue["type"] in {"MISSING", "UNSUPPORTED_OPERATION"}:
+                continue
+            path = issue["field"]
+            if path == "<root>":
+                issues.append({"type": "UNRESOLVED_OPERATION", "field": "operation_id", "message": issue["message"]})
+                continue
+            value = get_value(task.parameters, path)
+            if value is not None:
+                _record_candidate(task, issue, value)
+                task.parameters = set_value(task.parameters, path, None)
+                task.parameter_provenance.pop(path, None)
+        issues.extend(issue for issue in validation if issue["type"] == "UNSUPPORTED_OPERATION")
+        issues.extend(candidate for candidate in task.candidates if get_value(task.parameters, candidate["field"]) is None)
+        issues.extend(vars(issue) for issue in validate_parameter_result(task.parameters, schema).issues if issue.type == "MISSING")
+        if len(devices) == 1:
+            for issue in context_conflicts(task.operation_id, devices[0], task.parameters, task.confirmations, revision):
+                _record_candidate(task, issue, issue["value"])
+                task.parameters = set_value(task.parameters, issue["field"], None)
+                issues.insert(0, issue)
+            try:
+                select_template(devices[0], task.operation_id)
+            except (FileNotFoundError, ValueError) as exc:
+                issues.insert(0, {"type": "UNSUPPORTED_OPERATION", "field": "operation_id", "message": str(exc)})
+    # Dependent parameter questions wait until operation and targets are grounded.
+    blockers = [issue for issue in issues if issue["field"] == "operation_id" or issue["type"] in TARGET_ISSUES]
+    task.issues = blockers or issues
+    accepted_evidence = {}
+    for path, value in leaf_values(task.parameters):
+        if value is None:
+            continue
+        previous = task.parameter_evidence.get(path)
+        root = path.split("[", 1)[0].split(".", 1)[0]
+        source = task.parameter_provenance.get(path, task.parameter_provenance.get(root, "user"))
+        evidence = previous if previous and previous["value"] == value else {
+            "value": value, "source": source, "source_revision": revision,
+            "evidence": task.clarification_history[-1] if source.startswith(("clarification", "context:")) and task.clarification_history else task.request_text,
+            "device_id": task.device_id, "operation_id": task.operation_id, "validation": "accepted",
+        }
+        accepted_evidence[path] = evidence
+    task.parameter_evidence = accepted_evidence
+    task.status = "needs_clarification" if task.issues else "validated"
+    task.questions = build_questions(task)
+    task.clarification_questions = [question["wording"] for question in task.questions]
+    return task
 
 
-def _clarification_question(issue: dict) -> str:
-    issue_type = issue["type"]
-    field = _top_level_field(issue["field"])
-    if issue_type == "MISSING_TARGET":
-        return "Which target device or inventory group should this operation use?"
-    if issue_type in TARGET_ISSUES:
-        suggestions = issue.get("suggestions", [])
-        if suggestions:
-            labels = {candidate["hostname"]: candidate["label"] for candidate in issue.get("candidates", [])}
-            numbered = "; ".join(f"{index + 1}. {labels.get(name, name)}" for index, name in enumerate(suggestions))
-            return f"{issue['message']} Choose a device or refine the description: {numbered}."
-        return issue["message"]
-    if issue_type == "MISSING":
-        try:
-            return get_parameter(field).get("clarification") or f"What value should I use for {field}?"
-        except KeyError:
-            return f"What value should I use for {field}?"
-    if issue_type == "INVALID_INTERFACE":
-        suggestions = issue.get("suggestions", [])
-        if suggestions:
-            numbered = "; ".join(f"{index + 1}. {name}" for index, name in enumerate(suggestions))
-            return f"{issue['message']} Did you mean: {numbered}?"
-        return issue["message"]
-    return f"Please correct {field}: {issue['message']}"
+def _finalize_task(*, intent_id, request_text, category, operation_id, parameters,
+                   parameter_provenance, target_refs, target_queries=None,
+                   clarification_history=None, verbose=False, **extra) -> PlannedTask:
+    """Compatibility entry point: finalizes collection, never renders a task."""
+    queries = target_queries if target_queries is not None else [parse_description(ref, load_inventory()) for ref in target_refs]
+    task = PlannedTask(intent_id, request_text, category, operation_id, deepcopy(parameters), target_refs,
+                       parameter_provenance=deepcopy(parameter_provenance), target_queries=queries,
+                       clarification_history=clarification_history or [], logical_intent_id=intent_id, **extra)
+    return _refresh_task(task)
+
+
+def _split_bindings(task: PlannedTask) -> list[PlannedTask]:
+    if task.planning_issues:
+        return [_refresh_task(task)]
+    resolution = resolve_queries(task.target_queries)
+    if resolution["issues"] or len(resolution["devices"]) <= 1 or task.device_id:
+        return [_refresh_task(task)]
+    bindings = []
+    for device in resolution["devices"]:
+        binding = deepcopy(task)
+        binding.intent_id = f"{task.intent_id}:{device['id']}"
+        binding.device_id = device["id"]
+        binding.logical_intent_id = task.logical_intent_id or task.intent_id
+        bindings.append(_refresh_task(binding))
+    return bindings
+
+
+def _process_intent(intent, index=1, verbose=False) -> list[PlannedTask]:
+    queries = extract_target_queries(intent.target_text or intent.request_text, load_inventory(), allow_llm=True)
+    task = PlannedTask(intent.intent_id, intent.request_text, "", "", {}, [query["text"] for query in queries],
+                       target_queries=queries, logical_intent_id=intent.intent_id, planning_issues=deepcopy(intent.issues),
+                       source_spans=deepcopy(intent.source_spans))
+    try:
+        # Exact active catalog phrases work without embeddings or a model service.
+        operation = _explicit_operation(intent.request_text, load_operations())
+        proposed_operation = operation is None
+        if operation is None:
+            category = classify_category(intent.request_text)
+            retrieved = retrieve_operation_candidates(intent.request_text, category, 3)
+            operation = select_operation(intent.request_text, category, retrieved)
+        task.operation_id = operation
+        task.category = get_operation(operation)["category_id"]
+        devices = resolve_queries(queries)["devices"]
+        schema = load_schema(operation, devices)
+        extraction = extract_parameter_result(parameter_request(intent.request_text, queries), schema)
+        task.parameters, task.parameter_provenance = extraction.parameters, extraction.provenance
+        task.candidates = [{**candidate, "message": f"Several explicit values were supplied for {candidate['field']}. Choose one."} for candidate in extraction.candidates]
+        if proposed_operation:
+            task.planning_issues.insert(0, {"type": "OPERATION_PROPOSAL", "field": "operation_id",
+                                           "message": f"The model proposes {get_operation(operation)['display_name']}. Confirm the intended catalog operation."})
+    except Exception as exc:
+        task.feedback = "Operation resolution needs clarification: " + str(exc)
+    return _split_bindings(task)
 
 
 def next_clarification(task: PlannedTask) -> dict | None:
-    """Return the single issue the user should answer next.
-
-    Target grounding comes first because device-specific schemas and interface
-    validation are meaningless until the target is authoritative.
-    """
-    if not task.issues:
-        return None
-    return next((issue for issue in task.issues if issue["type"] in TARGET_ISSUES), task.issues[0])
+    return task.issues[0] if task.issues else None
 
 
 def next_clarification_prompt(task: PlannedTask) -> tuple[str, str]:
-    issue = next_clarification(task)
-    if not issue:
-        return "", ""
-    return _top_level_field(issue["field"]), _clarification_question(issue)
+    if not task.questions:
+        task.questions = build_questions(task)
+    question = task.questions[0] if task.questions else None
+    return (question["field_path"], question["wording"]) if question else ("", "")
 
 
-def _finalize_task(
-    *,
-    intent_id: str,
-    request_text: str,
-    category: str,
-    operation_id: str,
-    parameters: dict,
-    parameter_provenance: dict[str, str],
-    target_refs: list[str],
-    target_queries: list[dict] | None = None,
-    clarification_history: list[dict] | None = None,
-    verbose: bool = False,
-) -> PlannedTask:
-    if target_queries is None:
-        inventory = load_inventory()
-        target_queries = [parse_description(ref, inventory) for ref in target_refs]
-    resolution = resolve_queries(target_queries)
-    devices, issues = resolution["devices"], resolution["issues"]
-    schema = load_schema(operation_id, devices=devices)
-    validation = validate_parameter_result(parameters, schema)
-    issues.extend(_issue_to_dict(issue) for issue in validation.issues)
-    if not issues and devices:
-        issues.extend(validate_device_context(operation_id, category, parameters, devices))
-
-    questions = list(dict.fromkeys(_clarification_question(issue) for issue in issues))
-    if issues:
-        _log(verbose, "    NEEDS CLARIFICATION")
-        for issue in issues:
-            _log(verbose, f"    - {issue['field']}: {issue['message']}")
-        return PlannedTask(
-            intent_id=intent_id,
-            request_text=request_text,
-            category=category,
-            operation_id=operation_id,
-            parameters=parameters,
-            target_refs=target_refs,
-            status="needs_clarification",
-            parameter_provenance=parameter_provenance,
-            issues=issues,
-            clarification_questions=questions,
-            clarification_history=clarification_history or [],
-            target_devices=devices,
-            configs=[],
-            target_queries=target_queries,
-            target_resolution=resolution["evidence"],
-        )
-
-    configs = []
-    for device in devices:
-        device_params = normalize_parameters_for_device(parameters, device)
-        config = render(device, operation_id, device_params)
-        configs.append({
-            "device_id": device["hostname"],
-            "vendor": device["vendor"],
-            "platform": device["platform"],
-            "version": device["version"],
-            "parameters": device_params,
-            "configuration": config,
-        })
-        _log(verbose, f"\n--- {device['hostname']} ({device['vendor']}) ---\n{config}")
-
-    _log(verbose, "    PASSED")
-    return PlannedTask(
-        intent_id=intent_id,
-        request_text=request_text,
-        category=category,
-        operation_id=operation_id,
-        parameters=parameters,
-        target_refs=target_refs,
-        status="ready",
-        parameter_provenance=parameter_provenance,
-        clarification_history=clarification_history or [],
-        target_devices=devices,
-        configs=configs,
-        target_queries=target_queries,
-        target_resolution=resolution["evidence"],
-    )
+def _reject(task, message, answer=None):
+    rejected = deepcopy(task)
+    rejected.feedback = message
+    if answer:
+        rejected.clarification_history.append({"answer": asdict(answer), "accepted": False, "reason": message})
+    return rejected
 
 
-def _process_intent(intent, index: int, verbose: bool) -> PlannedTask:
-    _log(verbose, f"\n{'=' * 72}\nINTENT {index}: {intent.request_text}\n{'=' * 72}")
-    _log(verbose, "\n[1] CATEGORY CLASSIFICATION")
-    category = classify_category(intent.request_text)
-    _log(verbose, f"    {category}")
-
-    _log(verbose, "\n[2] OPERATION RETRIEVAL")
-    candidates = retrieve_operation_candidates(intent.request_text, category, 3)
-    for candidate in candidates:
-        _log(verbose, f"    {candidate['operation_id']} | distance={candidate['distance']:.4f}")
-    if not candidates:
-        raise ValueError(f"No operation candidates for intent {intent.intent_id}")
-
-    _log(verbose, "\n[3] OPERATION SELECTION")
-    operation_id = select_operation(intent.request_text, category, candidates)
-    _log(verbose, f"    {operation_id}")
-
-    target_queries = extract_target_queries(intent.request_text, load_inventory(), allow_llm=True)
-    resolved = resolve_queries(target_queries)
-    schema = load_schema(operation_id, devices=resolved["devices"])
-    _log(verbose, f"\n[4] PARAMETER EXTRACTION ({schema.get('title', operation_id)})")
-    extraction = extract_parameter_result(parameter_request(intent.request_text, target_queries), schema)
-    _log(verbose, json.dumps(extraction.parameters, indent=2))
-
-    target_refs = [query["text"] for query in target_queries]
-    _log(verbose, f"\n[5] TARGET REFERENCES: {target_refs or '[none]'}")
-    _log(verbose, "\n[6] VALIDATION + CONTEXT CHECK")
-    return _finalize_task(
-        intent_id=intent.intent_id,
-        request_text=intent.request_text,
-        category=category,
-        operation_id=operation_id,
-        parameters=extraction.parameters,
-        parameter_provenance=extraction.provenance,
-        target_refs=target_refs,
-        target_queries=target_queries,
-        verbose=verbose,
-    )
-
-
-def _strict_reply_value(reply: str, field: str) -> dict:
-    """Parse scalar clarification answers only for the field currently asked."""
-    value = reply.strip()
-    if field == "prefix_length":
-        from .parameters.normalizer import prefix_length_from_text
-        prefix = prefix_length_from_text(value, allow_bare_netmask=True)
-        return {field: prefix} if prefix is not None else {}
-    if field in {"address", "neighbor_ip", "next_hop", "router_id"}:
-        # A next hop/address must be a host address, never a CIDR or netmask.
-        if "/" in value:
-            return {}
-        try:
-            address = ipaddress.IPv4Address(value)
-        except ipaddress.AddressValueError:
-            return {}
-        if str(address) in {"0.0.0.0", "255.255.255.255"} or value in {
-            "255.0.0.0", "255.255.0.0", "255.255.255.0", "255.255.255.128",
-            "255.255.255.192", "255.255.255.224", "255.255.255.240", "255.255.255.248",
-            "255.255.255.252", "255.255.255.254",
-        }:
-            return {}
-        return {field: str(address)}
-    if field == "destination":
-        try:
-            network = ipaddress.IPv4Network(value, strict=False)
-        except ValueError:
-            return {}
-        return {field: str(network)} if "/" in value else {}
-    return {}
-
-
-def _contextual_clarification_values(
-    reply: str,
-    task: PlannedTask,
-    devices: list[dict],
-    requested_fields: list[str],
-) -> dict:
-    """Resolve only interface aliases explicitly present in a clarification reply."""
-    values: dict = {}
-    names = []
-    for device in devices:
-        names.extend(find_explicit_interface_names(device, reply))
-    names = list(dict.fromkeys(names))
-    if "interface" in requested_fields and len(names) == 1:
-        values["interface"] = names[0]
-    if "interfaces" in requested_fields and names:
-        area = re.search(r"\barea\s+([0-9.]+)\b", reply, re.I)
-        if area:
-            values["interfaces"] = [{"name": name, "area": area.group(1)} for name in names]
-    return values
-
-
-def resume_task(task: PlannedTask, reply: str, *, verbose: bool = False) -> PlannedTask:
-    """Apply one clarification response to one task without replanning the request."""
+def resume_task(task: PlannedTask, reply: str | ClarificationAnswer, *, verbose=False) -> PlannedTask:
+    if task.status == "collecting":
+        task = _refresh_task(deepcopy(task))
     if task.status != "needs_clarification":
-        return task
+        raise ValueError("This task has no pending question; use an explicit correction.")
+    if not task.questions:
+        task = _refresh_task(deepcopy(task))
+    question = task.questions[0]
+    try:
+        answer = answer_from_text(question, reply) if isinstance(reply, str) else reply
+        if (answer.question_id, answer.revision, answer.source_revision) != (question["question_id"], question["revision"], question["source_revision"]):
+            raise ValueError("Stale answer: reload the current question.")
+        if source_revision() != question["source_revision"]:
+            reload_catalog()
+            updated = _refresh_task(deepcopy(task))
+            return _reject(updated, "Source context changed. Review the refreshed question before answering.", answer)
+        options = selected_options(question, answer)
+        if answer.kind not in {"custom", "selection"}:
+            raise ValueError("Unknown answer kind.")
+        updated = deepcopy(task)
+        path = question["field_path"]
+        source = "clarification_user"
+        if question["issue_type"] in TARGET_ISSUES:
+            text = " and ".join(option["value"] for option in options) if options else answer.raw_input
+            issue = next(issue for issue in task.issues if issue["field"] == path)
+            queries = (extract_target_queries(text, load_inventory(), reply=True, allow_llm=True)
+                       if task.device_id and len(task.scope_device_ids) > 1
+                       else refine_queries(task.target_queries, issue, text, allow_llm=True))
+            confirming_scope = any(issue["type"] in TARGET_ISSUES for issue in task.planning_issues)
+            if not queries or (queries == task.target_queries and not confirming_scope and not options):
+                raise ValueError("No new device evidence found; select an option or describe a device.")
+            updated.target_queries = queries
+            updated.target_refs = [query["text"] for query in queries]
+            updated.device_id = None
+            updated.scope_device_ids = []
+            updated.planning_issues = [issue for issue in updated.planning_issues if issue["type"] not in TARGET_ISSUES]
+            updated.confirmations = {}
+            updated.parameter_evidence = {}
+        elif path == "operation_id":
+            operation = options[0]["value"] if options else answer.raw_input.strip()
+            try:
+                metadata = get_operation(operation)
+            except KeyError:
+                matched = _explicit_operation(operation, load_operations())
+                metadata = get_operation(matched or operation)
+            updated.operation_id = metadata["operation_id"]
+            updated.planning_issues = [issue for issue in updated.planning_issues if issue["field"] != "operation_id"]
+            updated.category = metadata["category_id"]
+            schema = load_schema(updated.operation_id, updated.target_devices)
+            extraction = extract_parameter_result(parameter_request(task.request_text, task.target_queries), schema)
+            updated.parameters = extraction.parameters
+            updated.parameter_provenance = extraction.provenance
+            updated.candidates = [{**candidate, "message": "Choose one explicitly supplied value."} for candidate in extraction.candidates]
+            updated.confirmations = {}
+        else:
+            schema = load_schema(task.operation_id, task.target_devices)
+            if options:
+                value = [item for option in options for item in option["value"]] if question["multiple"] else options[0]["value"]
+                source = "context:" + ",".join(option["source_ref"] for option in options)
+            else:
+                value = parse_answer(answer.raw_input, path, schema_at(schema, path))
+            proposed = set_value(task.parameters, path, value)
+            if len(task.target_devices) == 1:
+                proposed = normalize_parameters_for_device(proposed, task.target_devices[0])
+            old_errors = {(issue["type"], issue["field"], issue["message"]) for issue in _validation(task, task.parameters, schema) if issue["type"] != "MISSING"}
+            errors = [issue for issue in _validation(task, proposed, schema) if issue["type"] != "MISSING" and (issue["type"], issue["field"], issue["message"]) not in old_errors]
+            if errors:
+                raise ValueError("; ".join(issue["message"] for issue in errors))
+            updated.parameters = proposed
+            if isinstance(value, list):
+                old_items = get_value(task.parameters, path, []) or []
+                identities = {item.get("name"): task.item_ids.get(f"{path}[{index}]") for index, item in enumerate(old_items) if isinstance(item, dict)}
+                updated.item_ids = {key: identity for key, identity in task.item_ids.items() if not key.startswith(path + "[")}
+                for index, item in enumerate(value):
+                    identity = identities.get(item.get("name")) if isinstance(item, dict) else None
+                    if identity:
+                        updated.item_ids[f"{path}[{index}]"] = identity
+            updated.parameter_provenance[path] = source
+            updated.candidates = [candidate for candidate in task.candidates if candidate["field"] != path and not candidate["field"].startswith(path + "[")]
+            if options and options[0].get("override"):
+                updated.confirmations[path] = {"value": value, "source_revision": task.source_revision}
+            if question["issue_type"] == "CONTEXT_CONFLICT" and not options:
+                conflict = next(issue for issue in task.issues if issue["field"] == path)
+                if conflict.get("allow_override"):
+                    updated.confirmations[path] = {"value": value, "source_revision": task.source_revision}
+        updated.revision += 1
+        updated.feedback = ""
+        updated.clarification_history.append({"answer": asdict(answer), "field": path, "accepted": True,
+                                              "source": source, "updated_fields": [path]})
+        return _refresh_task(updated)
+    except (ValueError, KeyError, TypeError, IndexError) as exc:
+        return _reject(task, str(exc), locals().get("answer"))
 
-    schema = load_schema(task.operation_id)
-    current_issue = next_clarification(task)
-    current_field = _top_level_field(current_issue["field"]) if current_issue else ""
-    reply, _ = _resolve_numbered_selection(reply, task)
-    target_queries = task.target_queries or [parse_description(ref, load_inventory()) for ref in task.target_refs]
-    if current_issue and current_issue["type"] in TARGET_ISSUES:
-        queries = refine_queries(target_queries, current_issue, reply, allow_llm=True)
-        return _finalize_task(
-            intent_id=task.intent_id, request_text=task.request_text, category=task.category,
-            operation_id=task.operation_id, parameters=dict(task.parameters),
-            parameter_provenance=dict(task.parameter_provenance),
-            target_refs=[query["text"] for query in queries], target_queries=queries,
-            clarification_history=[*task.clarification_history, {
-                "reply": reply, "field": "target_refs", "updated_fields": ["target_refs"],
-            }], verbose=verbose,
-        )
-    extraction = extract_parameter_result(reply, schema, existing_parameters=task.parameters, requested_fields=[current_field])
-    parameters = merge_parameters(task.parameters, extraction.parameters, schema)
-    target_refs = list(task.target_refs)
 
-    devices = resolve_queries(target_queries)["devices"]
-    contextual = _contextual_clarification_values(reply, task, devices, [current_field])
-    strict_value = _strict_reply_value(reply, current_field)
-    # Inventory-normalized interface selections and strict scalar values are the
-    # only reply values allowed to cross the clarification boundary.
-    parameters = merge_parameters(parameters, {**contextual, **strict_value}, schema)
-
-    provenance = dict(task.parameter_provenance)
-    provenance.update({field: f"clarification_{source}" for field, source in extraction.provenance.items()})
-    provenance.update({field: "clarification_inventory_alias" for field in contextual})
-    provenance.update({field: "clarification_user" for field in strict_value})
-    history = [*task.clarification_history, {
-        "reply": reply,
-        "field": current_field,
-        "updated_fields": sorted(set(extraction.provided_fields) | set(contextual) | set(strict_value)),
-    }]
-    return _finalize_task(
-        intent_id=task.intent_id,
-        request_text=task.request_text,
-        category=task.category,
-        operation_id=task.operation_id,
-        parameters=parameters,
-        parameter_provenance=provenance,
-        target_refs=target_refs,
-        target_queries=target_queries,
-        clarification_history=history,
-        verbose=verbose,
-    )
+def correct_task(task: PlannedTask, path: str, reply: str) -> PlannedTask:
+    """Explicit edits use the same validation boundary and invalidate old artifacts."""
+    editable = deepcopy(task)
+    editable.status = "needs_clarification"
+    if path == "target_refs":
+        editable.issues = [{"type": "MISSING_TARGET", "field": path, "message": "Choose replacement target devices."}]
+    elif path == "operation_id":
+        editable.issues = [{"type": "UNRESOLVED_OPERATION", "field": path, "message": "Choose the replacement operation."}]
+    else:
+        schema_at(load_schema(task.operation_id, task.target_devices), path)
+        editable.issues = [{"type": "CORRECTION", "field": path, "message": f"Enter the corrected {path}."}]
+    editable.questions = build_questions(editable)
+    edited = resume_task(editable, reply)
+    if edited.feedback:
+        return _reject(task, edited.feedback)
+    if path in {"target_refs", "interface", "interfaces"} or path.endswith(".name"):
+        for dependent, provenance in list(edited.parameter_provenance.items()):
+            if dependent != path and provenance.startswith("context:") and not provenance.startswith(("context:inventory:", "context:schema:")):
+                edited.parameters = set_value(edited.parameters, dependent, None)
+                edited.parameter_provenance.pop(dependent, None)
+        edited.confirmations = {}
+        _refresh_task(edited)
+    edited.configs = []
+    return edited
 
 
-def _resolve_numbered_selection(reply: str, task: PlannedTask) -> tuple[str, str | None]:
-    """Turn a terminal answer such as ``2`` into an offered inventory value."""
-    if not reply.strip().isdigit():
-        return reply, None
-    index = int(reply.strip()) - 1
-    current_issue = next_clarification(task)
-    if not current_issue or not current_issue.get("suggestions"):
-        return reply, None
-    suggestions = current_issue["suggestions"]
-    if not 0 <= index < len(suggestions):
-        return reply, None
-    selected = suggestions[index]
-    if current_issue["type"] in TARGET_ISSUES:
-        return selected, selected
-    return selected, None
+def _cross_task_issues(tasks):
+    issues = []
+    registry = rules()["operations"]
+    def resources(task):
+        result = set()
+        for path in registry.get(task.operation_id, {}).get("resource_keys", []):
+            if "[]" in path:
+                root, child = path.split("[].")
+                result.update(str(item.get(child)) for item in task.parameters.get(root, []) if isinstance(item, dict) and item.get(child) is not None)
+            elif get_value(task.parameters, path) is not None:
+                result.add(str(get_value(task.parameters, path)))
+        return result
+    for index, left in enumerate(tasks):
+        for right in tasks[index + 1:]:
+            if left.device_id != right.device_id or not resources(left).intersection(resources(right)):
+                continue
+            if right.operation_id in registry.get(left.operation_id, {}).get("conflicts_with", []) or (left.operation_id == right.operation_id and left.parameters != right.parameters):
+                issues.append({"type": "CROSS_TASK_CONFLICT", "tasks": [left.intent_id, right.intent_id],
+                               "message": f"{left.intent_id} and {right.intent_id} propose conflicting changes to the same resource. Correct a task or explicitly confirm their listed order."})
+    return issues
 
 
-def run(prompt: str, *, verbose: bool = True) -> ExecutionPlan:
-    """Create a multi-operation plan. This function never changes a device."""
+def refresh_plan(plan: ExecutionPlan, *, render_complete=True) -> ExecutionPlan:
+    revision = source_revision()
+    if plan.source_revision != revision:
+        reload_catalog()
+        try:
+            validate_catalog()
+            validate_context_catalog()
+        except (ValueError, KeyError, OSError, TypeError) as exc:
+            plan.status = "failed"
+            plan.issues = [{"type": "CONTEXT_INVALID", "message": str(exc)}]
+            for task in plan.tasks:
+                task.configs = []
+                task.questions = []
+                task.status = "failed"
+            return plan
+    plan.source_revision = revision
+    plan.issues = []
+    tasks = []
+    for task in plan.tasks:
+        tasks.extend(_split_bindings(task))
+    plan.tasks = tasks
+    if any(task.status != "validated" for task in tasks) or not tasks:
+        plan.status = "needs_clarification"
+        return plan
+    conflicts = _cross_task_issues(tasks)
+    for conflict in conflicts:
+        key = "order:" + ":".join(conflict["tasks"])
+        signature = json.dumps([(task.intent_id, task.parameters, task.revision) for task in tasks if task.intent_id in conflict["tasks"]], sort_keys=True)
+        if not all(task.confirmations.get(key) == {"signature": signature, "source_revision": revision} for task in tasks if task.intent_id in conflict["tasks"]):
+            plan.issues.append(conflict)
+    if plan.issues:
+        plan.status = "needs_confirmation"
+        return plan
+    plan.status = "validated"
+    if not render_complete:
+        return plan
+    staged = []
+    try:
+        for task in tasks:
+            configs = []
+            for device in task.target_devices:
+                config = render(device, task.operation_id, task.parameters)
+                configs.append({"device_id": device["id"], "hostname": device["hostname"], "vendor": device["vendor"],
+                                "platform": device["platform"], "version": device["version"],
+                                "parameters": deepcopy(task.parameters), "configuration": config})
+            staged.append(configs)
+        if source_revision() != revision:
+            raise ValueError("Source data changed during rendering. Retry after reviewing current context.")
+    except Exception as exc:
+        plan.status = "failed"
+        plan.issues = [{"type": "RENDER_FAILED", "message": str(exc)}]
+        return plan
+    for task, configs in zip(tasks, staged):
+        task.configs, task.status = configs, "rendered"
+    plan.status = "ready"
+    return plan
+
+
+def confirm_order(plan: ExecutionPlan) -> ExecutionPlan:
+    refresh_plan(plan, render_complete=False)
+    for conflict in plan.issues:
+        if conflict["type"] != "CROSS_TASK_CONFLICT":
+            raise ValueError("This issue cannot be resolved by confirming order.")
+        key = "order:" + ":".join(conflict["tasks"])
+        selected = [task for task in plan.tasks if task.intent_id in conflict["tasks"]]
+        signature = json.dumps([(task.intent_id, task.parameters, task.revision) for task in selected], sort_keys=True)
+        for task in selected:
+            task.confirmations[key] = {"signature": signature, "source_revision": plan.source_revision}
+    return refresh_plan(plan)
+
+
+def run(prompt: str, *, verbose=True) -> ExecutionPlan:
+    reload_catalog()
     validate_catalog()
-    _log(verbose, "\n" + "#" * 72)
-    _log(verbose, "REQUEST")
-    _log(verbose, prompt)
-    _log(verbose, "#" * 72)
-
+    validate_context_catalog()
     intents = plan_intents(prompt)
-    if not intents:
-        raise ValueError("The planner produced no operation intents.")
-    plan = ExecutionPlan(original_prompt=prompt, intents=intents)
+    plan = ExecutionPlan(prompt, intents=intents)
     for index, intent in enumerate(intents, 1):
-        plan.tasks.append(_process_intent(intent, index, verbose))
-
-    _log(verbose, "\n" + "#" * 72)
-    _log(verbose, "EXECUTION PLAN READY - NO DEVICE CHANGES HAVE BEEN MADE")
-    _log(verbose, "#" * 72)
-    _log(verbose, json.dumps(plan_to_dict(plan), indent=2))
+        plan.tasks.extend(_process_intent(intent, index, verbose))
+    refresh_plan(plan)
+    if verbose:
+        print(json.dumps(plan_to_dict(plan), indent=2))
     return plan
 
 

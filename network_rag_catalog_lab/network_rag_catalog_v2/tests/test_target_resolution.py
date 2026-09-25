@@ -33,6 +33,7 @@ class TargetResolutionTests(unittest.TestCase):
             "the branch router": ["R3"],
             "Huawei": ["R2"],
             "edge router 1": ["R3"],
+            "the router named R1": ["R1"],
             "core routers": ["R1", "R2"],
             "R1 and R2": ["R1", "R2"],
             "the router with management IP 10.0.0.12": ["R2"],
@@ -71,7 +72,7 @@ class TargetResolutionTests(unittest.TestCase):
         with patch("app.pipeline.extract_parameter_result") as parameters:
             ready = resume_task(pending, "the Huawei one")
         parameters.assert_not_called()
-        self.assertEqual(ready.status, "ready")
+        self.assertEqual(ready.status, "validated")
         self.assertEqual([device["hostname"] for device in ready.target_devices], ["R2"])
         fields = {item["field"] for item in ready.target_queries[0]["constraints"]}
         self.assertTrue({"site", "role", "vendor"} <= fields)
@@ -81,9 +82,9 @@ class TargetResolutionTests(unittest.TestCase):
         conflict = self.task("the Cisco router in Penang")
         self.assertEqual(conflict.configs, [])
         ready = resume_task(conflict, "Juniper")
-        self.assertEqual(ready.status, "ready")
+        self.assertEqual(ready.status, "validated")
         self.assertEqual(ready.target_devices[0]["hostname"], "R3")
-        numbered = resume_task(self.task("core router"), "2")
+        numbered = resume_task(self.task("core router"), "select 2")
         self.assertEqual(numbered.target_devices[0]["hostname"], "R2")
 
     def test_duplicate_alias_stays_ambiguous(self):

@@ -29,6 +29,7 @@
         ],
         "properties": {
           "name": {
+            "x-parameter-id": "interface",
             "type": "string",
             "minLength": 1
           },

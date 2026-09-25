@@ -63,7 +63,27 @@ One catalog operation is one retrieval document. ChromaDB helps map natural lang
 
 ### 5. This lab stops before execution
 
-The result is an execution-ready plan containing rendered configurations. No device is modified. A future approval/Ansible layer can consume this plan.
+The result is a validated configuration preview. No device is modified. Template
+rendering tests are not device/NOS certification.
+
+### Context-aware clarification revision
+
+All intents are collected before asking questions. Each resolved operation/device
+binding owns its parameters, evidence, questions and state. A complete binding
+becomes `validated`; no configurations are published until the whole request
+passes validation. Then tasks become `rendered` and the request becomes `ready`.
+
+Missing/invalid fields receive one structured question at a time, with scoped
+inventory or planned choices and custom input. Local planned data lives in
+`data/planned/parameters.json`; `data/catalog/context_rules.json` explicitly
+permits each operation's lookups. Sample records are candidates requiring
+confirmation, not live facts or automatically applied defaults.
+
+Exact catalog phrases bypass model/retrieval calls. Other phrasing uses the
+existing discovery stages and asks for confirmation of a model-proposed
+operation. Parsing/selection repairs are bounded. See
+[CONTEXT_AWARE_REVISION.md](docs/CONTEXT_AWARE_REVISION.md) for the API contract,
+examples, revision behavior and remaining limits.
 
 ## Architecture
 
@@ -137,7 +157,8 @@ For example:
 Create VLAN 100 named STAFF on R1 and configure OSPF on R2
 ```
 
-produces a ready VLAN task, but the OSPF task asks for `process_id` and `interfaces` instead of inventing them.
+produces a validated VLAN binding and an incomplete OSPF binding. Neither renders
+until OSPF has validated interfaces, areas and its vendor-required process ID.
 
 ## Run
 
@@ -183,14 +204,21 @@ values are validated. For the interfaces question, reply:
 GigabitEthernet0/0/0 in area 0
 ```
 
-For the subsequent process-ID question, reply `process 100`.
+For the subsequent process-ID question, reply `100`.
 
-For an interface or device correction, terminal suggestions can be selected by
-their number. To leave and resume later:
+Choose an offered option with `select 1`, or multiple interfaces with
+`select 1,2`. Bare numbers are literal values. Custom input is always available;
+`value 100` explicitly enters a literal. Use `more` or `filter TEXT` for large
+option lists. To leave and resume later:
 
 ```bash
 python main.py --resume SESSION_ID --interactive
 ```
+
+Correct an accepted field using `edit TASK_ID FIELD_PATH VALUE` during a pending
+conversation, or `--resume SESSION_ID --edit TASK_ID FIELD_PATH VALUE`. Nested
+paths include `interfaces[0].area`. Conflicting operations require correction or
+explicit `confirm order`. An edit invalidates old outputs and rechecks the request.
 
 Use `--no-interactive` to print the session JSON without waiting for input.
 The final output is structured session data; it is deliberately not sent to any
@@ -241,4 +269,7 @@ python -m unittest discover -s tests -v
 - The current inventory is a JSON file. A real platform would normally query NetBox or another authoritative inventory source.
 - The current version renders configuration but does not run Ansible.
 - Target resolution intentionally asks for clarification rather than guessing when multiple devices are plausible.
-- Some logical operations are not perfectly semantically identical across vendors. For example, Junos OSPF does not use a Cisco-style numeric OSPF process ID. Production metadata should therefore include vendor/platform compatibility and parameter mapping rather than silently assuming complete equivalence.
+- Vendor-specific required fields remain in schemas. Junos OSPF has no numeric
+  process ID; Junos BGP now requires an explicit peer group. Template compatibility
+  is restricted by `data/catalog/template_support.json` to the lab inventory
+  releases; it is not a claim of release-certified CLI syntax.

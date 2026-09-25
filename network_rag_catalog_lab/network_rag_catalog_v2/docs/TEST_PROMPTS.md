@@ -33,9 +33,9 @@ Create VLAN 200 named GUEST on core routers
 Create VLAN 300 named TEST on Router 9
 ```
 
-For the second prompt, reply `1` in terminal mode to choose the first offered
+For the second prompt, reply `select 1` in terminal mode to choose the first offered
 interface. Answer each OSPF field when requested: `GigabitEthernet0/0/0 in area 0`
-for interfaces, then `process 100` for the process ID.
+for interfaces, then `100` for the process ID. Bare numbers are values, not choices.
 
 ## Inventory-context targets
 
@@ -63,5 +63,30 @@ Create VLAN 20 on the Penang edge Juniper router and create VLAN 30 on the KL Ci
 Create VLAN 20 on R3 and create VLAN 30 on the KL core router
 ```
 
-The second request keeps R3 ready and asks only about the second task's target.
+The second request keeps R3 validated and asks about the second task's target.
+No task renders until the whole request is complete.
 See `DEVICE_RESOLUTION.md` for attribute governance and limits.
+
+## Context-aware regression scenarios
+
+| Prompt | Expected behavior |
+|---|---|
+| Create VLAN 20 and configure OSPF on R1 and R2 | Four independent bindings; nothing renders until all four validate |
+| Create VLAN 20 and configure OSPF on R1; create VLAN 30 on R2 | First two operations use R1, last uses R2 |
+| Configure interface IP on R1 | Choose interface; address/prefix choices are scoped to that interface |
+| Configure OSPF process 100 on R1 using Ethernet1/1 and Loopback0 | Preserve both interfaces; ask each area separately |
+| Configure OSPF on R1 and R3 | Different interface options; process ID required only for R1 |
+| Configure BGP neighbor 192.0.2.2 local AS 65000 remote AS 65001 on R3 | Ask for peer group; never invent EBGP-PEER |
+| Create VLAN 20 or 30 on R1 | Ask which VLAN ID; no first-match choice |
+| Create VLAN 20 on R1; delete VLAN 20 on R1 | Require explicit ordering confirmation or a correction |
+| Configure IP address 192.0.2.1/24 on Ethernet1/10 on R1 | Reject the interface; never shorten it to Ethernet1/1 |
+| Create VLAN 20 on R1; do something unknown on R2 | Preserve first binding; ask which supported operation the second means |
+
+For `Configure interface IP on R1`, try `select 1`, then `255.255.255.0`.
+The address reply must be rejected with parameters unchanged. Enter `192.0.2.1`,
+then `255.255.255.0` when the prefix question appears. Only then should rendering
+produce `ip address 192.0.2.1 255.255.255.0`.
+
+For a process-ID question, compare `1` (process 1) with `select 1` (the first
+offered planned candidate, currently process 100). Try `-1`, `65536`, and `1abc`:
+all must be rejected without changing accepted parameters.

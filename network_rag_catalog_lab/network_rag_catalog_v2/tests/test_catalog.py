@@ -134,7 +134,7 @@ class CatalogTests(unittest.TestCase):
         self.assertFalse(validate_parameter_result(params, r2_schema).valid)
         self.assertTrue(validate_parameter_result(params, r3_schema).valid)
 
-    def test_incomplete_task_does_not_block_an_independent_ready_task(self):
+    def test_incomplete_task_does_not_block_independent_validation(self):
         ready = _finalize_task(
             intent_id="intent-1",
             request_text="Create VLAN 100 on R1",
@@ -153,7 +153,8 @@ class CatalogTests(unittest.TestCase):
             parameter_provenance={},
             target_refs=["R2"],
         )
-        self.assertEqual(ready.status, "ready")
+        self.assertEqual(ready.status, "validated")
+        self.assertEqual(ready.configs, [])
         self.assertEqual(pending.status, "needs_clarification")
 
     def test_numbered_interface_reply_uses_offered_suggestion(self):
@@ -174,8 +175,8 @@ class CatalogTests(unittest.TestCase):
         )
         extraction = ExtractionResult(parameters={}, provided_fields=[], missing_fields=[], provenance={})
         with patch("app.pipeline.extract_parameter_result", return_value=extraction):
-            resumed = resume_task(task, "1")
-        self.assertEqual(resumed.status, "ready")
+            resumed = resume_task(task, "select 1")
+        self.assertEqual(resumed.status, "validated")
         self.assertEqual(resumed.parameters["interface"], "Ethernet1/1")
 
     def test_clarification_updates_only_the_current_field(self):
@@ -196,7 +197,7 @@ class CatalogTests(unittest.TestCase):
         self.assertIsNone(rejected_mask.parameters["address"])
         self.assertEqual(addressed.parameters["address"], "192.168.1.1")
         self.assertEqual(complete.parameters["prefix_length"], 24)
-        self.assertEqual(complete.status, "ready")
+        self.assertEqual(complete.status, "validated")
 
     def test_verified_planner_target_is_retained_from_original_prompt(self):
         from app.devices.target_query import extract_target_queries

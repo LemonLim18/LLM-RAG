@@ -1,6 +1,10 @@
 # Implementation Plan: Context-Aware Clarification
 
-**Status:** Proposed for review. This document does not authorize or implement code changes.
+**Status:** Implemented as the V2 context-aware clarification revision. See
+`docs/CONTEXT_AWARE_REVISION.md` for the delivered behavior, API and practical
+limits, and `tests/test_clarification_flow.py` for regression coverage. This
+design is not a guarantee of perfect natural-language interpretation or device
+acceptance of the lab templates.
 
 ## Objective and Scope
 

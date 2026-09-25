@@ -111,6 +111,13 @@ def validate_catalog() -> None:
     assert_unique(categories, "category_id", "category")
     assert_unique(operations, "operation_id", "operation")
     assert_unique(parameters, "parameter_id", "parameter")
+    phrase_owners = {}
+    for operation in operations:
+        for phrase in [operation["display_name"], *operation.get("aliases", [])]:
+            key = phrase.strip().casefold()
+            if key in phrase_owners and phrase_owners[key] != operation["operation_id"]:
+                raise ValueError(f"Operation alias '{phrase}' has multiple owners.")
+            phrase_owners[key] = operation["operation_id"]
     category_ids = {item["category_id"] for item in categories}
     parameter_ids = {item["parameter_id"] for item in parameters}
     parameter_types = {
@@ -175,6 +182,8 @@ def validate_catalog() -> None:
 def _schema_parameter_ids(schema: dict) -> set[str]:
     names = set(schema.get("properties", {}))
     for property_schema in schema.get("properties", {}).values():
+        if "x-parameter-id" in property_schema:
+            names.add(property_schema["x-parameter-id"])
         if property_schema.get("type") == "object":
             names.update(_schema_parameter_ids(property_schema))
         elif property_schema.get("type") == "array":

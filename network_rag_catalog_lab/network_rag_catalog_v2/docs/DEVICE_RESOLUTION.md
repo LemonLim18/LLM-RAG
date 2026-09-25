@@ -45,7 +45,8 @@ Inventory/attribute edits do not require rebuilding the operation RAG index.
 
 A singular description with multiple matches always asks. Multiple names or
 explicit plural groups can select multiple devices. All selectors in a task
-must resolve before that task renders. Independent tasks remain independent.
+must resolve before validation completes. Bindings keep independent collection
+state, but the entire request must validate before any binding renders.
 Matching the name does not waive an incompatible site/vendor description.
 Overlapping aliases use the longest phrase: `edge router 1` resolves to R3,
 without accidentally treating its suffix `router 1` as R1 as well.
@@ -65,20 +66,22 @@ Run from the V2 directory:
 
 The terminal asks only the active task's next field, showing descriptive device
 choices. Answer `the Huawei one` to add the vendor constraint while retaining
-KL/core. Answer a numbered choice or `R2` to explicitly select that identity.
+KL/core. Answer `select 2` or `R2` to explicitly select that identity.
 For a conflict, `Juniper` replaces a previously stated vendor, keeping the site.
 A device reply never runs the operation-parameter extractor.
 
-An explicit name/number replaces that selector's previous description. This is
+An explicit name or `select NUMBER` replaces that selector's previous description. This is
 the user's correction, not an automatic override by the LLM. Descriptive replies
 preserve other constraints, and cannot silently drop unknown words. When an
 unrecognized qualifier cannot be corrected descriptively, choose the actual
-device by its offered number or hostname. Other selectors in the task survive.
+device with `select NUMBER` or its hostname. Other unresolved selectors in the
+logical task survive. A correction of a resolved per-device binding applies only
+to that binding.
 
 Sessions persist the queries and evidence. Older sessions without these fields
-use their saved target references on the next validation. Previously generated
-ready configurations are not retroactively certified; rerun the original prompt
-to apply current extraction rules.
+use their saved target references on the next validation. Old configurations are
+discarded and revalidated on resume; this cannot certify prior extraction or
+device syntax. Rerun the original prompt to apply current extraction rules.
 
 ## Bounds and checks
 

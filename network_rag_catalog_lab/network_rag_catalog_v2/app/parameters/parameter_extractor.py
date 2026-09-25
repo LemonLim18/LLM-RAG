@@ -10,6 +10,7 @@ from .normalizer import (
     deterministic_values,
     normalize_value,
     prefix_length_from_text,
+    explicit_alternatives,
 )
 
 
@@ -19,6 +20,8 @@ class ExtractionResult:
     provided_fields: list[str] = field(default_factory=list)
     missing_fields: list[str] = field(default_factory=list)
     provenance: dict[str, str] = field(default_factory=dict)
+    candidates: list[dict] = field(default_factory=list)
+    diagnostics: list[str] = field(default_factory=list)
 
 
 def _parse_json(raw: str) -> dict:
@@ -73,8 +76,7 @@ def _filter_value(prompt: str, value: Any, schema: dict, field: str) -> tuple[An
             filtered, _ = _filter_value(prompt, item, item_schema, field)
             if not isinstance(filtered, dict):
                 continue
-            required = item_schema.get("required", [])
-            if any(filtered.get(required_field) is None for required_field in required):
+            if not any(value is not None for value in filtered.values()):
                 continue
             filtered_items.append(filtered)
         return (filtered_items or None), ("user" if filtered_items else None)
@@ -101,8 +103,15 @@ def _filter_to_schema(
             continue
         candidate = canonical.get(field)
         value, source = _filter_value(prompt, candidate, field_schema, field)
-        if value is None and field in fallback:
+        if field in fallback:
             value, source = fallback[field]
+        elif value is not None:
+            # A literal's presence is insufficient to bind it to a scalar field.
+            # Accept model interpretations only with nearby catalog field wording.
+            aliases = field_schema.get("x-parameter", {}).get("aliases", [field.replace("_", " ")])
+            grounded = any(re.search(rf"\b{re.escape(alias)}\s*(?:is|=|:)?\s*[\"']?{re.escape(str(value))}(?![\w/])", prompt, re.I) for alias in aliases)
+            if not grounded:
+                value, source = None, None
         if value is not None:
             params[field] = value
             provenance[field] = source or "user"
@@ -149,24 +158,45 @@ Fields currently requested: {json.dumps(requested)}
     raw_params: dict = {}
     deterministic = deterministic_values(prompt, schema)
     fields_to_extract = requested or schema.get("required", [])
+    diagnostics = []
     if not all(field in deterministic for field in fields_to_extract):
-        try:
-            raw = llm.invoke([("system", system), ("human", prompt)]).content.strip()
-            data = _parse_json(raw)
-            candidate = data.get("parameters", data) if isinstance(data, dict) else {}
-            if isinstance(candidate, dict):
+        for attempt in range(2):
+            try:
+                repair = "\nPrevious output was not a parameter object. Return the required JSON object; unknown values must be null." if attempt else ""
+                raw = llm.invoke([("system", system + repair), ("human", prompt)]).content.strip()
+                data = _parse_json(raw)
+                candidate = data.get("parameters", data) if isinstance(data, dict) else None
+                if not isinstance(candidate, dict):
+                    raise ValueError("Expected a parameter object.")
+                filtered, _ = _filter_to_schema(prompt, candidate, schema)
+                canonical = canonicalize_parameter_keys(candidate, schema)
+                unsupported = [key for key, value in canonical.items() if value is not None and filtered.get(key) is None]
+                if unsupported and attempt == 0:
+                    system += "\nThe following proposed fields lack supported, field-specific user evidence: " + ", ".join(unsupported) + ". Repair once using only quoted user information; otherwise return null."
+                    continue
                 raw_params = candidate
-        except Exception as exc:
-            print(f"[parameters] LLM extraction unavailable; using explicit-value fallback: {exc}")
+                break
+            except (ValueError, TypeError, AttributeError):
+                diagnostics.append("Model returned an invalid extraction object.")
+            except Exception:
+                diagnostics.append("Model unavailable; retained deterministic extraction.")
+                break
 
     allowed_fields = set(requested_fields) if requested_fields else None
     params, provenance = _filter_to_schema(prompt, raw_params, schema, allowed_fields)
+    candidates = []
+    for field, values in explicit_alternatives(prompt, schema).items():
+        params[field] = None
+        provenance.pop(field, None)
+        candidates.append({"field": field, "type": "AMBIGUOUS", "values": values, "evidence": prompt, "source": "user"})
     required = schema.get("required", [])
     return ExtractionResult(
         parameters=params,
         provided_fields=sorted(provenance),
         missing_fields=[field for field in required if params.get(field) is None],
         provenance=provenance,
+        candidates=candidates,
+        diagnostics=diagnostics,
     )
 
 

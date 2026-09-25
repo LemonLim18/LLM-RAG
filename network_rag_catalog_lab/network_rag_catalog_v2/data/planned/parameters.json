@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "description": "Lab design candidates, not live configuration. Every proposed value requires confirmation.",
+  "records": [
+    {"id": "r1-ospf-process", "device_id": "dev-r1", "operation_id": "configure_ospf", "field": "process_id", "value": 100, "kind": "candidate", "source_ref": "lab-design:core-ospf", "revision": 1},
+    {"id": "r2-ospf-process", "device_id": "dev-r2", "operation_id": "configure_ospf", "field": "process_id", "value": 100, "kind": "candidate", "source_ref": "lab-design:core-ospf", "revision": 1},
+    {"id": "r1-ospf-area", "device_id": "dev-r1", "operation_id": "configure_ospf", "field": "interfaces[].area", "when": {"interfaces[].name": "Ethernet1/1"}, "value": "0", "kind": "candidate", "source_ref": "lab-design:core-ospf", "revision": 1},
+    {"id": "r2-ospf-area", "device_id": "dev-r2", "operation_id": "configure_ospf", "field": "interfaces[].area", "when": {"interfaces[].name": "GigabitEthernet0/0/0"}, "value": "0", "kind": "candidate", "source_ref": "lab-design:core-ospf", "revision": 1},
+    {"id": "r1-link-address", "device_id": "dev-r1", "operation_id": "configure_interface_ip", "field": "address", "when": {"interface": "Ethernet1/1"}, "value": "192.0.2.1", "kind": "candidate", "source_ref": "lab-design:r1-r2-link", "revision": 1},
+    {"id": "r1-link-prefix", "device_id": "dev-r1", "operation_id": "configure_interface_ip", "field": "prefix_length", "when": {"interface": "Ethernet1/1"}, "value": 30, "kind": "candidate", "source_ref": "lab-design:r1-r2-link", "revision": 1}
+  ]
+}

@@ -186,6 +186,10 @@ def extract_target_queries(text: str, inventory: list[dict], *, reply: bool = Fa
         # Parameter clauses are not device descriptors. A router's interface
         # is a selector only when explicitly introduced with "with/has".
         scope = re.split(r"\b(?:using|via|through)\b|\bon\s+(?=(?:Ethernet|Eth|GigabitEthernet|GE|ge-|Loopback|Lo)\d)", scope, maxsplit=1, flags=re.I)[0]
+        scope = re.split(r"\b(?:process(?:\s+id)?|local\s+as|remote\s+as|prefix(?:\s+length)?|netmask|area)\s+\d", scope, maxsplit=1, flags=re.I)[0]
+        named = re.search(r"\bnamed\s+", scope, re.I)
+        if named and any(re.search(_pattern(name), scope[:named.start()], re.I) for name in names):
+            scope = scope[:named.start()]
     scope = scope.strip(" .;")
     # Explicit alternatives are ambiguous, never an implicit union.
     parts = re.split(r"\s+and\s+|\s*&\s*|,\s*(?!\d)", scope, flags=re.I)

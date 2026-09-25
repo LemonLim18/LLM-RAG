@@ -7,6 +7,7 @@
     "neighbor_ip",
     "remote_as"
   ],
+  "x-required-by-vendor": {"juniper": ["peer_group"]},
   "properties": {
     "local_as": {
       "type": "integer",
@@ -24,6 +25,11 @@
     },
     "description": {
       "type": "string",
+      "maxLength": 128
+    },
+    "peer_group": {
+      "type": "string",
+      "minLength": 1,
       "maxLength": 128
     }
   }
