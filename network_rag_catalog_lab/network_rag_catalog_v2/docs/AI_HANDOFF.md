@@ -6,8 +6,10 @@ This is a planning and rendering lab, not an execution system. It converts one
 human request into independent network-operation tasks, validates each task
 against inventory, and renders only when the complete request validates.
 
-The primary and secondary context-aware revision plans are implemented. Read
-`docs/CONTEXT_AWARE_REVISION.md` for the concise current contract and limits.
+The shared core workflow from both revision plans is implemented; full production
+conformance is not proven. Start with [REVISION_NOTES.md](REVISION_NOTES.md) for
+changes, capabilities, usage and verification limits. Read
+`docs/CONTEXT_AWARE_REVISION.md` for the technical contract.
 
 ## Current Flow
 
