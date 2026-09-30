@@ -52,6 +52,12 @@ def normalize_parameters_for_device(params: dict, device: dict) -> dict:
     canonical = _resolve_interface_name(device, normalized.get("interface"))
     if canonical:
         normalized["interface"] = canonical
+    for field in ("aggregate_interface",):
+        canonical = _resolve_interface_name(device, normalized.get(field))
+        if canonical:
+            normalized[field] = canonical
+    if isinstance(normalized.get("member_interfaces"), list):
+        normalized["member_interfaces"] = [_resolve_interface_name(device, name) or name for name in normalized["member_interfaces"]]
 
     interfaces = normalized.get("interfaces")
     if isinstance(interfaces, list):
@@ -65,6 +71,10 @@ def normalize_parameters_for_device(params: dict, device: dict) -> dict:
 
 
 def validate_device_context(operation_id: str, category: str, params: dict, devices: list[dict]) -> list[dict]:
+    from ..context import rules
+    from .operation_policies import allows_new_interface, validate_policy
+
+    policy = rules()["operations"].get(operation_id, {}).get("device_policy")
     issues = []
     for device in devices:
         features = set(device.get("capabilities", {}).get("features", []))
@@ -75,7 +85,8 @@ def validate_device_context(operation_id: str, category: str, params: dict, devi
                 "message": f"{device['hostname']} does not advertise support for {operation_id}.",
             })
 
-        if isinstance(params.get("interface"), str) and not _resolve_interface_name(device, params["interface"]):
+        if (isinstance(params.get("interface"), str) and not _resolve_interface_name(device, params["interface"])
+                and not allows_new_interface(policy, params["interface"], device.get("vendor"))):
             suggestions = suggest_interfaces(device, params["interface"])
             issues.append({
                 "type": "INVALID_INTERFACE",
@@ -84,6 +95,8 @@ def validate_device_context(operation_id: str, category: str, params: dict, devi
                 "suggestions": suggestions,
                 "device": device["hostname"],
             })
+        if policy:
+            issues.extend(validate_policy(policy, params, device))
 
         interfaces = params.get("interfaces")
         if isinstance(interfaces, list):

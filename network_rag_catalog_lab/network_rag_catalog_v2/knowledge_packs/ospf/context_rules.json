@@ -1,0 +1,196 @@
+{
+  "enable_ospf_process": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "process_id",
+      "router_id"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "ospf_process",
+        "fields": [
+          "process_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "set_ospf_router_id",
+      "create_ospf_area",
+      "assign_interface_to_ospf_area",
+      "advertise_network",
+      "configure_passive_interface",
+      "configure_ospf_redistribution"
+    ],
+    "device_policy": "ospf_enable_v1"
+  },
+  "set_ospf_router_id": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "process_id",
+      "router_id"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "ospf_process",
+        "fields": [
+          "process_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "enable_ospf_process",
+      "create_ospf_area",
+      "assign_interface_to_ospf_area",
+      "advertise_network",
+      "configure_passive_interface",
+      "configure_ospf_redistribution"
+    ],
+    "device_policy": "ospf_router_id_v1"
+  },
+  "create_ospf_area": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "process_id",
+      "area",
+      "area_type"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "ospf_process",
+        "fields": [
+          "process_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "enable_ospf_process",
+      "set_ospf_router_id",
+      "assign_interface_to_ospf_area",
+      "advertise_network",
+      "configure_passive_interface",
+      "configure_ospf_redistribution"
+    ],
+    "device_policy": "ospf_area_v1"
+  },
+  "assign_interface_to_ospf_area": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "process_id",
+      "area"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "composite_keys": [
+      {
+        "kind": "ospf_process",
+        "fields": [
+          "process_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "enable_ospf_process",
+      "set_ospf_router_id",
+      "create_ospf_area",
+      "advertise_network",
+      "configure_passive_interface",
+      "configure_ospf_redistribution",
+      "configure_ospf",
+      "remove_ospf_interface",
+      "remove_interface_ip"
+    ],
+    "device_policy": "ospf_interface_v1"
+  },
+  "advertise_network": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "process_id",
+      "network_prefix",
+      "area"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "ospf_process",
+        "fields": [
+          "process_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "enable_ospf_process",
+      "set_ospf_router_id",
+      "create_ospf_area",
+      "assign_interface_to_ospf_area",
+      "configure_passive_interface",
+      "configure_ospf_redistribution"
+    ],
+    "device_policy": "ospf_network_v1"
+  },
+  "configure_passive_interface": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "process_id",
+      "passive"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "composite_keys": [
+      {
+        "kind": "ospf_process",
+        "fields": [
+          "process_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "enable_ospf_process",
+      "set_ospf_router_id",
+      "create_ospf_area",
+      "assign_interface_to_ospf_area",
+      "advertise_network",
+      "configure_ospf_redistribution",
+      "configure_ospf",
+      "remove_ospf_interface",
+      "remove_interface_ip"
+    ],
+    "device_policy": "ospf_passive_v1"
+  },
+  "configure_ospf_redistribution": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "process_id",
+      "redistribution_source",
+      "route_policy",
+      "ospf_metric",
+      "metric_type"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "ospf_process",
+        "fields": [
+          "process_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "enable_ospf_process",
+      "set_ospf_router_id",
+      "create_ospf_area",
+      "assign_interface_to_ospf_area",
+      "advertise_network",
+      "configure_passive_interface"
+    ],
+    "device_policy": "ospf_redistribute_v1"
+  }
+}

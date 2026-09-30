@@ -11,9 +11,15 @@ from app.parameters.validator import validate_parameter_result, validate_paramet
 from app.pipeline import _finalize_task, resume_task
 from app.planner.intent_planner import plan_intents
 from app.planner.models import PlannedTask
+from app.knowledge.runtime import snapshot_scope
 
 
 class CatalogTests(unittest.TestCase):
+    def setUp(self):
+        self.enterContext(snapshot_scope(None))
+        for target in ("app.llm.llm", "app.planner.intent_planner.llm", "app.parameters.parameter_extractor.llm"):
+            self.enterContext(patch(target)).invoke.return_value.content = "null"
+
     def test_catalog_has_two_or_more_operations_per_category(self):
         validate_catalog()
         counts = {}

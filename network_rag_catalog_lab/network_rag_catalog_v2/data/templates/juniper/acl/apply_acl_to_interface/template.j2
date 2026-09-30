@@ -1,0 +1,1 @@
+set interfaces {{ interface }} unit {{ logical_unit }} family inet filter {{ 'input' if direction == 'ingress' else 'output' }} {{ acl_name }}

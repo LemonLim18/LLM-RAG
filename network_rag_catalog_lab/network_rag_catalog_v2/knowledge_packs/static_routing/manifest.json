@@ -1,0 +1,33 @@
+{
+  "format_version": 1,
+  "pack_id": "static_routing_review_v1",
+  "phase": "C",
+  "status": "review_only",
+  "source_authority": "sqlite",
+  "operations": [
+    "add_default_route",
+    "add_floating_static_route"
+  ],
+  "reuse": [
+    "configure_static_route",
+    "remove_static_route"
+  ],
+  "support": {
+    "cisco": "Catalyst 9300 / IOS XE 17.9, explicit capability and planned resource facts required",
+    "juniper": "EX4300 / Junos 23.4 default and qualified-next-hop floating routes",
+    "huawei": "unsupported for this wave; exact profile behavior not verified",
+    "evidence": "Documentation-reviewed candidate; not device-lab certified"
+  },
+  "assets": [
+    "data/templates/cisco/static_routing/add_default_route/template.j2",
+    "data/templates/juniper/static_routing/add_default_route/template.j2",
+    "data/templates/cisco/static_routing/add_floating_static_route/template.j2",
+    "data/templates/juniper/static_routing/add_floating_static_route/template.j2"
+  ],
+  "asset_hashes": {
+    "data/templates/cisco/static_routing/add_floating_static_route/template.j2": "21a567b55b38128ca3110d346f098f88ed9940c473ca47c73d635753dd0a0ed0",
+    "data/templates/cisco/static_routing/add_default_route/template.j2": "9aa0c3a1cb4dc4138b8aa444b6f82f4540f5d6b420cd680f15894550913b5d5f",
+    "data/templates/juniper/static_routing/add_floating_static_route/template.j2": "6584566e95030c77c611956637e879929d917254cd079e576510bf7d80e383f1",
+    "data/templates/juniper/static_routing/add_default_route/template.j2": "7ca50ebb73f5ee0d7fa64768f82ffad0254aaeb1787bff70ced63aefcab5c67a"
+  }
+}

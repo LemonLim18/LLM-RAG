@@ -11,21 +11,31 @@ def normalize_key(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", value.lower())
 
 
+def parameter_identity(field: str, schema: dict) -> str:
+    return (schema.get("x-parameter") or {}).get("parameter_id", schema.get("x-parameter-id", field))
+
+
+def parameter_metadata(field: str, schema: dict) -> dict:
+    return schema.get("x-parameter") or get_parameter(parameter_identity(field, schema))
+
+
 def canonicalize_parameter_keys(raw_params: dict, schema: dict) -> dict:
-    """Map catalog aliases such as ``netmask`` to the schema's stable ID."""
+    """Map unambiguous canonical IDs/aliases to unchanged schema payload keys."""
     properties = schema.get("properties", {})
-    aliases: dict[str, str] = {}
-    for field in properties:
-        aliases[normalize_key(field)] = field
+    aliases: dict[str, set[str]] = {}
+    for field, field_schema in properties.items():
+        terms = [field, parameter_identity(field, field_schema)]
         try:
-            for alias in get_parameter(field).get("aliases", []):
-                aliases[normalize_key(alias)] = field
+            terms.extend(parameter_metadata(field, field_schema).get("aliases", []))
         except KeyError:
             pass
+        for term in terms:
+            aliases.setdefault(normalize_key(term), set()).add(field)
 
     canonical: dict = {}
     for key, value in raw_params.items():
-        field = aliases.get(normalize_key(str(key)))
+        candidates = aliases.get(normalize_key(str(key)), set())
+        field = key if key in properties else next(iter(candidates)) if len(candidates) == 1 else None
         if field and field not in canonical:
             canonical[field] = value
     return canonical
@@ -65,19 +75,12 @@ def normalize_value(field: str, value: Any, schema: dict, prompt: str) -> tuple[
     """Normalize only a value whose source is the current user text."""
     if value is None:
         return None, None
+    field = parameter_identity(field, schema)
 
-    if field == "prefix_length":
-        explicit_prefix = prefix_length_from_text(prompt)
-        if explicit_prefix is None:
-            return None, None
-        try:
-            candidate = int(value)
-        except (TypeError, ValueError):
-            candidate = explicit_prefix
-        if candidate != explicit_prefix:
-            return None, None
-        source = "derived_from_user_netmask" if "mask" in prompt.lower() else "user"
-        return explicit_prefix, source
+    normalizer = (schema.get("x-parameter") or {}).get("normalizer")
+    if normalizer == "ipv4_prefix_length" or field == "prefix_length":
+        from ..knowledge.rule_registry import normalize_prefix
+        return normalize_prefix(value, prompt)
 
     if field in {"address", "neighbor_ip", "next_hop", "router_id"}:
         try:
@@ -93,7 +96,21 @@ def normalize_value(field: str, value: Any, schema: dict, prompt: str) -> tuple[
     return value, "user"
 
 
+def _canonical_fields(schema: dict) -> tuple[dict, dict]:
+    by_id = {}
+    for field, field_schema in schema.get("properties", {}).items():
+        by_id.setdefault(parameter_identity(field, field_schema), []).append(field)
+    unique = {parameter_id: fields[0] for parameter_id, fields in by_id.items() if len(fields) == 1}
+    canonical_schema = {**schema, "properties": {key: schema["properties"][field] for key, field in unique.items()}}
+    return unique, canonical_schema
+
+
 def deterministic_values(prompt: str, schema: dict) -> dict[str, tuple[Any, str]]:
+    unique, canonical_schema = _canonical_fields(schema)
+    return {unique[key]: value for key, value in _deterministic_values(prompt, canonical_schema).items()}
+
+
+def _deterministic_values(prompt: str, schema: dict) -> dict[str, tuple[Any, str]]:
     """Small, explicit-value fallback for common network expressions.
 
     It is intentionally narrow: every value comes from a matched text span.
@@ -170,6 +187,11 @@ def deterministic_values(prompt: str, schema: dict) -> dict[str, tuple[Any, str]
 
 
 def explicit_alternatives(prompt: str, schema: dict) -> dict:
+    unique, canonical_schema = _canonical_fields(schema)
+    return {unique[key]: value for key, value in _explicit_alternatives(prompt, canonical_schema).items()}
+
+
+def _explicit_alternatives(prompt: str, schema: dict) -> dict:
     """Conflicting scalar alternatives stay candidates, never first-match values."""
     alternatives = {}
     for clause in re.split(r"\bor\b", prompt, flags=re.I):
@@ -188,7 +210,7 @@ def explicit_alternatives(prompt: str, schema: dict) -> dict:
     # Repeated labelled literals also conflict, even without an 'or'.
     for field in schema.get("properties", {}):
         try:
-            aliases = get_parameter(field).get("aliases", [])
+            aliases = parameter_metadata(field, schema["properties"][field]).get("aliases", [])
         except KeyError:
             continue
         kind = schema["properties"][field].get("type")

@@ -1,0 +1,91 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "process_id": {
+      "minimum": 1,
+      "maximum": 65535,
+      "type": "integer"
+    },
+    "router_id": {
+      "format": "ipv4",
+      "type": "string"
+    },
+    "interface": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+    },
+    "area": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "process_id",
+    "router_id"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "process_id": {
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "router_id": {
+          "format": "ipv4",
+          "type": "string"
+        }
+      },
+      "required": [
+        "process_id",
+        "router_id"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "process_id": {
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "router_id": {
+          "format": "ipv4",
+          "type": "string"
+        }
+      },
+      "required": [
+        "process_id",
+        "router_id"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "router_id": {
+          "format": "ipv4",
+          "type": "string"
+        },
+        "interface": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+        },
+        "area": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "router_id",
+        "interface",
+        "area"
+      ],
+      "description": "Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy."
+    }
+  }
+}

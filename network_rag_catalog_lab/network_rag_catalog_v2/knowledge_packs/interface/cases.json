@@ -1,0 +1,89 @@
+[
+  {
+    "operation_id": "set_interface_description",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/1",
+      "description": "User port"
+    },
+    "prompt": "set interface description; interface \"GigabitEthernet1/0/1\"; description \"User port\" on SW1"
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/1",
+      "admin_up": false
+    },
+    "prompt": "set interface admin state; interface \"GigabitEthernet1/0/1\"; admin_up false on SW1"
+  },
+  {
+    "operation_id": "configure_access_port",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/1",
+      "vlan_id": 20
+    },
+    "prompt": "configure access port; interface \"GigabitEthernet1/0/1\"; vlan_id 20 on SW1"
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/1",
+      "allowed_vlans": [
+        1,
+        10,
+        20
+      ],
+      "native_vlan": 1
+    },
+    "prompt": "configure trunk port; interface \"GigabitEthernet1/0/1\"; allowed_vlans [1,10,20]; native_vlan 1 on SW1"
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/2",
+      "allowed_vlans": [
+        30
+      ]
+    },
+    "prompt": "assign vlan to trunk port; interface \"GigabitEthernet1/0/2\"; allowed_vlans [30] on SW1"
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/2",
+      "allowed_vlans": [
+        1,
+        20
+      ]
+    },
+    "prompt": "configure trunk allowed vlans; interface \"GigabitEthernet1/0/2\"; allowed_vlans [1,20] on SW1"
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/2",
+      "native_vlan": 10
+    },
+    "prompt": "set native vlan; interface \"GigabitEthernet1/0/2\"; native_vlan 10 on SW1"
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "parameters": {
+      "interface": "Loopback99",
+      "address": "192.0.2.99",
+      "prefix_length": 32
+    },
+    "prompt": "configure loopback interface; interface \"Loopback99\"; address \"192.0.2.99\"; prefix_length 32 on SW1"
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "parameters": {
+      "aggregate_interface": "Port-channel5",
+      "member_interfaces": [
+        "GigabitEthernet1/0/3",
+        "GigabitEthernet1/0/4"
+      ],
+      "lacp_mode": "active"
+    },
+    "prompt": "configure port channel; aggregate_interface \"Port-channel5\"; member_interfaces [\"GigabitEthernet1/0/3\",\"GigabitEthernet1/0/4\"]; lacp_mode \"active\" on SW1"
+  }
+]

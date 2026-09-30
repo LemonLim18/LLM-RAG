@@ -1,0 +1,162 @@
+{
+  "set_interface_description": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "description"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "conflicts_with": [],
+    "device_policy": "physical_interface_v1"
+  },
+  "set_interface_admin_state": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "admin_up"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "conflicts_with": [],
+    "device_policy": "physical_interface_v1"
+  },
+  "configure_access_port": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "vlan_id",
+      "description"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "conflicts_with": [
+      "configure_trunk_port",
+      "assign_vlan_to_trunk_port",
+      "configure_trunk_allowed_vlans",
+      "set_native_vlan",
+      "configure_port_channel"
+    ],
+    "device_policy": "c9300_access_v1"
+  },
+  "configure_trunk_port": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "allowed_vlans",
+      "native_vlan"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "conflicts_with": [
+      "configure_access_port",
+      "assign_vlan_to_trunk_port",
+      "configure_trunk_allowed_vlans",
+      "set_native_vlan",
+      "configure_port_channel"
+    ],
+    "device_policy": "c9300_trunk_setup_v1"
+  },
+  "assign_vlan_to_trunk_port": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "allowed_vlans"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "conflicts_with": [
+      "configure_access_port",
+      "configure_trunk_port",
+      "configure_trunk_allowed_vlans",
+      "set_native_vlan",
+      "configure_port_channel"
+    ],
+    "device_policy": "switchport_trunk_add_v1"
+  },
+  "configure_trunk_allowed_vlans": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "allowed_vlans"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "conflicts_with": [
+      "configure_access_port",
+      "configure_trunk_port",
+      "assign_vlan_to_trunk_port",
+      "set_native_vlan",
+      "configure_port_channel"
+    ],
+    "device_policy": "c9300_trunk_replace_v1"
+  },
+  "set_native_vlan": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "native_vlan"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "conflicts_with": [
+      "configure_access_port",
+      "configure_trunk_port",
+      "assign_vlan_to_trunk_port",
+      "configure_trunk_allowed_vlans",
+      "configure_port_channel"
+    ],
+    "device_policy": "switchport_native_vlan_v1"
+  },
+  "configure_loopback_interface": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "interface",
+      "address",
+      "prefix_length",
+      "description"
+    ],
+    "resource_keys": [
+      "interface"
+    ],
+    "conflicts_with": [],
+    "device_policy": "c9300_loopback_v1"
+  },
+  "configure_port_channel": {
+    "inventory_fields": [
+      "aggregate_interface",
+      "member_interfaces",
+      "member_interfaces[]"
+    ],
+    "planned_fields": [
+      "lacp_mode",
+      "description"
+    ],
+    "resource_keys": [
+      "aggregate_interface",
+      "member_interfaces[]"
+    ],
+    "conflicts_with": [
+      "configure_access_port",
+      "configure_trunk_port",
+      "assign_vlan_to_trunk_port",
+      "configure_trunk_allowed_vlans",
+      "set_native_vlan"
+    ],
+    "device_policy": "c9300_routed_lag_v1"
+  }
+}

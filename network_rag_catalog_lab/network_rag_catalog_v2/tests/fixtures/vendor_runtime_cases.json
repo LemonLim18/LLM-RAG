@@ -1,0 +1,1460 @@
+[
+  {
+    "operation_id": "add_default_route",
+    "category": "static_routing",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "next_hop": "192.0.2.2",
+      "preference": 200
+    },
+    "prompt": "add default route, next_hop \"192.0.2.2\", preference 200 on SW1"
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "category": "static_routing",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "destination": "10.50.0.0/16",
+      "next_hop": "192.0.2.2",
+      "preference": 200
+    },
+    "prompt": "add floating static route, destination \"10.50.0.0/16\", next_hop \"192.0.2.2\", preference 200 on SW1"
+  },
+  {
+    "operation_id": "create_acl",
+    "category": "acl",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "acl_name": "NEW_ACL",
+      "description": "Reviewed policy"
+    },
+    "prompt": "create acl, acl_name \"NEW_ACL\", description \"Reviewed policy\" on SW1"
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "category": "acl",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 20,
+      "acl_action": "permit",
+      "source_prefix": "10.1.0.0/16",
+      "destination_prefix": "10.2.0.0/16",
+      "ip_protocol": "tcp",
+      "destination_port": 443,
+      "log": false
+    },
+    "prompt": "add acl rule, acl_name \"STAFF\", acl_rule_id 20, acl_action \"permit\", source_prefix \"10.1.0.0/16\", destination_prefix \"10.2.0.0/16\", ip_protocol \"tcp\", destination_port 443, log false on SW1"
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "category": "acl",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 10,
+      "acl_action": "permit",
+      "source_prefix": "10.1.0.0/16",
+      "destination_prefix": "10.2.0.0/16",
+      "ip_protocol": "tcp",
+      "destination_port": 443,
+      "log": false
+    },
+    "prompt": "modify acl rule, acl_name \"STAFF\", acl_rule_id 10, acl_action \"permit\", source_prefix \"10.1.0.0/16\", destination_prefix \"10.2.0.0/16\", ip_protocol \"tcp\", destination_port 443, log false on SW1"
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "category": "acl",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 10
+    },
+    "prompt": "delete acl rule, acl_name \"STAFF\", acl_rule_id 10 on SW1"
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "category": "acl",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "acl_name": "STAFF",
+      "interface": "GigabitEthernet1/0/5",
+      "direction": "ingress"
+    },
+    "prompt": "apply acl to interface, acl_name \"STAFF\", interface \"GigabitEthernet1/0/5\", direction \"ingress\" on SW1"
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 200,
+      "router_id": "192.0.2.200"
+    },
+    "prompt": "enable ospf process, process_id 200, router_id \"192.0.2.200\" on SW1"
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 100,
+      "router_id": "192.0.2.100"
+    },
+    "prompt": "set ospf router id, process_id 100, router_id \"192.0.2.100\" on SW1"
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 100,
+      "area": "1",
+      "area_type": "stub"
+    },
+    "prompt": "create ospf area, process_id 100, area \"1\", area_type \"stub\" on SW1"
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 100,
+      "interface": "GigabitEthernet1/0/5",
+      "area": "0"
+    },
+    "prompt": "assign interface to ospf area, process_id 100, interface \"GigabitEthernet1/0/5\", area \"0\" on SW1"
+  },
+  {
+    "operation_id": "advertise_network",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 100,
+      "network_prefix": "192.0.2.0/24",
+      "area": "0"
+    },
+    "prompt": "advertise network, process_id 100, network_prefix \"192.0.2.0/24\", area \"0\" on SW1"
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 100,
+      "interface": "GigabitEthernet1/0/5",
+      "passive": false
+    },
+    "prompt": "configure passive interface, process_id 100, interface \"GigabitEthernet1/0/5\", passive false on SW1"
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 100,
+      "redistribution_source": "static",
+      "route_policy": "LIMITED",
+      "ospf_metric": 20,
+      "metric_type": "2"
+    },
+    "prompt": "configure ospf redistribution, process_id 100, redistribution_source \"static\", route_policy \"LIMITED\", ospf_metric 20, metric_type \"2\" on SW1"
+  },
+  {
+    "operation_id": "set_interface_description",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/1",
+      "description": "User port"
+    },
+    "prompt": "set interface description, interface \"GigabitEthernet1/0/1\", description \"User port\" on SW1"
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/1",
+      "admin_up": false
+    },
+    "prompt": "set interface admin state, interface \"GigabitEthernet1/0/1\", admin_up false on SW1"
+  },
+  {
+    "operation_id": "configure_access_port",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/1",
+      "vlan_id": 20
+    },
+    "prompt": "configure access port, interface \"GigabitEthernet1/0/1\", vlan_id 20 on SW1"
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/1",
+      "allowed_vlans": [
+        1,
+        10,
+        20
+      ],
+      "native_vlan": 1
+    },
+    "prompt": "configure trunk port, interface \"GigabitEthernet1/0/1\", allowed_vlans [1,10,20], native_vlan 1 on SW1"
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/2",
+      "allowed_vlans": [
+        30
+      ]
+    },
+    "prompt": "assign vlan to trunk port, interface \"GigabitEthernet1/0/2\", allowed_vlans [30] on SW1"
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/2",
+      "allowed_vlans": [
+        1,
+        20
+      ]
+    },
+    "prompt": "configure trunk allowed vlans, interface \"GigabitEthernet1/0/2\", allowed_vlans [1,20] on SW1"
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "interface": "GigabitEthernet1/0/2",
+      "native_vlan": 10
+    },
+    "prompt": "set native vlan, interface \"GigabitEthernet1/0/2\", native_vlan 10 on SW1"
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "interface": "Loopback99",
+      "address": "192.0.2.99",
+      "prefix_length": 32
+    },
+    "prompt": "configure loopback interface, interface \"Loopback99\", address \"192.0.2.99\", prefix_length 32 on SW1"
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "category": "interface",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "aggregate_interface": "Port-channel5",
+      "member_interfaces": [
+        "GigabitEthernet1/0/3",
+        "GigabitEthernet1/0/4"
+      ],
+      "lacp_mode": "active"
+    },
+    "prompt": "configure port channel, aggregate_interface \"Port-channel5\", member_interfaces [\"GigabitEthernet1/0/3\",\"GigabitEthernet1/0/4\"], lacp_mode \"active\" on SW1"
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "category": "qos",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "policy_name": "NEW_QOS",
+      "policy_terms": [
+        {
+          "classifier_name": "VOICE",
+          "bandwidth_bps": 20000000
+        }
+      ]
+    },
+    "prompt": "create qos policy, policy_name \"NEW_QOS\", policy_terms [{\"classifier_name\":\"VOICE\",\"bandwidth_bps\":20000000}] on SW1"
+  },
+  {
+    "operation_id": "create_classifier",
+    "category": "qos",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "classifier_name": "NEW_CLASS",
+      "dscp_values": [
+        46,
+        34
+      ],
+      "match_mode": "any"
+    },
+    "prompt": "create classifier, classifier_name \"NEW_CLASS\", dscp_values [46,34], match_mode \"any\" on SW1"
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "category": "qos",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "classifier_name": "VOICE",
+      "dscp_values": [
+        46
+      ],
+      "previous_dscp_values": [
+        46
+      ]
+    },
+    "prompt": "classify by dscp, classifier_name \"VOICE\", dscp_values [46], previous_dscp_values [46] on SW1"
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "category": "qos",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "policy_name": "QOS_BASE",
+      "classifier_name": "VOICE",
+      "bandwidth_bps": 30000000
+    },
+    "prompt": "configure scheduler, policy_name \"QOS_BASE\", classifier_name \"VOICE\", bandwidth_bps 30000000 on SW1"
+  },
+  {
+    "operation_id": "configure_shaping",
+    "category": "qos",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "policy_name": "NEW_SHAPER",
+      "interface": "GigabitEthernet1/0/5",
+      "rate_bps": 100000000,
+      "direction": "egress"
+    },
+    "prompt": "configure shaping, policy_name \"NEW_SHAPER\", interface \"GigabitEthernet1/0/5\", rate_bps 100000000, direction \"egress\" on SW1"
+  },
+  {
+    "operation_id": "configure_policing",
+    "category": "qos",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "policy_name": "NEW_POLICER",
+      "interface": "GigabitEthernet1/0/5",
+      "rate_bps": 100000000,
+      "burst_bytes": 10000,
+      "direction": "ingress",
+      "exceed_action": "drop"
+    },
+    "prompt": "configure policing, policy_name \"NEW_POLICER\", interface \"GigabitEthernet1/0/5\", rate_bps 100000000, burst_bytes 10000, direction \"ingress\", exceed_action \"drop\" on SW1"
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "category": "qos",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "policy_name": "QOS_BASE",
+      "interface": "GigabitEthernet1/0/5",
+      "direction": "egress"
+    },
+    "prompt": "apply qos policy to interface, policy_name \"QOS_BASE\", interface \"GigabitEthernet1/0/5\", direction \"egress\" on SW1"
+  },
+  {
+    "operation_id": "modify_vlan",
+    "category": "vlan",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "vlan_id": 20,
+      "vlan_status": "suspend"
+    },
+    "prompt": "modify vlan, vlan_id 20, vlan_status \"suspend\" on SW1"
+  },
+  {
+    "operation_id": "rename_vlan",
+    "category": "vlan",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "vlan_id": 20,
+      "new_vlan_name": "EMPLOYEES"
+    },
+    "prompt": "rename vlan, vlan_id 20, new_vlan_name \"EMPLOYEES\" on SW1"
+  },
+  {
+    "operation_id": "create_vlan",
+    "category": "vlan",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "vlan_id": 100,
+      "name": "NEW_STAFF"
+    },
+    "prompt": "create vlan, vlan_id 100, name \"NEW_STAFF\" on SW1"
+  },
+  {
+    "operation_id": "delete_vlan",
+    "category": "vlan",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "vlan_id": 20,
+      "name": "STAFF"
+    },
+    "prompt": "delete vlan, vlan_id 20, name \"STAFF\" on SW1"
+  },
+  {
+    "operation_id": "configure_static_route",
+    "category": "static_routing",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "destination": "10.60.0.0/16",
+      "next_hop": "192.0.2.2",
+      "preference": 100
+    },
+    "prompt": "configure static route, destination \"10.60.0.0/16\", next_hop \"192.0.2.2\", preference 100 on SW1"
+  },
+  {
+    "operation_id": "remove_static_route",
+    "category": "static_routing",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "destination": "10.50.0.0/16",
+      "next_hop": "192.0.2.3"
+    },
+    "prompt": "remove static route, destination \"10.50.0.0/16\", next_hop \"192.0.2.3\" on SW1"
+  },
+  {
+    "operation_id": "configure_ospf",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 100,
+      "router_id": "192.0.2.10",
+      "interfaces": [
+        {
+          "name": "GigabitEthernet1/0/5",
+          "area": "0"
+        }
+      ]
+    },
+    "prompt": "configure ospf, process_id 100, router_id \"192.0.2.10\", interfaces [{\"name\":\"GigabitEthernet1/0/5\",\"area\":\"0\"}] on SW1"
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "category": "ospf",
+    "vendor": "cisco",
+    "device": "SW1",
+    "parameters": {
+      "process_id": 100,
+      "interface": "GigabitEthernet1/0/5",
+      "area": "0"
+    },
+    "prompt": "remove ospf interface, process_id 100, interface \"GigabitEthernet1/0/5\", area \"0\" on SW1"
+  },
+  {
+    "operation_id": "add_default_route",
+    "category": "static_routing",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "next_hop": "192.0.2.2",
+      "preference": 200
+    },
+    "prompt": "add default route, next_hop \"192.0.2.2\", preference 200 on SW2"
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "category": "static_routing",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "destination": "10.50.0.0/16",
+      "next_hop": "192.0.2.2",
+      "preference": 200
+    },
+    "prompt": "add floating static route, destination \"10.50.0.0/16\", next_hop \"192.0.2.2\", preference 200 on SW2"
+  },
+  {
+    "operation_id": "create_acl",
+    "category": "acl",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "acl_name": "NEW_ACL",
+      "description": "Reviewed policy"
+    },
+    "prompt": "create acl, acl_name \"NEW_ACL\", description \"Reviewed policy\" on SW2"
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "category": "acl",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 20,
+      "acl_action": "permit",
+      "source_prefix": "10.1.0.0/16",
+      "destination_prefix": "10.2.0.0/16",
+      "ip_protocol": "tcp",
+      "destination_port": 443
+    },
+    "prompt": "add acl rule, acl_name \"STAFF\", acl_rule_id 20, acl_action \"permit\", source_prefix \"10.1.0.0/16\", destination_prefix \"10.2.0.0/16\", ip_protocol \"tcp\", destination_port 443 on SW2"
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "category": "acl",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 10,
+      "acl_action": "permit",
+      "source_prefix": "10.1.0.0/16",
+      "destination_prefix": "10.2.0.0/16",
+      "ip_protocol": "tcp",
+      "destination_port": 443
+    },
+    "prompt": "modify acl rule, acl_name \"STAFF\", acl_rule_id 10, acl_action \"permit\", source_prefix \"10.1.0.0/16\", destination_prefix \"10.2.0.0/16\", ip_protocol \"tcp\", destination_port 443 on SW2"
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "category": "acl",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 10
+    },
+    "prompt": "delete acl rule, acl_name \"STAFF\", acl_rule_id 10 on SW2"
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "category": "acl",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "acl_name": "STAFF",
+      "interface": "10GE1/0/5",
+      "direction": "ingress",
+      "unmatched_action": "permit"
+    },
+    "prompt": "apply acl to interface, acl_name \"STAFF\", interface \"10GE1/0/5\", direction \"ingress\", unmatched_action \"permit\" on SW2"
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 200,
+      "router_id": "192.0.2.200"
+    },
+    "prompt": "enable ospf process, process_id 200, router_id \"192.0.2.200\" on SW2"
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 100,
+      "router_id": "192.0.2.100"
+    },
+    "prompt": "set ospf router id, process_id 100, router_id \"192.0.2.100\" on SW2"
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 100,
+      "area": "1",
+      "area_type": "stub"
+    },
+    "prompt": "create ospf area, process_id 100, area \"1\", area_type \"stub\" on SW2"
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 100,
+      "interface": "10GE1/0/5",
+      "area": "0"
+    },
+    "prompt": "assign interface to ospf area, process_id 100, interface \"10GE1/0/5\", area \"0\" on SW2"
+  },
+  {
+    "operation_id": "advertise_network",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 100,
+      "network_prefix": "192.0.2.0/24",
+      "area": "0"
+    },
+    "prompt": "advertise network, process_id 100, network_prefix \"192.0.2.0/24\", area \"0\" on SW2"
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 100,
+      "interface": "10GE1/0/5",
+      "passive": false
+    },
+    "prompt": "configure passive interface, process_id 100, interface \"10GE1/0/5\", passive false on SW2"
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 100,
+      "redistribution_source": "static",
+      "route_policy": "LIMITED",
+      "ospf_metric": 20,
+      "metric_type": "2"
+    },
+    "prompt": "configure ospf redistribution, process_id 100, redistribution_source \"static\", route_policy \"LIMITED\", ospf_metric 20, metric_type \"2\" on SW2"
+  },
+  {
+    "operation_id": "set_interface_description",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/1",
+      "description": "User port"
+    },
+    "prompt": "set interface description, interface \"10GE1/0/1\", description \"User port\" on SW2"
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/1",
+      "admin_up": false
+    },
+    "prompt": "set interface admin state, interface \"10GE1/0/1\", admin_up false on SW2"
+  },
+  {
+    "operation_id": "configure_access_port",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/1",
+      "vlan_id": 20
+    },
+    "prompt": "configure access port, interface \"10GE1/0/1\", vlan_id 20 on SW2"
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/1",
+      "allowed_vlans": [
+        1,
+        10,
+        20
+      ],
+      "native_vlan": 1
+    },
+    "prompt": "configure trunk port, interface \"10GE1/0/1\", allowed_vlans [1,10,20], native_vlan 1 on SW2"
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/2",
+      "allowed_vlans": [
+        30
+      ]
+    },
+    "prompt": "assign vlan to trunk port, interface \"10GE1/0/2\", allowed_vlans [30] on SW2"
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/2",
+      "allowed_vlans": [
+        1,
+        20
+      ]
+    },
+    "prompt": "configure trunk allowed vlans, interface \"10GE1/0/2\", allowed_vlans [1,20] on SW2"
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/2",
+      "native_vlan": 10
+    },
+    "prompt": "set native vlan, interface \"10GE1/0/2\", native_vlan 10 on SW2"
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "LoopBack99",
+      "address": "192.0.2.99",
+      "prefix_length": 32
+    },
+    "prompt": "configure loopback interface, interface \"LoopBack99\", address \"192.0.2.99\", prefix_length 32 on SW2"
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "category": "interface",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "aggregate_interface": "Eth-Trunk5",
+      "member_interfaces": [
+        "10GE1/0/3",
+        "10GE1/0/4"
+      ],
+      "lacp_mode": "active"
+    },
+    "prompt": "configure port channel, aggregate_interface \"Eth-Trunk5\", member_interfaces [\"10GE1/0/3\",\"10GE1/0/4\"], lacp_mode \"active\" on SW2"
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "category": "qos",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "policy_name": "NEW_QOS",
+      "policy_terms": [
+        {
+          "classifier_name": "VOICE",
+          "behavior_name": "VOICE_BEHAVIOR"
+        }
+      ]
+    },
+    "prompt": "create qos policy, policy_name \"NEW_QOS\", policy_terms [{\"classifier_name\":\"VOICE\",\"behavior_name\":\"VOICE_BEHAVIOR\"}] on SW2"
+  },
+  {
+    "operation_id": "create_classifier",
+    "category": "qos",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "classifier_name": "NEW_CLASS",
+      "dscp_values": [
+        46,
+        34
+      ],
+      "match_mode": "any"
+    },
+    "prompt": "create classifier, classifier_name \"NEW_CLASS\", dscp_values [46,34], match_mode \"any\" on SW2"
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "category": "qos",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "classifier_name": "VOICE",
+      "dscp_values": [
+        46
+      ],
+      "previous_dscp_values": [
+        46
+      ]
+    },
+    "prompt": "classify by dscp, classifier_name \"VOICE\", dscp_values [46], previous_dscp_values [46] on SW2"
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "category": "qos",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/5",
+      "queue_id": 4,
+      "scheduler_weight": 20
+    },
+    "prompt": "configure scheduler, interface \"10GE1/0/5\", queue_id 4, scheduler_weight 20 on SW2"
+  },
+  {
+    "operation_id": "configure_shaping",
+    "category": "qos",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "interface": "10GE1/0/5",
+      "rate_bps": 100000000,
+      "direction": "egress"
+    },
+    "prompt": "configure shaping, interface \"10GE1/0/5\", rate_bps 100000000, direction \"egress\" on SW2"
+  },
+  {
+    "operation_id": "configure_policing",
+    "category": "qos",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "policy_name": "NEW_POLICER",
+      "interface": "10GE1/0/5",
+      "rate_bps": 100000000,
+      "burst_bytes": 10000,
+      "direction": "ingress",
+      "exceed_action": "drop",
+      "classifier_name": "VOICE",
+      "behavior_name": "NEW_CAR"
+    },
+    "prompt": "configure policing, policy_name \"NEW_POLICER\", interface \"10GE1/0/5\", rate_bps 100000000, burst_bytes 10000, direction \"ingress\", exceed_action \"drop\", classifier_name \"VOICE\", behavior_name \"NEW_CAR\" on SW2"
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "category": "qos",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "policy_name": "QOS_BASE",
+      "interface": "10GE1/0/5",
+      "direction": "egress"
+    },
+    "prompt": "apply qos policy to interface, policy_name \"QOS_BASE\", interface \"10GE1/0/5\", direction \"egress\" on SW2"
+  },
+  {
+    "operation_id": "modify_vlan",
+    "category": "vlan",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "vlan_id": 20,
+      "description": "Staff department"
+    },
+    "prompt": "modify vlan, vlan_id 20, description \"Staff department\" on SW2"
+  },
+  {
+    "operation_id": "rename_vlan",
+    "category": "vlan",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "vlan_id": 20,
+      "new_vlan_name": "EMPLOYEES"
+    },
+    "prompt": "rename vlan, vlan_id 20, new_vlan_name \"EMPLOYEES\" on SW2"
+  },
+  {
+    "operation_id": "create_vlan",
+    "category": "vlan",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "vlan_id": 100,
+      "name": "NEW_STAFF"
+    },
+    "prompt": "create vlan, vlan_id 100, name \"NEW_STAFF\" on SW2"
+  },
+  {
+    "operation_id": "delete_vlan",
+    "category": "vlan",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "vlan_id": 20,
+      "name": "STAFF"
+    },
+    "prompt": "delete vlan, vlan_id 20, name \"STAFF\" on SW2"
+  },
+  {
+    "operation_id": "configure_static_route",
+    "category": "static_routing",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "destination": "10.60.0.0/16",
+      "next_hop": "192.0.2.2",
+      "preference": 100
+    },
+    "prompt": "configure static route, destination \"10.60.0.0/16\", next_hop \"192.0.2.2\", preference 100 on SW2"
+  },
+  {
+    "operation_id": "remove_static_route",
+    "category": "static_routing",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "destination": "10.50.0.0/16",
+      "next_hop": "192.0.2.3"
+    },
+    "prompt": "remove static route, destination \"10.50.0.0/16\", next_hop \"192.0.2.3\" on SW2"
+  },
+  {
+    "operation_id": "configure_ospf",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 100,
+      "router_id": "192.0.2.10",
+      "interfaces": [
+        {
+          "name": "10GE1/0/5",
+          "area": "0"
+        }
+      ]
+    },
+    "prompt": "configure ospf, process_id 100, router_id \"192.0.2.10\", interfaces [{\"name\":\"10GE1/0/5\",\"area\":\"0\"}] on SW2"
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "category": "ospf",
+    "vendor": "huawei",
+    "device": "SW2",
+    "parameters": {
+      "process_id": 100,
+      "interface": "10GE1/0/5",
+      "area": "0"
+    },
+    "prompt": "remove ospf interface, process_id 100, interface \"10GE1/0/5\", area \"0\" on SW2"
+  },
+  {
+    "operation_id": "add_default_route",
+    "category": "static_routing",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "next_hop": "192.0.2.2",
+      "preference": 200
+    },
+    "prompt": "add default route, next_hop \"192.0.2.2\", preference 200 on SW3"
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "category": "static_routing",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "destination": "10.50.0.0/16",
+      "next_hop": "192.0.2.2",
+      "preference": 200
+    },
+    "prompt": "add floating static route, destination \"10.50.0.0/16\", next_hop \"192.0.2.2\", preference 200 on SW3"
+  },
+  {
+    "operation_id": "create_acl",
+    "category": "acl",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "acl_name": "NEW_ACL"
+    },
+    "prompt": "create acl, acl_name \"NEW_ACL\" on SW3"
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "category": "acl",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 20,
+      "acl_action": "permit",
+      "source_prefix": "10.1.0.0/16",
+      "destination_prefix": "10.2.0.0/16",
+      "ip_protocol": "tcp",
+      "destination_port": 443,
+      "log": false,
+      "next_rule_id": 0
+    },
+    "prompt": "add acl rule, acl_name \"STAFF\", acl_rule_id 20, acl_action \"permit\", source_prefix \"10.1.0.0/16\", destination_prefix \"10.2.0.0/16\", ip_protocol \"tcp\", destination_port 443, log false, next_rule_id 0 on SW3"
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "category": "acl",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 10,
+      "acl_action": "permit",
+      "source_prefix": "10.1.0.0/16",
+      "destination_prefix": "10.2.0.0/16",
+      "ip_protocol": "tcp",
+      "destination_port": 443,
+      "log": false,
+      "next_rule_id": 0
+    },
+    "prompt": "modify acl rule, acl_name \"STAFF\", acl_rule_id 10, acl_action \"permit\", source_prefix \"10.1.0.0/16\", destination_prefix \"10.2.0.0/16\", ip_protocol \"tcp\", destination_port 443, log false, next_rule_id 0 on SW3"
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "category": "acl",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 10
+    },
+    "prompt": "delete acl rule, acl_name \"STAFF\", acl_rule_id 10 on SW3"
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "category": "acl",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "acl_name": "STAFF",
+      "interface": "ge-0/0/5",
+      "direction": "ingress",
+      "logical_unit": 0
+    },
+    "prompt": "apply acl to interface, acl_name \"STAFF\", interface \"ge-0/0/5\", direction \"ingress\", logical_unit 0 on SW3"
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "router_id": "192.0.2.200",
+      "interface": "ge-0/0/5",
+      "area": "0"
+    },
+    "prompt": "enable ospf process, router_id \"192.0.2.200\", interface \"ge-0/0/5\", area \"0\" on SW3"
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "router_id": "192.0.2.100"
+    },
+    "prompt": "set ospf router id, router_id \"192.0.2.100\" on SW3"
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "area": "1",
+      "area_type": "stub"
+    },
+    "prompt": "create ospf area, area \"1\", area_type \"stub\" on SW3"
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/5",
+      "area": "0"
+    },
+    "prompt": "assign interface to ospf area, interface \"ge-0/0/5\", area \"0\" on SW3"
+  },
+  {
+    "operation_id": "advertise_network",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "network_prefix": "192.0.2.0/24",
+      "area": "0",
+      "network_interfaces": [
+        "ge-0/0/5"
+      ]
+    },
+    "prompt": "advertise network, network_prefix \"192.0.2.0/24\", area \"0\", network_interfaces [\"ge-0/0/5\"] on SW3"
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/5",
+      "passive": false,
+      "area": "0"
+    },
+    "prompt": "configure passive interface, interface \"ge-0/0/5\", passive false, area \"0\" on SW3"
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "redistribution_source": "static",
+      "route_policy": "LIMITED",
+      "ospf_metric": 20,
+      "metric_type": "2",
+      "export_policy_name": "OSPF_EXPORT"
+    },
+    "prompt": "configure ospf redistribution, redistribution_source \"static\", route_policy \"LIMITED\", ospf_metric 20, metric_type \"2\", export_policy_name \"OSPF_EXPORT\" on SW3"
+  },
+  {
+    "operation_id": "set_interface_description",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/1",
+      "description": "User port"
+    },
+    "prompt": "set interface description, interface \"ge-0/0/1\", description \"User port\" on SW3"
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/1",
+      "admin_up": false
+    },
+    "prompt": "set interface admin state, interface \"ge-0/0/1\", admin_up false on SW3"
+  },
+  {
+    "operation_id": "configure_access_port",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/1",
+      "vlan_id": 20
+    },
+    "prompt": "configure access port, interface \"ge-0/0/1\", vlan_id 20 on SW3"
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/1",
+      "allowed_vlans": [
+        1,
+        10,
+        20
+      ],
+      "native_vlan": 1
+    },
+    "prompt": "configure trunk port, interface \"ge-0/0/1\", allowed_vlans [1,10,20], native_vlan 1 on SW3"
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/2",
+      "allowed_vlans": [
+        30
+      ]
+    },
+    "prompt": "assign vlan to trunk port, interface \"ge-0/0/2\", allowed_vlans [30] on SW3"
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/2",
+      "allowed_vlans": [
+        1,
+        20
+      ]
+    },
+    "prompt": "configure trunk allowed vlans, interface \"ge-0/0/2\", allowed_vlans [1,20] on SW3"
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/2",
+      "native_vlan": 10
+    },
+    "prompt": "set native vlan, interface \"ge-0/0/2\", native_vlan 10 on SW3"
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "lo0",
+      "address": "192.0.2.99",
+      "prefix_length": 32
+    },
+    "prompt": "configure loopback interface, interface \"lo0\", address \"192.0.2.99\", prefix_length 32 on SW3"
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "category": "interface",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "aggregate_interface": "ae5",
+      "member_interfaces": [
+        "ge-0/0/3",
+        "ge-0/0/4"
+      ],
+      "lacp_mode": "active"
+    },
+    "prompt": "configure port channel, aggregate_interface \"ae5\", member_interfaces [\"ge-0/0/3\",\"ge-0/0/4\"], lacp_mode \"active\" on SW3"
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "category": "qos",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "policy_name": "NEW_QOS",
+      "policy_terms": [
+        {
+          "forwarding_class": "expedited-forwarding",
+          "scheduler_name": "VOICE_SCHED"
+        }
+      ]
+    },
+    "prompt": "create qos policy, policy_name \"NEW_QOS\", policy_terms [{\"forwarding_class\":\"expedited-forwarding\",\"scheduler_name\":\"VOICE_SCHED\"}] on SW3"
+  },
+  {
+    "operation_id": "create_classifier",
+    "category": "qos",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "classifier_name": "NEW_CLASS",
+      "dscp_values": [
+        46,
+        34
+      ],
+      "match_mode": "any",
+      "forwarding_class": "expedited-forwarding",
+      "loss_priority": "low"
+    },
+    "prompt": "create classifier, classifier_name \"NEW_CLASS\", dscp_values [46,34], match_mode \"any\", forwarding_class \"expedited-forwarding\", loss_priority \"low\" on SW3"
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "category": "qos",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "classifier_name": "VOICE",
+      "dscp_values": [
+        46
+      ],
+      "previous_dscp_values": [
+        46
+      ],
+      "forwarding_class": "expedited-forwarding",
+      "loss_priority": "low"
+    },
+    "prompt": "classify by dscp, classifier_name \"VOICE\", dscp_values [46], previous_dscp_values [46], forwarding_class \"expedited-forwarding\", loss_priority \"low\" on SW3"
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "category": "qos",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "scheduler_name": "NEW_SCHED",
+      "bandwidth_bps": 30000000
+    },
+    "prompt": "configure scheduler, scheduler_name \"NEW_SCHED\", bandwidth_bps 30000000 on SW3"
+  },
+  {
+    "operation_id": "configure_shaping",
+    "category": "qos",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/5",
+      "rate_bps": 100000000,
+      "direction": "egress"
+    },
+    "prompt": "configure shaping, interface \"ge-0/0/5\", rate_bps 100000000, direction \"egress\" on SW3"
+  },
+  {
+    "operation_id": "configure_policing",
+    "category": "qos",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "policy_name": "NEW_POLICER",
+      "interface": "ge-0/0/5",
+      "rate_bps": 100000000,
+      "burst_bytes": 10000,
+      "direction": "ingress",
+      "exceed_action": "drop",
+      "logical_unit": 0
+    },
+    "prompt": "configure policing, policy_name \"NEW_POLICER\", interface \"ge-0/0/5\", rate_bps 100000000, burst_bytes 10000, direction \"ingress\", exceed_action \"drop\", logical_unit 0 on SW3"
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "category": "qos",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "policy_name": "QOS_BASE",
+      "interface": "ge-0/0/5",
+      "direction": "egress",
+      "classifier_name": "VOICE"
+    },
+    "prompt": "apply qos policy to interface, policy_name \"QOS_BASE\", interface \"ge-0/0/5\", direction \"egress\", classifier_name \"VOICE\" on SW3"
+  },
+  {
+    "operation_id": "modify_vlan",
+    "category": "vlan",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "vlan_id": 20,
+      "description": "Staff department",
+      "current_vlan_name": "STAFF"
+    },
+    "prompt": "modify vlan, vlan_id 20, description \"Staff department\", current_vlan_name \"STAFF\" on SW3"
+  },
+  {
+    "operation_id": "rename_vlan",
+    "category": "vlan",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "vlan_id": 20,
+      "new_vlan_name": "EMPLOYEES",
+      "current_vlan_name": "STAFF"
+    },
+    "prompt": "rename vlan, vlan_id 20, new_vlan_name \"EMPLOYEES\", current_vlan_name \"STAFF\" on SW3"
+  },
+  {
+    "operation_id": "create_vlan",
+    "category": "vlan",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "vlan_id": 100,
+      "name": "NEW_STAFF"
+    },
+    "prompt": "create vlan, vlan_id 100, name \"NEW_STAFF\" on SW3"
+  },
+  {
+    "operation_id": "delete_vlan",
+    "category": "vlan",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "vlan_id": 20,
+      "name": "STAFF"
+    },
+    "prompt": "delete vlan, vlan_id 20, name \"STAFF\" on SW3"
+  },
+  {
+    "operation_id": "configure_static_route",
+    "category": "static_routing",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "destination": "10.60.0.0/16",
+      "next_hop": "192.0.2.2",
+      "preference": 100
+    },
+    "prompt": "configure static route, destination \"10.60.0.0/16\", next_hop \"192.0.2.2\", preference 100 on SW3"
+  },
+  {
+    "operation_id": "remove_static_route",
+    "category": "static_routing",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "destination": "10.50.0.0/16",
+      "next_hop": "192.0.2.3"
+    },
+    "prompt": "remove static route, destination \"10.50.0.0/16\", next_hop \"192.0.2.3\" on SW3"
+  },
+  {
+    "operation_id": "configure_ospf",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "router_id": "192.0.2.10",
+      "interfaces": [
+        {
+          "name": "ge-0/0/5",
+          "area": "0"
+        }
+      ]
+    },
+    "prompt": "configure ospf, router_id \"192.0.2.10\", interfaces [{\"name\":\"ge-0/0/5\",\"area\":\"0\"}] on SW3"
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "category": "ospf",
+    "vendor": "juniper",
+    "device": "SW3",
+    "parameters": {
+      "interface": "ge-0/0/5",
+      "area": "0"
+    },
+    "prompt": "remove ospf interface, interface \"ge-0/0/5\", area \"0\" on SW3"
+  }
+]

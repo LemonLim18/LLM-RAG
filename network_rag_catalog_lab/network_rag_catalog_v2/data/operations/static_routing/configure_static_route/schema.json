@@ -2,22 +2,22 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "destination",
-    "next_hop"
-  ],
   "properties": {
     "destination": {
       "type": "string"
     },
     "next_hop": {
-      "type": "string",
-      "format": "ipv4"
+      "format": "ipv4",
+      "type": "string"
     },
     "preference": {
-      "type": "integer",
       "minimum": 1,
-      "maximum": 255
+      "maximum": 255,
+      "type": "integer"
     }
-  }
+  },
+  "required": [
+    "destination",
+    "next_hop"
+  ]
 }

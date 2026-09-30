@@ -1,0 +1,299 @@
+[
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "static_routing",
+      "parameter_id": "next_hop"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "static_routing",
+      "parameter_id": "preference"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "static_routing",
+      "parameter_id": "destination"
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "add_default_route",
+    "values": {
+      "operation_id": "add_default_route",
+      "display_name": "add default route",
+      "category_id": "static_routing",
+      "aliases": [
+        "add default route"
+      ],
+      "description": "Add an IPv4 default route with a directly connected next hop; preference is not a metric.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Add an IPv4 default route with a directly connected next hop; preference is not a metric."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "add_default_route",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "add_default_route",
+          "operation_version": 1,
+          "category_id": "static_routing",
+          "parameter_id": "next_hop",
+          "field_path": "next_hop",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "add_default_route",
+          "operation_version": 1,
+          "category_id": "static_routing",
+          "parameter_id": "preference",
+          "field_path": "preference",
+          "position": 1,
+          "required": false,
+          "required_order": null
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "add_default_route",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "add_default_route",
+          "operation_version": 1,
+          "field_path": "next_hop",
+          "keywords": {
+            "format": "ipv4"
+          }
+        },
+        {
+          "operation_id": "add_default_route",
+          "operation_version": 1,
+          "field_path": "preference",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 254
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "add_default_route",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/static_routing/add_default_route/template.j2",
+          "input_contract": {
+            "fields": [
+              "next_hop",
+              "preference"
+            ],
+            "optional_defaults": {
+              "preference": null
+            },
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "add_default_route",
+          "operation_version": 1,
+          "vendor": "juniper",
+          "platform": "junos",
+          "versions": [
+            "23.4"
+          ],
+          "template_path": "data/templates/juniper/static_routing/add_default_route/template.j2",
+          "input_contract": {
+            "fields": [
+              "next_hop",
+              "preference"
+            ],
+            "optional_defaults": {
+              "preference": null
+            },
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "add_floating_static_route",
+    "values": {
+      "operation_id": "add_floating_static_route",
+      "display_name": "add floating static route",
+      "category_id": "static_routing",
+      "aliases": [
+        "add floating static route"
+      ],
+      "description": "Add an IPv4 backup route only when a planned primary route and higher explicit preference are confirmed.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Add an IPv4 backup route only when a planned primary route and higher explicit preference are confirmed."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "add_floating_static_route",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "category_id": "static_routing",
+          "parameter_id": "destination",
+          "field_path": "destination",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "category_id": "static_routing",
+          "parameter_id": "next_hop",
+          "field_path": "next_hop",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "category_id": "static_routing",
+          "parameter_id": "preference",
+          "field_path": "preference",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "field_path": "destination",
+          "keywords": {
+            "pattern": "^[0-9.]+/[0-9]{1,2}$"
+          }
+        },
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "field_path": "next_hop",
+          "keywords": {
+            "format": "ipv4"
+          }
+        },
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "field_path": "preference",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 254
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/static_routing/add_floating_static_route/template.j2",
+          "input_contract": {
+            "fields": [
+              "destination",
+              "next_hop",
+              "preference"
+            ],
+            "optional_defaults": {},
+            "derived": {
+              "destination_address": "destination_address_v1",
+              "destination_mask": "destination_mask_v1"
+            }
+          }
+        },
+        {
+          "operation_id": "add_floating_static_route",
+          "operation_version": 1,
+          "vendor": "juniper",
+          "platform": "junos",
+          "versions": [
+            "23.4"
+          ],
+          "template_path": "data/templates/juniper/static_routing/add_floating_static_route/template.j2",
+          "input_contract": {
+            "fields": [
+              "destination",
+              "next_hop",
+              "preference"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,1581 @@
+[
+  {
+    "operation_id": "create_vlan",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/vlan/create_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "vlan_id",
+        "name"
+      ],
+      "optional_defaults": {
+        "name": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "create_vlan",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/vlan/create_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "vlan_id",
+        "name"
+      ],
+      "optional_defaults": {
+        "name": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "create_vlan",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/vlan/create_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "vlan_id",
+        "name"
+      ],
+      "optional_defaults": {
+        "name": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "delete_vlan",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/vlan/delete_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "vlan_id",
+        "name"
+      ],
+      "optional_defaults": {
+        "name": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "delete_vlan",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/vlan/delete_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "vlan_id",
+        "name"
+      ],
+      "optional_defaults": {
+        "name": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "delete_vlan",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/vlan/delete_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "vlan_id",
+        "name"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/configure_ospf/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "router_id",
+        "interfaces"
+      ],
+      "optional_defaults": {
+        "router_id": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/ospf/configure_ospf/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "router_id",
+        "interfaces"
+      ],
+      "optional_defaults": {
+        "router_id": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/ospf/configure_ospf/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "router_id",
+        "interfaces"
+      ],
+      "optional_defaults": {
+        "process_id": null,
+        "router_id": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/remove_ospf_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "interface",
+        "area"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/ospf/remove_ospf_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "interface",
+        "area"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/ospf/remove_ospf_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "interface",
+        "area"
+      ],
+      "optional_defaults": {
+        "process_id": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/bgp/configure_bgp_neighbor/template.j2",
+    "input_contract": {
+      "fields": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as",
+        "description",
+        "peer_group"
+      ],
+      "optional_defaults": {
+        "description": null,
+        "peer_group": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/bgp/configure_bgp_neighbor/template.j2",
+    "input_contract": {
+      "fields": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as",
+        "description",
+        "peer_group"
+      ],
+      "optional_defaults": {
+        "description": null,
+        "peer_group": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/bgp/configure_bgp_neighbor/template.j2",
+    "input_contract": {
+      "fields": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as",
+        "description",
+        "peer_group"
+      ],
+      "optional_defaults": {
+        "description": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/bgp/remove_bgp_neighbor/template.j2",
+    "input_contract": {
+      "fields": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as",
+        "peer_group"
+      ],
+      "optional_defaults": {
+        "peer_group": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/bgp/remove_bgp_neighbor/template.j2",
+    "input_contract": {
+      "fields": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as",
+        "peer_group"
+      ],
+      "optional_defaults": {
+        "peer_group": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/bgp/remove_bgp_neighbor/template.j2",
+    "input_contract": {
+      "fields": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as",
+        "peer_group"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/isis/configure_isis_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_name",
+        "interface",
+        "level"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/isis/configure_isis_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_name",
+        "interface",
+        "level"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/isis/configure_isis_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_name",
+        "interface",
+        "level"
+      ],
+      "optional_defaults": {
+        "process_name": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "disable_isis_interface",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/isis/disable_isis_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_name",
+        "interface"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "disable_isis_interface",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/isis/disable_isis_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_name",
+        "interface"
+      ],
+      "optional_defaults": {
+        "process_name": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "disable_isis_interface",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/isis/disable_isis_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_name",
+        "interface"
+      ],
+      "optional_defaults": {
+        "process_name": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/static_routing/configure_static_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "optional_defaults": {
+        "preference": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/static_routing/configure_static_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "optional_defaults": {
+        "preference": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/static_routing/configure_static_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "optional_defaults": {
+        "preference": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_static_route",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/static_routing/remove_static_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "destination",
+        "next_hop"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_static_route",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/static_routing/remove_static_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "destination",
+        "next_hop"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "remove_static_route",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/static_routing/remove_static_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "destination",
+        "next_hop"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ip_address/configure_interface_ip/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "address",
+        "prefix_length",
+        "admin_up"
+      ],
+      "optional_defaults": {
+        "admin_up": null
+      },
+      "derived": {
+        "netmask": "ipv4_netmask_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/ip_address/configure_interface_ip/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "address",
+        "prefix_length",
+        "admin_up"
+      ],
+      "optional_defaults": {
+        "admin_up": null
+      },
+      "derived": {
+        "netmask": "ipv4_netmask_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/ip_address/configure_interface_ip/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "address",
+        "prefix_length",
+        "admin_up"
+      ],
+      "optional_defaults": {
+        "admin_up": null
+      },
+      "derived": {
+        "netmask": "ipv4_netmask_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ip_address/remove_interface_ip/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "address",
+        "prefix_length"
+      ],
+      "optional_defaults": {},
+      "derived": {
+        "netmask": "ipv4_netmask_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "8"
+    ],
+    "template_path": "data/templates/huawei/ip_address/remove_interface_ip/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "address",
+        "prefix_length"
+      ],
+      "optional_defaults": {},
+      "derived": {
+        "netmask": "ipv4_netmask_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/ip_address/remove_interface_ip/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "address",
+        "prefix_length"
+      ],
+      "optional_defaults": {},
+      "derived": {
+        "netmask": "ipv4_netmask_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "modify_vlan",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/vlan/modify_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "rename_vlan",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/vlan/rename_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "vlan_id",
+        "new_vlan_name"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_interface_description",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/set_interface_description/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "description"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_interface_description",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "V200R024C10"
+    ],
+    "template_path": "data/templates/huawei/interface/set_interface_description/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "description"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_interface_description",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/interface/set_interface_description/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "description"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/set_interface_admin_state/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "admin_up"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "V200R024C10"
+    ],
+    "template_path": "data/templates/huawei/interface/set_interface_admin_state/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "admin_up"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/interface/set_interface_admin_state/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "admin_up"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_access_port",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/configure_access_port/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "vlan_id",
+        "description"
+      ],
+      "optional_defaults": {
+        "description": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/configure_trunk_port/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "allowed_vlans",
+        "native_vlan"
+      ],
+      "optional_defaults": {
+        "native_vlan": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/assign_vlan_to_trunk_port/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "allowed_vlans"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "V200R024C10"
+    ],
+    "template_path": "data/templates/huawei/interface/assign_vlan_to_trunk_port/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "allowed_vlans"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/interface/assign_vlan_to_trunk_port/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "allowed_vlans"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/configure_trunk_allowed_vlans/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "allowed_vlans"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/set_native_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "native_vlan"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "operation_version": 1,
+    "vendor": "huawei",
+    "platform": "vrp",
+    "versions": [
+      "V200R024C10"
+    ],
+    "template_path": "data/templates/huawei/interface/set_native_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "native_vlan"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/interface/set_native_vlan/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "native_vlan"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/configure_loopback_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "interface",
+        "address",
+        "prefix_length",
+        "description"
+      ],
+      "optional_defaults": {
+        "description": null
+      },
+      "derived": {
+        "netmask": "ipv4_netmask_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/interface/configure_port_channel/template.j2",
+    "input_contract": {
+      "fields": [
+        "aggregate_interface",
+        "member_interfaces",
+        "lacp_mode",
+        "description"
+      ],
+      "optional_defaults": {
+        "description": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "add_default_route",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/static_routing/add_default_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "next_hop",
+        "preference"
+      ],
+      "optional_defaults": {
+        "preference": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "add_default_route",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/static_routing/add_default_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "next_hop",
+        "preference"
+      ],
+      "optional_defaults": {
+        "preference": null
+      },
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/static_routing/add_floating_static_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "optional_defaults": {},
+      "derived": {
+        "destination_address": "destination_address_v1",
+        "destination_mask": "destination_mask_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "vendor": "juniper",
+    "platform": "junos",
+    "versions": [
+      "23.4"
+    ],
+    "template_path": "data/templates/juniper/static_routing/add_floating_static_route/template.j2",
+    "input_contract": {
+      "fields": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/enable_ospf_process/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "router_id"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/set_ospf_router_id/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "router_id"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/create_ospf_area/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "area",
+        "area_type"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/assign_interface_to_ospf_area/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "interface",
+        "area"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "advertise_network",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/advertise_network/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "network_prefix",
+        "area"
+      ],
+      "optional_defaults": {},
+      "derived": {
+        "network_address": "network_address_v1",
+        "network_wildcard": "network_wildcard_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/configure_passive_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "interface",
+        "passive"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/ospf/configure_ospf_redistribution/template.j2",
+    "input_contract": {
+      "fields": [
+        "process_id",
+        "redistribution_source",
+        "route_policy",
+        "ospf_metric",
+        "metric_type"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "create_acl",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/acl/create_acl/template.j2",
+    "input_contract": {
+      "fields": [
+        "acl_name",
+        "description"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/acl/add_acl_rule/template.j2",
+    "input_contract": {
+      "fields": [
+        "acl_name",
+        "acl_rule_id",
+        "acl_action",
+        "source_prefix",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "destination_port",
+        "log"
+      ],
+      "optional_defaults": {
+        "source_port": null,
+        "destination_port": null,
+        "log": null
+      },
+      "derived": {
+        "source_address": "acl_source_address_v1",
+        "source_wildcard": "acl_source_wildcard_v1",
+        "acl_destination_address": "acl_destination_address_v1",
+        "acl_destination_wildcard": "acl_destination_wildcard_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/acl/modify_acl_rule/template.j2",
+    "input_contract": {
+      "fields": [
+        "acl_name",
+        "acl_rule_id",
+        "acl_action",
+        "source_prefix",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "destination_port",
+        "log"
+      ],
+      "optional_defaults": {
+        "source_port": null,
+        "destination_port": null,
+        "log": null
+      },
+      "derived": {
+        "source_address": "acl_source_address_v1",
+        "source_wildcard": "acl_source_wildcard_v1",
+        "acl_destination_address": "acl_destination_address_v1",
+        "acl_destination_wildcard": "acl_destination_wildcard_v1"
+      }
+    }
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/acl/delete_acl_rule/template.j2",
+    "input_contract": {
+      "fields": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/acl/apply_acl_to_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "acl_name",
+        "interface",
+        "direction"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/qos/create_qos_policy/template.j2",
+    "input_contract": {
+      "fields": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/qos/create_classifier/template.j2",
+    "input_contract": {
+      "fields": [
+        "classifier_name",
+        "dscp_values",
+        "match_mode"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/qos/classify_by_dscp/template.j2",
+    "input_contract": {
+      "fields": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/qos/configure_scheduler/template.j2",
+    "input_contract": {
+      "fields": [
+        "policy_name",
+        "classifier_name",
+        "bandwidth_bps"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/qos/configure_shaping/template.j2",
+    "input_contract": {
+      "fields": [
+        "policy_name",
+        "interface",
+        "rate_bps",
+        "direction"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/qos/configure_policing/template.j2",
+    "input_contract": {
+      "fields": [
+        "policy_name",
+        "interface",
+        "rate_bps",
+        "burst_bytes",
+        "direction",
+        "exceed_action"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "operation_version": 1,
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "versions": [
+      "17.9"
+    ],
+    "template_path": "data/templates/cisco/qos/apply_qos_policy_to_interface/template.j2",
+    "input_contract": {
+      "fields": [
+        "policy_name",
+        "interface",
+        "direction"
+      ],
+      "optional_defaults": {},
+      "derived": {}
+    }
+  }
+]

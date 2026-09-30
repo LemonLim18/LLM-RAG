@@ -2,10 +2,13 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["interface", "level"],
   "x-required-by-vendor": {
-    "cisco": ["process_name"],
-    "huawei": ["process_name"]
+    "cisco": [
+      "process_name"
+    ],
+    "huawei": [
+      "process_name"
+    ]
   },
   "properties": {
     "process_name": {
@@ -15,12 +18,16 @@
       "type": "string"
     },
     "level": {
-      "type": "string",
       "enum": [
         "level-1",
         "level-2",
         "level-1-2"
-      ]
+      ],
+      "type": "string"
     }
-  }
+  },
+  "required": [
+    "interface",
+    "level"
+  ]
 }

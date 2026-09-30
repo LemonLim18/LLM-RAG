@@ -1,0 +1,219 @@
+{
+  "create_qos_policy": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "policy_name",
+      "policy_terms"
+    ],
+    "resource_keys": [
+      "policy_terms[].classifier_name"
+    ],
+    "composite_keys": [
+      {
+        "kind": "qos_policy",
+        "fields": [
+          "policy_name"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_classifier",
+      "classify_by_dscp",
+      "configure_scheduler",
+      "configure_shaping",
+      "configure_policing",
+      "apply_qos_policy_to_interface"
+    ],
+    "device_policy": "qos_policy_v1"
+  },
+  "create_classifier": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "classifier_name",
+      "dscp_values",
+      "match_mode"
+    ],
+    "resource_keys": [
+      "classifier_name"
+    ],
+    "composite_keys": [
+      {
+        "kind": "qos_classifier",
+        "fields": [
+          "classifier_name"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_qos_policy",
+      "classify_by_dscp",
+      "configure_scheduler",
+      "configure_shaping",
+      "configure_policing",
+      "apply_qos_policy_to_interface"
+    ],
+    "device_policy": "qos_classifier_v1"
+  },
+  "classify_by_dscp": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "classifier_name",
+      "dscp_values",
+      "previous_dscp_values"
+    ],
+    "resource_keys": [
+      "classifier_name"
+    ],
+    "composite_keys": [
+      {
+        "kind": "qos_classifier",
+        "fields": [
+          "classifier_name"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_qos_policy",
+      "create_classifier",
+      "configure_scheduler",
+      "configure_shaping",
+      "configure_policing",
+      "apply_qos_policy_to_interface"
+    ],
+    "device_policy": "qos_dscp_v1"
+  },
+  "configure_scheduler": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "policy_name",
+      "classifier_name",
+      "bandwidth_bps"
+    ],
+    "resource_keys": [
+      "classifier_name"
+    ],
+    "composite_keys": [
+      {
+        "kind": "qos_policy",
+        "fields": [
+          "policy_name"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_qos_policy",
+      "create_classifier",
+      "classify_by_dscp",
+      "configure_shaping",
+      "configure_policing",
+      "apply_qos_policy_to_interface"
+    ],
+    "device_policy": "qos_scheduler_v1"
+  },
+  "configure_shaping": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "policy_name",
+      "rate_bps",
+      "direction"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "qos_attachment",
+        "fields": [
+          "interface",
+          "direction"
+        ]
+      },
+      {
+        "kind": "qos_policy",
+        "fields": [
+          "policy_name"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_qos_policy",
+      "create_classifier",
+      "classify_by_dscp",
+      "configure_scheduler",
+      "configure_policing",
+      "apply_qos_policy_to_interface"
+    ],
+    "device_policy": "qos_shaping_v1"
+  },
+  "configure_policing": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "policy_name",
+      "rate_bps",
+      "burst_bytes",
+      "direction",
+      "exceed_action"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "qos_attachment",
+        "fields": [
+          "interface",
+          "direction"
+        ]
+      },
+      {
+        "kind": "qos_policy",
+        "fields": [
+          "policy_name"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_qos_policy",
+      "create_classifier",
+      "classify_by_dscp",
+      "configure_scheduler",
+      "configure_shaping",
+      "apply_qos_policy_to_interface"
+    ],
+    "device_policy": "qos_policing_v1"
+  },
+  "apply_qos_policy_to_interface": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "policy_name",
+      "direction"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "qos_attachment",
+        "fields": [
+          "interface",
+          "direction"
+        ]
+      },
+      {
+        "kind": "qos_policy",
+        "fields": [
+          "policy_name"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_qos_policy",
+      "create_classifier",
+      "classify_by_dscp",
+      "configure_scheduler",
+      "configure_shaping",
+      "configure_policing"
+    ],
+    "device_policy": "qos_attach_v1"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "add_default_route": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "next_hop",
+      "preference"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "default_next_hop",
+        "fields": [
+          "next_hop"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "add_floating_static_route",
+      "remove_static_route",
+      "configure_static_route"
+    ],
+    "device_policy": "default_route_v1",
+    "resource_constants": [
+      "0.0.0.0/0"
+    ]
+  },
+  "add_floating_static_route": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "destination",
+      "next_hop",
+      "preference"
+    ],
+    "resource_keys": [
+      "destination"
+    ],
+    "composite_keys": [
+      {
+        "kind": "route",
+        "fields": [
+          "destination",
+          "next_hop"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "add_default_route",
+      "remove_static_route",
+      "configure_static_route"
+    ],
+    "device_policy": "floating_route_v1"
+  }
+}

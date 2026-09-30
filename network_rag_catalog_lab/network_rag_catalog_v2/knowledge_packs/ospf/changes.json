@@ -1,0 +1,1066 @@
+[
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "process_id"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "router_id"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "area"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "area_type",
+    "values": {
+      "parameter_id": "area_type",
+      "display_name": "OSPF area type",
+      "value_type": "string",
+      "aliases": [
+        "area type"
+      ],
+      "clarification": "Provide ospf area type."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "area_type"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "interface"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "network_prefix",
+    "values": {
+      "parameter_id": "network_prefix",
+      "display_name": "OSPF network prefix",
+      "value_type": "string",
+      "aliases": [
+        "network prefix"
+      ],
+      "clarification": "Provide ospf network prefix."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "network_prefix"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "passive",
+    "values": {
+      "parameter_id": "passive",
+      "display_name": "Passive interface",
+      "value_type": "boolean",
+      "aliases": [
+        "passive"
+      ],
+      "clarification": "Provide passive interface."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "passive"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "redistribution_source",
+    "values": {
+      "parameter_id": "redistribution_source",
+      "display_name": "Redistribution source",
+      "value_type": "string",
+      "aliases": [
+        "redistribution source"
+      ],
+      "clarification": "Provide redistribution source."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "redistribution_source"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "route_policy",
+    "values": {
+      "parameter_id": "route_policy",
+      "display_name": "Route policy",
+      "value_type": "string",
+      "aliases": [
+        "route policy"
+      ],
+      "clarification": "Provide route policy."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "route_policy"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "ospf_metric",
+    "values": {
+      "parameter_id": "ospf_metric",
+      "display_name": "OSPF external metric",
+      "value_type": "integer",
+      "aliases": [
+        "ospf metric"
+      ],
+      "clarification": "Provide ospf external metric."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "ospf_metric"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "metric_type",
+    "values": {
+      "parameter_id": "metric_type",
+      "display_name": "OSPF external metric type",
+      "value_type": "string",
+      "aliases": [
+        "metric type"
+      ],
+      "clarification": "Provide ospf external metric type."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "ospf",
+      "parameter_id": "metric_type"
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "enable_ospf_process",
+    "values": {
+      "operation_id": "enable_ospf_process",
+      "display_name": "enable ospf process",
+      "category_id": "ospf",
+      "aliases": [
+        "initialize ospf process"
+      ],
+      "description": "Initialize a new IPv4 OSPF process with an explicit router ID; no interface participation is implied.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Initialize a new IPv4 OSPF process with an explicit router ID; no interface participation is implied."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "enable_ospf_process",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "enable_ospf_process",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "process_id",
+          "field_path": "process_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "enable_ospf_process",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "router_id",
+          "field_path": "router_id",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "enable_ospf_process",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "enable_ospf_process",
+          "operation_version": 1,
+          "field_path": "process_id",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "enable_ospf_process",
+          "operation_version": 1,
+          "field_path": "router_id",
+          "keywords": {
+            "format": "ipv4"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "enable_ospf_process",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/ospf/enable_ospf_process/template.j2",
+          "input_contract": {
+            "fields": [
+              "process_id",
+              "router_id"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "set_ospf_router_id",
+    "values": {
+      "operation_id": "set_ospf_router_id",
+      "display_name": "set ospf router id",
+      "category_id": "ospf",
+      "aliases": [
+        "set ospf router id"
+      ],
+      "description": "Set the router ID on an existing OSPF process; no process restart is performed.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Set the router ID on an existing OSPF process; no process restart is performed."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "set_ospf_router_id",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "set_ospf_router_id",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "process_id",
+          "field_path": "process_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "set_ospf_router_id",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "router_id",
+          "field_path": "router_id",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "set_ospf_router_id",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "set_ospf_router_id",
+          "operation_version": 1,
+          "field_path": "process_id",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "set_ospf_router_id",
+          "operation_version": 1,
+          "field_path": "router_id",
+          "keywords": {
+            "format": "ipv4"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "set_ospf_router_id",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/ospf/set_ospf_router_id/template.j2",
+          "input_contract": {
+            "fields": [
+              "process_id",
+              "router_id"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "create_ospf_area",
+    "values": {
+      "operation_id": "create_ospf_area",
+      "display_name": "create ospf area",
+      "category_id": "ospf",
+      "aliases": [
+        "create ospf area"
+      ],
+      "description": "Create a non-backbone stub area policy in a confirmed process; neighboring router consistency is not inferred.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Create a non-backbone stub area policy in a confirmed process; neighboring router consistency is not inferred."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "create_ospf_area",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "create_ospf_area",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "process_id",
+          "field_path": "process_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "create_ospf_area",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "area",
+          "field_path": "area",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "create_ospf_area",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "area_type",
+          "field_path": "area_type",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "create_ospf_area",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "create_ospf_area",
+          "operation_version": 1,
+          "field_path": "process_id",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "create_ospf_area",
+          "operation_version": 1,
+          "field_path": "area",
+          "keywords": {
+            "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$"
+          }
+        },
+        {
+          "operation_id": "create_ospf_area",
+          "operation_version": 1,
+          "field_path": "area_type",
+          "keywords": {
+            "enum": [
+              "stub"
+            ]
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "create_ospf_area",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/ospf/create_ospf_area/template.j2",
+          "input_contract": {
+            "fields": [
+              "process_id",
+              "area",
+              "area_type"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "assign_interface_to_ospf_area",
+    "values": {
+      "operation_id": "assign_interface_to_ospf_area",
+      "display_name": "assign interface to ospf area",
+      "category_id": "ospf",
+      "aliases": [
+        "assign interface to ospf area"
+      ],
+      "description": "Assign an addressed routed interface to a confirmed OSPF process and area.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Assign an addressed routed interface to a confirmed OSPF process and area."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "assign_interface_to_ospf_area",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "assign_interface_to_ospf_area",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "process_id",
+          "field_path": "process_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "assign_interface_to_ospf_area",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "assign_interface_to_ospf_area",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "area",
+          "field_path": "area",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "assign_interface_to_ospf_area",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "assign_interface_to_ospf_area",
+          "operation_version": 1,
+          "field_path": "process_id",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "assign_interface_to_ospf_area",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "assign_interface_to_ospf_area",
+          "operation_version": 1,
+          "field_path": "area",
+          "keywords": {
+            "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "assign_interface_to_ospf_area",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/ospf/assign_interface_to_ospf_area/template.j2",
+          "input_contract": {
+            "fields": [
+              "process_id",
+              "interface",
+              "area"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "advertise_network",
+    "values": {
+      "operation_id": "advertise_network",
+      "display_name": "advertise network",
+      "category_id": "ospf",
+      "aliases": [
+        "advertise network"
+      ],
+      "description": "Select recorded interfaces for OSPF with an exact IPv4 network selector, not arbitrary route injection.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Select recorded interfaces for OSPF with an exact IPv4 network selector, not arbitrary route injection."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "advertise_network",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "advertise_network",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "process_id",
+          "field_path": "process_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "advertise_network",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "network_prefix",
+          "field_path": "network_prefix",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "advertise_network",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "area",
+          "field_path": "area",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "advertise_network",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "advertise_network",
+          "operation_version": 1,
+          "field_path": "process_id",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "advertise_network",
+          "operation_version": 1,
+          "field_path": "network_prefix",
+          "keywords": {
+            "pattern": "^[0-9.]+/[0-9]{1,2}$"
+          }
+        },
+        {
+          "operation_id": "advertise_network",
+          "operation_version": 1,
+          "field_path": "area",
+          "keywords": {
+            "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "advertise_network",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/ospf/advertise_network/template.j2",
+          "input_contract": {
+            "fields": [
+              "process_id",
+              "network_prefix",
+              "area"
+            ],
+            "optional_defaults": {},
+            "derived": {
+              "network_address": "network_address_v1",
+              "network_wildcard": "network_wildcard_v1"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_passive_interface",
+    "values": {
+      "operation_id": "configure_passive_interface",
+      "display_name": "configure passive interface",
+      "category_id": "ospf",
+      "aliases": [
+        "configure passive interface"
+      ],
+      "description": "Set or remove passive state on a confirmed OSPF member; preserve route advertisement.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Set or remove passive state on a confirmed OSPF member; preserve route advertisement."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_passive_interface",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_passive_interface",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "process_id",
+          "field_path": "process_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_passive_interface",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_passive_interface",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "passive",
+          "field_path": "passive",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_passive_interface",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "configure_passive_interface",
+          "operation_version": 1,
+          "field_path": "process_id",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "configure_passive_interface",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "configure_passive_interface",
+          "operation_version": 1,
+          "field_path": "passive",
+          "keywords": {}
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_passive_interface",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/ospf/configure_passive_interface/template.j2",
+          "input_contract": {
+            "fields": [
+              "process_id",
+              "interface",
+              "passive"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_ospf_redistribution",
+    "values": {
+      "operation_id": "configure_ospf_redistribution",
+      "display_name": "configure ospf redistribution",
+      "category_id": "ospf",
+      "aliases": [
+        "configure ospf redistribution"
+      ],
+      "description": "Redistribute only connected or static IPv4 routes through a confirmed bounded default-deny route map, with explicit metric and type.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Redistribute only connected or static IPv4 routes through a confirmed bounded default-deny route map, with explicit metric and type."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_ospf_redistribution",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "process_id",
+          "field_path": "process_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "redistribution_source",
+          "field_path": "redistribution_source",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "route_policy",
+          "field_path": "route_policy",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "ospf_metric",
+          "field_path": "ospf_metric",
+          "position": 3,
+          "required": true,
+          "required_order": 3
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "category_id": "ospf",
+          "parameter_id": "metric_type",
+          "field_path": "metric_type",
+          "position": 4,
+          "required": true,
+          "required_order": 4
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "field_path": "process_id",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "field_path": "redistribution_source",
+          "keywords": {
+            "enum": [
+              "connected",
+              "static"
+            ]
+          }
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "field_path": "route_policy",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "field_path": "ospf_metric",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 16777214
+          }
+        },
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "field_path": "metric_type",
+          "keywords": {
+            "enum": [
+              "1",
+              "2"
+            ]
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_ospf_redistribution",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/ospf/configure_ospf_redistribution/template.j2",
+          "input_contract": {
+            "fields": [
+              "process_id",
+              "redistribution_source",
+              "route_policy",
+              "ospf_metric",
+              "metric_type"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  }
+]

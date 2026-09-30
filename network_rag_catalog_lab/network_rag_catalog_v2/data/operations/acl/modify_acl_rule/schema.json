@@ -1,0 +1,252 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "acl_name": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+      "type": "string"
+    },
+    "acl_rule_id": {
+      "minimum": 10,
+      "maximum": 2147483647,
+      "type": "integer"
+    },
+    "acl_action": {
+      "enum": [
+        "permit",
+        "deny"
+      ],
+      "type": "string"
+    },
+    "source_prefix": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$",
+      "type": "string"
+    },
+    "destination_prefix": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$",
+      "type": "string"
+    },
+    "ip_protocol": {
+      "enum": [
+        "ip",
+        "tcp",
+        "udp",
+        "icmp"
+      ],
+      "type": "string"
+    },
+    "source_port": {
+      "minimum": 0,
+      "maximum": 65535,
+      "type": "integer"
+    },
+    "destination_port": {
+      "minimum": 0,
+      "maximum": 65535,
+      "type": "integer"
+    },
+    "log": {
+      "type": "boolean"
+    },
+    "next_rule_id": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647,
+      "description": "Next existing Junos numeric term ID in evaluation order, or 0 to append."
+    }
+  },
+  "required": [
+    "acl_name",
+    "acl_rule_id",
+    "acl_action",
+    "source_prefix",
+    "destination_prefix",
+    "ip_protocol"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "acl_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "acl_rule_id": {
+          "minimum": 10,
+          "maximum": 2147483647,
+          "type": "integer"
+        },
+        "acl_action": {
+          "enum": [
+            "permit",
+            "deny"
+          ],
+          "type": "string"
+        },
+        "source_prefix": {
+          "pattern": "^[0-9.]+/[0-9]{1,2}$",
+          "type": "string"
+        },
+        "destination_prefix": {
+          "pattern": "^[0-9.]+/[0-9]{1,2}$",
+          "type": "string"
+        },
+        "ip_protocol": {
+          "enum": [
+            "ip",
+            "tcp",
+            "udp",
+            "icmp"
+          ],
+          "type": "string"
+        },
+        "source_port": {
+          "minimum": 0,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "destination_port": {
+          "minimum": 0,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "log": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "acl_name",
+        "acl_rule_id",
+        "acl_action",
+        "source_prefix",
+        "destination_prefix",
+        "ip_protocol"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "acl_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "acl_rule_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967294
+        },
+        "acl_action": {
+          "enum": [
+            "permit",
+            "deny"
+          ],
+          "type": "string"
+        },
+        "source_prefix": {
+          "pattern": "^[0-9.]+/[0-9]{1,2}$",
+          "type": "string"
+        },
+        "destination_prefix": {
+          "pattern": "^[0-9.]+/[0-9]{1,2}$",
+          "type": "string"
+        },
+        "ip_protocol": {
+          "enum": [
+            "ip",
+            "tcp",
+            "udp",
+            "icmp"
+          ],
+          "type": "string"
+        },
+        "source_port": {
+          "minimum": 0,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "destination_port": {
+          "minimum": 0,
+          "maximum": 65535,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "acl_name",
+        "acl_rule_id",
+        "acl_action",
+        "source_prefix",
+        "destination_prefix",
+        "ip_protocol"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "acl_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "acl_rule_id": {
+          "minimum": 10,
+          "maximum": 2147483647,
+          "type": "integer"
+        },
+        "acl_action": {
+          "enum": [
+            "permit",
+            "deny"
+          ],
+          "type": "string"
+        },
+        "source_prefix": {
+          "pattern": "^[0-9.]+/[0-9]{1,2}$",
+          "type": "string"
+        },
+        "destination_prefix": {
+          "pattern": "^[0-9.]+/[0-9]{1,2}$",
+          "type": "string"
+        },
+        "ip_protocol": {
+          "enum": [
+            "ip",
+            "tcp",
+            "udp",
+            "icmp"
+          ],
+          "type": "string"
+        },
+        "next_rule_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647,
+          "description": "Next existing Junos numeric term ID in evaluation order, or 0 to append."
+        },
+        "source_port": {
+          "minimum": 0,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "destination_port": {
+          "minimum": 0,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "log": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "acl_name",
+        "acl_rule_id",
+        "acl_action",
+        "source_prefix",
+        "destination_prefix",
+        "ip_protocol",
+        "next_rule_id"
+      ]
+    }
+  }
+}

@@ -11,9 +11,15 @@ from app.devices.target_resolver import resolve_queries
 from app.pipeline import _finalize_task, next_clarification_prompt, plan_to_dict, resume_task, run
 from app.planner.intent_planner import plan_intents
 from app.planner.models import ExecutionPlan
+from app.knowledge.runtime import snapshot_scope
 
 
 class TargetResolutionTests(unittest.TestCase):
+    def setUp(self):
+        self.enterContext(snapshot_scope(None))
+        for target in ("app.llm.llm", "app.planner.intent_planner.llm", "app.parameters.parameter_extractor.llm"):
+            self.enterContext(patch(target)).invoke.return_value.content = "null"
+
     def resolve(self, prompt, inventory=None):
         inventory = load_inventory() if inventory is None else inventory
         queries = extract_target_queries(prompt, inventory)

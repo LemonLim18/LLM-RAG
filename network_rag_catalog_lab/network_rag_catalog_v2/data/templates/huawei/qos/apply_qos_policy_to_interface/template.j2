@@ -1,0 +1,3 @@
+interface {{ interface }}
+ traffic-policy {{ policy_name }} {{ 'inbound' if direction == 'ingress' else 'outbound' }}
+quit

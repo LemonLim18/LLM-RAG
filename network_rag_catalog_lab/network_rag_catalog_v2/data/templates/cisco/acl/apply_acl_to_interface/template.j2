@@ -1,0 +1,3 @@
+interface {{ interface }}
+ ip access-group {{ acl_name }} {% if direction == 'ingress' %}in{% else %}out{% endif +%}
+ exit

@@ -1,0 +1,54 @@
+{
+  "format_version": 1,
+  "vendors": ["cisco", "huawei", "juniper"],
+  "categories": {
+    "vlan": ["create_vlan", "modify_vlan", "rename_vlan", "delete_vlan"],
+    "interface": ["set_interface_description", "set_interface_admin_state", "configure_access_port", "configure_trunk_port", "assign_vlan_to_trunk_port", "configure_trunk_allowed_vlans", "set_native_vlan", "configure_loopback_interface", "configure_port_channel"],
+    "static_routing": ["configure_static_route", "remove_static_route", "add_default_route", "add_floating_static_route"],
+    "ospf": ["configure_ospf", "remove_ospf_interface", "enable_ospf_process", "set_ospf_router_id", "create_ospf_area", "assign_interface_to_ospf_area", "advertise_network", "configure_passive_interface", "configure_ospf_redistribution"],
+    "acl": ["create_acl", "add_acl_rule", "modify_acl_rule", "delete_acl_rule", "apply_acl_to_interface"],
+    "qos": ["create_qos_policy", "create_classifier", "classify_by_dscp", "configure_scheduler", "configure_shaping", "configure_policing", "apply_qos_policy_to_interface"]
+  },
+  "blocked_requirements": {
+    "vlan": {
+      "huawei": ["Review the CloudEngine VLAN object command and its existing-name/state semantics; do not substitute VLANIF shutdown for Layer-2 VLAN state."],
+      "juniper": ["Resolve the numeric VLAN ID to the existing Junos VLAN object and its references; review rename/deactivation semantics separately from Cisco state suspend."]
+    },
+    "interface": {
+      "huawei": ["Implement and validate the VRP access/trunk replacement, LoopBack or routed Eth-Trunk contract for this operation; preserve unrelated interface configuration."],
+      "juniper": ["Implement and validate the ELS membership replacement, lo0 unit or routed ae/LACP contract for this operation; prove logical-unit and aggregate prerequisites."]
+    },
+    "static_routing": {
+      "huawei": ["Bind a reviewed VRP default/floating-route template, including preference limits and directly connected next-hop/primary-route checks."],
+      "juniper": ["Review the Junos route and qualified-next-hop preference contract for the selected platform."]
+    },
+    "ospf": {
+      "huawei": ["Implement the operation-specific VRP process/area/interface or import-route template with confirmed process, area and bounded route-policy facts."],
+      "juniper": ["Define explicit Junos routing-instance scope instead of treating Cisco process IDs as native Junos process IDs; validate interface/area membership and export-policy effects."]
+    },
+    "acl": {
+      "huawei": ["Implement a named advanced IPv4 ACL contract with validated rule identity/order, complete replacement semantics and attachment behavior, including the unmatched-traffic action."],
+      "juniper": ["Define the inet filter/term identity, ordering, unmatched-traffic action and logical attachment unit; do not assume Cisco sequence numbers are native Junos term identities."]
+    },
+    "qos": {
+      "huawei": ["Define the traffic-classifier/behavior/policy and queue mapping explicitly, including rate units, burst limits and supported attachment directions; Cisco MQC bandwidth is not a portable queue contract."],
+      "juniper": ["Define forwarding classes, loss priority, queues, scheduler maps and policer attachment explicitly; a Cisco policy-map is not a Junos scheduler map."]
+    }
+  },
+  "operation_requirements": {
+    "modify_vlan": ["The current operation changes active/suspend state only. A native equivalent has not been verified for this profile; this is not a claim that the vendor lacks VLAN management."],
+    "rename_vlan": ["Confirm existing VLAN identity, name collisions and references before emitting a rename."],
+    "configure_trunk_allowed_vlans": ["Replacement must remove obsolete members; additive-only syntax does not fulfill this operation."],
+    "configure_port_channel": ["Require clean compatible members, explicit LACP mode and aggregate capacity; do not silently convert routed/switchport modes."],
+    "enable_ospf_process": ["Do not invent a process identifier, router ID or instance, or emit an empty non-persistent configuration hierarchy."],
+    "advertise_network": ["Confirm which addressed interfaces the prefix selects; do not replace interface participation with unrestricted redistribution."],
+    "configure_ospf_redistribution": ["Require a source-specific, bounded default-deny export policy and explicit metric semantics."],
+    "create_acl": ["Review how an empty or description-only object persists and behaves before later attachment."],
+    "modify_acl_rule": ["The existing contract requires a complete replacement rule, not an inferred partial update."],
+    "create_qos_policy": ["The existing contract includes explicit policy terms and bandwidth reservations; creating only an empty vendor policy is not equivalent."],
+    "classify_by_dscp": ["Confirm the exact previous DSCP set and detached classifier before replacement."],
+    "configure_scheduler": ["The existing contract edits a detached policy class's absolute bandwidth; define the equivalent vendor queue/scheduler scope before activation."],
+    "configure_shaping": ["Review egress shaping attachment, whole-interface impact, rate granularity and existing policy collisions."],
+    "configure_policing": ["Review ingress policing, burst units, exceed action and hardware limits; never assume the Cisco values have identical vendor meaning."]
+  }
+}

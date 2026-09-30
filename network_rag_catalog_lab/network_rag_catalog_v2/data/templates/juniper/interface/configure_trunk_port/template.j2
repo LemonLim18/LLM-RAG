@@ -1,0 +1,6 @@
+delete interfaces {{ interface }} unit 0 family ethernet-switching vlan members
+set interfaces {{ interface }} unit 0 family ethernet-switching interface-mode trunk
+set interfaces {{ interface }} unit 0 family ethernet-switching vlan members [ {{ allowed_vlans | join(' ') }} ]
+{% if native_vlan is not none %}
+set interfaces {{ interface }} native-vlan-id {{ native_vlan }}
+{% endif %}

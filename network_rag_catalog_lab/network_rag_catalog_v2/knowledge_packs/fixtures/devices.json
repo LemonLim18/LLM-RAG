@@ -1,0 +1,922 @@
+[
+  {
+    "id": "lab-sw1",
+    "hostname": "SW1",
+    "kind": "switch",
+    "display_name": "Isolated C9300 lab fixture",
+    "aliases": [
+      "lab switch 1"
+    ],
+    "role": "access",
+    "site": "Lab",
+    "location": "Isolated rehearsal",
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "version": "17.9",
+    "model_family": "catalyst9300",
+    "management_ip": "192.0.2.10",
+    "status": "active",
+    "tags": [
+      "lab",
+      "switching"
+    ],
+    "source_refs": {
+      "fixture": "knowledge_packs/fixtures/devices.json; planned demonstration facts, not discovery"
+    },
+    "capabilities": {
+      "features": [
+        "interface",
+        "vlan",
+        "ip_address",
+        "static_routing",
+        "ospf",
+        "acl",
+        "qos"
+      ],
+      "validated_policies": [
+        "c9300_vlan_state_v1",
+        "c9300_vlan_rename_v1",
+        "physical_interface_v1",
+        "c9300_access_v1",
+        "c9300_trunk_setup_v1",
+        "switchport_trunk_add_v1",
+        "c9300_trunk_replace_v1",
+        "switchport_native_vlan_v1",
+        "c9300_loopback_v1",
+        "c9300_routed_lag_v1",
+        "default_route_v1",
+        "floating_route_v1",
+        "ospf_enable_v1",
+        "ospf_router_id_v1",
+        "ospf_area_v1",
+        "ospf_interface_v1",
+        "ospf_network_v1",
+        "ospf_passive_v1",
+        "ospf_redistribute_v1",
+        "acl_create_v1",
+        "acl_add_v1",
+        "acl_modify_v1",
+        "acl_delete_v1",
+        "acl_attach_v1",
+        "qos_policy_v1",
+        "qos_classifier_v1",
+        "qos_dscp_v1",
+        "qos_scheduler_v1",
+        "qos_shaping_v1",
+        "qos_policing_v1",
+        "qos_attach_v1"
+      ],
+      "vtp_mode": "transparent",
+      "qos_queue_count": 8
+    },
+    "vlans": [
+      {
+        "vlan_id": 1,
+        "name": "DEFAULT"
+      },
+      {
+        "vlan_id": 10,
+        "name": "USERS"
+      },
+      {
+        "vlan_id": 20,
+        "name": "STAFF"
+      },
+      {
+        "vlan_id": 30,
+        "name": "VOICE"
+      }
+    ],
+    "interfaces": [
+      {
+        "name": "GigabitEthernet1/0/1",
+        "aliases": [
+          "Gi1/0/1"
+        ],
+        "type": "ethernet",
+        "role": "switchport",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "access",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500
+      },
+      {
+        "name": "GigabitEthernet1/0/2",
+        "aliases": [
+          "Gi1/0/2"
+        ],
+        "type": "ethernet",
+        "role": "switchport",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "trunk",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500
+      },
+      {
+        "name": "GigabitEthernet1/0/3",
+        "aliases": [
+          "Gi1/0/3"
+        ],
+        "type": "ethernet",
+        "role": "routed_member",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "routing_context": "default"
+      },
+      {
+        "name": "GigabitEthernet1/0/4",
+        "aliases": [
+          "Gi1/0/4"
+        ],
+        "type": "ethernet",
+        "role": "routed_member",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "routing_context": "default"
+      },
+      {
+        "name": "Loopback0",
+        "aliases": [
+          "Lo0"
+        ],
+        "type": "loopback",
+        "enabled": true,
+        "role": "routing_id"
+      },
+      {
+        "name": "GigabitEthernet1/0/5",
+        "aliases": [
+          "Gi1/0/5"
+        ],
+        "type": "ethernet",
+        "role": "uplink",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [
+          "192.0.2.1/24"
+        ],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "ospf": {
+          "process_id": 100,
+          "area": "0"
+        },
+        "acl_bindings": {
+          "ingress": null,
+          "egress": null
+        },
+        "qos_bindings": {
+          "ingress": null,
+          "egress": null
+        },
+        "qos_directions": [
+          "ingress",
+          "egress"
+        ],
+        "routing_context": "default"
+      }
+    ],
+    "resources": {
+      "complete": true,
+      "source_ref": "fixture:planned-v1:not-discovered",
+      "routes": [
+        {
+          "id": "primary-1050",
+          "destination": "10.50.0.0/16",
+          "next_hop": "192.0.2.3",
+          "preference": 10,
+          "primary": true
+        }
+      ],
+      "ospf_processes": [
+        {
+          "process_id": 100,
+          "router_id": "192.0.2.10",
+          "areas": {
+            "0": "normal"
+          }
+        }
+      ],
+      "route_policies": [
+        {
+          "name": "LIMITED",
+          "sources": [
+            "static"
+          ],
+          "bounded": true,
+          "default_action": "deny",
+          "allowed_prefixes": [
+            "10.50.0.0/16"
+          ]
+        }
+      ],
+      "acls": [
+        {
+          "name": "STAFF",
+          "family": "ipv4_extended",
+          "rules": [
+            {
+              "acl_rule_id": 1,
+              "kind": "remark"
+            },
+            {
+              "acl_rule_id": 10,
+              "kind": "ace"
+            }
+          ]
+        },
+        {
+          "name": "GUEST",
+          "family": "ipv4_extended",
+          "rules": [
+            {
+              "acl_rule_id": 10,
+              "kind": "ace"
+            }
+          ]
+        }
+      ],
+      "classifiers": [
+        {
+          "name": "VOICE",
+          "match_type": "dscp",
+          "match_mode": "any",
+          "dscp_values": [
+            46
+          ],
+          "attachments": []
+        }
+      ],
+      "qos_policies": [
+        {
+          "name": "QOS_BASE",
+          "kind": "bandwidth",
+          "classes": {
+            "VOICE": 20000000
+          },
+          "attachments": []
+        }
+      ],
+      "routing_context": "default"
+    }
+  },
+  {
+    "id": "lab-sw2",
+    "hostname": "SW2",
+    "kind": "switch",
+    "display_name": "Isolated ce6800 planned fixture",
+    "aliases": [
+      "lab switch 2"
+    ],
+    "role": "access",
+    "site": "Lab",
+    "location": "Isolated rehearsal",
+    "vendor": "huawei",
+    "platform": "vrp",
+    "version": "V200R024C10",
+    "model_family": "ce6800",
+    "management_ip": "192.0.2.20",
+    "status": "active",
+    "tags": [
+      "lab",
+      "switching"
+    ],
+    "source_refs": {
+      "fixture": "knowledge_packs/fixtures/devices.json; planned demonstration facts, not discovery"
+    },
+    "capabilities": {
+      "features": [
+        "interface",
+        "vlan",
+        "ip_address",
+        "static_routing",
+        "ospf",
+        "acl",
+        "qos"
+      ],
+      "validated_policies": [
+        "physical_interface_v1",
+        "switchport_trunk_add_v1",
+        "switchport_native_vlan_v1"
+      ],
+      "vtp_mode": "transparent",
+      "qos_queue_count": 8
+    },
+    "vlans": [
+      {
+        "vlan_id": 1,
+        "name": "DEFAULT"
+      },
+      {
+        "vlan_id": 10,
+        "name": "USERS"
+      },
+      {
+        "vlan_id": 20,
+        "name": "STAFF"
+      },
+      {
+        "vlan_id": 30,
+        "name": "VOICE"
+      }
+    ],
+    "interfaces": [
+      {
+        "name": "10GE1/0/1",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "switchport",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "access",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching"
+      },
+      {
+        "name": "10GE1/0/2",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "switchport",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "trunk",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching"
+      },
+      {
+        "name": "10GE1/0/3",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "routed_member",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching",
+        "routing_context": "default"
+      },
+      {
+        "name": "10GE1/0/4",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "routed_member",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching",
+        "routing_context": "default"
+      },
+      {
+        "name": "10GE1/0/5",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "uplink",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [
+          "192.0.2.1/24"
+        ],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "ospf": {
+          "process_id": 100,
+          "area": "0"
+        },
+        "acl_bindings": {
+          "ingress": null,
+          "egress": null
+        },
+        "qos_bindings": {
+          "ingress": null,
+          "egress": null
+        },
+        "qos_directions": [
+          "ingress",
+          "egress"
+        ],
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching",
+        "routing_context": "default"
+      }
+    ],
+    "resources": {
+      "complete": true,
+      "source_ref": "fixture:planned-v1:not-discovered",
+      "routes": [
+        {
+          "id": "primary-1050",
+          "destination": "10.50.0.0/16",
+          "next_hop": "192.0.2.3",
+          "preference": 10,
+          "primary": true
+        }
+      ],
+      "ospf_processes": [
+        {
+          "process_id": 100,
+          "router_id": "192.0.2.10",
+          "areas": {
+            "0": "normal"
+          }
+        }
+      ],
+      "route_policies": [
+        {
+          "name": "LIMITED",
+          "sources": [
+            "static"
+          ],
+          "bounded": true,
+          "default_action": "deny",
+          "allowed_prefixes": [
+            "10.50.0.0/16"
+          ]
+        }
+      ],
+      "acls": [
+        {
+          "name": "STAFF",
+          "family": "ipv4_extended",
+          "rules": [
+            {
+              "acl_rule_id": 1,
+              "kind": "remark"
+            },
+            {
+              "acl_rule_id": 10,
+              "kind": "ace"
+            }
+          ]
+        },
+        {
+          "name": "GUEST",
+          "family": "ipv4_extended",
+          "rules": [
+            {
+              "acl_rule_id": 10,
+              "kind": "ace"
+            }
+          ]
+        }
+      ],
+      "classifiers": [
+        {
+          "name": "VOICE",
+          "match_type": "dscp",
+          "match_mode": "any",
+          "dscp_values": [
+            46
+          ],
+          "attachments": []
+        }
+      ],
+      "qos_policies": [
+        {
+          "name": "QOS_BASE",
+          "kind": "bandwidth",
+          "classes": {
+            "VOICE": 20000000
+          },
+          "attachments": []
+        }
+      ],
+      "routing_context": "default"
+    }
+  },
+  {
+    "id": "lab-sw3",
+    "hostname": "SW3",
+    "kind": "switch",
+    "display_name": "Isolated ex4300 planned fixture",
+    "aliases": [
+      "lab switch 3"
+    ],
+    "role": "access",
+    "site": "Lab",
+    "location": "Isolated rehearsal",
+    "vendor": "juniper",
+    "platform": "junos",
+    "version": "23.4",
+    "model_family": "ex4300",
+    "management_ip": "192.0.2.30",
+    "status": "active",
+    "tags": [
+      "lab",
+      "switching"
+    ],
+    "source_refs": {
+      "fixture": "knowledge_packs/fixtures/devices.json; planned demonstration facts, not discovery"
+    },
+    "capabilities": {
+      "features": [
+        "interface",
+        "vlan",
+        "ip_address",
+        "static_routing",
+        "ospf",
+        "acl",
+        "qos"
+      ],
+      "validated_policies": [
+        "physical_interface_v1",
+        "switchport_trunk_add_v1",
+        "switchport_native_vlan_v1",
+        "default_route_v1",
+        "floating_route_v1"
+      ],
+      "vtp_mode": "transparent",
+      "qos_queue_count": 8
+    },
+    "vlans": [
+      {
+        "vlan_id": 1,
+        "name": "DEFAULT"
+      },
+      {
+        "vlan_id": 10,
+        "name": "USERS"
+      },
+      {
+        "vlan_id": 20,
+        "name": "STAFF"
+      },
+      {
+        "vlan_id": 30,
+        "name": "VOICE"
+      }
+    ],
+    "interfaces": [
+      {
+        "name": "ge-0/0/1",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "switchport",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "access",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching"
+      },
+      {
+        "name": "ge-0/0/2",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "switchport",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "trunk",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching"
+      },
+      {
+        "name": "ge-0/0/3",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "routed_member",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching",
+        "routing_context": "default"
+      },
+      {
+        "name": "ge-0/0/4",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "routed_member",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching",
+        "routing_context": "default"
+      },
+      {
+        "name": "ge-0/0/5",
+        "aliases": [],
+        "type": "ethernet",
+        "role": "uplink",
+        "enabled": true,
+        "switchport_capable": true,
+        "switchport_mode": "routed",
+        "native_vlan": 1,
+        "allowed_vlans": [
+          1,
+          10,
+          20
+        ],
+        "aggregate": null,
+        "ip_addresses": [
+          "192.0.2.1/24"
+        ],
+        "service_bindings": [],
+        "lag_capable": true,
+        "speed_mbps": 1000,
+        "duplex": "full",
+        "mtu": 1500,
+        "ospf": {
+          "process_id": 100,
+          "area": "0"
+        },
+        "acl_bindings": {
+          "ingress": null,
+          "egress": null
+        },
+        "qos_bindings": {
+          "ingress": null,
+          "egress": null
+        },
+        "qos_directions": [
+          "ingress",
+          "egress"
+        ],
+        "logical_units": [
+          0
+        ],
+        "encapsulation": "ethernet-switching",
+        "routing_context": "default"
+      }
+    ],
+    "resources": {
+      "complete": true,
+      "source_ref": "fixture:planned-v1:not-discovered",
+      "routes": [
+        {
+          "id": "primary-1050",
+          "destination": "10.50.0.0/16",
+          "next_hop": "192.0.2.3",
+          "preference": 10,
+          "primary": true
+        }
+      ],
+      "ospf_processes": [
+        {
+          "process_id": 100,
+          "router_id": "192.0.2.10",
+          "areas": {
+            "0": "normal"
+          }
+        }
+      ],
+      "route_policies": [
+        {
+          "name": "LIMITED",
+          "sources": [
+            "static"
+          ],
+          "bounded": true,
+          "default_action": "deny",
+          "allowed_prefixes": [
+            "10.50.0.0/16"
+          ]
+        }
+      ],
+      "acls": [
+        {
+          "name": "STAFF",
+          "family": "ipv4_extended",
+          "rules": [
+            {
+              "acl_rule_id": 1,
+              "kind": "remark"
+            },
+            {
+              "acl_rule_id": 10,
+              "kind": "ace"
+            }
+          ]
+        },
+        {
+          "name": "GUEST",
+          "family": "ipv4_extended",
+          "rules": [
+            {
+              "acl_rule_id": 10,
+              "kind": "ace"
+            }
+          ]
+        }
+      ],
+      "classifiers": [
+        {
+          "name": "VOICE",
+          "match_type": "dscp",
+          "match_mode": "any",
+          "dscp_values": [
+            46
+          ],
+          "attachments": []
+        }
+      ],
+      "qos_policies": [
+        {
+          "name": "QOS_BASE",
+          "kind": "bandwidth",
+          "classes": {
+            "VOICE": 20000000
+          },
+          "attachments": []
+        }
+      ],
+      "routing_context": "default"
+    }
+  }
+]

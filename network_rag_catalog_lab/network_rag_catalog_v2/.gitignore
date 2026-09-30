@@ -3,4 +3,10 @@ __pycache__/
 .venv/
 storage/chroma/
 storage/sessions/
+storage/catalog_releases/
+storage/catalog_authoring/
+storage/knowledge/
+storage/direct_file_backup/
+data/catalog/.authoring.lock
+data/catalog/.authoring-pending.json
 .env

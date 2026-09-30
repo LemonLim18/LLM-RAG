@@ -1,0 +1,5 @@
+traffic policy {{ policy_name }}
+{% for term in policy_terms %}
+ classifier {{ term.classifier_name }} behavior {{ term.behavior_name }}
+{% endfor %}
+quit

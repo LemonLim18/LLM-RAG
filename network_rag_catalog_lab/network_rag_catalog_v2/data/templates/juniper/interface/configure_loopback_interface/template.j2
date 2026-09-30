@@ -1,0 +1,4 @@
+set interfaces lo0 unit 0 family inet address {{ address }}/{{ prefix_length }}
+{% if description %}
+set interfaces lo0 description "{{ description }}"
+{% endif %}

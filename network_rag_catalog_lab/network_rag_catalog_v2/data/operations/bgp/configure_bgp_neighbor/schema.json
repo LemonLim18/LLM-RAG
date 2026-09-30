@@ -2,35 +2,39 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
+  "x-required-by-vendor": {
+    "juniper": [
+      "peer_group"
+    ]
+  },
+  "properties": {
+    "local_as": {
+      "minimum": 1,
+      "maximum": 4294967295,
+      "type": "integer"
+    },
+    "neighbor_ip": {
+      "format": "ipv4",
+      "type": "string"
+    },
+    "remote_as": {
+      "minimum": 1,
+      "maximum": 4294967295,
+      "type": "integer"
+    },
+    "description": {
+      "maxLength": 128,
+      "type": "string"
+    },
+    "peer_group": {
+      "minLength": 1,
+      "maxLength": 128,
+      "type": "string"
+    }
+  },
   "required": [
     "local_as",
     "neighbor_ip",
     "remote_as"
-  ],
-  "x-required-by-vendor": {"juniper": ["peer_group"]},
-  "properties": {
-    "local_as": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 4294967295
-    },
-    "neighbor_ip": {
-      "type": "string",
-      "format": "ipv4"
-    },
-    "remote_as": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 4294967295
-    },
-    "description": {
-      "type": "string",
-      "maxLength": 128
-    },
-    "peer_group": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 128
-    }
-  }
+  ]
 }

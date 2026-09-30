@@ -1,0 +1,21 @@
+# Clarification and session state
+
+## Issue -> question -> answer
+
+`pipeline._refresh_task` collects planning, target, schema, device, context and template issues. Operation/target blockers suppress dependent parameter questions. `questions.build_questions` sorts operation first, target second, then fields by schema required/property order. It deduplicates `(field_path, query_index)`, uses parameter registry clarification wording for missing fields, and fills `options` from current inventory, `context.parameter_options`, rejected alternatives, interface suggestions and schema enum values. Every question carries `task_id`, `field_path`, `issue_type`, expected schema, dependencies, `question_id`, `revision`, `source_revision`, optional `item_id`, operation/device labels, `multiple`, and `allow_custom=True`.
+
+The terminal displays only `session.next_question` (`main._print_question`), paginates options, supports `select 1`, `select 1,2` or a custom typed value. `questions.answer_from_text` treats bare numbers as values, not option indices. A future UI can send the same `ClarificationAnswer` contract without terminal parsing. `selected_options` rejects missing/duplicate/foreign IDs and multiple selection where prohibited.
+
+`clarification.apply_answer` requires the current question ID. `apply_clarification` replaces exactly one task via `pipeline.resume_task`, refreshes the plan and persists the session. `resume_task` checks question ID, task revision and source revision; if source changed, it refreshes and rejects the stale answer. A selected option gets `context:<source_ref>` provenance; custom input is parsed with `fields.parse_answer` using `schema_at` for **that path only**. It normalizes against device and rejects newly introduced validation errors. A successful answer updates just that path, increments task revision, records history, and rebuilds questions. Failed answers retain prior validated values and add feedback.
+
+## Persistence and invalidation
+
+`ClarificationSession` wraps an `ExecutionPlan` and history. `create_session` calls `pipeline.run`, assigns UUID/timestamps and `save_session`. `save_session` writes a temporary JSON file under `storage/sessions/` then replaces the target. `load_session` rebuilds dataclasses with `_plan_from_dict`, **clears old configs** and refreshes the plan against current data. This is not an HTTP service or distributed store. `session_to_dict` exposes a transport-neutral representation.
+
+An operation edit re-extracts under its new schema; a target edit clears device binding, scope, confirmations and evidence; interface/target corrections invalidate context-dependent values; a changed source revision invalidates confirmations and selected context-derived parameters. `confirm_session_order -> pipeline.confirm_order` records explicit order for same-device resource conflicts against a task/source signature. A later edit requires reconfirmation.
+
+## Two-turn trace
+
+Use an exact operation phrase to bypass RAG: `Configure OSPF on R2`. `planner.plan_intents` creates a clause; target resolves to `dev-r2`. `schema_loader.load_schema` supplies `interfaces` plus Huawei's vendor-required `process_id`; `extract_parameter_result` leaves missing values null. `_refresh_task` creates field questions; no config is rendered. First answer, e.g. a valid `process_id` when that is the active question, goes through `parse_answer` as an integer, validation, history and session save. The next question is for the remaining `interfaces` structure. A reply must match that active question's schema, including interface name/area, and then pass inventory validation. The exact question order follows schema order in the current source; inspect `session.next_question` rather than assuming a conversation-wide parser. Once all tasks validate, `refresh_plan` renders. An invalid interface answer remains a rejected candidate/question, not an executable value.
+
+Limits: session JSON is local and not a multi-user transactional store. Option lists may be long and are inventory/planned snapshots, not live network measurements. Custom text is allowed but always reparsed/revalidated. Passing a question ID from another turn is rejected, but user-facing language quality still depends on catalog wording.

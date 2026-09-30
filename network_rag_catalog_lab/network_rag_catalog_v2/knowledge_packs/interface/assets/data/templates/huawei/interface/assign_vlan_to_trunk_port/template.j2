@@ -1,0 +1,3 @@
+interface {{ interface }}
+{% for vlan in allowed_vlans %} port trunk allow-pass vlan {{ vlan }}
+{% endfor %} quit

@@ -1,0 +1,21 @@
+[
+  {
+    "operation_id": "add_default_route",
+    "parameters": {
+      "next_hop": "192.0.2.2",
+      "preference": 200
+    },
+    "expected": "ip route 0.0.0.0 0.0.0.0 192.0.2.2 200",
+    "prompt": "add default route; next_hop \"192.0.2.2\"; preference 200 on SW1"
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "parameters": {
+      "destination": "10.50.0.0/16",
+      "next_hop": "192.0.2.2",
+      "preference": 200
+    },
+    "expected": "ip route 10.50.0.0 255.255.0.0 192.0.2.2 200",
+    "prompt": "add floating static route; destination \"10.50.0.0/16\"; next_hop \"192.0.2.2\"; preference 200 on SW1"
+  }
+]

@@ -1,0 +1,8 @@
+policy-map {{ policy_name }}
+ class class-default
+  shape average {{ rate_bps }}
+  exit
+ exit
+interface {{ interface }}
+ service-policy output {{ policy_name }}
+ exit

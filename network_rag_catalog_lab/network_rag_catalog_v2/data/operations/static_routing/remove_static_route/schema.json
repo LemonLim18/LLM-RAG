@@ -2,9 +2,18 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "additionalProperties": false,
-  "required": ["destination", "next_hop"],
   "properties": {
-    "destination": {"type": "string", "minLength": 3},
-    "next_hop": {"type": "string", "format": "ipv4"}
-  }
+    "destination": {
+      "minLength": 3,
+      "type": "string"
+    },
+    "next_hop": {
+      "format": "ipv4",
+      "type": "string"
+    }
+  },
+  "required": [
+    "destination",
+    "next_hop"
+  ]
 }

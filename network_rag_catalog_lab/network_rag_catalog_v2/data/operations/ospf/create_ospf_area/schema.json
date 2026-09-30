@@ -1,0 +1,101 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "process_id": {
+      "minimum": 1,
+      "maximum": 65535,
+      "type": "integer"
+    },
+    "area": {
+      "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$",
+      "type": "string"
+    },
+    "area_type": {
+      "enum": [
+        "stub"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "process_id",
+    "area",
+    "area_type"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "process_id": {
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "area": {
+          "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$",
+          "type": "string"
+        },
+        "area_type": {
+          "enum": [
+            "stub"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "process_id",
+        "area",
+        "area_type"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "process_id": {
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "area": {
+          "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$",
+          "type": "string"
+        },
+        "area_type": {
+          "enum": [
+            "stub"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "process_id",
+        "area",
+        "area_type"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "area": {
+          "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$",
+          "type": "string"
+        },
+        "area_type": {
+          "enum": [
+            "stub"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "area",
+        "area_type"
+      ],
+      "description": "Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy."
+    }
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "policy_name": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+      "type": "string"
+    },
+    "policy_terms": {
+      "minItems": 1,
+      "maxItems": 7,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "classifier_name": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+            "type": "string"
+          },
+          "bandwidth_bps": {
+            "minimum": 20000000,
+            "maximum": 100000000000,
+            "multipleOf": 1000,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "classifier_name",
+          "bandwidth_bps"
+        ]
+      }
+    }
+  },
+  "required": [
+    "policy_name",
+    "policy_terms"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "policy_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "policy_terms": {
+          "minItems": 1,
+          "maxItems": 7,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "classifier_name": {
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+                "type": "string"
+              },
+              "bandwidth_bps": {
+                "minimum": 20000000,
+                "maximum": 100000000000,
+                "multipleOf": 1000,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "classifier_name",
+              "bandwidth_bps"
+            ]
+          }
+        }
+      },
+      "required": [
+        "policy_name",
+        "policy_terms"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "policy_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "policy_terms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 7,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "classifier_name": {
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+                "type": "string"
+              },
+              "behavior_name": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+              }
+            },
+            "required": [
+              "classifier_name",
+              "behavior_name"
+            ]
+          }
+        }
+      },
+      "required": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "description": "Create an MQC policy associating existing classifiers with existing traffic behaviors; it does not invent bandwidth actions."
+    },
+    "juniper": {
+      "properties": {
+        "policy_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "policy_terms": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 7,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "forwarding_class": {
+                "type": "string",
+                "enum": [
+                  "best-effort",
+                  "expedited-forwarding",
+                  "assured-forwarding",
+                  "network-control"
+                ]
+              },
+              "scheduler_name": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+              }
+            },
+            "required": [
+              "forwarding_class",
+              "scheduler_name"
+            ]
+          }
+        }
+      },
+      "required": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "description": "Create a scheduler map associating existing forwarding classes with existing schedulers."
+    }
+  }
+}

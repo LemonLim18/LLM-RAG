@@ -1,0 +1,11 @@
+interface {{ aggregate_interface }}
+ no switchport
+{% if description is not none %}
+ description {{ description }}
+{% endif +%}
+ exit
+{% for member in member_interfaces %}
+interface {{ member }}
+ channel-group {{ aggregate_interface[12:] }} mode {{ lacp_mode }}
+ exit
+{% endfor %}

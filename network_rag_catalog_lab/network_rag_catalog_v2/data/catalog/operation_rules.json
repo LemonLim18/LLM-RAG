@@ -1,0 +1,1923 @@
+[
+  {
+    "operation_id": "create_vlan",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "create_vlan",
+    "operation_version": 1,
+    "field_path": "vlan_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4094
+    }
+  },
+  {
+    "operation_id": "create_vlan",
+    "operation_version": 1,
+    "field_path": "name",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64
+    }
+  },
+  {
+    "operation_id": "delete_vlan",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "x-required-by-vendor": {
+        "juniper": [
+          "name"
+        ]
+      }
+    }
+  },
+  {
+    "operation_id": "delete_vlan",
+    "operation_version": 1,
+    "field_path": "vlan_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4094
+    }
+  },
+  {
+    "operation_id": "delete_vlan",
+    "operation_version": 1,
+    "field_path": "name",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "x-required-by-vendor": {
+        "cisco": [
+          "process_id"
+        ],
+        "huawei": [
+          "process_id"
+        ]
+      }
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "field_path": "router_id",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "field_path": "interfaces",
+    "keywords": {
+      "minItems": 1
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "field_path": "interfaces[]",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "field_path": "interfaces[].name",
+    "keywords": {
+      "x-parameter-id": "interface",
+      "minLength": 1
+    }
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "field_path": "interfaces[].area",
+    "keywords": {}
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "x-required-by-vendor": {
+        "cisco": [
+          "process_id"
+        ],
+        "huawei": [
+          "process_id"
+        ]
+      }
+    }
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1
+    }
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "field_path": "area",
+    "keywords": {
+      "minLength": 1
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "x-required-by-vendor": {
+        "juniper": [
+          "peer_group"
+        ]
+      }
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "field_path": "local_as",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4294967295
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "field_path": "neighbor_ip",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "field_path": "remote_as",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4294967295
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "field_path": "description",
+    "keywords": {
+      "maxLength": 128
+    }
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "field_path": "peer_group",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 128
+    }
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "x-required-by-vendor": {
+        "juniper": [
+          "peer_group"
+        ]
+      }
+    }
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "field_path": "local_as",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4294967295
+    }
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "field_path": "neighbor_ip",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "field_path": "remote_as",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4294967295
+    }
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "field_path": "peer_group",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 128
+    }
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "x-required-by-vendor": {
+        "cisco": [
+          "process_name"
+        ],
+        "huawei": [
+          "process_name"
+        ]
+      }
+    }
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "field_path": "process_name",
+    "keywords": {}
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {}
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "field_path": "level",
+    "keywords": {
+      "enum": [
+        "level-1",
+        "level-2",
+        "level-1-2"
+      ]
+    }
+  },
+  {
+    "operation_id": "disable_isis_interface",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false,
+      "x-required-by-vendor": {
+        "cisco": [
+          "process_name"
+        ]
+      }
+    }
+  },
+  {
+    "operation_id": "disable_isis_interface",
+    "operation_version": 1,
+    "field_path": "process_name",
+    "keywords": {
+      "minLength": 1
+    }
+  },
+  {
+    "operation_id": "disable_isis_interface",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1
+    }
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "field_path": "destination",
+    "keywords": {}
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "field_path": "next_hop",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "field_path": "preference",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 255
+    }
+  },
+  {
+    "operation_id": "remove_static_route",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "remove_static_route",
+    "operation_version": 1,
+    "field_path": "destination",
+    "keywords": {
+      "minLength": 3
+    }
+  },
+  {
+    "operation_id": "remove_static_route",
+    "operation_version": 1,
+    "field_path": "next_hop",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {}
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "field_path": "address",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "field_path": "prefix_length",
+    "keywords": {
+      "minimum": 0,
+      "maximum": 32
+    }
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "field_path": "admin_up",
+    "keywords": {}
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1
+    }
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "field_path": "address",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "field_path": "prefix_length",
+    "keywords": {
+      "minimum": 0,
+      "maximum": 32
+    }
+  },
+  {
+    "operation_id": "modify_vlan",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "modify_vlan",
+    "operation_version": 1,
+    "field_path": "vlan_id",
+    "keywords": {
+      "minimum": 2,
+      "maximum": 1001
+    }
+  },
+  {
+    "operation_id": "modify_vlan",
+    "operation_version": 1,
+    "field_path": "vlan_status",
+    "keywords": {
+      "enum": [
+        "active",
+        "suspend"
+      ]
+    }
+  },
+  {
+    "operation_id": "rename_vlan",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "rename_vlan",
+    "operation_version": 1,
+    "field_path": "vlan_id",
+    "keywords": {
+      "minimum": 2,
+      "maximum": 1001
+    }
+  },
+  {
+    "operation_id": "rename_vlan",
+    "operation_version": 1,
+    "field_path": "new_vlan_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,19}$"
+    }
+  },
+  {
+    "operation_id": "set_interface_description",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "set_interface_description",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "set_interface_description",
+    "operation_version": 1,
+    "field_path": "description",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[A-Za-z0-9 _./:()-]+$"
+    }
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "operation_version": 1,
+    "field_path": "admin_up",
+    "keywords": {}
+  },
+  {
+    "operation_id": "configure_access_port",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "configure_access_port",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+    }
+  },
+  {
+    "operation_id": "configure_access_port",
+    "operation_version": 1,
+    "field_path": "vlan_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4094
+    }
+  },
+  {
+    "operation_id": "configure_access_port",
+    "operation_version": 1,
+    "field_path": "description",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[A-Za-z0-9 _./:()-]+$"
+    }
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+    }
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "field_path": "allowed_vlans",
+    "keywords": {
+      "minItems": 1,
+      "maxItems": 128,
+      "uniqueItems": true
+    }
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "field_path": "allowed_vlans[]",
+    "keywords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4094
+    }
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "field_path": "native_vlan",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4094
+    }
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "field_path": "allowed_vlans",
+    "keywords": {
+      "minItems": 1,
+      "maxItems": 128,
+      "uniqueItems": true
+    }
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "field_path": "allowed_vlans[]",
+    "keywords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4094
+    }
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+    }
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "operation_version": 1,
+    "field_path": "allowed_vlans",
+    "keywords": {
+      "minItems": 1,
+      "maxItems": 128,
+      "uniqueItems": true
+    }
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "operation_version": 1,
+    "field_path": "allowed_vlans[]",
+    "keywords": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4094
+    }
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "operation_version": 1,
+    "field_path": "native_vlan",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 4094
+    }
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "pattern": "^Loopback(?:0|[1-9][0-9]?)$"
+    }
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "field_path": "address",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "field_path": "prefix_length",
+    "keywords": {
+      "minimum": 0,
+      "maximum": 32
+    }
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "field_path": "description",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[A-Za-z0-9 _./:()-]+$"
+    }
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "field_path": "aggregate_interface",
+    "keywords": {
+      "pattern": "^Port-channel([1-9]|[1-9][0-9]|1[01][0-9]|12[0-8])$"
+    }
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "field_path": "member_interfaces",
+    "keywords": {
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true
+    }
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "field_path": "member_interfaces[]",
+    "keywords": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+    }
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "field_path": "lacp_mode",
+    "keywords": {
+      "enum": [
+        "active",
+        "passive"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "field_path": "description",
+    "keywords": {
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[A-Za-z0-9 _./:()-]+$"
+    }
+  },
+  {
+    "operation_id": "add_default_route",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "add_default_route",
+    "operation_version": 1,
+    "field_path": "next_hop",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "add_default_route",
+    "operation_version": 1,
+    "field_path": "preference",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 254
+    }
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "field_path": "destination",
+    "keywords": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$"
+    }
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "field_path": "next_hop",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "field_path": "preference",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 254
+    }
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "operation_version": 1,
+    "field_path": "router_id",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "operation_version": 1,
+    "field_path": "router_id",
+    "keywords": {
+      "format": "ipv4"
+    }
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "operation_version": 1,
+    "field_path": "area",
+    "keywords": {
+      "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$"
+    }
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "operation_version": 1,
+    "field_path": "area_type",
+    "keywords": {
+      "enum": [
+        "stub"
+      ]
+    }
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "operation_version": 1,
+    "field_path": "area",
+    "keywords": {
+      "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$"
+    }
+  },
+  {
+    "operation_id": "advertise_network",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "advertise_network",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "advertise_network",
+    "operation_version": 1,
+    "field_path": "network_prefix",
+    "keywords": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$"
+    }
+  },
+  {
+    "operation_id": "advertise_network",
+    "operation_version": 1,
+    "field_path": "area",
+    "keywords": {
+      "pattern": "^(0|[1-9][0-9]{0,9}|[0-9]{1,3}(\\.[0-9]{1,3}){3})$"
+    }
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "operation_version": 1,
+    "field_path": "passive",
+    "keywords": {}
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "field_path": "process_id",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "field_path": "redistribution_source",
+    "keywords": {
+      "enum": [
+        "connected",
+        "static"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "field_path": "route_policy",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "field_path": "ospf_metric",
+    "keywords": {
+      "minimum": 1,
+      "maximum": 16777214
+    }
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "field_path": "metric_type",
+    "keywords": {
+      "enum": [
+        "1",
+        "2"
+      ]
+    }
+  },
+  {
+    "operation_id": "create_acl",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "create_acl",
+    "operation_version": 1,
+    "field_path": "acl_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "create_acl",
+    "operation_version": 1,
+    "field_path": "description",
+    "keywords": {
+      "pattern": "^[A-Za-z0-9 ._:/()-]{1,80}$"
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "acl_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "acl_rule_id",
+    "keywords": {
+      "minimum": 10,
+      "maximum": 2147483647
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "acl_action",
+    "keywords": {
+      "enum": [
+        "permit",
+        "deny"
+      ]
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "source_prefix",
+    "keywords": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$"
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "destination_prefix",
+    "keywords": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$"
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "ip_protocol",
+    "keywords": {
+      "enum": [
+        "ip",
+        "tcp",
+        "udp",
+        "icmp"
+      ]
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "source_port",
+    "keywords": {
+      "minimum": 0,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "destination_port",
+    "keywords": {
+      "minimum": 0,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "field_path": "log",
+    "keywords": {}
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "acl_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "acl_rule_id",
+    "keywords": {
+      "minimum": 10,
+      "maximum": 2147483647
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "acl_action",
+    "keywords": {
+      "enum": [
+        "permit",
+        "deny"
+      ]
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "source_prefix",
+    "keywords": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$"
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "destination_prefix",
+    "keywords": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$"
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "ip_protocol",
+    "keywords": {
+      "enum": [
+        "ip",
+        "tcp",
+        "udp",
+        "icmp"
+      ]
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "source_port",
+    "keywords": {
+      "minimum": 0,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "destination_port",
+    "keywords": {
+      "minimum": 0,
+      "maximum": 65535
+    }
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "field_path": "log",
+    "keywords": {}
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "operation_version": 1,
+    "field_path": "acl_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "operation_version": 1,
+    "field_path": "acl_rule_id",
+    "keywords": {
+      "minimum": 10,
+      "maximum": 2147483647
+    }
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "operation_version": 1,
+    "field_path": "acl_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "operation_version": 1,
+    "field_path": "direction",
+    "keywords": {
+      "enum": [
+        "ingress",
+        "egress"
+      ]
+    }
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "field_path": "policy_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "field_path": "policy_terms",
+    "keywords": {
+      "minItems": 1,
+      "maxItems": 7
+    }
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "field_path": "policy_terms[]",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false
+    }
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "field_path": "policy_terms[].classifier_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "field_path": "policy_terms[].bandwidth_bps",
+    "keywords": {
+      "minimum": 20000000,
+      "maximum": 100000000000,
+      "multipleOf": 1000
+    }
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "field_path": "classifier_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "field_path": "dscp_values",
+    "keywords": {
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true
+    }
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "field_path": "dscp_values[]",
+    "keywords": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 63
+    }
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "field_path": "match_mode",
+    "keywords": {
+      "enum": [
+        "any"
+      ]
+    }
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "field_path": "classifier_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "field_path": "dscp_values",
+    "keywords": {
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true
+    }
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "field_path": "dscp_values[]",
+    "keywords": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 63
+    }
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "field_path": "previous_dscp_values",
+    "keywords": {
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true
+    }
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "field_path": "previous_dscp_values[]",
+    "keywords": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 63
+    }
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "operation_version": 1,
+    "field_path": "policy_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "operation_version": 1,
+    "field_path": "classifier_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "operation_version": 1,
+    "field_path": "bandwidth_bps",
+    "keywords": {
+      "minimum": 20000000,
+      "maximum": 100000000000,
+      "multipleOf": 1000
+    }
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "field_path": "policy_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "field_path": "rate_bps",
+    "keywords": {
+      "minimum": 8000,
+      "maximum": 10000000000
+    }
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "field_path": "direction",
+    "keywords": {
+      "enum": [
+        "egress"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "field_path": "policy_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "field_path": "rate_bps",
+    "keywords": {
+      "minimum": 8000,
+      "maximum": 10000000000
+    }
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "field_path": "burst_bytes",
+    "keywords": {
+      "minimum": 1000,
+      "maximum": 512000000
+    }
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "field_path": "direction",
+    "keywords": {
+      "enum": [
+        "ingress"
+      ]
+    }
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "field_path": "exceed_action",
+    "keywords": {
+      "enum": [
+        "drop"
+      ]
+    }
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "operation_version": 1,
+    "field_path": "",
+    "keywords": {
+      "type": "object",
+      "additionalProperties": false,
+      "x-validation-handlers": [
+        "network_values_v1",
+        "unique_interfaces_v1",
+        "safe_strings_v1",
+        "expansion_network_v1"
+      ]
+    }
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "operation_version": 1,
+    "field_path": "policy_name",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "operation_version": 1,
+    "field_path": "interface",
+    "keywords": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+    }
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "operation_version": 1,
+    "field_path": "direction",
+    "keywords": {
+      "enum": [
+        "egress"
+      ]
+    }
+  }
+]

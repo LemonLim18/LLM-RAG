@@ -1,0 +1,35 @@
+{
+  "format_version": 1,
+  "pack_id": "acl_review_v1",
+  "phase": "D1",
+  "status": "review_only",
+  "source_authority": "sqlite",
+  "operations": [
+    "create_acl",
+    "add_acl_rule",
+    "modify_acl_rule",
+    "delete_acl_rule",
+    "apply_acl_to_interface"
+  ],
+  "reuse": [],
+  "support": {
+    "cisco": "Catalyst 9300 / IOS XE 17.9, explicit capability and planned resource facts required",
+    "juniper": "unsupported",
+    "huawei": "unsupported for this wave; exact profile behavior not verified",
+    "evidence": "Documentation-reviewed candidate; not device-lab certified"
+  },
+  "assets": [
+    "data/templates/cisco/acl/create_acl/template.j2",
+    "data/templates/cisco/acl/add_acl_rule/template.j2",
+    "data/templates/cisco/acl/modify_acl_rule/template.j2",
+    "data/templates/cisco/acl/delete_acl_rule/template.j2",
+    "data/templates/cisco/acl/apply_acl_to_interface/template.j2"
+  ],
+  "asset_hashes": {
+    "data/templates/cisco/acl/modify_acl_rule/template.j2": "ebd14c2f1c5cf4e82d2283115c1c1634c682498460265dfd4432ebaf7545d3cf",
+    "data/templates/cisco/acl/apply_acl_to_interface/template.j2": "4434218eb6841bf9290fc3197c53d25f7565d5d0b0b1901552715eaeb99b30c6",
+    "data/templates/cisco/acl/delete_acl_rule/template.j2": "2e37eb03e5ac1b71b16eba12e4da7c2a3588c970b7d5d4551943b38a9d7b83aa",
+    "data/templates/cisco/acl/create_acl/template.j2": "7f84f8e9e5bb633f1e64e9d73e559efcd2c64192266ff372aff38b48f2f020dd",
+    "data/templates/cisco/acl/add_acl_rule/template.j2": "b1a85968a6a5784cd0b5937ed9b4f84a5dd2a071b106befcddd291609db09ed8"
+  }
+}

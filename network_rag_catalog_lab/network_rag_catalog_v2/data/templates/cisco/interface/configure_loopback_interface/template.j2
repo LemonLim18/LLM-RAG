@@ -1,0 +1,6 @@
+interface {{ interface }}
+ ip address {{ address }} {{ netmask }}
+{% if description is not none %}
+ description {{ description }}
+{% endif +%}
+ exit

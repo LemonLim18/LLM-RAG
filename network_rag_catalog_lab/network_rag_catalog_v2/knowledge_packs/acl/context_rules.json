@@ -1,0 +1,137 @@
+{
+  "create_acl": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "acl_name",
+      "description"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "acl_object",
+        "fields": [
+          "acl_name"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "add_acl_rule",
+      "modify_acl_rule",
+      "delete_acl_rule",
+      "apply_acl_to_interface"
+    ],
+    "device_policy": "acl_create_v1"
+  },
+  "add_acl_rule": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "acl_name",
+      "acl_rule_id",
+      "acl_action",
+      "source_prefix",
+      "destination_prefix",
+      "ip_protocol",
+      "source_port",
+      "destination_port",
+      "log"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "acl_rule",
+        "fields": [
+          "acl_name",
+          "acl_rule_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_acl",
+      "modify_acl_rule",
+      "delete_acl_rule",
+      "apply_acl_to_interface"
+    ],
+    "device_policy": "acl_add_v1"
+  },
+  "modify_acl_rule": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "acl_name",
+      "acl_rule_id",
+      "acl_action",
+      "source_prefix",
+      "destination_prefix",
+      "ip_protocol",
+      "source_port",
+      "destination_port",
+      "log"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "acl_rule",
+        "fields": [
+          "acl_name",
+          "acl_rule_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_acl",
+      "add_acl_rule",
+      "delete_acl_rule",
+      "apply_acl_to_interface"
+    ],
+    "device_policy": "acl_modify_v1"
+  },
+  "delete_acl_rule": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "acl_name",
+      "acl_rule_id"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "acl_rule",
+        "fields": [
+          "acl_name",
+          "acl_rule_id"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_acl",
+      "add_acl_rule",
+      "modify_acl_rule",
+      "apply_acl_to_interface"
+    ],
+    "device_policy": "acl_delete_v1"
+  },
+  "apply_acl_to_interface": {
+    "inventory_fields": [
+      "interface"
+    ],
+    "planned_fields": [
+      "acl_name",
+      "direction"
+    ],
+    "resource_keys": [],
+    "composite_keys": [
+      {
+        "kind": "acl_attachment",
+        "fields": [
+          "interface",
+          "direction"
+        ]
+      }
+    ],
+    "conflicts_with": [
+      "create_acl",
+      "add_acl_rule",
+      "modify_acl_rule",
+      "delete_acl_rule"
+    ],
+    "device_policy": "acl_attach_v1"
+  }
+}

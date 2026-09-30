@@ -1,0 +1,1 @@
+{{ 'set' if passive else 'delete' }} protocols ospf area {{ area }} interface {{ interface if '.' in interface else interface ~ '.0' }} passive

@@ -1,0 +1,4 @@
+acl name {{ acl_name }} advance
+ rule {{ acl_rule_id }} {{ acl_action }} {{ ip_protocol }} source {{ source_address }} {{ source_wildcard }}{% if source_port is not none %} source-port eq {{ source_port }}{% endif %} destination {{ acl_destination_address }} {{ acl_destination_wildcard }}{% if destination_port is not none %} destination-port eq {{ destination_port }}{% endif %}
+
+quit

@@ -1,60 +1,97 @@
 # Catalog Governance
 
-The catalog is the control plane for this lab. Keep IDs stable; edit labels and
-aliases instead of renaming IDs that schemas, templates, sessions, and future UI
-clients may reference.
+Exactly one backend owns authoring: JSON before migration, SQLite afterward.
+This workspace is migrated. Stable IDs identify meaning; change display labels
+instead of IDs. See the [completion audit](KNOWLEDGE_EVOLUTION_COMPLETION.md) and
+[Phase 5](KNOWLEDGE_PHASE_5.md) for management request formats and recovery.
 
-## Add an operation
+## Authority
 
-1. Add an active entry to `data/catalog/operations.json` with a stable
-   `operation_id`, `category_id`, `version`, `display_name`, aliases, and schema path.
-2. Add or reuse parameters from `data/catalog/parameters.json`. Parameter
-   `value_type`, aliases, clarification text, and normalizer metadata live there.
-3. Add the operation schema under `data/operations/<category>/<operation>/`.
-   The schema is the only authority for required fields, because requirements can
-   differ by operation and vendor. Use `x-required-by-vendor` where necessary.
-4. Add one `template.j2` for every vendor currently represented in inventory.
-5. Add approved inventory/planned lookups and conflict resource keys to
-   `data/catalog/context_rules.json`. Do not expose unrelated inventory fields
-   as configuration values. Declare platform/releases in `template_support.json`
-   only after reviewing the templates for that environment.
-6. Run `python -m app.ingest` and `python -m unittest discover -s tests -v`.
+- Shared parameter definitions own identity, type, label, aliases and clarification
+  text. They contain no operation required/optional flags or validation policies.
+- Category membership is only category/parameter ID pairs.
+- Registry operations use operation-specific mappings, ordered required flags,
+  nested rule nodes and vendor overlays. The compiler derives JSON Schemas.
+- Existing per-operation schemas remain migration evidence. Legacy-authority
+  operations retain their earlier behavior; migrated operations do not read these
+  files as validation authorities.
+- Template bindings declare the operation version, vendor/platform/OS support and
+  inputs. A file existing on disk does not enable support or certify device syntax.
+- Published releases freeze metadata, contracts, context policies, templates and
+  retrieval. Inventory/planned data remain separately revision-checked facts.
 
-`validate_catalog()` runs before planning and ingestion. It rejects duplicate IDs,
-missing schemas/templates, undefined parameters, incompatible parameter types,
-and invalid vendor-required fields.
+## Local Management
 
-`validate_context_catalog()` checks approved lookup paths, planned record IDs,
-device/operation scopes, revisions and typed candidate values. A planned record
-must have `id`, `device_id`, `operation_id`, `field`, `value`, `kind`, `source_ref`
-and `revision`. `when` scopes a value to dependencies such as an interface name.
-`candidate` values are suggestions. `intended_assignment` conflicts require
-explicit confirmation and an operation that allows plan override. `fact`
-conflicts cannot be overridden by a user answer. No answer edits these files.
+Publish a reviewed baseline before management writes. Use
+`python -m app.knowledge.cli inspect` to obtain the current revision, then submit
+strict edit requests with `expected_revision`, `actor`, `reason` and `changes`.
+Dry-run reports impact without changing files. Batch related changes together;
+do not update contract versions one file at a time through separate requests.
 
-Nested schema fields can use `x-parameter-id` to reuse central metadata under a
-different structural key; OSPF `interfaces[].name` references `interface` labels.
+Supported operations include category/parameter metadata edits, memberships,
+operation lifecycle, scoped contract replacement, context-policy replacement,
+schema previews, validation, export/import and explicit publication.
 
-## Change an operation
+Deletion never cascades. Referenced definitions and memberships cannot be removed;
+previously published identities cannot be deleted. Retire operations/categories
+instead, then publish. Retiring a category requires retirement of active children.
+An incomplete inactive operation can be authored incrementally but blocks full
+publication until completed or deleted. Do not automatically import unresolved
+target-document definitions from the migration manifest.
 
-- Change `display_name`, aliases, clarification wording, or descriptions in the
-  central catalog. These are shared by terminal prompts, RAG documents, and a
-  future UI.
-- Increase the operation `version` whenever behavior, schema semantics, or
-  template semantics materially change.
-- Rebuild Chroma after a catalog change: `python -m app.ingest`.
-- Long-running processes must call `app.catalog.reload_catalog()` before the next
-  request, then rebuild the retrieval index.
-- Saved questions contain source fingerprints. Resuming after a context/catalog
-  change revalidates saved values and rejects stale answers. Context-derived
-  planned values require reconfirmation. Unknown saved-session versions fail
-  explicitly instead of being interpreted as the current contract.
+## Add or Change an Operation
 
-## Retire an operation
+1. Review behavior and assign a stable operation ID and owning category.
+2. Define/reuse typed parameters and expose them through category membership.
+3. Create an inactive registry operation; author its mappings, rule nodes and
+   explicit template bindings. Paths are full payload paths such as
+   `interfaces[].name`, not flattened bare keys.
+4. Keep parameter IDs/types separate from operation policy. Use
+   `x-required-by-vendor` for reviewed vendor requirements. Named handlers are
+   code-reviewed allowlisted functions, not uploaded Python.
+   For conditional fields, object rules support `dependentRequired` and
+   `x-conditional-required: [{"field": "vlan_id", "equals": 20, "required": ["name"]}]`.
+   References are local object properties; missing values produce field questions.
+   Arbitrary schema composition or uploaded validation code remains unsupported.
+5. Add reviewed standalone Jinja assets under `data/templates/`. Declare exact
+   supported profiles and complete input contracts. Optional nulls do not authorize
+   invented values; keep StrictUndefined and all-task validation gates.
+6. Define approved lookup fields and conflict resource keys in
+   `context_rules.json`. Do not expose unrelated inventory facts as configuration.
+7. Preview/validate the draft, review affected operations and activate only when
+   its contract/templates are complete. Increment the operation version for
+   contract, template or category changes; all scoped records must match it.
+8. Publish with reviewed revision/release IDs. Indexed publication creates a new
+   collection and only activates on successful verification. Offline publication
+   explicitly disables semantic retrieval; it cannot reuse stale indexes.
 
-Set `status` to `inactive`; do not immediately delete the operation ID. Inactive
-operations are excluded from planning, fallback intent splitting, and ingestion,
-but their schema remains validateable for historical session inspection.
+Central labels/aliases propagate through published metadata and retrieval documents
+without changing machine IDs or payload keys. Display edits do not require a
+schema version bump, but still require publication to change live requests.
 
-Do not delete a parameter ID or an operation ID while persisted sessions or a
-future UI might still reference it. Retire first, migrate later.
+## Context and Runtime Safety
+
+Planned records require `id`, `device_id`, `operation_id`, `field`, `value`,
+`kind`, `source_ref`, and `revision`. Their `when` clauses scope dependencies.
+Candidates are suggestions; intended-assignment conflicts require explicit
+confirmation and an approved override policy. Facts cannot be overridden by a
+clarification answer. No user answer edits authoritative records.
+
+Old sessions revalidate against active knowledge and current inventory/planned
+context. Stale answers, revoked operations and changed interfaces must not reuse
+old rendered configurations. Retained releases serve audit, not retirement bypass.
+
+Management writers require a baseline release and a cooperative local lock.
+SQLite commits catalog changes and audit rows in one transaction; the legacy JSON
+adapter uses recoverable journals. A missing SQLite authority marker/database or
+active release must not fall back to seed files. Follow recovery guidance before
+removing any stale lock. Audit actor names are not authentication.
+Do not run concurrent database writers through OneDrive or multiple hosts. Back
+up a quiescent database with its authority marker and reviewed assets separately.
+
+## Review Boundary
+
+No GUI, HTTP server, PostgreSQL integration, Ansible execution, topology
+integration or automatic target-document import is included. Review model behavior
+and vendor templates in a real lab. Add authentication/authorization and stronger
+operational controls before exposing management beyond a trusted local terminal.

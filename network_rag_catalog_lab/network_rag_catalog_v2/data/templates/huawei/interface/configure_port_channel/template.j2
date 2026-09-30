@@ -1,0 +1,10 @@
+interface {{ aggregate_interface }}
+ undo portswitch
+ mode lacp-static
+{% if description %}
+ description {{ description }}
+{% endif %}
+{% for member in huawei_members %}
+ trunkport {{ member }} mode {{ lacp_mode }}
+{% endfor %}
+quit

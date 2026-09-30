@@ -2,37 +2,90 @@
   {
     "category_id": "vlan",
     "display_name": "VLAN",
-    "aliases": ["vlan", "layer 2 vlan", "layer-2 vlan"],
+    "aliases": [
+      "vlan",
+      "layer 2 vlan",
+      "layer-2 vlan"
+    ],
     "description": "Layer-2 VLAN creation, removal, and related VLAN operations."
   },
   {
     "category_id": "ospf",
     "display_name": "OSPF",
-    "aliases": ["ospf", "open shortest path first"],
+    "aliases": [
+      "ospf",
+      "open shortest path first"
+    ],
     "description": "OSPF routing processes, areas, and interface participation."
   },
   {
     "category_id": "bgp",
     "display_name": "BGP",
-    "aliases": ["bgp", "border gateway protocol", "bgp peer", "bgp neighbor"],
+    "aliases": [
+      "bgp",
+      "border gateway protocol",
+      "bgp peer",
+      "bgp neighbor"
+    ],
     "description": "BGP autonomous systems, peers, and neighbor relationships."
   },
   {
     "category_id": "isis",
     "display_name": "IS-IS",
-    "aliases": ["isis", "is-is", "intermediate system to intermediate system"],
+    "aliases": [
+      "isis",
+      "is-is",
+      "intermediate system to intermediate system"
+    ],
     "description": "IS-IS processes, levels, and interface participation."
   },
   {
     "category_id": "static_routing",
     "display_name": "Static Routing",
-    "aliases": ["static route", "static routing", "ip route"],
+    "aliases": [
+      "static route",
+      "static routing",
+      "ip route"
+    ],
     "description": "Static IPv4 route creation and removal."
   },
   {
     "category_id": "ip_address",
     "display_name": "Interface IPv4 Addressing",
-    "aliases": ["ip address", "ipv4 address", "interface address", "assign ip"],
+    "aliases": [
+      "ip address",
+      "ipv4 address",
+      "interface address",
+      "assign ip"
+    ],
     "description": "IPv4 address assignment and removal on an interface."
+  },
+  {
+    "display_name": "Interface",
+    "aliases": [
+      "interfaces",
+      "switchport"
+    ],
+    "description": "Physical and logical interface operations with explicit device policies.",
+    "category_id": "interface",
+    "status": "active"
+  },
+  {
+    "display_name": "ACL",
+    "aliases": [
+      "access control list"
+    ],
+    "description": "Reviewed ACL intent operations.",
+    "category_id": "acl",
+    "status": "active"
+  },
+  {
+    "display_name": "QOS",
+    "aliases": [
+      "quality of service"
+    ],
+    "description": "Reviewed QOS intent operations.",
+    "category_id": "qos",
+    "status": "active"
   }
 ]

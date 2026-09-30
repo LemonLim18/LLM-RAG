@@ -5,7 +5,8 @@ from dataclasses import asdict
 import json
 
 from .catalog import get_operation, load_operations, reload_catalog, validate_catalog
-from .context import context_conflicts, rules, source_revision, validate_context_catalog
+from .context import context_conflicts, context_revision, rules, source_revision, validate_context_catalog
+from .knowledge.runtime import current_snapshot, snapshot_request
 from .devices.context_validator import normalize_parameters_for_device, validate_device_context
 from .devices.inventory import load_inventory
 from .devices.target_query import extract_target_queries, parameter_request, parse_description
@@ -52,6 +53,9 @@ def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask
                 task.parameters = set_value(task.parameters, path, None)
                 task.parameter_provenance.pop(path, None)
     task.source_revision = revision
+    snapshot = current_snapshot()
+    task.knowledge_snapshot_id = snapshot.release_id if snapshot else ""
+    task.context_revision = context_revision()
     if not task.target_queries and task.target_refs:
         task.target_queries = [parse_description(ref, load_inventory()) for ref in task.target_refs]
     resolution = resolve_queries(task.target_queries)
@@ -108,6 +112,8 @@ def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask
                 _record_candidate(task, issue, value)
                 task.parameters = set_value(task.parameters, path, None)
                 task.parameter_provenance.pop(path, None)
+            else:
+                issues.append(issue)
         issues.extend(issue for issue in validation if issue["type"] == "UNSUPPORTED_OPERATION")
         issues.extend(candidate for candidate in task.candidates if get_value(task.parameters, candidate["field"]) is None)
         issues.extend(vars(issue) for issue in validate_parameter_result(task.parameters, schema).issues if issue.type == "MISSING")
@@ -143,6 +149,7 @@ def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask
     return task
 
 
+@snapshot_request
 def _finalize_task(*, intent_id, request_text, category, operation_id, parameters,
                    parameter_provenance, target_refs, target_queries=None,
                    clarification_history=None, verbose=False, **extra) -> PlannedTask:
@@ -189,7 +196,7 @@ def _process_intent(intent, index=1, verbose=False) -> list[PlannedTask]:
         schema = load_schema(operation, devices)
         extraction = extract_parameter_result(parameter_request(intent.request_text, queries), schema)
         task.parameters, task.parameter_provenance = extraction.parameters, extraction.provenance
-        task.candidates = [{**candidate, "message": f"Several explicit values were supplied for {candidate['field']}. Choose one."} for candidate in extraction.candidates]
+        task.candidates = [{**candidate, "message": candidate.get("message", f"Several explicit values were supplied for {candidate['field']}. Choose one.")} for candidate in extraction.candidates]
         if proposed_operation:
             task.planning_issues.insert(0, {"type": "OPERATION_PROPOSAL", "field": "operation_id",
                                            "message": f"The model proposes {get_operation(operation)['display_name']}. Confirm the intended catalog operation."})
@@ -217,7 +224,10 @@ def _reject(task, message, answer=None):
     return rejected
 
 
+@snapshot_request
 def resume_task(task: PlannedTask, reply: str | ClarificationAnswer, *, verbose=False) -> PlannedTask:
+    if task.knowledge_snapshot_id and current_snapshot() is None:
+        return _reject(task, "Published knowledge is unavailable; restore the active release before continuing.")
     if task.status == "collecting":
         task = _refresh_task(deepcopy(task))
     if task.status != "needs_clarification":
@@ -269,7 +279,7 @@ def resume_task(task: PlannedTask, reply: str | ClarificationAnswer, *, verbose=
             extraction = extract_parameter_result(parameter_request(task.request_text, task.target_queries), schema)
             updated.parameters = extraction.parameters
             updated.parameter_provenance = extraction.provenance
-            updated.candidates = [{**candidate, "message": "Choose one explicitly supplied value."} for candidate in extraction.candidates]
+            updated.candidates = [{**candidate, "message": candidate.get("message", "Choose one explicitly supplied value.")} for candidate in extraction.candidates]
             updated.confirmations = {}
         else:
             schema = load_schema(task.operation_id, task.target_devices)
@@ -311,6 +321,7 @@ def resume_task(task: PlannedTask, reply: str | ClarificationAnswer, *, verbose=
         return _reject(task, str(exc), locals().get("answer"))
 
 
+@snapshot_request
 def correct_task(task: PlannedTask, path: str, reply: str) -> PlannedTask:
     """Explicit edits use the same validation boundary and invalidate old artifacts."""
     editable = deepcopy(task)
@@ -341,9 +352,13 @@ def _cross_task_issues(tasks):
     issues = []
     registry = rules()["operations"]
     def resources(task):
-        result = set()
+        from .knowledge.resource_keys import composite_values
+        result = composite_values(registry.get(task.operation_id, {}), task.parameters)
+        result.update(str(value) for value in registry.get(task.operation_id, {}).get("resource_constants", []))
         for path in registry.get(task.operation_id, {}).get("resource_keys", []):
-            if "[]" in path:
+            if path.endswith("[]"):
+                result.update(str(item) for item in task.parameters.get(path[:-2], []) if item is not None)
+            elif "[]" in path:
                 root, child = path.split("[].")
                 result.update(str(item.get(child)) for item in task.parameters.get(root, []) if isinstance(item, dict) and item.get(child) is not None)
             elif get_value(task.parameters, path) is not None:
@@ -353,14 +368,28 @@ def _cross_task_issues(tasks):
         for right in tasks[index + 1:]:
             if left.device_id != right.device_id or not resources(left).intersection(resources(right)):
                 continue
-            if right.operation_id in registry.get(left.operation_id, {}).get("conflicts_with", []) or (left.operation_id == right.operation_id and left.parameters != right.parameters):
+            if (right.operation_id in registry.get(left.operation_id, {}).get("conflicts_with", [])
+                    or left.operation_id in registry.get(right.operation_id, {}).get("conflicts_with", [])
+                    or (left.operation_id == right.operation_id and left.parameters != right.parameters)):
                 issues.append({"type": "CROSS_TASK_CONFLICT", "tasks": [left.intent_id, right.intent_id],
                                "message": f"{left.intent_id} and {right.intent_id} propose conflicting changes to the same resource. Correct a task or explicitly confirm their listed order."})
     return issues
 
 
+@snapshot_request
 def refresh_plan(plan: ExecutionPlan, *, render_complete=True) -> ExecutionPlan:
-    revision = source_revision()
+    try:
+        if plan.knowledge_snapshot_id and current_snapshot() is None:
+            raise ValueError("Published knowledge is unavailable; restore the active release before continuing.")
+        revision = source_revision()
+    except (ValueError, OSError) as exc:
+        plan.status = "failed"
+        plan.issues = [{"type": "CONTEXT_INVALID", "message": str(exc)}]
+        for task in plan.tasks:
+            task.configs = []
+            task.questions = []
+            task.status = "failed"
+        return plan
     if plan.source_revision != revision:
         reload_catalog()
         try:
@@ -375,6 +404,9 @@ def refresh_plan(plan: ExecutionPlan, *, render_complete=True) -> ExecutionPlan:
                 task.status = "failed"
             return plan
     plan.source_revision = revision
+    snapshot = current_snapshot()
+    plan.knowledge_snapshot_id = snapshot.release_id if snapshot else ""
+    plan.context_revision = context_revision()
     plan.issues = []
     tasks = []
     for task in plan.tasks:
@@ -417,6 +449,7 @@ def refresh_plan(plan: ExecutionPlan, *, render_complete=True) -> ExecutionPlan:
     return plan
 
 
+@snapshot_request
 def confirm_order(plan: ExecutionPlan) -> ExecutionPlan:
     refresh_plan(plan, render_complete=False)
     for conflict in plan.issues:
@@ -430,6 +463,7 @@ def confirm_order(plan: ExecutionPlan) -> ExecutionPlan:
     return refresh_plan(plan)
 
 
+@snapshot_request
 def run(prompt: str, *, verbose=True) -> ExecutionPlan:
     reload_catalog()
     validate_catalog()

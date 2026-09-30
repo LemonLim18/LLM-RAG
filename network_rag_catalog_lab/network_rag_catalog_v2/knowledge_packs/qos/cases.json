@@ -1,0 +1,87 @@
+[
+  {
+    "operation_id": "create_qos_policy",
+    "parameters": {
+      "policy_name": "NEW_QOS",
+      "policy_terms": [
+        {
+          "classifier_name": "VOICE",
+          "bandwidth_bps": 20000000
+        }
+      ]
+    },
+    "expected": "bandwidth 20000",
+    "prompt": "create qos policy; policy_name \"NEW_QOS\"; policy_terms [{\"classifier_name\":\"VOICE\",\"bandwidth_bps\":20000000}] on SW1"
+  },
+  {
+    "operation_id": "create_classifier",
+    "parameters": {
+      "classifier_name": "NEW_CLASS",
+      "dscp_values": [
+        46,
+        34
+      ],
+      "match_mode": "any"
+    },
+    "expected": "match dscp 46 34",
+    "prompt": "create classifier; classifier_name \"NEW_CLASS\"; dscp_values [46,34]; match_mode \"any\" on SW1"
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "parameters": {
+      "classifier_name": "VOICE",
+      "dscp_values": [
+        46
+      ],
+      "previous_dscp_values": [
+        46
+      ]
+    },
+    "expected": "no match dscp 46",
+    "prompt": "classify by dscp; classifier_name \"VOICE\"; dscp_values [46]; previous_dscp_values [46] on SW1"
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "parameters": {
+      "policy_name": "QOS_BASE",
+      "classifier_name": "VOICE",
+      "bandwidth_bps": 30000000
+    },
+    "expected": "bandwidth 30000",
+    "prompt": "configure scheduler; policy_name \"QOS_BASE\"; classifier_name \"VOICE\"; bandwidth_bps 30000000 on SW1"
+  },
+  {
+    "operation_id": "configure_shaping",
+    "parameters": {
+      "policy_name": "NEW_SHAPER",
+      "interface": "GigabitEthernet1/0/5",
+      "rate_bps": 100000000,
+      "direction": "egress"
+    },
+    "expected": "shape average 100000000",
+    "prompt": "configure shaping; policy_name \"NEW_SHAPER\"; interface \"GigabitEthernet1/0/5\"; rate_bps 100000000; direction \"egress\" on SW1"
+  },
+  {
+    "operation_id": "configure_policing",
+    "parameters": {
+      "policy_name": "NEW_POLICER",
+      "interface": "GigabitEthernet1/0/5",
+      "rate_bps": 100000000,
+      "burst_bytes": 10000,
+      "direction": "ingress",
+      "exceed_action": "drop"
+    },
+    "expected": "police 100000000 10000 conform-action transmit exceed-action drop",
+    "prompt": "configure policing; policy_name \"NEW_POLICER\"; interface \"GigabitEthernet1/0/5\"; rate_bps 100000000; burst_bytes 10000; direction \"ingress\"; exceed_action \"drop\" on SW1"
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "parameters": {
+      "policy_name": "QOS_BASE",
+      "interface": "GigabitEthernet1/0/5",
+      "direction": "egress"
+    },
+    "expected": "service-policy output QOS_BASE",
+    "prompt": "apply qos policy to interface; policy_name \"QOS_BASE\"; interface \"GigabitEthernet1/0/5\"; direction \"egress\" on SW1"
+  }
+]

@@ -1,0 +1,9 @@
+traffic behavior {{ behavior_name }}
+ car cir {{ rate_bps // 1000 }} pir {{ rate_bps // 1000 }} cbs {{ burst_bytes }} pbs {{ burst_bytes }} mode color-blind green pass yellow discard red discard
+quit
+traffic policy {{ policy_name }}
+ classifier {{ classifier_name }} behavior {{ behavior_name }}
+quit
+interface {{ interface }}
+ traffic-policy {{ policy_name }} inbound
+quit

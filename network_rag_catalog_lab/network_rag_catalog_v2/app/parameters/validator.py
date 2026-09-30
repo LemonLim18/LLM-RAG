@@ -5,6 +5,7 @@ from typing import Any
 
 from jsonschema import Draft202012Validator, FormatChecker
 from .fields import leaf_values
+from ..knowledge.rule_registry import required_fields
 
 
 @dataclass
@@ -36,7 +37,7 @@ def _find_missing_required(params: Any, schema: dict, path: str = "") -> list[Va
         return issues
 
     properties = schema.get("properties", {})
-    for field in schema.get("required", []):
+    for field in required_fields(schema, params):
         field_path = f"{path}.{field}" if path else field
         if field not in params or _is_missing(params.get(field)):
             issues.append(
@@ -72,7 +73,7 @@ def validate_parameter_result(params: dict, schema: dict) -> ValidationResult:
         for part in error.path:
             path += f"[{part}]" if isinstance(part, int) else ("." if path else "") + part
         path = path or "<root>"
-        if error.validator == "required" or any(issue.field == path and issue.type == "MISSING" for issue in issues):
+        if error.validator in {"required", "dependentRequired"} or any(issue.field == path and issue.type == "MISSING" for issue in issues):
             continue
         issues.append(
             ValidationIssue(
@@ -81,7 +82,13 @@ def validate_parameter_result(params: dict, schema: dict) -> ValidationResult:
                 message=error.message,
             )
         )
-    issues.extend(_network_value_issues(params))
+    from ..knowledge.rule_registry import validation_issues
+    issues.extend(validation_issues(params, schema))
+    return ValidationResult(valid=not issues, issues=issues)
+
+
+def _unique_interface_issues(params: dict) -> list[ValidationIssue]:
+    issues = []
     interface_items = params.get("interfaces")
     if isinstance(interface_items, list):
         seen_names = set()
@@ -92,6 +99,11 @@ def validate_parameter_result(params: dict, schema: dict) -> ValidationResult:
             if name in seen_names:
                 issues.append(ValidationIssue("CONFLICT", f"interfaces[{index}].name", "Each interface must appear only once in this operation."))
             seen_names.add(name)
+    return issues
+
+
+def _safe_string_issues(params: dict) -> list[ValidationIssue]:
+    issues = []
     for path, value in leaf_values(params):
         if isinstance(value, str) and (any(ord(ch) < 32 or ord(ch) == 127 for ch in value) or any(ch in value for ch in ';{}"\\')):
             issues.append(ValidationIssue("UNSAFE_VALUE", path, "Control characters and configuration delimiters are not permitted."))
@@ -109,7 +121,7 @@ def validate_parameter_result(params: dict, schema: dict) -> ValidationResult:
                 issues.append(ValidationIssue("NETWORK_VALUE", path, "OSPF area must be a 32-bit unsigned decimal or dotted IPv4 value."))
         if field in {"name", "peer_group", "process_name"} and isinstance(value, str) and not re.fullmatch(r"[A-Za-z0-9_./:-]+", value):
             issues.append(ValidationIssue("NETWORK_VALUE", path, "Use an identifier without spaces or configuration punctuation."))
-    return ValidationResult(valid=not issues, issues=issues)
+    return issues
 
 
 def _network_value_issues(params: dict) -> list[ValidationIssue]:

@@ -1,0 +1,18 @@
+[
+  {
+    "operation_id": "modify_vlan",
+    "parameters": {
+      "vlan_id": 20,
+      "vlan_status": "suspend"
+    },
+    "prompt": "modify vlan; vlan_id 20; vlan_status \"suspend\" on SW1"
+  },
+  {
+    "operation_id": "rename_vlan",
+    "parameters": {
+      "vlan_id": 20,
+      "new_vlan_name": "EMPLOYEES"
+    },
+    "prompt": "rename vlan; vlan_id 20; new_vlan_name \"EMPLOYEES\" on SW1"
+  }
+]

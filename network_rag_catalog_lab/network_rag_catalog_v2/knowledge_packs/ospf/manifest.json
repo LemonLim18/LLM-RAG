@@ -1,0 +1,43 @@
+{
+  "format_version": 1,
+  "pack_id": "ospf_review_v1",
+  "phase": "C",
+  "status": "review_only",
+  "source_authority": "sqlite",
+  "operations": [
+    "enable_ospf_process",
+    "set_ospf_router_id",
+    "create_ospf_area",
+    "assign_interface_to_ospf_area",
+    "advertise_network",
+    "configure_passive_interface",
+    "configure_ospf_redistribution"
+  ],
+  "reuse": [
+    "configure_ospf"
+  ],
+  "support": {
+    "cisco": "Catalyst 9300 / IOS XE 17.9, explicit capability and planned resource facts required",
+    "juniper": "unsupported",
+    "huawei": "unsupported for this wave; exact profile behavior not verified",
+    "evidence": "Documentation-reviewed candidate; not device-lab certified"
+  },
+  "assets": [
+    "data/templates/cisco/ospf/enable_ospf_process/template.j2",
+    "data/templates/cisco/ospf/set_ospf_router_id/template.j2",
+    "data/templates/cisco/ospf/create_ospf_area/template.j2",
+    "data/templates/cisco/ospf/assign_interface_to_ospf_area/template.j2",
+    "data/templates/cisco/ospf/advertise_network/template.j2",
+    "data/templates/cisco/ospf/configure_passive_interface/template.j2",
+    "data/templates/cisco/ospf/configure_ospf_redistribution/template.j2"
+  ],
+  "asset_hashes": {
+    "data/templates/cisco/ospf/advertise_network/template.j2": "360c101518dd41c855ed9e7c2af6bc157e48714a8777103fdf3020ebcb847f61",
+    "data/templates/cisco/ospf/create_ospf_area/template.j2": "4f5b84f6d4187357a657e3a4389d6f8a6ca727e1e096ee4303e2ed4a18ea91a7",
+    "data/templates/cisco/ospf/assign_interface_to_ospf_area/template.j2": "4d1e46f20d89fb3e6137ba99cfd2edae562834b3ae5da17f0a3db854dcddd622",
+    "data/templates/cisco/ospf/set_ospf_router_id/template.j2": "f5bf692b04550c82353b8de439b6e584222f12b94c3382dce35ebec74ce3fff6",
+    "data/templates/cisco/ospf/enable_ospf_process/template.j2": "f5bf692b04550c82353b8de439b6e584222f12b94c3382dce35ebec74ce3fff6",
+    "data/templates/cisco/ospf/configure_ospf_redistribution/template.j2": "1fb0ba0d3dec2e96a710aa4a51100f1c0ce0412c8e7122b65fdc9cc745fcd6e6",
+    "data/templates/cisco/ospf/configure_passive_interface/template.j2": "345b892ae994de4e8b227986351dddd25554c0a4da06889d721989359b4a7cac"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "process_id": {
+      "minimum": 1,
+      "maximum": 65535,
+      "type": "integer"
+    },
+    "interface": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$",
+      "type": "string"
+    },
+    "passive": {
+      "type": "boolean"
+    },
+    "area": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "process_id",
+    "interface",
+    "passive"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "process_id": {
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "interface": {
+          "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$",
+          "type": "string"
+        },
+        "passive": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "process_id",
+        "interface",
+        "passive"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "process_id": {
+          "minimum": 1,
+          "maximum": 65535,
+          "type": "integer"
+        },
+        "interface": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+        },
+        "passive": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "process_id",
+        "interface",
+        "passive"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "interface": {
+          "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$",
+          "type": "string"
+        },
+        "passive": {
+          "type": "boolean"
+        },
+        "area": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "passive",
+        "area"
+      ],
+      "description": "Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy."
+    }
+  }
+}

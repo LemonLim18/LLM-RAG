@@ -1,0 +1,31 @@
+{
+  "format_version": 1,
+  "pack_id": "vlan_c9300_v1",
+  "phase": "A",
+  "status": "review_only",
+  "source_authority": "sqlite",
+  "operations": [
+    "modify_vlan",
+    "rename_vlan"
+  ],
+  "reuse": [
+    "create_vlan",
+    "delete_vlan"
+  ],
+  "support": {
+    "vendor": "cisco",
+    "platform": "iosxe",
+    "version": "17.9",
+    "model_family": "catalyst9300",
+    "evidence": "documentation-reviewed; device-lab validation pending",
+    "other_vendors": "unsupported for new operations"
+  },
+  "assets": [
+    "data/templates/cisco/vlan/modify_vlan/template.j2",
+    "data/templates/cisco/vlan/rename_vlan/template.j2"
+  ],
+  "asset_hashes": {
+    "data/templates/cisco/vlan/modify_vlan/template.j2": "b06b09644b1b31ab1d136e42ea571e66f05996ff46fbc74174af7411d0cee597",
+    "data/templates/cisco/vlan/rename_vlan/template.j2": "01cf7df398fecd195ac5436c0464f5416921a234ce2ad8c165567d0a75c44ec6"
+  }
+}

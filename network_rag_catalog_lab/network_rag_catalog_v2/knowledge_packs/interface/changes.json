@@ -1,0 +1,1407 @@
+[
+  {
+    "entity": "category",
+    "action": "create",
+    "entity_id": "interface",
+    "values": {
+      "display_name": "Interface",
+      "aliases": [
+        "interfaces",
+        "switchport"
+      ],
+      "description": "Physical and logical interface operations with explicit device policies.",
+      "status": "active"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "allowed_vlans",
+    "values": {
+      "display_name": "Allowed VLANs",
+      "aliases": [
+        "allowed vlans",
+        "vlan list"
+      ],
+      "clarification": "Which VLAN IDs should be in this list? Enter a JSON integer array.",
+      "parameter_id": "allowed_vlans",
+      "value_type": "array"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "native_vlan",
+    "values": {
+      "display_name": "Native VLAN",
+      "aliases": [
+        "native vlan"
+      ],
+      "clarification": "Which native VLAN ID should be used?",
+      "parameter_id": "native_vlan",
+      "value_type": "integer"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "aggregate_interface",
+    "values": {
+      "display_name": "Aggregate interface",
+      "aliases": [
+        "aggregate interface",
+        "port channel"
+      ],
+      "clarification": "Which Port-channel1 through Port-channel128 should be configured?",
+      "parameter_id": "aggregate_interface",
+      "value_type": "string"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "member_interfaces",
+    "values": {
+      "display_name": "Member interfaces",
+      "aliases": [
+        "member interfaces",
+        "members"
+      ],
+      "clarification": "Which existing routed ports should join the aggregate? Enter a JSON string array.",
+      "parameter_id": "member_interfaces",
+      "value_type": "array"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "lacp_mode",
+    "values": {
+      "display_name": "LACP mode",
+      "aliases": [
+        "lacp mode"
+      ],
+      "clarification": "Which explicit LACP mode should be used: active or passive?",
+      "parameter_id": "lacp_mode",
+      "value_type": "string"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "interface"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "description"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "admin_up"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "vlan_id"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "allowed_vlans"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "native_vlan"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "address"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "prefix_length"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "aggregate_interface"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "member_interfaces"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "interface",
+      "parameter_id": "lacp_mode"
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "set_interface_description",
+    "values": {
+      "operation_id": "set_interface_description",
+      "display_name": "Set interface description",
+      "category_id": "interface",
+      "aliases": [
+        "set interface description"
+      ],
+      "description": "Set a nonempty description on an existing inventory interface.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Set a nonempty description on an existing inventory interface."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "set_interface_description",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "set_interface_description",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "set_interface_description",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "description",
+          "field_path": "description",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "set_interface_description",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "set_interface_description",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "set_interface_description",
+          "operation_version": 1,
+          "field_path": "description",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[A-Za-z0-9 _./:()-]+$"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "set_interface_description",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/set_interface_description/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "description"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "set_interface_description",
+          "operation_version": 1,
+          "vendor": "huawei",
+          "platform": "vrp",
+          "versions": [
+            "V200R024C10"
+          ],
+          "template_path": "data/templates/huawei/interface/set_interface_description/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "description"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "set_interface_description",
+          "operation_version": 1,
+          "vendor": "juniper",
+          "platform": "junos",
+          "versions": [
+            "23.4"
+          ],
+          "template_path": "data/templates/juniper/interface/set_interface_description/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "description"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "set_interface_admin_state",
+    "values": {
+      "operation_id": "set_interface_admin_state",
+      "display_name": "Set interface admin state",
+      "category_id": "interface",
+      "aliases": [
+        "set interface admin state"
+      ],
+      "description": "Set the explicit administrative state on an existing inventory interface.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Set the explicit administrative state on an existing inventory interface."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "set_interface_admin_state",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "set_interface_admin_state",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "set_interface_admin_state",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "admin_up",
+          "field_path": "admin_up",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "set_interface_admin_state",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "set_interface_admin_state",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "set_interface_admin_state",
+          "operation_version": 1,
+          "field_path": "admin_up",
+          "keywords": {}
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "set_interface_admin_state",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/set_interface_admin_state/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "admin_up"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "set_interface_admin_state",
+          "operation_version": 1,
+          "vendor": "huawei",
+          "platform": "vrp",
+          "versions": [
+            "V200R024C10"
+          ],
+          "template_path": "data/templates/huawei/interface/set_interface_admin_state/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "admin_up"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "set_interface_admin_state",
+          "operation_version": 1,
+          "vendor": "juniper",
+          "platform": "junos",
+          "versions": [
+            "23.4"
+          ],
+          "template_path": "data/templates/juniper/interface/set_interface_admin_state/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "admin_up"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_access_port",
+    "values": {
+      "operation_id": "configure_access_port",
+      "display_name": "Configure access port",
+      "category_id": "interface",
+      "aliases": [
+        "configure access port",
+        "assign vlan to access port"
+      ],
+      "description": "Configure an existing L2 physical port as an access port with an existing VLAN.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Configure an existing L2 physical port as an access port with an existing VLAN."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_access_port",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_access_port",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_access_port",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "vlan_id",
+          "field_path": "vlan_id",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_access_port",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "description",
+          "field_path": "description",
+          "position": 2,
+          "required": false,
+          "required_order": null
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_access_port",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "configure_access_port",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+          }
+        },
+        {
+          "operation_id": "configure_access_port",
+          "operation_version": 1,
+          "field_path": "vlan_id",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 4094
+          }
+        },
+        {
+          "operation_id": "configure_access_port",
+          "operation_version": 1,
+          "field_path": "description",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[A-Za-z0-9 _./:()-]+$"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_access_port",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/configure_access_port/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "vlan_id",
+              "description"
+            ],
+            "optional_defaults": {
+              "description": null
+            },
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_trunk_port",
+    "values": {
+      "operation_id": "configure_trunk_port",
+      "display_name": "Configure trunk port",
+      "category_id": "interface",
+      "aliases": [
+        "configure trunk port"
+      ],
+      "description": "Explicitly configure trunk mode and replace its allowed VLAN list; optional native VLAN otherwise retains recorded native VLAN.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Explicitly configure trunk mode and replace its allowed VLAN list; optional native VLAN otherwise retains recorded native VLAN."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_trunk_port",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "allowed_vlans",
+          "field_path": "allowed_vlans",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "native_vlan",
+          "field_path": "native_vlan",
+          "position": 2,
+          "required": false,
+          "required_order": null
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+          }
+        },
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "field_path": "allowed_vlans",
+          "keywords": {
+            "minItems": 1,
+            "maxItems": 128,
+            "uniqueItems": true
+          }
+        },
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "field_path": "allowed_vlans[]",
+          "keywords": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4094
+          }
+        },
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "field_path": "native_vlan",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 4094
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_trunk_port",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/configure_trunk_port/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "allowed_vlans",
+              "native_vlan"
+            ],
+            "optional_defaults": {
+              "native_vlan": null
+            },
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "assign_vlan_to_trunk_port",
+    "values": {
+      "operation_id": "assign_vlan_to_trunk_port",
+      "display_name": "Add VLANs to trunk",
+      "category_id": "interface",
+      "aliases": [
+        "assign vlan to trunk port",
+        "add vlans to trunk"
+      ],
+      "description": "Add named VLANs to an existing trunk, preserving other allowed VLANs.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Add named VLANs to an existing trunk, preserving other allowed VLANs."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "assign_vlan_to_trunk_port",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "allowed_vlans",
+          "field_path": "allowed_vlans",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "field_path": "allowed_vlans",
+          "keywords": {
+            "minItems": 1,
+            "maxItems": 128,
+            "uniqueItems": true
+          }
+        },
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "field_path": "allowed_vlans[]",
+          "keywords": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4094
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/assign_vlan_to_trunk_port/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "allowed_vlans"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "vendor": "huawei",
+          "platform": "vrp",
+          "versions": [
+            "V200R024C10"
+          ],
+          "template_path": "data/templates/huawei/interface/assign_vlan_to_trunk_port/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "allowed_vlans"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "assign_vlan_to_trunk_port",
+          "operation_version": 1,
+          "vendor": "juniper",
+          "platform": "junos",
+          "versions": [
+            "23.4"
+          ],
+          "template_path": "data/templates/juniper/interface/assign_vlan_to_trunk_port/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "allowed_vlans"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_trunk_allowed_vlans",
+    "values": {
+      "operation_id": "configure_trunk_allowed_vlans",
+      "display_name": "Replace trunk allowed VLANs",
+      "category_id": "interface",
+      "aliases": [
+        "configure trunk allowed vlans",
+        "replace trunk allowed vlans"
+      ],
+      "description": "Replace the entire allowed list of an existing trunk; keep its recorded native VLAN allowed.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Replace the entire allowed list of an existing trunk; keep its recorded native VLAN allowed."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_trunk_allowed_vlans",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_trunk_allowed_vlans",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_trunk_allowed_vlans",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "allowed_vlans",
+          "field_path": "allowed_vlans",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_trunk_allowed_vlans",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "configure_trunk_allowed_vlans",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+          }
+        },
+        {
+          "operation_id": "configure_trunk_allowed_vlans",
+          "operation_version": 1,
+          "field_path": "allowed_vlans",
+          "keywords": {
+            "minItems": 1,
+            "maxItems": 128,
+            "uniqueItems": true
+          }
+        },
+        {
+          "operation_id": "configure_trunk_allowed_vlans",
+          "operation_version": 1,
+          "field_path": "allowed_vlans[]",
+          "keywords": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4094
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_trunk_allowed_vlans",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/configure_trunk_allowed_vlans/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "allowed_vlans"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "set_native_vlan",
+    "values": {
+      "operation_id": "set_native_vlan",
+      "display_name": "Set native VLAN",
+      "category_id": "interface",
+      "aliases": [
+        "set native vlan"
+      ],
+      "description": "Set a native VLAN already allowed on the existing trunk.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Set a native VLAN already allowed on the existing trunk."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "set_native_vlan",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "set_native_vlan",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "set_native_vlan",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "native_vlan",
+          "field_path": "native_vlan",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "set_native_vlan",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "set_native_vlan",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "set_native_vlan",
+          "operation_version": 1,
+          "field_path": "native_vlan",
+          "keywords": {
+            "minimum": 1,
+            "maximum": 4094
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "set_native_vlan",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/set_native_vlan/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "native_vlan"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "set_native_vlan",
+          "operation_version": 1,
+          "vendor": "huawei",
+          "platform": "vrp",
+          "versions": [
+            "V200R024C10"
+          ],
+          "template_path": "data/templates/huawei/interface/set_native_vlan/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "native_vlan"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        },
+        {
+          "operation_id": "set_native_vlan",
+          "operation_version": 1,
+          "vendor": "juniper",
+          "platform": "junos",
+          "versions": [
+            "23.4"
+          ],
+          "template_path": "data/templates/juniper/interface/set_native_vlan/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "native_vlan"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_loopback_interface",
+    "values": {
+      "operation_id": "configure_loopback_interface",
+      "display_name": "Configure loopback interface",
+      "category_id": "interface",
+      "aliases": [
+        "configure loopback interface"
+      ],
+      "description": "Create or configure Loopback0-99 with explicit IPv4 address and prefix on an approved device.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Create or configure Loopback0-99 with explicit IPv4 address and prefix on an approved device."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_loopback_interface",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "address",
+          "field_path": "address",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "prefix_length",
+          "field_path": "prefix_length",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        },
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "description",
+          "field_path": "description",
+          "position": 3,
+          "required": false,
+          "required_order": null
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "pattern": "^Loopback(?:0|[1-9][0-9]?)$"
+          }
+        },
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "field_path": "address",
+          "keywords": {
+            "format": "ipv4"
+          }
+        },
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "field_path": "prefix_length",
+          "keywords": {
+            "minimum": 0,
+            "maximum": 32
+          }
+        },
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "field_path": "description",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[A-Za-z0-9 _./:()-]+$"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_loopback_interface",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/configure_loopback_interface/template.j2",
+          "input_contract": {
+            "fields": [
+              "interface",
+              "address",
+              "prefix_length",
+              "description"
+            ],
+            "optional_defaults": {
+              "description": null
+            },
+            "derived": {
+              "netmask": "ipv4_netmask_v1"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_port_channel",
+    "values": {
+      "operation_id": "configure_port_channel",
+      "display_name": "Configure routed port channel",
+      "category_id": "interface",
+      "aliases": [
+        "configure port channel",
+        "configure routed port channel"
+      ],
+      "description": "Create or extend a routed LACP aggregate using existing enabled, unaddressed routed members; no VLAN or address configuration.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Create or extend a routed LACP aggregate using existing enabled, unaddressed routed members; no VLAN or address configuration."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_port_channel",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "aggregate_interface",
+          "field_path": "aggregate_interface",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "member_interfaces",
+          "field_path": "member_interfaces",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "lacp_mode",
+          "field_path": "lacp_mode",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        },
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "category_id": "interface",
+          "parameter_id": "description",
+          "field_path": "description",
+          "position": 3,
+          "required": false,
+          "required_order": null
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "field_path": "aggregate_interface",
+          "keywords": {
+            "pattern": "^Port-channel([1-9]|[1-9][0-9]|1[01][0-9]|12[0-8])$"
+          }
+        },
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "field_path": "member_interfaces",
+          "keywords": {
+            "minItems": 1,
+            "maxItems": 8,
+            "uniqueItems": true
+          }
+        },
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "field_path": "member_interfaces[]",
+          "keywords": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+          }
+        },
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "field_path": "lacp_mode",
+          "keywords": {
+            "enum": [
+              "active",
+              "passive"
+            ]
+          }
+        },
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "field_path": "description",
+          "keywords": {
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[A-Za-z0-9 _./:()-]+$"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_port_channel",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/interface/configure_port_channel/template.j2",
+          "input_contract": {
+            "fields": [
+              "aggregate_interface",
+              "member_interfaces",
+              "lacp_mode",
+              "description"
+            ],
+            "optional_defaults": {
+              "description": null
+            },
+            "derived": {}
+          }
+        }
+      ]
+    }
+  }
+]

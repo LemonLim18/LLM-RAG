@@ -1,0 +1,152 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "aggregate_interface": {
+      "pattern": "^Port-channel([1-9]|[1-9][0-9]|1[01][0-9]|12[0-8])$",
+      "type": "string"
+    },
+    "member_interfaces": {
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 64,
+        "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+      }
+    },
+    "lacp_mode": {
+      "enum": [
+        "active",
+        "passive"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[A-Za-z0-9 _./:()-]+$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "aggregate_interface",
+    "member_interfaces",
+    "lacp_mode"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "aggregate_interface": {
+          "pattern": "^Port-channel([1-9]|[1-9][0-9]|1[01][0-9]|12[0-8])$",
+          "type": "string"
+        },
+        "member_interfaces": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$"
+          }
+        },
+        "lacp_mode": {
+          "enum": [
+            "active",
+            "passive"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "aggregate_interface",
+        "member_interfaces",
+        "lacp_mode"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "aggregate_interface": {
+          "type": "string",
+          "pattern": "^Eth-Trunk(?:0|[1-9][0-9]?)$"
+        },
+        "member_interfaces": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        "lacp_mode": {
+          "enum": [
+            "active",
+            "passive"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "aggregate_interface",
+        "member_interfaces",
+        "lacp_mode"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "aggregate_interface": {
+          "type": "string",
+          "pattern": "^ae(?:0|[1-9][0-9]?)$"
+        },
+        "member_interfaces": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        "lacp_mode": {
+          "enum": [
+            "active",
+            "passive"
+          ],
+          "type": "string"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "aggregate_interface",
+        "member_interfaces",
+        "lacp_mode"
+      ]
+    }
+  }
+}

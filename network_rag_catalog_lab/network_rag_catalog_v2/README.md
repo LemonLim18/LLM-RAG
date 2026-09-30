@@ -2,6 +2,28 @@
 
 This is the revised version of the original `network_rag_catalog` learning lab.
 
+**Current terminal mode: direct files (`data/`), not publication.** All 38 requested
+operation IDs are present; six pre-existing operations are retained (44 total).
+Run `python -m app.ingest` after editing catalog/schema/template files, then
+`python main.py --interactive`. See [direct runtime notes](docs/DIRECT_RUNTIME.md).
+No pack import, database edit, release or activation command is required.
+Requested-operation templates now cover **Cisco 38/38, Huawei 38/38 and Juniper 38/38**.
+Use SW1/SW2/SW3 and the [three-vendor examples](docs/THREE_VENDOR_PROMPTS.md).
+Schemas collect native vendor inputs; this is preview support, not hardware certification.
+
+Retained backend revision: [Phases 1-5 completion audit](docs/KNOWLEDGE_EVOLUTION_COMPLETION.md)
+and [Phase 5 management](docs/KNOWLEDGE_PHASE_5.md). The optional backend uses SQLite
+authoring and immutable published runtime releases. Fresh clones start from JSON
+seeds until explicitly migrated. The handoff covers migration, management,
+publication, compatibility checks, and remaining operational limits.
+
+Previously published knowledge: **44 operations / 78 vendor bindings**. The default
+terminal path now uses their direct files. Start with the [prompt guide](docs/PROMPT_TESTING_GUIDE.md)
+and [activation results](docs/KNOWLEDGE_ACTIVATION_RESULTS.md).
+The [requested-operation coverage](docs/REQUESTED_OPERATION_COVERAGE.md) distinguishes
+RAG availability from implemented vendor templates. SQLite remains untouched for the optional backend;
+SW1/SW2/SW3 are explicitly synthetic demonstration inventory.
+
 The original MVP proved this lower-level pipeline:
 
 `prompt -> category -> ChromaDB operation retrieval -> operation selection -> schema -> parameter extraction -> validation -> vendor template -> rendered config`
@@ -237,15 +259,16 @@ Each category now has at least two safe planning/rendering operations:
 | Static routing | configure, remove route |
 | Interface IPv4 | configure, remove address |
 
-Catalog terminology is centralized in:
+Catalog terminology uses these JSON seed/export shapes:
 
 - `data/catalog/categories.json`
 - `data/catalog/operations.json`
 - `data/catalog/parameters.json`
 
 Stable IDs are used in code and schemas. A senior engineer can change display
-names, aliases, and clarification wording in these catalog files without
-renaming the internal IDs.
+names, aliases, and clarification wording through the management service without
+renaming internal IDs. After SQLite migration, editing seed files does not edit
+the active authoring catalog; validate and publish service changes explicitly.
 
 See `docs/CATALOG_GOVERNANCE.md` for the add/change/retire workflow and
 `docs/TEST_PROMPTS.md` for ready-made terminal tests.
@@ -271,5 +294,5 @@ python -m unittest discover -s tests -v
 - Target resolution intentionally asks for clarification rather than guessing when multiple devices are plausible.
 - Vendor-specific required fields remain in schemas. Junos OSPF has no numeric
   process ID; Junos BGP now requires an explicit peer group. Template compatibility
-  is restricted by `data/catalog/template_support.json` to the lab inventory
+  is restricted by reviewed operation template bindings to the lab inventory
   releases; it is not a claim of release-certified CLI syntax.

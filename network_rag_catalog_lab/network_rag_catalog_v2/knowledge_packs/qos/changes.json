@@ -1,0 +1,1270 @@
+[
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "previous_dscp_values",
+    "values": {
+      "parameter_id": "previous_dscp_values",
+      "display_name": "Existing DSCP values",
+      "value_type": "array",
+      "aliases": [
+        "previous dscp values",
+        "existing dscp values"
+      ],
+      "clarification": "Confirm the existing DSCP list to replace."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "previous_dscp_values"
+    }
+  },
+  {
+    "entity": "category",
+    "action": "create",
+    "entity_id": "qos",
+    "values": {
+      "category_id": "qos",
+      "display_name": "QOS",
+      "aliases": [
+        "quality of service"
+      ],
+      "description": "Reviewed QOS intent operations.",
+      "status": "active"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "policy_name",
+    "values": {
+      "parameter_id": "policy_name",
+      "display_name": "QoS policy name",
+      "value_type": "string",
+      "aliases": [
+        "policy name"
+      ],
+      "clarification": "Provide qos policy name."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "policy_name"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "policy_terms",
+    "values": {
+      "parameter_id": "policy_terms",
+      "display_name": "Policy terms",
+      "value_type": "array",
+      "aliases": [
+        "policy terms"
+      ],
+      "clarification": "Provide policy terms."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "policy_terms"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "classifier_name",
+    "values": {
+      "parameter_id": "classifier_name",
+      "display_name": "Classifier name",
+      "value_type": "string",
+      "aliases": [
+        "classifier name"
+      ],
+      "clarification": "Provide classifier name."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "classifier_name"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "bandwidth_bps",
+    "values": {
+      "parameter_id": "bandwidth_bps",
+      "display_name": "Bandwidth in bps",
+      "value_type": "integer",
+      "aliases": [
+        "bandwidth bps"
+      ],
+      "clarification": "Provide bandwidth in bps."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "bandwidth_bps"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "dscp_values",
+    "values": {
+      "parameter_id": "dscp_values",
+      "display_name": "DSCP values",
+      "value_type": "array",
+      "aliases": [
+        "dscp values"
+      ],
+      "clarification": "Provide dscp values."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "dscp_values"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "match_mode",
+    "values": {
+      "parameter_id": "match_mode",
+      "display_name": "Match mode",
+      "value_type": "string",
+      "aliases": [
+        "match mode"
+      ],
+      "clarification": "Provide match mode."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "match_mode"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "interface"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "rate_bps",
+    "values": {
+      "parameter_id": "rate_bps",
+      "display_name": "Rate in bps",
+      "value_type": "integer",
+      "aliases": [
+        "rate bps"
+      ],
+      "clarification": "Provide rate in bps."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "rate_bps"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "direction"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "burst_bytes",
+    "values": {
+      "parameter_id": "burst_bytes",
+      "display_name": "Burst in bytes",
+      "value_type": "integer",
+      "aliases": [
+        "burst bytes"
+      ],
+      "clarification": "Provide burst in bytes."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "burst_bytes"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "exceed_action",
+    "values": {
+      "parameter_id": "exceed_action",
+      "display_name": "Exceed action",
+      "value_type": "string",
+      "aliases": [
+        "exceed action"
+      ],
+      "clarification": "Provide exceed action."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "qos",
+      "parameter_id": "exceed_action"
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "create_qos_policy",
+    "values": {
+      "operation_id": "create_qos_policy",
+      "display_name": "create qos policy",
+      "category_id": "qos",
+      "aliases": [
+        "create qos policy"
+      ],
+      "description": "Create a detached absolute-bandwidth MQC policy with explicit existing DSCP classifiers and per-class bandwidth in bps.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Create a detached absolute-bandwidth MQC policy with explicit existing DSCP classifiers and per-class bandwidth in bps."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "create_qos_policy",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "policy_name",
+          "field_path": "policy_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "policy_terms",
+          "field_path": "policy_terms",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "classifier_name",
+          "field_path": "policy_terms[].classifier_name",
+          "position": 2,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "bandwidth_bps",
+          "field_path": "policy_terms[].bandwidth_bps",
+          "position": 3,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "field_path": "policy_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "field_path": "policy_terms",
+          "keywords": {
+            "minItems": 1,
+            "maxItems": 7
+          }
+        },
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "field_path": "policy_terms[]",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "field_path": "policy_terms[].classifier_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "field_path": "policy_terms[].bandwidth_bps",
+          "keywords": {
+            "minimum": 20000000,
+            "maximum": 100000000000,
+            "multipleOf": 1000
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "create_qos_policy",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/qos/create_qos_policy/template.j2",
+          "input_contract": {
+            "fields": [
+              "policy_name",
+              "policy_terms"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "create_classifier",
+    "values": {
+      "operation_id": "create_classifier",
+      "display_name": "create classifier",
+      "category_id": "qos",
+      "aliases": [
+        "create classifier"
+      ],
+      "description": "Create a DSCP-only match-any classifier; a single explicit match definition.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Create a DSCP-only match-any classifier; a single explicit match definition."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "create_classifier",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "classifier_name",
+          "field_path": "classifier_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "dscp_values",
+          "field_path": "dscp_values",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "match_mode",
+          "field_path": "match_mode",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "field_path": "classifier_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "field_path": "dscp_values",
+          "keywords": {
+            "minItems": 1,
+            "maxItems": 8,
+            "uniqueItems": true
+          }
+        },
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "field_path": "dscp_values[]",
+          "keywords": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        },
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "field_path": "match_mode",
+          "keywords": {
+            "enum": [
+              "any"
+            ]
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "create_classifier",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/qos/create_classifier/template.j2",
+          "input_contract": {
+            "fields": [
+              "classifier_name",
+              "dscp_values",
+              "match_mode"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "classify_by_dscp",
+    "values": {
+      "operation_id": "classify_by_dscp",
+      "display_name": "classify by dscp",
+      "category_id": "qos",
+      "aliases": [
+        "classify by dscp"
+      ],
+      "description": "Replace the entire DSCP match list on an existing DSCP-only match-any classifier.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Replace the entire DSCP match list on an existing DSCP-only match-any classifier."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "classify_by_dscp",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "classifier_name",
+          "field_path": "classifier_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "dscp_values",
+          "field_path": "dscp_values",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "previous_dscp_values",
+          "field_path": "previous_dscp_values",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "field_path": "classifier_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "field_path": "dscp_values",
+          "keywords": {
+            "minItems": 1,
+            "maxItems": 8,
+            "uniqueItems": true
+          }
+        },
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "field_path": "dscp_values[]",
+          "keywords": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        },
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "field_path": "previous_dscp_values",
+          "keywords": {
+            "minItems": 1,
+            "maxItems": 8,
+            "uniqueItems": true
+          }
+        },
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "field_path": "previous_dscp_values[]",
+          "keywords": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "classify_by_dscp",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/qos/classify_by_dscp/template.j2",
+          "input_contract": {
+            "fields": [
+              "classifier_name",
+              "dscp_values",
+              "previous_dscp_values"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_scheduler",
+    "values": {
+      "operation_id": "configure_scheduler",
+      "display_name": "configure scheduler",
+      "category_id": "qos",
+      "aliases": [
+        "configure scheduler"
+      ],
+      "description": "Set absolute minimum bandwidth for an existing class in a detached MQC policy; no invented standalone scheduler identity.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Set absolute minimum bandwidth for an existing class in a detached MQC policy; no invented standalone scheduler identity."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_scheduler",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_scheduler",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "policy_name",
+          "field_path": "policy_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_scheduler",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "classifier_name",
+          "field_path": "classifier_name",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_scheduler",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "bandwidth_bps",
+          "field_path": "bandwidth_bps",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_scheduler",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "configure_scheduler",
+          "operation_version": 1,
+          "field_path": "policy_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "configure_scheduler",
+          "operation_version": 1,
+          "field_path": "classifier_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "configure_scheduler",
+          "operation_version": 1,
+          "field_path": "bandwidth_bps",
+          "keywords": {
+            "minimum": 20000000,
+            "maximum": 100000000000,
+            "multipleOf": 1000
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_scheduler",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/qos/configure_scheduler/template.j2",
+          "input_contract": {
+            "fields": [
+              "policy_name",
+              "classifier_name",
+              "bandwidth_bps"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_shaping",
+    "values": {
+      "operation_id": "configure_shaping",
+      "display_name": "configure shaping",
+      "category_id": "qos",
+      "aliases": [
+        "configure shaping"
+      ],
+      "description": "Create and attach a dedicated egress class-default shaper using an unused policy name; no child queues or inferred classifier.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Create and attach a dedicated egress class-default shaper using an unused policy name; no child queues or inferred classifier."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_shaping",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "policy_name",
+          "field_path": "policy_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "rate_bps",
+          "field_path": "rate_bps",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        },
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "direction",
+          "field_path": "direction",
+          "position": 3,
+          "required": true,
+          "required_order": 3
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "field_path": "policy_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "field_path": "rate_bps",
+          "keywords": {
+            "minimum": 8000,
+            "maximum": 10000000000
+          }
+        },
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "field_path": "direction",
+          "keywords": {
+            "enum": [
+              "egress"
+            ]
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_shaping",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/qos/configure_shaping/template.j2",
+          "input_contract": {
+            "fields": [
+              "policy_name",
+              "interface",
+              "rate_bps",
+              "direction"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "configure_policing",
+    "values": {
+      "operation_id": "configure_policing",
+      "display_name": "configure policing",
+      "category_id": "qos",
+      "aliases": [
+        "configure policing"
+      ],
+      "description": "Create and attach a dedicated ingress class-default policer with explicit bps, burst bytes and drop excess action.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Create and attach a dedicated ingress class-default policer with explicit bps, burst bytes and drop excess action."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "configure_policing",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "policy_name",
+          "field_path": "policy_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "rate_bps",
+          "field_path": "rate_bps",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "burst_bytes",
+          "field_path": "burst_bytes",
+          "position": 3,
+          "required": true,
+          "required_order": 3
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "direction",
+          "field_path": "direction",
+          "position": 4,
+          "required": true,
+          "required_order": 4
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "exceed_action",
+          "field_path": "exceed_action",
+          "position": 5,
+          "required": true,
+          "required_order": 5
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "field_path": "policy_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "field_path": "rate_bps",
+          "keywords": {
+            "minimum": 8000,
+            "maximum": 10000000000
+          }
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "field_path": "burst_bytes",
+          "keywords": {
+            "minimum": 1000,
+            "maximum": 512000000
+          }
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "field_path": "direction",
+          "keywords": {
+            "enum": [
+              "ingress"
+            ]
+          }
+        },
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "field_path": "exceed_action",
+          "keywords": {
+            "enum": [
+              "drop"
+            ]
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "configure_policing",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/qos/configure_policing/template.j2",
+          "input_contract": {
+            "fields": [
+              "policy_name",
+              "interface",
+              "rate_bps",
+              "burst_bytes",
+              "direction",
+              "exceed_action"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "apply_qos_policy_to_interface",
+    "values": {
+      "operation_id": "apply_qos_policy_to_interface",
+      "display_name": "apply qos policy to interface",
+      "category_id": "qos",
+      "aliases": [
+        "apply qos policy to interface"
+      ],
+      "description": "Attach a confirmed bandwidth policy on egress without overwriting another policy; verify queue and link capacity.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Attach a confirmed bandwidth policy on egress without overwriting another policy; verify queue and link capacity."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "apply_qos_policy_to_interface",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "apply_qos_policy_to_interface",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "policy_name",
+          "field_path": "policy_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "apply_qos_policy_to_interface",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "apply_qos_policy_to_interface",
+          "operation_version": 1,
+          "category_id": "qos",
+          "parameter_id": "direction",
+          "field_path": "direction",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "apply_qos_policy_to_interface",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "apply_qos_policy_to_interface",
+          "operation_version": 1,
+          "field_path": "policy_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "apply_qos_policy_to_interface",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "apply_qos_policy_to_interface",
+          "operation_version": 1,
+          "field_path": "direction",
+          "keywords": {
+            "enum": [
+              "egress"
+            ]
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "apply_qos_policy_to_interface",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/qos/apply_qos_policy_to_interface/template.j2",
+          "input_contract": {
+            "fields": [
+              "policy_name",
+              "interface",
+              "direction"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  }
+]

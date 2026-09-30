@@ -1,0 +1,1 @@
+set routing-options static route 0.0.0.0/0 {% if preference is not none %}qualified-next-hop {{ next_hop }} preference {{ preference }}{% else %}next-hop {{ next_hop }}{% endif +%}

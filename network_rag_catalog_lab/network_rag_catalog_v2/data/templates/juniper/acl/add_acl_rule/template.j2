@@ -1,0 +1,18 @@
+set firewall family inet filter {{ acl_name }} term rule-{{ acl_rule_id }} from source-address {{ source_prefix }}
+set firewall family inet filter {{ acl_name }} term rule-{{ acl_rule_id }} from destination-address {{ destination_prefix }}
+{% if ip_protocol != 'ip' %}
+set firewall family inet filter {{ acl_name }} term rule-{{ acl_rule_id }} from protocol {{ ip_protocol }}
+{% endif %}
+{% if source_port is not none %}
+set firewall family inet filter {{ acl_name }} term rule-{{ acl_rule_id }} from source-port {{ source_port }}
+{% endif %}
+{% if destination_port is not none %}
+set firewall family inet filter {{ acl_name }} term rule-{{ acl_rule_id }} from destination-port {{ destination_port }}
+{% endif %}
+{% if log %}
+set firewall family inet filter {{ acl_name }} term rule-{{ acl_rule_id }} then log
+{% endif %}
+set firewall family inet filter {{ acl_name }} term rule-{{ acl_rule_id }} then {{ 'accept' if acl_action == 'permit' else 'discard' }}
+{% if next_rule_id %}
+insert firewall family inet filter {{ acl_name }} term rule-{{ acl_rule_id }} before term rule-{{ next_rule_id }}
+{% endif %}

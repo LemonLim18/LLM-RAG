@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "policy_name": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+      "type": "string"
+    },
+    "interface": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$",
+      "type": "string"
+    },
+    "rate_bps": {
+      "minimum": 8000,
+      "maximum": 10000000000,
+      "type": "integer"
+    },
+    "direction": {
+      "enum": [
+        "egress"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "policy_name",
+    "interface",
+    "rate_bps",
+    "direction"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "policy_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "interface": {
+          "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$",
+          "type": "string"
+        },
+        "rate_bps": {
+          "minimum": 8000,
+          "maximum": 10000000000,
+          "type": "integer"
+        },
+        "direction": {
+          "enum": [
+            "egress"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "policy_name",
+        "interface",
+        "rate_bps",
+        "direction"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "interface": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+        },
+        "rate_bps": {
+          "type": "integer",
+          "minimum": 64000,
+          "maximum": 10000000000,
+          "multipleOf": 1000
+        },
+        "direction": {
+          "enum": [
+            "egress"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "rate_bps",
+        "direction"
+      ],
+      "description": "Set the interface egress shaping rate in bps. This is not a named MQC policy."
+    },
+    "juniper": {
+      "properties": {
+        "interface": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+        },
+        "rate_bps": {
+          "type": "integer",
+          "minimum": 64000,
+          "maximum": 10000000000,
+          "multipleOf": 1000
+        },
+        "direction": {
+          "enum": [
+            "egress"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "rate_bps",
+        "direction"
+      ],
+      "description": "Set the interface egress shaping rate in bps. This is not a named MQC policy."
+    }
+  }
+}

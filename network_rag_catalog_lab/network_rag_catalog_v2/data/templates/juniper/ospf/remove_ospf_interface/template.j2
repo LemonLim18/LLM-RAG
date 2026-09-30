@@ -1,1 +1,1 @@
-delete protocols ospf area {{ area }} interface {{ interface }}
+delete protocols ospf area {{ area }} interface {{ interface if '.' in interface else interface ~ '.0' }}

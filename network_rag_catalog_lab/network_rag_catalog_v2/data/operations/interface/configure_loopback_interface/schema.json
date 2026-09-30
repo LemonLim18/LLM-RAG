@@ -1,0 +1,118 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "pattern": "^Loopback(?:0|[1-9][0-9]?)$",
+      "type": "string"
+    },
+    "address": {
+      "format": "ipv4",
+      "type": "string"
+    },
+    "prefix_length": {
+      "minimum": 0,
+      "maximum": 32,
+      "type": "integer"
+    },
+    "description": {
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[A-Za-z0-9 _./:()-]+$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "interface",
+    "address",
+    "prefix_length"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "interface": {
+          "pattern": "^Loopback(?:0|[1-9][0-9]?)$",
+          "type": "string"
+        },
+        "address": {
+          "format": "ipv4",
+          "type": "string"
+        },
+        "prefix_length": {
+          "minimum": 0,
+          "maximum": 32,
+          "type": "integer"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "address",
+        "prefix_length"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "interface": {
+          "type": "string",
+          "pattern": "^LoopBack(?:0|[1-9][0-9]?)$"
+        },
+        "address": {
+          "format": "ipv4",
+          "type": "string"
+        },
+        "prefix_length": {
+          "minimum": 0,
+          "maximum": 32,
+          "type": "integer"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "address",
+        "prefix_length"
+      ],
+      "description": "Default routing instance loopback; Junos uses lo0 unit 0."
+    },
+    "juniper": {
+      "properties": {
+        "interface": {
+          "type": "string",
+          "pattern": "^lo0$"
+        },
+        "address": {
+          "format": "ipv4",
+          "type": "string"
+        },
+        "prefix_length": {
+          "minimum": 0,
+          "maximum": 32,
+          "type": "integer"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "address",
+        "prefix_length"
+      ],
+      "description": "Default routing instance loopback; Junos uses lo0 unit 0."
+    }
+  }
+}

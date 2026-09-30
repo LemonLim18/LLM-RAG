@@ -1,0 +1,65 @@
+{
+  "format_version": 1,
+  "pack_id": "interface_review_v1",
+  "phase": "B1+B2",
+  "status": "review_only",
+  "source_authority": "sqlite",
+  "operations": [
+    "set_interface_description",
+    "set_interface_admin_state",
+    "configure_access_port",
+    "configure_trunk_port",
+    "assign_vlan_to_trunk_port",
+    "configure_trunk_allowed_vlans",
+    "set_native_vlan",
+    "configure_loopback_interface",
+    "configure_port_channel"
+  ],
+  "reuse": [
+    "configure_interface_ip"
+  ],
+  "support": {
+    "cisco": "Catalyst 9300 / IOS XE 17.9: all nine new operations",
+    "huawei": "CE6800 / VRP V200R024C10: physical description/admin, existing trunk addition/native VLAN",
+    "juniper": "EX4300 / Junos 23.4 ELS: physical description/admin, existing trunk addition/native VLAN",
+    "evidence": "Documentation-reviewed candidate bindings; device-lab certification pending. All other combinations unsupported."
+  },
+  "assets": [
+    "data/templates/cisco/interface/set_interface_description/template.j2",
+    "data/templates/cisco/interface/set_interface_admin_state/template.j2",
+    "data/templates/cisco/interface/configure_access_port/template.j2",
+    "data/templates/cisco/interface/configure_trunk_port/template.j2",
+    "data/templates/cisco/interface/assign_vlan_to_trunk_port/template.j2",
+    "data/templates/cisco/interface/configure_trunk_allowed_vlans/template.j2",
+    "data/templates/cisco/interface/set_native_vlan/template.j2",
+    "data/templates/cisco/interface/configure_loopback_interface/template.j2",
+    "data/templates/cisco/interface/configure_port_channel/template.j2",
+    "data/templates/huawei/interface/set_interface_description/template.j2",
+    "data/templates/juniper/interface/set_interface_description/template.j2",
+    "data/templates/huawei/interface/set_interface_admin_state/template.j2",
+    "data/templates/juniper/interface/set_interface_admin_state/template.j2",
+    "data/templates/huawei/interface/assign_vlan_to_trunk_port/template.j2",
+    "data/templates/juniper/interface/assign_vlan_to_trunk_port/template.j2",
+    "data/templates/huawei/interface/set_native_vlan/template.j2",
+    "data/templates/juniper/interface/set_native_vlan/template.j2"
+  ],
+  "asset_hashes": {
+    "data/templates/huawei/interface/assign_vlan_to_trunk_port/template.j2": "a9e7013e003b4eb3935cedb57a45b961fb1d78f84a0f36923ce8c15a7f3b803d",
+    "data/templates/cisco/interface/set_native_vlan/template.j2": "e40bade0a4921610a60f709fb42bd406c15f8192014bd34dc0bd8310bc475ce8",
+    "data/templates/cisco/interface/set_interface_admin_state/template.j2": "c4a62d015ee84cd3e072aa93e262746d0ac260c85bee60f4c97f292168c76037",
+    "data/templates/cisco/interface/configure_loopback_interface/template.j2": "f09c904fd2f35cf76bc08e09205b66e9374af73a32ad7c0e8efbfdde71c028fd",
+    "data/templates/cisco/interface/assign_vlan_to_trunk_port/template.j2": "fd57260705aefbe5d66416c309c0ea5f9fc5fd9d028e2968d53ff0fc30a07ead",
+    "data/templates/huawei/interface/set_interface_admin_state/template.j2": "9a53124486a587d387c537452a94a724ee30e74e0280c7d9b0e2f0de2098032e",
+    "data/templates/huawei/interface/set_native_vlan/template.j2": "65779425e9ef1b9185066c4f95d6f1bd25886ed55d6e789ff30b36676a4f33fa",
+    "data/templates/cisco/interface/set_interface_description/template.j2": "525bf79841339523d635dc7955dbd6ad0e2a1cce1a57c5f6d4da012dd74a629d",
+    "data/templates/huawei/interface/set_interface_description/template.j2": "105025d432f31d82da3dccca89950da0fd0eed09af3760f90e7ea1606c355c4d",
+    "data/templates/cisco/interface/configure_port_channel/template.j2": "ef7d536fd0ff42f155fcb8f699ebb6c3bcf9cb658c1c0ebb60d940443affc030",
+    "data/templates/juniper/interface/set_native_vlan/template.j2": "55b7e89a8254ba7c779517358b8e1550d34169052f8922d5a44156cbf33a7d77",
+    "data/templates/cisco/interface/configure_trunk_port/template.j2": "482a9a0fc905327ecc71e1e6f8f4d426bdef6895530f64a59e8f402da8e970a2",
+    "data/templates/cisco/interface/configure_access_port/template.j2": "5d356c722c623054ac0cdd5c597278cbcaab6362c9deadab94cc49cafaa67c36",
+    "data/templates/cisco/interface/configure_trunk_allowed_vlans/template.j2": "1199cd05c16d4323dd8722c3ebb7fc5b2c50b89e39f3329f979a2c4102a85a24",
+    "data/templates/juniper/interface/set_interface_description/template.j2": "d31858d7eac46843dab502bab363503ca6d6fa6b91f877c990dd162087ae3c0e",
+    "data/templates/juniper/interface/set_interface_admin_state/template.j2": "4c7926d17d4e762e5fe7bea823640f69e9898b7bd2492748ff8a886c0a592564",
+    "data/templates/juniper/interface/assign_vlan_to_trunk_port/template.j2": "14202c5bce60c59ac0d7eab2d30d0c3e58c1c05a22fa9bde3ce6d8371789b0e0"
+  }
+}

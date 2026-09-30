@@ -1,17 +1,966 @@
 {
   "version": 1,
   "operations": {
-    "create_vlan": {"planned_fields": ["vlan_id", "name"], "resource_keys": ["vlan_id"], "conflicts_with": ["delete_vlan"], "allow_plan_override": true},
-    "delete_vlan": {"planned_fields": ["vlan_id", "name"], "resource_keys": ["vlan_id"], "conflicts_with": ["create_vlan"]},
-    "configure_ospf": {"inventory_fields": ["interfaces", "interfaces[].name"], "planned_fields": ["process_id", "router_id", "interfaces[].area"], "resource_keys": ["interfaces[].name"], "conflicts_with": ["remove_ospf_interface"], "allow_plan_override": true},
-    "remove_ospf_interface": {"inventory_fields": ["interface"], "planned_fields": ["process_id", "area"], "resource_keys": ["interface"], "conflicts_with": ["configure_ospf"]},
-    "configure_bgp_neighbor": {"planned_fields": ["local_as", "neighbor_ip", "remote_as", "peer_group"], "resource_keys": ["neighbor_ip"], "conflicts_with": ["remove_bgp_neighbor"], "allow_plan_override": true},
-    "remove_bgp_neighbor": {"planned_fields": ["local_as", "neighbor_ip", "remote_as", "peer_group"], "resource_keys": ["neighbor_ip"], "conflicts_with": ["configure_bgp_neighbor"]},
-    "configure_isis_interface": {"inventory_fields": ["interface"], "planned_fields": ["process_name", "level"], "resource_keys": ["interface"], "conflicts_with": ["disable_isis_interface"], "allow_plan_override": true},
-    "disable_isis_interface": {"inventory_fields": ["interface"], "planned_fields": ["process_name"], "resource_keys": ["interface"], "conflicts_with": ["configure_isis_interface"]},
-    "configure_interface_ip": {"inventory_fields": ["interface"], "planned_fields": ["address", "prefix_length"], "resource_keys": ["interface"], "conflicts_with": ["remove_interface_ip"], "allow_plan_override": true},
-    "remove_interface_ip": {"inventory_fields": ["interface"], "planned_fields": ["address", "prefix_length"], "resource_keys": ["interface"], "conflicts_with": ["configure_interface_ip"]},
-    "configure_static_route": {"planned_fields": ["destination", "next_hop", "preference"], "resource_keys": ["destination"], "conflicts_with": ["remove_static_route"], "allow_plan_override": true},
-    "remove_static_route": {"planned_fields": ["destination", "next_hop"], "resource_keys": ["destination"], "conflicts_with": ["configure_static_route"]}
+    "create_vlan": {
+      "planned_fields": [
+        "vlan_id",
+        "name"
+      ],
+      "resource_keys": [
+        "vlan_id"
+      ],
+      "conflicts_with": [
+        "delete_vlan"
+      ],
+      "allow_plan_override": true
+    },
+    "delete_vlan": {
+      "planned_fields": [
+        "vlan_id",
+        "name"
+      ],
+      "resource_keys": [
+        "vlan_id"
+      ],
+      "conflicts_with": [
+        "create_vlan"
+      ]
+    },
+    "configure_ospf": {
+      "inventory_fields": [
+        "interfaces",
+        "interfaces[].name"
+      ],
+      "planned_fields": [
+        "process_id",
+        "router_id",
+        "interfaces[].area"
+      ],
+      "resource_keys": [
+        "interfaces[].name"
+      ],
+      "conflicts_with": [
+        "remove_ospf_interface"
+      ],
+      "allow_plan_override": true
+    },
+    "remove_ospf_interface": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "process_id",
+        "area"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "configure_ospf"
+      ]
+    },
+    "configure_bgp_neighbor": {
+      "planned_fields": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as",
+        "peer_group"
+      ],
+      "resource_keys": [
+        "neighbor_ip"
+      ],
+      "conflicts_with": [
+        "remove_bgp_neighbor"
+      ],
+      "allow_plan_override": true
+    },
+    "remove_bgp_neighbor": {
+      "planned_fields": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as",
+        "peer_group"
+      ],
+      "resource_keys": [
+        "neighbor_ip"
+      ],
+      "conflicts_with": [
+        "configure_bgp_neighbor"
+      ]
+    },
+    "configure_isis_interface": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "process_name",
+        "level"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "disable_isis_interface"
+      ],
+      "allow_plan_override": true
+    },
+    "disable_isis_interface": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "process_name"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "configure_isis_interface"
+      ]
+    },
+    "configure_interface_ip": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "address",
+        "prefix_length"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "remove_interface_ip"
+      ],
+      "allow_plan_override": true
+    },
+    "remove_interface_ip": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "address",
+        "prefix_length"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "configure_interface_ip"
+      ]
+    },
+    "configure_static_route": {
+      "planned_fields": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "resource_keys": [
+        "destination"
+      ],
+      "conflicts_with": [
+        "remove_static_route"
+      ],
+      "allow_plan_override": true
+    },
+    "remove_static_route": {
+      "planned_fields": [
+        "destination",
+        "next_hop"
+      ],
+      "resource_keys": [
+        "destination"
+      ],
+      "conflicts_with": [
+        "configure_static_route"
+      ]
+    },
+    "modify_vlan": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "resource_keys": [
+        "vlan_id"
+      ],
+      "conflicts_with": [
+        "delete_vlan",
+        "rename_vlan"
+      ],
+      "device_policy": "c9300_vlan_state_v1"
+    },
+    "rename_vlan": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "vlan_id",
+        "new_vlan_name"
+      ],
+      "resource_keys": [
+        "vlan_id"
+      ],
+      "conflicts_with": [
+        "delete_vlan",
+        "modify_vlan"
+      ],
+      "device_policy": "c9300_vlan_rename_v1"
+    },
+    "set_interface_description": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "description"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [],
+      "device_policy": "physical_interface_v1"
+    },
+    "set_interface_admin_state": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "admin_up"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [],
+      "device_policy": "physical_interface_v1"
+    },
+    "configure_access_port": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "vlan_id",
+        "description"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "configure_trunk_port",
+        "assign_vlan_to_trunk_port",
+        "configure_trunk_allowed_vlans",
+        "set_native_vlan",
+        "configure_port_channel"
+      ],
+      "device_policy": "c9300_access_v1"
+    },
+    "configure_trunk_port": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "allowed_vlans",
+        "native_vlan"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "configure_access_port",
+        "assign_vlan_to_trunk_port",
+        "configure_trunk_allowed_vlans",
+        "set_native_vlan",
+        "configure_port_channel"
+      ],
+      "device_policy": "c9300_trunk_setup_v1"
+    },
+    "assign_vlan_to_trunk_port": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "allowed_vlans"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "configure_access_port",
+        "configure_trunk_port",
+        "configure_trunk_allowed_vlans",
+        "set_native_vlan",
+        "configure_port_channel"
+      ],
+      "device_policy": "switchport_trunk_add_v1"
+    },
+    "configure_trunk_allowed_vlans": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "allowed_vlans"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "configure_access_port",
+        "configure_trunk_port",
+        "assign_vlan_to_trunk_port",
+        "set_native_vlan",
+        "configure_port_channel"
+      ],
+      "device_policy": "c9300_trunk_replace_v1"
+    },
+    "set_native_vlan": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "native_vlan"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [
+        "configure_access_port",
+        "configure_trunk_port",
+        "assign_vlan_to_trunk_port",
+        "configure_trunk_allowed_vlans",
+        "configure_port_channel"
+      ],
+      "device_policy": "switchport_native_vlan_v1"
+    },
+    "configure_loopback_interface": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "interface",
+        "address",
+        "prefix_length",
+        "description"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "conflicts_with": [],
+      "device_policy": "c9300_loopback_v1"
+    },
+    "configure_port_channel": {
+      "inventory_fields": [
+        "aggregate_interface",
+        "member_interfaces",
+        "member_interfaces[]"
+      ],
+      "planned_fields": [
+        "lacp_mode",
+        "description"
+      ],
+      "resource_keys": [
+        "aggregate_interface",
+        "member_interfaces[]"
+      ],
+      "conflicts_with": [
+        "configure_access_port",
+        "configure_trunk_port",
+        "assign_vlan_to_trunk_port",
+        "configure_trunk_allowed_vlans",
+        "set_native_vlan"
+      ],
+      "device_policy": "c9300_routed_lag_v1"
+    },
+    "add_default_route": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "next_hop",
+        "preference"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "default_next_hop",
+          "fields": [
+            "next_hop"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "add_floating_static_route",
+        "remove_static_route",
+        "configure_static_route"
+      ],
+      "device_policy": "default_route_v1",
+      "resource_constants": [
+        "0.0.0.0/0"
+      ]
+    },
+    "add_floating_static_route": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "resource_keys": [
+        "destination"
+      ],
+      "composite_keys": [
+        {
+          "kind": "route",
+          "fields": [
+            "destination",
+            "next_hop"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "add_default_route",
+        "remove_static_route",
+        "configure_static_route"
+      ],
+      "device_policy": "floating_route_v1"
+    },
+    "enable_ospf_process": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "process_id",
+        "router_id"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "ospf_process",
+          "fields": [
+            "process_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "set_ospf_router_id",
+        "create_ospf_area",
+        "assign_interface_to_ospf_area",
+        "advertise_network",
+        "configure_passive_interface",
+        "configure_ospf_redistribution"
+      ],
+      "device_policy": "ospf_enable_v1"
+    },
+    "set_ospf_router_id": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "process_id",
+        "router_id"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "ospf_process",
+          "fields": [
+            "process_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "enable_ospf_process",
+        "create_ospf_area",
+        "assign_interface_to_ospf_area",
+        "advertise_network",
+        "configure_passive_interface",
+        "configure_ospf_redistribution"
+      ],
+      "device_policy": "ospf_router_id_v1"
+    },
+    "create_ospf_area": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "process_id",
+        "area",
+        "area_type"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "ospf_process",
+          "fields": [
+            "process_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "enable_ospf_process",
+        "set_ospf_router_id",
+        "assign_interface_to_ospf_area",
+        "advertise_network",
+        "configure_passive_interface",
+        "configure_ospf_redistribution"
+      ],
+      "device_policy": "ospf_area_v1"
+    },
+    "assign_interface_to_ospf_area": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "process_id",
+        "area"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "composite_keys": [
+        {
+          "kind": "ospf_process",
+          "fields": [
+            "process_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "enable_ospf_process",
+        "set_ospf_router_id",
+        "create_ospf_area",
+        "advertise_network",
+        "configure_passive_interface",
+        "configure_ospf_redistribution",
+        "configure_ospf",
+        "remove_ospf_interface",
+        "remove_interface_ip"
+      ],
+      "device_policy": "ospf_interface_v1"
+    },
+    "advertise_network": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "process_id",
+        "network_prefix",
+        "area"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "ospf_process",
+          "fields": [
+            "process_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "enable_ospf_process",
+        "set_ospf_router_id",
+        "create_ospf_area",
+        "assign_interface_to_ospf_area",
+        "configure_passive_interface",
+        "configure_ospf_redistribution"
+      ],
+      "device_policy": "ospf_network_v1"
+    },
+    "configure_passive_interface": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "process_id",
+        "passive"
+      ],
+      "resource_keys": [
+        "interface"
+      ],
+      "composite_keys": [
+        {
+          "kind": "ospf_process",
+          "fields": [
+            "process_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "enable_ospf_process",
+        "set_ospf_router_id",
+        "create_ospf_area",
+        "assign_interface_to_ospf_area",
+        "advertise_network",
+        "configure_ospf_redistribution",
+        "configure_ospf",
+        "remove_ospf_interface",
+        "remove_interface_ip"
+      ],
+      "device_policy": "ospf_passive_v1"
+    },
+    "configure_ospf_redistribution": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "process_id",
+        "redistribution_source",
+        "route_policy",
+        "ospf_metric",
+        "metric_type"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "ospf_process",
+          "fields": [
+            "process_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "enable_ospf_process",
+        "set_ospf_router_id",
+        "create_ospf_area",
+        "assign_interface_to_ospf_area",
+        "advertise_network",
+        "configure_passive_interface"
+      ],
+      "device_policy": "ospf_redistribute_v1"
+    },
+    "create_acl": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "acl_name",
+        "description"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "acl_object",
+          "fields": [
+            "acl_name"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "add_acl_rule",
+        "modify_acl_rule",
+        "delete_acl_rule",
+        "apply_acl_to_interface"
+      ],
+      "device_policy": "acl_create_v1"
+    },
+    "add_acl_rule": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "acl_name",
+        "acl_rule_id",
+        "acl_action",
+        "source_prefix",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "destination_port",
+        "log"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "acl_rule",
+          "fields": [
+            "acl_name",
+            "acl_rule_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_acl",
+        "modify_acl_rule",
+        "delete_acl_rule",
+        "apply_acl_to_interface"
+      ],
+      "device_policy": "acl_add_v1"
+    },
+    "modify_acl_rule": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "acl_name",
+        "acl_rule_id",
+        "acl_action",
+        "source_prefix",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "destination_port",
+        "log"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "acl_rule",
+          "fields": [
+            "acl_name",
+            "acl_rule_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_acl",
+        "add_acl_rule",
+        "delete_acl_rule",
+        "apply_acl_to_interface"
+      ],
+      "device_policy": "acl_modify_v1"
+    },
+    "delete_acl_rule": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "acl_rule",
+          "fields": [
+            "acl_name",
+            "acl_rule_id"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_acl",
+        "add_acl_rule",
+        "modify_acl_rule",
+        "apply_acl_to_interface"
+      ],
+      "device_policy": "acl_delete_v1"
+    },
+    "apply_acl_to_interface": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "acl_name",
+        "direction"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "acl_attachment",
+          "fields": [
+            "interface",
+            "direction"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_acl",
+        "add_acl_rule",
+        "modify_acl_rule",
+        "delete_acl_rule"
+      ],
+      "device_policy": "acl_attach_v1"
+    },
+    "create_qos_policy": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "resource_keys": [
+        "policy_terms[].classifier_name"
+      ],
+      "composite_keys": [
+        {
+          "kind": "qos_policy",
+          "fields": [
+            "policy_name"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_classifier",
+        "classify_by_dscp",
+        "configure_scheduler",
+        "configure_shaping",
+        "configure_policing",
+        "apply_qos_policy_to_interface"
+      ],
+      "device_policy": "qos_policy_v1"
+    },
+    "create_classifier": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "classifier_name",
+        "dscp_values",
+        "match_mode"
+      ],
+      "resource_keys": [
+        "classifier_name"
+      ],
+      "composite_keys": [
+        {
+          "kind": "qos_classifier",
+          "fields": [
+            "classifier_name"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_qos_policy",
+        "classify_by_dscp",
+        "configure_scheduler",
+        "configure_shaping",
+        "configure_policing",
+        "apply_qos_policy_to_interface"
+      ],
+      "device_policy": "qos_classifier_v1"
+    },
+    "classify_by_dscp": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ],
+      "resource_keys": [
+        "classifier_name"
+      ],
+      "composite_keys": [
+        {
+          "kind": "qos_classifier",
+          "fields": [
+            "classifier_name"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_qos_policy",
+        "create_classifier",
+        "configure_scheduler",
+        "configure_shaping",
+        "configure_policing",
+        "apply_qos_policy_to_interface"
+      ],
+      "device_policy": "qos_dscp_v1"
+    },
+    "configure_scheduler": {
+      "inventory_fields": [],
+      "planned_fields": [
+        "policy_name",
+        "classifier_name",
+        "bandwidth_bps"
+      ],
+      "resource_keys": [
+        "classifier_name"
+      ],
+      "composite_keys": [
+        {
+          "kind": "qos_policy",
+          "fields": [
+            "policy_name"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_qos_policy",
+        "create_classifier",
+        "classify_by_dscp",
+        "configure_shaping",
+        "configure_policing",
+        "apply_qos_policy_to_interface"
+      ],
+      "device_policy": "qos_scheduler_v1"
+    },
+    "configure_shaping": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "policy_name",
+        "rate_bps",
+        "direction"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "qos_attachment",
+          "fields": [
+            "interface",
+            "direction"
+          ]
+        },
+        {
+          "kind": "qos_policy",
+          "fields": [
+            "policy_name"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_qos_policy",
+        "create_classifier",
+        "classify_by_dscp",
+        "configure_scheduler",
+        "configure_policing",
+        "apply_qos_policy_to_interface"
+      ],
+      "device_policy": "qos_shaping_v1"
+    },
+    "configure_policing": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "policy_name",
+        "rate_bps",
+        "burst_bytes",
+        "direction",
+        "exceed_action"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "qos_attachment",
+          "fields": [
+            "interface",
+            "direction"
+          ]
+        },
+        {
+          "kind": "qos_policy",
+          "fields": [
+            "policy_name"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_qos_policy",
+        "create_classifier",
+        "classify_by_dscp",
+        "configure_scheduler",
+        "configure_shaping",
+        "apply_qos_policy_to_interface"
+      ],
+      "device_policy": "qos_policing_v1"
+    },
+    "apply_qos_policy_to_interface": {
+      "inventory_fields": [
+        "interface"
+      ],
+      "planned_fields": [
+        "policy_name",
+        "direction"
+      ],
+      "resource_keys": [],
+      "composite_keys": [
+        {
+          "kind": "qos_attachment",
+          "fields": [
+            "interface",
+            "direction"
+          ]
+        },
+        {
+          "kind": "qos_policy",
+          "fields": [
+            "policy_name"
+          ]
+        }
+      ],
+      "conflicts_with": [
+        "create_qos_policy",
+        "create_classifier",
+        "classify_by_dscp",
+        "configure_scheduler",
+        "configure_shaping",
+        "configure_policing"
+      ],
+      "device_policy": "qos_attach_v1"
+    }
   }
 }

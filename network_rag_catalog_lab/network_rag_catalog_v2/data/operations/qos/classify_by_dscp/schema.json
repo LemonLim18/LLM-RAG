@@ -1,0 +1,184 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "classifier_name": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+      "type": "string"
+    },
+    "dscp_values": {
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 63
+      }
+    },
+    "previous_dscp_values": {
+      "minItems": 1,
+      "maxItems": 8,
+      "uniqueItems": true,
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 63
+      }
+    },
+    "forwarding_class": {
+      "type": "string",
+      "enum": [
+        "best-effort",
+        "expedited-forwarding",
+        "assured-forwarding",
+        "network-control"
+      ]
+    },
+    "loss_priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "high"
+      ]
+    }
+  },
+  "required": [
+    "classifier_name",
+    "dscp_values",
+    "previous_dscp_values"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "classifier_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "dscp_values": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        },
+        "previous_dscp_values": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        }
+      },
+      "required": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "classifier_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "dscp_values": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        },
+        "previous_dscp_values": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        }
+      },
+      "required": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "classifier_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "dscp_values": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        },
+        "previous_dscp_values": {
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 63
+          }
+        },
+        "forwarding_class": {
+          "type": "string",
+          "enum": [
+            "best-effort",
+            "expedited-forwarding",
+            "assured-forwarding",
+            "network-control"
+          ]
+        },
+        "loss_priority": {
+          "type": "string",
+          "enum": [
+            "low",
+            "high"
+          ]
+        }
+      },
+      "required": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values",
+        "forwarding_class",
+        "loss_priority"
+      ]
+    }
+  }
+}

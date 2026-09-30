@@ -40,6 +40,8 @@ class PlannedTask:
     source_spans: list[dict[str, Any]] = field(default_factory=list)
     scope_device_ids: list[str] = field(default_factory=list)
     parameter_evidence: dict[str, Any] = field(default_factory=dict)
+    knowledge_snapshot_id: str = ""
+    context_revision: str = ""
 
 @dataclass
 class ExecutionPlan:
@@ -51,6 +53,8 @@ class ExecutionPlan:
     issues: list[dict[str, Any]] = field(default_factory=list)
     source_revision: str = ""
     schema_version: int = 2
+    knowledge_snapshot_id: str = ""
+    context_revision: str = ""
 
 
 @dataclass

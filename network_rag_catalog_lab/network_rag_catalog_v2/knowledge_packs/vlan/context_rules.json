@@ -1,0 +1,32 @@
+{
+  "modify_vlan": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "vlan_id",
+      "vlan_status"
+    ],
+    "resource_keys": [
+      "vlan_id"
+    ],
+    "conflicts_with": [
+      "delete_vlan",
+      "rename_vlan"
+    ],
+    "device_policy": "c9300_vlan_state_v1"
+  },
+  "rename_vlan": {
+    "inventory_fields": [],
+    "planned_fields": [
+      "vlan_id",
+      "new_vlan_name"
+    ],
+    "resource_keys": [
+      "vlan_id"
+    ],
+    "conflicts_with": [
+      "delete_vlan",
+      "modify_vlan"
+    ],
+    "device_policy": "c9300_vlan_rename_v1"
+  }
+}

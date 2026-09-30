@@ -1,0 +1,322 @@
+[
+  {
+    "category_id": "bgp",
+    "parameter_id": "description"
+  },
+  {
+    "category_id": "bgp",
+    "parameter_id": "local_as"
+  },
+  {
+    "category_id": "bgp",
+    "parameter_id": "neighbor_ip"
+  },
+  {
+    "category_id": "bgp",
+    "parameter_id": "peer_group"
+  },
+  {
+    "category_id": "bgp",
+    "parameter_id": "remote_as"
+  },
+  {
+    "category_id": "ip_address",
+    "parameter_id": "address"
+  },
+  {
+    "category_id": "ip_address",
+    "parameter_id": "admin_up"
+  },
+  {
+    "category_id": "ip_address",
+    "parameter_id": "interface"
+  },
+  {
+    "category_id": "ip_address",
+    "parameter_id": "prefix_length"
+  },
+  {
+    "category_id": "isis",
+    "parameter_id": "interface"
+  },
+  {
+    "category_id": "isis",
+    "parameter_id": "level"
+  },
+  {
+    "category_id": "isis",
+    "parameter_id": "process_name"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "area"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "interface"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "interfaces"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "process_id"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "router_id"
+  },
+  {
+    "category_id": "static_routing",
+    "parameter_id": "destination"
+  },
+  {
+    "category_id": "static_routing",
+    "parameter_id": "next_hop"
+  },
+  {
+    "category_id": "static_routing",
+    "parameter_id": "preference"
+  },
+  {
+    "category_id": "vlan",
+    "parameter_id": "name"
+  },
+  {
+    "category_id": "vlan",
+    "parameter_id": "vlan_id"
+  },
+  {
+    "category_id": "vlan",
+    "parameter_id": "vlan_status"
+  },
+  {
+    "category_id": "vlan",
+    "parameter_id": "new_vlan_name"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "interface"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "description"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "admin_up"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "vlan_id"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "allowed_vlans"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "native_vlan"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "address"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "prefix_length"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "aggregate_interface"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "member_interfaces"
+  },
+  {
+    "category_id": "interface",
+    "parameter_id": "lacp_mode"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "area_type"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "network_prefix"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "passive"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "redistribution_source"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "route_policy"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "ospf_metric"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "metric_type"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "acl_name"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "description"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "acl_rule_id"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "acl_action"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "source_prefix"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "destination_prefix"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "ip_protocol"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "source_port"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "destination_port"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "log"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "interface"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "direction"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "previous_dscp_values"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "policy_name"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "policy_terms"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "classifier_name"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "bandwidth_bps"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "dscp_values"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "match_mode"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "interface"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "rate_bps"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "direction"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "burst_bytes"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "exceed_action"
+  },
+  {
+    "category_id": "vlan",
+    "parameter_id": "description"
+  },
+  {
+    "category_id": "vlan",
+    "parameter_id": "current_vlan_name"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "unmatched_action"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "logical_unit"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "behavior_name"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "logical_unit"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "network_interfaces"
+  },
+  {
+    "category_id": "ospf",
+    "parameter_id": "export_policy_name"
+  },
+  {
+    "category_id": "acl",
+    "parameter_id": "next_rule_id"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "forwarding_class"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "loss_priority"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "scheduler_name"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "queue_id"
+  },
+  {
+    "category_id": "qos",
+    "parameter_id": "scheduler_weight"
+  }
+]

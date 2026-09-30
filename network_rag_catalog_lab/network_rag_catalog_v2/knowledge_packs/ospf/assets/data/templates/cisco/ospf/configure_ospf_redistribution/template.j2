@@ -1,0 +1,3 @@
+router ospf {{ process_id }}
+ redistribute {{ redistribution_source }} subnets metric {{ ospf_metric }} metric-type {{ metric_type }} route-map {{ route_policy }}
+ exit

@@ -1,0 +1,132 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "acl_name": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+      "type": "string"
+    },
+    "interface": {
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$",
+      "type": "string"
+    },
+    "direction": {
+      "enum": [
+        "ingress",
+        "egress"
+      ],
+      "type": "string"
+    },
+    "unmatched_action": {
+      "type": "string",
+      "enum": [
+        "permit"
+      ],
+      "description": "Explicit acknowledgment that Huawei traffic-filter permits traffic unmatched by this ACL."
+    },
+    "logical_unit": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 16384
+    }
+  },
+  "required": [
+    "acl_name",
+    "interface",
+    "direction"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "acl_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "interface": {
+          "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$",
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "ingress",
+            "egress"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "acl_name",
+        "interface",
+        "direction"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "acl_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "interface": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+        },
+        "direction": {
+          "enum": [
+            "ingress",
+            "egress"
+          ],
+          "type": "string"
+        },
+        "unmatched_action": {
+          "type": "string",
+          "enum": [
+            "permit"
+          ],
+          "description": "Explicit acknowledgment that Huawei traffic-filter permits traffic unmatched by this ACL."
+        }
+      },
+      "required": [
+        "acl_name",
+        "interface",
+        "direction",
+        "unmatched_action"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "acl_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "interface": {
+          "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$",
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "ingress",
+            "egress"
+          ],
+          "type": "string"
+        },
+        "logical_unit": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16384
+        }
+      },
+      "required": [
+        "acl_name",
+        "interface",
+        "direction",
+        "logical_unit"
+      ]
+    }
+  }
+}

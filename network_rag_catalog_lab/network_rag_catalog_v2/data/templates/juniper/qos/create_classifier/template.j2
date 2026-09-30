@@ -1,0 +1,1 @@
+set class-of-service classifiers dscp {{ classifier_name }} forwarding-class {{ forwarding_class }} loss-priority {{ loss_priority }} code-points [ {{ dscp_codepoints | join(' ') }} ]

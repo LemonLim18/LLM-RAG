@@ -1,47 +1,176 @@
 [
   {
-    "operation_id": "create_vlan",
-    "status": "active",
-    "version": 1,
-    "category_id": "vlan",
     "display_name": "Create VLAN",
-    "aliases": ["create vlan", "add vlan", "configure new vlan"],
+    "aliases": [
+      "create vlan",
+      "add vlan",
+      "configure new vlan"
+    ],
     "description": "Create a VLAN with a VLAN ID and optional name.",
-    "use_cases": ["create VLAN 100", "add VLAN 200 named STAFF"],
-    "schema_path": "data/operations/vlan/create_vlan/schema.json"
-  },
-  {
-    "operation_id": "delete_vlan",
-    "status": "active",
-    "version": 1,
+    "operation_id": "create_vlan",
     "category_id": "vlan",
+    "schema_path": "data/operations/vlan/create_vlan/schema.json",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "create VLAN 100",
+      "add VLAN 200 named STAFF"
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    }
+  },
+  {
     "display_name": "Delete VLAN",
-    "aliases": ["delete vlan", "remove vlan"],
+    "aliases": [
+      "delete vlan",
+      "remove vlan"
+    ],
     "description": "Remove a VLAN. A VLAN name is required to support a deterministic Junos deletion.",
-    "use_cases": ["delete VLAN 100 named STAFF", "remove VLAN 200 named GUEST"],
-    "schema_path": "data/operations/vlan/delete_vlan/schema.json"
-  },
-  {
-    "operation_id": "configure_ospf",
+    "operation_id": "delete_vlan",
+    "category_id": "vlan",
+    "schema_path": "data/operations/vlan/delete_vlan/schema.json",
     "status": "active",
     "version": 1,
-    "category_id": "ospf",
+    "use_cases": [
+      "delete VLAN 100 named STAFF",
+      "remove VLAN 200 named GUEST"
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    }
+  },
+  {
     "display_name": "Configure OSPF",
-    "aliases": ["configure ospf", "enable ospf", "create ospf process", "create ospf routing", "configure ospf routing"],
+    "aliases": [
+      "configure ospf",
+      "enable ospf",
+      "create ospf process",
+      "create ospf routing",
+      "configure ospf routing"
+    ],
     "description": "Configure an OSPF process and enable OSPF on one or more interfaces in an area.",
-    "use_cases": ["configure OSPF process 100", "enable OSPF on Ethernet1/1 in area 0"],
-    "schema_path": "data/operations/ospf/configure_ospf/schema.json"
-  },
-  {
-    "operation_id": "remove_ospf_interface",
+    "operation_id": "configure_ospf",
+    "category_id": "ospf",
+    "schema_path": "data/operations/ospf/configure_ospf/schema.json",
     "status": "active",
     "version": 1,
-    "category_id": "ospf",
+    "use_cases": [
+      "configure OSPF process 100",
+      "enable OSPF on Ethernet1/1 in area 0"
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    }
+  },
+  {
     "display_name": "Remove OSPF From Interface",
-    "aliases": ["remove ospf from interface", "disable ospf on interface", "delete ospf interface"],
+    "aliases": [
+      "remove ospf from interface",
+      "disable ospf on interface",
+      "delete ospf interface",
+      "remove ospf interface"
+    ],
     "description": "Remove OSPF participation from one interface and area.",
-    "use_cases": ["remove OSPF process 100 from Ethernet1/1 in area 0"],
-    "schema_path": "data/operations/ospf/remove_ospf_interface/schema.json"
+    "operation_id": "remove_ospf_interface",
+    "category_id": "ospf",
+    "schema_path": "data/operations/ospf/remove_ospf_interface/schema.json",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "remove OSPF process 100 from Ethernet1/1 in area 0"
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    }
   },
   {
     "operation_id": "configure_bgp_neighbor",
@@ -49,10 +178,20 @@
     "version": 2,
     "category_id": "bgp",
     "display_name": "Configure BGP Neighbor",
-    "aliases": ["configure bgp neighbor", "create bgp peer", "add bgp neighbor", "configure bgp peer"],
+    "aliases": [
+      "configure bgp neighbor",
+      "create bgp peer",
+      "add bgp neighbor",
+      "configure bgp peer"
+    ],
     "description": "Configure a BGP local AS and a neighbor relationship with a remote AS.",
-    "use_cases": ["configure BGP neighbor 192.0.2.2", "add BGP peer with remote AS 65001"],
-    "schema_path": "data/operations/bgp/configure_bgp_neighbor/schema.json"
+    "use_cases": [
+      "configure BGP neighbor 192.0.2.2",
+      "add BGP peer with remote AS 65001"
+    ],
+    "schema_path": "data/operations/bgp/configure_bgp_neighbor/schema.json",
+    "schema_source": "registry",
+    "mapping_mode": "none"
   },
   {
     "operation_id": "remove_bgp_neighbor",
@@ -60,10 +199,18 @@
     "version": 1,
     "category_id": "bgp",
     "display_name": "Remove BGP Neighbor",
-    "aliases": ["remove bgp neighbor", "delete bgp peer", "remove bgp peer"],
+    "aliases": [
+      "remove bgp neighbor",
+      "delete bgp peer",
+      "remove bgp peer"
+    ],
     "description": "Remove a BGP neighbor relationship using its local AS, neighbor IP, remote AS, and peer group.",
-    "use_cases": ["remove BGP neighbor 192.0.2.2 in peer group EBGP-PEER"],
-    "schema_path": "data/operations/bgp/remove_bgp_neighbor/schema.json"
+    "use_cases": [
+      "remove BGP neighbor 192.0.2.2 in peer group EBGP-PEER"
+    ],
+    "schema_path": "data/operations/bgp/remove_bgp_neighbor/schema.json",
+    "schema_source": "registry",
+    "mapping_mode": "none"
   },
   {
     "operation_id": "configure_isis_interface",
@@ -71,10 +218,19 @@
     "version": 1,
     "category_id": "isis",
     "display_name": "Configure IS-IS Interface",
-    "aliases": ["configure isis interface", "enable is-is", "enable isis on interface", "configure is-is interface"],
+    "aliases": [
+      "configure isis interface",
+      "enable is-is",
+      "enable isis on interface",
+      "configure is-is interface"
+    ],
     "description": "Enable IS-IS on an interface and configure its routing level.",
-    "use_cases": ["enable IS-IS process CORE on ge-0/0/0 at level-2"],
-    "schema_path": "data/operations/isis/configure_isis_interface/schema.json"
+    "use_cases": [
+      "enable IS-IS process CORE on ge-0/0/0 at level-2"
+    ],
+    "schema_path": "data/operations/isis/configure_isis_interface/schema.json",
+    "schema_source": "registry",
+    "mapping_mode": "none"
   },
   {
     "operation_id": "disable_isis_interface",
@@ -82,32 +238,101 @@
     "version": 1,
     "category_id": "isis",
     "display_name": "Disable IS-IS Interface",
-    "aliases": ["disable isis interface", "remove is-is from interface", "remove isis interface"],
+    "aliases": [
+      "disable isis interface",
+      "remove is-is from interface",
+      "remove isis interface"
+    ],
     "description": "Disable IS-IS participation on one interface.",
-    "use_cases": ["disable IS-IS process CORE on ge-0/0/0"],
-    "schema_path": "data/operations/isis/disable_isis_interface/schema.json"
+    "use_cases": [
+      "disable IS-IS process CORE on ge-0/0/0"
+    ],
+    "schema_path": "data/operations/isis/disable_isis_interface/schema.json",
+    "schema_source": "registry",
+    "mapping_mode": "none"
   },
   {
-    "operation_id": "configure_static_route",
-    "status": "active",
-    "version": 1,
-    "category_id": "static_routing",
     "display_name": "Configure Static Route",
-    "aliases": ["configure static route", "add static route", "route prefix via next hop"],
+    "aliases": [
+      "configure static route",
+      "add static route",
+      "route prefix via next hop"
+    ],
     "description": "Configure an IPv4 static route toward a destination prefix through a next-hop address.",
-    "use_cases": ["add static route to 10.20.0.0/16 via 192.0.2.1"],
-    "schema_path": "data/operations/static_routing/configure_static_route/schema.json"
-  },
-  {
-    "operation_id": "remove_static_route",
+    "operation_id": "configure_static_route",
+    "category_id": "static_routing",
+    "schema_path": "data/operations/static_routing/configure_static_route/schema.json",
     "status": "active",
     "version": 1,
-    "category_id": "static_routing",
+    "use_cases": [
+      "add static route to 10.20.0.0/16 via 192.0.2.1"
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    }
+  },
+  {
     "display_name": "Remove Static Route",
-    "aliases": ["remove static route", "delete static route"],
+    "aliases": [
+      "remove static route",
+      "delete static route"
+    ],
     "description": "Remove an IPv4 static route using its destination prefix and next-hop address.",
-    "use_cases": ["remove static route to 10.20.0.0/16 via 192.0.2.1"],
-    "schema_path": "data/operations/static_routing/remove_static_route/schema.json"
+    "operation_id": "remove_static_route",
+    "category_id": "static_routing",
+    "schema_path": "data/operations/static_routing/remove_static_route/schema.json",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "remove static route to 10.20.0.0/16 via 192.0.2.1"
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    }
   },
   {
     "operation_id": "configure_interface_ip",
@@ -115,10 +340,21 @@
     "version": 1,
     "category_id": "ip_address",
     "display_name": "Configure Interface IPv4 Address",
-    "aliases": ["configure interface ip", "configure interface ip address", "configure ip address", "assign ip address", "assign ipv4 address", "set interface address"],
+    "aliases": [
+      "configure interface ip",
+      "configure interface ip address",
+      "configure ip address",
+      "assign ip address",
+      "assign ipv4 address",
+      "set interface address"
+    ],
     "description": "Configure an IPv4 address and prefix length on a network interface.",
-    "use_cases": ["assign 192.0.2.1/24 to Ethernet1/1"],
-    "schema_path": "data/operations/ip_address/configure_interface_ip/schema.json"
+    "use_cases": [
+      "assign 192.0.2.1/24 to Ethernet1/1"
+    ],
+    "schema_path": "data/operations/ip_address/configure_interface_ip/schema.json",
+    "schema_source": "registry",
+    "mapping_mode": "none"
   },
   {
     "operation_id": "remove_interface_ip",
@@ -126,9 +362,1303 @@
     "version": 1,
     "category_id": "ip_address",
     "display_name": "Remove Interface IPv4 Address",
-    "aliases": ["remove interface ip", "remove interface ip address", "delete ip address", "remove ipv4 address"],
+    "aliases": [
+      "remove interface ip",
+      "remove interface ip address",
+      "delete ip address",
+      "remove ipv4 address"
+    ],
     "description": "Remove an IPv4 address and prefix length from a network interface.",
-    "use_cases": ["remove 192.0.2.1/24 from Ethernet1/1"],
-    "schema_path": "data/operations/ip_address/remove_interface_ip/schema.json"
+    "use_cases": [
+      "remove 192.0.2.1/24 from Ethernet1/1"
+    ],
+    "schema_path": "data/operations/ip_address/remove_interface_ip/schema.json",
+    "schema_source": "registry",
+    "mapping_mode": "none"
+  },
+  {
+    "display_name": "Modify VLAN",
+    "aliases": [
+      "modify vlan",
+      "set vlan state"
+    ],
+    "description": "Change only an existing normal-range VLAN state; no rename or description mutation. Vendor-specific inputs and semantics are defined in the schema: huawei: Modify an existing VLAN description. Cisco active/suspend state is not portable; no state change is generated. juniper: Modify an existing VLAN description. Cisco active/suspend state is not portable; no state change is generated.",
+    "operation_id": "modify_vlan",
+    "category_id": "vlan",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Change only an existing normal-range VLAN state; no rename or description mutation."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/vlan/modify_vlan/schema.json"
+  },
+  {
+    "display_name": "Rename VLAN",
+    "aliases": [
+      "rename vlan"
+    ],
+    "description": "Rename an existing normal-range VLAN by numeric identity; require collision checks. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "rename_vlan",
+    "category_id": "vlan",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Rename an existing normal-range VLAN by numeric identity; require collision checks."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/vlan/rename_vlan/schema.json"
+  },
+  {
+    "display_name": "Set interface description",
+    "aliases": [
+      "set interface description"
+    ],
+    "description": "Set a nonempty description on an existing inventory interface.",
+    "operation_id": "set_interface_description",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Set a nonempty description on an existing inventory interface."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/set_interface_description/schema.json"
+  },
+  {
+    "display_name": "Set interface admin state",
+    "aliases": [
+      "set interface admin state"
+    ],
+    "description": "Set the explicit administrative state on an existing inventory interface.",
+    "operation_id": "set_interface_admin_state",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Set the explicit administrative state on an existing inventory interface."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/set_interface_admin_state/schema.json"
+  },
+  {
+    "display_name": "Configure access port",
+    "aliases": [
+      "configure access port",
+      "assign vlan to access port"
+    ],
+    "description": "Configure an existing L2 physical port as an access port with an existing VLAN. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "configure_access_port",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Configure an existing L2 physical port as an access port with an existing VLAN."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/configure_access_port/schema.json"
+  },
+  {
+    "display_name": "Configure trunk port",
+    "aliases": [
+      "configure trunk port"
+    ],
+    "description": "Explicitly configure trunk mode and replace its allowed VLAN list; optional native VLAN otherwise retains recorded native VLAN. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "configure_trunk_port",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Explicitly configure trunk mode and replace its allowed VLAN list; optional native VLAN otherwise retains recorded native VLAN."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/configure_trunk_port/schema.json"
+  },
+  {
+    "display_name": "Add VLANs to trunk",
+    "aliases": [
+      "assign vlan to trunk port",
+      "add vlans to trunk"
+    ],
+    "description": "Add named VLANs to an existing trunk, preserving other allowed VLANs.",
+    "operation_id": "assign_vlan_to_trunk_port",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Add named VLANs to an existing trunk, preserving other allowed VLANs."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/assign_vlan_to_trunk_port/schema.json"
+  },
+  {
+    "display_name": "Replace trunk allowed VLANs",
+    "aliases": [
+      "configure trunk allowed vlans",
+      "replace trunk allowed vlans"
+    ],
+    "description": "Replace the entire allowed list of an existing trunk; keep its recorded native VLAN allowed. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "configure_trunk_allowed_vlans",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Replace the entire allowed list of an existing trunk; keep its recorded native VLAN allowed."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/configure_trunk_allowed_vlans/schema.json"
+  },
+  {
+    "display_name": "Set native VLAN",
+    "aliases": [
+      "set native vlan"
+    ],
+    "description": "Set a native VLAN already allowed on the existing trunk.",
+    "operation_id": "set_native_vlan",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Set a native VLAN already allowed on the existing trunk."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/set_native_vlan/schema.json"
+  },
+  {
+    "display_name": "Configure loopback interface",
+    "aliases": [
+      "configure loopback interface"
+    ],
+    "description": "Create or configure Loopback0-99 with explicit IPv4 address and prefix on an approved device. Vendor-specific inputs and semantics are defined in the schema: huawei: Default routing instance loopback; Junos uses lo0 unit 0. juniper: Default routing instance loopback; Junos uses lo0 unit 0.",
+    "operation_id": "configure_loopback_interface",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Create or configure Loopback0-99 with explicit IPv4 address and prefix on an approved device."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/configure_loopback_interface/schema.json"
+  },
+  {
+    "display_name": "Configure routed port channel",
+    "aliases": [
+      "configure port channel",
+      "configure routed port channel"
+    ],
+    "description": "Create or extend a routed LACP aggregate using existing enabled, unaddressed routed members; no VLAN or address configuration. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "configure_port_channel",
+    "category_id": "interface",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Create or extend a routed LACP aggregate using existing enabled, unaddressed routed members; no VLAN or address configuration."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/interface/configure_port_channel/schema.json"
+  },
+  {
+    "display_name": "add default route",
+    "aliases": [
+      "add default route"
+    ],
+    "description": "Add an IPv4 default route with a directly connected next hop; preference is not a metric.",
+    "operation_id": "add_default_route",
+    "category_id": "static_routing",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Add an IPv4 default route with a directly connected next hop; preference is not a metric."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/static_routing/add_default_route/schema.json"
+  },
+  {
+    "display_name": "add floating static route",
+    "aliases": [
+      "add floating static route"
+    ],
+    "description": "Add an IPv4 backup route only when a planned primary route and higher explicit preference are confirmed.",
+    "operation_id": "add_floating_static_route",
+    "category_id": "static_routing",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Add an IPv4 backup route only when a planned primary route and higher explicit preference are confirmed."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/static_routing/add_floating_static_route/schema.json"
+  },
+  {
+    "display_name": "enable ospf process",
+    "aliases": [
+      "initialize ospf process"
+    ],
+    "description": "Initialize a new IPv4 OSPF process with an explicit router ID; no interface participation is implied. Vendor-specific inputs and semantics are defined in the schema: juniper: Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy.",
+    "operation_id": "enable_ospf_process",
+    "category_id": "ospf",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Initialize a new IPv4 OSPF process with an explicit router ID; no interface participation is implied."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/ospf/enable_ospf_process/schema.json"
+  },
+  {
+    "display_name": "set ospf router id",
+    "aliases": [
+      "set ospf router id"
+    ],
+    "description": "Set the router ID on an existing OSPF process; no process restart is performed. Vendor-specific inputs and semantics are defined in the schema: juniper: Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy.",
+    "operation_id": "set_ospf_router_id",
+    "category_id": "ospf",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Set the router ID on an existing OSPF process; no process restart is performed."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/ospf/set_ospf_router_id/schema.json"
+  },
+  {
+    "display_name": "create ospf area",
+    "aliases": [
+      "create ospf area"
+    ],
+    "description": "Create a non-backbone stub area policy in a confirmed process; neighboring router consistency is not inferred. Vendor-specific inputs and semantics are defined in the schema: juniper: Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy.",
+    "operation_id": "create_ospf_area",
+    "category_id": "ospf",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Create a non-backbone stub area policy in a confirmed process; neighboring router consistency is not inferred."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/ospf/create_ospf_area/schema.json"
+  },
+  {
+    "display_name": "assign interface to ospf area",
+    "aliases": [
+      "assign interface to ospf area"
+    ],
+    "description": "Assign an addressed routed interface to a confirmed OSPF process and area. Vendor-specific inputs and semantics are defined in the schema: juniper: Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy.",
+    "operation_id": "assign_interface_to_ospf_area",
+    "category_id": "ospf",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Assign an addressed routed interface to a confirmed OSPF process and area."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/ospf/assign_interface_to_ospf_area/schema.json"
+  },
+  {
+    "display_name": "advertise network",
+    "aliases": [
+      "advertise network"
+    ],
+    "description": "Select recorded interfaces for OSPF with an exact IPv4 network selector, not arbitrary route injection. Vendor-specific inputs and semantics are defined in the schema: juniper: Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy.",
+    "operation_id": "advertise_network",
+    "category_id": "ospf",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Select recorded interfaces for OSPF with an exact IPv4 network selector, not arbitrary route injection."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/ospf/advertise_network/schema.json"
+  },
+  {
+    "display_name": "configure passive interface",
+    "aliases": [
+      "configure passive interface"
+    ],
+    "description": "Set or remove passive state on a confirmed OSPF member; preserve route advertisement. Vendor-specific inputs and semantics are defined in the schema: juniper: Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy.",
+    "operation_id": "configure_passive_interface",
+    "category_id": "ospf",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Set or remove passive state on a confirmed OSPF member; preserve route advertisement."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/ospf/configure_passive_interface/schema.json"
+  },
+  {
+    "display_name": "configure ospf redistribution",
+    "aliases": [
+      "configure ospf redistribution"
+    ],
+    "description": "Redistribute only connected or static IPv4 routes through a confirmed bounded default-deny route map, with explicit metric and type. Vendor-specific inputs and semantics are defined in the schema: juniper: Junos default routing instance; no numeric OSPF process ID. Interface-based area participation and bounded export policy.",
+    "operation_id": "configure_ospf_redistribution",
+    "category_id": "ospf",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Redistribute only connected or static IPv4 routes through a confirmed bounded default-deny route map, with explicit metric and type."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/ospf/configure_ospf_redistribution/schema.json"
+  },
+  {
+    "display_name": "create acl",
+    "aliases": [
+      "create acl"
+    ],
+    "description": "Create an unattached named extended IPv4 ACL with a required persistent remark at sequence 1; no permit rule is inferred. Vendor-specific inputs and semantics are defined in the schema: juniper: Create an unattached IPv4 firewall filter with interface-specific counters. Junos filter description is not a supported input.",
+    "operation_id": "create_acl",
+    "category_id": "acl",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Create an unattached named extended IPv4 ACL with a required persistent remark at sequence 1; no permit rule is inferred."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/acl/create_acl/schema.json"
+  },
+  {
+    "display_name": "add acl rule",
+    "aliases": [
+      "add acl rule"
+    ],
+    "description": "Add one fully specified IPv4 ACE at an unused sequence; no implicit any match. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "add_acl_rule",
+    "category_id": "acl",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Add one fully specified IPv4 ACE at an unused sequence; no implicit any match."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/acl/add_acl_rule/schema.json"
+  },
+  {
+    "display_name": "modify acl rule",
+    "aliases": [
+      "modify acl rule"
+    ],
+    "description": "Replace exactly one confirmed ACE with a complete explicit rule; transient delete/add gap requires deployment review. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "modify_acl_rule",
+    "category_id": "acl",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Replace exactly one confirmed ACE with a complete explicit rule; transient delete/add gap requires deployment review."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/acl/modify_acl_rule/schema.json"
+  },
+  {
+    "display_name": "delete acl rule",
+    "aliases": [
+      "delete acl rule"
+    ],
+    "description": "Delete exactly one confirmed IPv4 ACE; never delete the ACL object. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "delete_acl_rule",
+    "category_id": "acl",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Delete exactly one confirmed IPv4 ACE; never delete the ACL object."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/acl/delete_acl_rule/schema.json"
+  },
+  {
+    "display_name": "apply acl to interface",
+    "aliases": [
+      "apply acl to interface"
+    ],
+    "description": "Attach a confirmed IPv4 extended ACL to a routed interface without replacing another policy. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "apply_acl_to_interface",
+    "category_id": "acl",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Attach a confirmed IPv4 extended ACL to a routed interface without replacing another policy."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/acl/apply_acl_to_interface/schema.json"
+  },
+  {
+    "display_name": "create qos policy",
+    "aliases": [
+      "create qos policy"
+    ],
+    "description": "Create a detached absolute-bandwidth MQC policy with explicit existing DSCP classifiers and per-class bandwidth in bps. Vendor-specific inputs and semantics are defined in the schema: huawei: Create an MQC policy associating existing classifiers with existing traffic behaviors; it does not invent bandwidth actions. juniper: Create a scheduler map associating existing forwarding classes with existing schedulers.",
+    "operation_id": "create_qos_policy",
+    "category_id": "qos",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Create a detached absolute-bandwidth MQC policy with explicit existing DSCP classifiers and per-class bandwidth in bps."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/qos/create_qos_policy/schema.json"
+  },
+  {
+    "display_name": "create classifier",
+    "aliases": [
+      "create classifier"
+    ],
+    "description": "Create a DSCP-only match-any classifier; a single explicit match definition. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "create_classifier",
+    "category_id": "qos",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Create a DSCP-only match-any classifier; a single explicit match definition."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/qos/create_classifier/schema.json"
+  },
+  {
+    "display_name": "classify by dscp",
+    "aliases": [
+      "classify by dscp"
+    ],
+    "description": "Replace the entire DSCP match list on an existing DSCP-only match-any classifier. Vendor-specific inputs and semantics are defined in the schema: ",
+    "operation_id": "classify_by_dscp",
+    "category_id": "qos",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Replace the entire DSCP match list on an existing DSCP-only match-any classifier."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/qos/classify_by_dscp/schema.json"
+  },
+  {
+    "display_name": "configure scheduler",
+    "aliases": [
+      "configure scheduler"
+    ],
+    "description": "Set absolute minimum bandwidth for an existing class in a detached MQC policy; no invented standalone scheduler identity. Vendor-specific inputs and semantics are defined in the schema: huawei: Configure WRR scheduling for one interface queue, with an explicit relative weight (not an absolute bandwidth guarantee). juniper: Create or update an unattached Junos scheduler's absolute transmit rate.",
+    "operation_id": "configure_scheduler",
+    "category_id": "qos",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Set absolute minimum bandwidth for an existing class in a detached MQC policy; no invented standalone scheduler identity."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/qos/configure_scheduler/schema.json"
+  },
+  {
+    "display_name": "configure shaping",
+    "aliases": [
+      "configure shaping"
+    ],
+    "description": "Create and attach a dedicated egress class-default shaper using an unused policy name; no child queues or inferred classifier. Vendor-specific inputs and semantics are defined in the schema: huawei: Set the interface egress shaping rate in bps. This is not a named MQC policy. juniper: Set the interface egress shaping rate in bps. This is not a named MQC policy.",
+    "operation_id": "configure_shaping",
+    "category_id": "qos",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Create and attach a dedicated egress class-default shaper using an unused policy name; no child queues or inferred classifier."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/qos/configure_shaping/schema.json"
+  },
+  {
+    "display_name": "configure policing",
+    "aliases": [
+      "configure policing"
+    ],
+    "description": "Create and attach a dedicated ingress class-default policer with explicit bps, burst bytes and drop excess action. Vendor-specific inputs and semantics are defined in the schema: huawei: Create a new CAR behavior/policy for the explicitly selected existing classifier, and attach ingress. juniper: Create a two-color policer and attach to the selected logical inet interface. policy_name names the policer.",
+    "operation_id": "configure_policing",
+    "category_id": "qos",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Create and attach a dedicated ingress class-default policer with explicit bps, burst bytes and drop excess action."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/qos/configure_policing/schema.json"
+  },
+  {
+    "display_name": "apply qos policy to interface",
+    "aliases": [
+      "apply qos policy to interface"
+    ],
+    "description": "Attach a confirmed bandwidth policy on egress without overwriting another policy; verify queue and link capacity. Vendor-specific inputs and semantics are defined in the schema: juniper: Attach an egress scheduler map. If explicitly provided, also attach the DSCP classifier to ingress on this physical interface.",
+    "operation_id": "apply_qos_policy_to_interface",
+    "category_id": "qos",
+    "status": "active",
+    "version": 1,
+    "use_cases": [
+      "Attach a confirmed bandwidth policy on egress without overwriting another policy; verify queue and link capacity."
+    ],
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "vendor_knowledge": {
+      "cisco": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "huawei": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      },
+      "juniper": {
+        "status": "generation_supported",
+        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "requirements": [
+          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+        ]
+      }
+    },
+    "schema_path": "data/operations/qos/apply_qos_policy_to_interface/schema.json"
   }
 ]

@@ -1,0 +1,5 @@
+policy-map {{ policy_name }}
+ class {{ classifier_name }}
+  bandwidth {{ bandwidth_bps // 1000 }}
+  exit
+ exit

@@ -1,0 +1,83 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "vlan_id": {
+      "minimum": 2,
+      "maximum": 1001,
+      "type": "integer"
+    },
+    "new_vlan_name": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,19}$",
+      "type": "string"
+    },
+    "current_vlan_name": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+      "description": "Exact existing Junos VLAN object name for the selected VLAN ID."
+    }
+  },
+  "required": [
+    "vlan_id",
+    "new_vlan_name"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "vlan_id": {
+          "minimum": 2,
+          "maximum": 1001,
+          "type": "integer"
+        },
+        "new_vlan_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,19}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vlan_id",
+        "new_vlan_name"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "vlan_id": {
+          "minimum": 2,
+          "maximum": 1001,
+          "type": "integer"
+        },
+        "new_vlan_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,19}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "vlan_id",
+        "new_vlan_name"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "vlan_id": {
+          "minimum": 2,
+          "maximum": 1001,
+          "type": "integer"
+        },
+        "new_vlan_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,19}$",
+          "type": "string"
+        },
+        "current_vlan_name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "description": "Exact existing Junos VLAN object name for the selected VLAN ID."
+        }
+      },
+      "required": [
+        "vlan_id",
+        "new_vlan_name",
+        "current_vlan_name"
+      ]
+    }
+  }
+}

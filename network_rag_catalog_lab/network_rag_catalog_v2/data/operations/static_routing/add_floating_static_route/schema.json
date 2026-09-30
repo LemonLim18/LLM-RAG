@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "destination": {
+      "pattern": "^[0-9.]+/[0-9]{1,2}$",
+      "type": "string"
+    },
+    "next_hop": {
+      "format": "ipv4",
+      "type": "string"
+    },
+    "preference": {
+      "minimum": 1,
+      "maximum": 254,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "destination",
+    "next_hop",
+    "preference"
+  ]
+}

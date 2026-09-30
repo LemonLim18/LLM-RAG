@@ -1,0 +1,2 @@
+set routing-options router-id {{ router_id }}
+set protocols ospf area {{ area }} interface {{ interface if '.' in interface else interface ~ '.0' }}

@@ -5,12 +5,15 @@ from typing import Any
 
 from ..catalog import parameter_label
 from ..llm import llm
+from .evidence import grounded_scalar, literal_candidates, mask_literals, mentioned_fields
 from .normalizer import (
     canonicalize_parameter_keys,
     deterministic_values,
     normalize_value,
     prefix_length_from_text,
     explicit_alternatives,
+    parameter_identity,
+    parameter_metadata,
 )
 
 
@@ -62,29 +65,32 @@ def _filter_value(prompt: str, value: Any, schema: dict, field: str) -> tuple[An
     schema_type = schema.get("type")
     if value is None:
         return None, None
-    if schema_type == "object":
-        if not isinstance(value, dict):
-            return None, None
-        nested, _ = _filter_to_schema(prompt, value, schema)
-        return nested, "user"
-    if schema_type == "array":
-        if not isinstance(value, list):
-            return None, None
-        filtered_items = []
-        item_schema = schema.get("items", {})
-        for item in value:
-            filtered, _ = _filter_value(prompt, item, item_schema, field)
-            if not isinstance(filtered, dict):
-                continue
-            if not any(value is not None for value in filtered.values()):
-                continue
-            filtered_items.append(filtered)
-        return (filtered_items or None), ("user" if filtered_items else None)
+    if schema_type in {"object", "array"}:
+        # Never assemble a collection from unrelated prompt-wide scalar matches.
+        explicit = literal_candidates(prompt, field, schema)
+        if len(explicit) == 1 and json.dumps(value, sort_keys=True) == json.dumps(explicit[0], sort_keys=True):
+            return explicit[0], "user"
+        return None, None
 
     normalized, source = normalize_value(field, value, schema, prompt)
-    if normalized is None or not _text_has_value(prompt, normalized, field):
+    if normalized is None or not _text_has_value(prompt, normalized, parameter_identity(field, schema)):
         return None, None
     return normalized, source
+
+
+def _explicit_values(prompt: str, schema: dict) -> dict:
+    values = deterministic_values(mask_literals(prompt), schema)
+    strict_preference = "expansion_network_v1" in schema.get("x-validation-handlers", [])
+    if strict_preference:
+        values.pop("preference", None)
+    for field, node in schema.get("properties", {}).items():
+        evidence = re.sub(r"\bmetric\s+\d+\b", "", prompt, flags=re.I) if strict_preference and field == "preference" else prompt
+        literals = literal_candidates(evidence, field, node)
+        if len(literals) == 1:
+            values[field] = (literals[0], "deterministic_user")
+        elif len(literals) > 1:
+            values.pop(field, None)
+    return values
 
 
 def _filter_to_schema(
@@ -97,20 +103,21 @@ def _filter_to_schema(
     canonical = canonicalize_parameter_keys(raw_params, schema)
     params: dict[str, Any] = {}
     provenance: dict[str, str] = {}
-    fallback = deterministic_values(prompt, schema)
+    fallback = _explicit_values(prompt, schema)
     for field, field_schema in properties.items():
         if allowed_fields is not None and field not in allowed_fields:
             continue
         candidate = canonical.get(field)
         value, source = _filter_value(prompt, candidate, field_schema, field)
+        if (field == "preference" and "expansion_network_v1" in schema.get("x-validation-handlers", [])
+                and field not in fallback):
+            value, source = None, None
         if field in fallback:
             value, source = fallback[field]
-        elif value is not None:
+        elif value is not None and field_schema.get("type") not in {"object", "array"}:
             # A literal's presence is insufficient to bind it to a scalar field.
             # Accept model interpretations only with nearby catalog field wording.
-            aliases = field_schema.get("x-parameter", {}).get("aliases", [field.replace("_", " ")])
-            grounded = any(re.search(rf"\b{re.escape(alias)}\s*(?:is|=|:)?\s*[\"']?{re.escape(str(value))}(?![\w/])", prompt, re.I) for alias in aliases)
-            if not grounded:
+            if not grounded_scalar(prompt, field, field_schema, value):
                 value, source = None, None
         if value is not None:
             params[field] = value
@@ -123,8 +130,12 @@ def _filter_to_schema(
 def _contract(schema: dict) -> dict:
     properties = {}
     for field, field_schema in schema.get("properties", {}).items():
+        try:
+            metadata = parameter_metadata(field, field_schema)
+        except KeyError:
+            metadata = {}
         properties[field] = {
-            "display_name": parameter_label(field),
+            "display_name": metadata.get("display_name") or parameter_label(field),
             "type": field_schema.get("type"),
             "enum": field_schema.get("enum"),
             "items": field_schema.get("items"),
@@ -141,11 +152,16 @@ def extract_parameter_result(
 ) -> ExtractionResult:
     contract = _contract(schema)
     existing = existing_parameters or {}
-    requested = requested_fields or schema.get("required", [])
+    mentioned = mentioned_fields(prompt, schema)
+    requested = requested_fields or list(dict.fromkeys([
+        *schema.get("required", []),
+        *(field for field in schema.get("properties", {}) if field in mentioned),
+    ]))
     system = f"""You are a strict network-operation parameter parser.
 Extract only values explicitly stated in the current user message.
 Never invent, assume, infer, guess, or use a value from an example.
 Return null for a required value absent from the current user message.
+Include optional values when explicitly supplied; omit absent optional values.
 Return JSON only: {{\"parameters\": {{}}}}.
 
 Parameter contract:
@@ -156,8 +172,8 @@ Existing validated values (context only; do not repeat unless the user repeats t
 Fields currently requested: {json.dumps(requested)}
 """
     raw_params: dict = {}
-    deterministic = deterministic_values(prompt, schema)
-    fields_to_extract = requested or schema.get("required", [])
+    deterministic = _explicit_values(prompt, schema)
+    fields_to_extract = requested
     diagnostics = []
     if not all(field in deterministic for field in fields_to_extract):
         for attempt in range(2):
@@ -185,11 +201,25 @@ Fields currently requested: {json.dumps(requested)}
     allowed_fields = set(requested_fields) if requested_fields else None
     params, provenance = _filter_to_schema(prompt, raw_params, schema, allowed_fields)
     candidates = []
-    for field, values in explicit_alternatives(prompt, schema).items():
+    alternatives = explicit_alternatives(mask_literals(prompt), schema)
+    for field, node in schema.get("properties", {}).items():
+        literals = literal_candidates(prompt, field, node)
+        if len(literals) > 1:
+            alternatives[field] = literals
+    for field, values in alternatives.items():
+        if allowed_fields is not None and field not in allowed_fields:
+            continue
         params[field] = None
         provenance.pop(field, None)
         candidates.append({"field": field, "type": "AMBIGUOUS", "values": values, "evidence": prompt, "source": "user"})
     required = schema.get("required", [])
+    for field in schema.get("properties", {}):
+        if (field in mentioned and field not in required and params.get(field) is None
+                and (allowed_fields is None or field in allowed_fields)
+                and not any(candidate["field"] == field for candidate in candidates)):
+            candidates.append({"field": field, "type": "UNRESOLVED_VALUE", "values": [],
+                               "evidence": prompt, "source": "user",
+                               "message": f"You mentioned {contract['properties'][field]['display_name']}, but its value could not be safely extracted. Please specify it."})
     return ExtractionResult(
         parameters=params,
         provided_fields=sorted(provenance),

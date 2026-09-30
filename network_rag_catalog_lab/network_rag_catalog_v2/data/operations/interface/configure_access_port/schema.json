@@ -1,0 +1,100 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$",
+      "type": "string"
+    },
+    "vlan_id": {
+      "minimum": 1,
+      "maximum": 4094,
+      "type": "integer"
+    },
+    "description": {
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[A-Za-z0-9 _./:()-]+$",
+      "type": "string"
+    }
+  },
+  "required": [
+    "interface",
+    "vlan_id"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "interface": {
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z][A-Za-z0-9/.-]*$",
+          "type": "string"
+        },
+        "vlan_id": {
+          "minimum": 1,
+          "maximum": 4094,
+          "type": "integer"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "vlan_id"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "interface": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+        },
+        "vlan_id": {
+          "minimum": 1,
+          "maximum": 4094,
+          "type": "integer"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "vlan_id"
+      ]
+    },
+    "juniper": {
+      "properties": {
+        "interface": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+        },
+        "vlan_id": {
+          "minimum": 1,
+          "maximum": 4094,
+          "type": "integer"
+        },
+        "description": {
+          "minLength": 1,
+          "maxLength": 80,
+          "pattern": "^[A-Za-z0-9 _./:()-]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "interface",
+        "vlan_id"
+      ]
+    }
+  }
+}

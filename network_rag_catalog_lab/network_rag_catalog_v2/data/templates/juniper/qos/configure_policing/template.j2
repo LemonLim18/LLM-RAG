@@ -1,0 +1,4 @@
+set firewall policer {{ policy_name }} if-exceeding bandwidth-limit {{ rate_bps }}
+set firewall policer {{ policy_name }} if-exceeding burst-size-limit {{ burst_bytes }}
+set firewall policer {{ policy_name }} then discard
+set interfaces {{ interface }} unit {{ logical_unit }} family inet policer input {{ policy_name }}

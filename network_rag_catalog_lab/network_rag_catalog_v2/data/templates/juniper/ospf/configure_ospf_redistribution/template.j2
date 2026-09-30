@@ -1,0 +1,7 @@
+set policy-options policy-statement {{ export_policy_name }} term selected from protocol {{ 'direct' if redistribution_source == 'connected' else 'static' }}
+set policy-options policy-statement {{ export_policy_name }} term selected from policy {{ route_policy }}
+set policy-options policy-statement {{ export_policy_name }} term selected then metric {{ ospf_metric }}
+set policy-options policy-statement {{ export_policy_name }} term selected then external type {{ metric_type }}
+set policy-options policy-statement {{ export_policy_name }} term selected then accept
+set policy-options policy-statement {{ export_policy_name }} term otherwise then reject
+set protocols ospf export {{ export_policy_name }}

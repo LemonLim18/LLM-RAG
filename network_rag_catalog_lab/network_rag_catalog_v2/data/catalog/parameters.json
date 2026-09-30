@@ -1,22 +1,643 @@
 [
-  {"parameter_id": "vlan_id", "display_name": "VLAN ID", "value_type": "integer", "aliases": ["vlan", "vlan id"], "clarification": "What VLAN ID should be used?"},
-  {"parameter_id": "name", "display_name": "VLAN name", "value_type": "string", "aliases": ["vlan name", "name", "named"], "clarification": "What VLAN name should be used?"},
-  {"parameter_id": "process_id", "display_name": "OSPF process ID", "value_type": "integer", "aliases": ["ospf process", "ospf process id", "process id"], "clarification": "What OSPF process ID should be used?"},
-  {"parameter_id": "router_id", "display_name": "router ID", "value_type": "string", "aliases": ["router id"], "clarification": "What router ID should be used?"},
-  {"parameter_id": "interfaces", "display_name": "OSPF interfaces and areas", "value_type": "array", "aliases": ["interfaces", "ospf interfaces"], "clarification": "Which interfaces and OSPF areas should be configured? For example: Ethernet1/1 in area 0."},
-  {"parameter_id": "interface", "display_name": "interface", "value_type": "string", "aliases": ["interface", "port"], "clarification": "Which interface should be used?"},
-  {"parameter_id": "area", "display_name": "OSPF area", "value_type": "string", "aliases": ["area", "ospf area"], "clarification": "What OSPF area should be used?"},
-  {"parameter_id": "local_as", "display_name": "local AS number", "value_type": "integer", "aliases": ["local as", "local autonomous system", "as number"], "clarification": "What local BGP AS number should be used?"},
-  {"parameter_id": "neighbor_ip", "display_name": "BGP neighbor IP", "value_type": "string", "aliases": ["neighbor", "peer", "neighbor ip", "peer ip"], "clarification": "What BGP neighbor IP address should be used?"},
-  {"parameter_id": "remote_as", "display_name": "remote AS number", "value_type": "integer", "aliases": ["remote as", "peer as", "remote autonomous system"], "clarification": "What remote BGP AS number should be used?"},
-  {"parameter_id": "description", "display_name": "description", "value_type": "string", "aliases": ["description", "desc"], "clarification": "What description should be used?"},
-  {"parameter_id": "peer_group", "display_name": "BGP peer group", "value_type": "string", "aliases": ["peer group", "bgp group", "group"], "clarification": "What BGP peer group should be used?"},
-  {"parameter_id": "process_name", "display_name": "IS-IS process name", "value_type": "string", "aliases": ["isis process", "is-is process", "process name"], "clarification": "What IS-IS process name should be used?"},
-  {"parameter_id": "level", "display_name": "IS-IS level", "value_type": "string", "aliases": ["isis level", "is-is level", "level"], "clarification": "Which IS-IS level should be used: level-1, level-2, or level-1-2?"},
-  {"parameter_id": "destination", "display_name": "destination prefix", "value_type": "string", "aliases": ["destination", "destination prefix", "route prefix"], "clarification": "What destination prefix should be used?"},
-  {"parameter_id": "next_hop", "display_name": "next-hop IP", "value_type": "string", "aliases": ["next hop", "next-hop", "via", "through"], "clarification": "What next-hop IP address should be used?"},
-  {"parameter_id": "preference", "display_name": "route preference", "value_type": "integer", "aliases": ["preference", "administrative distance", "metric"], "clarification": "What route preference should be used?"},
-  {"parameter_id": "address", "display_name": "IPv4 address", "value_type": "string", "aliases": ["ip address", "ipv4 address", "address"], "clarification": "What IPv4 address should be configured?"},
-  {"parameter_id": "prefix_length", "display_name": "prefix length", "value_type": "integer", "aliases": ["prefix length", "prefix", "cidr", "netmask", "subnet mask"], "normalizer": "ipv4_prefix_length", "clarification": "What prefix length or netmask should be used?"},
-  {"parameter_id": "admin_up", "display_name": "administrative state", "value_type": "boolean", "aliases": ["admin up", "enable", "disable", "shutdown", "no shutdown"], "clarification": "Should the interface be administratively enabled or disabled?"}
+  {
+    "parameter_id": "vlan_id",
+    "display_name": "VLAN ID",
+    "value_type": "integer",
+    "aliases": [
+      "vlan",
+      "vlan id"
+    ],
+    "clarification": "What VLAN ID should be used?"
+  },
+  {
+    "parameter_id": "name",
+    "display_name": "VLAN name",
+    "value_type": "string",
+    "aliases": [
+      "vlan name",
+      "name",
+      "named"
+    ],
+    "clarification": "What VLAN name should be used?"
+  },
+  {
+    "parameter_id": "process_id",
+    "display_name": "OSPF process ID",
+    "value_type": "integer",
+    "aliases": [
+      "ospf process",
+      "ospf process id",
+      "process id"
+    ],
+    "clarification": "What OSPF process ID should be used?"
+  },
+  {
+    "parameter_id": "router_id",
+    "display_name": "router ID",
+    "value_type": "string",
+    "aliases": [
+      "router id"
+    ],
+    "clarification": "What router ID should be used?"
+  },
+  {
+    "parameter_id": "interfaces",
+    "display_name": "OSPF interfaces and areas",
+    "value_type": "array",
+    "aliases": [
+      "interfaces",
+      "ospf interfaces"
+    ],
+    "clarification": "Which interfaces and OSPF areas should be configured? For example: Ethernet1/1 in area 0."
+  },
+  {
+    "parameter_id": "interface",
+    "display_name": "interface",
+    "value_type": "string",
+    "aliases": [
+      "interface",
+      "port"
+    ],
+    "clarification": "Which interface should be used?"
+  },
+  {
+    "parameter_id": "area",
+    "display_name": "OSPF area",
+    "value_type": "string",
+    "aliases": [
+      "area",
+      "ospf area"
+    ],
+    "clarification": "What OSPF area should be used?"
+  },
+  {
+    "parameter_id": "local_as",
+    "display_name": "local AS number",
+    "value_type": "integer",
+    "aliases": [
+      "local as",
+      "local autonomous system",
+      "as number"
+    ],
+    "clarification": "What local BGP AS number should be used?"
+  },
+  {
+    "parameter_id": "neighbor_ip",
+    "display_name": "BGP neighbor IP",
+    "value_type": "string",
+    "aliases": [
+      "neighbor",
+      "peer",
+      "neighbor ip",
+      "peer ip"
+    ],
+    "clarification": "What BGP neighbor IP address should be used?"
+  },
+  {
+    "parameter_id": "remote_as",
+    "display_name": "remote AS number",
+    "value_type": "integer",
+    "aliases": [
+      "remote as",
+      "peer as",
+      "remote autonomous system"
+    ],
+    "clarification": "What remote BGP AS number should be used?"
+  },
+  {
+    "parameter_id": "description",
+    "display_name": "description",
+    "value_type": "string",
+    "aliases": [
+      "description",
+      "desc"
+    ],
+    "clarification": "What description should be used?"
+  },
+  {
+    "parameter_id": "peer_group",
+    "display_name": "BGP peer group",
+    "value_type": "string",
+    "aliases": [
+      "peer group",
+      "bgp group",
+      "group"
+    ],
+    "clarification": "What BGP peer group should be used?"
+  },
+  {
+    "parameter_id": "process_name",
+    "display_name": "IS-IS process name",
+    "value_type": "string",
+    "aliases": [
+      "isis process",
+      "is-is process",
+      "process name"
+    ],
+    "clarification": "What IS-IS process name should be used?"
+  },
+  {
+    "parameter_id": "level",
+    "display_name": "IS-IS level",
+    "value_type": "string",
+    "aliases": [
+      "isis level",
+      "is-is level",
+      "level"
+    ],
+    "clarification": "Which IS-IS level should be used: level-1, level-2, or level-1-2?"
+  },
+  {
+    "parameter_id": "destination",
+    "display_name": "destination prefix",
+    "value_type": "string",
+    "aliases": [
+      "destination",
+      "destination prefix",
+      "route prefix"
+    ],
+    "clarification": "What destination prefix should be used?"
+  },
+  {
+    "parameter_id": "next_hop",
+    "display_name": "next-hop IP",
+    "value_type": "string",
+    "aliases": [
+      "next hop",
+      "next-hop",
+      "via",
+      "through"
+    ],
+    "clarification": "What next-hop IP address should be used?"
+  },
+  {
+    "parameter_id": "preference",
+    "display_name": "route preference",
+    "value_type": "integer",
+    "aliases": [
+      "preference",
+      "administrative distance",
+      "metric"
+    ],
+    "clarification": "What route preference should be used?"
+  },
+  {
+    "parameter_id": "address",
+    "display_name": "IPv4 address",
+    "value_type": "string",
+    "aliases": [
+      "ip address",
+      "ipv4 address",
+      "address"
+    ],
+    "clarification": "What IPv4 address should be configured?"
+  },
+  {
+    "parameter_id": "prefix_length",
+    "display_name": "prefix length",
+    "value_type": "integer",
+    "aliases": [
+      "prefix length",
+      "prefix",
+      "cidr",
+      "netmask",
+      "subnet mask"
+    ],
+    "normalizer": "ipv4_prefix_length",
+    "clarification": "What prefix length or netmask should be used?"
+  },
+  {
+    "parameter_id": "admin_up",
+    "display_name": "administrative state",
+    "value_type": "boolean",
+    "aliases": [
+      "admin up",
+      "enable",
+      "disable",
+      "shutdown",
+      "no shutdown"
+    ],
+    "clarification": "Should the interface be administratively enabled or disabled?"
+  },
+  {
+    "display_name": "VLAN state",
+    "aliases": [
+      "vlan state",
+      "vlan status",
+      "state"
+    ],
+    "parameter_id": "vlan_status",
+    "value_type": "string",
+    "clarification": "Should this VLAN be active or suspend?"
+  },
+  {
+    "display_name": "New VLAN name",
+    "aliases": [
+      "new vlan name",
+      "new name"
+    ],
+    "parameter_id": "new_vlan_name",
+    "value_type": "string",
+    "clarification": "What new VLAN name should be assigned?"
+  },
+  {
+    "display_name": "Allowed VLANs",
+    "aliases": [
+      "allowed vlans",
+      "vlan list"
+    ],
+    "parameter_id": "allowed_vlans",
+    "value_type": "array",
+    "clarification": "Which VLAN IDs should be in this list? Enter a JSON integer array."
+  },
+  {
+    "display_name": "Native VLAN",
+    "aliases": [
+      "native vlan"
+    ],
+    "parameter_id": "native_vlan",
+    "value_type": "integer",
+    "clarification": "Which native VLAN ID should be used?"
+  },
+  {
+    "display_name": "Aggregate interface",
+    "aliases": [
+      "aggregate interface",
+      "port channel"
+    ],
+    "parameter_id": "aggregate_interface",
+    "value_type": "string",
+    "clarification": "Which Port-channel1 through Port-channel128 should be configured?"
+  },
+  {
+    "display_name": "Member interfaces",
+    "aliases": [
+      "member interfaces",
+      "members"
+    ],
+    "parameter_id": "member_interfaces",
+    "value_type": "array",
+    "clarification": "Which existing routed ports should join the aggregate? Enter a JSON string array."
+  },
+  {
+    "display_name": "LACP mode",
+    "aliases": [
+      "lacp mode"
+    ],
+    "parameter_id": "lacp_mode",
+    "value_type": "string",
+    "clarification": "Which explicit LACP mode should be used: active or passive?"
+  },
+  {
+    "display_name": "OSPF area type",
+    "aliases": [
+      "area type"
+    ],
+    "parameter_id": "area_type",
+    "value_type": "string",
+    "clarification": "Provide ospf area type."
+  },
+  {
+    "display_name": "OSPF network prefix",
+    "aliases": [
+      "network prefix"
+    ],
+    "parameter_id": "network_prefix",
+    "value_type": "string",
+    "clarification": "Provide ospf network prefix."
+  },
+  {
+    "display_name": "Passive interface",
+    "aliases": [
+      "passive"
+    ],
+    "parameter_id": "passive",
+    "value_type": "boolean",
+    "clarification": "Provide passive interface."
+  },
+  {
+    "display_name": "Redistribution source",
+    "aliases": [
+      "redistribution source"
+    ],
+    "parameter_id": "redistribution_source",
+    "value_type": "string",
+    "clarification": "Provide redistribution source."
+  },
+  {
+    "display_name": "Route policy",
+    "aliases": [
+      "route policy"
+    ],
+    "parameter_id": "route_policy",
+    "value_type": "string",
+    "clarification": "Provide route policy."
+  },
+  {
+    "display_name": "OSPF external metric",
+    "aliases": [
+      "ospf metric"
+    ],
+    "parameter_id": "ospf_metric",
+    "value_type": "integer",
+    "clarification": "Provide ospf external metric."
+  },
+  {
+    "display_name": "OSPF external metric type",
+    "aliases": [
+      "metric type"
+    ],
+    "parameter_id": "metric_type",
+    "value_type": "string",
+    "clarification": "Provide ospf external metric type."
+  },
+  {
+    "display_name": "ACL name",
+    "aliases": [
+      "acl name"
+    ],
+    "parameter_id": "acl_name",
+    "value_type": "string",
+    "clarification": "Provide acl name."
+  },
+  {
+    "display_name": "ACL rule ID",
+    "aliases": [
+      "acl rule id"
+    ],
+    "parameter_id": "acl_rule_id",
+    "value_type": "integer",
+    "clarification": "Provide acl rule id."
+  },
+  {
+    "display_name": "ACL action",
+    "aliases": [
+      "acl action"
+    ],
+    "parameter_id": "acl_action",
+    "value_type": "string",
+    "clarification": "Provide acl action."
+  },
+  {
+    "display_name": "Source prefix",
+    "aliases": [
+      "source prefix"
+    ],
+    "parameter_id": "source_prefix",
+    "value_type": "string",
+    "clarification": "Provide source prefix."
+  },
+  {
+    "display_name": "Destination prefix",
+    "aliases": [
+      "destination prefix"
+    ],
+    "parameter_id": "destination_prefix",
+    "value_type": "string",
+    "clarification": "Provide destination prefix."
+  },
+  {
+    "display_name": "IP protocol",
+    "aliases": [
+      "ip protocol"
+    ],
+    "parameter_id": "ip_protocol",
+    "value_type": "string",
+    "clarification": "Provide ip protocol."
+  },
+  {
+    "display_name": "Source port",
+    "aliases": [
+      "source port"
+    ],
+    "parameter_id": "source_port",
+    "value_type": "integer",
+    "clarification": "Provide source port."
+  },
+  {
+    "display_name": "Destination port",
+    "aliases": [
+      "destination port"
+    ],
+    "parameter_id": "destination_port",
+    "value_type": "integer",
+    "clarification": "Provide destination port."
+  },
+  {
+    "display_name": "Log matches",
+    "aliases": [
+      "log"
+    ],
+    "parameter_id": "log",
+    "value_type": "boolean",
+    "clarification": "Provide log matches."
+  },
+  {
+    "display_name": "Direction",
+    "aliases": [
+      "direction"
+    ],
+    "parameter_id": "direction",
+    "value_type": "string",
+    "clarification": "Provide direction."
+  },
+  {
+    "display_name": "Existing DSCP values",
+    "aliases": [
+      "previous dscp values",
+      "existing dscp values"
+    ],
+    "parameter_id": "previous_dscp_values",
+    "value_type": "array",
+    "clarification": "Confirm the existing DSCP list to replace."
+  },
+  {
+    "display_name": "QoS policy name",
+    "aliases": [
+      "policy name"
+    ],
+    "parameter_id": "policy_name",
+    "value_type": "string",
+    "clarification": "Provide qos policy name."
+  },
+  {
+    "display_name": "Policy terms",
+    "aliases": [
+      "policy terms"
+    ],
+    "parameter_id": "policy_terms",
+    "value_type": "array",
+    "clarification": "Provide policy terms."
+  },
+  {
+    "display_name": "Classifier name",
+    "aliases": [
+      "classifier name"
+    ],
+    "parameter_id": "classifier_name",
+    "value_type": "string",
+    "clarification": "Provide classifier name."
+  },
+  {
+    "display_name": "Bandwidth in bps",
+    "aliases": [
+      "bandwidth bps"
+    ],
+    "parameter_id": "bandwidth_bps",
+    "value_type": "integer",
+    "clarification": "Provide bandwidth in bps."
+  },
+  {
+    "display_name": "DSCP values",
+    "aliases": [
+      "dscp values"
+    ],
+    "parameter_id": "dscp_values",
+    "value_type": "array",
+    "clarification": "Provide dscp values."
+  },
+  {
+    "display_name": "Match mode",
+    "aliases": [
+      "match mode"
+    ],
+    "parameter_id": "match_mode",
+    "value_type": "string",
+    "clarification": "Provide match mode."
+  },
+  {
+    "display_name": "Rate in bps",
+    "aliases": [
+      "rate bps"
+    ],
+    "parameter_id": "rate_bps",
+    "value_type": "integer",
+    "clarification": "Provide rate in bps."
+  },
+  {
+    "display_name": "Burst in bytes",
+    "aliases": [
+      "burst bytes"
+    ],
+    "parameter_id": "burst_bytes",
+    "value_type": "integer",
+    "clarification": "Provide burst in bytes."
+  },
+  {
+    "display_name": "Exceed action",
+    "aliases": [
+      "exceed action"
+    ],
+    "parameter_id": "exceed_action",
+    "value_type": "string",
+    "clarification": "Provide exceed action."
+  },
+  {
+    "parameter_id": "current_vlan_name",
+    "display_name": "current vlan name",
+    "value_type": "string",
+    "aliases": [
+      "current vlan name"
+    ],
+    "clarification": "Provide current vlan name: Exact existing Junos VLAN object name for the selected VLAN ID."
+  },
+  {
+    "parameter_id": "unmatched_action",
+    "display_name": "unmatched action",
+    "value_type": "string",
+    "aliases": [
+      "unmatched action"
+    ],
+    "clarification": "Provide unmatched action: Explicit acknowledgment that Huawei traffic-filter permits traffic unmatched by this ACL."
+  },
+  {
+    "parameter_id": "logical_unit",
+    "display_name": "logical unit",
+    "value_type": "integer",
+    "aliases": [
+      "logical unit"
+    ],
+    "clarification": "Provide logical unit."
+  },
+  {
+    "parameter_id": "behavior_name",
+    "display_name": "behavior name",
+    "value_type": "string",
+    "aliases": [
+      "behavior name"
+    ],
+    "clarification": "Provide behavior name."
+  },
+  {
+    "parameter_id": "network_interfaces",
+    "display_name": "network interfaces",
+    "value_type": "array",
+    "aliases": [
+      "network interfaces"
+    ],
+    "clarification": "Provide network interfaces."
+  },
+  {
+    "parameter_id": "export_policy_name",
+    "display_name": "export policy name",
+    "value_type": "string",
+    "aliases": [
+      "export policy name"
+    ],
+    "clarification": "Provide export policy name."
+  },
+  {
+    "parameter_id": "next_rule_id",
+    "display_name": "next rule id",
+    "value_type": "integer",
+    "aliases": [
+      "next rule id"
+    ],
+    "clarification": "Provide next rule id: Next existing Junos numeric term ID in evaluation order, or 0 to append."
+  },
+  {
+    "parameter_id": "forwarding_class",
+    "display_name": "forwarding class",
+    "value_type": "string",
+    "aliases": [
+      "forwarding class"
+    ],
+    "clarification": "Provide forwarding class."
+  },
+  {
+    "parameter_id": "loss_priority",
+    "display_name": "loss priority",
+    "value_type": "string",
+    "aliases": [
+      "loss priority"
+    ],
+    "clarification": "Provide loss priority."
+  },
+  {
+    "parameter_id": "scheduler_name",
+    "display_name": "scheduler name",
+    "value_type": "string",
+    "aliases": [
+      "scheduler name"
+    ],
+    "clarification": "Provide scheduler name."
+  },
+  {
+    "parameter_id": "queue_id",
+    "display_name": "queue id",
+    "value_type": "integer",
+    "aliases": [
+      "queue id"
+    ],
+    "clarification": "Provide queue id."
+  },
+  {
+    "parameter_id": "scheduler_weight",
+    "display_name": "scheduler weight",
+    "value_type": "integer",
+    "aliases": [
+      "scheduler weight"
+    ],
+    "clarification": "Provide scheduler weight."
+  }
 ]

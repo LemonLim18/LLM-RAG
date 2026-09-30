@@ -1,0 +1,4 @@
+traffic classifier {{ classifier_name }} operator or
+ undo if-match dscp
+ if-match dscp {{ dscp_values | join(' ') }}
+quit

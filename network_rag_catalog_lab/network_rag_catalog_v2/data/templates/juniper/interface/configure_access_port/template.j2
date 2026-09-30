@@ -1,0 +1,6 @@
+delete interfaces {{ interface }} unit 0 family ethernet-switching vlan members
+set interfaces {{ interface }} unit 0 family ethernet-switching interface-mode access
+set interfaces {{ interface }} unit 0 family ethernet-switching vlan members {{ vlan_id }}
+{% if description %}
+set interfaces {{ interface }} description "{{ description }}"
+{% endif %}

@@ -23,8 +23,13 @@ def select_operation(prompt: str, category: str, candidates: list[dict]) -> str:
     if explicit:
         return explicit
     allowed = {item["operation_id"] for item in candidates}
-    system = ('Choose one operation ID only if the request matches it; otherwise return null. '
-              'Return JSON {"operation_id":"..."}. Category: ' + category + '. Candidates: ' + json.dumps(candidates))
+    descriptions = [{"operation_id": item["operation_id"], "description": item["description"],
+                     "vendor_support": item.get("vendor_support", {})} for item in candidates]
+    system = ('Identify the requested network action by meaning, including paraphrases. '
+              'Select the most specific matching action from the list. Missing parameters and device '
+              'compatibility are checked later; they are not reasons to reject a matching action. '
+              'Return only JSON {"operation_id":"one listed ID"}, or {"operation_id":null} '
+              'when no listed action matches. Category: ' + category + '. Actions: ' + json.dumps(descriptions))
     for attempt in range(2):
         try:
             data = json.loads(llm.invoke([("system", system), ("human", prompt)]).content)

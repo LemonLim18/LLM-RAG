@@ -1,0 +1,7 @@
+interface {{ interface }}
+ switchport mode access
+ switchport access vlan {{ vlan_id }}
+{% if description is not none %}
+ description {{ description }}
+{% endif +%}
+ exit

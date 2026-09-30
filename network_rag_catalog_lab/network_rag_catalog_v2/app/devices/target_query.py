@@ -171,6 +171,13 @@ def extract_target_queries(text: str, inventory: list[dict], *, reply: bool = Fa
         scope = ""
         for index, match in enumerate(starts):
             end = starts[index + 1].start() if index + 1 < len(starts) else len(text)
+            if match.group().strip().casefold() == "for":
+                from ..catalog import load_categories
+                heading = text[match.end():end].split(",", 1)
+                category_terms = {term.casefold() for category in load_categories()
+                                  for term in [category["display_name"], *category.get("aliases", [])]}
+                if len(heading) == 2 and heading[0].strip().casefold() in category_terms:
+                    continue
             if device_hint(text[match.end():end]):
                 scope = text[match.end():]
                 break

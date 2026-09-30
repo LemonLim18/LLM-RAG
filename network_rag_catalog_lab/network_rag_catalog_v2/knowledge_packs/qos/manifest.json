@@ -1,0 +1,41 @@
+{
+  "format_version": 1,
+  "pack_id": "qos_review_v1",
+  "phase": "D2",
+  "status": "review_only",
+  "source_authority": "sqlite",
+  "operations": [
+    "create_qos_policy",
+    "create_classifier",
+    "classify_by_dscp",
+    "configure_scheduler",
+    "configure_shaping",
+    "configure_policing",
+    "apply_qos_policy_to_interface"
+  ],
+  "reuse": [],
+  "support": {
+    "cisco": "Catalyst 9300 / IOS XE 17.9, explicit capability and planned resource facts required",
+    "juniper": "unsupported",
+    "huawei": "unsupported for this wave; exact profile behavior not verified",
+    "evidence": "Documentation-reviewed candidate; not device-lab certified"
+  },
+  "assets": [
+    "data/templates/cisco/qos/create_qos_policy/template.j2",
+    "data/templates/cisco/qos/create_classifier/template.j2",
+    "data/templates/cisco/qos/classify_by_dscp/template.j2",
+    "data/templates/cisco/qos/configure_scheduler/template.j2",
+    "data/templates/cisco/qos/configure_shaping/template.j2",
+    "data/templates/cisco/qos/configure_policing/template.j2",
+    "data/templates/cisco/qos/apply_qos_policy_to_interface/template.j2"
+  ],
+  "asset_hashes": {
+    "data/templates/cisco/qos/configure_shaping/template.j2": "0337d761771df7e726c6efda5be7892d0b426df4daf4118f29df6a6148a6b549",
+    "data/templates/cisco/qos/create_qos_policy/template.j2": "5d64f296704164fd3448fd4ab6e2c33a6783566b93e048929b0ff8dc820d019c",
+    "data/templates/cisco/qos/classify_by_dscp/template.j2": "3a7fd57a5d0802167cd3a211dc4e0edbefcb59ddef53c222db375d979a23b777",
+    "data/templates/cisco/qos/configure_scheduler/template.j2": "af875286f7d31d13f580b10f1abbf1eccc78c050407fc2875668f38056b5f97e",
+    "data/templates/cisco/qos/apply_qos_policy_to_interface/template.j2": "c94999067d038a4db73f622e67417f5a14e7e98a8e11e4897e8a4b7b60c12c53",
+    "data/templates/cisco/qos/configure_policing/template.j2": "7b0e5fcd8f9ee465c7bca755d86463276dcdb3419bf763839a8f92fa4245794d",
+    "data/templates/cisco/qos/create_classifier/template.j2": "e14c4ab592c6c6bd4b8c22d27139260574aaf0665ccc2de685c16579ab910f34"
+  }
+}

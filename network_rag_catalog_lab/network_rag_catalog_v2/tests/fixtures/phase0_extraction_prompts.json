@@ -1,0 +1,46 @@
+[
+  {
+    "id": "vlan_fast_path",
+    "operation_id": "create_vlan",
+    "prompt": "Create VLAN 100 named STAFF on R1",
+    "parameters": {"vlan_id": 100, "name": "STAFF"},
+    "model_calls": 0
+  },
+  {
+    "id": "netmask_not_interface_slash",
+    "operation_id": "configure_interface_ip",
+    "prompt": "Configure IP address 10.10.10.1 netmask 255.255.255.0 on Ethernet1/1 on R1",
+    "parameters": {"interface": "Ethernet1/1", "address": "10.10.10.1", "prefix_length": 24},
+    "model_calls": 0
+  },
+  {
+    "id": "ospf_missing_does_not_take_device_number",
+    "operation_id": "configure_ospf",
+    "prompt": "Configure OSPF on R2",
+    "model_response": {"parameters": {"process_id": 2, "interfaces": [{"name": "Ethernet0", "area": "254"}]}},
+    "parameters": {"interfaces": null, "process_id": null},
+    "model_calls": 2
+  },
+  {
+    "id": "ospf_original_nested_parser",
+    "operation_id": "configure_ospf",
+    "prompt": "Configure OSPF process 100 on Ethernet1/1 in area 0 on R1",
+    "parameters": {"process_id": 100, "interfaces": [{"name": "Ethernet1/1", "area": "0"}]},
+    "model_calls": 0
+  },
+  {
+    "id": "optional_description_model_path",
+    "operation_id": "configure_bgp_neighbor",
+    "prompt": "Configure BGP neighbor 192.0.2.2 local AS 65001 remote AS 65002 description WAN uplink on R1",
+    "model_response": {"parameters": {"description": "WAN uplink"}},
+    "parameters": {"neighbor_ip": "192.0.2.2", "local_as": 65001, "remote_as": 65002, "description": "WAN uplink"},
+    "model_calls": 1
+  },
+  {
+    "id": "description_contents_not_parameters",
+    "operation_id": "configure_bgp_neighbor",
+    "prompt": "Configure BGP neighbor 192.0.2.2 local AS 65001 remote AS 65002 description \"remote AS 9\" on R1",
+    "parameters": {"neighbor_ip": "192.0.2.2", "local_as": 65001, "remote_as": 65002, "description": "remote AS 9"},
+    "model_calls": 0
+  }
+]

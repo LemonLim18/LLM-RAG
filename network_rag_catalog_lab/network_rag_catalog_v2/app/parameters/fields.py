@@ -4,7 +4,7 @@ from copy import deepcopy
 import json
 import re
 
-from .normalizer import deterministic_values, prefix_length_from_text
+from .normalizer import deterministic_values, parameter_identity, prefix_length_from_text
 
 
 def tokens(path: str) -> list:
@@ -61,7 +61,7 @@ def parse_answer(text: str, path: str, schema: dict):
     value = text.strip()
     if not value:
         raise ValueError("An answer is required.")
-    field = tokens(path)[-1]
+    field = parameter_identity(tokens(path)[-1], schema)
     kind = schema.get("type")
     if field == "prefix_length":
         prefix = prefix_length_from_text(value, allow_bare_netmask=True)

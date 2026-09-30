@@ -1,0 +1,72 @@
+[
+  {
+    "operation_id": "enable_ospf_process",
+    "parameters": {
+      "process_id": 200,
+      "router_id": "192.0.2.200"
+    },
+    "expected": "router ospf 200",
+    "prompt": "enable ospf process; process_id 200; router_id \"192.0.2.200\" on SW1"
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "parameters": {
+      "process_id": 100,
+      "router_id": "192.0.2.100"
+    },
+    "expected": "router-id 192.0.2.100",
+    "prompt": "set ospf router id; process_id 100; router_id \"192.0.2.100\" on SW1"
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "parameters": {
+      "process_id": 100,
+      "area": "1",
+      "area_type": "stub"
+    },
+    "expected": "area 1 stub",
+    "prompt": "create ospf area; process_id 100; area \"1\"; area_type \"stub\" on SW1"
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "parameters": {
+      "process_id": 100,
+      "interface": "GigabitEthernet1/0/5",
+      "area": "0"
+    },
+    "expected": "ip ospf 100 area 0",
+    "prompt": "assign interface to ospf area; process_id 100; interface \"GigabitEthernet1/0/5\"; area \"0\" on SW1"
+  },
+  {
+    "operation_id": "advertise_network",
+    "parameters": {
+      "process_id": 100,
+      "network_prefix": "192.0.2.0/24",
+      "area": "0"
+    },
+    "expected": "network 192.0.2.0 0.0.0.255 area 0",
+    "prompt": "advertise network; process_id 100; network_prefix \"192.0.2.0/24\"; area \"0\" on SW1"
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "parameters": {
+      "process_id": 100,
+      "interface": "GigabitEthernet1/0/5",
+      "passive": false
+    },
+    "expected": "no passive-interface GigabitEthernet1/0/5",
+    "prompt": "configure passive interface; process_id 100; interface \"GigabitEthernet1/0/5\"; passive false on SW1"
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "parameters": {
+      "process_id": 100,
+      "redistribution_source": "static",
+      "route_policy": "LIMITED",
+      "ospf_metric": 20,
+      "metric_type": "2"
+    },
+    "expected": "redistribute static subnets metric 20 metric-type 2 route-map LIMITED",
+    "prompt": "configure ospf redistribution; process_id 100; redistribution_source \"static\"; route_policy \"LIMITED\"; ospf_metric 20; metric_type \"2\" on SW1"
+  }
+]

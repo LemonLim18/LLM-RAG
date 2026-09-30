@@ -1,0 +1,4 @@
+set class-of-service interfaces {{ interface }} scheduler-map {{ policy_name }}
+{% if classifier_name %}
+set class-of-service interfaces {{ interface }} classifiers dscp {{ classifier_name }}
+{% endif %}

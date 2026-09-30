@@ -1,0 +1,116 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "x-validation-handlers": [
+    "network_values_v1",
+    "unique_interfaces_v1",
+    "safe_strings_v1",
+    "expansion_network_v1"
+  ],
+  "properties": {
+    "policy_name": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+      "type": "string"
+    },
+    "classifier_name": {
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+      "type": "string"
+    },
+    "bandwidth_bps": {
+      "minimum": 20000000,
+      "maximum": 100000000000,
+      "multipleOf": 1000,
+      "type": "integer"
+    },
+    "interface": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+    },
+    "queue_id": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 7
+    },
+    "scheduler_weight": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "scheduler_name": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+    }
+  },
+  "required": [
+    "policy_name",
+    "classifier_name",
+    "bandwidth_bps"
+  ],
+  "x-vendor-profiles": {
+    "cisco": {
+      "properties": {
+        "policy_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "classifier_name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
+          "type": "string"
+        },
+        "bandwidth_bps": {
+          "minimum": 20000000,
+          "maximum": 100000000000,
+          "multipleOf": 1000,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "policy_name",
+        "classifier_name",
+        "bandwidth_bps"
+      ]
+    },
+    "huawei": {
+      "properties": {
+        "interface": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9/.-]{0,63}$"
+        },
+        "queue_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 7
+        },
+        "scheduler_weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "interface",
+        "queue_id",
+        "scheduler_weight"
+      ],
+      "description": "Configure WRR scheduling for one interface queue, with an explicit relative weight (not an absolute bandwidth guarantee)."
+    },
+    "juniper": {
+      "properties": {
+        "scheduler_name": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+        },
+        "bandwidth_bps": {
+          "type": "integer",
+          "minimum": 8000,
+          "maximum": 160000000000
+        }
+      },
+      "required": [
+        "scheduler_name",
+        "bandwidth_bps"
+      ],
+      "description": "Create or update an unattached Junos scheduler's absolute transmit rate."
+    }
+  }
+}

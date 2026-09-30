@@ -4,11 +4,12 @@ from hashlib import sha256
 import json
 import re
 
-from .catalog import get_operation, get_parameter, load_operations
+from .catalog import get_operation, load_operations
 from .context import candidate_valid, parameter_options
 from .devices.inventory import load_inventory
 from .devices.target_resolver import TARGET_ISSUES
 from .parameters.fields import get_value, schema_at, tokens
+from .parameters.normalizer import parameter_metadata
 from .parameters.schema_loader import load_schema
 from .planner.models import ClarificationAnswer
 
@@ -60,7 +61,7 @@ def build_questions(task) -> list[dict]:
                 options = parameter_options(task.operation_id, task.target_devices[0], path, task.parameters, task.source_revision)
             field = tokens(path)[-1]
             try:
-                metadata = expected.get("x-parameter") or get_parameter(field)
+                metadata = parameter_metadata(field, expected)
                 wording = metadata.get("clarification", wording) if issue["type"] == "MISSING" else wording
             except KeyError:
                 pass

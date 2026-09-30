@@ -1,0 +1,1432 @@
+[
+  {
+    "operation_id": "create_vlan",
+    "operation_version": 1,
+    "category_id": "vlan",
+    "parameter_id": "vlan_id",
+    "field_path": "vlan_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "create_vlan",
+    "operation_version": 1,
+    "category_id": "vlan",
+    "parameter_id": "name",
+    "field_path": "name",
+    "position": 1,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "delete_vlan",
+    "operation_version": 1,
+    "category_id": "vlan",
+    "parameter_id": "vlan_id",
+    "field_path": "vlan_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "delete_vlan",
+    "operation_version": 1,
+    "category_id": "vlan",
+    "parameter_id": "name",
+    "field_path": "name",
+    "position": 1,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "router_id",
+    "field_path": "router_id",
+    "position": 1,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "interfaces",
+    "field_path": "interfaces",
+    "position": 2,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "interface",
+    "field_path": "interfaces[].name",
+    "position": 3,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_ospf",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "area",
+    "field_path": "interfaces[].area",
+    "position": 4,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "remove_ospf_interface",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "area",
+    "field_path": "area",
+    "position": 2,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "category_id": "bgp",
+    "parameter_id": "local_as",
+    "field_path": "local_as",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "category_id": "bgp",
+    "parameter_id": "neighbor_ip",
+    "field_path": "neighbor_ip",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "category_id": "bgp",
+    "parameter_id": "remote_as",
+    "field_path": "remote_as",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "category_id": "bgp",
+    "parameter_id": "description",
+    "field_path": "description",
+    "position": 3,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "configure_bgp_neighbor",
+    "operation_version": 2,
+    "category_id": "bgp",
+    "parameter_id": "peer_group",
+    "field_path": "peer_group",
+    "position": 4,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "category_id": "bgp",
+    "parameter_id": "local_as",
+    "field_path": "local_as",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "category_id": "bgp",
+    "parameter_id": "neighbor_ip",
+    "field_path": "neighbor_ip",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "category_id": "bgp",
+    "parameter_id": "remote_as",
+    "field_path": "remote_as",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "remove_bgp_neighbor",
+    "operation_version": 1,
+    "category_id": "bgp",
+    "parameter_id": "peer_group",
+    "field_path": "peer_group",
+    "position": 3,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "category_id": "isis",
+    "parameter_id": "process_name",
+    "field_path": "process_name",
+    "position": 0,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "category_id": "isis",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_isis_interface",
+    "operation_version": 1,
+    "category_id": "isis",
+    "parameter_id": "level",
+    "field_path": "level",
+    "position": 2,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "disable_isis_interface",
+    "operation_version": 1,
+    "category_id": "isis",
+    "parameter_id": "process_name",
+    "field_path": "process_name",
+    "position": 0,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "disable_isis_interface",
+    "operation_version": 1,
+    "category_id": "isis",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "destination",
+    "field_path": "destination",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "next_hop",
+    "field_path": "next_hop",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_static_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "preference",
+    "field_path": "preference",
+    "position": 2,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "remove_static_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "destination",
+    "field_path": "destination",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "remove_static_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "next_hop",
+    "field_path": "next_hop",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "category_id": "ip_address",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "category_id": "ip_address",
+    "parameter_id": "address",
+    "field_path": "address",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "category_id": "ip_address",
+    "parameter_id": "prefix_length",
+    "field_path": "prefix_length",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_interface_ip",
+    "operation_version": 1,
+    "category_id": "ip_address",
+    "parameter_id": "admin_up",
+    "field_path": "admin_up",
+    "position": 3,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "category_id": "ip_address",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "category_id": "ip_address",
+    "parameter_id": "address",
+    "field_path": "address",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "remove_interface_ip",
+    "operation_version": 1,
+    "category_id": "ip_address",
+    "parameter_id": "prefix_length",
+    "field_path": "prefix_length",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "modify_vlan",
+    "operation_version": 1,
+    "category_id": "vlan",
+    "parameter_id": "vlan_id",
+    "field_path": "vlan_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "modify_vlan",
+    "operation_version": 1,
+    "category_id": "vlan",
+    "parameter_id": "vlan_status",
+    "field_path": "vlan_status",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "rename_vlan",
+    "operation_version": 1,
+    "category_id": "vlan",
+    "parameter_id": "vlan_id",
+    "field_path": "vlan_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "rename_vlan",
+    "operation_version": 1,
+    "category_id": "vlan",
+    "parameter_id": "new_vlan_name",
+    "field_path": "new_vlan_name",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "set_interface_description",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "set_interface_description",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "description",
+    "field_path": "description",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "set_interface_admin_state",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "admin_up",
+    "field_path": "admin_up",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_access_port",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_access_port",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "vlan_id",
+    "field_path": "vlan_id",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_access_port",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "description",
+    "field_path": "description",
+    "position": 2,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "allowed_vlans",
+    "field_path": "allowed_vlans",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_trunk_port",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "native_vlan",
+    "field_path": "native_vlan",
+    "position": 2,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "assign_vlan_to_trunk_port",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "allowed_vlans",
+    "field_path": "allowed_vlans",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_trunk_allowed_vlans",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "allowed_vlans",
+    "field_path": "allowed_vlans",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "set_native_vlan",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "native_vlan",
+    "field_path": "native_vlan",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "address",
+    "field_path": "address",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "prefix_length",
+    "field_path": "prefix_length",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_loopback_interface",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "description",
+    "field_path": "description",
+    "position": 3,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "aggregate_interface",
+    "field_path": "aggregate_interface",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "member_interfaces",
+    "field_path": "member_interfaces",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "lacp_mode",
+    "field_path": "lacp_mode",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_port_channel",
+    "operation_version": 1,
+    "category_id": "interface",
+    "parameter_id": "description",
+    "field_path": "description",
+    "position": 3,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "add_default_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "next_hop",
+    "field_path": "next_hop",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "add_default_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "preference",
+    "field_path": "preference",
+    "position": 1,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "destination",
+    "field_path": "destination",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "next_hop",
+    "field_path": "next_hop",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "add_floating_static_route",
+    "operation_version": 1,
+    "category_id": "static_routing",
+    "parameter_id": "preference",
+    "field_path": "preference",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "enable_ospf_process",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "router_id",
+    "field_path": "router_id",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "set_ospf_router_id",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "router_id",
+    "field_path": "router_id",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "area",
+    "field_path": "area",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "create_ospf_area",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "area_type",
+    "field_path": "area_type",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "assign_interface_to_ospf_area",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "area",
+    "field_path": "area",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "advertise_network",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "advertise_network",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "network_prefix",
+    "field_path": "network_prefix",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "advertise_network",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "area",
+    "field_path": "area",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_passive_interface",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "passive",
+    "field_path": "passive",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "process_id",
+    "field_path": "process_id",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "redistribution_source",
+    "field_path": "redistribution_source",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "route_policy",
+    "field_path": "route_policy",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "ospf_metric",
+    "field_path": "ospf_metric",
+    "position": 3,
+    "required": true,
+    "required_order": 3
+  },
+  {
+    "operation_id": "configure_ospf_redistribution",
+    "operation_version": 1,
+    "category_id": "ospf",
+    "parameter_id": "metric_type",
+    "field_path": "metric_type",
+    "position": 4,
+    "required": true,
+    "required_order": 4
+  },
+  {
+    "operation_id": "create_acl",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_name",
+    "field_path": "acl_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "create_acl",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "description",
+    "field_path": "description",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_name",
+    "field_path": "acl_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_rule_id",
+    "field_path": "acl_rule_id",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_action",
+    "field_path": "acl_action",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "source_prefix",
+    "field_path": "source_prefix",
+    "position": 3,
+    "required": true,
+    "required_order": 3
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "destination_prefix",
+    "field_path": "destination_prefix",
+    "position": 4,
+    "required": true,
+    "required_order": 4
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "ip_protocol",
+    "field_path": "ip_protocol",
+    "position": 5,
+    "required": true,
+    "required_order": 5
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "source_port",
+    "field_path": "source_port",
+    "position": 6,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "destination_port",
+    "field_path": "destination_port",
+    "position": 7,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "log",
+    "field_path": "log",
+    "position": 8,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_name",
+    "field_path": "acl_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_rule_id",
+    "field_path": "acl_rule_id",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_action",
+    "field_path": "acl_action",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "source_prefix",
+    "field_path": "source_prefix",
+    "position": 3,
+    "required": true,
+    "required_order": 3
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "destination_prefix",
+    "field_path": "destination_prefix",
+    "position": 4,
+    "required": true,
+    "required_order": 4
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "ip_protocol",
+    "field_path": "ip_protocol",
+    "position": 5,
+    "required": true,
+    "required_order": 5
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "source_port",
+    "field_path": "source_port",
+    "position": 6,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "destination_port",
+    "field_path": "destination_port",
+    "position": 7,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "log",
+    "field_path": "log",
+    "position": 8,
+    "required": false,
+    "required_order": null
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_name",
+    "field_path": "acl_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_rule_id",
+    "field_path": "acl_rule_id",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "acl_name",
+    "field_path": "acl_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "operation_version": 1,
+    "category_id": "acl",
+    "parameter_id": "direction",
+    "field_path": "direction",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "policy_name",
+    "field_path": "policy_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "policy_terms",
+    "field_path": "policy_terms",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "classifier_name",
+    "field_path": "policy_terms[].classifier_name",
+    "position": 2,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "create_qos_policy",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "bandwidth_bps",
+    "field_path": "policy_terms[].bandwidth_bps",
+    "position": 3,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "classifier_name",
+    "field_path": "classifier_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "dscp_values",
+    "field_path": "dscp_values",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "create_classifier",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "match_mode",
+    "field_path": "match_mode",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "classifier_name",
+    "field_path": "classifier_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "dscp_values",
+    "field_path": "dscp_values",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "classify_by_dscp",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "previous_dscp_values",
+    "field_path": "previous_dscp_values",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "policy_name",
+    "field_path": "policy_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "classifier_name",
+    "field_path": "classifier_name",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_scheduler",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "bandwidth_bps",
+    "field_path": "bandwidth_bps",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "policy_name",
+    "field_path": "policy_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "rate_bps",
+    "field_path": "rate_bps",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_shaping",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "direction",
+    "field_path": "direction",
+    "position": 3,
+    "required": true,
+    "required_order": 3
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "policy_name",
+    "field_path": "policy_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "rate_bps",
+    "field_path": "rate_bps",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "burst_bytes",
+    "field_path": "burst_bytes",
+    "position": 3,
+    "required": true,
+    "required_order": 3
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "direction",
+    "field_path": "direction",
+    "position": 4,
+    "required": true,
+    "required_order": 4
+  },
+  {
+    "operation_id": "configure_policing",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "exceed_action",
+    "field_path": "exceed_action",
+    "position": 5,
+    "required": true,
+    "required_order": 5
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "policy_name",
+    "field_path": "policy_name",
+    "position": 0,
+    "required": true,
+    "required_order": 0
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "interface",
+    "field_path": "interface",
+    "position": 1,
+    "required": true,
+    "required_order": 1
+  },
+  {
+    "operation_id": "apply_qos_policy_to_interface",
+    "operation_version": 1,
+    "category_id": "qos",
+    "parameter_id": "direction",
+    "field_path": "direction",
+    "position": 2,
+    "required": true,
+    "required_order": 2
+  }
+]

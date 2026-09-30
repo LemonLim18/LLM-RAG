@@ -1,0 +1,4 @@
+interface {{ interface }}
+ undo port trunk allow-pass vlan all
+ port trunk allow-pass vlan {{ allowed_vlans | join(' ') }}
+quit

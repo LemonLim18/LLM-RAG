@@ -19,10 +19,12 @@ from app.parameters.validator import validate_parameter_result
 from app.pipeline import _finalize_task, confirm_order, correct_task, refresh_plan, resume_task, run
 from app.planner.models import ExecutionPlan
 from app.questions import answer_from_text
+from app.knowledge.runtime import snapshot_scope
 
 
 class ClarificationFlowTests(unittest.TestCase):
     def setUp(self):
+        self.enterContext(snapshot_scope(None))
         # Exercise every deterministic boundary while making model failure reproducible.
         for target in ("app.parameters.parameter_extractor.llm", "app.planner.intent_planner.llm", "app.llm.llm"):
             model = self.enterContext(patch(target))

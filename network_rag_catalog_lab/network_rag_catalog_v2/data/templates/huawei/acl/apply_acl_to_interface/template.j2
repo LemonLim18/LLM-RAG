@@ -1,0 +1,3 @@
+interface {{ interface }}
+ traffic-filter {{ 'inbound' if direction == 'ingress' else 'outbound' }} acl name {{ acl_name }}
+quit

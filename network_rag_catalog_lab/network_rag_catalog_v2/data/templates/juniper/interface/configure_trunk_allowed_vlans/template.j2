@@ -1,0 +1,2 @@
+delete interfaces {{ interface }} unit 0 family ethernet-switching vlan members
+set interfaces {{ interface }} unit 0 family ethernet-switching vlan members [ {{ allowed_vlans | join(' ') }} ]

@@ -1,0 +1,251 @@
+[
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "vlan_status",
+    "values": {
+      "display_name": "VLAN state",
+      "aliases": [
+        "vlan state",
+        "vlan status",
+        "state"
+      ],
+      "clarification": "Should this VLAN be active or suspend?",
+      "parameter_id": "vlan_status",
+      "value_type": "string"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "new_vlan_name",
+    "values": {
+      "display_name": "New VLAN name",
+      "aliases": [
+        "new vlan name",
+        "new name"
+      ],
+      "clarification": "What new VLAN name should be assigned?",
+      "parameter_id": "new_vlan_name",
+      "value_type": "string"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "vlan",
+      "parameter_id": "vlan_status"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "vlan",
+      "parameter_id": "new_vlan_name"
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "modify_vlan",
+    "values": {
+      "operation_id": "modify_vlan",
+      "display_name": "Modify VLAN",
+      "category_id": "vlan",
+      "aliases": [
+        "modify vlan",
+        "set vlan state"
+      ],
+      "description": "Change only an existing normal-range VLAN state; no rename or description mutation.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Change only an existing normal-range VLAN state; no rename or description mutation."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "modify_vlan",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "modify_vlan",
+          "operation_version": 1,
+          "category_id": "vlan",
+          "parameter_id": "vlan_id",
+          "field_path": "vlan_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "modify_vlan",
+          "operation_version": 1,
+          "category_id": "vlan",
+          "parameter_id": "vlan_status",
+          "field_path": "vlan_status",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "modify_vlan",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "modify_vlan",
+          "operation_version": 1,
+          "field_path": "vlan_id",
+          "keywords": {
+            "minimum": 2,
+            "maximum": 1001
+          }
+        },
+        {
+          "operation_id": "modify_vlan",
+          "operation_version": 1,
+          "field_path": "vlan_status",
+          "keywords": {
+            "enum": [
+              "active",
+              "suspend"
+            ]
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "modify_vlan",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/vlan/modify_vlan/template.j2",
+          "input_contract": {
+            "fields": [
+              "vlan_id",
+              "vlan_status"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "rename_vlan",
+    "values": {
+      "operation_id": "rename_vlan",
+      "display_name": "Rename VLAN",
+      "category_id": "vlan",
+      "aliases": [
+        "rename vlan"
+      ],
+      "description": "Rename an existing normal-range VLAN by numeric identity; require collision checks.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Rename an existing normal-range VLAN by numeric identity; require collision checks."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "rename_vlan",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "rename_vlan",
+          "operation_version": 1,
+          "category_id": "vlan",
+          "parameter_id": "vlan_id",
+          "field_path": "vlan_id",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "rename_vlan",
+          "operation_version": 1,
+          "category_id": "vlan",
+          "parameter_id": "new_vlan_name",
+          "field_path": "new_vlan_name",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "rename_vlan",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        {
+          "operation_id": "rename_vlan",
+          "operation_version": 1,
+          "field_path": "vlan_id",
+          "keywords": {
+            "minimum": 2,
+            "maximum": 1001
+          }
+        },
+        {
+          "operation_id": "rename_vlan",
+          "operation_version": 1,
+          "field_path": "new_vlan_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_.-]{0,19}$"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "rename_vlan",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/vlan/rename_vlan/template.j2",
+          "input_contract": {
+            "fields": [
+              "vlan_id",
+              "new_vlan_name"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  }
+]

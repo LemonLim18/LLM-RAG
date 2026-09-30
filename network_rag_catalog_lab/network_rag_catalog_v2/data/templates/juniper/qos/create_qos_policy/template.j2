@@ -1,0 +1,3 @@
+{% for term in policy_terms %}
+set class-of-service scheduler-maps {{ policy_name }} forwarding-class {{ term.forwarding_class }} scheduler {{ term.scheduler_name }}
+{% endfor %}

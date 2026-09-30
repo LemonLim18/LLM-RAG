@@ -11,9 +11,25 @@ from .devices.inventory import load_inventory
 from .parameters.fields import get_value, schema_at, set_value
 from .parameters.schema_loader import load_schema
 from .parameters.validator import validate_parameter_result
+from .knowledge.runtime import active_pointer, current_snapshot
+
+
+def context_revision() -> str:
+    digest = sha256()
+    for directory in (DATA_DIR / "inventory", DATA_DIR / "planned"):
+        for path in sorted(directory.rglob("*.json")):
+            digest.update(str(path.relative_to(DATA_DIR)).encode())
+            digest.update(path.read_bytes())
+    return digest.hexdigest()[:20]
 
 
 def source_revision() -> str:
+    snapshot = current_snapshot()
+    if snapshot:
+        snapshot.verify()
+        snapshot.assert_active()
+        pointer = active_pointer(snapshot.releases_root)
+        return sha256(json.dumps([snapshot.release_id, pointer, context_revision()], sort_keys=True).encode()).hexdigest()[:20]
     digest = sha256()
     for path in sorted(DATA_DIR.rglob("*")):
         if path.is_file() and path.suffix in {".json", ".j2"}:
@@ -23,6 +39,9 @@ def source_revision() -> str:
 
 
 def rules() -> dict:
+    snapshot = current_snapshot()
+    if snapshot:
+        return snapshot.read_json("catalog/context_rules.json")
     return json.loads((DATA_DIR / "catalog" / "context_rules.json").read_text(encoding="utf-8"))
 
 
@@ -59,9 +78,14 @@ def candidate_valid(operation: str, device: dict, path: str, value, params: dict
 def parameter_options(operation: str, device: dict, path: str, params: dict, revision: str) -> list[dict]:
     choices = []
     permitted = rules()["operations"].get(operation, {})
+    from .devices.resource_options import resource_options
+    choices.extend(resource_options(permitted.get("device_policy"), device, path, params, revision))
     if canonical_path(path) in permitted.get("inventory_fields", []):
+        expected = schema_at(load_schema(operation, [device]), path)
         for item in device.get("interfaces", []):
             value = [{"name": item["name"]}] if path == "interfaces" else item["name"]
+            if expected.get("type") == "array" and expected.get("items", {}).get("type") == "string":
+                value = [item["name"]]
             choices.append({"value": value, "label": f"{item['name']} ({item.get('role', 'interface')})",
                             "source_ref": f"inventory:{device['id']}:interfaces:{item['name']}",
                             "source_revision": revision, "explanation": "Recorded interface on this device.", "kind": "fact"})
@@ -99,6 +123,11 @@ def validate_context_catalog() -> None:
         if operations[operation].get("status", "active") != "active":
             continue
         schema = load_schema(operation)
+        from .knowledge.resource_keys import validate_composite_keys
+        validate_composite_keys(rule, schema)
+        if "device_policy" in rule:
+            from .devices.operation_policies import validate_policy_binding
+            validate_policy_binding(rule["device_policy"], schema)
         for path in rule.get("inventory_fields", []) + rule.get("planned_fields", []):
             schema_at(schema, path.replace("[]", "[0]"))
     records = json.loads((DATA_DIR / "planned" / "parameters.json").read_text(encoding="utf-8"))["records"]

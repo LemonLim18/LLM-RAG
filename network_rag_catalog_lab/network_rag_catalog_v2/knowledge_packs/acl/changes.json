@@ -1,0 +1,1097 @@
+[
+  {
+    "entity": "category",
+    "action": "create",
+    "entity_id": "acl",
+    "values": {
+      "category_id": "acl",
+      "display_name": "ACL",
+      "aliases": [
+        "access control list"
+      ],
+      "description": "Reviewed ACL intent operations.",
+      "status": "active"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "acl_name",
+    "values": {
+      "parameter_id": "acl_name",
+      "display_name": "ACL name",
+      "value_type": "string",
+      "aliases": [
+        "acl name"
+      ],
+      "clarification": "Provide acl name."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "acl_name"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "description"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "acl_rule_id",
+    "values": {
+      "parameter_id": "acl_rule_id",
+      "display_name": "ACL rule ID",
+      "value_type": "integer",
+      "aliases": [
+        "acl rule id"
+      ],
+      "clarification": "Provide acl rule id."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "acl_rule_id"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "acl_action",
+    "values": {
+      "parameter_id": "acl_action",
+      "display_name": "ACL action",
+      "value_type": "string",
+      "aliases": [
+        "acl action"
+      ],
+      "clarification": "Provide acl action."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "acl_action"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "source_prefix",
+    "values": {
+      "parameter_id": "source_prefix",
+      "display_name": "Source prefix",
+      "value_type": "string",
+      "aliases": [
+        "source prefix"
+      ],
+      "clarification": "Provide source prefix."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "source_prefix"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "destination_prefix",
+    "values": {
+      "parameter_id": "destination_prefix",
+      "display_name": "Destination prefix",
+      "value_type": "string",
+      "aliases": [
+        "destination prefix"
+      ],
+      "clarification": "Provide destination prefix."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "destination_prefix"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "ip_protocol",
+    "values": {
+      "parameter_id": "ip_protocol",
+      "display_name": "IP protocol",
+      "value_type": "string",
+      "aliases": [
+        "ip protocol"
+      ],
+      "clarification": "Provide ip protocol."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "ip_protocol"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "source_port",
+    "values": {
+      "parameter_id": "source_port",
+      "display_name": "Source port",
+      "value_type": "integer",
+      "aliases": [
+        "source port"
+      ],
+      "clarification": "Provide source port."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "source_port"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "destination_port",
+    "values": {
+      "parameter_id": "destination_port",
+      "display_name": "Destination port",
+      "value_type": "integer",
+      "aliases": [
+        "destination port"
+      ],
+      "clarification": "Provide destination port."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "destination_port"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "log",
+    "values": {
+      "parameter_id": "log",
+      "display_name": "Log matches",
+      "value_type": "boolean",
+      "aliases": [
+        "log"
+      ],
+      "clarification": "Provide log matches."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "log"
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "interface"
+    }
+  },
+  {
+    "entity": "parameter",
+    "action": "create",
+    "entity_id": "direction",
+    "values": {
+      "parameter_id": "direction",
+      "display_name": "Direction",
+      "value_type": "string",
+      "aliases": [
+        "direction"
+      ],
+      "clarification": "Provide direction."
+    }
+  },
+  {
+    "entity": "membership",
+    "action": "assign",
+    "values": {
+      "category_id": "acl",
+      "parameter_id": "direction"
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "create_acl",
+    "values": {
+      "operation_id": "create_acl",
+      "display_name": "create acl",
+      "category_id": "acl",
+      "aliases": [
+        "create acl"
+      ],
+      "description": "Create an unattached named extended IPv4 ACL with a required persistent remark at sequence 1; no permit rule is inferred.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Create an unattached named extended IPv4 ACL with a required persistent remark at sequence 1; no permit rule is inferred."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "create_acl",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "create_acl",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_name",
+          "field_path": "acl_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "create_acl",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "description",
+          "field_path": "description",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "create_acl",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "create_acl",
+          "operation_version": 1,
+          "field_path": "acl_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "create_acl",
+          "operation_version": 1,
+          "field_path": "description",
+          "keywords": {
+            "pattern": "^[A-Za-z0-9 ._:/()-]{1,80}$"
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "create_acl",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/acl/create_acl/template.j2",
+          "input_contract": {
+            "fields": [
+              "acl_name",
+              "description"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "add_acl_rule",
+    "values": {
+      "operation_id": "add_acl_rule",
+      "display_name": "add acl rule",
+      "category_id": "acl",
+      "aliases": [
+        "add acl rule"
+      ],
+      "description": "Add one fully specified IPv4 ACE at an unused sequence; no implicit any match.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Add one fully specified IPv4 ACE at an unused sequence; no implicit any match."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "add_acl_rule",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_name",
+          "field_path": "acl_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_rule_id",
+          "field_path": "acl_rule_id",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_action",
+          "field_path": "acl_action",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "source_prefix",
+          "field_path": "source_prefix",
+          "position": 3,
+          "required": true,
+          "required_order": 3
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "destination_prefix",
+          "field_path": "destination_prefix",
+          "position": 4,
+          "required": true,
+          "required_order": 4
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "ip_protocol",
+          "field_path": "ip_protocol",
+          "position": 5,
+          "required": true,
+          "required_order": 5
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "source_port",
+          "field_path": "source_port",
+          "position": 6,
+          "required": false,
+          "required_order": null
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "destination_port",
+          "field_path": "destination_port",
+          "position": 7,
+          "required": false,
+          "required_order": null
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "log",
+          "field_path": "log",
+          "position": 8,
+          "required": false,
+          "required_order": null
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "acl_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "acl_rule_id",
+          "keywords": {
+            "minimum": 10,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "acl_action",
+          "keywords": {
+            "enum": [
+              "permit",
+              "deny"
+            ]
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "source_prefix",
+          "keywords": {
+            "pattern": "^[0-9.]+/[0-9]{1,2}$"
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "destination_prefix",
+          "keywords": {
+            "pattern": "^[0-9.]+/[0-9]{1,2}$"
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "ip_protocol",
+          "keywords": {
+            "enum": [
+              "ip",
+              "tcp",
+              "udp",
+              "icmp"
+            ]
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "source_port",
+          "keywords": {
+            "minimum": 0,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "destination_port",
+          "keywords": {
+            "minimum": 0,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "field_path": "log",
+          "keywords": {}
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "add_acl_rule",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/acl/add_acl_rule/template.j2",
+          "input_contract": {
+            "fields": [
+              "acl_name",
+              "acl_rule_id",
+              "acl_action",
+              "source_prefix",
+              "destination_prefix",
+              "ip_protocol",
+              "source_port",
+              "destination_port",
+              "log"
+            ],
+            "optional_defaults": {
+              "source_port": null,
+              "destination_port": null,
+              "log": null
+            },
+            "derived": {
+              "source_address": "acl_source_address_v1",
+              "source_wildcard": "acl_source_wildcard_v1",
+              "acl_destination_address": "acl_destination_address_v1",
+              "acl_destination_wildcard": "acl_destination_wildcard_v1"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "modify_acl_rule",
+    "values": {
+      "operation_id": "modify_acl_rule",
+      "display_name": "modify acl rule",
+      "category_id": "acl",
+      "aliases": [
+        "modify acl rule"
+      ],
+      "description": "Replace exactly one confirmed ACE with a complete explicit rule; transient delete/add gap requires deployment review.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Replace exactly one confirmed ACE with a complete explicit rule; transient delete/add gap requires deployment review."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "modify_acl_rule",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_name",
+          "field_path": "acl_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_rule_id",
+          "field_path": "acl_rule_id",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_action",
+          "field_path": "acl_action",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "source_prefix",
+          "field_path": "source_prefix",
+          "position": 3,
+          "required": true,
+          "required_order": 3
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "destination_prefix",
+          "field_path": "destination_prefix",
+          "position": 4,
+          "required": true,
+          "required_order": 4
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "ip_protocol",
+          "field_path": "ip_protocol",
+          "position": 5,
+          "required": true,
+          "required_order": 5
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "source_port",
+          "field_path": "source_port",
+          "position": 6,
+          "required": false,
+          "required_order": null
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "destination_port",
+          "field_path": "destination_port",
+          "position": 7,
+          "required": false,
+          "required_order": null
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "log",
+          "field_path": "log",
+          "position": 8,
+          "required": false,
+          "required_order": null
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "acl_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "acl_rule_id",
+          "keywords": {
+            "minimum": 10,
+            "maximum": 2147483647
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "acl_action",
+          "keywords": {
+            "enum": [
+              "permit",
+              "deny"
+            ]
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "source_prefix",
+          "keywords": {
+            "pattern": "^[0-9.]+/[0-9]{1,2}$"
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "destination_prefix",
+          "keywords": {
+            "pattern": "^[0-9.]+/[0-9]{1,2}$"
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "ip_protocol",
+          "keywords": {
+            "enum": [
+              "ip",
+              "tcp",
+              "udp",
+              "icmp"
+            ]
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "source_port",
+          "keywords": {
+            "minimum": 0,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "destination_port",
+          "keywords": {
+            "minimum": 0,
+            "maximum": 65535
+          }
+        },
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "field_path": "log",
+          "keywords": {}
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "modify_acl_rule",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/acl/modify_acl_rule/template.j2",
+          "input_contract": {
+            "fields": [
+              "acl_name",
+              "acl_rule_id",
+              "acl_action",
+              "source_prefix",
+              "destination_prefix",
+              "ip_protocol",
+              "source_port",
+              "destination_port",
+              "log"
+            ],
+            "optional_defaults": {
+              "source_port": null,
+              "destination_port": null,
+              "log": null
+            },
+            "derived": {
+              "source_address": "acl_source_address_v1",
+              "source_wildcard": "acl_source_wildcard_v1",
+              "acl_destination_address": "acl_destination_address_v1",
+              "acl_destination_wildcard": "acl_destination_wildcard_v1"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "delete_acl_rule",
+    "values": {
+      "operation_id": "delete_acl_rule",
+      "display_name": "delete acl rule",
+      "category_id": "acl",
+      "aliases": [
+        "delete acl rule"
+      ],
+      "description": "Delete exactly one confirmed IPv4 ACE; never delete the ACL object.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Delete exactly one confirmed IPv4 ACE; never delete the ACL object."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "delete_acl_rule",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "delete_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_name",
+          "field_path": "acl_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "delete_acl_rule",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_rule_id",
+          "field_path": "acl_rule_id",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "delete_acl_rule",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "delete_acl_rule",
+          "operation_version": 1,
+          "field_path": "acl_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "delete_acl_rule",
+          "operation_version": 1,
+          "field_path": "acl_rule_id",
+          "keywords": {
+            "minimum": 10,
+            "maximum": 2147483647
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "delete_acl_rule",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/acl/delete_acl_rule/template.j2",
+          "input_contract": {
+            "fields": [
+              "acl_name",
+              "acl_rule_id"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  },
+  {
+    "entity": "operation",
+    "action": "create",
+    "entity_id": "apply_acl_to_interface",
+    "values": {
+      "operation_id": "apply_acl_to_interface",
+      "display_name": "apply acl to interface",
+      "category_id": "acl",
+      "aliases": [
+        "apply acl to interface"
+      ],
+      "description": "Attach a confirmed IPv4 extended ACL to a routed interface without replacing another policy.",
+      "status": "active",
+      "version": 1,
+      "schema_source": "registry",
+      "mapping_mode": "none",
+      "use_cases": [
+        "Attach a confirmed IPv4 extended ACL to a routed interface without replacing another policy."
+      ]
+    }
+  },
+  {
+    "entity": "contract",
+    "action": "replace",
+    "entity_id": "apply_acl_to_interface",
+    "values": {
+      "version": 1,
+      "mappings": [
+        {
+          "operation_id": "apply_acl_to_interface",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "acl_name",
+          "field_path": "acl_name",
+          "position": 0,
+          "required": true,
+          "required_order": 0
+        },
+        {
+          "operation_id": "apply_acl_to_interface",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "interface",
+          "field_path": "interface",
+          "position": 1,
+          "required": true,
+          "required_order": 1
+        },
+        {
+          "operation_id": "apply_acl_to_interface",
+          "operation_version": 1,
+          "category_id": "acl",
+          "parameter_id": "direction",
+          "field_path": "direction",
+          "position": 2,
+          "required": true,
+          "required_order": 2
+        }
+      ],
+      "rules": [
+        {
+          "operation_id": "apply_acl_to_interface",
+          "operation_version": 1,
+          "field_path": "",
+          "keywords": {
+            "type": "object",
+            "additionalProperties": false,
+            "x-validation-handlers": [
+              "network_values_v1",
+              "unique_interfaces_v1",
+              "safe_strings_v1",
+              "expansion_network_v1"
+            ]
+          }
+        },
+        {
+          "operation_id": "apply_acl_to_interface",
+          "operation_version": 1,
+          "field_path": "acl_name",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$"
+          }
+        },
+        {
+          "operation_id": "apply_acl_to_interface",
+          "operation_version": 1,
+          "field_path": "interface",
+          "keywords": {
+            "pattern": "^[A-Za-z][A-Za-z0-9/.-]{0,63}$"
+          }
+        },
+        {
+          "operation_id": "apply_acl_to_interface",
+          "operation_version": 1,
+          "field_path": "direction",
+          "keywords": {
+            "enum": [
+              "ingress",
+              "egress"
+            ]
+          }
+        }
+      ],
+      "templates": [
+        {
+          "operation_id": "apply_acl_to_interface",
+          "operation_version": 1,
+          "vendor": "cisco",
+          "platform": "iosxe",
+          "versions": [
+            "17.9"
+          ],
+          "template_path": "data/templates/cisco/acl/apply_acl_to_interface/template.j2",
+          "input_contract": {
+            "fields": [
+              "acl_name",
+              "interface",
+              "direction"
+            ],
+            "optional_defaults": {},
+            "derived": {}
+          }
+        }
+      ]
+    }
+  }
+]

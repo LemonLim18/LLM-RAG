@@ -1,0 +1,130 @@
+{
+  "manifest_version": 1,
+  "phase": 5,
+  "status": "pending_domain_review",
+  "purpose": "Reconciliation checklist, not runtime catalog input or an automatic import instruction.",
+  "target_document": "Implementation_Plan/CogniShield_v2_Category_Parameter_and_Operation_Schema_Registry.md",
+  "automatic_migration": false,
+  "authoritative_sources": {
+    "selection": "storage/knowledge/authority.json; JSON seeds before migration, SQLite afterward",
+    "managed_documents": "categories, parameters, category_parameters, operations, operation_parameters, operation_rules, template_bindings, context_rules",
+    "database": "storage/knowledge/catalog.sqlite3",
+    "schemas": "Shared types plus operation mappings/rules; compiled release artifacts; legacy schema.json retained as migration evidence",
+    "runtime": "storage/catalog_releases/active.json pins immutable metadata, schemas, templates and retrieval",
+    "templates": "Existing vendor-specific template.j2 files"
+  },
+  "compatibility_policy": {
+    "machine_ids": "Preserve existing IDs; change labels instead. ID changes require an explicit later migration.",
+    "payload_keys": "Preserve existing parameter paths and representations.",
+    "operation_statuses": ["active", "inactive"],
+    "legacy_defaults": {"status": "active", "version": 1},
+    "new_operations": "No target-document operations were imported or activated in Phases 1-5."
+  },
+  "completed_membership_backfill": {
+    "source": "Existing operation schema properties and explicit x-parameter-id references only",
+    "operation_count": 12,
+    "membership_count": 22,
+    "field_reference_count": 38,
+    "preview_command": "python -m app.knowledge.migration",
+    "preview_is_read_only": true,
+    "scope": "Current six categories only; new domain definitions still require review",
+    "repeat_policy": "Preview shows the schema-used subset; never automatically replace reviewed memberships or remove unused definitions"
+  },
+  "completed_operation_backfill": {
+    "source": "Authoritative legacy schemas, current operation versions, and reviewed category memberships",
+    "operation_count": 12,
+    "mapping_count": 38,
+    "rule_count": 51,
+    "comparison_files": ["data/catalog/operation_parameters.json", "data/catalog/operation_rules.json"],
+    "schema_source": "legacy",
+    "mapping_mode": "compare",
+    "preview_command": "python -m app.knowledge.migration --operations",
+    "comparison_command": "python -m app.knowledge.migration --compare",
+    "commands_are_read_only": true,
+    "runtime_policy": "Historical Phase 3 comparison-only milestone; superseded by the registry promotion below.",
+    "promotion": "Phase 4 promoted the reviewed records after equivalence checks."
+  },
+  "completed_schema_publication": {
+    "schema_source": "registry",
+    "mapping_mode": "none",
+    "operation_count": 12,
+    "template_binding_count": 36,
+    "authoring_authority": "Selected backend; this workspace migrated to SQLite",
+    "runtime": "Immutable release metadata, compiled schemas, templates and matching retrieval index; inventory/planned context remains separately revisioned",
+    "initial_publication": "Indexed baseline activated; SQLite publication recorded in docs/KNOWLEDGE_EVOLUTION_COMPLETION.md",
+    "legacy_comparison_command": "python -m app.knowledge.migration --compare"
+  },
+  "completed_json_management": {
+    "entry_point": "python -m app.knowledge.cli",
+    "contracts": "app/api/contracts.py",
+    "storage": "Revision-checked local JSON with exclusive writer lock, audit journal and rollback/recovery",
+    "database_cutover": "Historical JSON-only milestone; superseded by approved SQLite completion",
+    "scope": "Metadata, memberships, scoped operation contracts, previews, validation, import/export and explicit publication; no server or GUI"
+  },
+  "completed_sqlite_management": {
+    "migration": "app/knowledge/migrations/001_authoring.sql",
+    "entry_point": "python -m app.knowledge.cli migrate-sqlite REQUEST.json",
+    "authority": "Single explicit pointer, no JSON fallback after cutover",
+    "safety": "Foreign keys, transaction/audit atomicity, generation revisions, stale-write checks, dependency protections and recoverable authority switch",
+    "equivalence": "Identical catalog documents and typed records; shared management contract tests against both stores",
+    "verification": "docs/KNOWLEDGE_EVOLUTION_COMPLETION.md"
+  },
+  "preserved_categories": ["vlan", "ospf", "bgp", "isis", "static_routing", "ip_address"],
+  "preserved_operations": [
+    "create_vlan", "delete_vlan", "configure_ospf", "remove_ospf_interface",
+    "configure_bgp_neighbor", "remove_bgp_neighbor", "configure_isis_interface",
+    "disable_isis_interface", "configure_static_route", "remove_static_route",
+    "configure_interface_ip", "remove_interface_ip"
+  ],
+  "pending_decisions": [
+    {
+      "id": "missing_types",
+      "domains": ["acl", "qos", "static_routing", "ospf"],
+      "decision_needed": "Supply the missing parameter types; define array item structures, enum choices, and units as operation contracts. Do not infer types from names."
+    },
+    {
+      "id": "undefined_category_parameters",
+      "missing_by_domain": {
+        "vlan": ["mode"],
+        "interface": ["native_vlan", "threshold", "action", "prefix_length"],
+        "acl": ["description", "conditions", "zone"],
+        "qos": ["description", "match_conditions", "scheduler", "priority", "burst_size", "direction"],
+        "ospf": ["metric"]
+      },
+      "decision_needed": "Review definitions and category membership before any import."
+    },
+    {
+      "id": "overlapping_operations",
+      "pairs": [
+        ["assign_vlan_to_access_port", "configure_access_port"],
+        ["configure_trunk_allowed_vlans", "set_trunk_allowed_vlan_list"],
+        ["set_native_vlan", "configure_native_vlan"],
+        ["configure_vlan_membership", "set_port_vlan_membership"]
+      ],
+      "decision_needed": "Choose one canonical behavior owner with discovery aliases, or document different semantics."
+    },
+    {
+      "id": "category_continuity",
+      "decision_needed": "Keep BGP and IS-IS although absent from the target. Review expansion from ip_address to Interface without silently moving existing operations."
+    },
+    {
+      "id": "parameter_identity_and_representation",
+      "candidate_name_pairs": [["name", "vlan_name"], ["address", "ip_address"], ["area", "area_id"], ["destination", "destination_prefix"]],
+      "decision_needed": "Use scoped mappings only after semantic review. Prefix/netmask and admin_up/admin_state require validated conversions. Preserve OSPF interfaces as objects, not strings. Route preference is not route metric; action/mode may mean different things across domains."
+    },
+    {
+      "id": "operation_semantics",
+      "decision_needed": "Do not equate compound configure_ospf with enable_ospf_process, exact-next-hop route removal with deletion by prefix, or exact-address removal with all-address removal."
+    },
+    {
+      "id": "vendor_requirements",
+      "decision_needed": "Retain existing vendor overlays, including Cisco/Huawei OSPF process IDs and Juniper VLAN names/BGP peer groups, until reviewed replacement contracts exist."
+    }
+  ],
+  "deferred": [
+    "Multi-host authoring and server-database adapters",
+    "HTTP/GUI transport, authentication and authorization",
+    "Vendor-device certification and broad model-quality benchmarking",
+    "Unresolved target-domain definitions listed above"
+  ]
+}

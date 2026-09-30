@@ -10,6 +10,7 @@ from uuid import uuid4
 from .config import SESSIONS_DIR
 from .pipeline import confirm_order, correct_task, plan_to_dict, refresh_plan, resume_task, run
 from .planner.models import ClarificationAnswer, ExecutionPlan, OperationIntent, PlannedTask
+from .knowledge.runtime import snapshot_request
 
 
 def _timestamp() -> str:
@@ -90,6 +91,7 @@ def save_session(session: ClarificationSession) -> None:
     temporary.replace(target)
 
 
+@snapshot_request
 def load_session(session_id: str) -> ClarificationSession:
     path = _session_path(session_id)
     if not path.exists():
@@ -124,6 +126,7 @@ def create_session(prompt: str, *, verbose: bool = False) -> ClarificationSessio
     return session
 
 
+@snapshot_request
 def apply_clarification(
     session: ClarificationSession,
     task_id: str,
@@ -154,6 +157,7 @@ def apply_answer(session: ClarificationSession, answer: ClarificationAnswer) -> 
     return apply_clarification(session, question["task_id"], answer)
 
 
+@snapshot_request
 def apply_correction(session: ClarificationSession, task_id: str, path: str, reply: str) -> ClarificationSession:
     for index, task in enumerate(session.plan.tasks):
         if task.intent_id == task_id:
@@ -167,6 +171,7 @@ def apply_correction(session: ClarificationSession, task_id: str, path: str, rep
     raise KeyError(f"Unknown task {task_id}")
 
 
+@snapshot_request
 def confirm_session_order(session: ClarificationSession) -> ClarificationSession:
     confirm_order(session.plan)
     session.history.append({"at": _timestamp(), "type": "confirm_order"})

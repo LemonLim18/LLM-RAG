@@ -1,0 +1,60 @@
+[
+  {
+    "operation_id": "create_acl",
+    "parameters": {
+      "acl_name": "NEW_ACL",
+      "description": "Reviewed policy"
+    },
+    "expected": "1 remark Reviewed policy",
+    "prompt": "create acl; acl_name \"NEW_ACL\"; description \"Reviewed policy\" on SW1"
+  },
+  {
+    "operation_id": "add_acl_rule",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 20,
+      "acl_action": "permit",
+      "source_prefix": "10.1.0.0/16",
+      "destination_prefix": "10.2.0.0/16",
+      "ip_protocol": "tcp",
+      "destination_port": 443,
+      "log": false
+    },
+    "expected": "20 permit tcp 10.1.0.0 0.0.255.255 10.2.0.0 0.0.255.255 eq 443",
+    "prompt": "add acl rule; acl_name \"STAFF\"; acl_rule_id 20; acl_action \"permit\"; source_prefix \"10.1.0.0/16\"; destination_prefix \"10.2.0.0/16\"; ip_protocol \"tcp\"; destination_port 443; log false on SW1"
+  },
+  {
+    "operation_id": "modify_acl_rule",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 10,
+      "acl_action": "permit",
+      "source_prefix": "10.1.0.0/16",
+      "destination_prefix": "10.2.0.0/16",
+      "ip_protocol": "tcp",
+      "destination_port": 443,
+      "log": false
+    },
+    "expected": "no 10",
+    "prompt": "modify acl rule; acl_name \"STAFF\"; acl_rule_id 10; acl_action \"permit\"; source_prefix \"10.1.0.0/16\"; destination_prefix \"10.2.0.0/16\"; ip_protocol \"tcp\"; destination_port 443; log false on SW1"
+  },
+  {
+    "operation_id": "delete_acl_rule",
+    "parameters": {
+      "acl_name": "STAFF",
+      "acl_rule_id": 10
+    },
+    "expected": "no 10",
+    "prompt": "delete acl rule; acl_name \"STAFF\"; acl_rule_id 10 on SW1"
+  },
+  {
+    "operation_id": "apply_acl_to_interface",
+    "parameters": {
+      "acl_name": "STAFF",
+      "interface": "GigabitEthernet1/0/5",
+      "direction": "ingress"
+    },
+    "expected": "ip access-group STAFF in",
+    "prompt": "apply acl to interface; acl_name \"STAFF\"; interface \"GigabitEthernet1/0/5\"; direction \"ingress\" on SW1"
+  }
+]
