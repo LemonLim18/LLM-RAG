@@ -10,3 +10,4 @@ storage/direct_file_backup/
 data/catalog/.authoring.lock
 data/catalog/.authoring-pending.json
 .env
+/app_main_documents/Net_Topo_View-intentparse/*
