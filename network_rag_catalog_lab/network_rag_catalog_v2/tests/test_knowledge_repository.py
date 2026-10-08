@@ -223,6 +223,10 @@ class CatalogCompatibilityTests(unittest.TestCase):
                 expected_terms.add((phrase.strip().lower(), operation["operation_id"]))
             self.assertTrue((BASE_DIR / operation["schema_path"]).is_file())
             for device in devices:
+                if operation.get("vendor_knowledge", {}).get(device["vendor"], {}).get("status") == "blocked_unverified":
+                    with self.assertRaisesRegex(ValueError, "generation blocked"):
+                        select_template(device, operation["operation_id"])
+                    continue
                 self.assertEqual(select_template(device, operation["operation_id"]),
                                  TEMPLATES_DIR / device["vendor"] / operation["category_id"] / operation["operation_id"] / "template.j2")
         self.assertEqual(set(catalog.operation_terms()), expected_terms)

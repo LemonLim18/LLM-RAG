@@ -13,16 +13,17 @@ data/catalog/{categories,operations,parameters,operation_parameters}.json
 ```
 
 All 38 requested canonical IDs are present, with six existing IP/BGP/IS-IS
-operations preserved: 44 operations, 44 physical schema files and 132 templates.
+operations preserved: 44 operations, 44 physical schema files and 130 templates.
 Required/optional rules remain operation-specific. Existing parameter IDs and
 aliases are preserved; for example `address`, `admin_up` and `new_vlan_name`.
 
 `NETWORK_RAG_RUNTIME` defaults to `files`. Runtime schemas are read from the
 schema.json paths, not recompiled from SQLite or selected from a release.
 Templates are selected by their vendor/category/operation path. Binding records
-and vendor-knowledge metadata retained in the repository do not choose templates
-on this path. Existing type, inventory, device-policy and whole-request rendering
-checks remain; missing data still uses the existing clarification loop.
+do not choose templates on this path. Explicit `blocked_unverified` vendor
+knowledge prevents generation even if a template is present. Existing type,
+inventory, device-policy and whole-request rendering checks remain; missing data
+still uses the existing clarification loop.
 
 ## Run
 
@@ -67,14 +68,14 @@ classify every prompt correctly.
 | Requested operations | Cisco | Huawei | Juniper |
 | --- | --- | --- | --- |
 | Available to intent retrieval | 38 | 38 | 38 |
-| Generation templates | 38 | 38 | 38 |
-| Missing requested vendor templates | 0 | 0 | 0 |
+| Generation templates | 38 | 37 | 37 |
+| Missing requested vendor templates | 0 | 1 | 1 |
 
-All 54 formerly missing vendor templates are implemented. Use
+Use
 [the three-vendor prompt guide](THREE_VENDOR_PROMPTS.md) for complete examples.
-Some operations have different native contracts: Huawei/Juniper VLAN modification
-edits description rather than Cisco suspend state; OSPF, ACL and QoS schemas
-contain their required native inputs. No vendor falls back to Cisco commands.
+`modify_vlan` changes VLAN state only. Huawei/Juniper are blocked until equivalent
+state semantics are reviewed. Their former description templates were removed.
+OSPF, ACL and QoS schemas still contain their required native inputs.
 Inventory checks and required-value clarification remain intact.
 
 `x-vendor-profiles` in each affected schema selects the per-vendor properties
@@ -83,12 +84,37 @@ schema remains the direct runtime authority. RAG receives these profile contract
 The older SQLite registry mappings and binding records are not recompiled or
 silently synchronized by this file-only revision.
 
+Extraction uses the canonical/all-profile vocabulary before vendor validation.
+An explicit field excluded by the selected profile remains in the task and raises
+`PARAMETER_UNSUPPORTED_FOR_VENDOR`, blocking dependent clarification and rendering.
+Semantic inputs can be declared with `x-semantic-fields`; every profile must keep
+them required, and direct templates must consume them. `modify_vlan` declares
+`vlan_status`. These structural checks supplement review; they cannot prove the
+meaning of arbitrary vendor commands.
+
 ## Preserved Backend and Recovery
 
 SQLite, prior releases, packs and management services were not deleted. Explicit
 `NETWORK_RAG_RUNTIME=published` restores the existing published-reader path, but
 it does not include later direct-file edits automatically. Do not use publication
 commands for this prompt-testing phase. The two data sources are not synchronized.
+
+Direct files are the current development runtime authority. SQLite is the retained
+managed authoring authority, and an immutable release is the published runtime
+authority. The CLI and serialized plan/tasks expose `runtime_authority`.
+Blank `knowledge_snapshot_id` is expected for direct files; published requests
+identify their release. The retained unmigrated authoring fallback is labeled
+`authoring_files` rather than being reported as a published release.
+
+Before transferring changes between modes, run
+`python -m app.knowledge.runtime_audit --check` (or scope with
+`--operation modify_vlan`). It compares descriptions, schema assertions and vendor
+template content against managed authoring and any active release, and fails on
+drift. It does not compare platform/version eligibility: direct files intentionally
+lack the managed binding gate. Review intentional differences, update versioned
+managed contracts/bindings and their tests together, then publish through the
+existing management workflow when that transition is requested. Never copy a
+vendor-specific change of intent into the canonical operation automatically.
 
 The initial direct files were mechanically exported from the existing SQLite
 catalog and its published schemas, preserving IDs and contracts. Prior data/ was

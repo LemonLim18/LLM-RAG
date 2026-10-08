@@ -382,7 +382,7 @@
       "modify vlan",
       "set vlan state"
     ],
-    "description": "Change only an existing normal-range VLAN state; no rename or description mutation. Vendor-specific inputs and semantics are defined in the schema: huawei: Modify an existing VLAN description. Cisco active/suspend state is not portable; no state change is generated. juniper: Modify an existing VLAN description. Cisco active/suspend state is not portable; no state change is generated.",
+    "description": "Change only an existing normal-range VLAN state; no rename or description mutation.",
     "operation_id": "modify_vlan",
     "category_id": "vlan",
     "status": "active",
@@ -401,17 +401,17 @@
         ]
       },
       "huawei": {
-        "status": "generation_supported",
-        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "status": "blocked_unverified",
+        "reason": "No reviewed implementation of canonical VLAN active/suspend state changes for Huawei VRP. Description changes are a different operation.",
         "requirements": [
-          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+          "Verify an equivalent Layer-2 VLAN state command and capability contract before enabling generation; do not substitute VLANIF shutdown or description changes."
         ]
       },
       "juniper": {
-        "status": "generation_supported",
-        "reason": "Direct runtime vendor template and schema available. Generation tested with synthetic inventory, not certified on hardware.",
+        "status": "blocked_unverified",
+        "reason": "No reviewed implementation of canonical VLAN active/suspend state changes for Juniper Junos. Description changes are a different operation.",
         "requirements": [
-          "Use this vendor's operation schema and confirmed inventory resources; do not substitute another vendor's semantics."
+          "Review Junos VLAN deactivation and references against canonical active/suspend semantics before enabling generation."
         ]
       }
     },

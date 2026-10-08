@@ -1,4 +1,4 @@
-"""One explicit authoring authority; runtime always prefers published releases."""
+"""Managed authoring authority; runtime mode independently selects files or releases."""
 
 from pathlib import Path
 import json

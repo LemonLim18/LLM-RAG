@@ -10,14 +10,14 @@ def template_binding(device: dict, operation_id: str):
     if snapshot:
         return snapshot.binding(device, operation_id)
     from ..config import runtime_mode
-    if runtime_mode() == "files":
-        # Direct template paths are the lab contract; no binding entity needed.
-        return None
     operation = get_operation(operation_id)
     knowledge = operation.get("vendor_knowledge", {}).get(device["vendor"], {})
     if knowledge.get("status") == "blocked_unverified":
         raise ValueError(f"No declared template compatibility for {operation_id} / {device['vendor']}. "
                          f"Intent recognized; configuration generation blocked: {knowledge['reason']}")
+    if runtime_mode() == "files":
+        # A file's presence never overrides an explicit capability block.
+        return None
     if operation.get("schema_source") != "registry":
         return None
     for raw in json.loads(TEMPLATE_BINDINGS_FILE.read_text(encoding="utf-8")):

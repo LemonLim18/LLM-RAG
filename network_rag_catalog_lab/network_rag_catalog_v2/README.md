@@ -7,9 +7,24 @@ operation IDs are present; six pre-existing operations are retained (44 total).
 Run `python -m app.ingest` after editing catalog/schema/template files, then
 `python main.py --interactive`. See [direct runtime notes](docs/DIRECT_RUNTIME.md).
 No pack import, database edit, release or activation command is required.
-Requested-operation templates now cover **Cisco 38/38, Huawei 38/38 and Juniper 38/38**.
+Requested-operation templates cover **Cisco 38/38, Huawei 37/38 and Juniper 37/38**.
+`modify_vlan` means VLAN state changes in every mode. Huawei/Juniper generation
+is blocked pending review of an equivalent implementation; description edits
+are a separate intent. Explicit parameters cannot be discarded by a vendor profile.
 Use SW1/SW2/SW3 and the [three-vendor examples](docs/THREE_VENDOR_PROMPTS.md).
 Schemas collect native vendor inputs; this is preview support, not hardware certification.
+
+Sessions and the CLI show `runtime_authority`. In `files` mode,
+`knowledge_snapshot_id` is intentionally empty; `source_revision` identifies the
+file/context content. Published requests carry the release ID. Before reconciling
+direct experiments into managed knowledge, run the read-only drift check:
+
+```powershell
+python -m app.knowledge.runtime_audit --operation modify_vlan --check
+```
+
+Omit `--operation` to audit the entire catalog. Review reported differences before
+versioning/publishing changes; the command never synchronizes or publishes data.
 
 Retained backend revision: [Phases 1-5 completion audit](docs/KNOWLEDGE_EVOLUTION_COMPLETION.md)
 and [Phase 5 management](docs/KNOWLEDGE_PHASE_5.md). The optional backend uses SQLite

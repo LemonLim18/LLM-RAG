@@ -878,9 +878,9 @@
     "device": "SW2",
     "parameters": {
       "vlan_id": 20,
-      "description": "Staff department"
+      "vlan_status": "suspend"
     },
-    "prompt": "modify vlan, vlan_id 20, description \"Staff department\" on SW2"
+    "prompt": "modify vlan, vlan_id 20, vlan_status \"suspend\" on SW2"
   },
   {
     "operation_id": "rename_vlan",
@@ -1368,10 +1368,9 @@
     "device": "SW3",
     "parameters": {
       "vlan_id": 20,
-      "description": "Staff department",
-      "current_vlan_name": "STAFF"
+      "vlan_status": "suspend"
     },
-    "prompt": "modify vlan, vlan_id 20, description \"Staff department\", current_vlan_name \"STAFF\" on SW3"
+    "prompt": "modify vlan, vlan_id 20, vlan_status \"suspend\" on SW3"
   },
   {
     "operation_id": "rename_vlan",

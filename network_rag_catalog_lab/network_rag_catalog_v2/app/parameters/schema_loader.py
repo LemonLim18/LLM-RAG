@@ -27,6 +27,25 @@ def _add_catalog_metadata(schema: dict, mappings: dict | None = None, path: str 
     return enriched
 
 
+def _merge_profile_node(left: dict, right: dict) -> dict:
+    """Union extraction vocabulary recursively; enforce constraints per device."""
+    if left == right:
+        return deepcopy(left)
+    if left.get("type") != right.get("type"):
+        raise ValueError("Vendor profiles cannot redefine a canonical parameter's type.")
+    merged = {key: deepcopy(value) for key, value in left.items()
+              if key not in {"properties", "items", "required"} and right.get(key) == value}
+    if left.get("type") == "object":
+        properties = deepcopy(left.get("properties", {}))
+        for name, node in right.get("properties", {}).items():
+            properties[name] = _merge_profile_node(properties[name], node) if name in properties else deepcopy(node)
+        merged["properties"] = properties
+        merged["required"] = [name for name in left.get("required", []) if name in right.get("required", [])]
+    elif left.get("type") == "array":
+        merged["items"] = _merge_profile_node(left["items"], right["items"])
+    return merged
+
+
 def _apply_vendor_requirements(schema: dict, devices: list[dict] | None) -> dict:
     """Add only the required fields relevant to the selected vendor set.
 
@@ -36,6 +55,11 @@ def _apply_vendor_requirements(schema: dict, devices: list[dict] | None) -> dict
     """
     enriched = deepcopy(schema)
     profiles = enriched.pop("x-vendor-profiles", {})
+    semantic_fields = schema.get("x-semantic-fields", [])
+    for vendor, profile in {"canonical": schema, **profiles}.items():
+        if any(name not in profile.get("properties", {}) or name not in profile.get("required", [])
+               for name in semantic_fields):
+            raise ValueError(f"Vendor profile {vendor} removes required canonical semantic fields: {semantic_fields}")
     vendors = {device.get("vendor") for device in devices or []}
     if profiles:
         if len(vendors) == 1 and next(iter(vendors)) in profiles:
@@ -44,15 +68,15 @@ def _apply_vendor_requirements(schema: dict, devices: list[dict] | None) -> dict
             # Collect without imposing one vendor's grammar on another. Each
             # device binding is subsequently checked against its own profile.
             selected = [profiles[v] for v in sorted(vendors) if v in profiles] or list(profiles.values())
-            properties = {}
+            # Extraction without a target must retain canonical inputs even if
+            # every vendor profile omits them. Validation uses a single profile.
+            properties = deepcopy(schema.get("properties", {})) if not vendors else {}
             for profile in selected:
                 for name, definition in profile["properties"].items():
                     if name not in properties:
                         properties[name] = deepcopy(definition)
                     elif properties[name] != definition:
-                        properties[name] = {"type": definition["type"]}
-                        if definition["type"] == "array":
-                            properties[name]["items"] = deepcopy(definition["items"])
+                        properties[name] = _merge_profile_node(properties[name], definition)
             enriched["properties"] = properties
             enriched["required"] = [name for name in selected[0]["required"]
                                     if all(name in p["required"] for p in selected)]

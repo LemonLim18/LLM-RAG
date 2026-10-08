@@ -1,7 +1,8 @@
 # Three-Vendor Terminal Examples
 
-The direct-file runtime has all 38 requested operations for Cisco, Huawei and
-Juniper. These are configuration-generation contracts, not device certifications.
+The direct-file runtime recognizes all 38 requested operations for Cisco, Huawei
+and Juniper. Generation covers 38/37/37 respectively; Huawei/Juniper VLAN state
+changes are blocked. These are preview contracts, not device certifications.
 Use SW1 (Cisco), SW2 (Huawei), or SW3 (Juniper), whose inventory is synthetic.
 R1/R2/R3 retain their original capabilities and are not silently upgraded.
 
@@ -26,8 +27,8 @@ the same planned snapshot, not against the output of the preceding example.
 
 ## Vendor Semantics
 
-- `modify_vlan`: Cisco changes active/suspend; Huawei/Juniper edit description.
-  VLAN suspend is not a portable operation. Junos rename/edit asks for the
+- `modify_vlan`: state changes only; Huawei/Juniper equivalents are unreviewed
+  and generation is blocked. Junos rename asks for the
   existing VLAN object name and checks it against vlan_id.
 - Junos OSPF uses the default instance, areas and logical interfaces, not a
   numeric process ID. Router-ID edits affect that routing instance and do not
@@ -306,8 +307,10 @@ apply qos policy to interface, policy_name "QOS_BASE", interface "GigabitEtherne
 **modify_vlan**
 
 ```text
-modify vlan, vlan_id 20, description "Staff department" on SW2
+modify vlan, vlan_id 20, vlan_status "suspend" on SW2
 ```
+
+Expected: blocked, explicit state preserved. Description changes are a different intent.
 
 **rename_vlan**
 
@@ -548,8 +551,10 @@ apply qos policy to interface, policy_name "QOS_BASE", interface "10GE1/0/5", di
 **modify_vlan**
 
 ```text
-modify vlan, vlan_id 20, description "Staff department", current_vlan_name "STAFF" on SW3
+modify vlan, vlan_id 20, vlan_status "suspend" on SW3
 ```
+
+Expected: blocked, explicit state preserved. Description changes are a different intent.
 
 **rename_vlan**
 

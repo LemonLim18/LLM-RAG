@@ -42,6 +42,8 @@ class PlannedTask:
     parameter_evidence: dict[str, Any] = field(default_factory=dict)
     knowledge_snapshot_id: str = ""
     context_revision: str = ""
+    runtime_authority: str = ""
+    operation_candidates: list[str] = field(default_factory=list)
 
 @dataclass
 class ExecutionPlan:
@@ -55,6 +57,7 @@ class ExecutionPlan:
     schema_version: int = 2
     knowledge_snapshot_id: str = ""
     context_revision: str = ""
+    runtime_authority: str = ""
 
 
 @dataclass

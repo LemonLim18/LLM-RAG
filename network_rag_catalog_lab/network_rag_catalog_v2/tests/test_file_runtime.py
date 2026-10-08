@@ -75,7 +75,7 @@ class FileRuntimeTests(unittest.TestCase):
     def test_vendor_semantics_never_fall_back_to_cisco(self):
         from app.templates.renderer import render
         device = {"hostname": "SW2", "vendor": "huawei", "platform": "vrp", "version": "V200R024C10"}
-        with self.assertRaisesRegex(ValueError, "Schema validation"):
+        with self.assertRaisesRegex(ValueError, "generation blocked"):
             render(device, "modify_vlan", {"vlan_id": 20, "vlan_status": "suspend"})
 
     def test_required_and_optional_inputs_are_validated_for_direct_render(self):

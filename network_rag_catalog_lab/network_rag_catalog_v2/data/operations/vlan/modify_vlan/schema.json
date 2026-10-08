@@ -13,89 +13,11 @@
         "suspend"
       ],
       "type": "string"
-    },
-    "description": {
-      "minLength": 1,
-      "maxLength": 80,
-      "pattern": "^[A-Za-z0-9 _./:()-]+$",
-      "type": "string"
-    },
-    "current_vlan_name": {
-      "type": "string",
-      "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
-      "description": "Exact existing Junos VLAN object name for the selected VLAN ID."
     }
   },
   "required": [
     "vlan_id",
     "vlan_status"
   ],
-  "x-vendor-profiles": {
-    "cisco": {
-      "properties": {
-        "vlan_id": {
-          "minimum": 2,
-          "maximum": 1001,
-          "type": "integer"
-        },
-        "vlan_status": {
-          "enum": [
-            "active",
-            "suspend"
-          ],
-          "type": "string"
-        }
-      },
-      "required": [
-        "vlan_id",
-        "vlan_status"
-      ]
-    },
-    "huawei": {
-      "properties": {
-        "vlan_id": {
-          "minimum": 2,
-          "maximum": 1001,
-          "type": "integer"
-        },
-        "description": {
-          "minLength": 1,
-          "maxLength": 80,
-          "pattern": "^[A-Za-z0-9 _./:()-]+$",
-          "type": "string"
-        }
-      },
-      "required": [
-        "vlan_id",
-        "description"
-      ],
-      "description": "Modify an existing VLAN description. Cisco active/suspend state is not portable; no state change is generated."
-    },
-    "juniper": {
-      "properties": {
-        "vlan_id": {
-          "minimum": 2,
-          "maximum": 1001,
-          "type": "integer"
-        },
-        "description": {
-          "minLength": 1,
-          "maxLength": 80,
-          "pattern": "^[A-Za-z0-9 _./:()-]+$",
-          "type": "string"
-        },
-        "current_vlan_name": {
-          "type": "string",
-          "pattern": "^[A-Za-z][A-Za-z0-9_-]{0,31}$",
-          "description": "Exact existing Junos VLAN object name for the selected VLAN ID."
-        }
-      },
-      "required": [
-        "vlan_id",
-        "description",
-        "current_vlan_name"
-      ],
-      "description": "Modify an existing VLAN description. Cisco active/suspend state is not portable; no state change is generated."
-    }
-  }
+  "x-semantic-fields": ["vlan_status"]
 }

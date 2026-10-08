@@ -34,6 +34,7 @@ def validate_files():
         if op.schema_path != expected:
             raise ValueError(f"Use the direct schema path {expected} for {op.operation_id}.")
         schema = json.loads(safe_path(DATA_DIR.parent, expected).read_text(encoding="utf-8"))
+        _apply_vendor_requirements(schema, None)  # Verify declared semantic fields before extraction.
         refs = schema_parameter_references(schema, service.list_parameters())
         service.validate_schema_membership(op.category_id, refs)
         validate_handler_ids(schema)
@@ -58,9 +59,15 @@ def validate_files():
         env = Environment(undefined=StrictUndefined)
         for path in templates:
             vendor = path.relative_to(DATA_DIR / "templates").parts[0]
+            knowledge = op.vendor_knowledge.get(vendor)
+            if knowledge and knowledge.status == "blocked_unverified":
+                raise ValueError(f"Blocked operation has a direct template: {op.operation_id} / {vendor}")
             profile = _apply_vendor_requirements(schema, [{"vendor": vendor}])
             allowed = set(profile["properties"]) | {key for key, (_, source) in TEMPLATE_DERIVATIONS.items() if source in profile["properties"]}
-            unknown = meta.find_undeclared_variables(env.parse(path.read_text(encoding="utf-8"))) - allowed
+            inputs = meta.find_undeclared_variables(env.parse(path.read_text(encoding="utf-8")))
+            if set(schema.get("x-semantic-fields", [])) - inputs:
+                raise ValueError(f"Template omits canonical semantic inputs: {path}")
+            unknown = inputs - allowed
             if unknown:
                 raise ValueError(f"Unbound template inputs in {path}: {sorted(unknown)}")
         schemas[op.operation_id] = schema

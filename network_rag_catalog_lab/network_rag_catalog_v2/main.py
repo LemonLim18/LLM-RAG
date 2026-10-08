@@ -114,6 +114,8 @@ def main() -> None:
         session = apply_correction(session, *args.edit)
 
     print(f"Clarification session: {session.session_id} ({session.status})")
+    print("Runtime authority: " + session.plan.runtime_authority +
+          (" | release " + session.plan.knowledge_snapshot_id if session.plan.knowledge_snapshot_id else " | no published release"))
     _print_target_matches(session)
     interactive = args.interactive or (not args.no_interactive and sys.stdin.isatty())
     if interactive and (session.pending_tasks or session.status == "needs_confirmation"):

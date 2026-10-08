@@ -49,10 +49,15 @@ def build_questions(task) -> list[dict]:
                 options.append({"value": candidate["hostname"], "label": candidate["label"], "source_ref": "inventory:" + candidate["hostname"], "explanation": "Confirm this device; selection replaces the unresolved description."})
             multiple = issue["type"] == "MISSING_TARGET" or any(q.get("cardinality") == "many" for q in task.target_queries)
         elif path == "operation_id":
-            for operation in load_operations():
+            ranked = list(dict.fromkeys([task.operation_id, *task.operation_candidates]))
+            operations = sorted(load_operations(), key=lambda op: ranked.index(op["operation_id"])
+                                if op["operation_id"] in ranked else len(ranked))
+            for operation in operations:
                 if task.target_devices and any(operation["category_id"] not in d.get("capabilities", {}).get("features", []) for d in task.target_devices):
                     continue
                 options.append({"value": operation["operation_id"], "label": operation["display_name"], "source_ref": "catalog:" + operation["operation_id"], "explanation": operation["description"]})
+                if issue["type"] == "OPERATION_PROPOSAL" and operation["operation_id"] == task.operation_id:
+                    options[-1]["label"] = "Confirm " + operation["display_name"] + " (proposed)"
         else:
             expected = schema_at(schema, path)
             multiple = expected.get("type") == "array"

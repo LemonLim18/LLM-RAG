@@ -1,6 +1,8 @@
 # Terminal Prompt Testing Guide
 
-The direct runtime contains 44 canonical operations and 132 vendor templates.
+The direct runtime contains 44 canonical operations and 130 vendor templates.
+Huawei/Juniper `modify_vlan` state changes are recognized but blocked pending
+review of equivalent semantics; they never become description edits.
 All 38 requested operations are included. Default terminal mode reads `data/`
 without a knowledge-pack, binding-record or release activation step.
 Use this guide for configuration previews; it does not execute network changes.

@@ -1,17 +1,17 @@
 # Requested Operation Coverage
 
-Direct-file runtime, 2026-09-29. Supersedes the earlier Huawei 10/38 and Juniper
+Direct-file runtime, corrected 2026-10-08. Supersedes the earlier Huawei 10/38 and Juniper
 12/38 audit.
 
 | Requested scope | Cisco | Huawei | Juniper |
 | --- | --- | --- | --- |
 | Canonical operation IDs available to RAG | 38 | 38 | 38 |
-| Implemented generation templates | 38 | 38 | 38 |
-| Missing templates in requested list | 0 | 0 | 0 |
+| Implemented generation templates | 38 | 37 | 37 |
+| Missing templates in requested list | 0 | 1 | 1 |
 
-The repository contains 44 operations and 132 template files in total, retaining
+The repository contains 44 operations and 130 template files in total, retaining
 the six additional IP/BGP/IS-IS operations. There are no placeholder templates.
-The requested 38 have 114 concrete vendor-operation templates.
+The requested 38 have 112 concrete vendor-operation templates.
 
 - `add_default_route`: Cisco, Huawei, Juniper
 - `add_floating_static_route`: Cisco, Huawei, Juniper
@@ -43,7 +43,7 @@ The requested 38 have 114 concrete vendor-operation templates.
 - `configure_shaping`: Cisco, Huawei, Juniper
 - `configure_policing`: Cisco, Huawei, Juniper
 - `apply_qos_policy_to_interface`: Cisco, Huawei, Juniper
-- `modify_vlan`: Cisco, Huawei, Juniper
+- `modify_vlan`: Cisco; Huawei and Juniper blocked pending equivalent state semantics
 - `rename_vlan`: Cisco, Huawei, Juniper
 - `create_vlan`: Cisco, Huawei, Juniper
 - `delete_vlan`: Cisco, Huawei, Juniper
@@ -56,8 +56,8 @@ The requested 38 have 114 concrete vendor-operation templates.
 
 Coverage is at the canonical intent level, using native vendor contracts. It does
 not mean identical parameters, every feature variant, every hardware model or
-certified device behavior. Cisco suspend state is not rendered as an invented
-Huawei/Juniper command: their modify_vlan profile edits description.
+certified device behavior. `modify_vlan` always means state change. The former
+Huawei/Juniper description substitution was incorrect and has been removed.
 
 Junos uses default-instance/interface OSPF and native scheduler maps; Huawei QoS
 uses classifiers, behaviors and queue weights. Schemas collect those actual

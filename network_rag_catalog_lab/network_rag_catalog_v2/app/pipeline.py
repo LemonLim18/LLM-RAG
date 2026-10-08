@@ -25,6 +25,26 @@ from .templates.renderer import render
 from .templates.template_selector import select_template
 
 
+def _unsupported_parameters(params, schema, path=""):
+    """Keep explicit values visible when a vendor contract excludes their fields."""
+    if isinstance(params, dict):
+        for key, value in params.items():
+            field = f"{path}.{key}" if path else key
+            child = schema.get("properties", {}).get(key)
+            if child is None and value is not None and schema.get("additionalProperties") is False:
+                yield field, value
+            elif child is not None:
+                yield from _unsupported_parameters(value, child, field)
+    elif isinstance(params, list):
+        for index, value in enumerate(params):
+            yield from _unsupported_parameters(value, schema.get("items", {}), f"{path}[{index}]")
+
+
+def _runtime_authority(snapshot):
+    from .config import runtime_mode
+    return "published" if snapshot else "files" if runtime_mode() == "files" else "authoring_files"
+
+
 def _validation(task, params, schema):
     issues = [vars(issue) for issue in validate_parameter_result(params, schema).issues]
     issues += validate_device_context(task.operation_id, task.category, params, task.target_devices)
@@ -55,6 +75,7 @@ def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask
     task.source_revision = revision
     snapshot = current_snapshot()
     task.knowledge_snapshot_id = snapshot.release_id if snapshot else ""
+    task.runtime_authority = _runtime_authority(snapshot)
     task.context_revision = context_revision()
     if not task.target_queries and task.target_refs:
         task.target_queries = [parse_description(ref, load_inventory()) for ref in task.target_refs]
@@ -87,6 +108,10 @@ def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask
         schema = load_schema(task.operation_id, devices)
     except (KeyError, ValueError, OSError) as exc:
         task.operation_id = ""
+        task.category = ""
+        task.parameter_evidence = {}
+        task.confirmations = {}
+        task.item_ids = {}
         issues.insert(0, {"type": "UNRESOLVED_OPERATION", "field": "operation_id", "message": "Choose a supported operation. " + str(exc)})
         schema = None
     if schema:
@@ -99,7 +124,27 @@ def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask
                 if value != get_value(task.parameters, path):
                     task.parameter_provenance[path] = "inventory_normalization"
             task.parameters = normalized
-        validation = _validation(task, task.parameters, schema)
+        unsupported = list(_unsupported_parameters(task.parameters, schema))
+        for candidate in task.candidates:
+            try:
+                schema_at(schema, candidate["field"])
+            except ValueError:
+                unsupported.append((candidate["field"], candidate.get("values", candidate.get("value"))))
+        boundary_issues = []
+        target = ", ".join(f"{d['hostname']} / {d['vendor']} {d['platform']}" for d in devices) or "unresolved target"
+        for field, value in unsupported:
+            boundary_issues.append({"type": "PARAMETER_UNSUPPORTED_FOR_VENDOR", "field": "operation_id",
+                                    "requested_field": field, "value": value, "device_id": task.device_id,
+                                    "message": f"Explicit parameter {field}={value!r} is not supported by {task.operation_id} for {target}. Choose an operation that implements the requested intent or explicitly correct the target."})
+        for device in devices:
+            try:
+                select_template(device, task.operation_id)
+            except (FileNotFoundError, ValueError) as exc:
+                boundary_issues.append({"type": "UNSUPPORTED_OPERATION", "field": "operation_id", "message": str(exc)})
+        issues.extend(boundary_issues)
+        # Capability/semantic mismatches must be resolved before asking for
+        # vendor-native inputs or mutating the user's explicit parameters.
+        validation = [] if boundary_issues else _validation(task, task.parameters, schema)
         for issue in validation:
             if issue["type"] in {"MISSING", "UNSUPPORTED_OPERATION"}:
                 continue
@@ -115,17 +160,14 @@ def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask
             else:
                 issues.append(issue)
         issues.extend(issue for issue in validation if issue["type"] == "UNSUPPORTED_OPERATION")
-        issues.extend(candidate for candidate in task.candidates if get_value(task.parameters, candidate["field"]) is None)
-        issues.extend(vars(issue) for issue in validate_parameter_result(task.parameters, schema).issues if issue.type == "MISSING")
-        if len(devices) == 1:
+        if not boundary_issues:
+            issues.extend(candidate for candidate in task.candidates if get_value(task.parameters, candidate["field"]) is None)
+            issues.extend(vars(issue) for issue in validate_parameter_result(task.parameters, schema).issues if issue.type == "MISSING")
+        if len(devices) == 1 and not boundary_issues:
             for issue in context_conflicts(task.operation_id, devices[0], task.parameters, task.confirmations, revision):
                 _record_candidate(task, issue, issue["value"])
                 task.parameters = set_value(task.parameters, issue["field"], None)
                 issues.insert(0, issue)
-            try:
-                select_template(devices[0], task.operation_id)
-            except (FileNotFoundError, ValueError) as exc:
-                issues.insert(0, {"type": "UNSUPPORTED_OPERATION", "field": "operation_id", "message": str(exc)})
     # Dependent parameter questions wait until operation and targets are grounded.
     blockers = [issue for issue in issues if issue["field"] == "operation_id" or issue["type"] in TARGET_ISSUES]
     task.issues = blockers or issues
@@ -136,10 +178,17 @@ def _refresh_task(task: PlannedTask, revision: str | None = None) -> PlannedTask
         previous = task.parameter_evidence.get(path)
         root = path.split("[", 1)[0].split(".", 1)[0]
         source = task.parameter_provenance.get(path, task.parameter_provenance.get(root, "user"))
-        evidence = previous if previous and previous["value"] == value else {
+        validation_state = "blocked" if any(issue["type"] in {"UNSUPPORTED_OPERATION", "PARAMETER_UNSUPPORTED_FOR_VENDOR"} for issue in issues) else "accepted"
+        if schema is None:
+            validation_state = "unvalidated"
+        same_context = previous and all(previous.get(key) == expected for key, expected in {
+            "value": value, "source": source, "operation_id": task.operation_id,
+            "device_id": task.device_id, "source_revision": revision, "validation": validation_state,
+        }.items())
+        evidence = previous if same_context else {
             "value": value, "source": source, "source_revision": revision,
             "evidence": task.clarification_history[-1] if source.startswith(("clarification", "context:")) and task.clarification_history else task.request_text,
-            "device_id": task.device_id, "operation_id": task.operation_id, "validation": "accepted",
+            "device_id": task.device_id, "operation_id": task.operation_id, "validation": validation_state,
         }
         accepted_evidence[path] = evidence
     task.parameter_evidence = accepted_evidence
@@ -189,11 +238,13 @@ def _process_intent(intent, index=1, verbose=False) -> list[PlannedTask]:
         if operation is None:
             category = classify_category(intent.request_text)
             retrieved = retrieve_operation_candidates(intent.request_text, category, 3)
+            task.operation_candidates = [candidate["operation_id"] for candidate in retrieved]
             operation = select_operation(intent.request_text, category, retrieved)
         task.operation_id = operation
         task.category = get_operation(operation)["category_id"]
-        devices = resolve_queries(queries)["devices"]
-        schema = load_schema(operation, devices)
+        # Extract against the canonical/all-profile vocabulary before applying
+        # the selected vendor's validation contract in _refresh_task.
+        schema = load_schema(operation)
         extraction = extract_parameter_result(parameter_request(intent.request_text, queries), schema)
         task.parameters, task.parameter_provenance = extraction.parameters, extraction.provenance
         task.candidates = [{**candidate, "message": candidate.get("message", f"Several explicit values were supplied for {candidate['field']}. Choose one.")} for candidate in extraction.candidates]
@@ -275,12 +326,17 @@ def resume_task(task: PlannedTask, reply: str | ClarificationAnswer, *, verbose=
             updated.operation_id = metadata["operation_id"]
             updated.planning_issues = [issue for issue in updated.planning_issues if issue["field"] != "operation_id"]
             updated.category = metadata["category_id"]
-            schema = load_schema(updated.operation_id, updated.target_devices)
+            schema = load_schema(updated.operation_id)
             extraction = extract_parameter_result(parameter_request(task.request_text, task.target_queries), schema)
             updated.parameters = extraction.parameters
             updated.parameter_provenance = extraction.provenance
             updated.candidates = [{**candidate, "message": candidate.get("message", "Choose one explicitly supplied value.")} for candidate in extraction.candidates]
             updated.confirmations = {}
+            updated.parameter_evidence = {}
+            updated.item_ids = {}
+            updated.operation_candidates = []
+            updated.questions = []
+            updated.clarification_questions = []
         else:
             schema = load_schema(task.operation_id, task.target_devices)
             if options:
@@ -406,6 +462,7 @@ def refresh_plan(plan: ExecutionPlan, *, render_complete=True) -> ExecutionPlan:
     plan.source_revision = revision
     snapshot = current_snapshot()
     plan.knowledge_snapshot_id = snapshot.release_id if snapshot else ""
+    plan.runtime_authority = _runtime_authority(snapshot)
     plan.context_revision = context_revision()
     plan.issues = []
     tasks = []

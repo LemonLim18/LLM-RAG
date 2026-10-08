@@ -29,6 +29,10 @@ class NativeVendorRuntimeTests(unittest.TestCase):
         for row in self.cases:
             with self.subTest(operation=row["operation_id"], vendor=row["vendor"]):
                 device, params = self.devices[row["device"]], row["parameters"]
+                if row["operation_id"] == "modify_vlan" and row["vendor"] != "cisco":
+                    with self.assertRaisesRegex(ValueError, "generation blocked"):
+                        render(device, row["operation_id"], params)
+                    continue
                 result = validate_parameter_result(params, load_schema(row["operation_id"], [device]))
                 self.assertTrue(result.valid, result.issues)
                 self.assertEqual(validate_device_context(row["operation_id"], row["category"], params, [device]), [])
@@ -46,6 +50,11 @@ class NativeVendorRuntimeTests(unittest.TestCase):
                 continue
             with self.subTest(operation=row["operation_id"], vendor=row["vendor"]):
                 plan = run(row["prompt"], verbose=False)
+                if row["operation_id"] == "modify_vlan":
+                    self.assertEqual(plan.status, "needs_clarification")
+                    self.assertTrue(any(issue["type"] == "UNSUPPORTED_OPERATION" for issue in plan.tasks[0].issues))
+                    self.assertFalse(plan.tasks[0].configs)
+                    continue
                 self.assertEqual(plan.status, "ready", [(t.operation_id, t.issues, t.feedback) for t in plan.tasks])
                 self.assertEqual(len(plan.tasks), 1)
                 self.assertEqual(plan.tasks[0].operation_id, row["operation_id"])
@@ -55,7 +64,6 @@ class NativeVendorRuntimeTests(unittest.TestCase):
     def test_native_command_semantics(self):
         from app.templates.renderer import render
         expected = [
-            ("modify_vlan", "huawei", "description Staff department"),
             ("rename_vlan", "juniper", "rename vlans STAFF to EMPLOYEES"),
             ("create_classifier", "juniper", "code-points [ 101110 100010 ]"),
             ("configure_scheduler", "huawei", "qos queue 4 wrr weight 20"),
