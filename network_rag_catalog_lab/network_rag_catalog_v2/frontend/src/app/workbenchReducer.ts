@@ -28,6 +28,9 @@ export const initialWorkbenchState: WorkbenchState = {
     copilotVisible: true,
     activityVisible: true,
   },
+  workspaceView: 'samples',
+  reviewSessionId: '',
+  selectedPlanningTaskId: '',
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -41,13 +44,15 @@ export function workbenchReducer(state: WorkbenchState, action: WorkbenchAction)
         ...state,
         selectedDeviceId: device.id,
         activeTabId: Object.values(state.documents).find((document) => document.deviceId === device.id)?.id ?? state.activeTabId,
+        workspaceView: 'samples',
         activity: appendActivity(state, { kind: 'selection', message: `Selected V9 demo inventory device ${device.hostname} (${device.vendor}).` }),
       };
     }
     case 'INVENTORY_LOADING':
       return { ...state, inventory: { phase: 'loading', source: null, revision: null, message: 'Loading V9 demo inventory…' } };
     case 'INVENTORY_LOADED': {
-      const selectedDeviceId = action.devices.some((device) => device.id === state.selectedDeviceId)
+      const selectedDeviceId = action.selectDeviceId && action.devices.some((device) => device.id === action.selectDeviceId)
+        ? action.selectDeviceId : action.devices.some((device) => device.id === state.selectedDeviceId)
         ? state.selectedDeviceId
         : action.devices[0]?.id ?? '';
       return {
@@ -71,7 +76,7 @@ export function workbenchReducer(state: WorkbenchState, action: WorkbenchAction)
       };
     case 'ACTIVATE_TAB':
       if (!state.openTabIds.includes(action.tabId)) return state;
-      return { ...state, activeTabId: action.tabId };
+      return { ...state, activeTabId: action.tabId, workspaceView: 'samples' };
     case 'UPDATE_DOCUMENT': {
       const document = state.documents[action.tabId];
       if (!document || document.content === action.content) return state;
@@ -101,6 +106,23 @@ export function workbenchReducer(state: WorkbenchState, action: WorkbenchAction)
         activity: appendActivity(state, { kind: 'chat', message: 'Added a local mock Copilot exchange.' }),
       };
     }
+    case 'SHOW_WORKSPACE_VIEW':
+      if (action.view === 'plan' && !state.reviewSessionId) return state;
+      return { ...state, workspaceView: action.view };
+    case 'SYNC_PLANNING_SESSION': {
+      const sameSession = state.reviewSessionId === action.sessionId;
+      const selectedPlanningTaskId = sameSession && action.taskIds.includes(state.selectedPlanningTaskId)
+        ? state.selectedPlanningTaskId
+        : action.taskIds[0] ?? '';
+      return {
+        ...state,
+        reviewSessionId: action.sessionId,
+        selectedPlanningTaskId,
+        workspaceView: 'plan',
+      };
+    }
+    case 'SELECT_PLANNING_TASK':
+      return { ...state, selectedPlanningTaskId: action.taskId };
     case 'RESIZE_PANEL': {
       const next = { ...state.layout };
       if (action.panel === 'explorer') next.explorerWidth = clamp(action.value, 190, 380);

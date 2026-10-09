@@ -1,6 +1,6 @@
 # Architecture Decisions
 
-**Status:** Established product decisions from Iteration -1 plus source-backed design decisions from Iteration 0. New implementation boundaries below are selected designs, not implemented or runtime-verified services.
+**Status:** Product/design decisions from Iterations -1/0, with implementation decisions through Iteration 9. Historical deferrals are resolved only by the later explicitly scoped decisions and handovers below; future proposals are not authorization to implement them.
 
 ## AD-001 — V9 is the authoritative AI engine
 
@@ -217,3 +217,83 @@
 **Rationale:** Panel toggling must not discard pending work or enable duplicates, while API failure must not block Monaco or impersonate an AI response. V9 may use deterministic fallback even when a real session is created.
 
 **Consequences:** Pending questions have no answer controls in Iteration 4. Generated text is read-only session output, not a Monaco draft. Real model and retrieval participation is verified separately by an opt-in delegating probe, not inferred from health, session status or installed model tags. Browser state resets on reload; V9 sessions remain on disk.
+
+## AD-028 — Answer mutation restores saved state without invoking resume
+
+**Decision:** The answer-only POST reads and hashes existing saved JSON, validates its version-2 `SessionPayload`, reconstructs V9's own dataclasses and requires a lossless serialization round trip before mutation. It does not use `load_session` or `_plan_from_dict`, add a GET or migrate old state. It checks the expected saved hash, current question identity/revisions and active source/context/authority before calling existing `apply_answer`.
+
+**Rationale:** V9's current loader resets task output and refreshes/renders; invoking it before the stale-write check would change the answer's meaning. Dataclass rehydration is sufficient for current sessions without changing the CLI or duplicating planning.
+
+**Consequences:** Unknown/legacy/inconsistent state is explicitly rejected. Snapshot context and V9's own validation remain authoritative. No external input may specify an authoritative parameter/operation patch. Stale sessions require review outside this bounded workflow; general recovery/resume is deferred.
+
+## AD-029 — Creation and answers share the same bounded mutation coordinator
+
+**Decision:** Extend the existing `PlanningService` gate/cache to both mutation types; fingerprint the method, session and entire request. Keep a single worker-backed synchronous response and the existing 256-ID process-local retention budget. Publish the retained outcome before releasing the gate.
+
+**Rationale:** Creation and clarification both access global catalog state. Separate locks would allow them to race even across different sessions. Reusing one small boundary avoids an unrelated session/job architecture.
+
+**Consequences:** Busy mutations fail explicitly, retries reuse exact IDs/payloads, and conflicting IDs are rejected. Cached outcomes describe the original operation, not current session freshness. Single-process support only: no durable exactly-once guarantee, multi-worker lock, CLI coordination or cancellation. The saved hash rejects already-changed files but does not solve mid-operation cross-process writes. Do not mutate runtime sources externally during a request.
+
+## AD-030 — Acceptance is a V9 fact, not HTTP/function success inference
+
+**Decision:** The answer boundary returns success only when V9 records the new clarification history entry as accepted and the returned serialization matches saved JSON. A saved V9 rejection returns 422 `V9_ANSWER_REJECTED` plus the complete confirmed saved session and revision. Precheck errors do not refresh or write. The frontend retains confirmed state while pending and never advances optimistically.
+
+**Rationale:** V9 can return normally after rejecting a value and save feedback/history. Discarding that response would lose its new revision; treating it as accepted would falsely progress the GUI.
+
+**Consequences:** Backend-driven radio/checkbox options send stable IDs, and permitted custom values remain literal text for V9. Only the current question is answerable. Known validation rejection allows explicit edit/retry; stale and uncertain outcomes block new mutations and distinguish same-ID recovery from a new answer. No fake answers, terminal option numbers, automatic progression or mock fallback. One live R3 interface-selection round trip was verified; this is not universal clarification-type certification.
+
+## AD-031 — Plan review is a projection of the confirmed V9 response
+
+**Decision:** The central workspace projects the provider-owned Local V9 result into a selectable task list and read-only detail view. The reducer stores only the workspace view, current response session ID and selected task ID; it does not copy tasks or create another execution-plan store.
+
+**Rationale:** Multi-intent and per-device expansion are easiest to inspect in the main workspace, while request and clarification controls remain in AI Copilot. Keeping the full response in the existing planning hook prevents frontend state from diverging from V9 semantics.
+
+**Consequences:** `intent_id` remains the task identity, `logical_intent_id` links device-specific tasks to the originating intent, and target/config/evidence/issue fields are displayed only when returned. Raw V9 statuses remain authoritative; `ready` or `rendered` means preview availability, never deployment. A new session retains a selected task only if the same task still exists in that same session; otherwise selection moves to the first returned task. Generated previews are read-only and never replace the independent in-memory Monaco samples. Session retrieval, artifacts and drafts remain deferred.
+
+## AD-032 — Saved-session GET is one historical byte snapshot
+
+**Decision:** Iteration 7 extracts the answer adapter's version-2 validation into `app/workbench/saved_sessions.py`. GET and answer mutation share this validator. GET reads one file from configured session storage, validates lossless typed serialization and pending-question identities, and returns its exact-byte SHA-256. It neither imports the planning runtime nor calls the refreshing loader. Answers retain their additional runtime/source checks and V9 reconstruction equality check.
+
+**Rationale:** A typed snapshot can preserve saved configurations and historical authority while remaining independent of current Ollama/catalog availability. A separate `SavedSessionResponse` shares `SessionSnapshot`/`SessionPayload` with mutation responses, without inventing a creation request UUID that is absent from saved data.
+
+**Consequences:** Historical freshness and mutation eligibility are explicitly `not_checked`; read responses use `Cache-Control: no-store`. No mutation gate is acquired and a read can precede a concurrent atomic save. Version-incompatible, malformed, lossy or inconsistent records are rejected without repair. Reads do not grant permission to bypass answer revision/source checks. AD-031's retrieval deferral is resolved only for a known ID; resume, artifacts and drafts remain deferred.
+
+## AD-033 — Recovery remembers identifiers and reports evidence limits
+
+**Decision:** Persist only the latest confirmed session UUID/revision, an answer-uncertainty flag, and an unconfirmed creation UUID when relevant in browser local storage. Restore requires an explicit GET action and reuses provider-owned planning state and central review. No prompt, answer text, full session or generated configuration is stored in the browser recovery reference.
+
+**Rationale:** The persisted V9 session is the authority. Browser metadata is sufficient to locate a known session after reload, while preserving the distinction between restoring historical state and applying a mutation.
+
+**Consequences:** Compare saved revisions but never infer answer acceptance from a changed hash. With retained in-memory answer data, a unique matching new V9 history entry can confirm the recorded answer was accepted/rejected; it cannot identify the originating HTTP request. Without that evidence, uncertainty persists and further answers stay blocked. After reload, the flag survives but full answer evidence does not. Unknown-ID creation cannot be resolved from existing persistence: no request-to-session mapping, scan, automatic replay or exactly-once claim is introduced. Creation-outcome lookup is a separate proposed iteration.
+
+## AD-034 — Durable creation receipts favor uncertainty over replay
+
+**Decision:** Iteration 8 records a versioned accepted receipt under `SESSIONS_DIR/.creation_requests/` before invoking the unchanged V9 creator. It stores the request UUID, SHA-256 of normalized prompt/mode, status, and only a confirmed session UUID/creation timestamp or safe pre-invocation error code. No prompt or full session duplicate is stored. Writes flush/fsync a sibling temporary file and atomically replace the receipt. Retention is bounded and never silently evicted.
+
+**Rationale:** V9 allocates its UUID after planning and exposes no public predetermined-ID input. It atomically saves the session before returning. Without a core transaction change, a crash between that save and completed-receipt publication cannot safely establish the association. An unfinished receipt therefore blocks replay rather than guessing or scanning sessions.
+
+**Consequences:** Completed receipts are checked against the existing passive version-2 session reader, prompt/mode fingerprint, session ID and creation timestamp. The current saved revision can advance after answers; the receipt is not an immutable full-session snapshot. Same-ID completed POSTs return validated saved state without planning, including after restart. Different content conflicts; incomplete/corrupt receipts never invoke V9. Safe creator-import failures can be terminal; failures after invocation remain indeterminate. The small existing process gate/cache remains for mutations, not a multi-worker coordinator. No exactly-once, power-loss, durable-answer or cross-process guarantee is claimed. This resolves only creation's restart limitation in AD-029/AD-033.
+
+## AD-035 — Creation recovery is two explicit passive reads
+
+**Decision:** GET `/api/v1/planning/requests/{client_request_id}` reports unknown, in-progress, completed, terminal-error, indeterminate or corrupt state without importing AI runtime or mutating storage. A completed association is followed by the existing passive session GET before the frontend adopts it. Recovery reuses the provider-owned plan state, historical label and existing task/question components.
+
+**Rationale:** A receipt proves a recorded association, not current catalog validity. An unrelated remembered session or a missing record cannot supply that proof. Explicit reads prevent response loss from triggering a second creation.
+
+**Consequences:** Browser metadata remains unchanged and minimal. The creation retry button is replaced by outcome lookup; no automatic POST or replacement UUID occurs. Saved-session errors retain the outstanding request reference and existing state. Answer uncertainty is not cleared merely by identifying creation. Pre-receipt historical requests, lost/corrupt files and interrupted accepted receipts may remain unrecoverable. Session refresh/resume and all future roadmap changes remain deferred.
+
+## AD-036 — Add-only registration preserves the existing JSON authority
+
+**Decision:** Iteration 9 appends a server-identified synthetic device and optional initial interfaces to the same `INVENTORY_FILE` used by V9's uncached loader. A strict typed request, complete proposed-list structural/identity/reference validation and actual V9 selector checks precede a sibling temporary write, flush/fsync and atomic replacement. Original dictionaries, including unknown attributes, are retained rather than reconstructed from the safe GUI projection. Optimistic concurrency uses the established logical-record revision.
+
+**Rationale:** The inventory loader has no reusable whole-inventory schema validator, and target identity includes hostname/display-name/aliases rather than raw ID selectors. A small workbench adapter can validate add-only changes without altering V9 semantics, introducing a second dataset or porting the FYP backend. Explicit capability declarations avoid interpreting empty features as unsupported when V9 treats them as unrestricted.
+
+**Consequences:** Registration shares creation/answer's process mutation gate without entering their request-ID cache. Stale revisions and conflicting identities reject writes; pre-replacement failures leave the authority intact. The final revision check is not cross-process CAS, and no exactly-once registration, persistent backup, power-loss or external-writer guarantee is claimed. Old sessions are untouched and existing source-staleness rejection remains authoritative. Vendor/platform choices and declared capabilities are not operational certification. AD-015's broader inventory proposal is implemented only for this add-only boundary; edits, deletion and backup/recovery workflows remain deferred.
+
+## AD-037 — Native registration groups initial interfaces in one transaction
+
+**Decision:** Use a small native workbench dialog with typed metadata, paired vendor/platform choices, explicit capabilities and optional initial-interface rows. Reuse the provider's inventory GET/reducer for post-save refresh and selection. Retain the existing plan and independent Monaco samples; mark a retained plan historical after confirmed inventory change. No prototype source code is copied.
+
+**Rationale:** The scoped FYP inspection supported grouped fields, inline duplicate feedback and confirmed refresh, but its separate device/interface saves, credentials, SQL identities and background external sync conflict with V9's single JSON authority. One nested registration transaction is smaller and avoids partial interface onboarding.
+
+**Consequences:** Interfaces require explicit names, roles, types and administrative flags; no addresses, neighbors or discovery state are fabricated. Stale/uncertain outcomes require explicit reload and inspection rather than automatic POST replay. A confirmed save with a failed refresh offers reload only. Selection does not imply a matching sample document. Existing-device/interface management, topology, session refresh and execution remain outside this iteration.

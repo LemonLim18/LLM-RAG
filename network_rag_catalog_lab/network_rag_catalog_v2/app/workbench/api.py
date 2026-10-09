@@ -1,13 +1,17 @@
 import os
+from uuid import UUID
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from .inventory_service import DeviceNotFoundError, get_inventory_device, list_inventory_devices
 from .models import HealthResponse, InventoryDetailResponse, InventoryListResponse, RuntimeStatusResponse
 from .runtime_status import runtime_status
-from .planning_models import PlanningErrorResponse, PlanningRequest, PlanningResponse
+from .planning_models import AnswerRequest, AnswerResponse, PlanningErrorResponse, PlanningRequest, PlanningResponse
 from .planning_service import PlanningError, PlanningService
+from .planning_models import CreationOutcome, SavedSessionResponse, SavedSessionErrorResponse
+from .saved_sessions import get_saved_session
+from .inventory_registration import DeviceRegistration, InventoryErrorResponse
 
 
 def _development_origins() -> list[str]:
@@ -61,6 +65,39 @@ def create_app() -> FastAPI:
 
     planning = PlanningService()
 
+    @application.post('/api/v1/inventory/devices', response_model=InventoryDetailResponse, status_code=201,
+                      responses={code: {'model': InventoryErrorResponse} for code in (409, 503)}, tags=['inventory'])
+    def register_inventory_device(request: DeviceRegistration) -> InventoryDetailResponse:
+        try:
+            return planning.register_inventory_device(request)
+        except PlanningError as error:
+            raise HTTPException(status_code=error.status, detail={
+                'code': error.code, 'message': str(error),
+                'current_inventory_revision': getattr(error, 'revision', None),
+            }) from error
+
+    @application.get("/api/v1/planning/requests/{client_request_id}", response_model=CreationOutcome,
+                     responses={503: {"model": SavedSessionErrorResponse}}, tags=["planning"])
+    def read_creation_outcome(client_request_id: UUID, response: Response) -> CreationOutcome:
+        response.headers["Cache-Control"] = "no-store"
+        try:
+            return planning.lookup_creation(client_request_id)
+        except PlanningError as error:
+            raise HTTPException(status_code=error.status, detail={"code": error.code, "message": str(error)},
+                                headers={"Cache-Control": "no-store"}) from error
+
+    @application.get("/api/v1/planning/sessions/{session_id}", response_model=SavedSessionResponse,
+                     responses={code: {"model": SavedSessionErrorResponse} for code in (404, 409, 503)},
+                     tags=["planning"])
+    def read_planning_session(session_id: UUID, response: Response) -> SavedSessionResponse:
+        response.headers["Cache-Control"] = "no-store"
+        try:
+            return get_saved_session(str(session_id))
+        except PlanningError as error:
+            raise HTTPException(status_code=error.status, detail={
+                "code": error.code, "message": str(error),
+            }, headers={"Cache-Control": "no-store"}) from error
+
     @application.post("/api/v1/planning/sessions", response_model=PlanningResponse,
                       responses={code: {"model": PlanningErrorResponse} for code in (409, 500, 503)},
                       tags=["planning"])
@@ -72,6 +109,18 @@ def create_app() -> FastAPI:
             raise HTTPException(status_code=error.status, detail={
                 "code": error.code, "message": str(error),
                 "client_request_id": str(request.client_request_id),
+            }) from error
+
+    @application.post("/api/v1/planning/sessions/{session_id}/answers", response_model=AnswerResponse,
+                      responses={code: {"model": PlanningErrorResponse} for code in (404, 409, 422, 500, 503)},
+                      tags=["planning"])
+    def answer_planning_question(session_id: UUID, request: AnswerRequest) -> AnswerResponse:
+        try:
+            return planning.answer(str(session_id), request)
+        except PlanningError as error:
+            raise HTTPException(status_code=error.status, detail={
+                "code": error.code, "message": str(error), "client_request_id": str(request.client_request_id),
+                "current_session": error.current_session.model_dump(mode="json") if error.current_session else None,
             }) from error
 
     return application

@@ -14,7 +14,8 @@ const fixture = {
       })),
     },
     pending_questions: [{ question_id: 'question-from-v9', task_id: 'intent-1:dev-r1', wording: 'Which VLAN name?',
-      revision: 3, source_revision: 'source-hash', options: [{ option_id: 'stable-option', value: 'STAFF' }] }],
+      revision: 3, source_revision: 'source-hash', field_path: 'name', multiple: false, allow_custom: true,
+      expected_schema: { type: 'string' }, options: [{ option_id: 'stable-option', value: 'STAFF', label: 'STAFF' }] }],
   },
 };
 
@@ -48,13 +49,15 @@ test('Local V9 pending, structured multi-target clarification and mock separatio
   const result = page.getByRole('region', { name: 'Local V9 session result' });
   await expect(result).toContainText('server-session-42');
   await expect(result).toContainText('2 task(s)');
-  await expect(result).toContainText('intent-1:dev-r1');
-  await expect(result).toContainText('intent-1:dev-r2');
-  await expect(result).toContainText('R2 / huawei vrp');
-  await expect(result).toContainText('100');
   await expect(result).toContainText('Which VLAN name?');
   await expect(result).toContainText('question-from-v9');
-  await expect(result).toContainText('Answering questions is not supported');
+  await expect(result).toContainText('Only the current question can be answered');
+  const review = page.getByLabel('Local V9 plan review');
+  await expect(review).toContainText('intent-1:dev-r1');
+  await expect(review).toContainText('intent-1:dev-r2');
+  await page.getByRole('option', { name: /intent-1:dev-r2/ }).click();
+  await expect(page.getByLabel('Task details intent-1:dev-r2')).toContainText('R2');
+  await expect(page.getByLabel('Task details intent-1:dev-r2')).toContainText('100');
   expect(calls).toBe(1);
   await page.getByRole('button', { name: 'Demo mock', exact: true }).click();
   await expect(result).toHaveCount(0);
@@ -64,12 +67,16 @@ test('Local V9 pending, structured multi-target clarification and mock separatio
   expect(calls).toBe(1);
 });
 
-test('Local V9 errors never become demo results and retries retain request identity', async ({ page }) => {
+test('Local V9 errors never become demo results and lookup retains request identity', async ({ page }) => {
   const ids: string[] = [];
   await page.route('**/api/v1/planning/sessions', async (route) => {
     ids.push(route.request().postDataJSON().client_request_id);
     await route.fulfill({ status: 503, json: { detail: { code: 'LOCAL_SERVICE_UNAVAILABLE', message: 'Local model unavailable.' } } });
   });
+  await page.route('**/api/v1/planning/requests/*', (route) => route.fulfill({ json: {
+    api_version: 1, client_request_id: ids[0], status: 'unknown', message: 'No durable record is known.',
+    session_id: null, session_revision: null, error_code: null,
+  } }));
   await page.goto('/');
   await page.getByRole('button', { name: 'Local V9', exact: true }).click();
   await page.getByLabel('Request a Local V9 plan').fill('Create VLAN 100 on R1');
@@ -77,10 +84,10 @@ test('Local V9 errors never become demo results and retries retain request ident
   await expect(page.getByRole('complementary', { name: 'AI Copilot' }).getByRole('alert')).toContainText('LOCAL_SERVICE_UNAVAILABLE');
   await expect(page.getByRole('region', { name: 'Local V9 session result' })).toHaveCount(0);
   await expect(page.getByText(/Mock response:/)).toHaveCount(0);
-  await page.getByRole('button', { name: 'Retry same request' }).click();
+  await page.getByRole('button', { name: 'Check creation outcome' }).click();
   await expect(page.getByRole('complementary', { name: 'AI Copilot' }).getByRole('alert')).toContainText('LOCAL_SERVICE_UNAVAILABLE');
-  expect(ids).toHaveLength(2);
-  expect(ids[0]).toBe(ids[1]);
+  await expect(page.getByLabel('Saved session recovery')).toContainText('Creation outcome: unknown');
+  expect(ids).toHaveLength(1);
   await page.getByRole('tab', { name: /r3-juniper.cfg/i }).click();
   await expect(page.locator('.view-lines')).toContainText('host-name R3');
   await page.getByRole('listitem', { name: /R2 Huawei/i }).click();
@@ -107,9 +114,9 @@ test('opt-in real browser to FastAPI to V9 planning smoke', async ({ page }) => 
   await page.getByRole('button', { name: 'Create Local V9 session' }).click();
   const result = page.getByRole('region', { name: 'Local V9 session result' });
   await expect(result).toContainText('Session: ready', { timeout: 125_000 });
-  await expect(result).toContainText('create_vlan');
-  await expect(result).toContainText('dev-r1');
-  await page.getByText('Generated configuration (read-only preview)', { exact: true }).click();
-  await expect(result).toContainText('vlan 100');
+  const review = page.getByLabel('Local V9 plan review');
+  await expect(review).toContainText('create_vlan');
+  await expect(review).toContainText('dev-r1');
+  await expect(review).toContainText('vlan 100');
   console.log('REAL_BROWSER_SESSION', await result.locator('.planning-id').first().innerText());
 });

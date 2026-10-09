@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useWorkbench } from '../../app/workbenchContext';
 import { ChatInput } from './ChatInput';
 import { PlanningResult } from './PlanningResult';
+import { SessionRecovery } from './SessionRecovery';
 
 export function ChatPanel() {
   const { state, dispatch, localPlanning } = useWorkbench();
@@ -40,21 +41,21 @@ export function ChatPanel() {
           </article>
         ))}
         {local && <>
+          <SessionRecovery />
           {planning.phase === 'idle' && <p className="empty-state">Submit a request to create a persisted V9 planning session.</p>}
           {planning.request && <article className="message message--user"><div className="message-body"><strong>You · Local V9 request</strong><p>{planning.request.prompt}</p><p className="planning-id">Request: {planning.request.client_request_id}</p></div></article>}
           {planning.phase === 'pending' && <p role="status">V9 is processing… No automatic retries. You can continue editing sample tabs.</p>}
           {planning.phase === 'error' && <div className="planning-error" role="alert">
             <p>{planning.error}</p>
-            <p>No mock fallback. Retry reuses this request ID while this backend process remains running. After restart, inspect saved sessions first.</p>
+            <p>Use Check creation outcome to inspect the durable receipt, including after a backend restart. No request is replayed. An incomplete receipt may remain indeterminate.</p>
             <p className="planning-id">Request: {planning.request?.client_request_id}</p>
-            <button type="button" onClick={localPlanning.retry}>Retry same request</button>
-            <button type="button" onClick={localPlanning.reset}>New request (may create another session)</button>
+            <button type="button" disabled={localPlanning.busy} onClick={localPlanning.reset}>New request (may create another session)</button>
           </div>}
           {planning.result && <PlanningResult result={planning.result} />}
         </>}
         <div ref={endRef} />
       </div>
-      <ChatInput key={mode} local={local} disabled={local && (planning.phase === 'pending' || planning.phase === 'error')}
+      <ChatInput key={mode} local={local} disabled={local && (localPlanning.busy || planning.phase === 'error' || localPlanning.answerState.phase === 'error')}
         onSend={local ? localPlanning.submit : (message) => dispatch({ type: 'SEND_MOCK_MESSAGE', message })} />
       <p className="composer-note">Enter to send · Shift+Enter for a new line</p>
     </aside>

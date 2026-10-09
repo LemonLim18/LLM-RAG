@@ -57,16 +57,22 @@ export interface WorkbenchState {
   chatMessages: ChatMessage[];
   activity: ActivityEntry[];
   layout: PanelLayout;
+  workspaceView: 'samples' | 'plan';
+  reviewSessionId: string;
+  selectedPlanningTaskId: string;
 }
 
 export type WorkbenchAction =
   | { type: 'SELECT_DEVICE'; deviceId: string }
   | { type: 'INVENTORY_LOADING' }
-  | { type: 'INVENTORY_LOADED'; devices: InventoryDevice[]; source: 'synthetic'; revision: string }
+  | { type: 'INVENTORY_LOADED'; devices: InventoryDevice[]; source: 'synthetic'; revision: string; selectDeviceId?: string }
   | { type: 'INVENTORY_FAILED'; message: string }
   | { type: 'ACTIVATE_TAB'; tabId: string }
   | { type: 'UPDATE_DOCUMENT'; tabId: string; content: string }
   | { type: 'SEND_MOCK_MESSAGE'; message: string }
+  | { type: 'SHOW_WORKSPACE_VIEW'; view: 'samples' | 'plan' }
+  | { type: 'SYNC_PLANNING_SESSION'; sessionId: string; taskIds: string[] }
+  | { type: 'SELECT_PLANNING_TASK'; taskId: string }
   | { type: 'RESIZE_PANEL'; panel: 'explorer' | 'copilot' | 'activity'; value: number }
   | { type: 'TOGGLE_PANEL'; panel: 'explorer' | 'copilot' | 'activity' };
 
@@ -74,5 +80,6 @@ export interface WorkbenchContextValue {
   state: WorkbenchState;
   dispatch: React.Dispatch<WorkbenchAction>;
   retryInventory: () => void;
+  refreshInventory: (selectDeviceId?: string) => Promise<import('../services/inventoryApi').InventoryListResponse>;
   localPlanning: ReturnType<typeof useLocalPlanning>;
 }

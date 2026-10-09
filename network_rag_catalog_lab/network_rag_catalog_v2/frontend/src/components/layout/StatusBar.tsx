@@ -36,7 +36,7 @@ export function StatusBar() {
         <button type="button" className="status-retry" onClick={retry} aria-label="Retry backend connection"><RefreshCw size={11} /> Retry</button>
       )}
       <span className="status-bar-spacer" />
-      <span><Github size={12} /> Iteration 4</span>
+      <span><Github size={12} /> Iteration 9</span>
       <span>Local preview only</span>
     </footer>
   );

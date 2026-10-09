@@ -2,6 +2,7 @@ import { AlertTriangle, ChevronDown, LoaderCircle, Network, RefreshCw, Search } 
 import { useMemo, useState } from 'react';
 import { useWorkbench } from '../../app/workbenchContext';
 import { RouterIcon } from '../../components/icons/RouterIcon';
+import { AddDeviceForm } from './AddDeviceForm';
 
 const vendorLabels: Record<string, string> = { cisco: 'Cisco', huawei: 'Huawei', juniper: 'Juniper' };
 const vendorLabel = (vendor: string) => vendorLabels[vendor] ?? vendor;
@@ -10,6 +11,7 @@ const titleCase = (value: string) => value.replace(/(^|[_-])\w/g, (match) => mat
 export function ExplorerPanel() {
   const { state, dispatch, retryInventory } = useWorkbench();
   const [query, setQuery] = useState('');
+  const [adding, setAdding] = useState(false);
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
     if (!needle) return state.devices;
@@ -31,6 +33,9 @@ export function ExplorerPanel() {
           ? `V9 demo inventory · API · ${state.inventory.revision?.slice(0, 8)}`
           : state.inventory.message}
       </div>
+      <button className="inventory-add" type="button" disabled={!state.inventory.revision}
+        onClick={() => setAdding(true)}>Add Device</button>
+      {adding && <AddDeviceForm onClose={() => setAdding(false)} onRegistered={() => setQuery('')} />}
       <label className="search-box">
         <Search size={14} aria-hidden="true" />
         <span className="sr-only">Filter V9 demo inventory devices</span>

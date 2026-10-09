@@ -156,10 +156,11 @@ class WorkbenchPlanningTests(unittest.TestCase):
         self.assertEqual(saved, session)
         self.assertEqual(len(list(self.directory.glob('*.json'))), 1)
 
-    def test_only_session_creation_mutation_is_exposed(self):
+    def test_only_creation_and_answer_mutations_are_exposed(self):
         schema = self.client.get('/api/openapi.json').json()
         mutations = [(path, method) for path, methods in schema['paths'].items() for method in methods if method in {'post', 'put', 'patch', 'delete'}]
-        self.assertEqual(mutations, [('/api/v1/planning/sessions', 'post')])
+        self.assertEqual(mutations, [('/api/v1/inventory/devices', 'post'), ('/api/v1/planning/sessions', 'post'),
+                                     ('/api/v1/planning/sessions/{session_id}/answers', 'post')])
 
 
 if __name__ == '__main__':
