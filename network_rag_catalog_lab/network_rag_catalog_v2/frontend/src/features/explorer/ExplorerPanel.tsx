@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react';
 import { useWorkbench } from '../../app/workbenchContext';
 import { RouterIcon } from '../../components/icons/RouterIcon';
 import { AddDeviceForm } from './AddDeviceForm';
+import { SavedOriginals } from './SavedOriginals';
+import { WorkingFiles } from './WorkingFiles';
 
 const vendorLabels: Record<string, string> = { cisco: 'Cisco', huawei: 'Huawei', juniper: 'Juniper' };
 const vendorLabel = (vendor: string) => vendorLabels[vendor] ?? vendor;
@@ -73,6 +75,8 @@ export function ExplorerPanel() {
         })}
         {state.inventory.phase === 'ready' && filtered.length === 0 && <div className="empty-state"><Network size={20} /><span>No inventory devices match.</span></div>}
       </div>
+      <WorkingFiles />
+      <SavedOriginals />
       <div className="explorer-detail">
         {(() => {
           const selected = state.devices.find((device) => device.id === state.selectedDeviceId);

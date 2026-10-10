@@ -1,6 +1,6 @@
 # Architecture Decisions
 
-**Status:** Product/design decisions from Iterations -1/0, with implementation decisions through Iteration 9. Historical deferrals are resolved only by the later explicitly scoped decisions and handovers below; future proposals are not authorization to implement them.
+**Status:** Product/design decisions from Iterations -1/0, with implementation decisions through Iteration 14. Historical deferrals are resolved only by the later explicitly scoped decisions and handovers below; future proposals are not authorization to implement them.
 
 ## AD-001 — V9 is the authoritative AI engine
 
@@ -297,3 +297,75 @@
 **Rationale:** The scoped FYP inspection supported grouped fields, inline duplicate feedback and confirmed refresh, but its separate device/interface saves, credentials, SQL identities and background external sync conflict with V9's single JSON authority. One nested registration transaction is smaller and avoids partial interface onboarding.
 
 **Consequences:** Interfaces require explicit names, roles, types and administrative flags; no addresses, neighbors or discovery state are fabricated. Stale/uncertain outcomes require explicit reload and inspection rather than automatic POST replay. A confirmed save with a failed refresh offers reload only. Selection does not imply a matching sample document. Existing-device/interface management, topology, session refresh and execution remain outside this iteration.
+
+## AD-038 — Generated Monaco views are transient projections of confirmed snapshots
+
+**Decision:** Iteration 10 adds an explicit task-output action and one V9 preview workspace view. Resolve configuration text directly from the existing provider-owned response using session ID, exact saved revision, task ID, device ID and config-entry index. Require an explicit device association consistent with that task. Use an encoded tuple in a separate `inmemory://v9-preview/` model namespace, with both Monaco read-only options and no change/save handler. No backend field, artifact ID or endpoint is introduced.
+
+**Rationale:** V9 already returns device-specific configurations in each task. Snapshot-scoped entry indexes distinguish even multiple outputs for the same device without fabricating persistent identities. A transient selection and disposable model deliver review without duplicating the plan, affecting editable samples or prematurely implementing AD-017's artifact store.
+
+**Consequences:** Changed saved revisions or replacement sessions clear preview selection and show an explicit reopen notice. Rendering also checks the current provider snapshot before displaying content. Missing or mismatched output never falls back to another task/device/sample. Models are disposed on switch/close and recreated only from the confirmed response; preview cursor history is not retained. Historical restoration and known inventory changes retain existing unverified labels, not a new freshness claim. This resolves only read-only viewing: immutable original capture, drafts, DiffEditor, edited-content validation, persistence and execution remain deferred.
+
+## AD-039 — Originals explicitly capture one verified historical V9 snapshot
+
+**Decision:** Iteration 11 adds an immutable generated-original JSON store under configured `STORAGE_DIR/workbench/generated_originals`, separate from V9 sessions, inventory and knowledge. Capture accepts only session UUID, expected saved-byte revision, task ID, device ID and zero-based config-entry index. Under the existing mutation gate, the passive version-2 reader validates a single saved snapshot; capture verifies the task/config/target association and copies the exact string. No planning, rendering, refresh or current-source certification occurs.
+
+**Rationale:** A saved session (A) is the engine's evolving snapshot; an original (B) is an independently readable archived workbench document. A future editable working document (C) may reference this original identity but must not overwrite it. A future pending AI modification (D) must remain separate from any accepted working document. Only A and B are implemented; no draft/patch repository, virtual filesystem or speculative endpoints are introduced.
+
+**Consequences:** `original-` plus a SHA-256 of canonical version/source coordinates gives restart-stable identity and idempotent explicit capture. Content hashes use the exact string encoded as UTF-8 without newline/whitespace normalization; a separate canonical record hash checks provenance and content together. Captures flush/fsync an exclusive sibling temporary and publish through atomic no-clobber `os.link` on supported local NTFS, then verify before confirming. Existing originals are verified, never replaced. Failed/unsupported hard-link publication has no unsafe fallback. Reads/listing are passive and do not depend on the source session remaining current or present. The bounded store rejects corruption/capacity failures, never repairs or evicts. These are single-process coordination and API immutability guarantees, not multi-worker transactions, cryptographic authenticity against privileged tampering, or guaranteed sudden-power-loss/OneDrive durability. See `17_ITERATION_11_HANDOVER.md` for exact schema, limits and failure boundaries.
+
+## AD-040 — Saved Originals are discoverable read-only IDE documents
+
+**Decision:** Add a small Configurations / Saved Originals section to the existing Explorer, populated by a passive bounded metadata GET. The transient Monaco preview offers explicit Save to Workspace; its response must confirm the submitted coordinates before success is shown. Clicking an actual listed original fetches its detail and opens the single central editor using `inmemory://v9-original/{artifact_id}/configuration`.
+
+**Rationale:** Normal discovery must survive a fresh browser/backend without typing an artifact UUID or relying on cached plan data. A provider-owned server-response cache and existing workspace-view selection suffice; no second plan store, general file-tab framework or browser-persisted configurations are needed.
+
+**Consequences:** Original models are read-only and disposable on view/document switches, isolated from transient preview and editable sample namespaces. The server remains the content authority; samples retain their independent edits. Captured provenance and historical/current-validity-not-checked labels do not imply deployment. Lost capture responses remain uncertain; explicit passive refresh/reopen can discover a committed original, and no POST is automatically retried. A failed list does not revoke a previously confirmed capture. Editable drafts (recommended Iteration 12), optional on-demand comparison, agent proposals and knowledge-authoring workflows remain separate and unimplemented.
+
+## AD-041 — One revisioned working file per verified original
+
+**Decision:** Iteration 12 implements C (editable working document) as a bounded version-1 JSON record in configured `STORAGE_DIR/workbench/working_documents`. Its ID is `working-` plus its original's digest suffix, separate from A (saved V9 session), B (immutable original), and any future D (pending AI proposal). Creation accepts only an original ID, verifies that original using the existing adapter, and copies its exact content/provenance once. Reopening never resets edited text. Saves accept only expected working revision and text, never edits to source metadata.
+
+**Rationale:** Stable original-derived identity makes response-loss/restart reopening idempotent without a general filesystem or new planning store. A fresh UUID revision plus incremented save sequence on every save prevents content-hash ABA acceptance. Content and canonical-record hashes detect corruption, not network correctness or privileged tampering.
+
+**Consequences:** Sibling exclusive temporary writes, flush/fsync and hard-link no-clobber creation/atomic replacement operate under the existing single-process mutation gate. A final revision recheck is not cross-process CAS. List/detail are passive, bounded and independently readable after source-session changes. No edit/delete-original, working deletion, power-loss guarantee, cross-worker coordination, repair or semantic validation. Every working file remains unvalidated and not deployed, even if its text equals the original.
+
+## AD-042 — Generated output opens a native working editor without manual archival steps
+
+**Decision:** Reuse the existing source-coordinate capture API internally, then create/reopen the default working document. A newly confirmed user creation/answer response with exactly one task, one associated nonempty configuration, ready status and no pending questions triggers this normal open flow. Multiple or historical outputs have direct Open in Editor/Open for Editing actions in chat/review/preview. Passive restoration and Explorer GETs never create documents. Existing explicit original capture remains available but is not a prerequisite the engineer must perform manually.
+
+**Rationale:** The FYP's shared file-opening callback, tabs/dirty state and save-in-editor concepts fit an IDE; its arbitrary path writes, schema/template controllers and approval/Ansible/SSH flows do not. Native typed working APIs and the established workbench UI are smaller and safer; no FYP code is copied.
+
+**Consequences:** Explorer Working Files lists actual persisted records. Provider-owned document buffers retain unsaved text across navigation and delayed responses, separate from the authoritative planning state. `inmemory://v9-working/{document_id}/configuration` models are editable and disposed on switches; text survives, undo/cursor state does not. Ctrl+S is scoped to the active working editor. Failed/stale/uncertain saves preserve text and block blind retries; passive inspection followed by explicit reconciliation enables another save. The two-step capture/create flow can leave a discoverable original without a working file, and is not a transaction. Opening an already-open file never reloads over dirty content. AI proposals and on-demand comparison remain future work.
+
+## AD-043 — Pending proposals are separate, guarded working-document review state
+
+**Decision:** Iteration 13 extends the existing provider-owned working-document hook with one transient pending proposal per document. The internal contract carries proposal/document identity, saved revision, buffer epoch, exact base/proposed text, source/description and pending/stale review status. Staging and acceptance verify active document/editor identity, current revision, monotonic epoch and exact accepted text. No-op, competing, stale, inactive-target and save-conflicted proposals are refused explicitly; no automatic merge or document selection occurs.
+
+**Rationale:** Saved revision alone does not identify unsaved edits, and content equality alone misses A→B→A. Keeping proposed text separate from the accepted working buffer prevents review from becoming an implicit edit or save. This resolves D's review mechanism from AD-039, not a real AI producer or durable proposal repository.
+
+**Consequences:** Whole-proposal Accept changes only accepted in-memory working text; Reject never restores an obsolete base over newer edits. Existing explicit revision-checked save remains the only persistence path. Proposals are not restored after reload, do not confer validation/deployment status, and do not change original/session/inventory/knowledge authority. A future V9-owned producer must call this guarded contract and handle refusals, not mutate buffers directly. Only the separate test configuration injects deterministic proposals in Iteration 13; no production debug API or simulated AI editing action is added.
+
+## AD-044 — Temporary native inline review retains the accepted Monaco model
+
+**Decision:** Keep one visible central surface. Temporarily display a native read-only inline DiffEditor using disposable `v9-review` models while the normal `v9-working` editor/model remains mounted and hidden. Accept uses undo stops, `executeEdits`, and undoable uniform EOL changes, retaining the view/cursor; it never uses `setValue` or replaces the working model. Manual Review Changes compares against the latest confirmed saved working content, not the immutable original, and has only a Close action.
+
+**Rationale:** The installed React wrapper's controlled read-only value updates can reset models through `setValue`; dedicated temporary comparison models avoid undo-history loss and preview contamination. Native inline deleted zones and added-line decorations provide actual change review without a custom diff algorithm, permanently split workspace or general tab framework. This supersedes the Iteration 12 roadmap's proposed original baseline, under the explicit current assignment.
+
+**Consequences:** Typing/paste cannot alter either review side. The hidden working editor is synchronously unlocked only for a guarded acceptance because Monaco refuses programmatic `executeEdits` when read-only. Review model cleanup does not dispose the working or sample models. Undo/cursor preservation applies within a mounted working editor; navigation still follows existing disposal behavior. Mixed/bare-CR EOL and changed-BOM proposals cannot be accepted silently. No semantic validation, per-hunk decisions, AI edits, automatic saves, original writes or backend contract changes.
+
+## AD-045 — Real model edits are bounded V9 operation proposals, not whole-file rewrites
+
+**Decision:** Iteration 14 adds one V9-owned interpreter/patch adapter for an existing Cisco IOS XE VLAN name, using the configured `app.llm.llm` and actual `rename_vlan` catalog/schema/device-policy/Jinja contracts. A model produces schema-constrained operation parameters; literal evidence, current inventory and V9 validation decide whether a name-token replacement may be proposed. Existing `create_session`/`apply_answer` are not arbitrary editing APIs and are never repurposed here. No frontend parameter parser, generic LLM whole-file rewriter or deterministic mock fallback exists.
+
+**Rationale:** Current policy requires reviewed hardware/capabilities and recorded VLAN facts. The actual supported demo is SW1/VLAN 20 STAFF, not the illustrative R1/VLAN 100. Exact knowledge lookup is appropriate for the known document/operation slice; Chroma retrieval and embeddings are neither needed nor claimed. Only the selected token changes; the rest of the historical working document is not semantically certified.
+
+**Consequences:** Model interpretation receives the current buffer's bounded VLAN/name context, actual schema and safe device metadata. The browser submits only working identity/revision/current text/instruction, while source provenance comes from verified stored working/original records. Missing values produce a typed clarification-required result and require a new explicit instruction; no new answer/resume engine, session, artifact, knowledge write, device operation or persistence is introduced.
+
+## AD-046 — Edit computation releases the shared gate and rechecks before staging
+
+**Decision:** A typed compute-only `propose-edit` POST verifies source/document/current inventory/knowledge under the existing process gate, runs model inference outside it, then reacquires the gate and rechecks before validation/rendering/response. One edit inference per application is admitted. Frontend response identity/revision/base digest must match the captured `proposalBase`; it enters existing `stageProposal`, never directly modifies text. Navigation/mode changes invalidate a waiting response in addition to existing revision/epoch/base checks.
+
+**Rationale:** Slow inference must not turn a storage mutation lock into a long-running job coordinator. Saved revision alone cannot protect unsaved or A→B→A edits. A proposal need not have a durable request journal because this endpoint cannot save, accept or deploy anything.
+
+**Consequences:** 45-second browser wait and the configured model client timeout do not cancel server inference. Lost/late responses are explicit; no automatic POST replay occurs. Accept changes the buffer only; Ctrl+S remains separate. No cross-process CAS, durable outcome/exactly-once, external-writer/ABA source guarantee or universal configuration validation. Local V9 planning, Demo mock, originals, samples and normal review remain separate. These decisions resolve only AD-043's producer deferral.

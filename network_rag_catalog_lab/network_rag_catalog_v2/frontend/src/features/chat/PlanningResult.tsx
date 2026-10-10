@@ -1,10 +1,11 @@
 import type { SessionSnapshot } from '../../services/planningApi';
 import { useWorkbench } from '../../app/workbenchContext';
 import { ClarificationForm } from './ClarificationForm';
+import { GeneratedWorkingAction } from '../workspace/GeneratedWorkingAction';
 
 export function PlanningResult({ result }: { result: SessionSnapshot }) {
   const { session } = result;
-  const { dispatch, localPlanning } = useWorkbench();
+  const { dispatch, localPlanning, working } = useWorkbench();
   const answer = localPlanning.answerState;
   const question = session.pending_questions[0];
   const editableError = ['INVALID_OPTION', 'CUSTOM_NOT_ALLOWED', 'V9_ANSWER_REJECTED'].includes(answer.error?.code || '');
@@ -27,6 +28,10 @@ export function PlanningResult({ result }: { result: SessionSnapshot }) {
         <strong>{session.plan.tasks.length} task(s)</strong>
         <span>{session.plan.intents?.length ?? new Set(session.plan.tasks.map((task) => task.logical_intent_id || task.intent_id)).size} intent(s)</span>
         <button type="button" onClick={() => dispatch({ type: 'SHOW_WORKSPACE_VIEW', view: 'plan' })}>Review plan in workspace</button>
+      </div>
+      <div className="working-output-links">
+        {session.plan.tasks.map((task) => task.configs.map((_, index) => <GeneratedWorkingAction key={`${task.intent_id}:${index}`} result={result} task={task} index={index} />))}
+        {working.opening.message && <p role="status">{working.opening.message}</p>}
       </div>
       {answer.phase === 'pending' && <p role="status">Submitting answer to V9… Last confirmed session remains below.</p>}
       {answer.phase === 'success' && <p role="status">Answer accepted by V9. Showing the updated saved session.</p>}

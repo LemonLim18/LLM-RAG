@@ -17,7 +17,7 @@ export interface LocalPlanningState {
   error?: string;
 }
 
-export function useLocalPlanning() {
+export function useLocalPlanning(onConfirmed?: (result: SessionSnapshot) => void) {
   const [state, setState] = useState<LocalPlanningState>({ phase: 'idle' });
   const pending = useRef(false);
   const [answerState, setAnswerState] = useState<AnswerState>({ phase: 'idle' });
@@ -45,6 +45,7 @@ export function useLocalPlanning() {
       const result = await createPlanningSession(request);
       setState({ phase: 'success', request, result });
       remember({ reference: { sessionId: result.session.session_id, revision: result.session_revision, answerUncertain: false } });
+      onConfirmed?.(result);
     } catch (error) {
       setState({ phase: 'error', request, error: error instanceof Error ? error.message : 'Unexpected response from V9.' });
     } finally {
@@ -62,6 +63,7 @@ export function useLocalPlanning() {
       setState((prior) => ({ ...prior, result, historical: false }));
       rememberSession(result);
       setAnswerState({ phase: 'success', request, sessionId });
+      onConfirmed?.(result);
     } catch (caught) {
       const error = caught instanceof AnswerError ? caught : new AnswerError('OUTCOME_UNKNOWN', 'Answer outcome unknown.');
       if (error.currentSession?.session.session_id === sessionId) {

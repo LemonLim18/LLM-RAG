@@ -79,9 +79,9 @@ test('stays usable and offers retry when the backend is unavailable', async ({ p
   await page.route('**/api/v1/**', (route) => route.abort('connectionfailed'));
   await page.goto('/');
 
-  await expect(page.getByRole('status')).toContainText('Backend unavailable');
+  await expect(page.getByLabel('Workbench status').getByRole('status')).toContainText('Backend unavailable');
   await expect(page.getByRole('button', { name: 'Retry backend connection' })).toBeVisible();
-  await expect(page.getByRole('complementary', { name: 'Infrastructure explorer' }).getByRole('alert')).toContainText('V9 demo inventory is unavailable');
+  await expect(page.getByRole('list', { name: 'V9 demo inventory devices' }).getByRole('alert')).toContainText('V9 demo inventory is unavailable');
   await expect(page.getByRole('button', { name: 'Retry inventory' })).toBeVisible();
   await expect(page.locator('.monaco-editor')).toBeVisible({ timeout: 20_000 });
   await page.getByLabel('Message the demo Copilot').fill('Still local');

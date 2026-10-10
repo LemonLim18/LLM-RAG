@@ -3,6 +3,8 @@ __pycache__/
 .venv/
 storage/chroma/
 storage/sessions/
+storage/workbench/generated_originals/
+storage/workbench/working_documents/
 storage/catalog_releases/
 storage/catalog_authoring/
 storage/knowledge/

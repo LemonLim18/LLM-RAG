@@ -45,6 +45,30 @@ class PlanningService:
             with self._lock:
                 self._busy = False
 
+    def capture_original(self, request):
+        from .generated_originals import capture_original
+        with self._lock:
+            if self._busy:
+                raise PlanningError(503, 'PLANNER_BUSY', 'The local mutation worker is busy. No original capture was started.')
+            self._busy = True
+        try:
+            return capture_original(request)
+        finally:
+            with self._lock:
+                self._busy = False
+
+    def mutate_working_document(self, operation):
+        # Narrow workspace writes share the existing gate, not the AI request cache.
+        with self._lock:
+            if self._busy:
+                raise PlanningError(503, 'PLANNER_BUSY', 'The local mutation worker is busy. No working document write started.')
+            self._busy = True
+        try:
+            return operation()
+        finally:
+            with self._lock:
+                self._busy = False
+
     def _execute(self, request_id, fingerprint, operation, replay=None):
         key = str(request_id)
         with self._lock:

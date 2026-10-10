@@ -12,6 +12,10 @@ from .planning_service import PlanningError, PlanningService
 from .planning_models import CreationOutcome, SavedSessionResponse, SavedSessionErrorResponse
 from .saved_sessions import get_saved_session
 from .inventory_registration import DeviceRegistration, InventoryErrorResponse
+from .generated_originals import ArtifactId, CaptureRequest, CaptureResponse, GeneratedOriginal, OriginalList, list_originals, read_original
+from .working_documents import DocumentId, OpenWorkingRequest, OpenWorkingResponse, SaveWorkingRequest, WorkingDocument, WorkingList, open_document, read_document, list_documents, save_document
+from .edit_models import EditRequest, EditResponse
+from .edit_service import EditService
 
 
 def _development_origins() -> list[str]:
@@ -33,7 +37,7 @@ def create_app() -> FastAPI:
         CORSMiddleware,
         allow_origins=_development_origins(),
         allow_credentials=False,
-        allow_methods=["GET", "POST"],
+        allow_methods=["GET", "POST", "PUT"],
         allow_headers=["Accept", "Content-Type"],
     )
 
@@ -64,6 +68,81 @@ def create_app() -> FastAPI:
             ) from error
 
     planning = PlanningService()
+    edits = EditService(planning)
+
+    def artifact_error(error):
+        return HTTPException(status_code=error.status, detail={'code': error.code, 'message': str(error)},
+                             headers={'Cache-Control': 'no-store'})
+
+    @application.post('/api/v1/workbench/working-documents/{document_id}/propose-edit',
+                      response_model=EditResponse, tags=['working documents'])
+    def propose_edit(document_id: DocumentId, request: EditRequest, response: Response) -> EditResponse:
+        response.headers['Cache-Control'] = 'no-store'
+        try:
+            return edits.propose(document_id, request)
+        except PlanningError as error:
+            raise artifact_error(error) from error
+
+    @application.post('/api/v1/workbench/working-documents', response_model=OpenWorkingResponse,
+                      responses={201: {'model': OpenWorkingResponse}, **{code: {'model': SavedSessionErrorResponse} for code in (404, 409, 413, 503)}}, tags=['working documents'])
+    def open_working(request: OpenWorkingRequest, response: Response) -> OpenWorkingResponse:
+        response.headers['Cache-Control'] = 'no-store'
+        try:
+            result = planning.mutate_working_document(lambda: open_document(request))
+            response.status_code = 201 if result.outcome == 'created' else 200
+            return result
+        except PlanningError as error:
+            raise artifact_error(error) from error
+
+    @application.get('/api/v1/workbench/working-documents', response_model=WorkingList,
+                     responses={code: {'model': SavedSessionErrorResponse} for code in (409, 503)}, tags=['working documents'])
+    def working_documents(response: Response) -> WorkingList:
+        response.headers['Cache-Control'] = 'no-store'
+        try: return list_documents()
+        except PlanningError as error: raise artifact_error(error) from error
+
+    @application.get('/api/v1/workbench/working-documents/{document_id}', response_model=WorkingDocument,
+                     responses={code: {'model': SavedSessionErrorResponse} for code in (404, 409, 503)}, tags=['working documents'])
+    def working_document(document_id: DocumentId, response: Response) -> WorkingDocument:
+        response.headers['Cache-Control'] = 'no-store'
+        try: return read_document(document_id)
+        except PlanningError as error: raise artifact_error(error) from error
+
+    @application.put('/api/v1/workbench/working-documents/{document_id}', response_model=WorkingDocument,
+                     responses={code: {'model': SavedSessionErrorResponse} for code in (404, 409, 413, 503)}, tags=['working documents'])
+    def save_working(document_id: DocumentId, request: SaveWorkingRequest, response: Response) -> WorkingDocument:
+        response.headers['Cache-Control'] = 'no-store'
+        try: return planning.mutate_working_document(lambda: save_document(document_id, request))
+        except PlanningError as error: raise artifact_error(error) from error
+
+    @application.post('/api/v1/workbench/artifacts/generated-originals', response_model=CaptureResponse,
+                      responses={201: {'model': CaptureResponse}, **{code: {'model': SavedSessionErrorResponse} for code in (404, 409, 413, 503)}}, tags=['originals'])
+    def capture_generated_original(request: CaptureRequest, response: Response) -> CaptureResponse:
+        response.headers['Cache-Control'] = 'no-store'
+        try:
+            result = planning.capture_original(request)
+            response.status_code = 201 if result.outcome == 'created' else 200
+            return result
+        except PlanningError as error:
+            raise artifact_error(error) from error
+
+    @application.get('/api/v1/workbench/artifacts/generated-originals', response_model=OriginalList,
+                     responses={code: {'model': SavedSessionErrorResponse} for code in (409, 503)}, tags=['originals'])
+    def generated_originals(response: Response) -> OriginalList:
+        response.headers['Cache-Control'] = 'no-store'
+        try:
+            return list_originals()
+        except PlanningError as error:
+            raise artifact_error(error) from error
+
+    @application.get('/api/v1/workbench/artifacts/generated-originals/{artifact_id}', response_model=GeneratedOriginal,
+                     responses={code: {'model': SavedSessionErrorResponse} for code in (404, 409, 503)}, tags=['originals'])
+    def generated_original(artifact_id: ArtifactId, response: Response) -> GeneratedOriginal:
+        response.headers['Cache-Control'] = 'no-store'
+        try:
+            return read_original(artifact_id)
+        except PlanningError as error:
+            raise artifact_error(error) from error
 
     @application.post('/api/v1/inventory/devices', response_model=InventoryDetailResponse, status_code=201,
                       responses={code: {'model': InventoryErrorResponse} for code in (409, 503)}, tags=['inventory'])

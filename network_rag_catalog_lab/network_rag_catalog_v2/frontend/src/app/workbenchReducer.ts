@@ -30,7 +30,10 @@ export const initialWorkbenchState: WorkbenchState = {
   },
   workspaceView: 'samples',
   reviewSessionId: '',
+  reviewSessionRevision: '',
   selectedPlanningTaskId: '',
+  generatedPreview: null,
+  previewNotice: '',
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
@@ -108,17 +111,29 @@ export function workbenchReducer(state: WorkbenchState, action: WorkbenchAction)
     }
     case 'SHOW_WORKSPACE_VIEW':
       if (action.view === 'plan' && !state.reviewSessionId) return state;
+      if (action.view === 'preview' && !state.generatedPreview) return state;
       return { ...state, workspaceView: action.view };
+    case 'OPEN_GENERATED_PREVIEW':
+      if (action.selection.sessionId !== state.reviewSessionId || action.selection.sessionRevision !== state.reviewSessionRevision) return state;
+      return { ...state, generatedPreview: action.selection, previewNotice: '', workspaceView: 'preview' };
+    case 'CLOSE_GENERATED_PREVIEW':
+      return { ...state, generatedPreview: null, previewNotice: '', workspaceView: 'plan' };
     case 'SYNC_PLANNING_SESSION': {
       const sameSession = state.reviewSessionId === action.sessionId;
+      const keepPreview = sameSession && state.reviewSessionRevision === action.sessionRevision
+        && Boolean(state.generatedPreview && action.taskIds.includes(state.generatedPreview.taskId));
       const selectedPlanningTaskId = sameSession && action.taskIds.includes(state.selectedPlanningTaskId)
         ? state.selectedPlanningTaskId
         : action.taskIds[0] ?? '';
       return {
         ...state,
         reviewSessionId: action.sessionId,
+        reviewSessionRevision: action.sessionRevision,
         selectedPlanningTaskId,
         workspaceView: 'plan',
+        generatedPreview: keepPreview ? state.generatedPreview : null,
+        previewNotice: state.generatedPreview && !keepPreview
+          ? 'The previous V9 preview was closed because the confirmed session changed. Open an output from the current plan to review it.' : state.previewNotice,
       };
     }
     case 'SELECT_PLANNING_TASK':

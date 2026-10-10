@@ -1,6 +1,8 @@
 import { AlertTriangle, CheckCircle2, CircleDashed, FileCode2, Network, Server } from 'lucide-react';
 import { useWorkbench } from '../../app/workbenchContext';
 import type { Json, PlanningTask } from '../../services/planningApi';
+import { deviceConfiguration } from './generatedPreview';
+import { GeneratedWorkingAction } from './GeneratedWorkingAction';
 
 function textField(record: Record<string, Json>, field: string): string {
   const value = record[field];
@@ -61,7 +63,7 @@ function TaskListItem({ task, selected, onSelect }: { task: PlanningTask; select
 }
 
 function TaskDetails({ task }: { task: PlanningTask }) {
-  const { localPlanning } = useWorkbench();
+  const { localPlanning, dispatch } = useWorkbench();
   const plan = localPlanning.state.result?.session.plan;
   const intentId = task.logical_intent_id || task.intent_id;
   const intent = plan?.intents?.find((item) => item.intent_id === intentId);
@@ -124,6 +126,15 @@ function TaskDetails({ task }: { task: PlanningTask }) {
             <div><strong>{textField(config, 'hostname') || textField(config, 'device_id') || `Output ${index + 1}`}</strong>
               <span>{[textField(config, 'vendor'), textField(config, 'platform'), textField(config, 'version')].filter(Boolean).join(' · ')}</span>
               <span className="readonly-badge"><CheckCircle2 size={11} /> READ-ONLY V9 OUTPUT</span></div>
+            {deviceConfiguration(task, index) ? <button type="button" onClick={() => {
+              const result = localPlanning.state.result;
+              if (result && typeof config.device_id === 'string') dispatch({ type: 'OPEN_GENERATED_PREVIEW', selection: {
+                sessionId: result.session.session_id, sessionRevision: result.session_revision,
+                taskId: task.intent_id, deviceId: config.device_id, configIndex: index,
+              } });
+            }}>Open read-only in Monaco · output {index + 1}</button>
+              : <p className="review-hint">Monaco preview unavailable: nonempty configuration text and an explicit matching task/device identity are required.</p>}
+            {localPlanning.state.result && <GeneratedWorkingAction result={localPlanning.state.result} task={task} index={index} />}
             {typeof config.configuration === 'string'
               ? <pre>{config.configuration}</pre>
               : <div className="review-empty">No configuration text was returned for this output record.</div>}
