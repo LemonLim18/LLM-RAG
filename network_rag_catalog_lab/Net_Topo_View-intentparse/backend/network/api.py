@@ -92,6 +92,7 @@ from pydantic import BaseModel
 
 from db.manager import DatabaseManager
 from db.models import Device
+from lab_config import LOCAL_LAB
 from deploy.snapshots import SnapshotManager
 from auth.rbac import require_any, require_engineer
 
@@ -195,7 +196,7 @@ async def list_devices_for_backup(user: dict = Depends(require_any)):
         devices = db.get_all_devices()
         # Read live topology cache only (no writes)
         try:
-            topo = db.get_topology()
+            topo = {} if LOCAL_LAB else db.get_topology()
             nodes = topo.get("nodes") or {}
         except Exception:
             nodes = {}
@@ -242,7 +243,7 @@ async def list_devices_for_backup(user: dict = Depends(require_any)):
                 vendor=d.vendor,
                 status=d.status,
                 role=d.role,
-                live_in_topology=in_live_topo(d),
+                live_in_topology=None if LOCAL_LAB else in_live_topo(d),
             )
             for d in devices
             if d.id is not None

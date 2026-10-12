@@ -1,3 +1,4 @@
+import { useLocalLab } from '../localLab';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import type { TopologyData } from '../../types';
 import { Toast } from '../utils/swal';
@@ -50,7 +51,8 @@ export const useWebSocket = ({
   // creating a WebSocket connection. You can also enable this by
   // running Vite in `development` mode — change the condition below
   // if you prefer a different behavior.
-  const USE_LOCAL_TOPOLOGY = (import.meta.env?.VITE_USE_LOCAL_TOPOLOGY === 'true');
+  const localLab = useLocalLab();
+  const USE_LOCAL_TOPOLOGY = !localLab && (import.meta.env?.VITE_USE_LOCAL_TOPOLOGY === 'true');
   // Debug info: will be removed after troubleshooting
   // Shows the resolved boolean and the raw env values injected by Vite
   // (check browser console when running `npm run dev`).

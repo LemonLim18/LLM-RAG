@@ -1,3 +1,4 @@
+# Optional normal-mode integration requirements. For M0 use requirements-local.lock.txt.
 fastapi
 uvicorn
 paramiko
@@ -27,7 +28,7 @@ google-genai
 
 # M22 — Ansible-First Automation Layer
 ansible-runner>=2.3
-ansible-core>=2.14   # required for Windows (ansible-runner uses pexpect, so we run ansible-playbook via subprocess)
+ansible-core>=2.14   # optional Linux/WSL controller stack; not required or installed for native Windows M0
 netmiko>=4.3
 ansible-lint>=6.22         # optional: playbook linting in builder.py
 jsonschema>=4.0            # VLAN intent schema validation (reference/vlan/intent_schema.json)

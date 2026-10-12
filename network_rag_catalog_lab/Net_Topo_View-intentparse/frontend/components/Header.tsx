@@ -1,4 +1,5 @@
 import React from 'react';
+import { EnvironmentSelector } from './EnvironmentSelector';
 import { Bell, Check, ListChecks, Sun } from 'lucide-react';
 import { useNotification } from '../contexts/NotificationContext';
 import { useTaskProgress } from '../contexts/TaskProgressContext';
@@ -45,7 +46,8 @@ const Header: React.FC<HeaderProps> = ({ theme, setTheme, setView }) => {
           <span className="font-bold mr-2">CogniShield</span> <span className="text-xs opacity-50 font-stretch-75">LLM-Assisted Network Automation Controller</span>
         </a>
       </div>
-      <div className="flex-none gap-4">
+      <div className="flex gap-4">
+        <EnvironmentSelector />
         {/* Notification Bell */}
         <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">

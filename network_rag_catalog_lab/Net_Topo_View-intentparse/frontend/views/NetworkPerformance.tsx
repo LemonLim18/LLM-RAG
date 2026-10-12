@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useLocalLab } from '../src/localLab';
 import {
   RefreshCw, Activity, Server, Cpu,
   AlertTriangle, CheckCircle, BarChart3, Clock,
@@ -616,6 +617,8 @@ type SortDirection = 'asc' | 'desc';
 interface SortConfig { key: string; direction: SortDirection; }
 
 const NetworkPerformance: React.FC = () => {
+  const localLab = useLocalLab();
+  const [providerError, setProviderError] = useState('');
   const [stackStatus, setStackStatus] = useState<string>('unknown');
   const [devices, setDevices] = useState<DeviceSummary[]>([]);
   const [alerts, setAlerts] = useState<ThresholdAlert[]>([]);
@@ -695,8 +698,8 @@ const NetworkPerformance: React.FC = () => {
       const includePackets = Boolean(focusDevice);
       const pointLimit = focusDevice ? 120 : 90;
       const [statusRes, alertsRes, bundleRes] = await Promise.all([
-        monitorApi.getStatus().catch(() => ({ status: 'error' })),
-        thresholdApi.listAlerts('active', 30).catch(() => []),
+        monitorApi.getStatus(),
+        thresholdApi.listAlerts('active', 30),
         monitorApi.getDashboardBundle({
           device: focusDevice || undefined,
           rangeMinutes,
@@ -704,12 +707,7 @@ const NetworkPerformance: React.FC = () => {
           summaryLimit: 50,
           interfaceName: selectedInterface || undefined,
           includePackets,
-        }).catch(() => ({
-          summary: { devices: [] },
-          hostnames: { hostnames: {} },
-          history: { data: {} },
-          interfaces: { interfaces: [] },
-        })),
+        }),
       ]);
 
       const nextDevices = (((bundleRes as any)?.summary?.devices) || []).filter((d: DeviceSummary) => isValidDeviceKey(d.mgmt_ip || d.hostname));
@@ -724,6 +722,7 @@ const NetworkPerformance: React.FC = () => {
 
       console.log('[NetworkHealth] summary devices', nextDevices);
 
+      setProviderError('');
       setStackStatus((statusRes as any).status || 'error');
       setDevices(nextDevices);
       setAlerts(alertsRes as ThresholdAlert[]);
@@ -752,7 +751,9 @@ const NetworkPerformance: React.FC = () => {
       if (focusDevice && nextInterfaces.length === 0) {
         setSelectedInterface('');
       }
-    } catch {
+    } catch (error) {
+      setProviderError(error instanceof Error ? error.message : 'Observation provider failed');
+      setDevices([]); setCpuPoints([]); setMemPoints([]); setTrafficIn([]); setTrafficOut([]); setAlerts([]); setInterfaceSnapshots([]); setErrors([]); setDiscards([]);
       setHasLoadedSummaryGraphs(true);
       setHasLoadedHistoryGraphs(true);
       Toast.error('Load failed', 'Could not fetch monitoring data');
@@ -767,7 +768,8 @@ const NetworkPerformance: React.FC = () => {
     try {
       const events = await syslogApi.listEvents(80, selectedSyslogDevice || undefined);
       setRecentSyslogEvents(Array.isArray(events) ? events : []);
-    } catch {
+    } catch (error) {
+      setProviderError(error instanceof Error ? error.message : 'Syslog provider failed');
       setRecentSyslogEvents([]);
     } finally {
       setSyslogEventsLoading(false);
@@ -940,6 +942,7 @@ const NetworkPerformance: React.FC = () => {
 
   return (
     <div className="p-4 space-y-4 h-full overflow-y-auto">
+      {providerError && <div role="alert" className="alert alert-error">{providerError} — observation state is invalid; no live state is implied.</div>}
       <div className="flex items-center justify-between mb-4 shrink-0 flex-wrap gap-3">
         <div>
           <div className="flex items-center gap-3 w-full">
@@ -956,7 +959,7 @@ const NetworkPerformance: React.FC = () => {
           <button className="btn btn-sm btn-outline gap-1" onClick={() => { fetchAll(); }} disabled={isLoading}>
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} /> Refresh
           </button>
-          <button className="btn btn-sm btn-outline gap-1" onClick={handleSyncTelegraf} disabled={telegrafSyncLoading}>
+          <button className="btn btn-sm btn-outline gap-1" onClick={handleSyncTelegraf} disabled={localLab || telegrafSyncLoading} title={localLab ? 'Remote synchronization unavailable in local lab' : undefined}>
             {telegrafSyncLoading ? <span className="loading loading-spinner loading-xs" /> : <Server className="w-4 h-4" />}
             Sync Telegraf Config
           </button>
@@ -996,10 +999,10 @@ const NetworkPerformance: React.FC = () => {
         </div>
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <KPICard icon={<Activity className="h-4 w-4" />} label="Stack Status" value={toTitleCase(stackStatus)} color={stackStatus.toLowerCase() === 'healthy' ? 'text-success' : 'text-warning'} subtext="InfluxDB reachability" />
-          <KPICard icon={<CheckCircle className="h-4 w-4 text-success" />} label="Devices Up" value={`${upDevices} / ${devices.length}`} color="text-success" subtext={devices.length ? `${Math.round(upDevices / devices.length * 100)}% availability` : 'No live telemetry'} />
+          <KPICard icon={<Activity className="h-4 w-4" />} label="Stack Status" value={toTitleCase(stackStatus)} color={stackStatus.toLowerCase() === 'healthy' ? 'text-success' : 'text-warning'} subtext={stackStatus === "sample" ? "Editable JSON simulation; no live telemetry" : "InfluxDB reachability"} />
+          <KPICard icon={<CheckCircle className="h-4 w-4 text-success" />} label="Devices Up" value={`${upDevices} / ${devices.length}`}  color="text-success" subtext={localLab ? 'Simulated availability from JSON' : devices.length ? `${Math.round(upDevices / devices.length * 100)}% availability` : 'No live telemetry'} />
           <KPICard icon={<Cpu className="h-4 w-4 text-info" />} label="Average CPU" value={avgCpu !== null ? `${avgCpu.toFixed(1)}%` : 'N/A'} color={avgCpu !== null && avgCpu > 80 ? 'text-error' : avgCpu !== null && avgCpu > 60 ? 'text-warning' : 'text-info'} subtext={`${cpuDevices.length} devices with CPU values`} />
-          <KPICard icon={<Wifi className="h-4 w-4 text-primary" />} label="Interface Health" value={totalIf ? `${totalIfUp}/${totalIf}` : 'N/A'} color="text-primary" subtext={`${activeAlerts} active alerts`} />
+          <KPICard icon={<Wifi className="h-4 w-4 text-primary" />} label="Interface Health" value={totalIf ? `${totalIfUp}/${totalIf}` : 'N/A'} color="text-primary" subtext={localLab ? `${activeAlerts} fixture alerts (simulated)` : `${activeAlerts} active alerts`} />
         </div>
       )}
 
@@ -1159,7 +1162,7 @@ const NetworkPerformance: React.FC = () => {
               </div>
             )
           ) : (
-            interfaceInsights.length === 0 ? <EmptyChart label="Select a device or wait for interface telemetry" /> : (
+            interfaceInsights.length === 0 ? <EmptyChart label={localLab ? 'Select a stored device to view sample interfaces' : 'Select a device or wait for interface telemetry'} /> : (
               <div className="overflow-x-auto">
                 <table className="table table-xs table-zebra">
                   <thead>
@@ -1232,7 +1235,7 @@ const NetworkPerformance: React.FC = () => {
 
       <div className="card bg-base-100 border border-base-300 shadow-sm">
         <div className="card-body p-3">
-          <h3 className="text-xs font-semibold opacity-60 uppercase tracking-wide mb-2 flex items-center gap-1.5"><Server className="h-3.5 w-3.5" /> Live Devices</h3>
+          <h3 className="text-xs font-semibold opacity-60 uppercase tracking-wide mb-2 flex items-center gap-1.5"><Server className="h-3.5 w-3.5" /> {localLab ? 'Stored Devices — Simulated Observations' : 'Live Devices'}</h3>
           <div className="overflow-x-auto">
             <table className="table table-xs table-zebra">
               <thead>
@@ -1281,7 +1284,7 @@ const NetworkPerformance: React.FC = () => {
                 <RefreshCw className={`w-3 h-3 ${syslogEventsLoading ? 'animate-spin' : ''}`} />
                 Refresh Logs
               </button>
-              <button className="btn btn-outline btn-xs gap-1" onClick={handleSyncSyslogServer} disabled={syslogSyncLoading}>
+              <button className="btn btn-outline btn-xs gap-1" onClick={handleSyncSyslogServer} disabled={localLab || syslogSyncLoading} title={localLab ? 'Remote synchronization unavailable in local lab' : undefined}>
                 {syslogSyncLoading ? <span className="loading loading-spinner loading-xs" /> : <Server className="w-3 h-3" />}
                 Sync Syslog Server
               </button>
@@ -1310,7 +1313,7 @@ const NetworkPerformance: React.FC = () => {
 
           {recentSyslogEvents.length === 0 ? (
             <div className="rounded-lg border border-dashed border-base-300 bg-base-200/40 px-4 py-4 text-sm opacity-70">
-              No syslog events yet. Ensure your devices are sending syslog to the configured server/port and trigger traffic.
+              {localLab ? 'No stored or fixture syslog events. Edit backend/simulation/syslog.json to add simulated events.' : 'No syslog events yet. Ensure your devices are sending syslog to the configured server/port and trigger traffic.'}
             </div>
           ) : (
             <div className="space-y-2 max-h-60 overflow-y-auto">

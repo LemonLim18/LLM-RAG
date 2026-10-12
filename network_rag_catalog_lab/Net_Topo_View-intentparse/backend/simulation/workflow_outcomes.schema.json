@@ -1,0 +1,167 @@
+{
+  "$defs": {
+    "Capture": {
+      "additionalProperties": false,
+      "properties": {
+        "default_config": {
+          "maxLength": 2000000,
+          "minLength": 1,
+          "title": "Default Config",
+          "type": "string"
+        },
+        "device_configs": {
+          "items": {
+            "$ref": "#/$defs/CaptureConfig"
+          },
+          "title": "Device Configs",
+          "type": "array"
+        }
+      },
+      "required": [
+        "default_config"
+      ],
+      "title": "Capture",
+      "type": "object"
+    },
+    "CaptureConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "exclusiveMinimum": 0,
+          "title": "Device Id",
+          "type": "integer"
+        },
+        "config_text": {
+          "maxLength": 2000000,
+          "minLength": 1,
+          "title": "Config Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id",
+        "config_text"
+      ],
+      "title": "CaptureConfig",
+      "type": "object"
+    },
+    "DeploymentHistory": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "outcome": {
+          "pattern": "^(success|failed)$",
+          "title": "Outcome",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "timestamp",
+        "outcome",
+        "message"
+      ],
+      "title": "DeploymentHistory",
+      "type": "object"
+    },
+    "ExternalAction": {
+      "additionalProperties": false,
+      "properties": {
+        "default_status": {
+          "title": "Default Status",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "device_outcomes": {
+          "items": {
+            "$ref": "#/$defs/Outcome"
+          },
+          "title": "Device Outcomes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "default_status",
+        "message"
+      ],
+      "title": "ExternalAction",
+      "type": "object"
+    },
+    "Outcome": {
+      "additionalProperties": false,
+      "properties": {
+        "device_id": {
+          "exclusiveMinimum": 0,
+          "title": "Device Id",
+          "type": "integer"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "device_id",
+        "status",
+        "message"
+      ],
+      "title": "Outcome",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "default": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "capture": {
+      "$ref": "#/$defs/Capture"
+    },
+    "ztp_publish": {
+      "$ref": "#/$defs/ExternalAction"
+    },
+    "restore": {
+      "$ref": "#/$defs/ExternalAction"
+    },
+    "deployment_history": {
+      "items": {
+        "$ref": "#/$defs/DeploymentHistory"
+      },
+      "title": "Deployment History",
+      "type": "array"
+    }
+  },
+  "required": [
+    "capture",
+    "ztp_publish",
+    "restore"
+  ],
+  "title": "WorkflowFixture",
+  "type": "object"
+}

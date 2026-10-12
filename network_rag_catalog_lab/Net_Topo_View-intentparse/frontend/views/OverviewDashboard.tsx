@@ -1,3 +1,4 @@
+import { useLocalLab } from '../src/localLab';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Activity,
@@ -10,14 +11,13 @@ import {
   WifiOff,
   HelpCircle,
   AlertTriangle,
-  Shield,
   Settings,
   GitBranch,
   Radio,
   CheckSquare,
   Zap,
 } from 'lucide-react';
-import { dashboardApi, netboxApi, deployApi, proposalApi, telemetryWs, syslogApi } from '../src/services/api';
+import { dashboardApi, netboxApi, deployApi, telemetryWs, syslogApi } from '../src/services/api';
 import type { DashboardSummary, DeviceRecord } from '../src/services/api';
 import type { ViewId, User } from '../types';
 import { normalizeUserRole } from '../types';
@@ -25,7 +25,6 @@ import { Toast } from '../src/utils/swal';
 
 
 /* ────────── helpers ────────── */
-const pct = (n: number) => `${n.toFixed(1)}%`;
 
 const severityColor: Record<string, string> = {
   critical: 'badge-error',
@@ -44,6 +43,7 @@ interface Props {
 
 /* ────────── component ────────── */
 const OverviewDashboard: React.FC<Props> = ({ setView, setSelectedDeviceId, user }) => {
+  const localLab = useLocalLab();
   const normalizedRole = user ? normalizeUserRole(user.role) : 'viewer';
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [devices, setDevices] = useState<DeviceRecord[]>([]);
@@ -91,7 +91,7 @@ const OverviewDashboard: React.FC<Props> = ({ setView, setSelectedDeviceId, user
     } finally {
       setLoading(false);
     }
-  }, [selectedSyslogSourceIp]);
+  }, [selectedSyslogSourceIp, localLab]);
 
   useEffect(() => { refresh(); }, [refresh]);
 
@@ -157,7 +157,7 @@ const OverviewDashboard: React.FC<Props> = ({ setView, setSelectedDeviceId, user
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Network Dashboard</h1>
-          <p className="text-sm opacity-60">Operational overview — CogniShield NMC</p>
+          <p className="text-sm opacity-60">{localLab ? 'Stored inventory with editable simulated operational observations' : 'Operational overview — CogniShield NMC'}</p>
         </div>
         <button className="btn btn-sm btn-ghost gap-2" onClick={refresh} disabled={loading}>
           <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
@@ -236,8 +236,8 @@ const OverviewDashboard: React.FC<Props> = ({ setView, setSelectedDeviceId, user
                 <AlertTriangle className="h-4 w-4" />
               </span>
               <div>
-                <h2 className="text-sm font-semibold tracking-wide">Live Syslog Stream</h2>
-                <p className="text-[11px] opacity-60">Real-time infrastructure logs across all onboarded devices</p>
+                <h2 className="text-sm font-semibold tracking-wide">{localLab ? 'Simulated Syslog Stream' : 'Live Syslog Stream'}</h2>
+                <p className="text-[11px] opacity-60">{localLab ? 'Editable JSON observations plus stored local history; collection is disabled.' : 'Real-time infrastructure logs across all onboarded devices'}</p>
               </div>
             </div>
             <button className="btn btn-ghost btn-xs gap-1" onClick={() => setView('common_services')}>
@@ -248,7 +248,7 @@ const OverviewDashboard: React.FC<Props> = ({ setView, setSelectedDeviceId, user
           <div className="p-4">
             {syslogEvents.length === 0 && syslogSources.length === 0 ? (
               <div className="rounded-xl border border-dashed border-base-300 bg-base-100/60 px-4 py-5 text-sm opacity-65">
-                No syslog events yet. Generate an interface/admin event on a device and this stream will populate.
+                {localLab ? 'No simulated or stored syslog events. Edit the local observation fixture, then refresh.' : 'No syslog events yet. Generate an interface/admin event on a device and this stream will populate.'}
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
@@ -274,7 +274,7 @@ const OverviewDashboard: React.FC<Props> = ({ setView, setSelectedDeviceId, user
 
               {syslogEvents.length === 0 ? (
                 <div className="rounded-xl border border-dashed border-base-300 bg-base-100/60 px-4 py-5 text-sm opacity-65">
-                  No syslog events yet. Generate an interface/admin event on a device and this stream will populate.
+                  {localLab ? 'No simulated or stored syslog events. Edit the local observation fixture, then refresh.' : 'No syslog events yet. Generate an interface/admin event on a device and this stream will populate.'}
                 </div>
               ) : (
                 <div className="space-y-1.5 max-h-56 overflow-y-auto pr-1">
@@ -400,7 +400,7 @@ const OverviewDashboard: React.FC<Props> = ({ setView, setSelectedDeviceId, user
                 </button>
               </div>
               {pendingApprovals.length === 0 ? (
-                <p className="text-sm opacity-50 text-center py-8">No pending approvals</p>
+                <p className="text-sm opacity-50 text-center py-8">{localLab ? 'No pending local approvals. Decisions are stored locally; execution remains unavailable.' : 'No pending approvals'}</p>
               ) : (
                 <div className="space-y-2 max-h-48 overflow-y-auto">
                   {pendingApprovals.map((p: any) => (

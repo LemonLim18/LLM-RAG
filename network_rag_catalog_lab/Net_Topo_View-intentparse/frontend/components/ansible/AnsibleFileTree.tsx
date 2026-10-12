@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { useCapability } from '../../src/localLab';
 import {
   Folder,
   FolderOpen,
@@ -14,7 +15,6 @@ import {
   Trash2,
   Pencil,
 } from 'lucide-react';
-import Swal from 'sweetalert2';
 import { ansibleApi } from '../../src/services/api';
 import type { AnsibleFileNode } from '../../typesLLM';
 import ContextMenu, { type ContextMenuAction } from '../ContextMenu';
@@ -253,7 +253,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                 depth={depth + 1}
                 type={creatingType || 'file'}
                 onCommit={(name) => onCreateCommit?.(node.path, name, creatingType || 'file')}
-                onCancel={onCreateCancel}
+                onCancel={() => onCreateCancel?.()}
               />
             )}
           </ul>
@@ -326,6 +326,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
 };
 
 const AnsibleFileTree: React.FC<AnsibleFileTreeProps> = ({ onFileOpen, selectedPath, refreshTrigger, onAfterRefresh }) => {
+  const canAuthor = useCapability('studio.authoring');
   const [tree, setTree] = useState<AnsibleFileNode[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -618,7 +619,8 @@ const AnsibleFileTree: React.FC<AnsibleFileTreeProps> = ({ onFileOpen, selectedP
             <button
               className="btn btn-ghost btn-xs"
               onClick={() => setShowCreateMenu(v => !v)}
-              title="Create"
+              title={canAuthor ? 'Create' : 'Local authoring unavailable'}
+              disabled={!canAuthor}
             >
               <Plus className="h-3 w-3" />
             </button>

@@ -25,6 +25,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from lab_config import LOCAL_LAB, DB_PATH
+from .local_migrations import ensure_local_schema
+
 from .models import (
     AuditLogEntry,
     ConfigSnapshot,
@@ -141,7 +144,7 @@ class DatabaseManager:
     """
 
     def __init__(self, db_path: Optional[str] = None):
-        self._db_path = db_path or str(_DEFAULT_DB_PATH)
+        self._db_path = str(DB_PATH) if db_path is None or db_path == "db/netauto.db" else str(db_path)
         self._lock = threading.Lock()
 
         # ---- Real-time topology cache (in-memory) ----
@@ -151,6 +154,10 @@ class DatabaseManager:
             "nodes": {},
         }
         self._topo_lock = threading.Lock()
+
+        if LOCAL_LAB:
+            ensure_local_schema(self._db_path)
+            return
 
         # ---- Safe migrations: add columns if missing ----
         _new_columns = [
@@ -448,6 +455,9 @@ class DatabaseManager:
     # =============================================================
     def initialize(self) -> None:
         """Create all tables defined in schema.sql (idempotent)."""
+        if LOCAL_LAB:
+            ensure_local_schema(self._db_path)
+            return
         schema_sql = _SCHEMA_PATH.read_text(encoding="utf-8")
         with self._connect() as conn:
             conn.executescript(schema_sql)
@@ -773,7 +783,7 @@ class DatabaseManager:
     # =============================================================
     # DEVICES  (persistent)
     # =============================================================
-    def upsert_device(self, device: Device) -> int:
+    def upsert_device(self, device: Device, *, create_only: bool = False) -> int:
         """
         Insert a new device or update an existing one. Matches by ID if provided, 
         otherwise falls back to hostname.
@@ -782,15 +792,15 @@ class DatabaseManager:
         with self._connect() as conn:
             # 1. Match by local ID
             row = None
-            if device.id is not None:
+            if not create_only and device.id is not None:
                 row = conn.execute("SELECT id FROM devices WHERE id = ?", (device.id,)).fetchone()
             
             # 2. Match by NetBox ID
-            if not row and device.netbox_id is not None:
+            if not create_only and not row and device.netbox_id is not None:
                 row = conn.execute("SELECT id FROM devices WHERE netbox_id = ?", (device.netbox_id,)).fetchone()
             
             # 3. Match by hostname fallback
-            if not row:
+            if not create_only and not row:
                 row = conn.execute(
                     "SELECT id FROM devices WHERE hostname = ?",
                     (device.hostname,),

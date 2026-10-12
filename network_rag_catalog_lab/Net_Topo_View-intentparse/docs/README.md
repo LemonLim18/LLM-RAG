@@ -1,8 +1,10 @@
-# Documentation index
+# CogniShield local-lab documentation
 
-| Document | Description |
-|----------|-------------|
-| **[intent_operation_reference.md](intent_operation_reference.md)** | **Canonical** intent operations reference: `action`/`feature` pairs, required vs optional, VLAN DB vs ports, etc. **All new/changed operations must update this file and** `backend/ansible/intent_schemas/*.yml` **together.** |
-| [test_case/operation_by_category.md](test_case/operation_by_category.md) | Test prompts by category (Ansible Studio / intent pipeline). |
+The retained operational handovers describe the current SQLite-backed local lab,
+editable simulation fixtures, startup, and verification status:
 
-See also: `backend/ansible/intent_schemas/README.md` for the YAML + JSON schema layout.
+- [M0 handover](M0_HANDOVER.md)
+- [M0.1 handover](M0_1_HANDOVER.md)
+- [M0.2/M0.3 handover](M0_2_M0_3_HANDOVER.md)
+
+The normal-mode backend remains available through `backend/integrated_backend.py`.

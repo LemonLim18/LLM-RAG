@@ -561,7 +561,8 @@ class IntentParser:
         if "ollama" not in provider_name:
             return provider
         try:
-            timeout_sec = int(float(os.getenv("INTENT_PARSE_OLLAMA_TIMEOUT_SEC", "3")))
+            from lab_config import LOCAL_LAB
+            timeout_sec = int(float(os.getenv("INTENT_PARSE_OLLAMA_TIMEOUT_SEC", "180" if LOCAL_LAB else "3")))
         except ValueError:
             timeout_sec = 3
         timeout_sec = max(1, timeout_sec)

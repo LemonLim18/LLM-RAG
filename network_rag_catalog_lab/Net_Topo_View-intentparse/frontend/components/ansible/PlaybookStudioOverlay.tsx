@@ -814,6 +814,14 @@ export function PlaybookStudioOverlay({
   const buildStudioMergedParams = useCallback((): Record<string, unknown> => {
     const { params: baseParams } = parseIntent(intentDescription);
     const pip = previewParsedIntentRef.current;
+    if (pip?.engine === 'v9') {
+      const reviewed: Record<string, unknown> = { _v9_session: pip._v9_session };
+      for (const field of schemaEditableFields) {
+        const value = schemaParamValues[field.field];
+        if (value !== undefined && value !== '') reviewed[field.field] = field.type === 'number' ? Number(value) : value;
+      }
+      return reviewed;
+    }
     const params: Record<string, unknown> = { ...(baseParams || {}) };
     Object.entries(schemaParamValues).forEach(([k, v]) => {
       if (v === '' || v === undefined) return;

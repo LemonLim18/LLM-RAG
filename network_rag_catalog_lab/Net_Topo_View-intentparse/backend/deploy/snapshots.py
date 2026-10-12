@@ -14,7 +14,9 @@ from typing import Optional, List, Dict, Any
 
 from db.manager import DatabaseManager
 from db.models import ConfigSnapshot, AuditLogEntry
-from drivers.factory import DriverFactory
+from lab_config import LOCAL_LAB
+if not LOCAL_LAB:
+    from drivers.factory import DriverFactory
 
 logger = logging.getLogger("deploy.snapshots")
 

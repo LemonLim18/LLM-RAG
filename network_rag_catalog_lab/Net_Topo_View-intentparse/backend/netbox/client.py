@@ -1,17 +1,21 @@
 import os
-import pynetbox
+from lab_config import LOCAL_LAB
+if not LOCAL_LAB:
+    import pynetbox
 import logging
-import requests
-import urllib3
+if not LOCAL_LAB:
+    import requests
+    import urllib3
 
 # Disable insecure request warnings for lab self-signed certs
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+if not LOCAL_LAB:
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configure logging
 logger = logging.getLogger("netbox.client")
 
 
-class _TimeoutSession(requests.Session):
+class _TimeoutSession(requests.Session if not LOCAL_LAB else object):
     def __init__(self, timeout_seconds: float):
         super().__init__()
         self._timeout_seconds = timeout_seconds
@@ -45,6 +49,11 @@ class NetBoxClient:
     _instance = None
 
     def __init__(self, url=None, token=None):
+        if LOCAL_LAB:
+            self.api = None
+            self.url = ""
+            self.token = ""
+            return
         # Read env vars lazily (at instantiation time, AFTER load_dotenv)
         resolved_url = url if url is not None else os.environ.get("NETBOX_URL", "")
         resolved_token = token if token is not None else os.environ.get("NETBOX_TOKEN", "")

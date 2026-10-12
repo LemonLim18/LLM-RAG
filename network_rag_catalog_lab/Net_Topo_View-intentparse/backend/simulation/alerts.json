@@ -1,0 +1,20 @@
+{
+  "alerts": [],
+  "thresholds": [
+    {
+      "metric": "errors",
+      "threshold": 1,
+      "severity": "warning"
+    },
+    {
+      "metric": "cpu",
+      "threshold": 80,
+      "severity": "high"
+    },
+    {
+      "metric": "memory",
+      "threshold": 90,
+      "severity": "critical"
+    }
+  ]
+}

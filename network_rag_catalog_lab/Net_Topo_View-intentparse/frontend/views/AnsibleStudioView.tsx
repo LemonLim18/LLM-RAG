@@ -659,6 +659,7 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
     }
   }, [isClearingPreviewCache]);
 
+  void handleClearPreviewCache; // Deferred controls retained until formal cleanup.
   const approvalReady = Boolean(
     activeJobId && (checkPassedByJobId[activeJobId] || (checkResultJobId === activeJobId && checkResult?.rc === 0))
   );

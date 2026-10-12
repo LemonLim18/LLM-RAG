@@ -1,15 +1,17 @@
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List
 from starlette.concurrency import run_in_threadpool
 from db.manager import DatabaseManager
 from db.models import Device
 from llm.context_contract import CONTEXT_DOMAIN_INVENTORY, CONTEXT_DOMAIN_PLANNED_TOPOLOGY
 from llm.refresh_fabric import publish_context_refresh_event
-from device_syslog.service import sync_syslog_server_inventory
-from monitor.telegraf_sync import sync_telegraf_config
-from netbox.sync_devices import DeviceSyncer
-from netbox.sync_topology import TopologySyncer
+from lab_config import LOCAL_LAB, DB_PATH, require_remote
+if not LOCAL_LAB:
+    from device_syslog.service import sync_syslog_server_inventory
+    from monitor.telegraf_sync import sync_telegraf_config
+    from netbox.sync_devices import DeviceSyncer
+    from netbox.sync_topology import TopologySyncer
 from netbox.client import NetBoxClient
 import logging
 import sqlite3
@@ -21,7 +23,7 @@ logger = logging.getLogger("netbox.api")
 
 router = APIRouter()
 
-DB_PATH = "db/netauto.db"
+DB_PATH = str(DB_PATH)
 _NETBOX_RETRY_INTERVAL_SEC = 30
 _NETBOX_RETRY_MAX_ATTEMPTS = 60
 
@@ -70,6 +72,8 @@ def _enqueue_netbox_retry(action: str, payload: dict, error: Optional[str] = Non
 
 
 def process_pending_netbox_retries(limit: int = 20) -> dict:
+    if LOCAL_LAB:
+        return {"available": False, "reason": "local_lab"}
     _ensure_netbox_retry_table()
     conn = sqlite3.connect(DB_PATH, timeout=10)
     conn.row_factory = sqlite3.Row
@@ -137,6 +141,8 @@ def _invalidate_inventory_context(source: str, summary: str, metadata: Optional[
 
 
 def _sync_created_device_to_netbox(device_id: int) -> None:
+    if LOCAL_LAB:
+        return {"available": False, "reason": "local_lab"}
     db = _db()
     device = db.get_device_by_id(device_id)
     if not device:
@@ -173,6 +179,8 @@ def _sync_created_device_to_netbox(device_id: int) -> None:
 
 
 def _sync_updated_device_to_netbox(device_id: int, original_hostname: str) -> None:
+    if LOCAL_LAB:
+        return {"available": False, "reason": "local_lab"}
     db = _db()
     device = db.get_device_by_id(device_id)
     if not device:
@@ -210,6 +218,8 @@ def _sync_updated_device_to_netbox(device_id: int, original_hostname: str) -> No
 
 
 def _sync_deleted_device_to_netbox(hostname: str) -> None:
+    if LOCAL_LAB:
+        return {"available": False, "reason": "local_lab"}
     try:
         nb = NetBoxClient.get_client()
         if not nb or not nb.api:
@@ -223,6 +233,8 @@ def _sync_deleted_device_to_netbox(hostname: str) -> None:
 
 
 def _sync_telegraf_targets_after_inventory_change(trigger: str) -> None:
+    if LOCAL_LAB:
+        return {"available": False, "reason": "local_lab"}
     """Regenerate Telegraf config and optionally deploy/restart remote service."""
     try:
         db = _db()
@@ -241,6 +253,8 @@ def _sync_telegraf_targets_after_inventory_change(trigger: str) -> None:
 
 
 def _sync_syslog_targets_after_inventory_change(trigger: str) -> None:
+    if LOCAL_LAB:
+        return {"available": False, "reason": "local_lab"}
     """Sync /etc/hosts + rsyslog dynamic fan-out on remote syslog server."""
     try:
         db = _db()
@@ -258,6 +272,8 @@ def _sync_syslog_targets_after_inventory_change(trigger: str) -> None:
 
 
 def sync_local_inventory_to_netbox() -> dict:
+    if LOCAL_LAB:
+        return {"available": False, "reason": "local_lab"}
     """
     Periodic reconciliation: push local DB device inventory to NetBox.
     This is best-effort and works together with the retry queue.
@@ -297,7 +313,7 @@ def sync_local_inventory_to_netbox() -> dict:
 # ---------------------------------------------------------------------------
 
 class DeviceCreate(BaseModel):
-    hostname: str
+    hostname: str = Field(min_length=1, max_length=253, pattern=r"^[A-Za-z0-9][A-Za-z0-9_.-]*$")
     management_ip: Optional[str] = None
     management_subnet_mask: Optional[str] = None
     management_interface: Optional[str] = None
@@ -310,10 +326,10 @@ class DeviceCreate(BaseModel):
     role: str = "network-device"
     ssh_user: Optional[str] = None
     ssh_password: Optional[str] = None
-    ssh_port: int = 22
+    ssh_port: int = Field(default=22, ge=1, le=65535)
 
 class DeviceUpdate(BaseModel):
-    hostname: Optional[str] = None
+    hostname: Optional[str] = Field(default=None, min_length=1, max_length=253, pattern=r"^[A-Za-z0-9][A-Za-z0-9_.-]*$")
     management_ip: Optional[str] = None
     management_subnet_mask: Optional[str] = None
     management_interface: Optional[str] = None
@@ -326,10 +342,10 @@ class DeviceUpdate(BaseModel):
     role: Optional[str] = None
     ssh_user: Optional[str] = None
     ssh_password: Optional[str] = None
-    ssh_port: Optional[int] = None
+    ssh_port: Optional[int] = Field(default=None, ge=1, le=65535)
 
 class InterfaceCreate(BaseModel):
-    name: str
+    name: str = Field(min_length=1, max_length=128, pattern=r"^\S+(?:[ ]\S+)*$")
     ip_address: Optional[str] = None
     subnet_mask: Optional[str] = None
     mac_address: Optional[str] = None
@@ -339,7 +355,7 @@ class InterfaceCreate(BaseModel):
     status: str = "unknown"
 
 class InterfaceUpdate(BaseModel):
-    name: Optional[str] = None
+    name: Optional[str] = Field(default=None, min_length=1, max_length=128, pattern=r"^\S+(?:[ ]\S+)*$")
     ip_address: Optional[str] = None
     subnet_mask: Optional[str] = None
     mac_address: Optional[str] = None
@@ -540,7 +556,7 @@ async def list_devices():
     devices = db.get_all_devices()
     # M14: Filter out devices that purely came from the crawler discovery (live topology)
     # The inventory should only show authoritative records (manual or NetBox).
-    filtered = [d for d in devices if d.source != 'crawler']
+    filtered = devices if LOCAL_LAB else [d for d in devices if d.source != 'crawler']
     return {"devices": [_device_dict(d) for d in filtered]}
 
 
@@ -592,10 +608,13 @@ async def create_device(body: DeviceCreate, background_tasks: BackgroundTasks):
         ssh_password=body.ssh_password,
         ssh_port=body.ssh_port,
     )
-    device_id = db.upsert_device(device)
-    background_tasks.add_task(_sync_created_device_to_netbox, device_id)
-    background_tasks.add_task(_sync_telegraf_targets_after_inventory_change, f"create:{body.hostname}")
-    background_tasks.add_task(_sync_syslog_targets_after_inventory_change, f"create:{body.hostname}")
+    device_id = db.upsert_device(device, create_only=True) if LOCAL_LAB else db.upsert_device(device)
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_created_device_to_netbox, device_id)
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_telegraf_targets_after_inventory_change, f"create:{body.hostname}")
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_syslog_targets_after_inventory_change, f"create:{body.hostname}")
     created = db.get_device_by_id(device_id)
     _invalidate_inventory_context(
         source="netbox_api",
@@ -604,8 +623,8 @@ async def create_device(body: DeviceCreate, background_tasks: BackgroundTasks):
     )
     out = _device_dict(created)
     out["netbox_synced"] = False
-    out["netbox_sync_pending"] = True
-    out["netbox_message"] = "Inventory saved successfully. NetBox sync is running in background."
+    out["netbox_sync_pending"] = not LOCAL_LAB
+    out["netbox_message"] = "Saved in local SQLite; remote sync disabled." if LOCAL_LAB else "Inventory saved successfully. NetBox sync is running in background."
     return out
 
 
@@ -651,9 +670,12 @@ async def update_device(device_id: int, body: DeviceUpdate, background_tasks: Ba
         ssh_port=body.ssh_port if body.ssh_port is not None else existing.ssh_port,
     )
     db.upsert_device(device)
-    background_tasks.add_task(_sync_updated_device_to_netbox, device_id, existing.hostname)
-    background_tasks.add_task(_sync_telegraf_targets_after_inventory_change, f"update:{hostname}")
-    background_tasks.add_task(_sync_syslog_targets_after_inventory_change, f"update:{hostname}")
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_updated_device_to_netbox, device_id, existing.hostname)
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_telegraf_targets_after_inventory_change, f"update:{hostname}")
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_syslog_targets_after_inventory_change, f"update:{hostname}")
     updated = db.get_device_by_id(device_id)
     _invalidate_inventory_context(
         source="netbox_api",
@@ -662,8 +684,8 @@ async def update_device(device_id: int, body: DeviceUpdate, background_tasks: Ba
     )
     out = _device_dict(updated)
     out["netbox_synced"] = False
-    out["netbox_sync_pending"] = True
-    out["netbox_message"] = "Inventory updated successfully. NetBox sync is running in background."
+    out["netbox_sync_pending"] = not LOCAL_LAB
+    out["netbox_message"] = "Updated in local SQLite; remote sync disabled." if LOCAL_LAB else "Inventory updated successfully. NetBox sync is running in background."
     return out
 
 
@@ -676,9 +698,12 @@ async def delete_device(device_id: int, background_tasks: BackgroundTasks):
         raise HTTPException(404, "Device not found")
 
     db.delete_device(device_id)
-    background_tasks.add_task(_sync_deleted_device_to_netbox, existing.hostname)
-    background_tasks.add_task(_sync_telegraf_targets_after_inventory_change, f"delete:{existing.hostname}")
-    background_tasks.add_task(_sync_syslog_targets_after_inventory_change, f"delete:{existing.hostname}")
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_deleted_device_to_netbox, existing.hostname)
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_telegraf_targets_after_inventory_change, f"delete:{existing.hostname}")
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_syslog_targets_after_inventory_change, f"delete:{existing.hostname}")
     _invalidate_inventory_context(
         source="netbox_api",
         summary=f"device deleted: {existing.hostname}",
@@ -688,8 +713,8 @@ async def delete_device(device_id: int, background_tasks: BackgroundTasks):
         "deleted": True,
         "id": device_id,
         "hostname": existing.hostname,
-        "netbox_sync_pending": True,
-        "netbox_message": "Device deleted locally. NetBox delete is running in background.",
+        "netbox_sync_pending": not LOCAL_LAB,
+        "netbox_message": "Deleted in local SQLite; remote sync disabled." if LOCAL_LAB else "Device deleted locally. NetBox delete is running in background.",
     }
 
 
@@ -867,6 +892,13 @@ async def update_interface(device_id: int, iface_id: int, body: InterfaceUpdate,
                 iface_id,
             ),
         )
+        if LOCAL_LAB:
+            edited = conn.execute("SELECT * FROM interfaces WHERE id=?", (iface_id,)).fetchone()
+            for link in conn.execute("SELECT * FROM links WHERE src_interface_id=? OR dst_interface_id=?", (iface_id, iface_id)).fetchall():
+                peer_id = link["dst_interface_id"] if link["src_interface_id"] == iface_id else link["src_interface_id"]
+                peer = conn.execute("SELECT * FROM interfaces WHERE id=?", (peer_id,)).fetchone()
+                if peer:
+                    _validate_link_interfaces_compatible(edited, peer)
         conn.commit()
         row = conn.execute("SELECT * FROM interfaces WHERE id = ?", (iface_id,)).fetchone()
         device = db.get_device_by_id(device_id)
@@ -1020,7 +1052,7 @@ async def create_link(body: LinkCreate):
         dst_iface_name = dst_row["name"]
 
         # Manual links are strict: NetBox cable creation must succeed.
-        if body.discovery_protocol == "manual":
+        if body.discovery_protocol == "manual" and not LOCAL_LAB:
             if not src_dev.netbox_id or not dst_dev.netbox_id:
                 raise HTTPException(
                     409,
@@ -1064,7 +1096,7 @@ async def create_link(body: LinkCreate):
         return {
             "id": cur.lastrowid,
             "created": True,
-            "netbox_synced": body.discovery_protocol == "manual",
+            "netbox_synced": body.discovery_protocol == "manual" and not LOCAL_LAB,
         }
     except sqlite3.IntegrityError as e:
         conn.rollback()
@@ -1126,6 +1158,7 @@ async def delete_link(link_id: int):
 
 @router.post("/devices/{device_id}/push")
 async def push_device_to_netbox(device_id: int):
+    require_remote()
     """Push a single device to NetBox and mark it as 'registered'."""
     db = _db()
     d = db.get_device_by_id(device_id)
@@ -1175,6 +1208,7 @@ async def push_device_to_netbox(device_id: int):
 
 @router.post("/push-all")
 async def push_all_to_netbox():
+    require_remote()
     """Push all 'planned' devices to NetBox in batch."""
     db = _db()
     devices = db.get_all_devices()
@@ -1261,6 +1295,7 @@ async def push_all_to_netbox():
 
 @router.post("/sync/devices")
 async def sync_devices(background_tasks: BackgroundTasks):
+    require_remote()
     """
     Sync all devices from NetBox into the local inventory.
     Runs in a thread pool so it doesn't block the event loop,
@@ -1272,12 +1307,15 @@ async def sync_devices(background_tasks: BackgroundTasks):
         return syncer.sync_all_devices()
 
     result = await run_in_threadpool(_run)
-    background_tasks.add_task(_sync_telegraf_targets_after_inventory_change, "sync_devices")
-    background_tasks.add_task(_sync_syslog_targets_after_inventory_change, "sync_devices")
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_telegraf_targets_after_inventory_change, "sync_devices")
+    if not LOCAL_LAB:
+        background_tasks.add_task(_sync_syslog_targets_after_inventory_change, "sync_devices")
     return result or {"status": "success", "synced_count": 0}
 
 @router.post("/sync/topology")
 async def sync_topology():
+    require_remote()
     """
     Sync topology (cables) from NetBox into the local inventory.
     Runs in a thread pool so it doesn't block the event loop,
@@ -1298,6 +1336,7 @@ async def sync_topology():
 
 @router.get("/topology/planned")
 async def get_planned_topology():
+    require_remote()
     """
     Build the design-of-record (planned) topology graph from NetBox.
 
@@ -1429,6 +1468,8 @@ async def get_local_planned_topology():
 # ---------------------------------------------------------------------------
 
 def _try_push_to_netbox(device_data: DeviceCreate, action: str = "create"):
+    if LOCAL_LAB:
+        return {"available": False, "reason": "local_lab"}
     """Attempt to push a device to NetBox (blocking — call via background task)."""
     try:
         nb = NetBoxClient.get_client()

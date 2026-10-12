@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 
 import { ansibleApi, deployApi, llmApi, type PlaybookAnalysisResponse } from '../src/services/api';
+import { useLocalLab } from '../src/localLab';
 import { Confirm, Toast } from '../src/utils/swal';
 import type { ViewId } from '../types';
 
@@ -130,6 +131,7 @@ const statusDisplayLabel = (status: string) => {
 
 const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
   void _setView;
+  const localLab = useLocalLab();
   const [activeTab, setActiveTab] = useState<QueueTab>('pending');
   const [items, setItems] = useState<Record<QueueTab, QueueItem[]>>(readCachedQueueItems);
   const [loading, setLoading] = useState<Record<QueueTab, boolean>>({
@@ -149,6 +151,7 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
   const [aiTab, setAiTab] = useState<'audit' | 'chat'>('audit');
   const [analysis, setAnalysis] = useState<PlaybookAnalysisResponse | null>(null);
   const [analysisLoading, setAnalysisLoading] = useState(false);
+  const [analysisError, setAnalysisError] = useState('');
   const [qaHistory, setQaHistory] = useState<{ role: 'user' | 'assistant'; content: string; quote?: string }[]>([]);
   const [qaInput, setQaInput] = useState('');
   const [qaSending, setQaSending] = useState(false);
@@ -206,7 +209,9 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
     const label = action === 'approve' ? 'Approve' : 'Reject';
     const confirmMessage =
       action === 'approve'
-        ? item.type === 'ansible_job'
+        ? localLab
+          ? 'This records a local approval decision and audit record. It does not execute, deploy, or contact a device.'
+          : item.type === 'ansible_job'
           ? 'This approves the Ansible job and the linked change request. You can run Execute from Ansible Studio after approval.'
           : 'This approves the change request. If a playbook job exists, prefer approving from the Playbook row so job state stays in sync.'
         : 'This will move the item to Rejected with your review note.';
@@ -238,7 +243,7 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
     } finally {
       setActionId(null);
     }
-  }, [activeTab, refreshAllTabs]);
+  }, [activeTab, localLab, refreshAllTabs]);
 
   const triggerAnalysis = useCallback(async (content: string, promptRequest?: string) => {
     setAnalysis(null);
@@ -256,10 +261,12 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
     if (invalidContent) return;
 
     setAnalysisLoading(true);
+    setAnalysisError('');
     try {
       const res = await llmApi.analyzePlaybook(content, promptRequest);
       setAnalysis(res);
-    } catch (e) {
+    } catch (e: any) {
+      setAnalysisError(e.message || 'AI review failed. Check the configured model service.');
       console.error("Failed to analyze playbook:", e);
     } finally {
       setAnalysisLoading(false);
@@ -362,7 +369,9 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
             loadedContent = file.content || '# Empty playbook';
           }
         } else {
-          try {
+          if (localLab) {
+            loadedContent = (await deployApi.reviewContent(item.request_id)).content;
+          } else try {
             const link = await ansibleApi.getJobForRequest(item.request_id);
             let path = (link.entrypoint_path || '').trim();
             if (!path) {
@@ -387,7 +396,7 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
         void triggerAnalysis(loadedContent, item.title);
       }
     },
-    [triggerAnalysis]
+    [triggerAnalysis, localLab]
   );
 
   const tabItems = items[activeTab];
@@ -452,7 +461,7 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
               {counts[tab]}
             </div>
             <div className="stat-desc">
-              {tab === 'pending' ? 'Awaiting reviewer decision' : tab === 'approved' ? 'Ready for deploy' : 'Sent back with review'}
+              {tab === 'pending' ? 'Awaiting reviewer decision' : tab === 'approved' ? (localLab ? 'Review approved; not deployed' : 'Ready for deploy') : 'Sent back with review'}
             </div>
           </button>
         ))}
@@ -607,7 +616,7 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
             <div className="flex items-center justify-between border-b pb-3 mb-4 shrink-0">
               <div>
                 <h3 className="font-bold text-lg text-base-content">Preview: {previewTitle}</h3>
-                <p className="text-xs text-base-content/50">Review playbook YAML and consult AI safety insights before approving.</p>
+                <p className="text-xs text-base-content/50">Review the submitted change and consult AI safety insights before approving.</p>
               </div>
               <button className="btn btn-sm btn-circle btn-ghost" onClick={() => setPreviewOpen(false)}>✕</button>
             </div>
@@ -616,8 +625,8 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
               {/* Left: Playbook Preview (YAML) */}
               <div className="lg:col-span-7 flex flex-col h-full min-h-0 border border-base-300 rounded-xl overflow-hidden bg-base-300/30">
                 <div className="p-3 bg-base-200 border-b border-base-300 flex items-center justify-between font-mono text-xs shrink-0 select-none">
-                  <span className="font-bold text-base-content/70">playbook_entrypoint.yml</span>
-                  <span className="badge badge-sm badge-outline">YAML</span>
+                  <span className="font-bold text-base-content/70">Submitted change content</span>
+                  <span className="badge badge-sm badge-outline">Read-only</span>
                 </div>
                 <div className="flex-1 overflow-auto p-4 custom-scrollbar bg-neutral text-neutral-content">
                   {previewLoading ? (
@@ -661,6 +670,7 @@ const ApprovalQueueView: React.FC<Props> = ({ setView: _setView }) => {
 
                 {/* Tab Contents */}
                 <div className="flex-1 overflow-y-auto p-4 min-h-0 custom-scrollbar">
+                  {analysisError && <div role="alert" className="alert alert-error text-sm">{analysisError}</div>}
                   {analysisLoading ? (
                     <div className="flex flex-col items-center justify-center h-full gap-3 py-16 opacity-75 select-none">
                       <div className="relative w-16 h-16 flex items-center justify-center">

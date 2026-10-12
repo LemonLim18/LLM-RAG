@@ -2,6 +2,16 @@ import { API_CONFIG } from '../config';
 
 const BASE_URL = API_CONFIG.API_URL;
 
+export const knowledgeApi = {
+  inspect: () => request<any>('/knowledge'),
+  initialize: (reason: string) => request<any>('/knowledge/initialize', { method: 'POST', body: JSON.stringify({reason}) }),
+  edit: (body: unknown) => request<any>('/knowledge/edit', { method: 'POST', body: JSON.stringify(body) }),
+  template: (body: unknown) => request<any>('/knowledge/template', { method: 'PUT', body: JSON.stringify(body) }),
+  validate: () => request<any>('/knowledge/validate', { method: 'POST' }),
+  schema: (operation: string) => request<any>(`/knowledge/schema/${encodeURIComponent(operation)}`),
+  publish: (body: unknown) => request<any>('/knowledge/publish', { method: 'POST', body: JSON.stringify(body) }),
+};
+
 // Generic fetch wrapper
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const url = `${BASE_URL}/api/v1${endpoint}`;
@@ -224,6 +234,9 @@ export const onboardingApi = {
 
 // --- M4: Deployment API ---
 export const deployApi = {
+  environment: () => request<{active_mode: string; selected_mode: string; automatic_restart: boolean; restart_required: boolean}>('/environment'),
+  selectEnvironment: (mode: 'local_lab' | 'normal') => request<{automatic_restart: boolean; restart_required: boolean}>('/environment', {method: 'PUT', body: JSON.stringify({mode})}),
+  reviewContent: (id: number) => request<{ content: string; source: string }>(`/deploy/requests/${id}/review-content`),
   createRequest: (title: string, description: string) => 
     request<{ request_id: number }>('/deploy/requests', {
       method: 'POST',
@@ -923,6 +936,8 @@ export interface LinkRecord {
 
 // --- Network: Config Backup & Restore ---
 export interface ConfigBackupDevice {
+  operational_status?: 'up' | 'down' | 'unknown';
+  observation_source?: 'simulated' | 'real';
   id: number;
   hostname: string;
   management_ip?: string;
@@ -964,6 +979,9 @@ export interface ConfigBackupExplainResponse {
   summary: string;
 }
 export const networkConfigBackupApi = {
+  importLocal: (deviceId: number, configText: string, description: string) =>
+    request<{ snapshot_id: number }>('/network/config-backup/import', { method: 'POST', body: JSON.stringify({ device_id: deviceId, config_text: configText, description }) }),
+  deleteLocal: (id: number) => request<{ deleted: boolean }>(`/network/config-backup/snapshots/${id}`, { method: 'DELETE' }),
   listDevices: () =>
     request<ConfigBackupDevice[]>('/network/config-backup/devices'),
   listSnapshots: (deviceId: number, limit = 20) =>
@@ -1132,6 +1150,9 @@ export const netboxApi = {
       method: 'POST',
       body: JSON.stringify(link),
     }),
+
+  updateLink: (linkId: number, link: { src_device_id: number; src_interface_id?: number; dst_device_id: number; dst_interface_id?: number; discovery_protocol?: string }) =>
+    request<LinkRecord>(`/netbox/links/${linkId}`, { method: 'PUT', body: JSON.stringify(link) }),
 
   deleteLink: (linkId: number) =>
     request<{ deleted: boolean }>(`/netbox/links/${linkId}`, {

@@ -7,7 +7,8 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 ALLOWED_SCOPES = {"global", "site", "role", "device"}
-DEFAULT_DB_PATH = "db/netauto.db"
+from lab_config import DB_PATH
+DEFAULT_DB_PATH = str(DB_PATH)
 DEFAULT_HUAWEI_SNMP_COMMUNITY = os.getenv("SNMP_HUAWEI_COMMUNITY", "CogniShield@Lab2026").strip() or "CogniShield@Lab2026"
 
 

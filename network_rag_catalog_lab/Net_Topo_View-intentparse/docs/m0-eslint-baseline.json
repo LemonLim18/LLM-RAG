@@ -1,0 +1,21 @@
+{
+  "basis": "HEAD tracked frontend source; current unchanged ESLint configuration and locked packages",
+  "files": 99,
+  "errors": 570,
+  "warnings": 36,
+  "rules": {
+    "@typescript-eslint/no-explicit-any": 474,
+    "@typescript-eslint/no-unused-vars": 47,
+    "react-hooks/set-state-in-effect": 15,
+    "react-hooks/exhaustive-deps": 32,
+    "react-hooks/purity": 1,
+    "prefer-const": 4,
+    "no-empty": 1,
+    "react-hooks/static-components": 14,
+    "no-useless-escape": 5,
+    "react-hooks/preserve-manual-memoization": 5,
+    "react-refresh/only-export-components": 3,
+    "null": 4,
+    "react-hooks/immutability": 1
+  }
+}

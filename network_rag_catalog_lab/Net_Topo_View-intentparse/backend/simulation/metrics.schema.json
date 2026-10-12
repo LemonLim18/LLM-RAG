@@ -1,0 +1,568 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Alert": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "device_id": {
+          "exclusiveMinimum": 0,
+          "title": "Device Id",
+          "type": "integer"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "severity": {
+          "default": "info",
+          "enum": [
+            "info",
+            "low",
+            "warning",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 8000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "kind": {
+          "default": "network",
+          "maxLength": 100,
+          "title": "Kind",
+          "type": "string"
+        },
+        "metric": {
+          "default": "cpu",
+          "maxLength": 100,
+          "title": "Metric",
+          "type": "string"
+        },
+        "value": {
+          "default": 0,
+          "title": "Value",
+          "type": "number"
+        },
+        "threshold": {
+          "default": 80,
+          "title": "Threshold",
+          "type": "number"
+        },
+        "status": {
+          "default": "active",
+          "enum": [
+            "active",
+            "resolved"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "device_id",
+        "timestamp",
+        "message"
+      ],
+      "title": "Alert",
+      "type": "object"
+    },
+    "DeviceObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "default": "active",
+          "enum": [
+            "active",
+            "inactive"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "availability": {
+          "default": "unknown",
+          "enum": [
+            "up",
+            "down",
+            "unknown"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "sysuptime": {
+          "default": 0,
+          "description": "SNMP uptime in hundredths of a second",
+          "minimum": 0,
+          "title": "Sysuptime",
+          "type": "integer"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/Point"
+          },
+          "maxItems": 5000,
+          "title": "Metrics",
+          "type": "array"
+        }
+      },
+      "title": "DeviceObservation",
+      "type": "object",
+      "required": []
+    },
+    "DeviceOverride": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "default": "active",
+          "enum": [
+            "active",
+            "inactive"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "availability": {
+          "default": "unknown",
+          "enum": [
+            "up",
+            "down",
+            "unknown"
+          ],
+          "title": "Availability",
+          "type": "string"
+        },
+        "sysuptime": {
+          "default": 0,
+          "description": "SNMP uptime in hundredths of a second",
+          "minimum": 0,
+          "title": "Sysuptime",
+          "type": "integer"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/Point"
+          },
+          "maxItems": 5000,
+          "title": "Metrics",
+          "type": "array"
+        },
+        "device_id": {
+          "exclusiveMinimum": 0,
+          "title": "Device Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "device_id"
+      ],
+      "title": "DeviceOverride",
+      "type": "object"
+    },
+    "Event": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "device_id": {
+          "exclusiveMinimum": 0,
+          "title": "Device Id",
+          "type": "integer"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "severity": {
+          "default": "info",
+          "enum": [
+            "info",
+            "low",
+            "warning",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "message": {
+          "maxLength": 8000,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "kind": {
+          "default": "network",
+          "maxLength": 100,
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "device_id",
+        "timestamp",
+        "message"
+      ],
+      "title": "Event",
+      "type": "object"
+    },
+    "EventTemplate": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "default": "info",
+          "enum": [
+            "info",
+            "low",
+            "warning",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "group": {
+          "default": "syslog",
+          "enum": [
+            "syslog",
+            "events"
+          ],
+          "title": "Group",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "timestamp",
+        "message"
+      ],
+      "title": "EventTemplate",
+      "type": "object"
+    },
+    "InterfaceDefaults": {
+      "additionalProperties": false,
+      "properties": {
+        "admin_status": {
+          "default": "unknown",
+          "enum": [
+            "up",
+            "down",
+            "unknown"
+          ],
+          "title": "Admin Status",
+          "type": "string"
+        },
+        "oper_status": {
+          "default": "unknown",
+          "enum": [
+            "up",
+            "down",
+            "unknown"
+          ],
+          "title": "Oper Status",
+          "type": "string"
+        },
+        "speed_bps": {
+          "default": 1000000000,
+          "exclusiveMinimum": 0,
+          "title": "Speed Bps",
+          "type": "number"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/Point"
+          },
+          "maxItems": 5000,
+          "title": "Metrics",
+          "type": "array"
+        }
+      },
+      "title": "InterfaceDefaults",
+      "type": "object",
+      "required": []
+    },
+    "InterfaceObservation": {
+      "additionalProperties": false,
+      "properties": {
+        "admin_status": {
+          "default": "unknown",
+          "enum": [
+            "up",
+            "down",
+            "unknown"
+          ],
+          "title": "Admin Status",
+          "type": "string"
+        },
+        "oper_status": {
+          "default": "unknown",
+          "enum": [
+            "up",
+            "down",
+            "unknown"
+          ],
+          "title": "Oper Status",
+          "type": "string"
+        },
+        "speed_bps": {
+          "default": 1000000000,
+          "exclusiveMinimum": 0,
+          "title": "Speed Bps",
+          "type": "number"
+        },
+        "metrics": {
+          "items": {
+            "$ref": "#/$defs/Point"
+          },
+          "maxItems": 5000,
+          "title": "Metrics",
+          "type": "array"
+        },
+        "device_id": {
+          "exclusiveMinimum": 0,
+          "title": "Device Id",
+          "type": "integer"
+        },
+        "interface_id": {
+          "exclusiveMinimum": 0,
+          "title": "Interface Id",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "device_id",
+        "interface_id"
+      ],
+      "title": "InterfaceObservation",
+      "type": "object"
+    },
+    "Point": {
+      "additionalProperties": false,
+      "properties": {
+        "time": {
+          "title": "Time",
+          "type": "string"
+        },
+        "cpu": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Cpu",
+          "type": "number"
+        },
+        "memory": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Memory",
+          "type": "number"
+        },
+        "in_bps": {
+          "default": 0,
+          "minimum": 0,
+          "title": "In Bps",
+          "type": "number"
+        },
+        "out_bps": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Out Bps",
+          "type": "number"
+        },
+        "utilization_pct": {
+          "default": 0,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Utilization Pct",
+          "type": "number"
+        },
+        "errors": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Errors",
+          "type": "number"
+        },
+        "discards": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Discards",
+          "type": "number"
+        },
+        "pkts_in_ucast": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pkts In Ucast",
+          "type": "number"
+        },
+        "pkts_out_ucast": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pkts Out Ucast",
+          "type": "number"
+        },
+        "pkts_in_mcast": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pkts In Mcast",
+          "type": "number"
+        },
+        "pkts_out_mcast": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pkts Out Mcast",
+          "type": "number"
+        },
+        "pkts_in_bcast": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pkts In Bcast",
+          "type": "number"
+        },
+        "pkts_out_bcast": {
+          "default": 0,
+          "minimum": 0,
+          "title": "Pkts Out Bcast",
+          "type": "number"
+        }
+      },
+      "required": [
+        "time",
+        "cpu",
+        "memory"
+      ],
+      "title": "Point",
+      "type": "object"
+    },
+    "SnapshotFixture": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 100,
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "device_id": {
+          "exclusiveMinimum": 0,
+          "title": "Device Id",
+          "type": "integer"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "config_text": {
+          "maxLength": 2000000,
+          "minLength": 1,
+          "title": "Config Text",
+          "type": "string"
+        },
+        "description": {
+          "default": "Simulated configuration",
+          "maxLength": 500,
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "device_id",
+        "timestamp",
+        "config_text"
+      ],
+      "title": "SnapshotFixture",
+      "type": "object"
+    },
+    "Threshold": {
+      "additionalProperties": false,
+      "properties": {
+        "metric": {
+          "enum": [
+            "cpu",
+            "memory",
+            "errors",
+            "discards",
+            "utilization_pct"
+          ],
+          "title": "Metric",
+          "type": "string"
+        },
+        "threshold": {
+          "minimum": 0,
+          "title": "Threshold",
+          "type": "number"
+        },
+        "severity": {
+          "default": "warning",
+          "enum": [
+            "warning",
+            "high",
+            "critical"
+          ],
+          "title": "Severity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "metric",
+        "threshold"
+      ],
+      "title": "Threshold",
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "defaults": {
+      "$ref": "#/$defs/DeviceObservation"
+    },
+    "interface_defaults": {
+      "$ref": "#/$defs/InterfaceDefaults"
+    },
+    "devices": {
+      "items": {
+        "$ref": "#/$defs/DeviceOverride"
+      },
+      "title": "Devices",
+      "type": "array"
+    },
+    "interfaces": {
+      "items": {
+        "$ref": "#/$defs/InterfaceObservation"
+      },
+      "title": "Interfaces",
+      "type": "array"
+    }
+  }
+}

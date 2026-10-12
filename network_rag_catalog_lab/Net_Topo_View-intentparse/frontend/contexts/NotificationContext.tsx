@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import type { AppNotification, NotificationType, ViewId } from '../types';
-import { ENABLE_DRIFT_NOTIFICATIONS, API_CONFIG } from '../src/config';
+import { API_CONFIG } from '../src/config';
 
 /* -- Telemetry WS listener (incident push events) ------------- */
 // Use configured backend URL when available so frontend works across networks.
@@ -181,23 +181,6 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
                         );
                     }
 
-                    // Phase 13 - Drift detection push events
-                    if (ENABLE_DRIFT_NOTIFICATIONS && msg.event === 'drift_check_complete') {
-                        const dCount = msg.data?.drift_detected ?? 0;
-                        if (dCount > 0) {
-                            addNotification(
-                                'Drift Detected',
-                                `${dCount} device(s) with configuration drift (${msg.data?.devices_checked ?? 0} checked)`,
-                                dCount > 2 ? 'error' : 'warning',
-                                {
-                                    targetView: 'compliance_hub',
-                                    contextLabel: 'Open compliance findings',
-                                    dedupeKey: `drift|${dCount}|${msg.data?.devices_checked ?? 0}`,
-                                    dedupeWindowMs: 300000,
-                                },
-                            );
-                        }
-                    }
                 } catch { /* ignore non-JSON frames */ }
             };
 

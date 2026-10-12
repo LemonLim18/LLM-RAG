@@ -1,3 +1,4 @@
+import { useLocalLab } from '../src/localLab';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Server,
@@ -10,17 +11,13 @@ import {
   Download,
   Eye,
   FileText,
-  X,
-  Edit2,
-  Check,
-  Sparkles,
 } from 'lucide-react';
 import {
   networkConfigBackupApi,
   type ConfigBackupDevice,
   type ConfigBackupSnapshot,
 } from '../src/services/api';
-import { Toast } from '../src/utils/swal';
+import { Confirm, Toast } from '../src/utils/swal';
 import DeviceSelect from '../components/DeviceSelect';
 import CaptureSnapshotModal from '../components/CaptureSnapshotModal';
 
@@ -29,12 +26,15 @@ import CaptureSnapshotModal from '../components/CaptureSnapshotModal';
 // ---------------------------------------------------------------------------
 
 const ConfigBackupView: React.FC = () => {
+  const localLab = useLocalLab();
+  const [importOpen, setImportOpen] = useState(false);
+  const [importText, setImportText] = useState('');
+  const [importDescription, setImportDescription] = useState('');
   const [devices, setDevices] = useState<ConfigBackupDevice[]>([]);
   const [selectedDevice, setSelectedDevice] = useState<ConfigBackupDevice | null>(null);
   const [snapshots, setSnapshots] = useState<ConfigBackupSnapshot[]>([]);
   const [loadingDevices, setLoadingDevices] = useState(true);
   const [loadingSnapshots, setLoadingSnapshots] = useState(false);
-  const [capturing, setCapturing] = useState(false);
   const [showCaptureModal, setShowCaptureModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [viewingSnapshot, setViewingSnapshot] = useState<ConfigBackupSnapshot | null>(null);
@@ -149,8 +149,10 @@ const ConfigBackupView: React.FC = () => {
           <h1 className="text-2xl font-bold">Config Backup & Restore</h1>
         </div>
         <p className="text-slate-400 text-sm mt-1">
-          Store the current <strong>live</strong> running-configuration of any device for backup.
-          Snapshots are fetched from the device over SSH and saved so you can restore later if needed.
+          {localLab ? 'Capture, compare and restore SQLite snapshots against a simulated device configuration. No device connection or command is performed.' : <>
+            Store the current <strong>live</strong> running-configuration of any device for backup.
+            Snapshots are fetched from the device over SSH and saved so you can restore later if needed.
+          </>}
         </p>
       </header>
 
@@ -316,6 +318,11 @@ const ConfigBackupView: React.FC = () => {
                                 <Eye className="h-3.5 w-3.5" />
                                 View
                               </button>
+                              {localLab && <button className="btn btn-ghost btn-sm text-error" onClick={async () => {
+                                if (!await Confirm.danger('Delete local snapshot?', 'Only this stored snapshot will be removed.')) return;
+                                try { await networkConfigBackupApi.deleteLocal(s.id); fetchSnapshots(); }
+                                catch (e) { Toast.error('Delete failed', e instanceof Error ? e.message : String(e)); }
+                              }}>Delete</button>}
                               <button
                                 type="button"
                                 className="btn btn-ghost btn-sm text-primary gap-1.5"
@@ -337,6 +344,21 @@ const ConfigBackupView: React.FC = () => {
         </main>
       </div>
 
+      {importOpen && selectedDevice && <div className="modal modal-open" role="dialog" aria-label="Import local configuration">
+        <div className="modal-box">
+          <h2 className="font-bold text-lg">Import Local Configuration</h2>
+          <p className="text-sm my-2">Stores a snapshot in SQLite. No device connection or execution occurs.</p>
+          <input aria-label="Snapshot description" className="input input-bordered w-full mb-2" placeholder="Description" value={importDescription} onChange={e => setImportDescription(e.target.value)} />
+          <textarea aria-label="Configuration text" className="textarea textarea-bordered w-full h-48 font-mono" value={importText} onChange={e => setImportText(e.target.value)} />
+          <div className="modal-action">
+            <button className="btn" onClick={() => setImportOpen(false)}>Cancel</button>
+            <button className="btn btn-primary" disabled={!importText.trim()} onClick={async () => {
+              try { await networkConfigBackupApi.importLocal(selectedDevice.id, importText, importDescription); setImportOpen(false); setImportText(''); setImportDescription(''); fetchSnapshots(); Toast.success('Configuration saved locally'); }
+              catch (e) { Toast.error('Import failed', e instanceof Error ? e.message : String(e)); }
+            }}>Save Local Snapshot</button>
+          </div>
+        </div>
+      </div>}
       {/* View Modal */}
       {viewingSnapshot && selectedDevice && (
         <CaptureSnapshotModal

@@ -58,7 +58,7 @@ def _get_pwd_context():
 # ---------------------------------------------------------------------------
 _HERE = Path(__file__).resolve().parent
 _KEY_FILE = _HERE / ".vault_key"
-_DB_PATH = _HERE.parent / "db" / "netauto.db"
+from lab_config import DB_PATH as _DB_PATH
 
 ALGORITHM = "HS256"
 # How long access tokens are valid for.
@@ -241,7 +241,7 @@ def seed_default_admin() -> None:
                 "INSERT INTO users (username, password_hash, role, full_name, email, avatar) VALUES (?, ?, ?, ?, ?, ?)",
                 ("admin", hashed, "admin", "CogniShield Administrator", "admin@cognishield.local", "avatar-1"),
             )
-            logger.info("Seeded default admin user (admin/admin)")
+            logger.info("Seeded local default admin user")
 
         # Seed a default engineer account for RBAC onboarding flows.
         existing_engineer = conn.execute(
@@ -254,7 +254,7 @@ def seed_default_admin() -> None:
                 "INSERT INTO users (username, password_hash, role, full_name, email, avatar) VALUES (?, ?, ?, ?, ?, ?)",
                 ("engineer", hashed, "engineer", "Default Engineer", "engineer@cognishield.local", "avatar-2"),
             )
-            logger.info("Seeded default engineer user (engineer/engineer)")
+            logger.info("Seeded local default engineer user")
 
         # Update missing fields for admin and engineer if they exist but have null values
         try:

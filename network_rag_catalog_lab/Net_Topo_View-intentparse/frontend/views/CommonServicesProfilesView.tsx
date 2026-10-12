@@ -192,7 +192,7 @@ const CommonServicesProfilesView: React.FC = () => {
     try {
       const result = await onboardingApi.testServerConnection(targetServerIp, 22, credentialLabel);
       const details = result.ok
-        ? `Connected in ${result.duration_ms} ms using ${result.credential_label}`
+        ? (result.message || `Connected in ${result.duration_ms} ms using ${result.credential_label}`)
         : (result.stderr || result.message || 'Connection test failed');
       setServerConnectionResult({
         ok: Boolean(result.ok),
@@ -295,7 +295,7 @@ const CommonServicesProfilesView: React.FC = () => {
     setTestSyslogLoading(true);
     try {
       const res: any = await commonServicesApi.testSyslog();
-      Toast.success('Syslog test sent', `Sent to ${res.host}:${res.port}`);
+      Toast.success(res.source === 'simulated' ? 'Simulated syslog test successful' : 'Syslog test sent', res.message || `Sent to ${res.host}:${res.port}`);
     } catch (e: any) {
       Toast.error('Syslog test failed', e?.message || 'Unable to send test syslog');
     } finally {
@@ -311,7 +311,7 @@ const CommonServicesProfilesView: React.FC = () => {
     setTestNtpLoading(true);
     try {
       const res: any = await commonServicesApi.testNtp();
-      Toast.success('NTP OK', `Server ${res.server} responded — offset ${res.offset_seconds.toFixed(2)}s`);
+      Toast.success(res.source === 'simulated' ? 'Simulated NTP test successful' : 'NTP OK', res.message || `Server ${res.server} responded — offset ${res.offset_seconds.toFixed(2)}s`);
     } catch (e: any) {
       Toast.error('NTP test failed', e?.message || 'Failed to query NTP server');
     } finally {

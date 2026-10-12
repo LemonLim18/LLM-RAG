@@ -80,19 +80,12 @@ export type ViewId =
   | 'topology'
   | 'netbox_devices'
   | 'net_perf'
-  | 'compliance_hub'
-  | 'compliance_device_detail'
-  | 'knowledge_base'
   | 'ansible_studio'
   | 'device_detail'
   | 'onboarding'
   | 'common_services'
-  | 'intent_history'
-  | 'intent_parser'
-  | 'sdn_dashboard'
-  | 'playbook_comparison'
   | 'approval_queue'
-  | 'template_studio'
+  | 'knowledge_overview' | 'knowledge_categories' | 'knowledge_parameters' | 'knowledge_publication' | 'knowledge_templates' | 'knowledge_engineering' | 'template_studio'
   | 'config_backup';
 
 // Notification Types

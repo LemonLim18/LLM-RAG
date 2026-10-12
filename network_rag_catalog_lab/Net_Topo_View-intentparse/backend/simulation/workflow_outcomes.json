@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "capture": {
+    "default_config": "version 17.9\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nservice password-encryption\nhostname {hostname}\n!\nip domain name lab.example\nip routing\nno ip http server\nno ip http secure-server\n!\ninterface GigabitEthernet0/0\n description Management uplink\n ip address {management_ip} 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet0/1\n description User LAN\n ip address 10.10.10.1 255.255.255.0\n no shutdown\n!\ninterface Loopback0\n description Router ID\n ip address 10.255.0.1 255.255.255.255\n!\nip route 0.0.0.0 0.0.0.0 192.168.1.1\nlogging buffered 65536 informational\nlogging host 192.168.1.10\nntp server 192.168.1.20\nsnmp-server location Lab\nsnmp-server contact noc@lab.example\n!\nline con 0\n logging synchronous\n exec-timeout 10 0\nline vty 0 4\n transport input ssh\n login local\nend\n",
+    "device_configs": []
+  },
+  "ztp_publish": {
+    "default_status": "success",
+    "message": "Staged configuration in the local simulated ZTP publication store. No DHCP, TFTP, SSH, or device provisioning was performed.",
+    "device_outcomes": []
+  },
+  "restore": {
+    "default_status": "success",
+    "message": "Recorded a successful local simulated restore. No device command was sent.",
+    "device_outcomes": []
+  },
+  "deployment_history": [
+    {
+      "label": "Simulated configuration delivery",
+      "timestamp": "2026-10-10T15:00:00Z",
+      "outcome": "success",
+      "message": "Example delivery outcome from the local scenario fixture."
+    }
+  ]
+}

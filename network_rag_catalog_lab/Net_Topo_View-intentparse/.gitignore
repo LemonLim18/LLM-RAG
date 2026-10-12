@@ -41,3 +41,20 @@ backend/.pytest-tmp/
 .tmp_pytest/
 tmp/
 
+
+# M0 local runtime and private database backups
+backend/.venv-m0/
+backend/db/backups/
+backend/db/*.db-*
+backend/.m0-test/
+frontend/node_modules/
+frontend/dist/
+
+# SQLite journal sidecars are runtime state, never source artifacts
+net_topo.db-shm
+net_topo.db-wal
+backend/net_topo.db-shm
+backend/net_topo.db-wal
+
+# Local V9 knowledge authority and immutable release artifacts (back up separately).
+backend/knowledge_workspace/

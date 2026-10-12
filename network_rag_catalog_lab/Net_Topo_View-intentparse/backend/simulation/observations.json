@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "defaults": {
+    "status": "active",
+    "availability": "up",
+    "sysuptime": 86400000,
+    "metrics": []
+  },
+  "snapshots": [],
+  "interface_defaults": {
+    "admin_status": "up",
+    "oper_status": "up",
+    "speed_bps": 1000000000,
+    "metrics": []
+  }
+}

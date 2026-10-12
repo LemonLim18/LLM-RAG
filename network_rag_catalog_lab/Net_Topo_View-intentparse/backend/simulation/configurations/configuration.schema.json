@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "device_id": {
+      "exclusiveMinimum": 0,
+      "title": "Device Id",
+      "type": "integer"
+    },
+    "config_text": {
+      "maxLength": 2000000,
+      "minLength": 1,
+      "title": "Config Text",
+      "type": "string"
+    },
+    "source": {
+      "default": "simulated",
+      "title": "Source",
+      "type": "string"
+    }
+  },
+  "required": [
+    "device_id",
+    "config_text"
+  ],
+  "title": "DeviceConfig",
+  "type": "object"
+}

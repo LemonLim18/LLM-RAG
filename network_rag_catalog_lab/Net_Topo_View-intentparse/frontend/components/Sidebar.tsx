@@ -7,7 +7,6 @@ import {
   ShieldCheck,
   LogOut,
   Server,
-  BookOpen,
   Workflow,
   PackagePlus,
   ListChecks,
@@ -16,12 +15,14 @@ import {
   FileCode2,
   HardDrive,
   RadioTower,
+  LayoutDashboard,
+  Library,
   User as UserIcon,
 } from 'lucide-react';
 import type { ViewId, User } from '../types';
 import { normalizeUserRole } from '../types';
 import { Confirm } from '../src/utils/swal';
-import { SHOW_SDN_CONTROLLER } from '../src/config';
+import { useLocalLab } from '../src/localLab';
 
 interface SidebarProps {
   currentView: ViewId;
@@ -36,6 +37,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout, collapsed, onToggleCollapse, onEditProfile }) => {
   const [networkOpen, setNetworkOpen] = useState(true);
   const [automationOpen, setAutomationOpen] = useState(true);
+  const localLab = useLocalLab();
+  const [knowledgeOpen, setKnowledgeOpen] = useState(true);
 
   if (!user) return null;
   const normalizedRole = normalizeUserRole(user.role);
@@ -228,37 +231,23 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout,
           open={automationOpen}
           onToggle={() => setAutomationOpen(!automationOpen)}
         >
-          {/* <MenuItem id="net_chat" label="Network Copilot" icon={BotMessageSquare} /> */}
           <MenuItem id="ansible_studio" label="Ansible Studio" icon={Workflow} iconColor="text-accent"/>
-          {/* <MenuItem id="intent_parser" label="Intent Parser" icon={BotMessageSquare} iconColor="text-accent"/> */}
-          {/* <MenuItem id="intent_history" label="Intent History" icon={History} iconColor="text-accent"/> */}
-          {/* <MenuItem id="playbook_comparison" label="Playbook Compare" icon={Columns} /> */}
           {normalizedRole === 'admin' && (
             <MenuItem id="approval_queue" label="Approval Queue" icon={ListChecks} iconColor="text-accent"/>
           )}
-          {SHOW_SDN_CONTROLLER && (
-            <MenuItem id="sdn_dashboard" label="SDN Controllers" icon={Network} iconColor="text-accent"/>
-          )}
-          {/* <MenuItem id="knowledge_base" label="Knowledge Base" icon={BookOpen} iconColor="text-accent"/> */}
         </SectionHeader>
-        {/* <SectionHeader
-          label="Security"
-          icon={ShieldCheck}
-          iconColor="text-secondary"
-          open={securityOpen}
-          onToggle={() => setSecurityOpen(!securityOpen)}
-          >
-          <MenuItem id="sec_dashboard" label="Security Dashboard" icon={Gauge} iconColor="text-secondary"/>
-          <MenuItem id="sec_events" label="SIEM & Events" icon={ShieldAlert} iconColor="text-secondary"/>
-          <MenuItem id="sec_analysis" label="Threat Analysis" icon={ScanSearch} iconColor="text-secondary"/>
-          <MenuItem id="sec_chat" label="Security Copilot" icon={BotMessageSquare} iconColor="text-secondary"/>
-          <MenuItem id="incidents" label="Incident Response" icon={Siren} iconColor="text-secondary"/>
-        </SectionHeader> */}
+        {localLab && <SectionHeader label="Knowledge Engineering" icon={FileCode2} iconColor="text-info" open={knowledgeOpen} onToggle={() => setKnowledgeOpen(!knowledgeOpen)}>
+          <MenuItem id="knowledge_overview" label="Overview" icon={LayoutDashboard}/>
+          <MenuItem id="knowledge_categories" label="Category Management" icon={PackagePlus}/>
+          <MenuItem id="knowledge_engineering" label="Operation Management" icon={Workflow}/>
+          <MenuItem id="knowledge_parameters" label="Global Parameters" icon={ListChecks}/>
+          <MenuItem id="knowledge_templates" label="Template Management" icon={Library}/>
+          <MenuItem id="knowledge_publication" label="Validation & Publication" icon={ShieldCheck}/>
+        </SectionHeader>}
       </ul>
 
       {/* Bottom Section: Collapse Toggle + Logout */}
       <div className="border-t border-base-200 p-2 flex flex-col gap-1">
-        {/* Collapse toggle */}
         <button
           onClick={onToggleCollapse}
           className="btn btn-ghost btn-sm w-full gap-2"

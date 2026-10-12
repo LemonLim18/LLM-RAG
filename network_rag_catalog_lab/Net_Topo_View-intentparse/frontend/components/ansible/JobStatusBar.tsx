@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useLocalLab } from '../../src/localLab';
 import { CheckCircle2, Circle, Loader2, AlertCircle, History, ScrollText, Server, Terminal, Play, ChevronDown, Trash2, PanelRightOpen, X, Plus } from 'lucide-react';
 import { deployApi, ansibleApi } from '../../src/services/api';
 import SSHTerminal from '../SSHTerminal';
@@ -67,6 +68,7 @@ const JobStatusBar: React.FC<JobStatusBarProps> = ({
   onOpenSshModal,
   onConnectionChangeSsh,
 }) => {
+  const localLab = useLocalLab();
   const logRef = useRef<HTMLDivElement>(null);
   const [tab, setTab] = useState<BottomTab>('output');
   const [outputPanelCollapsed, setOutputPanelCollapsed] = useState(false);
@@ -205,6 +207,8 @@ const JobStatusBar: React.FC<JobStatusBarProps> = ({
           : 'border-transparent opacity-60 hover:opacity-100'
       }`}
       onClick={() => setTab(id)}
+      disabled={localLab && id === 'ssh'}
+      title={localLab && id === 'ssh' ? 'SSH execution unavailable in local lab' : label}
     >
       {icon}{label}
     </button>
@@ -275,7 +279,7 @@ const JobStatusBar: React.FC<JobStatusBarProps> = ({
               ) : (
                 <div className="flex items-center gap-2 px-4 py-4 text-xs opacity-50">
                   <Terminal className="h-4 w-4 shrink-0" />
-                  <span>No output yet. Run <strong>Check</strong> or <strong>Deploy</strong> to see logs here.</span>
+                  <span>{localLab ? 'Checks and deployment are unavailable in local lab. No commands have been executed.' : <>No output yet. Run <strong>Check</strong> or <strong>Deploy</strong> to see logs here.</>}</span>
                 </div>
               )
             ) : (

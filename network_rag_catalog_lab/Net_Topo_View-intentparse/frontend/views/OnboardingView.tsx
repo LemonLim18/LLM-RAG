@@ -12,6 +12,7 @@ import {
 } from '../src/services/api';
 import { Confirm, Toast } from '../src/utils/swal';
 import { formatIpInput, isValidIp } from '../src/utils/validation';
+import { useLocalLab } from '../src/localLab';
 
 const ONBOARDING_STEP_KEY = 'onboarding.step';
 const ONBOARDING_SELECTED_DEVICE_KEY = 'onboarding.selectedDeviceId';
@@ -36,6 +37,7 @@ const VENDOR_LABELS: Record<string, string> = {
 // ---------------------------------------------------------------------------
 
 const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }) => {
+  const localLab = useLocalLab();
   const [step, setStep]               = useState<1 | 2 | 3>(() => {
     const raw = Number(localStorage.getItem(ONBOARDING_STEP_KEY));
     return raw === 1 || raw === 2 || raw === 3 ? raw : 1;
@@ -51,6 +53,11 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
     setIsSyncing(true);
     setError('');
     try {
+      if (localLab) {
+        await fetchDevices();
+        Toast.info('Inventory refreshed', 'Loaded the planned devices stored in this local lab. Remote NetBox synchronization is disabled.');
+        return;
+      }
       const res = await netboxApi.syncFromNetbox();
       if (res.status === 'success') {
         const ifaceMsg = (res as any).interface_count ? `, ${(res as any).interface_count} interfaces` : '';
@@ -196,7 +203,7 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
         setServerCredentialConfigured(false);
         setServerCredentialUsername('');
       });
-  }, [credentialLabel]);
+  }, [credentialLabel, localLab]);
 
   const handleGenerate = async (device: OnboardingDeviceSummary) => {
     setSelected(device);
@@ -263,6 +270,7 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
     }
   };
 
+  void handleRevertToDefault; // Deferred controls retained until formal cleanup.
   const handleDownload = () => {
     const blob = new Blob([config], { type: 'text/plain' });
     const url  = URL.createObjectURL(blob);
@@ -344,13 +352,13 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
     }
     const publishDetails = [
       `${deviceIds.length} device(s)`,
-      dryRun ? 'dry run only' : 'writes files to the ZTP server',
-      restartServices ? 'restarts services' : '',
-      resetLeases ? 'resets DHCP leases' : '',
+      localLab ? 'records the selected configuration in simulated ZTP publication history' : (dryRun ? 'dry run only' : 'writes files to the ZTP server'),
+      !localLab && restartServices ? 'restarts services' : '',
+      !localLab && resetLeases ? 'resets DHCP leases' : '',
     ].filter(Boolean).join(', ');
     const ok = dryRun
       ? await Confirm.ask('Run ZTP publish dry run?', publishDetails)
-      : await Confirm.danger('Publish configuration to ZTP server?', publishDetails);
+      : await Confirm.danger(localLab ? 'Stage simulated ZTP publication?' : 'Publish configuration to ZTP server?', publishDetails);
     if (!ok) return;
     setPublishLoading(true);
     setError('');
@@ -437,11 +445,11 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
     try {
       const result = await onboardingApi.testServerConnection(targetServerIp, 22, credentialLabel);
       const details = result.ok
-        ? `Connected in ${result.duration_ms} ms using ${result.credential_label})`
+        ? (localLab ? result.message : `Connected in ${result.duration_ms} ms using ${result.credential_label}`)
         : (result.stderr || result.message || 'Connection test failed');
       setServerConnectionResult({
         ok: Boolean(result.ok),
-        message: result.ok ? 'ZTP server connection successful' : 'ZTP server connection failed',
+        message: result.ok ? (localLab ? 'Simulated connection successful' : 'ZTP server connection successful') : 'ZTP server connection failed',
         details,
       });
     } catch (e: any) {
@@ -488,7 +496,7 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
         <div>
           <h1 className="text-xl font-bold">Onboard New Device</h1>
           <p className="text-slate-400 text-sm mt-1">
-            Select a planned device, review the generated Day-0 config in the editor, then publish the configuration to the ZTP server.
+            {localLab ? 'Select a planned device, review its generated Day-0 configuration, then stage it through the simulated ZTP publication workflow.' : 'Select a planned device, review the generated Day-0 config in the editor, then publish the configuration to the ZTP server.'}
           </p>
         </div>
       </div>
@@ -520,6 +528,7 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
                 className="btn btn-outline btn-xs"
                 onClick={handleTestServerConnection}
                 disabled={serverConnectionTesting}
+                title={localLab ? 'Validate saved credentials using the local simulator' : undefined}
               >
                 {serverConnectionTesting ? <span className="loading loading-spinner loading-xs" /> : 'Test Connection'}
               </button>
@@ -548,7 +557,7 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
                     className="input input-bordered input-sm"
                     value={targetServerIp}
                     onChange={(event) => setTargetServerIp(formatIpInput(event.target.value))}
-                    placeholder="192.168.1.240"
+                    placeholder={localLab ? 'Recorded as local simulation metadata' : '192.168.1.240'}
                   />
                 </label>
 
@@ -822,7 +831,7 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
                 className="btn btn-ghost btn-xs gap-1"
                 onClick={handleSyncAndRefresh}
                 disabled={loadingDevices || isSyncing}
-                title="Sync latest devices from NetBox and refresh list"
+                title={localLab ? 'Refresh local planned devices' : 'Sync latest devices from NetBox and refresh list'}
               >
                 <RefreshCw className={`h-3.5 w-3.5 ${loadingDevices || isSyncing ? 'animate-spin' : ''}`} />
                 Refresh

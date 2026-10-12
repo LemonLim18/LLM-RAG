@@ -1,3 +1,9 @@
+# M0 local startup
+
+Use `./run_local.ps1` from this directory and `npm run dev -- --host 127.0.0.1` from `../frontend` in a second terminal. Install only `requirements-local.lock.txt` into `.venv-m0`; use the existing frontend lockfile with `npm ci`. See [M0 handover](../docs/M0_HANDOVER.md) for exact commands, availability and verification.
+
+The legacy instructions below describe the optional normal integration mode, not the M0 local runtime. Native Windows Ansible controller execution is not part of M0.
+
 # NetTopoView Backend
 
 ## Running the backend (required for Ansible Studio Check/Deploy)

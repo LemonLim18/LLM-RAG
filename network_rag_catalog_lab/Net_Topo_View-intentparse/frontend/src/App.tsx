@@ -1,3 +1,4 @@
+import { useLocalLab } from './localLab';
 import React, { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
 import { authApi } from './services/api';
@@ -5,17 +6,12 @@ import Sidebar from '../components/Sidebar';
 import OverviewDashboard from '../views/OverviewDashboard';
 import Dashboard from '../views/Dashboard';
 import NetBoxDevices from '../views/NetBoxDevices';
-import KnowledgeBase from '../views/KnowledgeBase';
 import AnsibleStudioView from '../views/AnsibleStudioView';
+import KnowledgeEngineeringView from '../views/KnowledgeEngineeringView';
 import TemplateStudioView from '../views/TemplateStudioView';
 import ConfigBackupView from '../views/ConfigBackupView';
-import ComplianceHubView from '../views/ComplianceHubView';
 
 import OnboardingView from '../views/OnboardingView';
-import IntentHistoryView from '../views/IntentHistoryView';
-import IntentParserView from '../views/IntentParserView';
-import SDNDashboardView from '../views/SDNDashboardView';
-import PlaybookComparisonView from '../views/PlaybookComparisonView';
 import ApprovalQueueView from '../views/ApprovalQueueView';
 import CommonServicesProfilesView from '../views/CommonServicesProfilesView.tsx';
 import FloatingInventoryOverlay from '../components/FloatingInventoryOverlay';
@@ -26,9 +22,7 @@ import UserProfileModal from '../components/UserProfileModal';
 
 import { NotificationProvider } from '../contexts/NotificationContext';
 import { DeviceProvider } from '../contexts/DeviceContext';
-import { useTaskProgress } from '../contexts/TaskProgressContext';
 import { Bot } from 'lucide-react';
-import { SHOW_SDN_CONTROLLER } from './config';
 
 import type { ViewId, User } from '../types';
 import { normalizeUserRole } from '../types';
@@ -44,18 +38,17 @@ const isViewId = (value: string | null): value is ViewId => {
     'topology',
     'netbox_devices',
     'net_perf',
-    'compliance_hub',
-    'compliance_device_detail',
-    'knowledge_base',
     'ansible_studio',
     'device_detail',
     'onboarding',
     'common_services',
-    'intent_history',
-    'intent_parser',
-    ...(SHOW_SDN_CONTROLLER ? ['sdn_dashboard'] : []),
-    'playbook_comparison',
     'approval_queue',
+    'knowledge_categories',
+    'knowledge_overview',
+    'knowledge_parameters',
+    'knowledge_publication',
+    'knowledge_templates',
+    'knowledge_engineering',
     'template_studio',
     'config_backup',
   ].includes(value);
@@ -63,6 +56,7 @@ const isViewId = (value: string | null): value is ViewId => {
 
 
 const App: React.FC = () => {
+  const localLab = useLocalLab();
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('theme');
     return (saved && saved !== 'dark') ? saved : 'night';
@@ -198,12 +192,6 @@ const App: React.FC = () => {
         return <div className="p-6"><h2 className="text-xl font-bold">Device 360 - #{selectedDeviceId ?? '?'}</h2><p className="mt-2 opacity-60">Device detail view - Phase 2.</p></div>;
       case 'net_perf':
         return <NetworkPerformance />;
-      case 'compliance_hub':
-        return <ComplianceHubView setView={setView} setSelectedDeviceId={setSelectedDeviceId} />;
-      // case 'compliance_device_detail':
-      //   return <ComplianceDeviceDetail setView={setView} setSelectedDeviceId={setSelectedDeviceId} />;
-      case 'knowledge_base':
-        return <KnowledgeBase />;
       case 'ansible_studio':
         return <AnsibleStudioView user={user} />;
 
@@ -213,21 +201,6 @@ const App: React.FC = () => {
       case 'common_services':
         return <CommonServicesProfilesView />;
 
-      // Phase 1 - Intent Lifecycle Management
-      case 'intent_history':
-        return <IntentHistoryView setView={setView} />;
-      case 'intent_parser':
-        return <IntentParserView />;
-
-      // Phase 3 - SDN Controller Dashboard
-      case 'sdn_dashboard':
-        if (!SHOW_SDN_CONTROLLER) return <OverviewDashboard setView={setView} setSelectedDeviceId={setSelectedDeviceId} user={user} />;
-        return <SDNDashboardView setView={setView} />;
-
-      // Phase 12 - Playbook Candidate Comparison (UC14)
-      case 'playbook_comparison':
-        return <PlaybookComparisonView setView={setView} />;
-
       // Phase 16 - Approval Queue Dashboard
       case 'approval_queue':
         if (normalizeUserRole(user?.role) !== 'admin') {
@@ -236,6 +209,18 @@ const App: React.FC = () => {
         return <ApprovalQueueView setView={setView} />;
 
       // Template Studio - Jinja2 template editor
+      case 'knowledge_overview':
+        return <KnowledgeEngineeringView user={user} initialPage="Overview" setView={setView} />;
+      case 'knowledge_categories':
+        return <KnowledgeEngineeringView user={user} initialPage="Categories" setView={setView} />;
+      case 'knowledge_parameters':
+        return <KnowledgeEngineeringView user={user} initialPage="Parameters" setView={setView} />;
+      case 'knowledge_publication':
+        return <KnowledgeEngineeringView user={user} initialPage="Publication" setView={setView} />;
+      case 'knowledge_templates':
+        return <KnowledgeEngineeringView user={user} initialPage="Templates" setView={setView} />;
+      case 'knowledge_engineering':
+        return <KnowledgeEngineeringView user={user} initialPage="Operations" setView={setView} />;
       case 'template_studio':
         return <TemplateStudioView />;
 
@@ -287,7 +272,7 @@ const App: React.FC = () => {
               </div>
 
               {/* Enriched Draggable Toggle Button */}
-              {!overlayOpen && (
+              {!localLab && !overlayOpen && (
                 <>
                   <style>{`
                     @keyframes agent-breath {
@@ -323,16 +308,6 @@ const App: React.FC = () => {
                       title="Open Inventory AI & Network Ops Center"
                     >
                       <Bot className="w-6 h-6" />
-                      {/* {hasProcessingTask ? (
-                        <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500 border border-base-100"></span>
-                        </span>
-                      ) : hasUncheckedDoneTask ? (
-                        <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                          <span className="relative inline-flex rounded-full h-3 w-3 bg-success border border-base-100"></span>
-                        </span>
-                      ) : null} */}
                     </button>
                   </div>
                 </>

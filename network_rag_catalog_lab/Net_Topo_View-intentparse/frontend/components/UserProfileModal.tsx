@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, User as UserIcon, Mail, ShieldAlert, Key, Upload, CheckCircle2, AlertTriangle, HelpCircle } from 'lucide-react';
+import { X, User as UserIcon, Mail, ShieldAlert, Key, Upload, HelpCircle } from 'lucide-react';
 import { authApi } from '../src/services/api';
 import { Toast, Confirm } from '../src/utils/swal';
 import type { User } from '../types';

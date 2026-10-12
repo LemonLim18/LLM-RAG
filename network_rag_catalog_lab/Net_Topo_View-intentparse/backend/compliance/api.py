@@ -8,7 +8,9 @@ from starlette.concurrency import run_in_threadpool
 
 from db.manager import DatabaseManager
 from db.models import ConfigSnapshot
-from drivers.factory import DriverFactory
+from lab_config import LOCAL_LAB
+if not LOCAL_LAB:
+    from drivers.factory import DriverFactory
 
 from .policy_service import PolicyService
 from .evaluator import ComplianceEvaluator
@@ -16,7 +18,8 @@ from .scope_resolver import NetBoxScopeResolver
 
 logger = logging.getLogger("compliance.api")
 
-DB_PATH = "db/netauto.db"
+from lab_config import DB_PATH
+DB_PATH = str(DB_PATH)
 router = APIRouter()
 
 

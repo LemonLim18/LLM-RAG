@@ -1,3 +1,4 @@
+import { useLocalLab } from '../src/localLab';
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Loader2,
@@ -83,8 +84,9 @@ const CaptureSnapshotModal: React.FC<CaptureSnapshotModalProps> = ({
   const [loadingDiff, setLoadingDiff] = useState(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const localLab = useLocalLab();
   const vendorKey = (device.vendor || '').trim().toLowerCase();
-  const restoreSupported = ['cisco_ios', 'cisco_xe', 'huawei_vrp', 'juniper_junos'].includes(vendorKey);
+  const restoreSupported = localLab || ['cisco_ios', 'cisco_xe', 'huawei_vrp', 'juniper_junos'].includes(vendorKey);
   const restoreBlockedReason = vendorKey === 'juniper_junos'
     ? ''
     : 'Restore is currently available for Cisco IOS/IOS-XE, Huawei VRP, and Juniper Junos snapshots.';
@@ -258,7 +260,7 @@ const CaptureSnapshotModal: React.FC<CaptureSnapshotModalProps> = ({
 
     const ok = await Confirm.danger(
       `Restore snapshot #${captureResult.snapshot_id} to ${device.hostname}?`,
-      'This will apply the saved configuration back to the live device. A fresh safety backup will be captured first before any restore commands are sent.'
+      localLab ? 'This records a simulated restore against the local simulated device state. No device command or SSH connection is performed.' : 'This will apply the saved configuration back to the live device. A fresh safety backup will be captured first before any restore commands are sent.'
     );
     if (!ok) return;
 
@@ -556,7 +558,7 @@ const CaptureSnapshotModal: React.FC<CaptureSnapshotModalProps> = ({
             <button
               className="btn btn-xs gap-1.5 border-primary/30 bg-primary/5 hover:bg-primary/15 text-primary font-medium"
               onClick={handleAiSuggest}
-              disabled={aiSuggesting || !captureResult}
+              disabled={localLab || aiSuggesting || !captureResult}
               title="Let AI suggest a description based on the captured config"
             >
               {aiSuggesting ? (

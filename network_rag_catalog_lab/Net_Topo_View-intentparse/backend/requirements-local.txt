@@ -1,0 +1,15 @@
+# Local GUI/API only. No Ansible controller, vector database or network drivers.
+fastapi
+uvicorn
+websockets
+python-dotenv
+python-multipart
+bcrypt==3.2.0
+python-jose[cryptography]
+cryptography
+jinja2
+jsonschema
+PyYAML
+# Verification
+httpx
+pytest

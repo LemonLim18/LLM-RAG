@@ -1,0 +1,15 @@
+{
+  "devices": [
+    {
+      "device_id": 1,
+      "status": "active",
+      "availability": "up"
+    },
+    {
+      "device_id": 2,
+      "status": "active",
+      "availability": "up"
+    }
+  ],
+  "interfaces": []
+}

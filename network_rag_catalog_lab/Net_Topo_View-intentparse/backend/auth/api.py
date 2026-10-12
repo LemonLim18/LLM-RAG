@@ -38,7 +38,7 @@ from auth.credentials import CredentialVault
 logger = logging.getLogger("auth.api")
 router = APIRouter(prefix="/auth", tags=["Authentication (M15)"])
 
-_DB_PATH = Path(__file__).resolve().parent.parent / "db" / "netauto.db"
+from lab_config import DB_PATH as _DB_PATH
 _vault = CredentialVault()
 _ALLOWED_ROLES = {"admin", "engineer", "operator", "auditor"}
 

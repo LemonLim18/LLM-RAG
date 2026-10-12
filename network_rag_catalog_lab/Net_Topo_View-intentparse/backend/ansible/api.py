@@ -27,6 +27,7 @@ import stat
 import ipaddress
 import threading
 import time
+from lab_config import LOCAL_LAB
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
@@ -1860,6 +1861,9 @@ def _build_topo_from_db(hostnames: List[str]) -> dict:
 
 
 def _provider_for_request(provider: Optional[str], model: Optional[str], ollama_base_url: Optional[str]):
+    if LOCAL_LAB:
+        from local_providers.studio import provider as local_provider
+        return local_provider(model)
     if provider and str(provider).strip():
         from llm.api import _instantiate_runtime_provider
 
@@ -2713,6 +2717,9 @@ async def _ensure_planning_context(
     if readiness.get("ready"):
         return planning_context, {"reconciled": False, "issues": []}
 
+    if LOCAL_LAB:
+        raise HTTPException(422, detail={'message': 'Complete the selected devices and interfaces in SQLite inventory before generation.', 'issues': readiness.get('issues', [])})
+
     reconciliation = await run_in_threadpool(reconcile_inventory_state, _db)
     planning_context = build_scoped_planning_context(
         _db,
@@ -3063,6 +3070,8 @@ async def plan_ansible(
     The playbook now goes through a bounded refine-and-verify loop before being stored.
     Device dry-run contact remains optional and disabled unless requested.
     """
+    if LOCAL_LAB and req.verify_with_dry_run:
+        raise HTTPException(422, 'Remote Ansible check-mode is unavailable in local mode; local structural validation still runs.')
     _assert_job_artifacts_unlocked(job_id, "replanned")
     builder = _require_builder()
     resolved_hosts = _resolve_target_hosts(req.target_hosts)
@@ -3992,9 +4001,13 @@ async def plan_ansible(
                 entrypoint_rel = f"playbooks/generated/job_{job_id}/playbook.yml"
                 entrypoint_virtual = f"generated/job_{job_id}/playbook.yml"
                 try:
-                    disk_path = _safe_path(entrypoint_rel)
-                    disk_path.parent.mkdir(parents=True, exist_ok=True)
-                    disk_path.write_text(playbook_yaml, encoding="utf-8")
+                    if LOCAL_LAB:
+                        from local_providers.studio import save_artifact
+                        save_artifact(_db, entrypoint_rel, playbook_yaml)
+                    else:
+                        disk_path = _safe_path(entrypoint_rel)
+                        disk_path.parent.mkdir(parents=True, exist_ok=True)
+                        disk_path.write_text(playbook_yaml, encoding="utf-8")
                 except HTTPException:
                     raise
                 except Exception as exc:
@@ -4012,6 +4025,8 @@ async def plan_ansible(
                     notes="Original playbook generation",
                 )
         except Exception as exc:
+            if LOCAL_LAB:
+                raise
             logger.warning("Could not persist playbook to DB: %s", exc)
 
     # Response entrypoint_path: virtual path so frontend can GET /files/generated/job_XX/playbook.yml
@@ -4897,6 +4912,9 @@ def _builder_for_request(
     ollama_base_url: Optional[str],
 ):
     """Return a PlaybookBuilder for this request: request-scoped if provider/model set, else global."""
+    if LOCAL_LAB:
+        from local_providers.studio import LocalBuilder, provider as local_provider
+        return LocalBuilder(local_provider(model))
     if provider and str(provider).strip().lower() in ("gemini", "ollama"):
         from llm.api import _instantiate_runtime_provider
         from ansible.builder import PlaybookBuilder
@@ -5422,6 +5440,9 @@ def _entrypoint_content_from_disk(entrypoint_path: str) -> str | None:
     by the UI and by Check/Deploy instead of the stored DB version.
     Returns None if path is empty, invalid, or file does not exist.
     """
+    if LOCAL_LAB:
+        from local_providers.studio import read_artifact
+        return read_artifact(_db, entrypoint_path)
     for rel in _candidate_entrypoint_paths_for_disk(entrypoint_path):
         try:
             disk_path = _safe_path(rel)
@@ -5440,6 +5461,10 @@ def _persist_bundle_to_workspace(bundle: dict[str, Any]) -> None:
     for item in bundle.get("files") or []:
         rel_path = str(item.get("path") or "").replace("\\", "/").strip("/")
         if not rel_path:
+            continue
+        if LOCAL_LAB:
+            from local_providers.studio import save_artifact
+            save_artifact(_db, rel_path, str(item.get('content') or ''))
             continue
         path = _safe_path(rel_path)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -6999,6 +7024,9 @@ async def preview_intent(
     RAG would use, so the UI can show an overlay and let the user remove irrelevant
     refs or confirm before calling create-and-plan.
     """
+    from local_providers import v9_studio
+    if v9_studio.enabled():
+        return await v9_studio.preview(_db, req, user)
     _preview_started = time.perf_counter()
     categories, references, parsed_intent, policy_approved, reasoning, resolved_hosts = _preview_parse_and_rag(
         intent_description=req.intent_description,
@@ -9315,7 +9343,10 @@ async def create_and_plan(
     2. Generates an Ansible playbook via LLM (same as /plan-ansible).
     3. Stores the playbook on the job and returns it.
     """
-    if _db is None or _pipeline is None:
+    from local_providers import v9_studio
+    if v9_studio.enabled():
+        return await v9_studio.generate(_db, req, user)
+    if _db is None or (not LOCAL_LAB and _pipeline is None):
         raise HTTPException(503, "Backend not fully initialized")
 
     plan_req, parsed_intent, policy = _resolve_backend_intent_request(req, user)

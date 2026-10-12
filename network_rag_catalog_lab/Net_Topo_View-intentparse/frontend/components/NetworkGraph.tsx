@@ -609,6 +609,7 @@ const NetworkGraph: React.FC<NetworkGraphProps> = ({ nodes, links, onNodeClick, 
     forceRender(c => c + 1);
   }, []);
 
+  void handleResetLayout; // Deferred controls retained until formal cleanup.
   return (
     <div 
       ref={containerRef} 

@@ -1,3 +1,4 @@
+import { useLocalLab } from '../src/localLab';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Server,
@@ -337,6 +338,8 @@ const NetBoxDevices: React.FC = () => {
   const [ifaceFormError, setIfaceFormError] = useState<string | null>(null);
 
   // Link modal state
+  const localLab = useLocalLab();
+  const [editingLinkId, setEditingLinkId] = useState<number | null>(null);
   const [showLinkModal, setShowLinkModal] = useState(false);
   const [linkForm, setLinkForm] = useState({
     src_device_id: 0,
@@ -667,7 +670,7 @@ const NetBoxDevices: React.FC = () => {
     if (isEditing && editId !== null) {
       const ok = await Confirm.ask(
         `Save changes to ${form.hostname}?`,
-        'This updates the local inventory and may trigger a NetBox sync.',
+        localLab ? 'This updates the local SQLite inventory only.' : 'This updates the local inventory and may trigger a NetBox sync.',
       );
       if (!ok) return;
     }
@@ -700,7 +703,9 @@ const NetBoxDevices: React.FC = () => {
           Toast.warning('Device updated', `Management MAC not saved: ${macErr?.message || 'unknown error'}`);
         }
         Toast.success(`Device "${updated.hostname}" updated`);
-        if (updated.netbox_sync_pending) {
+        if (localLab) {
+          Toast.success('Saved in local SQLite');
+        } else if (updated.netbox_sync_pending) {
           Toast.success('Saved successfully', updated.netbox_message || 'Inventory saved. NetBox sync is running in background.');
         } else if (updated.netbox_synced === false) {
           Toast.warning('Saved locally', updated.netbox_error || 'NetBox sync failed. Check NETBOX_URL and NETBOX_TOKEN.');
@@ -729,7 +734,9 @@ const NetBoxDevices: React.FC = () => {
           Toast.warning('Device added', `Management MAC not saved: ${macErr?.message || 'unknown error'}`);
         }
         Toast.success(`Device "${created.hostname}" added`, `ID ${created.id}`);
-        if (created.netbox_sync_pending) {
+        if (localLab) {
+          Toast.success('Saved in local SQLite');
+        } else if (created.netbox_sync_pending) {
           Toast.success('Saved successfully', created.netbox_message || 'Inventory saved. NetBox sync is running in background.');
         } else if (created.netbox_synced === false) {
           Toast.warning('Saved locally', created.netbox_error || 'NetBox sync failed. Check NETBOX_URL and NETBOX_TOKEN.');
@@ -904,6 +911,7 @@ const NetBoxDevices: React.FC = () => {
   // -----------------------------------------------------------------------
 
   const handleAddLink = () => {
+    setEditingLinkId(null);
     setLinkForm({ src_device_id: 0, src_interface_id: 0, dst_device_id: 0, dst_interface_id: 0 });
     setLinkFormError(null);
     setSrcInterfaces([]);
@@ -937,20 +945,21 @@ const NetBoxDevices: React.FC = () => {
     const srcDevice = devices.find((d) => d.id === linkForm.src_device_id)?.hostname || 'source device';
     const dstDevice = devices.find((d) => d.id === linkForm.dst_device_id)?.hostname || 'destination device';
     const ok = await Confirm.ask(
-      `Create link ${srcDevice} -> ${dstDevice}?`,
+      `${editingLinkId ? "Update" : "Create"} link ${srcDevice} -> ${dstDevice}?`,
       'This adds a manual topology link to the inventory source of truth.',
     );
     if (!ok) return;
 
     try {
-      await netboxApi.createLink({
+      const saveLink = editingLinkId ? (payload: Parameters<typeof netboxApi.createLink>[0]) => netboxApi.updateLink(editingLinkId, payload) : netboxApi.createLink;
+      await saveLink({
         src_device_id: linkForm.src_device_id,
         src_interface_id: linkForm.src_interface_id || undefined,
         dst_device_id: linkForm.dst_device_id,
         dst_interface_id: linkForm.dst_interface_id || undefined,
         discovery_protocol: 'manual',
       });
-      Toast.success('Link created');
+      Toast.success(editingLinkId ? 'Link updated' : 'Link created');
       setShowLinkModal(false);
       fetchLinks(true); // Mutation (Create Link) -> Update cache
     } catch (e: any) {
@@ -1006,7 +1015,7 @@ const NetBoxDevices: React.FC = () => {
           <span className="badge badge-primary badge-outline">{devices.length} devices</span>
         </div>
         <div className="flex gap-2">
-          <button className="btn btn-sm btn-outline gap-1" onClick={handleSync} disabled={isSyncing}>
+          <button className="btn btn-sm btn-outline gap-1" onClick={handleSync} disabled={isSyncing || localLab} title={localLab ? "NetBox synchronization is unavailable in local lab" : undefined}>
             {isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
             Sync from NetBox
           </button>
@@ -1336,6 +1345,14 @@ const NetBoxDevices: React.FC = () => {
                                     </span>
                                   </td>
                                   <td className="text-right">
+                                    {localLab && <button className="btn btn-ghost btn-xs" title="Edit link" onClick={() => {
+                                      setEditingLinkId(link.id);
+                                      setLinkForm({ src_device_id: link.src_device_id, src_interface_id: link.src_interface_id || 0, dst_device_id: link.dst_device_id, dst_interface_id: link.dst_interface_id || 0 });
+                                      setLinkFormError(null);
+                                      loadIfacesForLink(link.src_device_id, 'src');
+                                      loadIfacesForLink(link.dst_device_id, 'dst');
+                                      setShowLinkModal(true);
+                                    }}>Edit</button>}
                                     <button
                                       className="btn btn-ghost btn-xs text-error"
                                       onClick={() => handleDeleteLink(link)}
@@ -1622,7 +1639,7 @@ const NetBoxDevices: React.FC = () => {
       {showLinkModal && (
         <div className="modal modal-open">
           <div className="modal-box max-w-lg">
-            <h3 className="font-bold text-lg mb-4">Add Link (Neighbor Connection)</h3>
+            <h3 className="font-bold text-lg mb-4">{editingLinkId ? "Edit Link" : "Add Link"} (Neighbor Connection)</h3>
 
             {linkFormError && (
               <div className="alert alert-error alert-sm mb-3">
@@ -1655,7 +1672,7 @@ const NetBoxDevices: React.FC = () => {
                   onChange={(e) => setLinkForm({ ...linkForm, src_interface_id: Number(e.target.value) })}
                   disabled={!linkForm.src_device_id}
                 >
-                  <option value={0}>Select interface (optional)…</option>
+                  <option value={0}>Select interface…</option>
                   {srcInterfaces.filter(i => !i.is_management).map(i => (
                     <option key={i.id} value={i.id}>{i.name} {i.ip_address ? `(${i.ip_address})` : ''}</option>
                   ))}
@@ -1687,7 +1704,7 @@ const NetBoxDevices: React.FC = () => {
                   onChange={(e) => setLinkForm({ ...linkForm, dst_interface_id: Number(e.target.value) })}
                   disabled={!linkForm.dst_device_id}
                 >
-                  <option value={0}>Select interface (optional)…</option>
+                  <option value={0}>Select interface…</option>
                   {dstInterfaces.filter(i => !i.is_management).map(i => (
                     <option key={i.id} value={i.id}>{i.name} {i.ip_address ? `(${i.ip_address})` : ''}</option>
                   ))}
@@ -1698,7 +1715,7 @@ const NetBoxDevices: React.FC = () => {
             <div className="modal-action">
               <button className="btn btn-ghost" onClick={() => setShowLinkModal(false)}>Cancel</button>
               <button className="btn btn-primary gap-1" onClick={handleSaveLink}>
-                <Cable className="w-4 h-4" /> Create Link
+                <Cable className="w-4 h-4" /> {editingLinkId ? "Save Link" : "Create Link"}
               </button>
             </div>
           </div>

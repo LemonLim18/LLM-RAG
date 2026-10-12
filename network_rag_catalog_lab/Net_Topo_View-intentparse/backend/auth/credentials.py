@@ -28,7 +28,7 @@ from auth.auth import SECRET_KEY
 
 logger = logging.getLogger("auth.credentials")
 
-_DB_PATH = Path(__file__).resolve().parent.parent / "db" / "netauto.db"
+from lab_config import DB_PATH as _DB_PATH
 
 
 def _derive_fernet_key(secret: str) -> bytes:

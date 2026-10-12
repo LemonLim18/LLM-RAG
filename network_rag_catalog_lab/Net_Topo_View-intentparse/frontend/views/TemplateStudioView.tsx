@@ -1,3 +1,4 @@
+import { useCapability } from '../src/localLab';
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import Editor, { type Monaco } from '@monaco-editor/react';
 import {
@@ -7,13 +8,11 @@ import {
   Plus,
   Trash2,
   Upload,
-  Eye,
   RefreshCw,
   Loader2,
   AlertTriangle,
   ChevronRight,
   ChevronDown,
-  Play,
   X,
   LogIn,
 } from 'lucide-react';
@@ -252,6 +251,7 @@ import { useMonacoTheme } from '../src/utils/monacoTheme';
 // ---------------------------------------------------------------------------
 
 const TemplateStudioView: React.FC = () => {
+  const gitStatusAvailable = useCapability('template_git.status');
   const { themeName } = useMonacoTheme();
   const getStoredTabs = (): OpenTab[] => {
     try {
@@ -376,10 +376,11 @@ const TemplateStudioView: React.FC = () => {
     try {
       const res = await configApi.listTemplates();
       setTemplates(res);
-      // Auto-expand all vendors
+      // Initialize once; background refresh must preserve the explorer state.
       if (!hasStoredExpandedRef.current) {
         const vendors = new Set(res.map(t => t.vendor));
         setExpandedVendors(vendors);
+        hasStoredExpandedRef.current = true;
       }
     } catch (e: any) {
       Toast.error('Failed to load templates', e.message);
@@ -498,6 +499,7 @@ const TemplateStudioView: React.FC = () => {
   }, []);
 
   const refreshGitStatus = useCallback(async () => {
+    if (!gitStatusAvailable) return;
     setGitLoadingStatus(true);
     try {
       const status = await templateGitApi.status();
@@ -507,7 +509,7 @@ const TemplateStudioView: React.FC = () => {
     } finally {
       setGitLoadingStatus(false);
     }
-  }, []);
+  }, [gitStatusAvailable]);
 
   const handleGitHubLogin = useCallback(async () => {
     if (!gitHubUsername.trim() || !gitHubToken.trim()) {
@@ -615,7 +617,7 @@ const TemplateStudioView: React.FC = () => {
 
     const openTabs = [...tabs];
     if (!openTabs.length) {
-      Toast.success('Template list refreshed from disk');
+      Toast.success('Template list refreshed from storage');
       return;
     }
 
@@ -656,16 +658,16 @@ const TemplateStudioView: React.FC = () => {
 
     if (skippedDirty > 0) {
       Toast.info(
-        'Template list refreshed from disk',
+        'Template list refreshed from storage',
         `${refreshedCount} open tab(s) reloaded; ${skippedDirty} dirty tab(s) kept unchanged.`
       );
       return;
     }
     if (overwriteDirty) {
-      Toast.success(`Template list refreshed from disk; ${dirtyTabs.length} dirty tab(s) overwritten.`);
+      Toast.success(`Template list refreshed from storage; ${dirtyTabs.length} dirty tab(s) overwritten.`);
       return;
     }
-    Toast.success('Template list refreshed from disk');
+    Toast.success('Template list refreshed from storage');
   };
 
   // -----------------------------------------------------------------------
@@ -687,7 +689,7 @@ const TemplateStudioView: React.FC = () => {
     if (!activeTab || !activeTab.isDirty) return;
     const ok = await Confirm.ask(
       `Save ${activeTab.vendor}/${activeTab.feature}.j2?`,
-      'This overwrites the template source file on disk.',
+      'This saves the template source. Local lab retains recoverable revisions in SQLite.',
     );
     if (!ok) return;
 
@@ -772,7 +774,8 @@ const TemplateStudioView: React.FC = () => {
     setIsRendering(true);
     try {
       const res = await configApi.render(activeTab.vendor, activeTab.feature, params);
-      setPreviewContent(res.config);
+      const validation = await configApi.validate(activeTab.vendor, res.config);
+      setPreviewContent(res.config + '\n\n' + (validation.valid ? 'Validation: passed (local syntax checks; no execution)' : 'Validation errors: ' + validation.errors.join('; '))); 
     } catch (e: any) {
       setPreviewContent(`Error: ${e.message}`);
     } finally {
@@ -784,6 +787,7 @@ const TemplateStudioView: React.FC = () => {
   //  Create / Delete
   // -----------------------------------------------------------------------
 
+  void [schemaPlaceholder, previewContent, isRendering, validationErrors, renderPreview]; // Deferred controls retained until formal cleanup.
   const handleCreateTemplate = async () => {
     if (!newFeature.trim()) {
       setNewError('Feature name is required');
@@ -897,7 +901,7 @@ const TemplateStudioView: React.FC = () => {
           </div>
 
           <div className="p-1 grow overflow-y-auto">
-            {loadingTree ? (
+            {loadingTree && templates.length === 0 ? (
               <div className="text-center py-8 opacity-50">
                 <Loader2 className="w-5 h-5 animate-spin mx-auto mb-1" />
                 <p className="text-xs">Loading…</p>
@@ -1116,144 +1120,6 @@ const TemplateStudioView: React.FC = () => {
           {/* </div> */}
         </div>
 
-        {/* ─── Right: Variables + Preview ─── */}
-        {/* <div
-          className="shrink-0 overflow-hidden border-l border-base-300 bg-base-100 flex flex-col"
-          style={{ width: '300px' }}
-        >
-          {activeTab ? (
-            <>
-              <div className="border-b border-base-300 p-3 shrink-0 overflow-y-auto" style={{ maxHeight: '45%' }}>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold uppercase opacity-60">Template Variables</span>
-                  <span className="badge badge-xs badge-ghost">{promptFields.length}</span>
-                </div>
-                {promptFields.length === 0 ? (
-                  <p className="text-xs opacity-40">No {'{{ variables }}'} found in template</p>
-                ) : (
-                  <div className="space-y-2">
-                    {promptFields.map((key) => {
-                      const val = variables[key] ?? '';
-                      const fieldSchema = schemaProperties[key] as SchemaProperty | undefined;
-                      const fieldType = fieldSchema?.type || 'string';
-                      const isRequired = activeSchema?.required?.includes(key);
-                      const hasError = !!validationErrors[key];
-                      
-                      return (
-                        <div key={key} className="form-control w-full">
-                          <label className="label py-0">
-                            <span className="label-text text-xs font-mono">
-                              {`{{ ${key} }}`}
-                              {isRequired && <span className="text-error ml-1">*</span>}
-                            </span>
-                            <span className="label-text-alt text-[10px] opacity-50 uppercase">{fieldType}</span>
-                          </label>
-                          {fieldType === 'boolean' ? (
-                            <select
-                              className={`select select-bordered select-xs w-full font-mono ${hasError ? 'select-error' : ''}`}
-                              value={val}
-                              onChange={(e) => {
-                                setVariables(prev => ({ ...prev, [key]: e.target.value }));
-                                if (validationErrors[key]) {
-                                  setValidationErrors(prev => {
-                                    const next = { ...prev };
-                                    delete next[key];
-                                    return next;
-                                  });
-                                }
-                              }}
-                            >
-                              <option value="">Unset</option>
-                              <option value="true">true</option>
-                              <option value="false">false</option>
-                            </select>
-                          ) : fieldType === 'array' || fieldType === 'object' ? (
-                            <textarea
-                              className={`textarea textarea-bordered w-full font-mono text-xs min-h-24 ${hasError ? 'textarea-error' : ''}`}
-                              placeholder={schemaPlaceholder(fieldSchema, key)}
-                              value={val}
-                              onChange={(e) => {
-                                setVariables(prev => ({ ...prev, [key]: e.target.value }));
-                                if (validationErrors[key]) {
-                                  setValidationErrors(prev => {
-                                    const next = { ...prev };
-                                    delete next[key];
-                                    return next;
-                                  });
-                                }
-                              }}
-                            />
-                          ) : (
-                            <input
-                              type={fieldType === 'integer' || fieldType === 'number' ? 'number' : 'text'}
-                              className={`input input-bordered input-xs w-full font-mono ${hasError ? 'input-error' : ''}`}
-                              placeholder={schemaPlaceholder(fieldSchema, key)}
-                              value={val}
-                              onChange={(e) => {
-                                setVariables(prev => ({ ...prev, [key]: e.target.value }));
-                                if (validationErrors[key]) {
-                                  setValidationErrors(prev => {
-                                    const next = { ...prev };
-                                    delete next[key];
-                                    return next;
-                                  });
-                                }
-                              }}
-                            />
-                          )}
-                          {fieldSchema?.description && (
-                            <div className="label py-0 w-full">
-                              <span className="label-text-alt text-[10px] opacity-50">{fieldSchema.description}</span>
-                            </div>
-                          )}
-                          {hasError && (
-                            <div className="label py-0 w-full">
-                              <span className="label-text-alt text-error text-[10px] mt-0.5">
-                                {validationErrors[key]}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-
-              <div className="flex flex-col grow min-h-0">
-                <div className="flex items-center justify-between p-3 border-b border-base-300 shrink-0">
-                  <span className="text-xs font-bold uppercase opacity-60">Live Preview</span>
-                  <button
-                    className="btn btn-xs btn-primary gap-1"
-                    onClick={renderPreview}
-                    disabled={isRendering}
-                  >
-                    {isRendering
-                      ? <Loader2 className="w-3 h-3 animate-spin" />
-                      : <Play className="w-3 h-3" />
-                    }
-                    Render
-                  </button>
-                </div>
-                <div className="grow overflow-y-auto p-3">
-                  {previewContent ? (
-                    <pre className="text-xs font-mono whitespace-pre-wrap opacity-90">{previewContent}</pre>
-                  ) : (
-                    <div className="text-center py-8 opacity-40">
-                      <Eye className="w-6 h-6 mx-auto mb-1" />
-                      <p className="text-xs">Fill in variables and click Render</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full opacity-40 gap-2 p-4">
-              <Eye className="w-8 h-8" />
-              <p className="text-xs">Preview panel</p>
-            </div>
-          )}
-        </div> */}
       </div>
 
       {/* ─── New Template Modal ─── */}

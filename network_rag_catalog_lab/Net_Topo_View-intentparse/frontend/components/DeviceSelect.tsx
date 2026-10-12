@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Search } from 'lucide-react';
 import DeviceStatusDot from './DeviceStatusDot';
+import { useLocalLab } from '../src/localLab';
 import type { ConfigBackupDevice } from '../src/services/api';
 
 interface DeviceSelectProps {
@@ -16,6 +17,7 @@ const DeviceSelect: React.FC<DeviceSelectProps> = ({
   onChange,
   loading = false 
 }) => {
+  const localLab = useLocalLab();
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -63,9 +65,9 @@ const DeviceSelect: React.FC<DeviceSelectProps> = ({
                 )}
               </div>
               <DeviceStatusDot
-                status={selectedDevice.live_in_topology === true ? 'active' : selectedDevice.live_in_topology === false ? 'down' : selectedDevice.status}
+                status={localLab ? selectedDevice.operational_status : selectedDevice.live_in_topology === true ? 'active' : selectedDevice.live_in_topology === false ? 'down' : selectedDevice.status}
                 size="sm"
-                title={selectedDevice.live_in_topology === true ? 'Live (in topology)' : selectedDevice.live_in_topology === false ? 'Not in live topology' : selectedDevice.status}
+                title={localLab ? 'Simulated availability from JSON' : selectedDevice.live_in_topology === true ? 'Live (in topology)' : selectedDevice.live_in_topology === false ? 'Not in live topology' : selectedDevice.status}
               />
             </>
           ) : (
@@ -121,9 +123,9 @@ const DeviceSelect: React.FC<DeviceSelectProps> = ({
                     )}
                   </div>
                   <DeviceStatusDot
-                    status={device.live_in_topology === true ? 'active' : device.live_in_topology === false ? 'down' : device.status}
+                    status={localLab ? device.operational_status : device.live_in_topology === true ? 'active' : device.live_in_topology === false ? 'down' : device.status}
                     size="sm"
-                    title={device.live_in_topology === true ? 'Live (in topology)' : device.live_in_topology === false ? 'Not in live topology' : device.status}
+                    title={localLab ? 'Simulated availability from JSON' : device.live_in_topology === true ? 'Live (in topology)' : device.live_in_topology === false ? 'Not in live topology' : device.status}
                   />
                 </button>
               ))

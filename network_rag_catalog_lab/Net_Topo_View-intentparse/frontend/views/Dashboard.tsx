@@ -1,3 +1,4 @@
+import { useLocalLab } from '../src/localLab';
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import type { D3Node, D3Link, TopologyData } from '../types';
 import NetworkGraph from '../components/NetworkGraph';
@@ -445,7 +446,9 @@ const Dashboard: React.FC = () => {
         const raw = localStorage.getItem(DASHBOARD_GRID_VISIBLE_KEY);
         return raw === null ? true : raw === 'true';
     });
+    const localLab = useLocalLab();
     const [topologyView, setTopologyView] = useState<TopologyView>(() => {
+        if (localLab) return 'planned';
         const raw = localStorage.getItem(DASHBOARD_VIEW_KEY);
         if (raw === 'actual' || raw === 'planned' || raw === 'diff') return raw;
         return 'diff';
@@ -634,6 +637,12 @@ const Dashboard: React.FC = () => {
             await refreshConnectData(true);
             await fetchPlanned(true);
 
+            if (localLab) {
+                setWsTopology(await topologyApi.get());
+                Toast.success('Stored topology refreshed');
+                setIsRefreshing(false);
+                return;
+            }
             // 2. Trigger a new crawl on the backend
             await topologyApi.crawl();
             Toast.success('Crawl Triggered', 'Manual refresh started. Cache updated, topology will update via WebSocket when done.');
@@ -680,13 +689,13 @@ const Dashboard: React.FC = () => {
             }
             setIsRefreshing(false);
         }
-    }, [setWsTopology]);
+    }, [setWsTopology, localLab, refreshConnectData, fetchPlanned]);
     
     const isLoading = status === 'connecting' || (status === 'connected' && !realTimeTopology);
 
     const graphData = useMemo(() => {
         const planned = processTopologyData(plannedTopology, allLinks, connectDevices);
-        const actual = processTopologyData(realTimeTopology, allLinks, connectDevices, { hideDownNodes: true });
+        const actual = processTopologyData(realTimeTopology, allLinks, connectDevices, { hideDownNodes: !localLab });
 
         if (topologyView === 'planned') return planned;
         if (topologyView === 'actual') return actual;
@@ -727,7 +736,7 @@ const Dashboard: React.FC = () => {
 
         return { nodes: Array.from(nodeMap.values()), links: Array.from(linkMap.values()) };
 
-    }, [topologyView, realTimeTopology, plannedTopology, allLinks, connectDevices]);
+    }, [topologyView, realTimeTopology, plannedTopology, allLinks, connectDevices, localLab]);
 
     const selectedNodeData = useMemo(() => {
         if (!selectedNodeId) return null;
@@ -770,7 +779,7 @@ const Dashboard: React.FC = () => {
 
     const openLinkModal = useCallback(async (sourceNodeId: string) => {
         setIsNetboxOpLoading(true);
-        setNetboxOpMessage('Loading devices and interfaces from NetBox...');
+        setNetboxOpMessage('Loading stored devices and interfaces...');
         try {
             await refreshConnectData();
             const srcDev = connectDevices.find((d: DeviceRecord) => d.hostname === sourceNodeId);
@@ -824,12 +833,12 @@ const Dashboard: React.FC = () => {
         const dstDevice = connectDevices.find((d) => d.id === linkForm.dst_device_id)?.hostname || 'destination device';
         const ok = await Confirm.ask(
             `Create link ${srcDevice} -> ${dstDevice}?`,
-            'This adds a manual topology link to NetBox and refreshes the planned topology.',
+            'This adds a manual topology link to stored inventory and refreshes the planned topology.',
         );
         if (!ok) return;
 
         setIsNetboxOpLoading(true);
-        setNetboxOpMessage('Creating link in NetBox and refreshing topology...');
+        setNetboxOpMessage('Saving inventory link and refreshing topology...');
         try {
             await netboxApi.createLink({
                 src_device_id: linkForm.src_device_id,
@@ -873,10 +882,10 @@ const Dashboard: React.FC = () => {
 
     const handleDeleteLink = useCallback(async (linkId: number) => {
         setIsNetboxOpLoading(true);
-        setNetboxOpMessage('Deleting link from NetBox...');
+        setNetboxOpMessage('Deleting inventory link...');
         try {
             await netboxApi.deleteLink(linkId);
-            Toast.success('Link Deleted', 'Connection removed from NetBox.');
+            Toast.success('Link Deleted', 'Connection removed from inventory.');
             
             // Refresh everything
             const data = await netboxApi.getLocalPlannedTopology();
@@ -917,7 +926,7 @@ const Dashboard: React.FC = () => {
 
         try {
             setIsNetboxOpLoading(true);
-            setNetboxOpMessage('Creating interface in NetBox...');
+            setNetboxOpMessage('Creating inventory interface...');
             const iface = await netboxApi.createInterface(targetDeviceId, {
                 ...ifaceForm,
                 status: 'planned'
@@ -964,7 +973,7 @@ const Dashboard: React.FC = () => {
 
         try {
             setIsNetboxOpLoading(true);
-            setNetboxOpMessage('Loading interface details from NetBox...');
+            setNetboxOpMessage('Loading inventory interface details...');
             // Fetch interfaces to get the ID
             const res = await netboxApi.listInterfaces(dev.id);
             // Match name exactly or abbreviated form
@@ -996,13 +1005,13 @@ const Dashboard: React.FC = () => {
       }
       const ok = await Confirm.ask(
         `Update interface ${editingIface.name}?`,
-        'This updates the interface IP address in NetBox and refreshes the planned topology.',
+        'This updates the stored interface IP address and refreshes the planned topology.',
       );
       if (!ok) return;
 
       try {
         setIsNetboxOpLoading(true);
-        setNetboxOpMessage('Updating interface in NetBox...');
+        setNetboxOpMessage('Updating inventory interface...');
         await netboxApi.updateInterface(editingIface.device_id, editingIface.id, {
           ip_address: editIfaceForm.ip_address,
         });
@@ -1213,8 +1222,8 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="join">
                     {/* info, accent, primary, secondary */}
-                    <button className={`btn join-item btn-sm ${topologyView === 'planned' ? 'btn-active text-accent' : ''}`} onClick={() => setTopologyView('planned')}>Planned</button>
-                    <button className={`btn join-item btn-sm ${topologyView === 'actual' ? 'btn-active text-accent' : ''}`} onClick={() => setTopologyView('actual')}>Real-Time</button>
+                    <button className={`btn join-item btn-sm ${topologyView === 'planned' ? 'btn-active text-accent' : ''}`} onClick={() => setTopologyView('planned')}>{localLab ? 'Stored Inventory' : 'Planned'}</button>
+                    <button className={`btn join-item btn-sm ${topologyView === 'actual' ? 'btn-active text-accent' : ''}`} title={localLab ? 'Editable JSON operational state' : undefined} onClick={() => setTopologyView('actual')}>Real-Time{localLab ? ' · Simulated' : ''}</button>
                     <button className={`btn join-item btn-sm ${topologyView === 'diff' ? 'btn-active text-accent' : ''}`} onClick={() => setTopologyView('diff')}>Diff</button>
                 </div>
                 {/* D3/Cytoscape engine toggle — temporarily hidden
@@ -1227,7 +1236,7 @@ const Dashboard: React.FC = () => {
                     className={`btn btn-sm btn-outline btn-primary gap-1 ${isRefreshing ? 'btn-disabled' : ''}`}
                     onClick={handleRefreshTopology}
                     disabled={isRefreshing}
-                    title="Trigger a fresh network crawl and reload topology"
+                    title={localLab ? "Reload topology from SQLite" : "Trigger a fresh network crawl and reload topology"}
                 >
                     <RefreshCw size={14} className={isRefreshing ? 'animate-spin' : ''} />
                     {isRefreshing ? 'Scanning...' : 'Refresh'}

@@ -1,0 +1,326 @@
+{
+  "errors": 546,
+  "warnings": 35,
+  "rules": {
+    "@typescript-eslint/no-explicit-any": 474,
+    "@typescript-eslint/no-unused-vars": 23,
+    "react-hooks/set-state-in-effect": 15,
+    "react-hooks/exhaustive-deps": 31,
+    "react-hooks/purity": 1,
+    "prefer-const": 4,
+    "no-empty": 1,
+    "react-hooks/static-components": 14,
+    "no-useless-escape": 5,
+    "react-hooks/preserve-manual-memoization": 5,
+    "react-refresh/only-export-components": 3,
+    "null": 4,
+    "react-hooks/immutability": 1
+  },
+  "files": [
+    {
+      "file": "frontend\\components\\AIAgentPanel.tsx",
+      "errors": 11,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\ApprovalDialog.tsx",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\CaptureSnapshotModal.tsx",
+      "errors": 5,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\FloatingInventoryOverlay.tsx",
+      "errors": 1,
+      "warnings": 1
+    },
+    {
+      "file": "frontend\\components\\LLMRuntimeSelector.tsx",
+      "errors": 3,
+      "warnings": 5
+    },
+    {
+      "file": "frontend\\components\\MessageBubble.tsx",
+      "errors": 3,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\NetworkGraph.tsx",
+      "errors": 13,
+      "warnings": 1
+    },
+    {
+      "file": "frontend\\components\\NetworkGraphCytoscape.tsx",
+      "errors": 7,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\NotificationToast.tsx",
+      "errors": 2,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\PremiumLoaderOverlay.tsx",
+      "errors": 0,
+      "warnings": 2
+    },
+    {
+      "file": "frontend\\components\\SSHConnectModal.tsx",
+      "errors": 6,
+      "warnings": 1
+    },
+    {
+      "file": "frontend\\components\\Sidebar.tsx",
+      "errors": 16,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\UserProfileModal.tsx",
+      "errors": 3,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\ansible\\AnsibleChatPanel.tsx",
+      "errors": 109,
+      "warnings": 6
+    },
+    {
+      "file": "frontend\\components\\ansible\\AnsibleFileTree.tsx",
+      "errors": 8,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\ansible\\JobStatusBar.tsx",
+      "errors": 4,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\ansible\\PlaybookEditor.tsx",
+      "errors": 7,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\ansible\\PlaybookStudioOverlay.tsx",
+      "errors": 22,
+      "warnings": 4
+    },
+    {
+      "file": "frontend\\components\\ansible\\SSHTerminalDrawer.tsx",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\compliance\\ComplianceAlertsPanel.tsx",
+      "errors": 2,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\compliance\\PolicyScopeSelector.tsx",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\components\\compliance\\PolicyVersionHistory.tsx",
+      "errors": 2,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\contexts\\DeviceContext.tsx",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\contexts\\NotificationContext.tsx",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\contexts\\TaskProgressContext.tsx",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\services\\gemini.tsx",
+      "errors": 2,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\src\\App.tsx",
+      "errors": 3,
+      "warnings": 1
+    },
+    {
+      "file": "frontend\\src\\hooks\\useTelemetry.ts",
+      "errors": 2,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\src\\hooks\\useWebSocket.ts",
+      "errors": 2,
+      "warnings": 5
+    },
+    {
+      "file": "frontend\\src\\services\\api.ts",
+      "errors": 80,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\src\\types\\declarations.d.ts",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\src\\utils\\monacoTheme.ts",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\src\\utils\\validation.ts",
+      "errors": 2,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\types.ts",
+      "errors": 5,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\typesLLM.tsx",
+      "errors": 4,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\AIChat.tsx",
+      "errors": 5,
+      "warnings": 1
+    },
+    {
+      "file": "frontend\\views\\AnsibleStudioView.tsx",
+      "errors": 8,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\ApprovalQueueView.tsx",
+      "errors": 5,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\CommonServicesProfilesView.tsx",
+      "errors": 11,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\ComplianceDeviceDetail.tsx",
+      "errors": 8,
+      "warnings": 1
+    },
+    {
+      "file": "frontend\\views\\ComplianceHubView.tsx",
+      "errors": 2,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\ConfigBackupView.tsx",
+      "errors": 3,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\Configuration.tsx",
+      "errors": 9,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\Dashboard.tsx",
+      "errors": 19,
+      "warnings": 2
+    },
+    {
+      "file": "frontend\\views\\Deployments.tsx",
+      "errors": 3,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\DriftView.tsx",
+      "errors": 3,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\IncidentDashboard.tsx",
+      "errors": 6,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\IntentHistoryView.tsx",
+      "errors": 8,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\IntentParserView.tsx",
+      "errors": 2,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\KnowledgeBase.tsx",
+      "errors": 13,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\Login.tsx",
+      "errors": 3,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\NetBoxDevices.tsx",
+      "errors": 20,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\NetworkPerformance.tsx",
+      "errors": 21,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\OnboardingView.tsx",
+      "errors": 15,
+      "warnings": 1
+    },
+    {
+      "file": "frontend\\views\\OverviewDashboard.tsx",
+      "errors": 12,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\PlaybookComparisonView.tsx",
+      "errors": 3,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\PolicyBuilder.tsx",
+      "errors": 7,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\SDNDashboardView.tsx",
+      "errors": 8,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\SecurityDashboard.tsx",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\SecurityEvents.tsx",
+      "errors": 1,
+      "warnings": 0
+    },
+    {
+      "file": "frontend\\views\\TemplateStudioView.tsx",
+      "errors": 18,
+      "warnings": 4
+    }
+  ]
+}

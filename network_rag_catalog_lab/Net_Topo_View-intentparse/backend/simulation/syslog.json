@@ -1,0 +1,27 @@
+{
+  "syslog": [],
+  "events": [],
+  "event_templates": [
+    {
+      "id": "sample-link",
+      "group": "syslog",
+      "timestamp": "2026-10-10T15:00:00Z",
+      "severity": "info",
+      "message": "{hostname}: simulated management interface changed to up."
+    },
+    {
+      "id": "sample-error",
+      "group": "syslog",
+      "timestamp": "2026-10-10T15:10:00Z",
+      "severity": "warning",
+      "message": "{hostname}: simulated receive errors observed; inspect interface performance."
+    },
+    {
+      "id": "sample-monitor",
+      "group": "events",
+      "timestamp": "2026-10-10T15:11:00Z",
+      "severity": "info",
+      "message": "{hostname}: simulated monitoring observation refreshed."
+    }
+  ]
+}

@@ -94,7 +94,7 @@ class OllamaProvider(LLMProvider):
         payload = self._build_payload(messages, tools, temperature)
 
         try:
-            async with httpx.AsyncClient(timeout=self._timeout) as client:
+            async with httpx.AsyncClient(timeout=self._timeout, trust_env=self._base_url.split("//")[-1].split(":")[0] not in {"127.0.0.1", "localhost", "[::1]"}) as client:
                 resp = await client.post(
                     f"{self._base_url}/api/chat",
                     json=payload,

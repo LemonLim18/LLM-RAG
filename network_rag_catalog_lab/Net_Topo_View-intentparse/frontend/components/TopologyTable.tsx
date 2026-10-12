@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useLocalLab } from '../src/localLab';
 import type { D3Link, D3Node } from '../types';
 import { Trash2 } from 'lucide-react';
 import { Confirm } from '../src/utils/swal';
@@ -13,6 +14,7 @@ interface TopologyTableProps {
 type SortKey = 'source' | 'target' | 'status';
 
 const TopologyTable: React.FC<TopologyTableProps> = ({ links, onNodeClick, onDeleteLink, showStatus }) => {
+  const localLab = useLocalLab();
   const [sortKey, setSortKey] = useState<SortKey>('source');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
@@ -89,13 +91,13 @@ const TopologyTable: React.FC<TopologyTableProps> = ({ links, onNodeClick, onDel
                                 onClick={async (e) => {
                                     e.stopPropagation();
                                     const ok = await Confirm.danger(
-                                        'Delete link from NetBox?',
+                                        localLab ? 'Delete stored local link?' : 'Delete link from NetBox?',
                                         `${sourceId} ${link.sourceInterface || ''} -> ${targetId} ${link.targetInterface || ''}`,
                                     );
                                     if (ok) onDeleteLink(link.netboxLinkId!);
                                 }}
                                 className="btn btn-ghost btn-xs text-error hover:bg-error/10"
-                                title="Delete Link from NetBox"
+                                title={localLab ? 'Delete stored local link' : 'Delete Link from NetBox'}
                             >
                                 <Trash2 size={14} />
                             </button>

@@ -6,6 +6,7 @@ import { Send, Loader2, Bot, Sparkles, AlertCircle, FileCode, ChevronRight, Pape
 import PremiumLoaderOverlay from '../PremiumLoaderOverlay';
 import { v4 as uuidv4 } from 'uuid';
 import { ansibleApi, llmApi, netboxApi, ragApi } from '../../src/services/api';
+import { CapabilityContext } from '../../src/localLab';
 import { Toast, Confirm } from '../../src/utils/swal';
 import {
   buildPlannedInventoryPreselectChips,
@@ -813,6 +814,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   onExplainSelectionHandled,
 }) => {
   void _activeJob;
+  const localChat = React.useContext(CapabilityContext).providers?.chat === 'local_ollama';
   const initialStoredSessions = useMemo(() => loadStoredAnsibleSessions(), []);
   const initialStoredSessionId = useMemo(
     () => loadStoredCurrentAnsibleSessionId(initialStoredSessions),
@@ -1269,12 +1271,12 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
         const raw = localStorage.getItem(ANSIBLE_MODEL_STORAGE_KEY);
         if (raw) {
           const parsed = JSON.parse(raw) as AnsibleModelSelection;
-          if (parsed?.provider && parsed?.model) {
+          if (parsed?.provider && parsed?.model && r.providers.some(p => p.name === parsed.provider && p.models.includes(parsed.model))) {
             const ollamaDesc = r.providers.find((p) => p.name === 'ollama');
             const restoredOllamaBaseUrl = parsed.provider === 'ollama'
               ? (isLocalOllamaUrl(parsed.ollama_base_url)
                 ? (ollamaDesc?.base_url ?? r.active_base_url ?? DEFAULT_OLLAMA_BASE_URL)
-                : (parsed.ollama_base_url ?? ollamaDesc?.base_url ?? null))
+                : (ollamaDesc?.base_url ?? r.active_base_url ?? null))
               : null;
             setAnsibleModel({
               provider: parsed.provider,
@@ -1538,6 +1540,10 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
    */
   const applyPreviewFollowUps = useCallback(
     (res: any, intentText: string): boolean => {
+      if (res?.parsed_intent?.engine === 'v9') {
+        setPreviewAccumulatedParams(prev => ({ ...prev, _v9_session: res.parsed_intent._v9_session }));
+        setPreviewAccumulatedIntentText(intentText);
+      }
       const secMerge = res?.parsed_intent?.secondary_intents;
       if (Array.isArray(secMerge) && secMerge.length) {
         // Secondary intents are only meaningful for the same prompt text.
@@ -2461,6 +2467,30 @@ setGeneratingPlaybook(false);
     if (isGenerating) return;
     const hasUpload = attachedFiles.length > 0;
 
+    // Explanations remain chat; authoring requests use the original Studio pipeline.
+    const explanationOnly = /^(explain|what\b|why\b|how\b|is\b|are\b|hello\b|hi\b|reply\b)/i.test(baseText) || Boolean(quotedSelection);
+    if (localChat && explanationOnly) {
+      const context = [quotedSelection?.text || '', ...attachedFiles.map(file => `${file.name}\n${file.content}`)].filter(Boolean).join('\n\n');
+      const question = baseText || 'Explain the attached content.';
+      addMsg({ role: 'user', content: question });
+      setInput(''); setAttachedFiles([]); setQuotedSelection(null);
+      setGenerating(true);
+      const ac = new AbortController();
+      abortControllerRef.current = ac;
+      try {
+          await llmApi.updateRuntime({provider: 'ollama', model: ansibleModel.model}, {signal: ac.signal});
+        const result = await llmApi.qaPlaybook(context, question,
+          messages.filter(m => !m.isError && (m.role === 'user' || m.role === 'assistant')).slice(-20).map(m => ({ role: m.role, content: m.content })), { signal: ac.signal });
+        addMsg({ role: 'assistant', content: result.answer });
+      } catch (error) {
+        if (!ac.signal.aborted) addMsg({ role: 'assistant', content: describeError(error, 'Local model inference failed.'), isError: true });
+      } finally {
+        abortControllerRef.current = null;
+        setGenerating(false);
+      }
+      return;
+    }
+
     if (quotedSelection) {
       if (!baseText) return;
       setCommandHistory((prev) => {
@@ -2776,6 +2806,8 @@ setGeneratingPlaybook(false);
         const isAbort = err instanceof DOMException && err.name === 'AbortError';
         if (isAbort) {
           addMsg({ role: 'assistant', content: 'The generation was cancelled by the user.' });
+        } else {
+          addMsg({ role: 'assistant', content: describeError(err, 'Could not prepare the generation preview.'), isError: true });
         }
         setGenerating(false);
         setGeneratingPlaybook(false);
@@ -2791,6 +2823,8 @@ setGeneratingPlaybook(false);
     }
   }, [
     input,
+    localChat,
+    messages,
     isGenerating,
     addMsg,
     onPlaybookReady,

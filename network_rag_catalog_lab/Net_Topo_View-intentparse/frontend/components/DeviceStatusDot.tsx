@@ -14,7 +14,8 @@ const DeviceStatusDot: React.FC<DeviceStatusDotProps> = ({
   className = '',
   title: titleProp,
 }) => {
-  const isOnline = status === 'active' || status === 'registered' || status === 'provisioning';
+  const normalized = status.trim().toLowerCase();
+  const isOnline = ['up', 'active', 'registered', 'provisioning'].includes(normalized);
   const title = titleProp ?? (status.charAt(0).toUpperCase() + status.slice(1));
   
   const sizeClasses = {

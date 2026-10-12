@@ -1,3 +1,4 @@
+import { useCapability } from '../../src/localLab';
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
@@ -47,6 +48,9 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
   onCheck, onApprove, onDeploy, onRegenerate,
   onExplainSelection,
 }) => {
+  const executionAvailable = useCapability('execution.deploy');
+  const aiAvailable = useCapability('ai.generate');
+  const approvalAvailable = useCapability('approval.workflow_ui');
   const { themeName } = useMonacoTheme();
   const activeTabRef = useRef<HTMLDivElement>(null);
   const editorInstanceRef = useRef<any>(null);
@@ -254,7 +258,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
         <button
           className="btn btn-xs btn-ghost gap-1"
           onClick={onRegenerate}
-          disabled={!hasPlaybook}
+          disabled={!aiAvailable || !hasPlaybook}
           title="Re-generate playbook via AI"
         >
           <RefreshCw className="h-3 w-3" /> Re-generate
@@ -265,7 +269,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
         <button
           className="btn btn-xs btn-info gap-1"
           onClick={onCheck}
-          disabled={!canRunCheck}
+          disabled={!executionAvailable || !canRunCheck}
           title={checkTitle}
         >
           {isChecking ? (
@@ -294,7 +298,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
                   : 'btn-ghost opacity-60'
           }`}
           onClick={onApprove}
-          disabled={!canSubmitToQueue}
+          disabled={!approvalAvailable || !canSubmitToQueue}
           title={approveTitle}
         >
           {isPendingApproval ? (
@@ -316,7 +320,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
         <button
           className={`btn btn-xs gap-1 ${isDeploying ? 'btn-disabled' : 'btn-success'}`}
           onClick={onDeploy}
-          disabled={!canEdit || !canDeploy || isDeploying}
+          disabled={!executionAvailable || !canEdit || !canDeploy || isDeploying}
           title={deployTitle}
         >
           <Play className="h-3 w-3" />

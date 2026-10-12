@@ -23,7 +23,12 @@ router = APIRouter(prefix="/config", tags=["Config Engine (M3)"])
 # ---------------------------------------------------------------------------
 # Singletons
 # ---------------------------------------------------------------------------
-_renderer = TemplateRenderer()
+from lab_config import LOCAL_LAB
+if LOCAL_LAB:
+    from local_providers.templates import LocalTemplateRenderer
+    _renderer = LocalTemplateRenderer()
+else:
+    _renderer = TemplateRenderer()
 _differ = ConfigDiffer()
 _validator = SyntaxValidator()
 _DB_PATH = "db/netauto.db"
@@ -71,6 +76,8 @@ class TemplateInfo(BaseModel):
     feature: str
     has_undo: bool
     schema_exists: bool
+    source: str = "stored"
+    revision: int = 0
 
 
 def _maybe_inject_common_services(params: Dict[str, Any]) -> Dict[str, Any]:
@@ -139,6 +146,13 @@ async def render_template(req: RenderRequest):
     Returns the generated CLI commands and optionally the undo/rollback commands.
     """
     effective_params = _maybe_inject_common_services(req.params)
+    if LOCAL_LAB:
+        errors = _renderer._validate_params(req.feature, dict(req.params))
+        if errors:
+            raise HTTPException(400, '; '.join(errors))
+        schema = _renderer.get_schema(req.feature)
+        if schema and schema.get('additionalProperties') is False:
+            effective_params = {k:v for k,v in effective_params.items() if k in schema.get('properties', {})}
 
     try:
         config = _renderer.render(req.vendor, req.feature, effective_params)
@@ -240,6 +254,8 @@ async def save_template_source(
     _user: dict = Depends(_require_role("admin")),
 ):
     """Write back edited Jinja2 source (admin only)."""
+    if LOCAL_LAB:
+        return _renderer.store.mutate('templates', f'{vendor}/{feature}.j2', body.content, _user['username'])
     from pathlib import Path
     tpl_file = Path(_renderer.templates_dir) / vendor / f"{feature}.j2"
     if not tpl_file.parent.exists():
@@ -254,6 +270,11 @@ async def save_template_source(
 @router.get("/schemas/{feature}/source")
 async def get_schema_source(feature: str):
     """Return the raw JSON schema source for in-browser editing."""
+    if LOCAL_LAB:
+        try:
+            return {'feature':feature, 'content':_renderer.store.read('schemas', f'{feature}.json'), 'source':'stored'}
+        except FileNotFoundError:
+            raise HTTPException(404, 'Schema not found')
     from pathlib import Path
     schema_file = Path(_renderer.schemas_dir) / f"{feature}.json"
     if not schema_file.exists():
@@ -268,6 +289,8 @@ async def save_schema_source(
     _user: dict = Depends(_require_role("admin")),
 ):
     """Write back edited JSON schema (admin only)."""
+    if LOCAL_LAB:
+        return _renderer.store.mutate('schemas', f'{feature}.json', body.content, _user['username'], operation='save' if _renderer.get_schema(feature) is not None else 'create')
     import json as _json
     from pathlib import Path
     # Validate it's actual JSON before saving
@@ -290,6 +313,8 @@ async def delete_template(
     _user: dict = Depends(_require_role("admin")),
 ):
     """Delete a Jinja2 template file (admin only)."""
+    if LOCAL_LAB:
+        return _renderer.store.mutate('templates', f'{vendor}/{feature}.j2', '', _user['username'], operation='delete')
     from pathlib import Path
     tpl_file = Path(_renderer.templates_dir) / vendor / f"{feature}.j2"
     if not tpl_file.exists():
@@ -308,6 +333,8 @@ async def create_template(
     _user: dict = Depends(_require_role("admin")),
 ):
     """Create a new Jinja2 template file (admin only)."""
+    if LOCAL_LAB:
+        return _renderer.store.mutate('templates', f'{vendor}/{feature}.j2', body.content, _user['username'], operation='create')
     from pathlib import Path
     vendor_dir = Path(_renderer.templates_dir) / vendor
     vendor_dir.mkdir(parents=True, exist_ok=True)
@@ -318,4 +345,3 @@ async def create_template(
     _renderer._env = None  # force reload
     logger.info("Template %s/%s created by %s", vendor, feature, _user.get("username"))
     return {"status": "created", "vendor": vendor, "feature": feature}
-
