@@ -30,19 +30,4 @@ export const configureKnowledgeEditor: BeforeMount = monaco => {
       [/-?\d+(?:\.\d+)?/,'number'],[/[{}\[\],:]/,'delimiter'],
     ]}});
   }
-  monaco.editor.defineTheme('ke-reference', {
-    base:'vs-dark', inherit:true,
-    rules:[
-      {token:'comment',foreground:'718B9F'}, {token:'command',foreground:'FFBA32'},
-      {token:'keyword',foreground:'55D3FF'}, {token:'variable',foreground:'63D2FF'},
-      {token:'string',foreground:'FF7352'}, {token:'jsonstring',foreground:'A8E45C'},
-      {token:'number',foreground:'65DEDF'}, {token:'delimiter',foreground:'DDDFF3'},
-      {token:'operator',foreground:'B795FF'}, {token:'text',foreground:'BED4E5'},
-    ],
-    colors:{'editor.background':'#09151F','editor.foreground':'#BED4E5',
-      'editorLineNumber.foreground':'#62839F','editorLineNumber.activeForeground':'#BFD5E8',
-      'editor.selectionBackground':'#153D66','editor.lineHighlightBorder':'#142532',
-      'editorGutter.background':'#09151F'},
-  });
 };
-

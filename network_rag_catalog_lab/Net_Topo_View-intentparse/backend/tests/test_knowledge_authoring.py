@@ -39,13 +39,32 @@ def test_publication_loop():
         assert draft['data']['catalogs']['operations'][0]['version'] > initial['data']['catalogs']['operations'][0]['version']
         call('PUT','/knowledge/template',{**invalid,'content':original},409)
         call('POST','/knowledge/validate')
+        render = {'expected_revision':draft['revision'], 'path':path,
+                  'content':draft['data']['templates'][path], 'parameters':{'vlan_id':30}}
+        assert 'vlan 30' in call('POST','/knowledge/render',render)['data']['configuration']
+        call('POST','/knowledge/render',render|{'parameters':{'vlan_id':5000}},422)
         publication = {'expected_revision':draft['revision'],'expected_release':release,'reason':'Approve isolated template change'}
         client.headers['Authorization']='Bearer '+create_access_token(2,'knowledge-engineer','engineer')
         call('POST','/knowledge/publish',publication,403)
         client.headers['Authorization']='Bearer '+create_access_token(1,'knowledge-admin','admin')
         published = call('POST','/knowledge/publish',publication)
         assert published['data']['release_id']!=release
-        call('POST','/knowledge/publish',publication,422)
+        call('POST','/knowledge/publish',publication,409)
+        active = published['data']['release_id']
+        built = call('POST','/knowledge/build',publication|{'expected_release':active})['data']['release_id']
+        assert call('GET','/knowledge')['data']['active_release']['release_id']==active
+        frozen = call('GET','/knowledge/releases/'+built)
+        assert frozen['ok']
+        activation={'release_id':built,'expected_release':active,'reason':'Verify explicit activation'}
+        call('POST','/knowledge/activate',activation|{'expected_release':release},409)
+        assert call('GET','/knowledge')['data']['active_release']['release_id']==active
+        call('POST','/knowledge/activate',activation)
+        assert call('GET','/knowledge')['data']['active_release']['release_id']==built
+        call('POST','/knowledge/activate',{'release_id':active,'expected_release':built,'reason':'Verify rollback'})
+        restored=call('GET','/knowledge')
+        assert restored['revision']==draft['revision']
+        assert restored['data']['active_release']['release_id']==active
+        print('PASS: validated render, build-only isolation, frozen inspection, stale activation rejection, activation and rollback',flush=True)
         call('POST','/netbox/devices',{'hostname':'Knowledge-SW1','management_ip':'192.0.2.88','management_subnet_mask':'24','vendor':'cisco_ios','os_version':'IOS-XE 17.9','status':'planned'})
         request={'intent_description':'Create VLAN 30 on Knowledge-SW1','target_hosts':['Knowledge-SW1'],'model':'qwen2.5:1.5b'}
         preview=call('POST','/ansible/preview-intent',request)

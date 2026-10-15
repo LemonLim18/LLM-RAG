@@ -24,7 +24,13 @@
     coffee,
     winter,
     dim,
-    nord;
+    nord,
+    pastel,
+    wireframe,
+    cmyk,
+    acid,
+    lemonade,
+    sunset;
 }
 @plugin "@tailwindcss/typography";
 
@@ -54,4 +60,21 @@
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(128, 128, 128, 0.2) transparent;
+}
+
+/* Semantic accents shared by authoring/navigation surfaces. DaisyUI supplies
+   color-scheme and base/status colors; these preserve hue roles in every theme. */
+@theme inline {
+  --color-authoring: light-dark(#6940c8, #a78bfa);
+  --color-network: light-dark(#1266bf, #4da6ff);
+  --color-telemetry: light-dark(#007c83, #22d3d0);
+  --color-change: light-dark(#ae1677, #f472b6);
+  --color-alert: var(--color-error);
+}
+:root, [data-theme] {
+  --ui-muted: color-mix(in oklab, var(--color-base-content) 75%, var(--color-base-100));
+  --ui-border: color-mix(in oklab, var(--color-base-content) 24%, var(--color-base-100));
+  --ui-success: light-dark(#087447, #34d399);
+  --ui-warning: light-dark(#986000, #fbbf24);
+  --ui-error: light-dark(#bd2040, #fb7185);
 }

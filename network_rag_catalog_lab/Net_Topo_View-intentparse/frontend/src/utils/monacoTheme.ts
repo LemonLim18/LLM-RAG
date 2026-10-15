@@ -124,7 +124,10 @@ export function updateMonacoTheme() {
       base: baseTheme,
       inherit: true,
       rules: isDark ? [
-        { token: 'comment', foreground: '6B7280' },
+        { token: 'comment', foreground: '94A3B8' },
+        { token: 'variable', foreground: '22D3EE' },
+        { token: 'command', foreground: 'FBBF24' },
+        { token: 'jsonstring', foreground: '86EFAC' },
         { token: 'delimiter', foreground: 'F59E0B' },
         { token: 'delimiter.bracket', foreground: 'FBBF24' },
         { token: 'keyword', foreground: 'C084FC' },
@@ -135,7 +138,10 @@ export function updateMonacoTheme() {
         { token: 'predefined', foreground: '7DD3FC' },
         { token: 'operator', foreground: 'F9A8D4' },
       ] : [
-        { token: 'comment', foreground: '8E9297' },
+        { token: 'comment', foreground: '596579' },
+        { token: 'variable', foreground: '087D96' },
+        { token: 'command', foreground: '9A5800' },
+        { token: 'jsonstring', foreground: '15803D' },
         { token: 'delimiter', foreground: 'D97706' },
         { token: 'delimiter.bracket', foreground: 'B45309' },
         { token: 'keyword', foreground: '7C3AED' },
@@ -157,6 +163,7 @@ export function updateMonacoTheme() {
         'editorCursor.foreground': fgHex,
       },
     });
+    monaco.editor.setTheme(themeName);
   });
 }
 

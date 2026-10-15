@@ -1,17 +1,23 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import Editor from '@monaco-editor/react';
+import { useMonacoTheme } from '../../src/utils/monacoTheme';
 import { Folder, Layers3, FileText, Box, Network, Clock3, ArrowRight, Plus, Search, Pencil, Trash2, MoreHorizontal, ChevronRight, ChevronLeft, Database, Settings2, Upload, Copy, Download, CheckCircle2, XCircle, AlertTriangle, Info, X, Eye, Braces, Maximize2, Play, Check, CalendarDays, UserRound, ShieldCheck } from 'lucide-react';
 import { knowledgeApi } from '../../src/services/api';
 import { Toast } from '../../src/utils/swal';
 import { configureKnowledgeEditor } from './editorLanguage';
 import { referenceReleases, referenceParameters } from './referenceData';
 import './referenceLayouts.css';
+import { LatestOverview, LatestCategories, LatestParameters, LatestOperations, LatestPublication } from './LatestLayouts';
 type Row = Record<string, any>;
 type Context = Record<string, any>;
 
 function Templates({c}:{c:Context}) {
   const [params,setParams]=useState('{\n  "vlan_id": 100,\n  "vlan_name": "STAFF",\n  "description": "Staff VLAN",\n  "state": "present"\n}');
   const [fullscreen,setFullscreen]=useState(false);
+  const [rendered,setRendered]=useState('');
+  const [renderError,setRenderError]=useState('');
+  const render=async()=>{c.setBusy(true);setRenderError('');try{const result=await knowledgeApi.render({expected_revision:c.snapshot.revision,path:c.selectedTemplatePath,content:c.templateContent,parameters:JSON.parse(params)});setRendered(result.data.configuration)}catch(e:any){setRendered('');setRenderError(e.message);Toast.error('Preview rejected',e.message)}finally{c.setBusy(false)}};
+  useEffect(()=>{setRendered('');setRenderError('')},[c.selectedTemplatePath,c.templateContent,params]);
   const [variables,setVariables]=useState(false);
   const [templateCategory,setTemplateCategory]=useState('');
   const b:Row=c.bindings.find((r:Row)=>r.template_path===c.selectedTemplatePath)||{};
@@ -41,17 +47,17 @@ function Templates({c}:{c:Context}) {
       </Panel>
       <Panel className="kr-template-parameters" title="4. Parameters Reference"><div className="kr-scroll"><table><thead><tr><th>Name</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody>{mappings.map((m:Row)=>{const p=c.parameters.find((r:Row)=>r.parameter_id===m.parameter_id)||{};return <tr key={m.parameter_id}><td>{m.parameter_id}</td><td>{p.value_type}</td><td><input aria-label={m.parameter_id+' required reference'} type="checkbox" checked={Boolean(m.required)} readOnly/></td><td>{p.description||'—'}</td></tr>})}</tbody></table></div></Panel>
       <Panel className="kr-template-test" title="5. Validation & Preview">
-        <div className="kr-test-title"><span>Test Parameters (JSON)</span><Btn kind="text-button" icon={Copy} onClick={()=>setParams('{\n  "vlan_id": 100,\n  "vlan_name": "STAFF",\n  "description": "Staff VLAN",\n  "state": "present"\n}')}>Load Example</Btn></div>
+        <div className="kr-test-title"><span>Test Parameters (JSON)</span><Btn kind="text-button" icon={Copy} onClick={()=>setParams(JSON.stringify(Object.fromEntries(mappings.map((m:Row)=>{const p=c.parameters.find((p:Row)=>p.parameter_id===m.parameter_id);const rule=c.operationRules.find((r:Row)=>r.operation_id===c.selectedOperation&&r.field_path===m.field_path)?.keywords||{};return [m.field_path,rule.default??rule.enum?.[0]??(p?.value_type==='integer'||p?.value_type==='number'?rule.minimum??1:p?.value_type==='boolean'?false:p?.value_type==='array'?[]:p?.value_type==='object'?{}:'')]})),null,2))}>Load Example</Btn></div>
         <div className="kr-test-input"><Code language="ke-json" value={params} onChange={setParams}/></div>
-        <div className="kr-toolbar"><Btn kind="primary" icon={Play} disabled hint="The existing knowledge API does not expose an unsaved template render endpoint.">Render Preview</Btn><Btn kind="cyan-outline" icon={CheckCircle2} disabled={c.preview||!c.editable||c.busy} hint={c.preview?previewReason:'Validates the stored catalog, not the test input.'} onClick={()=>void validate()}>Validate</Btn></div>
-        <div className="kr-rendered"><div className="kr-panel-head"><h3>Rendered Configuration (Preview)</h3><CopyButton text={c.preview?'vlan 100\n  name STAFF\n  description Staff VLAN':''}/></div><pre>{c.preview?'vlan 100\n  name STAFF\n  description Staff VLAN':'No render has been run. This endpoint is not connected yet.'}</pre>{c.preview&&<small>Illustrative output from the reference image; not calculated from editor changes.</small>}</div>
+        <div className="kr-toolbar"><Btn kind="primary" icon={Play} disabled={c.preview||c.busy||!c.selectedTemplatePath} onClick={()=>void render()}>Render Preview</Btn><Btn kind="cyan-outline" icon={CheckCircle2} disabled={c.preview||!c.editable||c.busy} hint={c.preview?previewReason:'Validates the stored catalog, not the test input.'} onClick={()=>void validate()}>Validate</Btn></div>
+        <div className="kr-rendered"><div className="kr-panel-head"><h3>Rendered Configuration (Preview)</h3><CopyButton text={c.preview?'vlan 100\n  name STAFF\n  description Staff VLAN':rendered}/></div><pre>{c.preview?'vlan 100\n  name STAFF\n  description Staff VLAN':rendered||'Enter valid parameters and render the current template.'}</pre>{renderError&&<p role="alert" className="text-error whitespace-pre-wrap">{renderError}</p>}{c.preview&&<small>Illustrative output from the reference image; not calculated from editor changes.</small>}</div>
       </Panel>
     </div>
     {fullscreen&&<div className="kr-overlay"><Panel title="Template Studio (Jinja2)" actions={<Btn icon={X} onClick={()=>setFullscreen(false)}>Close</Btn>}>{editor}</Panel></div>}
   </>;
 }
 
-function Publication({c}:{c:Context}) {
+export function Publication({c}:{c:Context}) {
   const pointer=c.snapshot.data.active_release;
   const releases:Row[]=c.preview?referenceReleases:pointer?[{...pointer,version:pointer.version||pointer.release_id,status:'Published',description:pointer.description||'Active runtime release',created_at:pointer.created_at||pointer.published_at||'—',actor:pointer.actor||'—'}]:[];
   const [selected,setSelected]=useState(''),[tab,setTab]=useState('All'),[group,setGroup]=useState('By Category'),[details,setDetails]=useState<Row|null>(null);
@@ -86,7 +92,7 @@ function Publication({c}:{c:Context}) {
 }
 
 
-function Parameters({c}:{c:Context}) {
+export function Parameters({c}:{c:Context}) {
   const [type,setType]=useState('all'),[open,setOpen]=useState(true);
   const [example,setExample]=useState<Row>({parameter_id:'vlan_name',value_type:'string',description:'Name of the VLAN',minLength:3,maxLength:32,pattern:'[a-zA-Z0-9_-]+',enum:'',default:''});
   const record:Row=c.editorMode==='parameter'?c.record:c.preview?example:c.parameter || {};
@@ -114,10 +120,10 @@ function Parameters({c}:{c:Context}) {
   </>;
 }
 
-function VariantTree({bindings,selected,onSelect}:{bindings:Row[];selected:string;onSelect:(r:Row)=>void}) {
+export function VariantTree({bindings,selected,onSelect}:{bindings:Row[];selected:string;onSelect:(r:Row)=>void}) {
  return <div className="kr-tree kr-variants">{[...new Set(bindings.map(b=>b.vendor))].map(v=><details open key={v}><summary><Folder/>{title(v)}<b>{bindings.filter(b=>b.vendor===v).length}</b></summary><div className="kr-tree-branch">{[...new Set(bindings.filter(b=>b.vendor===v).map(b=>b.platform))].map(p=><details open key={p}><summary><Folder/>{platformName(p)}</summary><div className="kr-tree-branch">{bindings.filter(b=>b.vendor===v&&b.platform===p).map(b=><button key={b.template_path} className={selected===b.template_path?'selected':''} onClick={()=>onSelect(b)}><i className={'kr-dot '+(b.status==='Published'?'green':b.status==='Draft'?'yellow':'blue')}/><span>{b.versions.join(', ')}</span><Status value={b.status||'Draft'}/></button>)}</div></details>)}</div></details>)}</div>;
 }
-function Operations({c}:{c:Context}) {
+export function Operations({c}:{c:Context}) {
   const op:Row=c.operation||{};
   const [selected,setSelected]=useState('');
   const [editRules,setEditRules]=useState(false);
@@ -144,7 +150,7 @@ function Operations({c}:{c:Context}) {
       <Panel className="kr-operation-variants" title="Variants & Template" icon={FileText} actions={<Btn kind="purple-outline" icon={Plus} onClick={()=>c.setView?.('knowledge_templates')}>Add Variant</Btn>}><div className="kr-scroll"><VariantTree bindings={bindings} selected={b?.template_path||''} onSelect={r=>setSelected(r.template_path)}/></div></Panel>
       <Panel className="kr-operation-template" title={'Template Studio'+(b?' ('+title(b.vendor)+' '+platformName(b.platform)+' '+b.versions.join(', ')+')':'')} icon={FileText} actions={<Btn kind="purple-outline" icon={Braces} onClick={()=>c.setView?.('knowledge_templates')}>Variables</Btn>}>{b?<Code value={c.snapshot.data.templates[b.template_path]||''} readOnly/>:<Empty>No template variants for this operation.</Empty>}<div className="kr-info"><Info size={21}/><p><strong>Template Authoring</strong><br/>Parameter validation rules and schema are system-managed.<br/>The template is authored by a senior network engineer using the defined parameters.</p></div></Panel>
     </div>
-    {editRules&&<div className="kr-overlay"><Panel title="Parameter Mapping & Validation Rules" actions={<Btn icon={X} onClick={()=>setEditRules(false)}>Close</Btn>}><div className="kr-scroll kr-form-body">{c.mappings.map((m:Row,i:number)=><div className="kr-form-columns" key={m.parameter_id}><FormField label={m.parameter_id+' field path'}><input value={m.field_path} onChange={e=>c.setMappings((rows:Row[])=>rows.map((r,j)=>j===i?{...r,field_path:e.target.value}:r))}/></FormField><Btn icon={Trash2} onClick={()=>c.setMappings((rows:Row[])=>rows.filter((_,j)=>j!==i))}>Remove mapping</Btn></div>)}<select aria-label="Add parameter mapping" value="" onChange={e=>e.target.value&&c.setMappings((rows:Row[])=>[...rows,{parameter_id:e.target.value,field_path:e.target.value,required:false}])}><option value="">Add parameter from category pool…</option>{c.categoryParameters.filter((r:Row)=>r.category_id===op.category_id&&!c.mappings.some((m:Row)=>m.parameter_id===r.parameter_id)).map((r:Row)=><option key={r.parameter_id}>{r.parameter_id}</option>)}</select><select aria-label="Add validation rule" value="" onChange={e=>e.target.value&&c.setRules((rows:Row[])=>[...rows,{field_path:e.target.value,keywords:{}}])}><option value="">Add constraints to a mapped field…</option>{c.mappings.filter((m:Row)=>!c.rules.some((r:Row)=>r.field_path===m.field_path)).map((m:Row)=><option key={m.field_path}>{m.field_path}</option>)}</select>{c.rules.filter((r:Row)=>r.field_path).map((r:Row)=>{const i=c.rules.indexOf(r);return <div key={r.field_path} className="kr-form-divider"><h3>{r.field_path}</h3><div className="kr-form-columns">{['minimum','maximum','minLength','maxLength','minItems','maxItems'].map(k=><FormField key={k} label={k}><input type="number" value={r.keywords?.[k]??''} onChange={e=>c.setKeyword(i,k,e.target.value===''?'':Number(e.target.value))}/></FormField>)}</div><FormField label="Pattern"><input value={r.keywords?.pattern||''} onChange={e=>c.setKeyword(i,'pattern',e.target.value)}/></FormField><FormField label="Allowed values"><input value={(r.keywords?.enum||[]).join(', ')} onChange={e=>c.setKeyword(i,'enum',e.target.value.split(',').map(s=>s.trim()).filter(Boolean))}/></FormField></div>})}</div><footer className="kr-form-footer"><Btn kind="primary" disabled={c.preview||!c.editable||!c.reason.trim()} onClick={c.saveContract} hint={c.preview?previewReason:undefined}>Save Contract</Btn></footer></Panel></div>}
+    {editRules&&<div className="kr-overlay"><Panel title="Parameter Mapping & Validation Rules" actions={<Btn icon={X} onClick={()=>setEditRules(false)}>Close</Btn>}><div className="kr-scroll kr-form-body">{c.mappings.map((m:Row,i:number)=><div className="kr-form-columns" key={m.parameter_id}><FormField label={m.parameter_id+' field path'}><input value={m.field_path} onChange={e=>c.setMappings((rows:Row[])=>rows.map((r,j)=>j===i?{...r,field_path:e.target.value}:r))}/></FormField><Btn icon={Trash2} onClick={()=>c.setMappings((rows:Row[])=>rows.filter((_,j)=>j!==i))}>Remove mapping</Btn><Btn disabled={c.preview||!c.parameters.find((p:Row)=>p.parameter_id===m.parameter_id)?.cognishield_preset} onClick={()=>c.applyPreset(m.parameter_id)}>Apply Global Preset</Btn></div>)}<select aria-label="Add parameter mapping" value="" onChange={e=>e.target.value&&c.setMappings((rows:Row[])=>[...rows,{parameter_id:e.target.value,field_path:e.target.value,required:false}])}><option value="">Add parameter from category pool…</option>{c.categoryParameters.filter((r:Row)=>r.category_id===op.category_id&&!c.mappings.some((m:Row)=>m.parameter_id===r.parameter_id)).map((r:Row)=><option key={r.parameter_id}>{r.parameter_id}</option>)}</select><select aria-label="Add validation rule" value="" onChange={e=>e.target.value&&c.setRules((rows:Row[])=>[...rows,{field_path:e.target.value,keywords:{}}])}><option value="">Add constraints to a mapped field…</option>{c.mappings.filter((m:Row)=>!c.rules.some((r:Row)=>r.field_path===m.field_path)).map((m:Row)=><option key={m.field_path}>{m.field_path}</option>)}</select>{c.rules.filter((r:Row)=>r.field_path).map((r:Row)=>{const i=c.rules.indexOf(r);return <div key={r.field_path} className="kr-form-divider"><h3>{r.field_path}</h3><Btn disabled={c.preview||!c.parameters.find((p:Row)=>p.parameter_id===c.mappings.find((m:Row)=>m.field_path===r.field_path)?.parameter_id)?.cognishield_preset} onClick={()=>c.applyPreset(c.mappings.find((m:Row)=>m.field_path===r.field_path)?.parameter_id)}>Apply Global Preset</Btn><div className="kr-form-columns">{['minimum','maximum','minLength','maxLength','minItems','maxItems'].map(k=><FormField key={k} label={k}><input type="number" value={r.keywords?.[k]??''} onChange={e=>c.setKeyword(i,k,e.target.value===''?'':Number(e.target.value))}/></FormField>)}</div><FormField label="Pattern"><input value={r.keywords?.pattern||''} onChange={e=>c.setKeyword(i,'pattern',e.target.value)}/></FormField><FormField label="Allowed values"><input value={(r.keywords?.enum||[]).join(', ')} onChange={e=>c.setKeyword(i,'enum',e.target.value.split(',').map(s=>s.trim()).filter(Boolean))}/></FormField></div>})}</div><footer className="kr-form-footer"><Btn kind="primary" disabled={c.preview||!c.editable||!c.reason.trim()} onClick={c.saveContract} hint={c.preview?previewReason:undefined}>Save Contract</Btn></footer></Panel></div>}
   </>;
 }
 
@@ -153,51 +159,52 @@ const title = (value: string) => value.replaceAll('_',' ').replace(/\b\w/g, c =>
 const platformName = (value: string) => ({iosxe:'IOS-XE',ios:'IOS',junos:'Junos',vrp:'VRP'}[value] || value);
 const disabledReason = 'This action has no backend contract yet; it is shown to match the selected design.';
 const previewReason = 'Reference data only. Saving, validating and publishing this example catalog is disabled.';
-function Status({value = 'Draft'}:{value?: string}) {
+export function Status({value = 'Draft'}:{value?: string}) {
   const lower=value.toLowerCase();
-  const tone = /fail|error|reject/.test(lower)?'red':/draft|warn|inactive/.test(lower)?'yellow':/active|publish|pass|valid/.test(lower)?'green':'blue';
+  const tone = /fail|error|reject/.test(lower)?'red':/draft|warn|inactive|deprecated/.test(lower)?'yellow':/active|publish|pass|valid/.test(lower)?'green':'blue';
   return <span className={'kr-status '+tone}><i/>{title(value)}</span>;
 }
 function TypeBadge({type='string'}:{type?:string}) {
   const tone=/integer|number/.test(type)?'yellow':/boolean/.test(type)?'red':/enum/.test(type)?'green':/ip/.test(type)?'purple':/object|array|json/.test(type)?'teal':'blue';
   return <span className={'kr-type '+tone}>{title(type)}</span>;
 }
-function Btn({children,onClick,kind='',icon:Icon,disabled=false,hint}:{children:ReactNode;onClick?:()=>void;kind?:string;icon?:any;disabled?:boolean;hint?:string}) {
+export function Btn({children,onClick,kind='',icon:Icon,disabled=false,hint}:{children:ReactNode;onClick?:()=>void;kind?:string;icon?:any;disabled?:boolean;hint?:string}) {
   return <button type="button" className={'kr-btn '+kind} onClick={onClick} disabled={disabled} title={hint}>{Icon && <Icon size={15}/>} {children}</button>;
 }
-function Panel({title:label,icon:Icon,actions,children,className=''}:{title?:ReactNode;icon?:any;actions?:ReactNode;children:ReactNode;className?:string}) {
+export function Panel({title:label,icon:Icon,actions,children,className=''}:{title?:ReactNode;icon?:any;actions?:ReactNode;children:ReactNode;className?:string}) {
   return <section className={'kr-panel '+className}>{label && <div className="kr-panel-head"><h2>{Icon && <Icon size={21}/>} {label}</h2>{actions}</div>}{children}</section>;
 }
-function Header({title:label,description,icon:Icon,children}:{title:string;description:string;icon?:any;children?:ReactNode}) {
+export function Header({title:label,description,icon:Icon,children}:{title:string;description:string;icon?:any;children?:ReactNode}) {
   return <header className="kr-header"><div className="kr-heading">{Icon && <span className="kr-title-icon"><Icon size={29}/></span>}<div><h1>{label}</h1><p>{description}</p></div></div><div className="kr-header-actions">{children}</div></header>;
 }
-function SearchField({value,onChange,placeholder}:{value:string;onChange:(s:string)=>void;placeholder:string}) {
+export function SearchField({value,onChange,placeholder}:{value:string;onChange:(s:string)=>void;placeholder:string}) {
   return <label className="kr-search"><Search size={16}/><input aria-label={placeholder} placeholder={placeholder} value={value} onChange={e=>onChange(e.target.value)}/></label>;
 }
-function Stat({icon:Icon,label,value,sub,tone='purple'}:{icon:any;label:string;value:ReactNode;sub?:string;tone?:string}) {
+export function Stat({icon:Icon,label,value,sub,tone='purple'}:{icon:any;label:string;value:ReactNode;sub?:string;tone?:string}) {
   return <div className="kr-stat"><span className={'kr-stat-icon '+tone}><Icon size={27}/></span><div><span>{label}</span><strong>{value}</strong>{sub && <small>{sub}</small>}</div></div>;
 }
-function Code({value,onChange,language='ke-jinja',readOnly=false}:{value:string;onChange?:(s:string)=>void;language?:string;readOnly?:boolean}) {
-  return <div className="kr-code"><Editor height="100%" beforeMount={configureKnowledgeEditor} language={language} theme="ke-reference" value={value} onChange={s=>onChange?.(s || '')} options={{readOnly,minimap:{enabled:false},automaticLayout:true,fontSize:13,lineHeight:21,scrollBeyondLastLine:false,padding:{top:10},wordWrap:'on',renderLineHighlight:'none',overviewRulerLanes:0}}/></div>;
+export function Code({value,onChange,language='ke-jinja',readOnly=false}:{value:string;onChange?:(s:string)=>void;language?:string;readOnly?:boolean}) {
+  const { themeName } = useMonacoTheme();
+  return <div className="kr-code"><Editor height="100%" beforeMount={configureKnowledgeEditor} language={language} theme={themeName} value={value} onChange={s=>onChange?.(s || '')} options={{readOnly,minimap:{enabled:false},automaticLayout:true,fontSize:13,lineHeight:21,scrollBeyondLastLine:false,padding:{top:10},wordWrap:'on',renderLineHighlight:'none',overviewRulerLanes:0}}/></div>;
 }
 function Pager({count}:{count:number}) {return <footer className="kr-pager"><span>Showing {count?1:0} to {count} of {count}</span><div><Btn disabled icon={ChevronLeft}> </Btn><Btn kind="primary">1</Btn><Btn disabled icon={ChevronRight}> </Btn></div></footer>}
 function CopyButton({text}:{text:string}) {return <Btn icon={Copy} onClick={()=>void navigator.clipboard.writeText(text).catch(()=>Toast.error('Copy failed','Clipboard access was denied.'))}>Copy</Btn>}
-function Empty({children}:{children:ReactNode}) {return <div className="kr-empty">{children}</div>}
-function FormField({label,children}:{label:string;children:ReactNode}) {return <label className="kr-field"><span>{label}</span>{children}</label>}
+export function Empty({children}:{children:ReactNode}) {return <div className="kr-empty">{children}</div>}
+export function FormField({label,children}:{label:string;children:ReactNode}) {return <label className="kr-field"><span>{label}</span>{children}</label>}
 const constraints = (rules:Row[],id:string) => Object.entries(rules.find(r=>r.field_path===id)?.keywords || {}).filter(([key])=>!['type','$schema'].includes(key)).map(([k,v])=>k+': '+(Array.isArray(v)?v.join(', '):v)).join(' · ');
 
 export default function KnowledgeLayouts({c}:{c:Context}) {
   return <div className={'kr-page kr-'+c.initialPage.toLowerCase()}>
-    <div className="kr-modebar"><span>Knowledge Engineering <ChevronRight size={12}/> {c.initialPage==='Publication'?'Release & Validation':c.initialPage}</span><label><input type="checkbox" checked={c.preview} disabled={c.previewOnly} onChange={e=>c.setPreview(e.target.checked)}/>Reference-data preview</label>{c.preview?<strong>Example data · no database changes</strong>:c.actionBar}</div>
-    {c.initialPage==='Overview' && <Overview c={c}/>}
-    {c.initialPage==='Categories' && <Categories c={c}/>}
-    {c.initialPage==='Parameters' && <Parameters c={c}/>}
-    {c.initialPage==='Operations' && <Operations c={c}/>}
+    {!c.previewOnly&&<div className="kr-modebar"><span>Knowledge Engineering <ChevronRight size={12}/> {c.initialPage==='Publication'?'Release & Validation':c.initialPage}</span><label><input type="checkbox" checked={c.preview} onChange={e=>c.setPreview(e.target.checked)}/>Reference-data preview</label>{c.preview?<strong>Example data · no database changes</strong>:c.actionBar}</div>}
+    {c.initialPage==='Overview' && <LatestOverview c={c}/>}
+    {c.initialPage==='Categories' && <LatestCategories c={c}/>}
+    {c.initialPage==='Parameters' && <LatestParameters c={c}/>}
+    {c.initialPage==='Operations' && <LatestOperations c={c}/>}
     {c.initialPage==='Templates' && <Templates c={c}/>}
-    {c.initialPage==='Publication' && <Publication c={c}/>}
+    {c.initialPage==='Publication' && <LatestPublication c={c}/>}
   </div>;
 }
-function Overview({c}:{c:Context}) {
+export function Overview({c}:{c:Context}) {
   const history:Row[]=c.snapshot.data.history || [];
   const nav=(view:string)=>c.setView?.(view);
   return <>
@@ -220,7 +227,7 @@ function Overview({c}:{c:Context}) {
     <div className="kr-overview-links">{[[Folder,'Manage Categories','Create and manage categories (e.g. VLAN, Routing, Security). Assign global parameters to be shared by all operations under the category.','knowledge_categories'],[Settings2,'Manage Operations','Create and manage operations under each category. Select required parameters and maintain template variations for different vendors, platforms, and versions.','knowledge_engineering'],[FileText,'Manage Global Parameters','Define reusable parameters with type, constraints and validation rules. Used for automatic schema generation across categories and operations.','knowledge_parameters']].map(([Icon,label,text,view]:any)=><button key={view} onClick={()=>nav(view)}><span className="kr-stat-icon purple"><Icon size={29}/></span><div><h3>{label}</h3><p>{text}</p></div><ArrowRight size={20}/></button>)}</div>
   </>;
 }
-function Categories({c}:{c:Context}) {
+export function Categories({c}:{c:Context}) {
   const [assign,setAssign]=useState(false), [status,setStatus]=useState('all'),[vendor,setVendor]=useState('all');
   const cat:Row=c.category || {}, ops=c.operations.filter((o:Row)=>o.category_id===cat.category_id);
   const memberships=c.categoryParameters.filter((r:Row)=>r.category_id===cat.category_id);

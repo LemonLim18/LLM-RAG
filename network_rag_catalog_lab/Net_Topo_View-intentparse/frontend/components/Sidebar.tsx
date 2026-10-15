@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
   Home,
   Network,
@@ -34,7 +34,15 @@ interface SidebarProps {
   onEditProfile?: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout, collapsed, onToggleCollapse, onEditProfile }) => {
+const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout, collapsed: userCollapsed, onToggleCollapse, onEditProfile }) => {
+  const [compact, setCompact] = useState(() => window.matchMedia('(max-width: 640px)').matches);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 640px)');
+    const update = () => setCompact(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  const collapsed = userCollapsed || (currentView.startsWith('knowledge_') && compact);
   const [networkOpen, setNetworkOpen] = useState(true);
   const [automationOpen, setAutomationOpen] = useState(true);
   const localLab = useLocalLab();
@@ -70,7 +78,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout,
         <a
           className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer 
             ${isActive
-              ? 'bg-primary/20 text-primary font-semibold border-l-2 border-primary'
+              ? (id.startsWith('knowledge_') ? 'bg-authoring/20 text-authoring font-semibold border-l-2 border-authoring' : 'bg-primary/20 text-primary font-semibold border-l-2 border-primary')
               : 'hover:bg-base-200'
             }
             ${collapsed ? 'justify-center px-2' : ''}
@@ -78,7 +86,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout,
           onClick={() => setView(id)}
           title={label}
         >
-          <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-primary' : (iconColor || '')}`} />
+          <Icon className={`h-4 w-4 shrink-0 ${isActive ? (id.startsWith('knowledge_') ? 'text-authoring' : 'text-primary') : (id.startsWith('knowledge_') ? 'text-authoring' : (iconColor || ''))}`} />
           {!collapsed && <span className={`whitespace-nowrap overflow-hidden ${isActive ? '' : (textColor || '')} ${labelClassName || ''}`}>{label}</span>}
         </a>
       </li>
@@ -236,7 +244,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, setView, user, onLogout,
             <MenuItem id="approval_queue" label="Approval Queue" icon={ListChecks} iconColor="text-accent"/>
           )}
         </SectionHeader>
-        {localLab && <SectionHeader label="Knowledge Engineering" icon={FileCode2} iconColor="text-info" open={knowledgeOpen} onToggle={() => setKnowledgeOpen(!knowledgeOpen)}>
+        {localLab && <SectionHeader label="Knowledge Engineering" icon={FileCode2} iconColor="text-authoring" open={knowledgeOpen} onToggle={() => setKnowledgeOpen(!knowledgeOpen)}>
           <MenuItem id="knowledge_overview" label="Overview" icon={LayoutDashboard}/>
           <MenuItem id="knowledge_categories" label="Category Management" icon={PackagePlus}/>
           <MenuItem id="knowledge_engineering" label="Operation Management" icon={Workflow}/>

@@ -2,6 +2,46 @@
 
 ## Resume here
 
+### Three-operation extensibility verification — COMPLETE (isolated scope) — 2026-10-14
+
+Authoritative latest checkpoint: **STOP; requested verification and handover complete.** See [three-operation handover](../KNOWLEDGE_EXTENSIBILITY_HANDOVER.md) for parameters, mappings, template/schema paths, actual evidence, corrections and limits.
+
+GUI-created category `management_plane_security`, six constrained global parameters/category assignments, and `configure_login_banner`, `configure_exec_timeout`, `configure_login_lockout` contracts/templates. Catalog audit found no equivalent operations. V9 compiled the schemas. GUI validation/publication activated `c90cf63a5f9342528c5014125778c233` in isolated `tmp/m4/k`; previous `3ee58ee401954856a53cc2ceb71aae1c` retained. Draft isolation proved all three absent before publication. Chroma release-specific retrieval and real local Qwen calls selected all three afterward (6/6/7 successful calls, zero failed in accepted walkthroughs).
+
+Original Studio GUI jobs **3/4/5** generated banner / VTY timeout 5 0 / login block-for 120 attempts 3 within 60 on SQLite fixture MGMT-SW-A (C9500-24Y4C IOS-XE 17.9). Actual missing-banner question/answer and MGMT-SW-A/B ambiguity selection/resume passed. Timeout and lockout values required explicit schema clarification; do not claim perfect one-shot extraction. Original review/comparison dialogs, four saved files per job, Explorer and native .cfg in Monaco passed. Published frozen templates determine native output and metadata; existing Ansible wrapper references the exact native file.
+
+Fixed two generic handoff defects: manifest-registered .cfg read access (`authoring.py`), and V9 ambiguous targets exposed through original candidate picker (`v9_studio.py`). One affected browser retest each passed. Artifact metadata tests 2 passed; new presentation/path tests 2 passed; existing V9 bridge passed once; frontend build passed once (3947 modules, 35.70s, inherited warnings). Final `tmp/extensibility/verify_acceptance.py` passed frozen hashes/rendering/schema/index/target/persistence/audit/artifact checks and HTTP 422 rejection of bad delimiter, timeout range, failure count and unsupported IOS-XE version; no extra jobs. Evidence: `tmp/extensibility/acceptance-results.json` and screenshots. Scoped whitespace check passed.
+
+No user database/active release replacement, sibling V9 edits, network execution or automatic commit. Only isolated single-operation/single-target Cisco IOS-XE generation verified; syntax checks are reviewed command forms/Jinja/schema/Ansible safety, not a hardware parser or deployment. No incomplete acceptance checks in the agreed isolated scope. Next action: **none for this iteration; await user direction**. Do not repeat passing suites or start expansion. Services 5175/8001/Ollama were running at completion; inspect current processes if resuming later.
+
+
+### M4 backend integration — 2026-10-13 — END-TO-END VERIFIED (supported Cisco IOS-XE scope)
+
+Authoritative resume point; entries below are historical. The senior GUI → V9 SQLite → compiled schema/template → immutable Chroma release → activation → junior Studio → saved native/Ansible artifacts → Monaco acceptance scenario PASSED. This does not claim all of Idea 2 or all runtime vendors/tasks are complete. The current output adapter supports one operation, one stored Cisco IOS-XE target and a declared compatible template version.
+
+Reused V9 KnowledgeManagementService, authoring store, compiler, publisher, KnowledgeSnapshot and original retrieval. The sibling remains read-only. No automatic commit, actual deployment, user DB mutation or user active-release replacement. Full implementation map, test evidence, operating notes and limits: [M4 integration handover](../M4_KNOWLEDGE_INTEGRATION_HANDOVER.md).
+
+Senior GUI verification: created `lab_label` (string, uppercase pattern, length 1–24); assigned it to VLAN; required it in create_vlan; explicitly applied reusable constraints; saved Cisco IOS-XE 17.9 template in Monaco. Backend process restart preserved it. Unpublished changes did not affect runtime. Valid template preview rendered; lowercase value returned 422. GUI validation, build-only, immutable package inspection and activation passed. First build with stopped Ollama failed without changing the active release.
+
+Junior GUI verification: literal VLAN 240 request and paraphrased VLAN 241 request both asked for the new required label, accepted CAMPUS, passed original review/generation dialogs and opened native_config.txt in Monaco. The paraphrase used the published Chroma index and four real local Qwen calls, with human confirmation of create_vlan. Job 2 is `vlan 241 / name CAMPUS / ! M4 senior-authored campus configuration`. SQLite checks confirmed exact native text, ios_config wrapper referencing that file, four saved artifacts per job, correct release identity, pending status and audit records.
+
+Tests passed: `test_v9_studio_bridge.py`; `test_knowledge_management_creation.py` (new category/parameter/operation/variant published and consumed by Studio); isolated lifecycle script (invalid preset/membership/template, dependency protection, stale/missing activation, rollback/runtime schema switch, unchanged draft, unsupported IOS-XE version rejection). Malformed default JSON save guard was browser verified and cancelled without saving. Final frontend TypeScript/Vite build passed: 3947 modules, 63s, inherited @property and chunk-size warnings. Scoped whitespace check passes using `git -c core.whitespace=cr-at-eol diff --check`, preserving existing CRLF files. The extended permanent `test_knowledge_authoring.py` PASSED, including render validation, build-only isolation, immutable inspection, stale activation rejection, activation/rollback, Studio consumption, audit and restart persistence. The initial sandboxed rerun was interrupted after local socket restrictions; the authorized isolated run passed.
+
+Isolated environment: http://127.0.0.1:5175 → backend 8001, DB `tmp/m4/app.db`, knowledge `tmp/m4/k`, fixtures `tmp/m4/fixtures`; runner `tmp/m4/serve.py`. Active test release `3ee58ee401954856a53cc2ceb71aae1c`; baseline `428e4a0588dc4d078e4ee1c68da0d051`. Evidence: `tmp/m4/{acceptance-results,lifecycle-results,rag-preview,before-restart,draft-isolation}.json`, `tmp/m4/studio-rag-result.jpg`. Services stopped during interruption and were restarted; frontend/backend/Ollama HTTP checks returned 200. Check availability again after a future interruption rather than trusting old PIDs.
+
+Remaining boundaries: normal remote infrastructure/deployment untested; multi-operation/multi-target and non-IOS-XE runtime adapters remain future work. Defaults are JSON Schema annotations, not automatic runtime insertion; presets copy explicitly into operation rules. Derived-context template previews use Studio. Do not restart this completed integration or rewrite the GUI. Next exact action: user acceptance testing at the isolated URL above. If expanding runtime scope, select and verify the next vendor/platform or multi-target adapter; retain the completed authoring/publication/Studio chain. No required work remains for the demonstrated supported M4 acceptance scenario.
+
+### Latest Knowledge Engineering UI checkpoint — 2026-10-12 20:05 +08:00
+
+**Frontend implemented and browser/build verified; Idea 2 remains partial.** New authoritative images: latest_overview.png, latest_category.png, latest_operation.png, latest_global_parameters.png, latest_validation_publication.png. Templates retains template/template_sample 3.png. The older filename-selection question is resolved and superseded. Individual image analysis and actual evidence are in `docs/KNOWLEDGE_ENGINEERING_UI_REFERENCE.md`.
+
+`frontend/views/knowledge/LatestLayouts.tsx` and scoped `latestLayouts.css` implement five new layouts; existing Templates presentation is retained with tighter metadata spacing. Existing route IDs and API handlers remain. `referenceData.ts` isolates the latest image dataset from live SQLite records; `KnowledgeEngineeringView.tsx` selects the relevant preview dataset. `editorLanguage.ts` adds scoped operation syntax colors. Separate preview: `http://127.0.0.1:5173/knowledge-reference.html`. Original app header/sidebar retained.
+
+Final production build passed (3946 modules, 24.73s; inherited @property/chunk-size warnings). Installed npm shim initially failed and Vite hit sandbox access denial; direct installed npm CLI with authorized execution passed. Browser visually checked six workspaces; bounds fit at 1600×900 and compact 1000×750. Search/tabs, pagination, parameter editing, disabled preview saves, operation use/required toggles, preview modal and Monaco keyboard editing passed. No browser console errors observed. No live save/publication performed in this frontend verification; no backend tests rerun, user records changed, sibling writes or commit. Screenshot: `tmp/knowledge-ui-verification/overview.png`.
+
+Existing supported authoring/contract/template/validation/publication APIs are wired. Remaining unsupported contracts: delete, global default/vendor persistence, unsaved render, build-only/named release, rollback/full release history. Controls are disabled/explained; live authoring history is not fabricated as a release diff. Reference data is labeled and cannot publish. Exact pixel equivalence is not claimed. Next action: user review of these six layouts, then only the specifically requested remaining Idea 2 backend contracts; do not restart V9 integration or redesign unrelated pages.
+
+
 ### Latest visual continuation — 2026-10-12 12:30 +08:00
 
 Knowledge Engineering reference matching is **IN PROGRESS, not visually accepted**. The user now requires strict matching of the images in `docs/reference_images`, including panel contents/proportions, colors, overlays and syntax highlighting. The previous approximate layouts are insufficient. User selected **a separate reference-data preview**, preserving the live catalog, and said they will specify authoritative filenames for the folders containing alternatives. A question is pending for Global Parameters (`global parameters_sample 1/2/3.png` or `c63c8c90…png`), Templates (`template_sample 1/2/3.png`), and Validation & Publication (`validation & publication 1/2.png`). Do not assume the previously proposed images were accepted. Categories, Operations and Overview have one image each.
@@ -335,3 +375,22 @@ A junior engineer enters a supported network request in CogniShield's original A
 
 After we prove that one vertical workflow works, we can build the senior engineer's pages so that changing and publishing an operation really changes the knowledge used by that same junior-engineer workflow.
 That's the architecture that unifies both of your ideas without throwing away either V9's intelligence or CogniShield's better user experience.
+
+
+### UI continuation — 2026-10-12 20:07 +08:00
+
+Continued latest-reference visual alignment: purple Knowledge Engineering navigation, yellow deprecated badges, compact responsive card cascade corrected. Rechecked Categories and Templates in the browser; template metadata fits and workspace panels scroll internally. Reference preview remains separate from live catalog; no backend mutations or sibling edits. Next action: user review of the six workspaces, then address any specifically identified remaining API functionality separately from the visual implementation.
+
+Verification: final production build passed (3,946 modules, 14.46s), after rerunning outside the sandbox due to Vite config directory access restrictions. No commit created.
+
+
+### Theme/responsiveness checkpoint — 2026-10-12
+
+All six Knowledge Engineering workspaces now inherit the existing DaisyUI theme system; removed local dark color overrides and independent Monaco themes. Semantic accents defined centrally, shared theme list enabled consistently, phone sidebar collapses only within Knowledge Engineering, compact grids stack and editor panels resize vertically. Preserved authoring handlers, backend contracts and preview isolation. TypeScript/Vite passed (3,947 modules, 20.52s). Browser checked 30 themes across six pages, desktop/tablet/phone sizing, live editor theme switching and search/parameter states. See KNOWLEDGE_ENGINEERING_UI_REFERENCE.md for actual verification details and limitations. No commit. Next: user review; Idea 2 backend gaps previously recorded remain separate from this completed frontend theme/responsive task.
+
+
+### Readable page scrolling — 2026-10-12
+
+User requested whole-view scrolling instead of compressing panels into one screen. All six Knowledge Engineering workspaces now scroll vertically at the ke-workspace boundary while the application sidebar stays fixed. Panels use content-sized rows or generous IDE row minimums, forms have 40px inputs and 90px textareas, table cells have 13px text and expanded padding, and stacked mobile workspaces expand naturally. Horizontal table overflow and Monaco's own editor scrolling remain where needed. Removed wheel overscroll containment on table wrappers so gestures reach the outer page.
+
+Browser: all six pages exceeded the 844px workspace height (content heights 1115–1396px) with overflow-y:auto. Actual wheel scrolling reached scrollTop=488 on Validation & Publication while sidebar top remained 56px; release history and publication controls became visible. Screenshot: tmp/knowledge-ui-verification/page-scroll.png. No API contract changes.

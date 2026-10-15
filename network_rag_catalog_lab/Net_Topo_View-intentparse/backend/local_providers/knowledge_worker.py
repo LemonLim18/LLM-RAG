@@ -28,7 +28,7 @@ def main(payload):
     body = payload.get('body', {})
     actor = payload['actor']
     reason = body.get('reason', '').strip()
-    if action not in {'inspect', 'schema', 'validate'} and not reason:
+    if action not in {'inspect', 'schema', 'validate', 'release', 'render'} and not reason:
         raise ValueError('A change reason is required.')
 
     if action == 'initialize':
@@ -91,23 +91,63 @@ def main(payload):
     SQLiteAuthoringStore._snapshot = with_templates
     service = KnowledgeManagementService(base)
 
+    from knowledge_lifecycle import build, activate, release_rows, pointer_for, validate_preset, render_preview
+
     if action in {'initialize', 'inspect'}:
         snapshot = service.store.snapshot()
         with sqlite3.connect(database) as connection:
             history = [dict(zip(('actor','reason','created_at'), row)) for row in connection.execute('SELECT actor,reason,created_at FROM authoring_audit ORDER BY generation DESC LIMIT 15')]
+        rows = release_rows(releases)
+        pointer = active_pointer(releases)
+        active = next((r for r in rows if r['release_id']==(pointer or {}).get('release_id')), None)
+        changes = []
+        frozen = active_snapshot(releases)
+        identities = {'categories':'category_id','parameters':'parameter_id','operations':'operation_id'}
+        for table, key in identities.items():
+            previous = {r[key]:r for r in frozen.read_json('catalog/'+table+'.json')} if frozen else {}
+            current = {r[key]:r for r in snapshot['catalogs'][table]}
+            for identity in sorted(set(previous)|set(current)):
+                if previous.get(identity)!=current.get(identity):
+                    changes.append({'type':table,'name':identity,'action':'Added' if identity not in previous else 'Removed' if identity not in current else 'Modified','details':'Authoring record differs from active release'})
+        for table in ('category_parameters','operation_parameters','operation_rules','template_bindings'):
+            old = frozen.read_json('catalog/'+table+'.json') if frozen else []
+            if old != snapshot['catalogs'][table]:
+                changes.append({'type':table,'name':table,'action':'Modified','details':'Relationships or contracts differ from active release'})
+        frozen_hashes = {b['template_path']:b['template_sha256'] for b in frozen.manifest['template_bindings']} if frozen else {}
+        for binding in snapshot['catalogs']['template_bindings']:
+            path = binding['template_path']
+            if sha256(snapshot['sources'][path]).hexdigest()!=frozen_hashes.get(path):
+                changes.append({'type':'Template','name':path,'action':'Modified' if path in frozen_hashes else 'Added','details':'Template content differs from active release'})
         paths = {row['template_path'] for row in snapshot['catalogs']['template_bindings']}
         return {'ok': True, 'revision': snapshot['revision'], 'data': {'initialized': True,
             'catalogs': snapshot['catalogs'], 'templates': {p: snapshot['sources'][p].decode('utf-8') for p in paths},
-            'active_release': active_pointer(releases), 'history': history, 'authority': 'sqlite',
-            'publication_mode': 'offline', 'output_format': 'native_cli'}}
+            'active_release': ({**pointer, **active} if active else pointer), 'releases': rows, 'changes':changes, 'history': history, 'authority': 'sqlite',
+            'publication_mode': 'chroma', 'output_format': 'native_cli'}}
     if action == 'schema':
         return service.preview_schema(body['operation_id']).model_dump()
     if action == 'validate':
         return service.validate().model_dump()
     if action == 'edit':
+        definitions = {r['parameter_id']: r for r in service.store.snapshot()['catalogs']['parameters']}
+        for change in body['changes']:
+            if change['entity']=='parameter' and change['action'] in {'create','update'}:
+                validate_preset({**definitions.get(change['entity_id'], {}), **change['values']})
         return service.apply({**body, 'actor': actor}).model_dump()
-    if action == 'publish':
-        return service.publish({**body, 'actor': actor, 'mode': 'offline'}).model_dump()
+    if action in {'publish', 'build'}:
+        identity = build(base, releases, body, actor)
+        if action == 'publish':
+            activate(base, releases, {**body, 'release_id':identity}, actor)
+        return {'ok':True, 'data':{'release_id':identity, 'activated':action=='publish'}}
+    if action == 'activate':
+        identity = activate(base, releases, body, actor)
+        return {'ok':True, 'data':{'release_id':identity, 'activated':True}}
+    if action == 'release':
+        _, frozen = pointer_for(releases, body['release_id'])
+        return {'ok':True, 'data':{'manifest':frozen.manifest,
+            'schemas':{op:frozen.schema(op) for op in frozen.manifest['schemas']},
+            'templates':{b['template_path']:(frozen.root/b['artifact_path']).read_text(encoding='utf-8') for b in frozen.manifest['template_bindings']}}}
+    if action == 'render':
+        return render_preview(service, body)
     if action == 'template':
         store = service.store
         with authoring_lock(base), store._connection() as connection:
@@ -117,6 +157,8 @@ def main(payload):
                 if before['revision'] != body['expected_revision']:
                     raise AuthoringError('STALE_REVISION', 'Knowledge changed; reload before saving.')
                 path, content = body['path'], body['content']
+                from artifact_metadata import artifact_metadata
+                artifact_metadata(content)
                 candidate = deepcopy(before['catalogs'])
                 bound = [r for r in before['catalogs']['template_bindings'] if r['template_path'] == path]
                 if body.get('operation_id'):

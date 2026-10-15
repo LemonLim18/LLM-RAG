@@ -28,7 +28,21 @@ class AuthoringStore:
             if parts[0] not in allowed or (write and len(parts)<2):
                 raise HTTPException(403,'Only playbooks/ and roles/ are writable local workspace roots')
             if kind=='file' and path.suffix.lower() not in {'.yml','.yaml','.json','.j2','.md','.txt'}:
-                raise HTTPException(422,'Unsupported authoring file type')
+                # A generated text artifact may declare its own suffix in its
+                # frozen template. Trust only the exact persisted job manifest,
+                # not arbitrary filenames or client-supplied extensions.
+                match = re.fullmatch(r'playbooks/generated/job_(\d+)/[^/]+', value)
+                registered = False
+                if match:
+                    with self.db._connect() as conn:
+                        row = conn.execute('SELECT ansible_artifact_manifest FROM jobs WHERE id=?', (int(match[1]),)).fetchone()
+                    if row and row[0]:
+                        manifest = json.loads(row[0])
+                        registered = (manifest.get('engine') == 'v9'
+                            and manifest.get('artifact_metadata', {}).get('extension') == path.suffix
+                            and any(item.get('path') == value for item in manifest.get('files', [])))
+                if not registered:
+                    raise HTTPException(422,'Unsupported authoring file type')
         elif namespace=='templates':
             from config_engine.renderer import SUPPORTED_VENDORS
             if len(parts)!=2 or parts[0] not in SUPPORTED_VENDORS or path.suffix!='.j2':

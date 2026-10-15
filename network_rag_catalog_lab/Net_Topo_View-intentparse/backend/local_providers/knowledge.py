@@ -6,6 +6,7 @@ from pathlib import Path
 import subprocess
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
+from typing import Literal
 from auth.rbac import require_any, require_engineer, require_admin
 from lab_config import PROJECT_DIR
 
@@ -25,7 +26,7 @@ def invoke(action, body, actor):
     payload = dict(root=str(root), base=str(knowledge_root()), action=action, body=body, actor=actor)
     try:
         result = subprocess.run([str(python), '-B', str(Path(__file__).with_name('knowledge_worker.py'))],
-            input=json.dumps(payload), capture_output=True, text=True, encoding='utf-8', timeout=120,
+            input=json.dumps(payload), capture_output=True, text=True, encoding='utf-8', timeout=300,
             cwd=PROJECT_DIR, env={**os.environ, 'PYTHONDONTWRITEBYTECODE':'1'})
         output = json.loads(result.stdout)
     except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
@@ -55,6 +56,7 @@ class TemplateEdit(BaseModel):
 
 
 class Publication(BaseModel):
+    mode: Literal["chroma", "offline"] = "chroma"
     expected_revision: str = Field(min_length=1)
     expected_release: str | None
     reason: str = Field(min_length=1, max_length=1000)
@@ -97,3 +99,30 @@ async def schema(operation_id: str, user=Depends(require_any)):
 @router.post('/publish')
 async def publish(body: Publication, user=Depends(require_admin)):
     return await asyncio.to_thread(invoke, 'publish', body.model_dump(), user['username'])
+
+class Activation(BaseModel):
+    release_id: str = Field(pattern=r'^[a-f0-9]{32}$')
+    expected_release: str | None
+    reason: str = Field(min_length=1, max_length=1000)
+
+class RenderPreview(BaseModel):
+    expected_revision: str
+    path: str
+    content: str = Field(max_length=200000)
+    parameters: dict
+
+@router.post('/build')
+async def build_release(body: Publication, user=Depends(require_engineer)):
+    return await asyncio.to_thread(invoke, 'build', body.model_dump(), user['username'])
+
+@router.post('/activate')
+async def activate_release(body: Activation, user=Depends(require_admin)):
+    return await asyncio.to_thread(invoke, 'activate', body.model_dump(), user['username'])
+
+@router.get('/releases/{release_id}')
+async def release_details(release_id: str, user=Depends(require_any)):
+    return await asyncio.to_thread(invoke, 'release', {'release_id':release_id}, user['username'])
+
+@router.post('/render')
+async def render_template(body: RenderPreview, user=Depends(require_engineer)):
+    return await asyncio.to_thread(invoke, 'render', body.model_dump(), user['username'])

@@ -49,14 +49,27 @@ def main(payload):
             raise ValueError('An active published V9 release is required; no source fallback.')
         from langchain_ollama import ChatOllama
         import app.llm as model_module
-        model_module.llm = ChatOllama(model=payload['model'], base_url=payload['ollama_url'], temperature=0,
-                                      client_kwargs={'timeout': 45.0, 'trust_env': False})
+        engine = ChatOllama(model=payload['model'], base_url=payload['ollama_url'], temperature=0,
+                            client_kwargs={'timeout': 45.0, 'trust_env': False})
+        model_calls = {'succeeded':0, 'failed':0}
+        class ObservedModel:
+            def invoke(self, *args, **kwargs):
+                try:
+                    response = engine.invoke(*args, **kwargs)
+                    model_calls['succeeded'] += 1
+                    return response
+                except Exception:
+                    model_calls['failed'] += 1
+                    raise
+        model_module.llm = ObservedModel()
+        # Configure V9's existing retriever only against the published owned index.
+        from knowledge_lifecycle import configure_embeddings
+        configure_embeddings()
         from app import pipeline
-        # This bounded slice supports literal published operation phrases. Never
-        # open Chroma's mutable database in the preserved sibling repository.
-        def no_retrieval(*args, **kwargs):
-            raise ValueError('This Studio slice supports explicit create VLAN requests; semantic retrieval is deferred.')
-        pipeline.retrieve_operation_candidates = no_retrieval
+        if snapshot.manifest['retrieval']['mode'] == 'chroma':
+            index = Path(snapshot.manifest['retrieval']['index_path']).resolve()
+            if not payload.get('releases') or not index.is_relative_to(Path(payload['releases']).resolve().parent.parent):
+                raise ValueError('Runtime retrieval requires a CogniShield-owned published index.')
         from app.planner.models import ExecutionPlan, PlannedTask, OperationIntent
         with snapshot_scope(snapshot):
             if payload.get('plan'):
@@ -68,8 +81,8 @@ def main(payload):
                     raise ValueError('Published release changed. Start a fresh preview.')
             else:
                 plan = pipeline.run(payload['prompt'], verbose=False)
-            if len(plan.tasks) != 1 or plan.tasks[0].operation_id != 'create_vlan':
-                raise ValueError('First V9 Studio milestone supports exactly one create_vlan task and one target; no tasks were discarded.')
+            if len(plan.tasks) != 1:
+                raise ValueError('Studio currently supports one operation and one target per reviewed job; no tasks were discarded.')
             task = plan.tasks[0]
             if payload.get('hosts') and sorted(payload['hosts']) != sorted(d['hostname'] for d in task.target_devices):
                 task = pipeline.correct_task(task, 'target_refs', ', '.join(payload['hosts']))
@@ -86,9 +99,17 @@ def main(payload):
             for device in plan.tasks[0].target_devices:
                 if device['vendor'] != 'cisco' or device['platform'] != 'iosxe':
                     raise ValueError('This Studio Ansible output adapter supports Cisco IOS-XE only.')
-            schema = snapshot.schema('create_vlan', 'cisco')
-            return {'plan': pipeline.plan_to_dict(plan), 'schema': schema,
-                    'release_id': snapshot.release_id, 'manifest_sha256': snapshot._manifest_hash}
+            if not plan.tasks[0].operation_id:
+                raise ValueError(plan.tasks[0].feedback or 'V9 could not resolve a published operation.')
+            schema = snapshot.schema(plan.tasks[0].operation_id, 'cisco')
+            metadata = None
+            task = plan.tasks[0]
+            if task.configs:
+                binding = snapshot.binding(task.target_devices[0], task.operation_id)
+                from artifact_metadata import artifact_metadata
+                metadata = artifact_metadata((snapshot.root / binding['artifact_path']).read_text(encoding='utf-8'))
+            return {'artifact_metadata': metadata, 'plan': pipeline.plan_to_dict(plan), 'schema': schema,
+                    'release_id': snapshot.release_id, 'manifest_sha256': snapshot._manifest_hash, 'retrieval': snapshot.manifest['retrieval'], 'model_calls':model_calls}
 
 
 if __name__ == '__main__':

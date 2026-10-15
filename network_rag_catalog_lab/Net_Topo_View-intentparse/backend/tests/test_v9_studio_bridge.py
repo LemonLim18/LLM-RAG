@@ -3,6 +3,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 os.environ['COGNISHIELD_MODE']='local_lab'
 os.environ['COGNISHIELD_STUDIO_ENGINE']='v9'
+os.environ['COGNISHIELD_KNOWLEDGE_ROOT']=str(Path(tempfile.mkdtemp(prefix='v9-root-',dir=Path(__file__).resolve().parents[2]/'tmp'))/'not-initialized')
 os.environ['COGNISHIELD_DB_PATH']=str(Path(tempfile.mkdtemp(prefix='cognishield-v9-check-'))/'test.db')
 from fastapi.testclient import TestClient
 from local_app import app
@@ -15,6 +16,7 @@ def test_v9_vertical_slice():
    r=c.request(method,'/api/v1'+path,json=body)
    assert r.status_code==expected,(path,r.status_code,r.text[:2000])
    return r.json()
+  call('POST','/knowledge/initialize',{'reason':'Isolated V9 bridge check'})
   call('POST','/netbox/devices',{'hostname':'V9-Test','management_ip':'192.0.2.80','management_subnet_mask':'24','vendor':'cisco_ios','os_version':'IOS-XE 17.9','status':'planned'})
   request={'intent_description':'Create VLAN on V9-Test','target_hosts':['V9-Test'],'model':'qwen2.5:1.5b'}
   p=call('POST','/ansible/preview-intent',request)
@@ -27,7 +29,8 @@ def test_v9_vertical_slice():
   assert 'interfaces_for_selection' not in p, 'Resolved VLAN target must not reopen the interface picker'
   call('POST','/ansible/create-and-plan',request|{'params':{'_v9_session':sid,'vlan_id':5000}},422)
   result=call('POST','/ansible/create-and-plan',request|{'params':{'_v9_session':sid,'vlan_id':20,'name':'Reviewed'}})
-  assert 'vlan_id: 20' in result['playbook'] and 'Reviewed' in result['playbook']
+  assert 'cisco.ios.ios_config' in result['playbook'] and 'src: native_config.txt' in result['playbook']
+  assert 'Reviewed' in next(f['content'] for f in result['files'] if f['path'].endswith('.txt'))
   assert 'vlan 20' in next(f['content'] for f in result['files'] if f['path'].endswith('.txt'))
   path=result['entrypoint_path']; assert call('GET','/ansible/files/'+path)['content']==result['playbook']
   call('PUT','/ansible/files/'+path,{'content':result['playbook']+'\n# saved\n'})

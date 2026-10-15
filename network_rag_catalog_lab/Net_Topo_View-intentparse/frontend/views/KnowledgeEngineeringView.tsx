@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import './KnowledgeEngineering.css';
 import KnowledgeLayouts from './knowledge/KnowledgeLayouts';
-import { referenceSnapshot } from './knowledge/referenceData';
+import { referenceSnapshot, latestReferenceSnapshot } from './knowledge/referenceData';
 import { AlertTriangle, Database, GitBranch, Library, RefreshCw, Save, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { knowledgeApi } from '../src/services/api';
 import { Toast } from '../src/utils/swal';
@@ -10,7 +10,7 @@ import { normalizeUserRole, type User, type ViewId } from '../types';
 
 type Row = Record<string, any>;
 type Page = 'Overview' | 'Categories' | 'Operations' | 'Parameters' | 'Templates' | 'Publication';
-type Snapshot = { revision: string; data: { initialized: boolean; catalogs: Record<string, Row[]>; templates: Record<string, string>; active_release?: Record<string, any>; history: Row[]; authority?: string; publication_mode?: string; output_format?: string } };
+type Snapshot = { revision: string; data: { initialized: boolean; catalogs: Record<string, Row[]>; templates: Record<string, string>; active_release?: Record<string, any>; history: Row[]; releases?: Row[]; changes?: Row[]; authority?: string; publication_mode?: string; output_format?: string } };
 const input = 'input input-bordered input-sm w-full bg-base-100';
 const select = 'select select-bordered select-sm w-full bg-base-100';
 const card = 'ke-card rounded-xl border border-base-300 bg-base-100 shadow-sm';
@@ -30,10 +30,11 @@ function PageHeader({icon: Icon, title, description, actions}: {icon: any; title
 export default function KnowledgeEngineeringView({user, initialPage = 'Operations', setView, previewOnly = false}: {previewOnly?: boolean; user: User | null; initialPage?: Page; setView?: (view: ViewId) => void}) {
   const [storedSnapshot, setSnapshot] = useState<Snapshot | null>(null);
   const [preview, setPreviewState] = useState(() => previewOnly || sessionStorage.getItem('knowledge_reference_preview') === 'true');
-  const snapshot: Snapshot | null = preview ? referenceSnapshot : storedSnapshot;
+  const snapshot: Snapshot | null = preview ? (initialPage === 'Templates' ? referenceSnapshot : latestReferenceSnapshot) : storedSnapshot;
   function setPreview(value: boolean) { if (previewOnly) return; sessionStorage.setItem('knowledge_reference_preview', String(value)); setPreviewState(value); setSelectedCategory(''); setSelectedOperation(''); setSelectedParameter(''); setEditorMode('none'); setValidation(null); }
   const [busy, setBusy] = useState(true);
   const [reason, setReason] = useState('');
+  const [actionError, setActionError] = useState('');
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedParameter, setSelectedParameter] = useState('');
@@ -67,8 +68,8 @@ export default function KnowledgeEngineeringView({user, initialPage = 'Operation
     if (preview) { Toast.warning('Reference-data preview', 'Switch to the live catalog to save changes.'); return false; }
     if (!reason.trim()) { Toast.warning('Change reason required', 'Describe why you are making this authoring change.'); return false; }
     setBusy(true);
-    try { await action(); setValidation(null); await load(); Toast.success(success); return true; }
-    catch (error: any) { Toast.error('Knowledge change rejected', error.message || String(error)); setBusy(false); return false; }
+    try { setActionError(''); await action(); setValidation(null); await load(); Toast.success(success); return true; }
+    catch (error: any) { setActionError(error.message || String(error)); Toast.error('Knowledge change rejected', error.message || String(error)); setBusy(false); return false; }
   }
   useEffect(() => { if (!preview) void load(); else setBusy(false); }, [preview]);
   useEffect(() => { setSearch(''); setEditorMode('none'); }, [initialPage]);
@@ -89,9 +90,10 @@ export default function KnowledgeEngineeringView({user, initialPage = 'Operation
   async function saveRecord() {
     const entity = editorMode; if (entity === 'none' || !snapshot) return;
     const idKey = `${entity}_id`, id = record[idKey], existing = Boolean(record.__existing);
-    const allowed = entity === 'parameter' ? ['display_name', 'description', 'aliases', 'value_type', 'clarification', 'normalizer'] : entity === 'category' ? ['display_name', 'description', 'aliases', 'status'] : ['display_name', 'description', 'aliases', 'category_id', 'status'];
+    const allowed = entity === 'parameter' ? ['display_name', 'description', 'aliases', 'value_type', 'clarification', 'normalizer', 'cognishield_preset'] : entity === 'category' ? ['display_name', 'description', 'aliases', 'status'] : ['display_name', 'description', 'aliases', 'category_id', 'status'];
     const values = Object.fromEntries(allowed.filter(key => record[key] !== undefined).map(key => [key, record[key]]));
     if (!values.display_name) values.display_name = id;
+    if (entity === 'parameter' && !values.normalizer) values.normalizer = null;
     if (await mutate(() => knowledgeApi.edit({expected_revision: snapshot.revision, reason, changes: [{entity, action: existing ? 'update' : 'create', entity_id: id, values}]}), `${titleCase(entity)} draft saved`)) setEditorMode('none');
   }
   function toggleMembership(parameterId: string) {
@@ -101,9 +103,18 @@ export default function KnowledgeEngineeringView({user, initialPage = 'Operation
   function saveContract() {
     if (!snapshot || !operation) return; const version = Number(operation.version || 1) + 1; let requiredOrder = 0;
     const rootRule = {operation_id: operation.operation_id, operation_version: version, field_path: '', keywords: {$schema: 'https://json-schema.org/draft/2020-12/schema', type: 'object', additionalProperties: false}};
-    const contractRules = rules.some(rule => rule.field_path === '') ? rules : [rootRule, ...rules];
-    const values = {version, mappings: mappings.map((item, index) => ({...item, operation_id: operation.operation_id, operation_version: version, category_id: operation.category_id, position: index, required_order: item.required ? requiredOrder++ : null})), rules: contractRules.map(item => ({...item, operation_id: operation.operation_id, operation_version: version})), templates: bindings.map(item => ({...item, operation_version: version}))};
+    const missingRules = mappings.filter(m => !rules.some(r => r.field_path === m.field_path)).map(m => ({field_path:m.field_path, keywords:{}}));
+    const populatedRules = [...rules, ...missingRules];
+    const contractRules = populatedRules.some(rule => rule.field_path === '') ? populatedRules : [rootRule, ...populatedRules];
+    const values = {version, mappings: mappings.map((item, index) => ({...item, operation_id: operation.operation_id, operation_version: version, category_id: operation.category_id, position: index, required_order: item.required ? requiredOrder++ : null})), rules: contractRules.map(item => ({...item, operation_id: operation.operation_id, operation_version: version})), templates: bindings.map(item => {const fields = [...new Set(mappings.map(m => m.field_path.split(/[.\[]/)[0]))]; const required = new Set([...mappings.filter(m => m.required).map(m => m.field_path), ...(contractRules.find(r=>r.field_path==='')?.keywords?.['x-required-by-vendor']?.[item.vendor]||[])]); return {...item, operation_version: version, input_contract:{...item.input_contract,fields,optional_defaults:Object.fromEntries(fields.filter(f=>!required.has(f)).map(f=>[f,null]))}}})};
     void mutate(() => knowledgeApi.edit({expected_revision: snapshot.revision, reason, changes: [{entity: 'contract', action: 'replace', entity_id: operation.operation_id, values}]}), 'Operation contract saved');
+  }
+  function applyPreset(parameterId: string) {
+    const mapping = mappings.find(m=>m.parameter_id===parameterId);
+    const preset = parameters.find(p=>p.parameter_id===parameterId)?.cognishield_preset;
+    if (!mapping || !preset) return;
+    setRules(rows=>[...rows.filter(r=>r.field_path!==mapping.field_path), {field_path:mapping.field_path, keywords:{...(rows.find(r=>r.field_path===mapping.field_path)?.keywords||{}),...preset}}]);
+    Toast.success('Preset applied to draft contract', 'Review and save the operation contract to persist these rules.');
   }
   function setKeyword(index: number, keyword: string, value: unknown) { setRules(rows => rows.map((row, current) => { if (current !== index) return row; const keywords = {...row.keywords}; if (value === '') delete keywords[keyword]; else keywords[keyword] = value; return {...row, keywords}; })); }
 
@@ -119,9 +130,10 @@ export default function KnowledgeEngineeringView({user, initialPage = 'Operation
     selectedTemplatePath,setSelectedTemplatePath,templateContent,setTemplateContent,newVariant,setNewVariant,variant,setVariant,
     validation,setValidation,role,editable,categories,parameters,operations,categoryParameters,templateBindings,
     operationParameters,operationRules,activeRelease,filteredCategories,filteredParameters,filteredOperations,
-    category,parameter,operation,bindings,beginCreate,beginEdit,saveRecord,toggleMembership,saveContract,setKeyword,
+    category,parameter,operation,bindings,beginCreate,beginEdit,saveRecord,toggleMembership,saveContract,setKeyword,applyPreset,
     mutate,setView,actionBar};
   return <div className={`ke-workspace ke-${initialPage.toLowerCase()}`}>
+    {actionError && <div role="alert" className="alert alert-error whitespace-pre-wrap"><span>{actionError}</span><button className="btn btn-sm btn-ghost" onClick={() => setActionError('')}>Dismiss</button></div>}
     <KnowledgeLayouts c={context}/>
     {editorMode !== 'none' && (initialPage !== 'Parameters' || editorMode !== 'parameter') &&
       <RecordDrawer entity={editorMode} record={record} setRecord={setRecord} categories={categories}

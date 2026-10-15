@@ -2,14 +2,21 @@ import { API_CONFIG } from '../config';
 
 const BASE_URL = API_CONFIG.API_URL;
 
+export type KnowledgePublication = {expected_revision: string; expected_release: string | null; reason: string; mode?: 'chroma' | 'offline'};
+export type KnowledgeActivation = {release_id: string; expected_release: string | null; reason: string};
+export type KnowledgeRender = {expected_revision: string; path: string; content: string; parameters: Record<string, unknown>};
 export const knowledgeApi = {
+  build: (body: KnowledgePublication) => request<any>('/knowledge/build', {method:'POST', body:JSON.stringify(body)}),
+  activate: (body: KnowledgeActivation) => request<any>('/knowledge/activate', {method:'POST', body:JSON.stringify(body)}),
+  release: (id: string) => request<any>(`/knowledge/releases/${encodeURIComponent(id)}`),
+  render: (body: KnowledgeRender) => request<any>('/knowledge/render', {method:'POST', body:JSON.stringify(body)}),
   inspect: () => request<any>('/knowledge'),
   initialize: (reason: string) => request<any>('/knowledge/initialize', { method: 'POST', body: JSON.stringify({reason}) }),
   edit: (body: unknown) => request<any>('/knowledge/edit', { method: 'POST', body: JSON.stringify(body) }),
   template: (body: unknown) => request<any>('/knowledge/template', { method: 'PUT', body: JSON.stringify(body) }),
   validate: () => request<any>('/knowledge/validate', { method: 'POST' }),
   schema: (operation: string) => request<any>(`/knowledge/schema/${encodeURIComponent(operation)}`),
-  publish: (body: unknown) => request<any>('/knowledge/publish', { method: 'POST', body: JSON.stringify(body) }),
+  publish: (body: KnowledgePublication) => request<any>('/knowledge/publish', { method: 'POST', body: JSON.stringify(body) }),
 };
 
 // Generic fetch wrapper

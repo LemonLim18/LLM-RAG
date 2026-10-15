@@ -1,5 +1,5 @@
 /* Knowledge Engineering reference layouts. All sizing is relative to the app
-   content area; long data belongs to panel scrollports, never the page. */
+   content area; Knowledge Engineering uses page scrolling for readable content. */
 .ke-workspace {
   position: absolute; inset: 0; min-width: 0; min-height: 0;
   overflow: hidden; padding: clamp(10px, 1.4vw, 22px);

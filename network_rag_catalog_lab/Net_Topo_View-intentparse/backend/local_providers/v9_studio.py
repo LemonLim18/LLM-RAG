@@ -94,7 +94,7 @@ async def preview(db, req, user):
     data = inventory(db)
     if previous and previous['inventory_hash'] != digest(data):
         raise HTTPException(409, 'Inventory changed. Start a fresh preview.')
-    corrections = {k:v for k,v in params.items() if k in {'vlan_id','name'}} if previous else {}
+    corrections = {k:v for k,v in params.items() if k in {*json.loads(previous['body'])['schema']['properties'], 'operation_id'}} if previous else {}
     output = await asyncio.to_thread(worker, {'inventory':data, 'prompt':req.intent_description,
         'plan':json.loads(previous['body'])['plan'] if previous else None, 'hosts':req.target_hosts,
         'corrections':corrections, 'model':req.model})
@@ -117,18 +117,25 @@ def presentation(output,sid,data):
              'min':spec.get('minimum'), 'max':spec.get('maximum')} for key,spec in schema['properties'].items()]
     issues=task['issues']+plan['issues']
     missing=[f for f in fields if any(i.get('field')==f['field'] and i.get('type')=='MISSING' for i in issues)]
-    errors=[i['message'] for i in issues if i.get('type') not in {'MISSING','MISSING_TARGET'}]
+    ambiguity=next((i for i in issues if i.get('type')=='AMBIGUOUS_TARGET'), None)
+    errors=[i['message'] for i in issues if i.get('type') not in {'MISSING','MISSING_TARGET','AMBIGUOUS_TARGET'}]
     hosts=[d['hostname'] for d in task['target_devices']]
     reasoning=[f"V9 published release {output['release_id']}", f"Operation: {task['operation_id']}",
                'V9 validates the engineering contract. Human approval is still required; no deployment or policy approval is implied.',
                'Parameter provenance: '+json.dumps(task['parameter_provenance']), *[i['message'] for i in issues]]
-    result={'categories':['vlan'], 'references':[{'doc_name':'playbook.yml','feature':'vlan','vendor':'cisco_ios','path':'reference/vlan/cisco_ios/playbook.yml'}],
+    result={'categories':[task['category']], 'references':[],
         'reasoning':reasoning,'policy_approved':False,'target_hosts':hosts,'schema_editable_fields':fields,
-        'parsed_intent':{'engine':'v9','_v9_session':sid,'action':'create_vlan','feature':'vlan','parameters':task['parameters'],
+        'parsed_intent':{'engine':'v9','_v9_session':sid,'action':task['operation_id'],'feature':task['category'],'parameters':task['parameters'],
                          'resolved_devices':hosts,'validation_errors':errors,'knowledge_snapshot_id':output['release_id']}}
-    if not hosts and not errors:
-        result['interfaces_for_selection']={'question':'Select a stored target','devices':[{'hostname':d['hostname'],'interfaces':d['interfaces']} for d in data]}
-        result['params_disambiguation']={'question':'Select the target from SQLite inventory.','fields':[{'field':'target_devices','label':'Target devices','type':'text','required':True}]}
+    proposal = next((i for i in issues if i.get('type')=='OPERATION_PROPOSAL'), None)
+    if proposal:
+        result['params_disambiguation']={'question':proposal['message'], 'fields':[{'field':'operation_id','label':f"Confirm proposed operation: {task['operation_id']}",'type':'text','required':True,'value':task['operation_id']}]}
+    elif not hosts and not errors:
+        candidates = {c['hostname'] for c in ambiguity.get('candidates', [])} if ambiguity else None
+        targets = [d for d in data if candidates is None or d['hostname'] in candidates]
+        question = ambiguity['message'] if ambiguity else 'Select the target from SQLite inventory.'
+        result['interfaces_for_selection']={'question':question,'devices':[{'hostname':d['hostname'],'interfaces':d['interfaces']} for d in targets]}
+        result['params_disambiguation']={'question':question,'fields':[{'field':'target_devices','label':'Target devices','type':'text','required':True}]}
     elif missing:
         result['params_disambiguation']={'question':'V9 requires these values before generation.','fields':missing}
     return result
@@ -144,19 +151,24 @@ async def generate(db,req,user):
     if digest(data)!=previous['inventory_hash']: raise HTTPException(409,'Inventory changed. Start a fresh preview.')
     raw=json.loads(previous['body'])
     output=await asyncio.to_thread(worker, {'inventory':data,'prompt':previous['prompt'],'plan':raw['plan'],
-        'hosts':req.target_hosts,'corrections':{k:v for k,v in params.items() if k in {'vlan_id','name'}},'model':req.model})
+        'hosts':req.target_hosts,'corrections':{k:v for k,v in params.items() if k in {*raw['schema']['properties'], 'operation_id'}},'model':req.model})
     if digest(inventory(db)) != previous['inventory_hash']:
         raise HTTPException(409,'Inventory changed during validation. Start a fresh preview.')
     plan=output['plan']; task=plan['tasks'][0]
     if plan['status']!='ready':
         raise HTTPException(422, {'message':'V9 validation requires correction.', 'issues':[i['message'] for i in task['issues']+plan['issues']]})
     values=task['parameters']; host=task['target_devices'][0]['hostname']
-    config={'vlan_id':values['vlan_id'],'state':'active'}
-    if values.get('name'): config['name']=values['name']
-    playbook=yaml.safe_dump([{'name':'V9 validated VLAN creation','hosts':[host],'gather_facts':False,'tasks':[
-        {'name':'Ensure validated VLAN exists','cisco.ios.ios_vlans':{'config':[config],'state':'merged'}}]}],sort_keys=False)
+    native=task['configs'][0]['configuration']
+    artifact = output.get('artifact_metadata') or {'format':'native_cli','language':'text','extension':'.txt'}
+    if artifact['format'] != 'native_cli':
+        raise HTTPException(422, 'The current IOS-XE Ansible adapter requires native_cli output.')
+    native_name = 'native_config' + artifact['extension']
+    # The frozen native CLI is the source of truth. The Ansible wrapper references
+    # that exact saved file; never reconstruct commands from a hardcoded VLAN map.
+    playbook=yaml.safe_dump([{'name':'V9 validated '+task['operation_id'],'hosts':[host],'gather_facts':False,'tasks':[
+        {'name':'Apply reviewed native configuration','cisco.ios.ios_config':{'src':native_name}}]}],sort_keys=False)
     from config_engine.safety import validate_playbook_yaml
-    report=validate_playbook_yaml(playbook_yaml=playbook,vendor='cisco_ios',feature='vlan',target_hosts=[host],execution_engine='ansible_native')
+    report=validate_playbook_yaml(playbook_yaml=playbook,vendor='cisco_ios',feature=task['category'],target_hosts=[host],execution_engine='ansible_native')
     if not report['passed']: raise HTTPException(422, {'message':'Ansible safety validation failed','issues':report['errors']})
     native=task['configs'][0]['configuration']
     explanation='# V9 engineering review\n\n'+previous['prompt']+'\n\n```json\n'+json.dumps(output,indent=2)+'\n```\n'
@@ -170,8 +182,8 @@ async def generate(db,req,user):
         jid=conn.execute("INSERT INTO jobs(request_id,device_id,status,stage,execution_engine,ansible_playbook,generated_config,owner_username) VALUES (?,?,'pending','plan','ansible_native',?,?,?)",
             (cr,int(task['device_id']),playbook,native,user['username'])).lastrowid
         base=f'playbooks/generated/job_{jid}'
-        files=[{'path':base+'/playbook.yml','content':playbook}, {'path':base+'/native_config.txt','content':native}, {'path':base+'/v9_review.md','content':explanation}]
-        manifest={'engine':'v9','knowledge_snapshot_id':output['release_id'],'session_id':sid,'files':[{'path':f['path']} for f in files]}
+        files=[{'path':base+'/playbook.yml','content':playbook}, {'path':base+'/'+native_name,'content':native}, {'path':base+'/v9_review.md','content':explanation}]
+        manifest={'engine':'v9','artifact_metadata':artifact,'knowledge_snapshot_id':output['release_id'],'session_id':sid,'files':[{'path':f['path']} for f in files]}
         for f in files:
             conn.execute("INSERT INTO authoring_revisions(namespace,path,content,kind,deleted,actor,revision) VALUES ('ansible',?,?,'file',0,?,1)",(f['path'],f['content'],user['username']))
         conn.execute('UPDATE jobs SET ansible_entrypoint_path=?,ansible_artifact_manifest=? WHERE id=?',(files[0]['path'],json.dumps(manifest),jid))
