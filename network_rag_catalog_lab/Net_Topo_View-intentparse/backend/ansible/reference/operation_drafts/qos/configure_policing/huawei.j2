@@ -1,0 +1,5 @@
+{# Editable reference draft: huawei / configure_policing. Verify syntax, dependencies and device suitability before use. #}
+traffic behavior {{ policy_name }}
+ car cir {{ rate_kbps }} cbs {{ burst_bytes }} green pass red {{ exceed_action }}
+quit
+{# Review classifier attachment and policy direction. #}

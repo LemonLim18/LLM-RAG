@@ -1,0 +1,3 @@
+{# Editable reference draft: juniper / configure_port_channel. Verify syntax, dependencies and device suitability before use. #}
+{% for member in member_interfaces %}set interfaces {{ member }} ether-options 802.3ad {{ aggregate_interface }}
+{% endfor %}set interfaces {{ aggregate_interface }} aggregated-ether-options lacp {{ lacp_mode }}

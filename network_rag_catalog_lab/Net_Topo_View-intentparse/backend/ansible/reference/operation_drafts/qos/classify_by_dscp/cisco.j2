@@ -1,0 +1,6 @@
+{# Editable reference draft: cisco / classify_by_dscp. Verify syntax, dependencies and device suitability before use. #}
+class-map match-any {{ classifier_name }}
+ no match dscp {{ previous_dscp_values | join(' ') }}
+ match dscp {{ dscp_values | join(' ') }}
+ exit
+

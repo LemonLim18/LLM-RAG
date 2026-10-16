@@ -1,0 +1,8 @@
+{# Editable reference draft: juniper / modify_acl_rule. Verify syntax, dependencies and device suitability before use. #}
+delete firewall family inet filter {{ acl_name }} term RULE_{{ acl_rule_id }}
+set firewall family inet filter {{ acl_name }} term RULE_{{ acl_rule_id }} from source-address {{ source_prefix }}
+set firewall family inet filter {{ acl_name }} term RULE_{{ acl_rule_id }} from destination-address {{ destination_prefix }}
+{% if ip_protocol != "ip" %}set firewall family inet filter {{ acl_name }} term RULE_{{ acl_rule_id }} from protocol {{ ip_protocol }}
+{% endif %}{% if source_port is defined and source_port is not none %}set firewall family inet filter {{ acl_name }} term RULE_{{ acl_rule_id }} from source-port {{ source_port }}
+{% endif %}{% if destination_port is defined and destination_port is not none %}set firewall family inet filter {{ acl_name }} term RULE_{{ acl_rule_id }} from destination-port {{ destination_port }}
+{% endif %}set firewall family inet filter {{ acl_name }} term RULE_{{ acl_rule_id }} then {{ "accept" if acl_action == "permit" else "discard" }}

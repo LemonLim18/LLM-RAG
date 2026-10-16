@@ -1,0 +1,5 @@
+{# Editable reference draft: juniper / configure_policing. Verify syntax, dependencies and device suitability before use. #}
+set firewall policer {{ policy_name }} if-exceeding bandwidth-limit {{ rate_bps }}
+set firewall policer {{ policy_name }} if-exceeding burst-size-limit {{ burst_bytes }}
+set firewall policer {{ policy_name }} then discard
+{# Attach via a reviewed firewall filter; review exceed_action and direction. #}

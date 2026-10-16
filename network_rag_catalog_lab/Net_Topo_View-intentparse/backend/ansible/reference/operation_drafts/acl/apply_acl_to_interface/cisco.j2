@@ -1,0 +1,5 @@
+{# Editable reference draft: cisco / apply_acl_to_interface. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+ ip access-group {{ acl_name }} {% if direction == 'ingress' %}in{% else %}out{% endif +%}
+ exit
+

@@ -1738,7 +1738,7 @@ export function PlaybookStudioOverlay({
                   <div className="flex-1 min-h-0">
                     <Editor
                       height="100%"
-                      defaultLanguage="yaml"
+                      language="jinja2"
                       value={referenceContent}
                       theme="vs-dark"
                       options={{ readOnly: true, wordWrap: 'on', minimap: { enabled: false } }}
@@ -1757,7 +1757,7 @@ export function PlaybookStudioOverlay({
                       <>
                         <Editor
                           height="100%"
-                          defaultLanguage="yaml"
+                          language="jinja2"
                           value="# Playbook will appear here when generation finishes."
                           theme="vs-dark"
                           options={{ readOnly: true, wordWrap: 'on', minimap: { enabled: false }, domReadOnly: true }}
@@ -1770,7 +1770,7 @@ export function PlaybookStudioOverlay({
                     ) : (
                       <Editor
                         height="100%"
-                        defaultLanguage="yaml"
+                        language="jinja2"
                         value={generatedContent}
                         theme="vs-dark"
                         options={{ readOnly: true, wordWrap: 'on', minimap: { enabled: false } }}

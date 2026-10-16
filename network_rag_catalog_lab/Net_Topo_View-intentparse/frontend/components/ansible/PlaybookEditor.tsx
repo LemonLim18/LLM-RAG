@@ -1,6 +1,8 @@
+import { languageForDocument } from '../../src/monacoLanguages';
 import { useCapability } from '../../src/localLab';
-import React, { useCallback, useState, useEffect, useRef } from 'react';
-import Editor from '@monaco-editor/react';
+import React, { useCallback, useState, useEffect, useLayoutEffect, useRef } from 'react';
+import Editor, { DiffEditor } from '@monaco-editor/react';
+import { aiApi, type EditorSnapshot, type EditProposal } from '../../src/services/ai';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
@@ -10,6 +12,9 @@ import type { AnsibleTab, AnsibleJob, AnsibleCheckResult } from '../../typesLLM'
 import { useMonacoTheme } from '../../src/utils/monacoTheme';
 
 interface PlaybookEditorProps {
+  onEditableCopy?: () => void;
+  onEditorBridge?: (bridge: EditorBridge | null) => void;
+  onDocumentDevice?: (id: string, deviceId: string) => void;
   tabs:            AnsibleTab[];
   activeTabId:     string | null;
   job:             AnsibleJob | null;
@@ -26,6 +31,11 @@ interface PlaybookEditorProps {
   onDeploy:        () => void;
   onRegenerate:    () => void;
   onExplainSelection?: (payload: { text: string; tab: AnsibleTab }) => void;
+}
+
+export interface EditorBridge {
+  snapshot: () => EditorSnapshot | null;
+  review: (proposal: EditProposal) => boolean;
 }
 
 
@@ -47,6 +57,8 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
   userRole,   onTabSelect, onTabClose, onChange, onSave,
   onCheck, onApprove, onDeploy, onRegenerate,
   onExplainSelection,
+  onEditorBridge,
+  onDocumentDevice, onEditableCopy,
 }) => {
   const executionAvailable = useCapability('execution.deploy');
   const aiAvailable = useCapability('ai.generate');
@@ -57,6 +69,66 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const selectionDisposeRef = useRef<{ dispose?: () => void } | null>(null);
   const activeTab = tabs.find(t => t.id === activeTabId) ?? null;
+  const [proposal, setProposal] = useState<EditProposal | null>(null);
+  const reviewEditor = useRef<any>(null);
+  const detachReview = useCallback(() => {
+    const editor = reviewEditor.current; reviewEditor.current = null;
+    const models = editor?.getModel();
+    if (models) { editor.setModel(null); models.original.dispose(); models.modified.dispose(); }
+  }, []);
+  const dismissReview = useCallback(() => { detachReview(); setProposal(null); }, [detachReview]);
+  useLayoutEffect(() => () => detachReview(), [detachReview]);
+  const [reviewError, setReviewError] = useState('');
+  const [documentDevices, setDocumentDevices] = useState<{id: number; hostname: string}[]>([]);
+  useEffect(() => {
+    if (onDocumentDevice) void aiApi.inventory().then(r => setDocumentDevices(r.data.devices)).catch(() => setDocumentDevices([]));
+  }, [onDocumentDevice]);
+  const epoch = useRef(0);
+  const currentTab = useRef(activeTab);
+  currentTab.current = activeTab;
+  const changeDispose = useRef<{ dispose: () => void } | null>(null);
+  const snapshot = useCallback((): EditorSnapshot | null => {
+    const editor = editorInstanceRef.current; const tab = currentTab.current;
+    const model = editor?.getModel();
+    if (!model || !tab || model.isDisposed()) return null;
+    if (!decodeURIComponent(model.uri.path).endsWith('/' + tab.path)) return null;
+    const selected = editor.getSelection();
+    return { document_id: tab.id, path: tab.path, content: model.getValue(undefined, true), language: model.getLanguageId(),
+      model_id: model.id, model_version: model.getVersionId(), buffer_epoch: epoch.current,
+      saved_revision: tab.savedRevision ?? 0, is_dirty: tab.isDirty, read_only: tab.isReadOnly,
+      device_id: tab.deviceId,
+      ...(selected && !selected.isEmpty() ? { selection: { text: model.getValueInRange(selected), start_line: selected.startLineNumber, end_line: selected.endLineNumber } } : {}) };
+  }, []);
+  const matches = useCallback((p: EditProposal) => {
+    const now = snapshot();
+    return !!now && now.document_id === p.document_id && now.path === p.path && now.model_id === p.model_id &&
+      now.model_version === p.model_version && now.buffer_epoch === p.buffer_epoch && now.saved_revision === p.saved_revision && now.content === p.original && !now.read_only;
+  }, [snapshot]);
+  useEffect(() => {
+    onEditorBridge?.({ snapshot, review: p => {
+      if (!matches(p) || p.original === p.suggested) return false;
+      setReviewError(''); setProposal(p); return true;
+    } });
+    return () => onEditorBridge?.(null);
+  }, [onEditorBridge, snapshot, matches]);
+  useEffect(() => { epoch.current++; dismissReview(); setReviewError(''); }, [activeTabId, activeTab?.deviceId, dismissReview]);
+  useEffect(() => () => changeDispose.current?.dispose(), []);
+  const acceptProposal = () => {
+    if (!proposal || !matches(proposal)) { setReviewError('This proposal is stale. Your current buffer was preserved. Request a new edit.'); return; }
+    const next = proposal.suggested;
+    const eols: string[] = next.match(/\r\n|\r|\n/g) || [];
+    if (new Set(eols).size > 1 || eols.includes('\r') || next.startsWith('\uFEFF') !== proposal.original.startsWith('\uFEFF')) {
+      setReviewError('Mixed line endings or a changed BOM require manual review. Nothing was applied.'); return;
+    }
+    const editor = editorInstanceRef.current; const model = editor.getModel(); const view = editor.saveViewState();
+    editor.updateOptions({ readOnly: false, domReadOnly: false });
+    editor.pushUndoStop();
+    if (eols.length && model.getEOL() !== eols[0]) model.pushEOL(eols[0] === '\r\n' ? 1 : 0);
+    const applied = editor.executeEdits('accept-ai-proposal', [{ range: model.getFullModelRange(), text: next.replace(/^\uFEFF/, '') }]);
+    editor.pushUndoStop(); editor.restoreViewState(view);
+    if (applied) { dismissReview(); setReviewError(''); editor.focus(); }
+    else setReviewError('Monaco refused the edit. The proposal was not accepted.');
+  };
   const isMarkdownActiveTab = Boolean(activeTab?.name.toLowerCase().endsWith('.md'));
   const canEdit   = userRole === 'admin' || userRole === 'engineer';
   const [selectionAction, setSelectionAction] = useState<{ text: string; top: number; left: number } | null>(null);
@@ -346,6 +418,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
         )}
 
         <div className="ml-auto flex items-center gap-2">
+          {onDocumentDevice && activeTab && /\.(cfg|conf|txt|log)$/i.test(activeTab.name) && <select aria-label="Document device" className="select select-xs max-w-44" value={activeTab.deviceId || ''} disabled={Boolean(proposal)} onChange={e => onDocumentDevice(activeTab.id,e.target.value)}><option value="">Select document device</option>{documentDevices.map(device => <option key={device.id} value={String(device.id)}>{device.hostname}</option>)}</select>}
           {activeTab?.name.endsWith('.md') && (
             <button
               type="button"
@@ -356,6 +429,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
               <FileText className="h-3 w-3" /> {isMdPreview ? 'Close Preview' : 'Preview'}
             </button>
           )}
+          {onEditableCopy && activeTab?.isReadOnly && <button className="btn btn-xs btn-outline" onClick={onEditableCopy}>Edit a copy</button>}
           {activeTab && !activeTab.isReadOnly && canEdit && (
             <button
               className={`btn btn-xs gap-1 ${
@@ -393,7 +467,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
               </article>
             </div>
           ) : (
-            <div ref={editorContainerRef} className="relative h-full">
+            <div ref={editorContainerRef} className="relative h-full" style={{ display: proposal ? 'none' : undefined }}>
               {selectionAction && activeTab && onExplainSelection && (
                 <button
                   type="button"
@@ -409,18 +483,16 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
                 </button>
               )}
               <Editor
+                path={activeTab.path}
                 height="100%"
-                language={
-                  activeTab.name.endsWith('.md') ? 'markdown' :
-                  activeTab.name.endsWith('.j2') ? 'jinja2' :
-                  activeTab.name.endsWith('.cfg') ? 'ini' :
-                  'yaml'
-                }
+                language={languageForDocument(activeTab.path, activeTab.content)}
                 theme={themeName}
                 value={activeTab.content}
                 onMount={(editor) => {
                   selectionDisposeRef.current?.dispose?.();
                   editorInstanceRef.current = editor;
+                  changeDispose.current?.dispose();
+                  changeDispose.current = editor.onDidChangeModelContent(() => { epoch.current++; });
                   selectionDisposeRef.current = editor.onDidChangeCursorSelection(() => {
                     window.requestAnimationFrame(updateSelectionAction);
                   });
@@ -435,7 +507,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
                   if (!activeTab.isReadOnly) onChange(activeTab.id, val ?? '');
                 }}
                 options={{
-                  readOnly:         activeTab.isReadOnly,
+                  readOnly:         activeTab.isReadOnly || Boolean(proposal),
                   domReadOnly:      activeTab.isReadOnly,
                   minimap:          { enabled: false },
                   wordWrap:         'on',
@@ -456,6 +528,12 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
             <span className="text-sm">Open a file from the explorer or generate a playbook via the AI chat</span>
           </div>
         )}
+        {proposal && <div className="h-full flex flex-col" aria-label="Review AI changes">
+          <div className="p-2 border-b border-base-300 flex gap-2 items-center"><strong className="text-sm">Review proposed changes</strong><span className="text-xs opacity-60 grow">Accept changes the buffer. Save is separate.</span><button className="btn btn-success btn-sm" onClick={acceptProposal}>Accept</button><button className="btn btn-ghost btn-sm" onClick={() => { dismissReview(); setReviewError(''); }}>Reject</button></div>
+          {reviewError && <p role="alert" className="text-error p-2">{reviewError}</p>}
+          <pre className="text-xs p-2 max-h-24 overflow-auto">{JSON.stringify(proposal.validation, null, 2)}</pre>
+          <div className="grow min-h-0"><DiffEditor onMount={editor => { reviewEditor.current = editor; }} original={proposal.original} modified={proposal.suggested} theme={themeName} language={languageForDocument(activeTab?.path || "", proposal.suggested)} originalModelPath={`ai-review/${proposal.id}/base`} modifiedModelPath={`ai-review/${proposal.id}/proposal`} options={{ readOnly: true, originalEditable: false, renderSideBySide: false, automaticLayout: true }} /></div>
+        </div>}
       </div>
     </div>
   );

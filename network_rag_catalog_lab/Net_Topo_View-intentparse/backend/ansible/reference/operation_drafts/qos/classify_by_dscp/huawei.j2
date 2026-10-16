@@ -1,0 +1,5 @@
+{# Editable reference draft: huawei / classify_by_dscp. Verify syntax, dependencies and device suitability before use. #}
+traffic classifier {{ classifier_name }}
+{% for dscp in previous_dscp_values %} undo if-match dscp {{ dscp }}
+{% endfor %} if-match dscp {{ dscp_values | join(" ") }}
+quit

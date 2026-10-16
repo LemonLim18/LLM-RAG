@@ -1,0 +1,4 @@
+{# Editable reference draft: juniper / configure_trunk_port. Verify syntax, dependencies and device suitability before use. #}
+set interfaces {{ interface }} unit 0 family ethernet-switching interface-mode trunk
+{% for vlan in allowed_vlans %}set interfaces {{ interface }} unit 0 family ethernet-switching vlan members {{ vlan }}
+{% endfor %}{% if native_vlan is defined %}set interfaces {{ interface }} native-vlan-id {{ native_vlan }}{% endif %}

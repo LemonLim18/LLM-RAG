@@ -1,0 +1,5 @@
+{# Editable reference draft: huawei / configure_shaping. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+ qos lr {{ direction }} cir {{ rate_kbps }}
+quit
+{# VRP command and rate units vary; review interface/platform syntax. #}

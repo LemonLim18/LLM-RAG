@@ -1,0 +1,5 @@
+{# Editable reference draft: huawei / configure_bgp_neighbor. Verify syntax, dependencies and device suitability before use. #}
+bgp {{ local_as }}
+ peer {{ neighbor_ip }} as-number {{ remote_as }}
+{% if description is defined and description %} peer {{ neighbor_ip }} description {{ description }}{% endif %}
+

@@ -44,7 +44,8 @@ class StudioPresentationTests(unittest.TestCase):
                 conn.execute('INSERT INTO jobs VALUES(1, ?)', (json.dumps(dict(engine='v9', artifact_metadata=dict(extension='.cfg'), files=[dict(path=path)])),))
             store = AuthoringStore(db, dict(ansible=Path(folder)/'ansible'))
             self.assertEqual(store.resolve('ansible', path).suffix, '.cfg')
-            for other in ['playbooks/unknown.cfg', 'playbooks/generated/job_1/other.cfg', 'playbooks/generated/job_2/native_config.cfg', '../native_config.cfg']:
+            self.assertEqual(store.resolve('ansible', 'playbooks/imported.cfg').suffix, '.cfg')
+            for other in ['playbooks/generated/job_1/other.cfg', 'playbooks/generated/job_2/native_config.cfg', '../native_config.cfg']:
                 with self.subTest(path=other), self.assertRaises(HTTPException):
                     store.resolve('ansible', other)
 

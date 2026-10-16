@@ -121,6 +121,9 @@ export interface AnsibleTab {
   isDirty: boolean;
   isReadOnly: boolean;
   jobId?: number;          // set when opened from AI generation
+  savedRevision?: number;
+  isNew?: boolean;
+  deviceId?: string;
 }
 
 export interface AnsibleJobStep {
@@ -176,6 +179,9 @@ export interface AnsibleProposedEdit {
 }
 
 export interface AnsibleMessage {
+  evidence?: { id: string; source: string; origin: string; page?: number; start_line?: number; end_line?: number }[];
+  gatewayReview?: { preview: any; prompt: string; conversation: string };
+
   id: string;
   role: 'user' | 'assistant' | 'system';
   content: string;

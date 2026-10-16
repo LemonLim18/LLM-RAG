@@ -1,0 +1,7 @@
+{# Editable reference draft: cisco / configure_scheduler. Verify syntax, dependencies and device suitability before use. #}
+policy-map {{ policy_name }}
+ class {{ classifier_name }}
+  bandwidth {{ bandwidth_bps // 1000 }}
+  exit
+ exit
+

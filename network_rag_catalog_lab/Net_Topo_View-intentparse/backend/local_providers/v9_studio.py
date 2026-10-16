@@ -31,7 +31,10 @@ def ensure_schema(db):
 
 def inventory(db):
     with db._connect() as conn:
-        rows = [dict(r) for r in conn.execute('SELECT id,hostname,management_ip,vendor,model,os_version,role,status FROM devices ORDER BY id')]
+        columns = {r[1] for r in conn.execute('PRAGMA table_info(devices)')}
+        extras = ',site,location,aliases_json' if 'site' in columns else ''
+        if 'engineering_facts_json' in columns: extras += ',engineering_facts_json'
+        rows = [dict(r) for r in conn.execute('SELECT id,hostname,management_ip,vendor,model,os_version,role,status'+extras+' FROM devices ORDER BY id')]
         interfaces = [dict(r) for r in conn.execute('SELECT device_id,name,interface_type,ip_address FROM interfaces ORDER BY id')]
     result = []
     for row in rows:
@@ -41,10 +44,11 @@ def inventory(db):
         iosxe = row['vendor'] == 'cisco_xe' or bool(re.match(r'IOS[- ]?XE\s+', version, re.I))
         platform = 'iosxe' if vendor == 'cisco' and iosxe else {'huawei':'vrp','juniper':'junos'}.get(vendor, 'ios' if vendor == 'cisco' else '')
         version = re.sub(r'^IOS[- ]?XE\s+', '', version, flags=re.I)
-        result.append({'id':str(row['id']), 'hostname':row['hostname'], 'display_name':row['hostname'], 'aliases':[],
+        from llm.gateway_inventory import project_facts
+        result.append(project_facts({'id':str(row['id']), 'hostname':row['hostname'], 'display_name':row['hostname'], 'aliases':json.loads(row.get('aliases_json','[]')),
                        'management_ip':row['management_ip'], 'vendor':vendor, 'platform':platform, 'version':version,
-                       'role':row['role'], 'status':row['status'], 'site':'', 'location':'',
-                       'interfaces':[{'name':i['name'], 'mode':i['interface_type'], 'aliases':[]} for i in interfaces if i['device_id']==row['id']]})
+                       'role':row['role'], 'status':row['status'], 'site':row.get('site',''), 'location':row.get('location',''),
+                       'interfaces':[{'name':i['name'], 'mode':i['interface_type'], 'aliases':[]} for i in interfaces if i['device_id']==row['id']]},json.loads(row.get('engineering_facts_json','{}'))))
     return result
 
 
@@ -87,6 +91,8 @@ def session(db, sid, owner):
 
 
 async def preview(db, req, user):
+    from llm.gateway import authorize_studio
+    authorize_studio(user)
     ensure_schema(db)
     params = req.params or {}
     sid = params.get('_v9_session')
@@ -94,10 +100,23 @@ async def preview(db, req, user):
     data = inventory(db)
     if previous and previous['inventory_hash'] != digest(data):
         raise HTTPException(409, 'Inventory changed. Start a fresh preview.')
-    corrections = {k:v for k,v in params.items() if k in {*json.loads(previous['body'])['schema']['properties'], 'operation_id'}} if previous else {}
+    raw = json.loads(previous['body']) if previous else {}
+    multi = bool(getattr(req, 'allow_multi', False))
+    task_id = getattr(req, 'task_id', None)
+    if previous and multi and getattr(req, 'expected_revision', None) != previous['revision']:
+        raise HTTPException(409, 'The review changed. Reopen the latest interpretation before correcting it.')
+    if previous and multi and task_id and task_id not in raw.get('schemas', {}):
+        raise HTTPException(409, 'This task no longer exists. Reopen the review.')
+    schema = raw.get('schemas', {}).get(task_id, raw.get('schema', {}))
+    corrections = {k:v for k,v in params.items() if k in {*schema.get('properties', {}), 'operation_id'}} if previous else {}
+    selection=getattr(req,'selection',None)
+    if selection is not None and not previous: raise HTTPException(422,'Open a preview before changing its selection.')
     output = await asyncio.to_thread(worker, {'inventory':data, 'prompt':req.intent_description,
         'plan':json.loads(previous['body'])['plan'] if previous else None, 'hosts':req.target_hosts,
-        'corrections':corrections, 'model':req.model})
+        'corrections':corrections, 'model':req.model, 'allow_multi':multi, 'task_id':task_id,
+        'confirm_order':bool(getattr(req, 'confirm_order', False)), 'selection':selection})
+    if digest(inventory(db)) != digest(data):
+        raise HTTPException(409, 'Inventory changed during interpretation. Review again.')
     sid = sid or uuid.uuid4().hex
     with db._connect() as conn:
         conn.execute('BEGIN IMMEDIATE')
@@ -107,14 +126,27 @@ async def preview(db, req, user):
         else:
             conn.execute('INSERT INTO studio_v9_sessions(id,owner,prompt,body,inventory_hash) VALUES (?,?,?,?,?)', (sid,user['username'],req.intent_description,json.dumps(output),digest(data)))
         conn.execute('INSERT INTO audit_log(user_id,action,target,details) VALUES (?,?,?,?)', (user['username'],'v9.preview',sid,json.dumps({'release':output['release_id']})))
-    return presentation(output,sid,data)
+    result = presentation(output,sid,data)
+    result['session_revision'] = previous['revision'] + 1 if previous else 1
+    if multi:
+        result['tasks'] = []
+        for task in output['plan']['tasks']:
+            single = {**output, 'plan':{**output['plan'], 'tasks':[task]}, 'schema':output['schemas'][task['intent_id']]}
+            item = presentation(single, sid, data)
+            item.update(task_id=task['intent_id'], status=task['status'],
+                        request_text=task['request_text'], reference=output.get('task_references',{}).get(task['intent_id']),
+                        issues=task['issues'], operation_candidates=task.get('operation_candidates', []))
+            result['tasks'].append(item)
+        result['plan_status'] = output['plan']['status']
+        result['plan_issues'] = output['plan']['issues']
+    return result
 
 
 def presentation(output,sid,data):
-    plan=output['plan']; task=plan['tasks'][0]; schema=output['schema']
-    fields=[{'field':key,'label':key.replace('_',' ').title(),'type':'number' if spec.get('type')=='integer' else 'text',
+    plan=output['plan']; task=plan['tasks'][0] if plan['tasks'] else {'parameters':{},'issues':[],'target_devices':[],'operation_id':'','category':'','parameter_provenance':{}}; schema=output['schema']
+    fields=[{'field':key,'label':key.replace('_',' ').title(),'type':'number' if spec.get('type') in {'integer','number'} else ('json' if spec.get('type') in {'array','object'} else ('boolean' if spec.get('type')=='boolean' else 'text')),
              'required':key in schema.get('required',[]), 'value':task['parameters'].get(key),
-             'min':spec.get('minimum'), 'max':spec.get('maximum')} for key,spec in schema['properties'].items()]
+             'min':spec.get('minimum'), 'max':spec.get('maximum'), 'options':spec.get('enum'), 'description':spec.get('description',''), 'schema':spec} for key,spec in schema['properties'].items()]
     issues=task['issues']+plan['issues']
     missing=[f for f in fields if any(i.get('field')==f['field'] and i.get('type')=='MISSING' for i in issues)]
     ambiguity=next((i for i in issues if i.get('type')=='AMBIGUOUS_TARGET'), None)
@@ -142,6 +174,8 @@ def presentation(output,sid,data):
 
 
 async def generate(db,req,user):
+    from llm.gateway import authorize_studio
+    authorize_studio(user)
     if req.verify_with_dry_run:
         raise HTTPException(422,'Remote Ansible execution is unavailable in local mode.')
     params=req.params or {}
@@ -158,6 +192,8 @@ async def generate(db,req,user):
     if plan['status']!='ready':
         raise HTTPException(422, {'message':'V9 validation requires correction.', 'issues':[i['message'] for i in task['issues']+plan['issues']]})
     values=task['parameters']; host=task['target_devices'][0]['hostname']
+    if task['target_devices'][0]['vendor']!='cisco' or task['target_devices'][0]['platform']!='iosxe':
+        raise HTTPException(422,'This legacy Ansible wrapper supports IOS-XE only; use native generation for other verified V9 bindings.')
     native=task['configs'][0]['configuration']
     artifact = output.get('artifact_metadata') or {'format':'native_cli','language':'text','extension':'.txt'}
     if artifact['format'] != 'native_cli':

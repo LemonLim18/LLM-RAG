@@ -1,0 +1,4 @@
+{# Editable reference draft: huawei / modify_vlan. Verify syntax, dependencies and device suitability before use. #}
+vlan {{ vlan_id }}
+ state {{ "suspend" if vlan_status == "suspend" else "active" }}
+quit

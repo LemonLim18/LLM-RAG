@@ -59,6 +59,9 @@ class OllamaProvider(LLMProvider):
         base_url: Optional[str] = None,
         model: Optional[str] = None,
         timeout: Optional[int] = None,
+        response_format: Any = None,
+        max_output_tokens: int = 2048,
+        context_tokens: int = 16384,
     ):
         resolved_base_url = (
             base_url
@@ -69,10 +72,23 @@ class OllamaProvider(LLMProvider):
         self._base_url = str(resolved_base_url).rstrip("/")
         self._model    = model   or os.getenv("OLLAMA_MODEL",    _DEFAULT_MODEL)
         self._timeout  = int(timeout or os.getenv("OLLAMA_TIMEOUT", _DEFAULT_TIMEOUT))
+        self._response_format = response_format
+        self._max_output_tokens = max_output_tokens
+        self._context_tokens = context_tokens
         logger.info("OllamaProvider initialised (url=%s model=%s)", self._base_url, self._model)
 
     def model_name(self) -> str:
         return self._model
+
+    async def embed(self, inputs: List[str], model: str) -> List[List[float]]:
+        """Local semantic vectors; never pulls a missing model or truncates inputs."""
+        async with httpx.AsyncClient(timeout=15, trust_env=False) as client:
+            response=await client.post(self._base_url+'/api/embed',json={'model':model,'input':inputs,'truncate':False})
+            response.raise_for_status()
+            vectors=response.json()['embeddings']
+        if len(vectors)!=len(inputs) or any(not vector for vector in vectors):
+            raise ValueError('Incomplete semantic embeddings')
+        return vectors
 
     # ------------------------------------------------------------------
     # Core generation
@@ -134,7 +150,7 @@ class OllamaProvider(LLMProvider):
             "stream":   False,
             "options":  {
                 "temperature": temperature,
-                "num_ctx": 16384,
+                "num_ctx": self._context_tokens,
                 "num_predict": 1024,
             },
         }
@@ -213,6 +229,7 @@ class OllamaProvider(LLMProvider):
                 ollama_messages.append({
                     "role":    msg.role,
                     "content": msg.content,
+                    **({"images": msg.images} if msg.images else {}),
                 })
 
         payload: Dict[str, Any] = {
@@ -221,11 +238,13 @@ class OllamaProvider(LLMProvider):
             "stream":   False,
             "options":  {
                 "temperature": temperature,
-                "num_ctx": 16384,
-                "num_predict": 2048,
+                "num_ctx": self._context_tokens,
+                "num_predict": self._max_output_tokens,
             },
         }
 
+        if self._response_format is not None:
+            payload['format'] = self._response_format
         if tools:
             # Ollama accepts OpenAI-compatible tool definitions
             payload["tools"] = tools

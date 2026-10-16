@@ -1,4 +1,5 @@
 import { useLocalLab } from '../src/localLab';
+import InventoryMetadataEditor from '../components/InventoryMetadataEditor';
 import React, { useState, useEffect, useCallback } from 'react';
 import {
   Server,
@@ -1207,6 +1208,7 @@ const NetBoxDevices: React.FC = () => {
                     <DetailRow label="Role" value={ROLE_OPTIONS.find(r => r.value === selected.role)?.label || selected.role} />
                     <DetailRow label="Model" value={selected.model || '—'} />
                     <DetailRow label="OS Version" value={selected.os_version || '—'} />
+                    {localLab && <InventoryMetadataEditor deviceId={selected.id} />}
                     <DetailRow label="Serial Number" value={selected.serial_number || '—'} mono />
                     <DetailRow label="Status">{statusBadge(selected.status)}</DetailRow>
                     <DetailRow label="Source">{sourceBadge(selected.source)}</DetailRow>

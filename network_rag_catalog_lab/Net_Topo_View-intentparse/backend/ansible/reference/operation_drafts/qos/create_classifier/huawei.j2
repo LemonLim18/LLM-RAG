@@ -1,0 +1,4 @@
+{# Editable reference draft: huawei / create_classifier. Verify syntax, dependencies and device suitability before use. #}
+traffic classifier {{ classifier_name }} operator {{ "and" if match_mode == "all" else "or" }}
+ if-match dscp {{ dscp_values | join(" ") }}
+quit

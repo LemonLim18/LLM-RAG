@@ -1,0 +1,10 @@
+{# Editable reference draft: cisco / configure_policing. Verify syntax, dependencies and device suitability before use. #}
+policy-map {{ policy_name }}
+ class class-default
+  police {{ rate_bps }} {{ burst_bytes }} conform-action transmit exceed-action {{ exceed_action }}
+  exit
+ exit
+interface {{ interface }}
+ service-policy input {{ policy_name }}
+ exit
+

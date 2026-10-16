@@ -1,6 +1,9 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import AnsibleFileTree                              from '../components/ansible/AnsibleFileTree';
 import PlaybookEditor                               from '../components/ansible/PlaybookEditor';
+import type { EditorBridge } from '../components/ansible/PlaybookEditor';
+import { aiApi, type DraftDocument } from '../src/services/ai';
+import { useLocalLab } from '../src/localLab';
 import JobStatusBar                                 from '../components/ansible/JobStatusBar';
 import AnsibleChatPanel                             from '../components/ansible/AnsibleChatPanel';
 import SSHConnectModal                              from '../components/SSHConnectModal';
@@ -114,6 +117,9 @@ function ResizeHandle({
 }
 
 const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
+  const localLab = useLocalLab();
+  const editorBridge = useRef<EditorBridge | null>(null);
+  const bindEditorBridge = useCallback((bridge: EditorBridge | null) => { editorBridge.current = bridge; }, []);
   const userRole = (user as any)?.role ?? 'viewer';
 
   const getStoredTabs = (): AnsibleTab[] => {
@@ -135,6 +141,9 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
         isDirty: Boolean(t.isDirty),
         isReadOnly: Boolean(t.isReadOnly),
         jobId: typeof t.jobId === 'number' ? t.jobId : undefined,
+        savedRevision: typeof t.savedRevision === 'number' ? t.savedRevision : undefined,
+        isNew: Boolean(t.isNew),
+        deviceId: typeof t.deviceId === 'string' ? t.deviceId : undefined,
       }));
     } catch {
       return [];
@@ -162,6 +171,7 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
 
   // ── Playbook / editor state ──────────────────────────────────────────────
   const [tabs, setTabs]               = useState<AnsibleTab[]>(() => getStoredTabs());
+  const selectDocumentDevice = useCallback((id: string, deviceId: string) => setTabs(prev => prev.map(tab => tab.id === id ? {...tab,deviceId} : tab)), []);
   const [activeTabId, setActiveTabId] = useState<string | null>(() => localStorage.getItem(ANSIBLE_ACTIVE_TAB_KEY));
   const [activeJobId, setActiveJobId] = useState<number | null>(null);
   const [job, setJob]                 = useState<AnsibleJob | null>(null);
@@ -299,6 +309,7 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
     setTabs(prev => {
       const existing = prev.find(t => t.id === id);
       if (existing) {
+        if (existing.isDirty) return prev;
         return prev.map(t => t.id === id
           ? {
               ...t,
@@ -434,6 +445,7 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
       const jobMatch = pathNorm.match(/(?:^|\/)generated\/job_(\d+)(?:\/|$)/);
       const jobIdFromPath = jobMatch && Number.isFinite(Number(jobMatch[1])) ? parseInt(jobMatch[1], 10) : undefined;
       openTab(node.path, node.name, r.content, false, Boolean(r.read_only), jobIdFromPath);
+      setTabs(prev => prev.map(t => t.id === node.path ? { ...t, savedRevision: r.revision ?? 0 } : t));
     } catch { /* ignore */ }
   }, [tabs, openTab]);
 
@@ -460,14 +472,24 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
         return;
       }
 
-      await ansibleApi.writeFile(activeTab.id, activeTab.content);
-      setTabs(prev => prev.map(t => t.id === activeTab.id ? { ...t, isDirty: false } : t));
+      const savingContent = editorBridge.current?.snapshot()?.document_id === activeTab.id ? editorBridge.current.snapshot()!.content : activeTab.content;
+      let revision = activeTab.savedRevision;
+      if (localLab) {
+        if (revision === undefined && !activeTab.isNew) {
+          const stored = await ansibleApi.readFile(activeTab.path);
+          if (stored.content !== savingContent) throw new Error('This restored buffer has no verified saved revision. Compare it with the current saved file before overwriting. Your buffer is preserved.');
+          revision = stored.revision ?? 0;
+        }
+        const result = await aiApi.save(activeTab.path, savingContent, revision ?? 0, Boolean(activeTab.isNew));
+        revision = result.revision;
+      } else await ansibleApi.writeFile(activeTab.id, savingContent);
+      setTabs(prev => prev.map(t => t.id === activeTab.id ? { ...t, savedRevision: revision, isNew: false, isDirty: t.content !== savingContent } : t));
       setFileTreeRefresh(n => n + 1);
       Toast.successEmphasis('Saved successfully', `${activeTab.name} saved.`);
     } catch (err: any) {
       Toast.error('Save failed', err.message || String(err));
     }
-  }, [activeTab]);
+  }, [activeTab, localLab]);
 
   // ── Check (dry-run) ──────────────────────────────────────────────────────
   const handleCheck = useCallback(async () => {
@@ -785,6 +807,14 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
         <div className="flex flex-col grow min-w-0 overflow-hidden">
           <div className="grow min-h-0 overflow-hidden">
             <PlaybookEditor
+              onEditableCopy={localLab ? () => {
+                if(!activeTab)return;
+                const path='playbooks/drafts/copy-'+Date.now()+'-'+activeTab.name;
+                openTab(path,activeTab.name,activeTab.content,true,false);
+                setTabs(prev=>prev.map(tab=>tab.id===path?{...tab,isNew:true,savedRevision:0,deviceId:activeTab.deviceId}:tab));
+              } : undefined}
+              onEditorBridge={bindEditorBridge}
+              onDocumentDevice={localLab ? selectDocumentDevice : undefined}
               tabs={tabs}
               activeTabId={activeTabId}
               onTabSelect={handleTabSelect}
@@ -864,6 +894,12 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
           style={{ width: chatPanelWidth, minWidth: CHAT_PANEL_MIN, maxWidth: CHAT_PANEL_MAX }}
         >
           <AnsibleChatPanel
+            getEditorSnapshot={() => editorBridge.current?.snapshot() ?? null}
+            onEditProposal={proposal => editorBridge.current?.review(proposal) ?? false}
+            onDraftReady={(draft: DraftDocument) => {
+              openTab(draft.path, draft.path.split('/').pop() || 'draft.cfg', draft.content, true, false);
+              setTabs(prev => prev.map(t => t.id === draft.path ? { ...t, isNew: true, savedRevision: 0, deviceId: draft.device_id } : t));
+            }}
             onPlaybookReady={handlePlaybookReady}
             onOpenFile={(path) => handleFileOpen({ path, name: path.split('/').pop() ?? path })}
             activeJob={job}

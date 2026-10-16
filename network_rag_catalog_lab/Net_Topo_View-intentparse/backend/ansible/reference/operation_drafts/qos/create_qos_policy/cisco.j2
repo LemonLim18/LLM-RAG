@@ -1,0 +1,7 @@
+{# Editable reference draft: cisco / create_qos_policy. Verify syntax, dependencies and device suitability before use. #}
+policy-map {{ policy_name }}
+{% for term in policy_terms %} class {{ term.classifier_name }}
+  bandwidth {{ term.bandwidth_bps // 1000 }}
+  exit
+{% endfor %} exit
+

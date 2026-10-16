@@ -1,0 +1,5 @@
+{# Editable reference draft: cisco / configure_bgp_neighbor. Verify syntax, dependencies and device suitability before use. #}
+router bgp {{ local_as }}
+ neighbor {{ neighbor_ip }} remote-as {{ remote_as }}
+{% if description is defined and description %} neighbor {{ neighbor_ip }} description {{ description }}{% endif %}
+

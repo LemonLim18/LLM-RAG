@@ -17,6 +17,7 @@ def main(payload):
     if base.is_relative_to(root):
         raise ValueError('Knowledge workspace cannot be inside the preserved V9 repository.')
     protect_source(root)
+    sys.path.insert(1, str(Path(__file__).resolve().parents[1]))
     from app.knowledge.management import KnowledgeManagementService
     from app.knowledge.runtime import active_snapshot, active_pointer
     from app.knowledge.sqlite_repository import SQLiteAuthoringStore
@@ -86,10 +87,31 @@ def main(payload):
         rows = connection.execute('SELECT path,content FROM cognishield_template_revisions WHERE id IN (SELECT MAX(id) FROM cognishield_template_revisions GROUP BY path)')
         for path, content in rows:
             result['sources'][path] = content.encode('utf-8')
+        if connection.execute("SELECT 1 FROM sqlite_master WHERE name='cognishield_playbook_variants'").fetchone():
+            for identity, content in connection.execute('SELECT id,body FROM cognishield_playbook_variants ORDER BY id'):
+                result['sources']['cognishield/playbooks/'+identity+'.json'] = content.encode('utf-8')
         result['revision'] = sha256(f"sqlite:{result['generation']}:{_source_digest(result['sources'])}".encode()).hexdigest()
         return result
     SQLiteAuthoringStore._snapshot = with_templates
     service = KnowledgeManagementService(base)
+
+    if action == 'playbook_variant':
+        from llm.gateway_playbooks import validate_variant
+        store=service.store
+        with authoring_lock(base), store._connection() as connection:
+            connection.execute('BEGIN IMMEDIATE')
+            before=store._snapshot(connection)
+            if before['revision']!=body['expected_revision']:
+                raise AuthoringError('STALE_REVISION','Knowledge changed; refresh before saving a playbook variant')
+            variant=validate_variant(body['variant'],before['catalogs']['operations'])
+            connection.execute('CREATE TABLE IF NOT EXISTS cognishield_playbook_variants (id TEXT PRIMARY KEY,body TEXT NOT NULL)')
+            connection.execute('INSERT INTO cognishield_playbook_variants(id,body) VALUES (?,?) ON CONFLICT(id) DO UPDATE SET body=excluded.body',
+                (variant.id,variant.model_dump_json()))
+            connection.execute('UPDATE authoring_state SET generation=generation+1 WHERE singleton=1')
+            after=store._snapshot(connection)
+            audit=store._audit(connection,before,after,actor,reason)
+            connection.commit()
+            return {'ok':True,'revision':after['revision'],'data':{'audit_id':audit,'variant_id':variant.id,'status':'draft','published':False}}
 
     from knowledge_lifecycle import build, activate, release_rows, pointer_for, validate_preset, render_preview
 

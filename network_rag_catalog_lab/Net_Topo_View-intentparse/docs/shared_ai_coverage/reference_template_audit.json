@@ -1,0 +1,3958 @@
+{
+  "ordinary_release": "0690966eb003499380e960a98d1e418f",
+  "operation_count": 47,
+  "template_count": 141,
+  "summary": {
+    "retained_published_copy": 77,
+    "requires_engineering_review": 64
+  },
+  "publication": "Not performed: reference copies already exist in the ordinary release; remaining translations/adaptation lack verified contracts and semantic evidence.",
+  "no_device_execution": true,
+  "templates": [
+    {
+      "operation_id": "create_vlan",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/vlan/create_vlan/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "name",
+        "vlan_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_vlan",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/vlan/create_vlan/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "name",
+        "vlan_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_vlan",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/vlan/create_vlan/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "name",
+        "vlan_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "delete_vlan",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/vlan/delete_vlan/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "vlan_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "delete_vlan",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/vlan/delete_vlan/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "name"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "delete_vlan",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/vlan/delete_vlan/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "vlan_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_ospf",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/configure_ospf/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interfaces",
+        "process_id",
+        "router_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_ospf",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/configure_ospf/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interfaces",
+        "router_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": [
+        "https://www.juniper.net/documentation/us/en/software/junos/ospf/topics/topic-map/configuring-ospf-areas.html"
+      ]
+    },
+    {
+      "operation_id": "configure_ospf",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/configure_ospf/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interfaces",
+        "process_id",
+        "router_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_ospf_interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/remove_ospf_interface/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_ospf_interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/remove_ospf_interface/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "area",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": [
+        "https://www.juniper.net/documentation/us/en/software/junos/ospf/topics/topic-map/configuring-ospf-areas.html"
+      ]
+    },
+    {
+      "operation_id": "remove_ospf_interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/remove_ospf_interface/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_bgp_neighbor",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/bgp/configure_bgp_neighbor/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "description",
+        "local_as",
+        "neighbor_ip",
+        "remote_as"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_bgp_neighbor",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/bgp/configure_bgp_neighbor/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "description",
+        "local_as",
+        "neighbor_ip",
+        "peer_group",
+        "remote_as"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_bgp_neighbor",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/bgp/configure_bgp_neighbor/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "description",
+        "local_as",
+        "neighbor_ip",
+        "remote_as"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_bgp_neighbor",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/bgp/remove_bgp_neighbor/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_bgp_neighbor",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/bgp/remove_bgp_neighbor/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "neighbor_ip",
+        "peer_group"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_bgp_neighbor",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/bgp/remove_bgp_neighbor/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_isis_interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/isis/configure_isis_interface/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "level",
+        "process_name"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_isis_interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/isis/configure_isis_interface/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "level"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_isis_interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/isis/configure_isis_interface/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "level",
+        "process_name"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "disable_isis_interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/isis/disable_isis_interface/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "process_name"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "disable_isis_interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/isis/disable_isis_interface/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "disable_isis_interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/isis/disable_isis_interface/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_static_route",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/static_routing/configure_static_route/cisco.j2",
+      "source": "published_cli_adaptation",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "destination_address",
+        "destination_mask",
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Reference-only static-route adaptation differs from active binding; requires a reviewed contract/version update."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_static_route",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/static_routing/configure_static_route/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_static_route",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/static_routing/configure_static_route/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_static_route",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/static_routing/remove_static_route/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "destination",
+        "next_hop"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_static_route",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/static_routing/remove_static_route/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "destination",
+        "next_hop"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_static_route",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/static_routing/remove_static_route/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "destination",
+        "next_hop"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_interface_ip",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ip_address/configure_interface_ip/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "address",
+        "admin_up",
+        "interface",
+        "netmask"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_interface_ip",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ip_address/configure_interface_ip/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "address",
+        "interface",
+        "prefix_length"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_interface_ip",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ip_address/configure_interface_ip/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "address",
+        "admin_up",
+        "interface",
+        "netmask"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_interface_ip",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ip_address/remove_interface_ip/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "address",
+        "interface",
+        "netmask"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_interface_ip",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ip_address/remove_interface_ip/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "address",
+        "interface",
+        "prefix_length"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "remove_interface_ip",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ip_address/remove_interface_ip/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "address",
+        "interface",
+        "netmask"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "modify_vlan",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/vlan/modify_vlan/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "modify_vlan",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/vlan/modify_vlan/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "unmapped_inputs": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Junos identifies VLAN configuration by name; vlan_id alone does not resolve the existing VLAN name.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "modify_vlan",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/vlan/modify_vlan/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "unmapped_inputs": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "IOS state active/suspend translation has no verified VRP implementation in this repository.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "rename_vlan",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/vlan/rename_vlan/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "new_vlan_name",
+        "vlan_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "rename_vlan",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/vlan/rename_vlan/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "new_vlan_name",
+        "old_vlan_name"
+      ],
+      "unmapped_inputs": [
+        "new_vlan_name",
+        "old_vlan_name"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Requires existing Junos VLAN name; the native VLAN-ID operation cannot infer it.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "rename_vlan",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/vlan/rename_vlan/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "new_vlan_name",
+        "vlan_id"
+      ],
+      "unmapped_inputs": [
+        "new_vlan_name",
+        "vlan_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_interface_description",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/set_interface_description/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "description",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_interface_description",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/set_interface_description/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "description",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_interface_description",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/set_interface_description/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "description",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "V200R024C10"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_interface_admin_state",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/set_interface_admin_state/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "admin_up",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_interface_admin_state",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/set_interface_admin_state/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "admin_up",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_interface_admin_state",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/set_interface_admin_state/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "admin_up",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "V200R024C10"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_access_port",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_access_port/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "description",
+        "interface",
+        "vlan_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_access_port",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_access_port/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "interface",
+        "vlan_id"
+      ],
+      "unmapped_inputs": [
+        "interface",
+        "vlan_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_access_port",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_access_port/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "interface",
+        "vlan_id"
+      ],
+      "unmapped_inputs": [
+        "interface",
+        "vlan_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_trunk_port",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_trunk_port/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_trunk_port",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_trunk_port/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "unmapped_inputs": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_trunk_port",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_trunk_port/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "unmapped_inputs": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "assign_vlan_to_trunk_port",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/assign_vlan_to_trunk_port/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "allowed_vlans",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "assign_vlan_to_trunk_port",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/assign_vlan_to_trunk_port/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "allowed_vlans",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "assign_vlan_to_trunk_port",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/assign_vlan_to_trunk_port/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "allowed_vlans",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "V200R024C10"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_trunk_allowed_vlans",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_trunk_allowed_vlans/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "allowed_vlans",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_trunk_allowed_vlans",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_trunk_allowed_vlans/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "unmapped_inputs": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_trunk_allowed_vlans",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_trunk_allowed_vlans/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "unmapped_inputs": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_native_vlan",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/set_native_vlan/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "native_vlan"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_native_vlan",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/set_native_vlan/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "native_vlan"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_native_vlan",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/set_native_vlan/huawei.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "native_vlan"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "vrp",
+      "versions": [
+        "V200R024C10"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_loopback_interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_loopback_interface/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "address",
+        "description",
+        "interface",
+        "netmask"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_loopback_interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_loopback_interface/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "address",
+        "description",
+        "interface",
+        "prefix_length"
+      ],
+      "unmapped_inputs": [
+        "address",
+        "description",
+        "interface",
+        "prefix_length"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_loopback_interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_loopback_interface/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "address",
+        "description",
+        "interface",
+        "netmask"
+      ],
+      "unmapped_inputs": [
+        "address",
+        "description",
+        "interface",
+        "netmask"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_port_channel",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_port_channel/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "aggregate_interface",
+        "description",
+        "lacp_mode",
+        "member_interfaces"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_port_channel",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_port_channel/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "aggregate_interface",
+        "lacp_mode",
+        "member_interfaces"
+      ],
+      "unmapped_inputs": [
+        "aggregate_interface",
+        "lacp_mode",
+        "member_interfaces"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Aggregate device allocation and membership prerequisites are not established.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_port_channel",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_port_channel/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "aggregate_id",
+        "aggregate_interface",
+        "member_interfaces"
+      ],
+      "unmapped_inputs": [
+        "aggregate_id",
+        "aggregate_interface",
+        "member_interfaces"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Hard-coded lacp-static ignores the requested LACP mode; aggregate ID mapping requires a contract.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_default_route",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/static_routing/add_default_route/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_default_route",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/static_routing/add_default_route/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_default_route",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/static_routing/add_default_route/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [
+        "next_hop",
+        "preference"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_floating_static_route",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/static_routing/add_floating_static_route/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "destination_address",
+        "destination_mask",
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_floating_static_route",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/static_routing/add_floating_static_route/juniper.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_floating_static_route",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/static_routing/add_floating_static_route/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "destination_address",
+        "destination_netmask",
+        "next_hop",
+        "preference"
+      ],
+      "unmapped_inputs": [
+        "destination_address",
+        "destination_netmask",
+        "next_hop",
+        "preference"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "enable_ospf_process",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/enable_ospf_process/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "process_id",
+        "router_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "enable_ospf_process",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/enable_ospf_process/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "router_id"
+      ],
+      "unmapped_inputs": [
+        "router_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Sets a global router ID only; does not establish OSPF area/interface membership or an IOS-like process.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": [
+        "https://www.juniper.net/documentation/us/en/software/junos/ospf/topics/topic-map/configuring-ospf-areas.html"
+      ]
+    },
+    {
+      "operation_id": "enable_ospf_process",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/enable_ospf_process/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "process_id",
+        "router_id"
+      ],
+      "unmapped_inputs": [
+        "process_id",
+        "router_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_ospf_router_id",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/set_ospf_router_id/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "process_id",
+        "router_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "set_ospf_router_id",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/set_ospf_router_id/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "router_id"
+      ],
+      "unmapped_inputs": [
+        "router_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": [
+        "https://www.juniper.net/documentation/us/en/software/junos/ospf/topics/topic-map/configuring-ospf-areas.html"
+      ]
+    },
+    {
+      "operation_id": "set_ospf_router_id",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/set_ospf_router_id/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "process_id",
+        "router_id"
+      ],
+      "unmapped_inputs": [
+        "process_id",
+        "router_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_ospf_area",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/create_ospf_area/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "area",
+        "area_type",
+        "process_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_ospf_area",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/create_ospf_area/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "area",
+        "area_type"
+      ],
+      "unmapped_inputs": [
+        "area",
+        "area_type"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": [
+        "https://www.juniper.net/documentation/us/en/software/junos/ospf/topics/topic-map/configuring-ospf-areas.html"
+      ]
+    },
+    {
+      "operation_id": "create_ospf_area",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/create_ospf_area/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "area",
+        "area_type",
+        "process_id"
+      ],
+      "unmapped_inputs": [
+        "area",
+        "area_type",
+        "process_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "assign_interface_to_ospf_area",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/assign_interface_to_ospf_area/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "assign_interface_to_ospf_area",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/assign_interface_to_ospf_area/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "area",
+        "interface"
+      ],
+      "unmapped_inputs": [
+        "area",
+        "interface"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": [
+        "https://www.juniper.net/documentation/us/en/software/junos/ospf/topics/topic-map/configuring-ospf-areas.html"
+      ]
+    },
+    {
+      "operation_id": "assign_interface_to_ospf_area",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/assign_interface_to_ospf_area/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "unmapped_inputs": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "advertise_network",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/advertise_network/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "area",
+        "network_address",
+        "network_wildcard",
+        "process_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "advertise_network",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/advertise_network/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "area",
+        "ospf_interface"
+      ],
+      "unmapped_inputs": [
+        "area",
+        "ospf_interface"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Requires interface resolution from the network prefix; ospf_interface is an additional unverified input.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "advertise_network",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/advertise_network/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "area",
+        "network_address",
+        "network_wildcard",
+        "process_id"
+      ],
+      "unmapped_inputs": [
+        "area",
+        "network_address",
+        "network_wildcard",
+        "process_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_passive_interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/configure_passive_interface/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "passive",
+        "process_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_passive_interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/configure_passive_interface/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "interface",
+        "ospf_area",
+        "passive"
+      ],
+      "unmapped_inputs": [
+        "interface",
+        "ospf_area",
+        "passive"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Requires ospf_area context that is absent from the base operation contract.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_passive_interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/configure_passive_interface/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "interface",
+        "passive",
+        "process_id"
+      ],
+      "unmapped_inputs": [
+        "interface",
+        "passive",
+        "process_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_ospf_redistribution",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/configure_ospf_redistribution/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "metric_type",
+        "ospf_metric",
+        "process_id",
+        "redistribution_source",
+        "route_policy"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_ospf_redistribution",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/configure_ospf_redistribution/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "metric_type",
+        "ospf_metric",
+        "redistribution_source",
+        "route_policy"
+      ],
+      "unmapped_inputs": [
+        "metric_type",
+        "ospf_metric",
+        "redistribution_source",
+        "route_policy"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Policy scope, source protocol and external metric semantics need a separate vendor contract.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": [
+        "https://www.juniper.net/documentation/us/en/software/junos/ospf/topics/topic-map/configuring-ospf-areas.html"
+      ]
+    },
+    {
+      "operation_id": "configure_ospf_redistribution",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/configure_ospf_redistribution/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "metric_type",
+        "ospf_metric",
+        "process_id",
+        "redistribution_source",
+        "route_policy"
+      ],
+      "unmapped_inputs": [
+        "metric_type",
+        "ospf_metric",
+        "process_id",
+        "redistribution_source",
+        "route_policy"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "References route-policy without creating/verifying it and lacks protocol-specific process mapping.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_acl",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/create_acl/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "acl_name",
+        "description"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_acl",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/create_acl/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_name"
+      ],
+      "unmapped_inputs": [
+        "acl_name"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "An empty interface-specific filter does not implement the full ACL semantics; default action and attachment must be reviewed.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_acl",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/create_acl/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_name",
+        "description"
+      ],
+      "unmapped_inputs": [
+        "acl_name",
+        "description"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_acl_rule",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/add_acl_rule/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "log",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_acl_rule",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/add_acl_rule/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_action",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "source_prefix"
+      ],
+      "unmapped_inputs": [
+        "acl_action",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "source_prefix"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "add_acl_rule",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/add_acl_rule/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "unmapped_inputs": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "modify_acl_rule",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/modify_acl_rule/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "log",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "modify_acl_rule",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/modify_acl_rule/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_action",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "source_prefix"
+      ],
+      "unmapped_inputs": [
+        "acl_action",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "source_prefix"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "modify_acl_rule",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/modify_acl_rule/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "unmapped_inputs": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "delete_acl_rule",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/delete_acl_rule/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "delete_acl_rule",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/delete_acl_rule/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "unmapped_inputs": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "delete_acl_rule",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/delete_acl_rule/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "unmapped_inputs": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "apply_acl_to_interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/apply_acl_to_interface/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "acl_name",
+        "direction",
+        "interface"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "apply_acl_to_interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/apply_acl_to_interface/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_name",
+        "direction",
+        "interface"
+      ],
+      "unmapped_inputs": [
+        "acl_name",
+        "direction",
+        "interface"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "apply_acl_to_interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/apply_acl_to_interface/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "acl_name",
+        "direction",
+        "interface"
+      ],
+      "unmapped_inputs": [
+        "acl_name",
+        "direction",
+        "interface"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_qos_policy",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/create_qos_policy/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_qos_policy",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/create_qos_policy/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "unmapped_inputs": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Forwarding-class/queue definitions and scheduler-map attachment are dependencies, not inferred inputs.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_qos_policy",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/create_qos_policy/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "unmapped_inputs": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "References traffic behaviors without defining/verifying their bandwidth actions.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_classifier",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/create_classifier/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "classifier_name",
+        "dscp_values",
+        "match_mode"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_classifier",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/create_classifier/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "classifier_name",
+        "dscp_values",
+        "forwarding_class"
+      ],
+      "unmapped_inputs": [
+        "classifier_name",
+        "dscp_values",
+        "forwarding_class"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "create_classifier",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/create_classifier/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "classifier_name",
+        "dscp_values",
+        "match_mode"
+      ],
+      "unmapped_inputs": [
+        "classifier_name",
+        "dscp_values",
+        "match_mode"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "classify_by_dscp",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/classify_by_dscp/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "classify_by_dscp",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/classify_by_dscp/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "classifier_name",
+        "dscp_values",
+        "forwarding_class",
+        "previous_dscp_values"
+      ],
+      "unmapped_inputs": [
+        "classifier_name",
+        "dscp_values",
+        "forwarding_class",
+        "previous_dscp_values"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "classify_by_dscp",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/classify_by_dscp/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ],
+      "unmapped_inputs": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_scheduler",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/configure_scheduler/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "bandwidth_bps",
+        "classifier_name",
+        "policy_name"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_scheduler",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/configure_scheduler/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "bandwidth_bps",
+        "classifier_name",
+        "policy_name"
+      ],
+      "unmapped_inputs": [
+        "bandwidth_bps",
+        "classifier_name",
+        "policy_name"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_scheduler",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/configure_scheduler/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "bandwidth_kbps",
+        "classifier_name",
+        "policy_name"
+      ],
+      "unmapped_inputs": [
+        "bandwidth_kbps",
+        "classifier_name",
+        "policy_name"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_shaping",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/configure_shaping/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "policy_name",
+        "rate_bps"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_shaping",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/configure_shaping/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "interface",
+        "rate_bps"
+      ],
+      "unmapped_inputs": [
+        "interface",
+        "rate_bps"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Junos shaping is egress; a generic direction parameter cannot imply ingress shaping support.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_shaping",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/configure_shaping/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "direction",
+        "interface",
+        "rate_kbps"
+      ],
+      "unmapped_inputs": [
+        "direction",
+        "interface",
+        "rate_kbps"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Direction tokens, units and qos lr availability require a VRP platform contract.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_policing",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/configure_policing/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "burst_bytes",
+        "exceed_action",
+        "interface",
+        "policy_name",
+        "rate_bps"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_policing",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/configure_policing/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "burst_bytes",
+        "policy_name",
+        "rate_bps"
+      ],
+      "unmapped_inputs": [
+        "burst_bytes",
+        "policy_name",
+        "rate_bps"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Creates a policer but does not attach it; ignores requested exceed_action and direction.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": [
+        "https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/statement/policer-edit-firewall.html"
+      ]
+    },
+    {
+      "operation_id": "configure_policing",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/configure_policing/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "burst_bytes",
+        "exceed_action",
+        "policy_name",
+        "rate_kbps"
+      ],
+      "unmapped_inputs": [
+        "burst_bytes",
+        "exceed_action",
+        "policy_name",
+        "rate_kbps"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Creates a behavior without classifier/policy/interface attachment; action mapping requires validation.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "apply_qos_policy_to_interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/apply_qos_policy_to_interface/cisco.j2",
+      "source": "published_cli_copy",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": true,
+      "template_variables": [
+        "interface",
+        "policy_name"
+      ],
+      "unmapped_inputs": [],
+      "runtime_native": "existing_published_binding",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "reference_review": "retained_published_copy",
+      "publication_blockers": [],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "apply_qos_policy_to_interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/apply_qos_policy_to_interface/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "interface",
+        "policy_name"
+      ],
+      "unmapped_inputs": [
+        "interface",
+        "policy_name"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Scheduler map attachment is egress; requested ingress policy cannot be silently translated.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "apply_qos_policy_to_interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/apply_qos_policy_to_interface/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "direction",
+        "interface",
+        "policy_name"
+      ],
+      "unmapped_inputs": [
+        "direction",
+        "interface",
+        "policy_name"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_login_banner",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_banner/cisco.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "login_banner_text"
+      ],
+      "unmapped_inputs": [
+        "login_banner_text"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_login_banner",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_banner/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "login_banner_text"
+      ],
+      "unmapped_inputs": [
+        "login_banner_text"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_login_banner",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_banner/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "login_banner_text"
+      ],
+      "unmapped_inputs": [
+        "login_banner_text"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_exec_timeout",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/management_plane_security/configure_exec_timeout/cisco.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "exec_timeout_minutes",
+        "exec_timeout_seconds"
+      ],
+      "unmapped_inputs": [
+        "exec_timeout_minutes",
+        "exec_timeout_seconds"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_exec_timeout",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/management_plane_security/configure_exec_timeout/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "exec_timeout_minutes",
+        "login_class"
+      ],
+      "unmapped_inputs": [
+        "exec_timeout_minutes",
+        "login_class"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Junos login-class timeout uses minutes; IOS seconds and class membership need explicit handling.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_exec_timeout",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/management_plane_security/configure_exec_timeout/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "exec_timeout_minutes",
+        "exec_timeout_seconds"
+      ],
+      "unmapped_inputs": [
+        "exec_timeout_minutes",
+        "exec_timeout_seconds"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_login_lockout",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_lockout/cisco.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "login_block_seconds",
+        "login_failure_attempts",
+        "login_failure_window_seconds"
+      ],
+      "unmapped_inputs": [
+        "login_block_seconds",
+        "login_failure_attempts",
+        "login_failure_window_seconds"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_login_lockout",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_lockout/juniper.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "lockout_minutes",
+        "login_failure_attempts"
+      ],
+      "unmapped_inputs": [
+        "lockout_minutes",
+        "login_failure_attempts"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Disconnect attempts and lockout duration do not reproduce the IOS failure-window policy.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    },
+    {
+      "operation_id": "configure_login_lockout",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_lockout/huawei.j2",
+      "source": "new_translation_draft",
+      "jinja_parse": "passed",
+      "hash_matches": true,
+      "published_copy_matches": false,
+      "template_variables": [
+        "reviewed_aaa_lockout_commands"
+      ],
+      "unmapped_inputs": [
+        "reviewed_aaa_lockout_commands"
+      ],
+      "runtime_native": "unsupported",
+      "platform": null,
+      "versions": [],
+      "reference_review": "requires_engineering_review",
+      "publication_blockers": [
+        "Placeholder reviewed_aaa_lockout_commands is not an implementation of lockout semantics.",
+        "No reviewed vendor input contract, compatibility profile or validation evidence accompanies this draft.",
+        "Operation is absent from the ordinary release; isolated test knowledge is not adopted."
+      ],
+      "semantic_certification": "not_established_by_this_audit",
+      "ansible_variant": "unsupported_no_verified_variant",
+      "device_testing": "not_run",
+      "sources": []
+    }
+  ]
+}

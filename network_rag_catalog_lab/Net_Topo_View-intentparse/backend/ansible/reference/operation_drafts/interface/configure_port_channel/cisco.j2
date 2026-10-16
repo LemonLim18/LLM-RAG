@@ -1,0 +1,13 @@
+{# Editable reference draft: cisco / configure_port_channel. Verify syntax, dependencies and device suitability before use. #}
+interface {{ aggregate_interface }}
+ no switchport
+{% if description is not none %}
+ description {{ description }}
+{% endif +%}
+ exit
+{% for member in member_interfaces %}
+interface {{ member }}
+ channel-group {{ aggregate_interface[12:] }} mode {{ lacp_mode }}
+ exit
+{% endfor %}
+

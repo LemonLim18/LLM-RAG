@@ -1,0 +1,5 @@
+{# Editable reference draft: cisco / create_classifier. Verify syntax, dependencies and device suitability before use. #}
+class-map match-{{ match_mode }} {{ classifier_name }}
+ match dscp {{ dscp_values | join(' ') }}
+ exit
+

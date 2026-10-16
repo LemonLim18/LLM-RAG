@@ -58,6 +58,8 @@ async def lifespan(app):
                 source.backup(target)
     db = DatabaseManager(str(DB_PATH))
     db.initialize()
+    from llm.gateway_store import ensure_schema
+    ensure_schema(db)
     network.set_db_manager(db)
     # The original route modules use module-level paths/managers. In local mode
     # they point at the same canonical SQLite authority, never a remote adapter.
@@ -81,7 +83,7 @@ app = FastAPI(title='CogniShield Backend — Local Lab', lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=[
     'http://localhost:5173', 'http://127.0.0.1:5173',
     'http://localhost:4173', 'http://127.0.0.1:4173',
-], allow_methods=['*'], allow_headers=['*'])
+], allow_methods=['*'], allow_headers=['*'], allow_private_network=True)
 
 @app.exception_handler(sqlite3.IntegrityError)
 async def conflict(request, exc):
@@ -97,6 +99,8 @@ from environment_api import router as environment_router
 app.include_router(environment_router)
 from local_providers.settings_api import router as local_settings_router
 app.include_router(local_settings_router)
+from llm.gateway_api import router as ai_router, require_ai_user
+app.include_router(ai_router)
 include_local(inventory.router, lambda r: (
     r.path.startswith('/devices') and not r.path.endswith('/push')
     or r.path.startswith('/links')
@@ -448,9 +452,9 @@ def stored_jobs():
         return [dict(r) for r in c.execute('SELECT * FROM jobs ORDER BY id DESC')]
 
 @app.get('/api/v1/ansible/chat-sessions')
-def chat_sessions(user=Depends(require_any)):
+def chat_sessions(user=Depends(require_ai_user)):
     with db._connect() as c:
-        rows = c.execute('SELECT * FROM ansible_chat_sessions WHERE owner_username=? ORDER BY updated_at DESC', (user['username'],)).fetchall()
+        rows = c.execute("SELECT * FROM ansible_chat_sessions WHERE owner_username=? AND assistant_kind='studio' ORDER BY updated_at DESC", (user['username'],)).fetchall()
         return {'sessions': [{'id': r['id'], 'title': r['title'], 'messages': json.loads(r['messages_json']), 'updatedAt': r['updated_at']} for r in rows]}
 
 class FileContent(BaseModel):
@@ -462,23 +466,24 @@ class ChatSessionBody(BaseModel):
     messages: list[dict] = Field(max_length=1000)
 
 @app.put('/api/v1/ansible/chat-sessions/{session_id}')
-def save_chat_session(session_id: str, body: ChatSessionBody, user=Depends(require_any)):
+def save_chat_session(session_id: str, body: ChatSessionBody, user=Depends(require_ai_user)):
     if session_id!=body.id: raise HTTPException(422,'Session ID mismatch')
     encoded=json.dumps(body.messages)
     if len(encoded)>2000000: raise HTTPException(422,'Conversation exceeds 2 MB')
     with db._connect() as c:
-        existing=c.execute('SELECT owner_username FROM ansible_chat_sessions WHERE id=?',(session_id,)).fetchone()
+        existing=c.execute('SELECT owner_username,assistant_kind FROM ansible_chat_sessions WHERE id=?',(session_id,)).fetchone()
         if existing and existing[0]!=user['username']: raise HTTPException(403,'Conversation belongs to another account')
+        if existing and existing[1]!='studio': raise HTTPException(404,'Studio conversation not found')
         c.execute("INSERT INTO ansible_chat_sessions(id,owner_username,title,messages_json) VALUES (?,?,?,?) ON CONFLICT(id) DO UPDATE SET title=excluded.title,messages_json=excluded.messages_json,updated_at=datetime('now')",(session_id,user['username'],body.title,encoded))
     return {'session':next(s for s in chat_sessions(user)['sessions'] if s['id']==session_id),'source':'stored'}
 
 @app.delete('/api/v1/ansible/chat-sessions/{session_id}')
-def delete_chat_session(session_id: str, user=Depends(require_any)):
-    with db._connect() as c:
-        c.execute('DELETE FROM ansible_chat_sessions WHERE id=? AND owner_username=?',(session_id,user['username']))
+def delete_chat_session(session_id: str, user=Depends(require_ai_user)):
+    from llm.gateway_store import ConversationStore
+    ConversationStore(db).delete(session_id, user['username'], 'studio')
     return {'deleted':session_id}
 
-@app.get('/api/v1/llm/chat/runtime', dependencies=[Depends(require_any)])
+@app.get('/api/v1/llm/chat/runtime', dependencies=[Depends(require_ai_user)])
 async def local_chat_runtime():
     from local_providers.chat import runtime
     return await runtime()
@@ -494,9 +499,8 @@ class RuntimeSelection(BaseModel):
     ollama_base_url: str | None = None
     clear_history: bool = False
 
-@app.post('/api/v1/llm/chat/runtime', dependencies=[Depends(require_engineer)])
+@app.post('/api/v1/llm/chat/runtime', dependencies=[Depends(require_ai_user),Depends(require_engineer)])
 async def select_local_model(body: RuntimeSelection):
-    import os
     from local_providers.chat import runtime
     from lab_config import LOCAL_OLLAMA_URL
     state = await runtime()
@@ -504,8 +508,9 @@ async def select_local_model(body: RuntimeSelection):
         raise HTTPException(422, 'Select an installed Ollama chat model')
     if body.ollama_base_url and body.ollama_base_url.rstrip('/') != LOCAL_OLLAMA_URL:
         raise HTTPException(422, 'Set COGNISHIELD_LOCAL_OLLAMA_URL in .env and restart to change the inference endpoint')
-    os.environ['COGNISHIELD_LOCAL_OLLAMA_MODEL'] = body.model
-    return await runtime()
+    # Compatibility facade: selections belong to the caller's request, never
+    # mutate the model configured for another user or assistant.
+    return {**state,'active_model':body.model,'scope':'request','selection_persisted':False}
 
 class AnalysisBody(BaseModel):
     playbook_content: str = Field(min_length=1, max_length=100000)
@@ -520,7 +525,7 @@ class AnalysisResult(BaseModel):
     operational_level: str
     operational_explanation: str
 
-@app.post('/api/v1/llm/chat/playbook/analyze', dependencies=[Depends(require_any)])
+@app.post('/api/v1/llm/chat/playbook/analyze', dependencies=[Depends(require_ai_user)])
 async def analyze_local_change(body: AnalysisBody):
     from local_providers.chat import generate
     from pydantic import ValidationError
@@ -555,7 +560,7 @@ def review_content(request_id: int):
         if text: sections.append(text)
     return {'content': '\n\n'.join(sections), 'source': 'stored'}
 
-@app.post('/api/v1/llm/chat/playbook/qa', dependencies=[Depends(require_any)])
+@app.post('/api/v1/llm/chat/playbook/qa', dependencies=[Depends(require_ai_user)])
 async def local_chat(body: LocalChatBody):
     from local_providers.chat import answer
     return await answer(body.question,body.playbook_content,body.history)

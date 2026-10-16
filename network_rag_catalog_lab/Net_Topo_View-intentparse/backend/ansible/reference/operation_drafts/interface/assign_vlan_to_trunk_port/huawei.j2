@@ -1,0 +1,5 @@
+{# Editable reference draft: huawei / assign_vlan_to_trunk_port. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+{% for vlan in allowed_vlans %} port trunk allow-pass vlan {{ vlan }}
+{% endfor %} quit
+

@@ -1,3 +1,4 @@
+import { languageForDocument } from '../src/monacoLanguages';
 ﻿import React, { useState, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
 import { PackagePlus, Download, RefreshCw, ChevronLeft, ChevronDown, ChevronUp, Terminal, Maximize2, Minimize2, Copy, Check, Lightbulb, X } from 'lucide-react';
@@ -753,7 +754,7 @@ const OnboardingView: React.FC<{ setView: (id: ViewId) => void }> = ({ setView }
                 <div className="rounded-lg overflow-hidden border border-base-300 transition-all duration-300" style={{ height: isFullWidth ? '700px' : '480px' }}>
                   <Editor
                      height={isFullWidth ? '700px' : '480px'}
-                    defaultLanguage="shell"
+                    language={languageForDocument("device.cfg", config)}
                     theme="vs-dark"
                     value={config}
                     onChange={(val) => setConfig(val ?? '')}

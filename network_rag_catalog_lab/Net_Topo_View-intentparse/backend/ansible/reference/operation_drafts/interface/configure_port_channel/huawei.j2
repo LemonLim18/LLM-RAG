@@ -1,0 +1,8 @@
+{# Editable reference draft: huawei / configure_port_channel. Verify syntax, dependencies and device suitability before use. #}
+interface {{ aggregate_interface }}
+ mode lacp-static
+quit
+{% for member in member_interfaces %}interface {{ member }}
+ eth-trunk {{ aggregate_id }}
+quit
+{% endfor %}{# Verify VRP LACP mode and aggregate numbering. #}

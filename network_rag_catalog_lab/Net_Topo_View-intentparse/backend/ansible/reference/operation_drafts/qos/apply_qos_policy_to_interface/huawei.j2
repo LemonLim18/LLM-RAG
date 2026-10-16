@@ -1,0 +1,4 @@
+{# Editable reference draft: huawei / apply_qos_policy_to_interface. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+ traffic-policy {{ policy_name }} {{ "inbound" if direction in ["in","input","inbound"] else "outbound" }}
+quit

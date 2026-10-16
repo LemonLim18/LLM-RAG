@@ -5,12 +5,17 @@ from fastapi import HTTPException
 from lab_config import LOCAL_OLLAMA_URL, LOCAL_OLLAMA_MODEL
 from llm.provider import LLMMessage
 
+def is_document_only_model(name):
+    """OCR decoders advertise completion/vision too; those flags do not imply chat."""
+    configured=os.getenv('COGNISHIELD_OCR_MODEL','')
+    return 'ocr' in name.casefold() or bool(configured and name.casefold()==configured.casefold())
+
 async def runtime():
     try:
         async with httpx.AsyncClient(timeout=5, trust_env=False) as client:
             response=await client.get(LOCAL_OLLAMA_URL+'/api/tags')
             response.raise_for_status()
-            models=[m['name'] for m in response.json().get('models',[]) if 'embed' not in m['name'].lower()]
+            models=[m['name'] for m in response.json().get('models',[]) if 'embed' not in m['name'].lower() and not is_document_only_model(m['name'])]
         configured = os.getenv('COGNISHIELD_LOCAL_OLLAMA_MODEL', LOCAL_OLLAMA_MODEL)
         model=configured if configured!='auto' else (models[0] if models else '')
         available=model in models
@@ -21,25 +26,25 @@ async def runtime():
         'providers':[{'name':'ollama','label':'Local Ollama','base_url':LOCAL_OLLAMA_URL,'models':models,'available':available,'reachable':bool(models),'error':error}],
         'source':'real','scope':'process','execution_available':False}
 
-async def generate(messages, structured=False):
+async def generate(messages, structured=False, model=None):
     state = await runtime()
-    if not state['providers'][0]['available']:
+    if not state['providers'][0]['models'] or (model is None and not state['providers'][0]['available']):
         raise HTTPException(503, state['providers'][0]['error'])
-    payload = {'model': state['active_model'], 'messages': messages, 'stream': False,
-               'options': {'temperature': 0.2, 'num_predict': 1800}}
-    if structured:
-        payload['format'] = 'json'
+    selected = model or state['active_model']
+    if selected not in state['providers'][0]['models']:
+        raise HTTPException(422, 'Select an installed local chat model')
+    from llm.ollama_provider import OllamaProvider
+    provider = OllamaProvider(base_url=LOCAL_OLLAMA_URL, model=selected, timeout=180,
+        response_format=('json' if structured is True else structured or None), max_output_tokens=4096 if structured else 1536,
+        context_tokens=8192 if sum(len(message['content']) for message in messages)<24000 else 16384)
     try:
-        # Local inference must bypass corporate/VM proxy environment settings.
-        async with httpx.AsyncClient(timeout=180, trust_env=False) as client:
-            response = await client.post(LOCAL_OLLAMA_URL + '/api/chat', json=payload)
-            response.raise_for_status()
-            content = response.json()['message']['content'].strip()
-    except (httpx.HTTPError, ValueError, KeyError) as exc:
+        response = await provider.generate([LLMMessage(role=m['role'], content=m['content'], images=m.get('images',[])) for m in messages], temperature=0 if structured else 0.2)
+        content = response.content.strip()
+    except (httpx.HTTPError, ValueError, KeyError, ConnectionError, RuntimeError) as exc:
         raise HTTPException(502, 'Local Ollama inference failed. Check the configured endpoint and installed model; no artificial reply was substituted.') from exc
     if not content:
         raise HTTPException(502, 'Local Ollama returned an empty answer')
-    return content, state['active_model']
+    return content, selected
 
 async def answer(question, content, history):
     state=await runtime()

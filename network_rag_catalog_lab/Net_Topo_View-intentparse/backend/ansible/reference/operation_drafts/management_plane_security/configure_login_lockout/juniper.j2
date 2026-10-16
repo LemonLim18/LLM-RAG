@@ -1,0 +1,4 @@
+{# Editable reference draft: juniper / configure_login_lockout. Verify syntax, dependencies and device suitability before use. #}
+set system login retry-options tries-before-disconnect {{ login_failure_attempts }}
+set system login retry-options lockout-period {{ lockout_minutes }}
+{# Review seconds-to-minutes policy and failure-window semantics. #}

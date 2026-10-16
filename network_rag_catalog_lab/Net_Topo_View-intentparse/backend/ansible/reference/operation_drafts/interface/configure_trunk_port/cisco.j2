@@ -1,0 +1,9 @@
+{# Editable reference draft: cisco / configure_trunk_port. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+ switchport mode trunk
+ switchport trunk allowed vlan {{ allowed_vlans | join(',') }}
+{% if native_vlan is not none %}
+ switchport trunk native vlan {{ native_vlan }}
+{% endif +%}
+ exit
+

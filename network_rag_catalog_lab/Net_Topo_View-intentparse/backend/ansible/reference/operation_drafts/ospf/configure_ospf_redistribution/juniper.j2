@@ -1,0 +1,6 @@
+{# Editable reference draft: juniper / configure_ospf_redistribution. Verify syntax, dependencies and device suitability before use. #}
+set policy-options policy-statement {{ route_policy }} term EXPORT from protocol {{ "direct" if redistribution_source == "connected" else redistribution_source }}
+set policy-options policy-statement {{ route_policy }} term EXPORT then metric {{ ospf_metric }}
+set policy-options policy-statement {{ route_policy }} term EXPORT then external type {{ metric_type }}
+set policy-options policy-statement {{ route_policy }} term EXPORT then accept
+set protocols ospf export {{ route_policy }}

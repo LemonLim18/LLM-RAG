@@ -1,0 +1,3535 @@
+{
+  "format_version": 1,
+  "purpose": "Editable references; not a runtime operation catalog or publication.",
+  "ordinary_release": "0690966eb003499380e960a98d1e418f",
+  "operation_count": 47,
+  "templates": [
+    {
+      "operation_id": "create_vlan",
+      "category_id": "vlan",
+      "label": "Create VLAN",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/vlan/create_vlan/cisco.j2",
+      "variables": [
+        "name",
+        "vlan_id"
+      ],
+      "sha256": "3993c395efd1c51affb9a88355736ed7336f6c682f916352522efa8d2bafc02b",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/0/template.j2",
+      "input_contract": {
+        "fields": [
+          "vlan_id",
+          "name"
+        ],
+        "optional_defaults": {
+          "name": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_vlan",
+      "category_id": "vlan",
+      "label": "Create VLAN",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/vlan/create_vlan/juniper.j2",
+      "variables": [
+        "name",
+        "vlan_id"
+      ],
+      "sha256": "8a1e7337f94d999359ea19190e6487d20a49f54ea440b2d32ba1d6ca2b060e5a",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/2/template.j2",
+      "input_contract": {
+        "fields": [
+          "vlan_id",
+          "name"
+        ],
+        "optional_defaults": {
+          "name": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_vlan",
+      "category_id": "vlan",
+      "label": "Create VLAN",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/vlan/create_vlan/huawei.j2",
+      "variables": [
+        "name",
+        "vlan_id"
+      ],
+      "sha256": "a7b255e45db03dfefd46162c066ec3dea8f520272833f95c59adc57e70fb9566",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/1/template.j2",
+      "input_contract": {
+        "fields": [
+          "vlan_id",
+          "name"
+        ],
+        "optional_defaults": {
+          "name": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "delete_vlan",
+      "category_id": "vlan",
+      "label": "Delete VLAN",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/vlan/delete_vlan/cisco.j2",
+      "variables": [
+        "vlan_id"
+      ],
+      "sha256": "40a4d9dd18ef5ed3abbf633df95d81b510aae70a22b944cf4437ec304babf198",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/3/template.j2",
+      "input_contract": {
+        "fields": [
+          "vlan_id",
+          "name"
+        ],
+        "optional_defaults": {
+          "name": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "delete_vlan",
+      "category_id": "vlan",
+      "label": "Delete VLAN",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/vlan/delete_vlan/juniper.j2",
+      "variables": [
+        "name"
+      ],
+      "sha256": "c1350afe4608f95a7f947a901278e9a009b37608021cae0c6b88cbfc54486a2b",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/5/template.j2",
+      "input_contract": {
+        "fields": [
+          "vlan_id",
+          "name"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "delete_vlan",
+      "category_id": "vlan",
+      "label": "Delete VLAN",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/vlan/delete_vlan/huawei.j2",
+      "variables": [
+        "vlan_id"
+      ],
+      "sha256": "8b006c4522e0f60972a1faa7edef8dde329899043a14c9ef52e7ddec484376d8",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/4/template.j2",
+      "input_contract": {
+        "fields": [
+          "vlan_id",
+          "name"
+        ],
+        "optional_defaults": {
+          "name": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_ospf",
+      "category_id": "ospf",
+      "label": "Configure OSPF",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/configure_ospf/cisco.j2",
+      "variables": [
+        "interfaces",
+        "process_id",
+        "router_id"
+      ],
+      "sha256": "b53ffeb270a540e0191613e65683d55ab1fe83ad33b5dccb26c9d7a6ca1de438",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/6/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "router_id",
+          "interfaces"
+        ],
+        "optional_defaults": {
+          "router_id": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_ospf",
+      "category_id": "ospf",
+      "label": "Configure OSPF",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/configure_ospf/juniper.j2",
+      "variables": [
+        "interfaces",
+        "router_id"
+      ],
+      "sha256": "557900d5dc0b7a136b3cbc62ee303a200efd52d4d4607f07831829e981cda32a",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/8/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "router_id",
+          "interfaces"
+        ],
+        "optional_defaults": {
+          "process_id": null,
+          "router_id": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_ospf",
+      "category_id": "ospf",
+      "label": "Configure OSPF",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/configure_ospf/huawei.j2",
+      "variables": [
+        "interfaces",
+        "process_id",
+        "router_id"
+      ],
+      "sha256": "ca2eeee6172dce2f6d2fc0af72f81de305b793343808977ce5382fe1c34afc1f",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/7/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "router_id",
+          "interfaces"
+        ],
+        "optional_defaults": {
+          "router_id": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_ospf_interface",
+      "category_id": "ospf",
+      "label": "Remove OSPF From Interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/remove_ospf_interface/cisco.j2",
+      "variables": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "sha256": "c777ff17ea53d290a713988031e61737c088d55c39cff29d736de9fd502afc7a",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/9/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "interface",
+          "area"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_ospf_interface",
+      "category_id": "ospf",
+      "label": "Remove OSPF From Interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/remove_ospf_interface/juniper.j2",
+      "variables": [
+        "area",
+        "interface"
+      ],
+      "sha256": "210bde1481d0add2eba2414ed51fb03c83bef9ecae12224b3f7f4045458e6a13",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/11/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "interface",
+          "area"
+        ],
+        "optional_defaults": {
+          "process_id": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_ospf_interface",
+      "category_id": "ospf",
+      "label": "Remove OSPF From Interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/remove_ospf_interface/huawei.j2",
+      "variables": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "sha256": "3bd8129c8477eba98a54af0420714c2d4c88ba395bbcc21c20150b04c609a15a",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/10/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "interface",
+          "area"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_bgp_neighbor",
+      "category_id": "bgp",
+      "label": "Configure BGP Neighbor",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/bgp/configure_bgp_neighbor/cisco.j2",
+      "variables": [
+        "description",
+        "local_as",
+        "neighbor_ip",
+        "remote_as"
+      ],
+      "sha256": "9177ef661495495f09211163490aba814b1a4b0f33c18a7a8316c3235ace90c3",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/12/template.j2",
+      "input_contract": {
+        "fields": [
+          "local_as",
+          "neighbor_ip",
+          "remote_as",
+          "description",
+          "peer_group"
+        ],
+        "optional_defaults": {
+          "description": null,
+          "peer_group": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_bgp_neighbor",
+      "category_id": "bgp",
+      "label": "Configure BGP Neighbor",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/bgp/configure_bgp_neighbor/juniper.j2",
+      "variables": [
+        "description",
+        "local_as",
+        "neighbor_ip",
+        "peer_group",
+        "remote_as"
+      ],
+      "sha256": "38df89ff19e57733357fca0a6d330d70501b896822a6b90b178e630decf2a0d2",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/14/template.j2",
+      "input_contract": {
+        "fields": [
+          "local_as",
+          "neighbor_ip",
+          "remote_as",
+          "description",
+          "peer_group"
+        ],
+        "optional_defaults": {
+          "description": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_bgp_neighbor",
+      "category_id": "bgp",
+      "label": "Configure BGP Neighbor",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/bgp/configure_bgp_neighbor/huawei.j2",
+      "variables": [
+        "description",
+        "local_as",
+        "neighbor_ip",
+        "remote_as"
+      ],
+      "sha256": "5eb2a9f39a3b4a39c2ac59e1500ecd5a241e27ffb9b68ac1d0183cd4f5bdcf3c",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/13/template.j2",
+      "input_contract": {
+        "fields": [
+          "local_as",
+          "neighbor_ip",
+          "remote_as",
+          "description",
+          "peer_group"
+        ],
+        "optional_defaults": {
+          "description": null,
+          "peer_group": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_bgp_neighbor",
+      "category_id": "bgp",
+      "label": "Remove BGP Neighbor",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/bgp/remove_bgp_neighbor/cisco.j2",
+      "variables": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as"
+      ],
+      "sha256": "2def6cbadc34fd3857eb7828162e64cc142d14a1bda8e08b146699a926570f14",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/15/template.j2",
+      "input_contract": {
+        "fields": [
+          "local_as",
+          "neighbor_ip",
+          "remote_as",
+          "peer_group"
+        ],
+        "optional_defaults": {
+          "peer_group": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_bgp_neighbor",
+      "category_id": "bgp",
+      "label": "Remove BGP Neighbor",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/bgp/remove_bgp_neighbor/juniper.j2",
+      "variables": [
+        "neighbor_ip",
+        "peer_group"
+      ],
+      "sha256": "4f84534cfb92e9466f69e88f26bd255375e17255ed55dff968530b410125b48e",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/17/template.j2",
+      "input_contract": {
+        "fields": [
+          "local_as",
+          "neighbor_ip",
+          "remote_as",
+          "peer_group"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_bgp_neighbor",
+      "category_id": "bgp",
+      "label": "Remove BGP Neighbor",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/bgp/remove_bgp_neighbor/huawei.j2",
+      "variables": [
+        "local_as",
+        "neighbor_ip",
+        "remote_as"
+      ],
+      "sha256": "ffeef7d247a594cb299e0a90995170ddf56b32cf4471dc29b41b3dc63a774c26",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/16/template.j2",
+      "input_contract": {
+        "fields": [
+          "local_as",
+          "neighbor_ip",
+          "remote_as",
+          "peer_group"
+        ],
+        "optional_defaults": {
+          "peer_group": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_isis_interface",
+      "category_id": "isis",
+      "label": "Configure IS-IS Interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/isis/configure_isis_interface/cisco.j2",
+      "variables": [
+        "interface",
+        "level",
+        "process_name"
+      ],
+      "sha256": "94d5456fd47f826b6c9f63582c64cca7db60b481b33dad736b88eadbe3b73ec9",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/18/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_name",
+          "interface",
+          "level"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_isis_interface",
+      "category_id": "isis",
+      "label": "Configure IS-IS Interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/isis/configure_isis_interface/juniper.j2",
+      "variables": [
+        "interface",
+        "level"
+      ],
+      "sha256": "a1cd146e99a0b9f3fefcee3eb0f15f5dbb7b1c5fa988116fa88715f9980e8712",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/20/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_name",
+          "interface",
+          "level"
+        ],
+        "optional_defaults": {
+          "process_name": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_isis_interface",
+      "category_id": "isis",
+      "label": "Configure IS-IS Interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/isis/configure_isis_interface/huawei.j2",
+      "variables": [
+        "interface",
+        "level",
+        "process_name"
+      ],
+      "sha256": "cb4f9150a02b1974bc3cdfb69a6454bd1f1522820be2f267d27759bdd0ab0aaa",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/19/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_name",
+          "interface",
+          "level"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "disable_isis_interface",
+      "category_id": "isis",
+      "label": "Disable IS-IS Interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/isis/disable_isis_interface/cisco.j2",
+      "variables": [
+        "interface",
+        "process_name"
+      ],
+      "sha256": "5b96c92fb5a1885cb12ca4e0dc4b072e50cd5e2eb5223978c39fa36e9ab91072",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/21/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_name",
+          "interface"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "disable_isis_interface",
+      "category_id": "isis",
+      "label": "Disable IS-IS Interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/isis/disable_isis_interface/juniper.j2",
+      "variables": [
+        "interface"
+      ],
+      "sha256": "b807277cf456e36c70357fcc319a492c89c6710f9a5e021346d24d67c89eccc6",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/23/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_name",
+          "interface"
+        ],
+        "optional_defaults": {
+          "process_name": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "disable_isis_interface",
+      "category_id": "isis",
+      "label": "Disable IS-IS Interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/isis/disable_isis_interface/huawei.j2",
+      "variables": [
+        "interface"
+      ],
+      "sha256": "05e37887e39a9837e73868e68245d081d86737208b92073b37f47c16acc73154",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/22/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_name",
+          "interface"
+        ],
+        "optional_defaults": {
+          "process_name": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_static_route",
+      "category_id": "static_routing",
+      "label": "Configure Static Route",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/static_routing/configure_static_route/cisco.j2",
+      "variables": [
+        "destination_address",
+        "destination_mask",
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "04ec4bc57da479b81a1f6afb04f15f790a8570b84806f7ea29160adb5932c990",
+      "status": "reference_draft",
+      "source": "published_cli_adaptation",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/24/template.j2",
+      "input_contract": {
+        "fields": [
+          "destination",
+          "next_hop",
+          "preference"
+        ],
+        "optional_defaults": {
+          "preference": null
+        },
+        "derived": {
+          "destination_address": "destination_address_v1",
+          "destination_mask": "destination_mask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_static_route",
+      "category_id": "static_routing",
+      "label": "Configure Static Route",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/static_routing/configure_static_route/juniper.j2",
+      "variables": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "1e9adab0a63dd467a91480049f659fde4bc7ff1e59fce43c450f4401d0d5631d",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/26/template.j2",
+      "input_contract": {
+        "fields": [
+          "destination",
+          "next_hop",
+          "preference"
+        ],
+        "optional_defaults": {
+          "preference": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_static_route",
+      "category_id": "static_routing",
+      "label": "Configure Static Route",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/static_routing/configure_static_route/huawei.j2",
+      "variables": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "fd8a14d362c76a347fb570f19076b7d36a2b43bd00624c9e44b0622e5114188f",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/25/template.j2",
+      "input_contract": {
+        "fields": [
+          "destination",
+          "next_hop",
+          "preference"
+        ],
+        "optional_defaults": {
+          "preference": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_static_route",
+      "category_id": "static_routing",
+      "label": "Remove Static Route",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/static_routing/remove_static_route/cisco.j2",
+      "variables": [
+        "destination",
+        "next_hop"
+      ],
+      "sha256": "323b431e450e51c9ba4e074f82083186488fffbbbffa4a1710567d1d51f61868",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/27/template.j2",
+      "input_contract": {
+        "fields": [
+          "destination",
+          "next_hop"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_static_route",
+      "category_id": "static_routing",
+      "label": "Remove Static Route",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/static_routing/remove_static_route/juniper.j2",
+      "variables": [
+        "destination",
+        "next_hop"
+      ],
+      "sha256": "1f2bed0eea9808670618792da668d4d9c6fb2ab6af004e4ec8bd69359123b02f",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/29/template.j2",
+      "input_contract": {
+        "fields": [
+          "destination",
+          "next_hop"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_static_route",
+      "category_id": "static_routing",
+      "label": "Remove Static Route",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/static_routing/remove_static_route/huawei.j2",
+      "variables": [
+        "destination",
+        "next_hop"
+      ],
+      "sha256": "b3cebcb4090145501d5c4e86ea41fb980c05e72366d1f38ac8c1f826a9af5220",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/28/template.j2",
+      "input_contract": {
+        "fields": [
+          "destination",
+          "next_hop"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_interface_ip",
+      "category_id": "ip_address",
+      "label": "Configure Interface IPv4 Address",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ip_address/configure_interface_ip/cisco.j2",
+      "variables": [
+        "address",
+        "admin_up",
+        "interface",
+        "netmask"
+      ],
+      "sha256": "4b031445e9a1f3346f8c8808487745e76be69dece239a9080acdab5b764d2563",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/30/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "address",
+          "prefix_length",
+          "admin_up"
+        ],
+        "optional_defaults": {
+          "admin_up": null
+        },
+        "derived": {
+          "netmask": "ipv4_netmask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_interface_ip",
+      "category_id": "ip_address",
+      "label": "Configure Interface IPv4 Address",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ip_address/configure_interface_ip/juniper.j2",
+      "variables": [
+        "address",
+        "interface",
+        "prefix_length"
+      ],
+      "sha256": "554605c86c36aa35ead0736ce9879ae694f5b010edadd41de4d55acbe111747f",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/32/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "address",
+          "prefix_length",
+          "admin_up"
+        ],
+        "optional_defaults": {
+          "admin_up": null
+        },
+        "derived": {
+          "netmask": "ipv4_netmask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_interface_ip",
+      "category_id": "ip_address",
+      "label": "Configure Interface IPv4 Address",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ip_address/configure_interface_ip/huawei.j2",
+      "variables": [
+        "address",
+        "admin_up",
+        "interface",
+        "netmask"
+      ],
+      "sha256": "0476c6f786cc99a24cd8ca8c614010c29e42f792514233a2956f5e7c80b976ea",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/31/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "address",
+          "prefix_length",
+          "admin_up"
+        ],
+        "optional_defaults": {
+          "admin_up": null
+        },
+        "derived": {
+          "netmask": "ipv4_netmask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_interface_ip",
+      "category_id": "ip_address",
+      "label": "Remove Interface IPv4 Address",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ip_address/remove_interface_ip/cisco.j2",
+      "variables": [
+        "address",
+        "interface",
+        "netmask"
+      ],
+      "sha256": "b27e42f1a8c26a20250d31622301cb5111d1d8e7cd2d8c2b63d248564bc97bd2",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/33/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "address",
+          "prefix_length"
+        ],
+        "optional_defaults": {},
+        "derived": {
+          "netmask": "ipv4_netmask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_interface_ip",
+      "category_id": "ip_address",
+      "label": "Remove Interface IPv4 Address",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ip_address/remove_interface_ip/juniper.j2",
+      "variables": [
+        "address",
+        "interface",
+        "prefix_length"
+      ],
+      "sha256": "b6dfe0ff30a1aa02cf9caed4907fd188b500c6c78a48cc4ba8029eb4a40448f5",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/35/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "address",
+          "prefix_length"
+        ],
+        "optional_defaults": {},
+        "derived": {
+          "netmask": "ipv4_netmask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "remove_interface_ip",
+      "category_id": "ip_address",
+      "label": "Remove Interface IPv4 Address",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ip_address/remove_interface_ip/huawei.j2",
+      "variables": [
+        "address",
+        "interface",
+        "netmask"
+      ],
+      "sha256": "84b5168e176589f835862d907715238bb04ceeb37c2842fb3bd20666c17df815",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/34/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "address",
+          "prefix_length"
+        ],
+        "optional_defaults": {},
+        "derived": {
+          "netmask": "ipv4_netmask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "modify_vlan",
+      "category_id": "vlan",
+      "label": "Modify VLAN",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/vlan/modify_vlan/cisco.j2",
+      "variables": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "sha256": "de8d0ca5b1171e642e8dc3263c58ee5d88861f4466e81573400f98df72226450",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/36/template.j2",
+      "input_contract": {
+        "fields": [
+          "vlan_id",
+          "vlan_status"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "modify_vlan",
+      "category_id": "vlan",
+      "label": "Modify VLAN",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/vlan/modify_vlan/juniper.j2",
+      "variables": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "sha256": "bb065a36d96ebe409f1e15ef6ce60f92ad92d2aa770618c11e33e2f15eec3e52",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "modify_vlan",
+      "category_id": "vlan",
+      "label": "Modify VLAN",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/vlan/modify_vlan/huawei.j2",
+      "variables": [
+        "vlan_id",
+        "vlan_status"
+      ],
+      "sha256": "d551cb6d959acd18b9eb26de2bc9c8015b0e4076f16043d517e72c21a490e934",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "rename_vlan",
+      "category_id": "vlan",
+      "label": "Rename VLAN",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/vlan/rename_vlan/cisco.j2",
+      "variables": [
+        "new_vlan_name",
+        "vlan_id"
+      ],
+      "sha256": "994a9c86c9aa2c351a7dda84190c8d1ec98fbbe49502edd4dc78151358874823",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/37/template.j2",
+      "input_contract": {
+        "fields": [
+          "vlan_id",
+          "new_vlan_name"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "rename_vlan",
+      "category_id": "vlan",
+      "label": "Rename VLAN",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/vlan/rename_vlan/juniper.j2",
+      "variables": [
+        "new_vlan_name",
+        "old_vlan_name"
+      ],
+      "sha256": "ad84d80f6ac32e5818d02168ecc59663e856462836b8bf65fc581f8798295870",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "rename_vlan",
+      "category_id": "vlan",
+      "label": "Rename VLAN",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/vlan/rename_vlan/huawei.j2",
+      "variables": [
+        "new_vlan_name",
+        "vlan_id"
+      ],
+      "sha256": "dc4b8e34eb439c7dbdf531fce9404b5e068361561eedca01517ddb048c8c9d84",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_interface_description",
+      "category_id": "interface",
+      "label": "Set interface description",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/set_interface_description/cisco.j2",
+      "variables": [
+        "description",
+        "interface"
+      ],
+      "sha256": "e75f3bc4f7a08e8c379c6a8745f9df3be2ad5aeea84b25b1f1e3dfd7d7538e0e",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/38/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "description"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_interface_description",
+      "category_id": "interface",
+      "label": "Set interface description",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/set_interface_description/juniper.j2",
+      "variables": [
+        "description",
+        "interface"
+      ],
+      "sha256": "5a474b151377490c1f97308cb6d720e285d54ee8299fce4956f299014439f88b",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/40/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "description"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_interface_description",
+      "category_id": "interface",
+      "label": "Set interface description",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/set_interface_description/huawei.j2",
+      "variables": [
+        "description",
+        "interface"
+      ],
+      "sha256": "a2236907fab085798497afb544d0e019894c3a40be315a6f491db689074ec300",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/39/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "description"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_interface_admin_state",
+      "category_id": "interface",
+      "label": "Set interface admin state",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/set_interface_admin_state/cisco.j2",
+      "variables": [
+        "admin_up",
+        "interface"
+      ],
+      "sha256": "69baa78977af7bd39134736dddf541b073a5b6a28544a621e7c62de9ba2a251d",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/41/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "admin_up"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_interface_admin_state",
+      "category_id": "interface",
+      "label": "Set interface admin state",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/set_interface_admin_state/juniper.j2",
+      "variables": [
+        "admin_up",
+        "interface"
+      ],
+      "sha256": "caafbe7e4b7d5d4e528a8ebcd65bc60531f558e69e6ae52692acdb924275d257",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/43/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "admin_up"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_interface_admin_state",
+      "category_id": "interface",
+      "label": "Set interface admin state",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/set_interface_admin_state/huawei.j2",
+      "variables": [
+        "admin_up",
+        "interface"
+      ],
+      "sha256": "6384ce8ffd448bb50aed9f52f8bf341aac765a82f0bbc4f67022fad6d82015de",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/42/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "admin_up"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_access_port",
+      "category_id": "interface",
+      "label": "Configure access port",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_access_port/cisco.j2",
+      "variables": [
+        "description",
+        "interface",
+        "vlan_id"
+      ],
+      "sha256": "abc002b802e8c380f21bdcba441c7fe3519e4a265ff05c44306a15262b82e56a",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/44/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "vlan_id",
+          "description"
+        ],
+        "optional_defaults": {
+          "description": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_access_port",
+      "category_id": "interface",
+      "label": "Configure access port",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_access_port/juniper.j2",
+      "variables": [
+        "interface",
+        "vlan_id"
+      ],
+      "sha256": "209042bf5199d476583342117324c198612c039948ed6782f4032eef96597237",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_access_port",
+      "category_id": "interface",
+      "label": "Configure access port",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_access_port/huawei.j2",
+      "variables": [
+        "interface",
+        "vlan_id"
+      ],
+      "sha256": "32cec752b301f991492cd2e776ae162c8f630432321b477ab5456142727331eb",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_trunk_port",
+      "category_id": "interface",
+      "label": "Configure trunk port",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_trunk_port/cisco.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "sha256": "2a68384fd324bb016ec0f670f46e279744665ea7d2795ea73728775de0098958",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/45/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "allowed_vlans",
+          "native_vlan"
+        ],
+        "optional_defaults": {
+          "native_vlan": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_trunk_port",
+      "category_id": "interface",
+      "label": "Configure trunk port",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_trunk_port/juniper.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "sha256": "cd4a512ace59a6d0f5629e4d90ea5243cab7deeb0625f53118c23a8bd1c64e13",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_trunk_port",
+      "category_id": "interface",
+      "label": "Configure trunk port",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_trunk_port/huawei.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "sha256": "77772244ed5069e300e76a94b4a589537aba6936be62d439216f8b37ab2713ff",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "assign_vlan_to_trunk_port",
+      "category_id": "interface",
+      "label": "Add VLANs to trunk",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/assign_vlan_to_trunk_port/cisco.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface"
+      ],
+      "sha256": "39a82253d3caa7e09973b9fa373dd8c6f5ac250eebf4271f273fb6abaa9a8a94",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/46/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "allowed_vlans"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "assign_vlan_to_trunk_port",
+      "category_id": "interface",
+      "label": "Add VLANs to trunk",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/assign_vlan_to_trunk_port/juniper.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface"
+      ],
+      "sha256": "b98ef86db757dda96c2967c530986ed910569a7ed1bdb599f2a8112857abb6be",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/48/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "allowed_vlans"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "assign_vlan_to_trunk_port",
+      "category_id": "interface",
+      "label": "Add VLANs to trunk",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/assign_vlan_to_trunk_port/huawei.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface"
+      ],
+      "sha256": "4591bbe140f01a478bdd109739ceb6bafcaa46dc3b50456226d6c771aab1b90d",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/47/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "allowed_vlans"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_trunk_allowed_vlans",
+      "category_id": "interface",
+      "label": "Replace trunk allowed VLANs",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_trunk_allowed_vlans/cisco.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface"
+      ],
+      "sha256": "985c744c7987eefa704e6f12e175babc527840fea044f22655a6392459e62a13",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/49/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "allowed_vlans"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_trunk_allowed_vlans",
+      "category_id": "interface",
+      "label": "Replace trunk allowed VLANs",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_trunk_allowed_vlans/juniper.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "sha256": "9fe8664c4b83fbb295f3829a6011d038d7a0cbdd84961862be6fd0cf06502665",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_trunk_allowed_vlans",
+      "category_id": "interface",
+      "label": "Replace trunk allowed VLANs",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_trunk_allowed_vlans/huawei.j2",
+      "variables": [
+        "allowed_vlans",
+        "interface",
+        "native_vlan"
+      ],
+      "sha256": "447a8ab98036c7f8f434a7e180c743889bf72b44175779e2ab3b947409f0fccb",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_native_vlan",
+      "category_id": "interface",
+      "label": "Set native VLAN",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/set_native_vlan/cisco.j2",
+      "variables": [
+        "interface",
+        "native_vlan"
+      ],
+      "sha256": "39a356a381ea65849e4fc4d56a122619a250a6713954d23da5a8b8f59bb76a3d",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/50/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "native_vlan"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_native_vlan",
+      "category_id": "interface",
+      "label": "Set native VLAN",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/set_native_vlan/juniper.j2",
+      "variables": [
+        "interface",
+        "native_vlan"
+      ],
+      "sha256": "1805de4df5d21c576de2d3dfafd7e28ae8f9d839dff3f70aca3e2724c3bf5e34",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/52/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "native_vlan"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_native_vlan",
+      "category_id": "interface",
+      "label": "Set native VLAN",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/set_native_vlan/huawei.j2",
+      "variables": [
+        "interface",
+        "native_vlan"
+      ],
+      "sha256": "759bc30d1f26be44fec9e3d6b31efac3484c9bc9832c590fc3de405960fd96f5",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/51/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "native_vlan"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_loopback_interface",
+      "category_id": "interface",
+      "label": "Configure loopback interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_loopback_interface/cisco.j2",
+      "variables": [
+        "address",
+        "description",
+        "interface",
+        "netmask"
+      ],
+      "sha256": "56ddb2480ef2414d44d8dfb8e262c5e6b12818b65900945567ee740df5f9dc01",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/53/template.j2",
+      "input_contract": {
+        "fields": [
+          "interface",
+          "address",
+          "prefix_length",
+          "description"
+        ],
+        "optional_defaults": {
+          "description": null
+        },
+        "derived": {
+          "netmask": "ipv4_netmask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_loopback_interface",
+      "category_id": "interface",
+      "label": "Configure loopback interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_loopback_interface/juniper.j2",
+      "variables": [
+        "address",
+        "description",
+        "interface",
+        "prefix_length"
+      ],
+      "sha256": "0abd8034425a2b8f426d300a13bcaf0d884d92449e271747d8468f02c8d36faf",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_loopback_interface",
+      "category_id": "interface",
+      "label": "Configure loopback interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_loopback_interface/huawei.j2",
+      "variables": [
+        "address",
+        "description",
+        "interface",
+        "netmask"
+      ],
+      "sha256": "4b65511f9a9d6919b3d41e86cd9170d7c05f7711253bb2d0c71f43a8e14a1072",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_port_channel",
+      "category_id": "interface",
+      "label": "Configure routed port channel",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/interface/configure_port_channel/cisco.j2",
+      "variables": [
+        "aggregate_interface",
+        "description",
+        "lacp_mode",
+        "member_interfaces"
+      ],
+      "sha256": "a5c825946691f31986b37837e22648c1ab442268f20973fd3a2b2678a94a8d7b",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/54/template.j2",
+      "input_contract": {
+        "fields": [
+          "aggregate_interface",
+          "member_interfaces",
+          "lacp_mode",
+          "description"
+        ],
+        "optional_defaults": {
+          "description": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_port_channel",
+      "category_id": "interface",
+      "label": "Configure routed port channel",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/interface/configure_port_channel/juniper.j2",
+      "variables": [
+        "aggregate_interface",
+        "lacp_mode",
+        "member_interfaces"
+      ],
+      "sha256": "652e8dd4471dd14202e0ab7b370a58dd112186859837a3b2f07101fbf8f6d3c7",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_port_channel",
+      "category_id": "interface",
+      "label": "Configure routed port channel",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/interface/configure_port_channel/huawei.j2",
+      "variables": [
+        "aggregate_id",
+        "aggregate_interface",
+        "member_interfaces"
+      ],
+      "sha256": "a8c54e66b08b80cbe1fa815c98ae65a74c248421b66701cc0063101870087b30",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_default_route",
+      "category_id": "static_routing",
+      "label": "add default route",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/static_routing/add_default_route/cisco.j2",
+      "variables": [
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "991573bc7eb9417b6d3de1a2b50fbc7cc04fe1221894623e2d28822d445fa1df",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/55/template.j2",
+      "input_contract": {
+        "fields": [
+          "next_hop",
+          "preference"
+        ],
+        "optional_defaults": {
+          "preference": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_default_route",
+      "category_id": "static_routing",
+      "label": "add default route",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/static_routing/add_default_route/juniper.j2",
+      "variables": [
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "eb3a6ddb37fd190a1edcee217805ca73b465e96f791561a7b67e164bea9856a0",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/56/template.j2",
+      "input_contract": {
+        "fields": [
+          "next_hop",
+          "preference"
+        ],
+        "optional_defaults": {
+          "preference": null
+        },
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_default_route",
+      "category_id": "static_routing",
+      "label": "add default route",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/static_routing/add_default_route/huawei.j2",
+      "variables": [
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "ad733b04a05f548747e1e0bdbaf65faf77269d34b7e9b723a2b4ad57b9f78020",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_floating_static_route",
+      "category_id": "static_routing",
+      "label": "add floating static route",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/static_routing/add_floating_static_route/cisco.j2",
+      "variables": [
+        "destination_address",
+        "destination_mask",
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "5d6ddf28a765a4e7a34d38c23f5e1b7b41f847f680854c11f19df53b96762235",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/57/template.j2",
+      "input_contract": {
+        "fields": [
+          "destination",
+          "next_hop",
+          "preference"
+        ],
+        "optional_defaults": {},
+        "derived": {
+          "destination_address": "destination_address_v1",
+          "destination_mask": "destination_mask_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_floating_static_route",
+      "category_id": "static_routing",
+      "label": "add floating static route",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/static_routing/add_floating_static_route/juniper.j2",
+      "variables": [
+        "destination",
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "676d3fde4c9bd947226622e41c804c6e3ce4b4bc28b429ee8c5602c11ad1a17b",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/58/template.j2",
+      "input_contract": {
+        "fields": [
+          "destination",
+          "next_hop",
+          "preference"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_floating_static_route",
+      "category_id": "static_routing",
+      "label": "add floating static route",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/static_routing/add_floating_static_route/huawei.j2",
+      "variables": [
+        "destination_address",
+        "destination_netmask",
+        "next_hop",
+        "preference"
+      ],
+      "sha256": "3102f074ecc28bfd372b544b47fd4fd8bd54b74e483840b86e4bac461eb3bd2d",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "enable_ospf_process",
+      "category_id": "ospf",
+      "label": "enable ospf process",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/enable_ospf_process/cisco.j2",
+      "variables": [
+        "process_id",
+        "router_id"
+      ],
+      "sha256": "0dec157dce579924eaf1bd105ef7316cdb77f42b5f68f9c068b0a5f62efd5a70",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/59/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "router_id"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "enable_ospf_process",
+      "category_id": "ospf",
+      "label": "enable ospf process",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/enable_ospf_process/juniper.j2",
+      "variables": [
+        "router_id"
+      ],
+      "sha256": "d5b4b73f53950a3aed9951727d074c787147dcaf86d35609597d3e0973df6d67",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "enable_ospf_process",
+      "category_id": "ospf",
+      "label": "enable ospf process",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/enable_ospf_process/huawei.j2",
+      "variables": [
+        "process_id",
+        "router_id"
+      ],
+      "sha256": "c993aca7434a2c373c99ae2ab5acc2f51309ea738af4a8d301ac5170274b200a",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_ospf_router_id",
+      "category_id": "ospf",
+      "label": "set ospf router id",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/set_ospf_router_id/cisco.j2",
+      "variables": [
+        "process_id",
+        "router_id"
+      ],
+      "sha256": "055c0faf253f90a77f0e2d9bca92fb14ebee601ffb1416adcf1fa8ff58b86926",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/60/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "router_id"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_ospf_router_id",
+      "category_id": "ospf",
+      "label": "set ospf router id",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/set_ospf_router_id/juniper.j2",
+      "variables": [
+        "router_id"
+      ],
+      "sha256": "2a9154902a4324a24cf3b9686242601adecbaf7029373ad69e57db1b69af9829",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "set_ospf_router_id",
+      "category_id": "ospf",
+      "label": "set ospf router id",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/set_ospf_router_id/huawei.j2",
+      "variables": [
+        "process_id",
+        "router_id"
+      ],
+      "sha256": "a8d8ca22cd26da5f32d3addf0fae8f786c2feb082dde768a4c0e472d56901834",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_ospf_area",
+      "category_id": "ospf",
+      "label": "create ospf area",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/create_ospf_area/cisco.j2",
+      "variables": [
+        "area",
+        "area_type",
+        "process_id"
+      ],
+      "sha256": "5c4967cb5eb073ed1c0b0a39ed2177e36e4cc6c4a159c735651ae8dd5a99f8a1",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/61/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "area",
+          "area_type"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_ospf_area",
+      "category_id": "ospf",
+      "label": "create ospf area",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/create_ospf_area/juniper.j2",
+      "variables": [
+        "area",
+        "area_type"
+      ],
+      "sha256": "f17b26e201d6b79b5e74de0b555d161d442b3860147ff2d1cdd22078a28c4708",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_ospf_area",
+      "category_id": "ospf",
+      "label": "create ospf area",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/create_ospf_area/huawei.j2",
+      "variables": [
+        "area",
+        "area_type",
+        "process_id"
+      ],
+      "sha256": "2044c83ff15913b03408513d15be78a73078b89eab33d8b044d049fb8d731ddf",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "assign_interface_to_ospf_area",
+      "category_id": "ospf",
+      "label": "assign interface to ospf area",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/assign_interface_to_ospf_area/cisco.j2",
+      "variables": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "sha256": "26127868f6b9d0b269890f58e25e40b5c69d020a24635102fd2cdae685e23ab9",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/62/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "interface",
+          "area"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "assign_interface_to_ospf_area",
+      "category_id": "ospf",
+      "label": "assign interface to ospf area",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/assign_interface_to_ospf_area/juniper.j2",
+      "variables": [
+        "area",
+        "interface"
+      ],
+      "sha256": "82abee0e1829e91d7b8091c48acbeea8243bace57355b41a9d4696d6be715aec",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "assign_interface_to_ospf_area",
+      "category_id": "ospf",
+      "label": "assign interface to ospf area",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/assign_interface_to_ospf_area/huawei.j2",
+      "variables": [
+        "area",
+        "interface",
+        "process_id"
+      ],
+      "sha256": "1cf04c8c5fe1832ebd9ee11a9e8d86694d86d8aa690454ee651a847fe3f2dc73",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "advertise_network",
+      "category_id": "ospf",
+      "label": "advertise network",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/advertise_network/cisco.j2",
+      "variables": [
+        "area",
+        "network_address",
+        "network_wildcard",
+        "process_id"
+      ],
+      "sha256": "9c6ca4cbeb61b78b76fd2c171019af1d7e70658cb63480c98c46832928a5b83e",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/63/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "network_prefix",
+          "area"
+        ],
+        "optional_defaults": {},
+        "derived": {
+          "network_address": "network_address_v1",
+          "network_wildcard": "network_wildcard_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "advertise_network",
+      "category_id": "ospf",
+      "label": "advertise network",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/advertise_network/juniper.j2",
+      "variables": [
+        "area",
+        "ospf_interface"
+      ],
+      "sha256": "9906ecfa1915f72e5cf8b848ccfe44eb7b2a1e10dddc213389b71b46021aa81f",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "advertise_network",
+      "category_id": "ospf",
+      "label": "advertise network",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/advertise_network/huawei.j2",
+      "variables": [
+        "area",
+        "network_address",
+        "network_wildcard",
+        "process_id"
+      ],
+      "sha256": "ddc056c2c39d9397fef78770516f8fe90bc550b0429fe591ddbc54baf5dfcbb0",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_passive_interface",
+      "category_id": "ospf",
+      "label": "configure passive interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/configure_passive_interface/cisco.j2",
+      "variables": [
+        "interface",
+        "passive",
+        "process_id"
+      ],
+      "sha256": "c22172aa013258c73f13fd948f212e6528d7b7ecf26e6344c43e36a1c1f0816e",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/64/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "interface",
+          "passive"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_passive_interface",
+      "category_id": "ospf",
+      "label": "configure passive interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/configure_passive_interface/juniper.j2",
+      "variables": [
+        "interface",
+        "ospf_area",
+        "passive"
+      ],
+      "sha256": "96137bd821bc83621d64a62acc0ff8a027ccc74ca75be1d1fab8017959b1011a",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_passive_interface",
+      "category_id": "ospf",
+      "label": "configure passive interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/configure_passive_interface/huawei.j2",
+      "variables": [
+        "interface",
+        "passive",
+        "process_id"
+      ],
+      "sha256": "596c22d1b6db6be08cdec38384c390bb5fcdd2eb8ea16c673bf6ff17e31ac191",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_ospf_redistribution",
+      "category_id": "ospf",
+      "label": "configure ospf redistribution",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/ospf/configure_ospf_redistribution/cisco.j2",
+      "variables": [
+        "metric_type",
+        "ospf_metric",
+        "process_id",
+        "redistribution_source",
+        "route_policy"
+      ],
+      "sha256": "36fa5f03a921aa5408063a6805668617d5960e19c31303f9c978e98a90bc5d35",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/65/template.j2",
+      "input_contract": {
+        "fields": [
+          "process_id",
+          "redistribution_source",
+          "route_policy",
+          "ospf_metric",
+          "metric_type"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_ospf_redistribution",
+      "category_id": "ospf",
+      "label": "configure ospf redistribution",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/ospf/configure_ospf_redistribution/juniper.j2",
+      "variables": [
+        "metric_type",
+        "ospf_metric",
+        "redistribution_source",
+        "route_policy"
+      ],
+      "sha256": "68eb34093d4294595948628ddaafe9b1f97e88b6843ea4759b9db91ea30e3021",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_ospf_redistribution",
+      "category_id": "ospf",
+      "label": "configure ospf redistribution",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/ospf/configure_ospf_redistribution/huawei.j2",
+      "variables": [
+        "metric_type",
+        "ospf_metric",
+        "process_id",
+        "redistribution_source",
+        "route_policy"
+      ],
+      "sha256": "246c54f2e5312b920558fb666357e0e73cf1ccc4b2865fcd4a1dbe61fb11527a",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_acl",
+      "category_id": "acl",
+      "label": "create acl",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/create_acl/cisco.j2",
+      "variables": [
+        "acl_name",
+        "description"
+      ],
+      "sha256": "efda364c89da64e97b2b629c768d305f46c25a151681a98cfc3aca0e41a7ae6c",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/66/template.j2",
+      "input_contract": {
+        "fields": [
+          "acl_name",
+          "description"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_acl",
+      "category_id": "acl",
+      "label": "create acl",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/create_acl/juniper.j2",
+      "variables": [
+        "acl_name"
+      ],
+      "sha256": "3db50666f83160404ccd31239f2ee3a4ce8dff2e4bdf2f9211c198a73fe9fe1c",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_acl",
+      "category_id": "acl",
+      "label": "create acl",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/create_acl/huawei.j2",
+      "variables": [
+        "acl_name",
+        "description"
+      ],
+      "sha256": "ea7cb3a83c9184921b9fcaad42f133ca729406198356b4dc916e8e410b6377ae",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_acl_rule",
+      "category_id": "acl",
+      "label": "add acl rule",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/add_acl_rule/cisco.j2",
+      "variables": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "log",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "sha256": "78a60e99f9120f4cae824aa7fc46e75f7d23cd3917354b50e5656a981432bd7d",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/67/template.j2",
+      "input_contract": {
+        "fields": [
+          "acl_name",
+          "acl_rule_id",
+          "acl_action",
+          "source_prefix",
+          "destination_prefix",
+          "ip_protocol",
+          "source_port",
+          "destination_port",
+          "log"
+        ],
+        "optional_defaults": {
+          "source_port": null,
+          "destination_port": null,
+          "log": null
+        },
+        "derived": {
+          "source_address": "acl_source_address_v1",
+          "source_wildcard": "acl_source_wildcard_v1",
+          "acl_destination_address": "acl_destination_address_v1",
+          "acl_destination_wildcard": "acl_destination_wildcard_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_acl_rule",
+      "category_id": "acl",
+      "label": "add acl rule",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/add_acl_rule/juniper.j2",
+      "variables": [
+        "acl_action",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "source_prefix"
+      ],
+      "sha256": "e8aa18c5266d1c264a972947b577fb211366fbfbb906e605cf235998d3fc4d2f",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "add_acl_rule",
+      "category_id": "acl",
+      "label": "add acl rule",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/add_acl_rule/huawei.j2",
+      "variables": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "sha256": "27eb9da558f64081e111e4158375cbd332216f6a94bd8d3e315919421c38cda4",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "modify_acl_rule",
+      "category_id": "acl",
+      "label": "modify acl rule",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/modify_acl_rule/cisco.j2",
+      "variables": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "log",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "sha256": "cb577c8c38cc3d8d633f62bec2aece1162bd3006476e939be9725ed6b7d6b342",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/68/template.j2",
+      "input_contract": {
+        "fields": [
+          "acl_name",
+          "acl_rule_id",
+          "acl_action",
+          "source_prefix",
+          "destination_prefix",
+          "ip_protocol",
+          "source_port",
+          "destination_port",
+          "log"
+        ],
+        "optional_defaults": {
+          "source_port": null,
+          "destination_port": null,
+          "log": null
+        },
+        "derived": {
+          "source_address": "acl_source_address_v1",
+          "source_wildcard": "acl_source_wildcard_v1",
+          "acl_destination_address": "acl_destination_address_v1",
+          "acl_destination_wildcard": "acl_destination_wildcard_v1"
+        }
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "modify_acl_rule",
+      "category_id": "acl",
+      "label": "modify acl rule",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/modify_acl_rule/juniper.j2",
+      "variables": [
+        "acl_action",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "destination_prefix",
+        "ip_protocol",
+        "source_port",
+        "source_prefix"
+      ],
+      "sha256": "ef32e06918a579268e1fd55db2ce20f7d8e3756bab65a09e381e66440b998c9a",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "modify_acl_rule",
+      "category_id": "acl",
+      "label": "modify acl rule",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/modify_acl_rule/huawei.j2",
+      "variables": [
+        "acl_action",
+        "acl_destination_address",
+        "acl_destination_wildcard",
+        "acl_name",
+        "acl_rule_id",
+        "destination_port",
+        "ip_protocol",
+        "source_address",
+        "source_port",
+        "source_wildcard"
+      ],
+      "sha256": "19cd1bef50bb682472dc8f3c3e1d74559601fa8af1914a4333d64c8eccdf7071",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "delete_acl_rule",
+      "category_id": "acl",
+      "label": "delete acl rule",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/delete_acl_rule/cisco.j2",
+      "variables": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "sha256": "b69084ed8616cfd173770910d2e6fbe5b1f2cfa33af33556cb1b5a2fb8f4e982",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/69/template.j2",
+      "input_contract": {
+        "fields": [
+          "acl_name",
+          "acl_rule_id"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "delete_acl_rule",
+      "category_id": "acl",
+      "label": "delete acl rule",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/delete_acl_rule/juniper.j2",
+      "variables": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "sha256": "ca20811773402b2b9b043da403ac56711d724a4553052b9f8f126c1a3237c939",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "delete_acl_rule",
+      "category_id": "acl",
+      "label": "delete acl rule",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/delete_acl_rule/huawei.j2",
+      "variables": [
+        "acl_name",
+        "acl_rule_id"
+      ],
+      "sha256": "a128e15211c661c631412f0e699bbefdfee16336d175be6900afba132045fbc0",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "apply_acl_to_interface",
+      "category_id": "acl",
+      "label": "apply acl to interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/acl/apply_acl_to_interface/cisco.j2",
+      "variables": [
+        "acl_name",
+        "direction",
+        "interface"
+      ],
+      "sha256": "8da6375ec3978f2b577cbbf10e0c4c8ea958922742c19f567c1176301d3f3a2f",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/70/template.j2",
+      "input_contract": {
+        "fields": [
+          "acl_name",
+          "interface",
+          "direction"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "apply_acl_to_interface",
+      "category_id": "acl",
+      "label": "apply acl to interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/acl/apply_acl_to_interface/juniper.j2",
+      "variables": [
+        "acl_name",
+        "direction",
+        "interface"
+      ],
+      "sha256": "087018a53be435b9c5fb354523ce25627b4e7679eb18aaf1a83a9546041425e4",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "apply_acl_to_interface",
+      "category_id": "acl",
+      "label": "apply acl to interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/acl/apply_acl_to_interface/huawei.j2",
+      "variables": [
+        "acl_name",
+        "direction",
+        "interface"
+      ],
+      "sha256": "ce430cddf50b599fcfc5de8584703cc2bffb1c525881019c0a3f6289de572c94",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_qos_policy",
+      "category_id": "qos",
+      "label": "create qos policy",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/create_qos_policy/cisco.j2",
+      "variables": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "sha256": "7eb739f0b5315a9f141fa0fd380e5c8bf0e87fe581e68eec5fa4e4b8038a245c",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/71/template.j2",
+      "input_contract": {
+        "fields": [
+          "policy_name",
+          "policy_terms"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_qos_policy",
+      "category_id": "qos",
+      "label": "create qos policy",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/create_qos_policy/juniper.j2",
+      "variables": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "sha256": "918fef158a32fb00ed69c4bfdbb9d45fd75057f4461b49ca12f813b95cd5fad3",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_qos_policy",
+      "category_id": "qos",
+      "label": "create qos policy",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/create_qos_policy/huawei.j2",
+      "variables": [
+        "policy_name",
+        "policy_terms"
+      ],
+      "sha256": "0f945d454381720fce0a349da050d7f72613cfc2334e77940a1ca6da79af48c9",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_classifier",
+      "category_id": "qos",
+      "label": "create classifier",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/create_classifier/cisco.j2",
+      "variables": [
+        "classifier_name",
+        "dscp_values",
+        "match_mode"
+      ],
+      "sha256": "c376befa3b3f1f335060875d0bc41fe65a80a84546b01f0db58f73eb7129bbc5",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/72/template.j2",
+      "input_contract": {
+        "fields": [
+          "classifier_name",
+          "dscp_values",
+          "match_mode"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_classifier",
+      "category_id": "qos",
+      "label": "create classifier",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/create_classifier/juniper.j2",
+      "variables": [
+        "classifier_name",
+        "dscp_values",
+        "forwarding_class"
+      ],
+      "sha256": "c662f809ab14a0c7d5d31739f6c18f57181aea386ff8ddc9aed13b917c4bf2ea",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "create_classifier",
+      "category_id": "qos",
+      "label": "create classifier",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/create_classifier/huawei.j2",
+      "variables": [
+        "classifier_name",
+        "dscp_values",
+        "match_mode"
+      ],
+      "sha256": "fdf62bcc34891e56409a6c96ad17383697561ce3d989d237259e09896c025b2a",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "classify_by_dscp",
+      "category_id": "qos",
+      "label": "classify by dscp",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/classify_by_dscp/cisco.j2",
+      "variables": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ],
+      "sha256": "5b729537f10d4befd84219efa9d1078eb3b848733cb03183390a5b1a5164ffe8",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/73/template.j2",
+      "input_contract": {
+        "fields": [
+          "classifier_name",
+          "dscp_values",
+          "previous_dscp_values"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "classify_by_dscp",
+      "category_id": "qos",
+      "label": "classify by dscp",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/classify_by_dscp/juniper.j2",
+      "variables": [
+        "classifier_name",
+        "dscp_values",
+        "forwarding_class",
+        "previous_dscp_values"
+      ],
+      "sha256": "d9e05f5a7115bc09139e0ba409bc411dab493676c449c38968310668c63cac41",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "classify_by_dscp",
+      "category_id": "qos",
+      "label": "classify by dscp",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/classify_by_dscp/huawei.j2",
+      "variables": [
+        "classifier_name",
+        "dscp_values",
+        "previous_dscp_values"
+      ],
+      "sha256": "b34dae2216de70dc6fcec7a3ff2264d69bb3c3047745829a3846f288b5d2b990",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_scheduler",
+      "category_id": "qos",
+      "label": "configure scheduler",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/configure_scheduler/cisco.j2",
+      "variables": [
+        "bandwidth_bps",
+        "classifier_name",
+        "policy_name"
+      ],
+      "sha256": "7d52b15ece55a4658bba43dcb681736ed7afee0831abba7e2eeeb83dac08d07c",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/74/template.j2",
+      "input_contract": {
+        "fields": [
+          "policy_name",
+          "classifier_name",
+          "bandwidth_bps"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_scheduler",
+      "category_id": "qos",
+      "label": "configure scheduler",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/configure_scheduler/juniper.j2",
+      "variables": [
+        "bandwidth_bps",
+        "classifier_name",
+        "policy_name"
+      ],
+      "sha256": "1ccbfc0f9a8537ca4d304a69988fd5f942e34535b3511dc74353c60cbdf1d9c8",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_scheduler",
+      "category_id": "qos",
+      "label": "configure scheduler",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/configure_scheduler/huawei.j2",
+      "variables": [
+        "bandwidth_kbps",
+        "classifier_name",
+        "policy_name"
+      ],
+      "sha256": "453cf3055381ec09f67e3e63b6bd779a951fe1f53a69a3abbb1fe61ece775d18",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_shaping",
+      "category_id": "qos",
+      "label": "configure shaping",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/configure_shaping/cisco.j2",
+      "variables": [
+        "interface",
+        "policy_name",
+        "rate_bps"
+      ],
+      "sha256": "638a4e71afb24a986df03edecaec0ed815432b782fb4b5c2d55b54d519c4700b",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/75/template.j2",
+      "input_contract": {
+        "fields": [
+          "policy_name",
+          "interface",
+          "rate_bps",
+          "direction"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_shaping",
+      "category_id": "qos",
+      "label": "configure shaping",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/configure_shaping/juniper.j2",
+      "variables": [
+        "interface",
+        "rate_bps"
+      ],
+      "sha256": "128ce7e46c382faf1612ebd3f6c5012c11e88b5db1e9e193ac6d7020ffa4c006",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_shaping",
+      "category_id": "qos",
+      "label": "configure shaping",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/configure_shaping/huawei.j2",
+      "variables": [
+        "direction",
+        "interface",
+        "rate_kbps"
+      ],
+      "sha256": "247944506d1798290d7d46e8db6fb9000367a0c1995f726ed70d3c98965cbffc",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_policing",
+      "category_id": "qos",
+      "label": "configure policing",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/configure_policing/cisco.j2",
+      "variables": [
+        "burst_bytes",
+        "exceed_action",
+        "interface",
+        "policy_name",
+        "rate_bps"
+      ],
+      "sha256": "617ef8af458d6e55fc27008605b424c6c2ce318dfc6fb8e62756c30cb1a4da7c",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/76/template.j2",
+      "input_contract": {
+        "fields": [
+          "policy_name",
+          "interface",
+          "rate_bps",
+          "burst_bytes",
+          "direction",
+          "exceed_action"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_policing",
+      "category_id": "qos",
+      "label": "configure policing",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/configure_policing/juniper.j2",
+      "variables": [
+        "burst_bytes",
+        "policy_name",
+        "rate_bps"
+      ],
+      "sha256": "be47f763ba3ebed45638fec87becfd8a5601946ed6db55f612d7fc6a4ef5d0af",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_policing",
+      "category_id": "qos",
+      "label": "configure policing",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/configure_policing/huawei.j2",
+      "variables": [
+        "burst_bytes",
+        "exceed_action",
+        "policy_name",
+        "rate_kbps"
+      ],
+      "sha256": "19a1ede5a6852ae31f39d8eb6d4b583bb72a35f18174d3974fdb0104295404f6",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "apply_qos_policy_to_interface",
+      "category_id": "qos",
+      "label": "apply qos policy to interface",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/qos/apply_qos_policy_to_interface/cisco.j2",
+      "variables": [
+        "interface",
+        "policy_name"
+      ],
+      "sha256": "4b9812bf3ad67ade768672c41d4525e6ad275ca2558ddc7baaf23a50ff5a643e",
+      "status": "reference_draft",
+      "source": "published_cli_copy",
+      "source_release": "0690966eb003499380e960a98d1e418f",
+      "source_binding": "templates/77/template.j2",
+      "input_contract": {
+        "fields": [
+          "policy_name",
+          "interface",
+          "direction"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
+      "verified_runtime_support": true,
+      "version_certification": false
+    },
+    {
+      "operation_id": "apply_qos_policy_to_interface",
+      "category_id": "qos",
+      "label": "apply qos policy to interface",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/qos/apply_qos_policy_to_interface/juniper.j2",
+      "variables": [
+        "interface",
+        "policy_name"
+      ],
+      "sha256": "a00e0828a451d0978d2dfc94131418ca26221239033ffe9d0130fa8920863ddd",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "apply_qos_policy_to_interface",
+      "category_id": "qos",
+      "label": "apply qos policy to interface",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/qos/apply_qos_policy_to_interface/huawei.j2",
+      "variables": [
+        "direction",
+        "interface",
+        "policy_name"
+      ],
+      "sha256": "af3db9d7b5523c7cd513fe436ef24ebfa1143cca2e18e9b4bdd1248841237665",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_login_banner",
+      "category_id": "management_plane_security",
+      "label": "Login banner",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_banner/cisco.j2",
+      "variables": [
+        "login_banner_text"
+      ],
+      "sha256": "0a62b6727e8bf05cc3a79e979ec3a580eafba06396876d1070accf205fb679e4",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_login_banner",
+      "category_id": "management_plane_security",
+      "label": "Login banner",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_banner/juniper.j2",
+      "variables": [
+        "login_banner_text"
+      ],
+      "sha256": "a1cafb1a7997373cb4bbf358e84d98562b60d229037cbfd2ae8aa3d68d249962",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_login_banner",
+      "category_id": "management_plane_security",
+      "label": "Login banner",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_banner/huawei.j2",
+      "variables": [
+        "login_banner_text"
+      ],
+      "sha256": "30b1653b12d601df08d50ac7addaf6953f055d522a93326d855763244bbe1186",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_exec_timeout",
+      "category_id": "management_plane_security",
+      "label": "Session idle timeout",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/management_plane_security/configure_exec_timeout/cisco.j2",
+      "variables": [
+        "exec_timeout_minutes",
+        "exec_timeout_seconds"
+      ],
+      "sha256": "fd68c0cc8df781b25a404fc848b72e90dbf8ecee859f3e4d35d8cd196d4b8670",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_exec_timeout",
+      "category_id": "management_plane_security",
+      "label": "Session idle timeout",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/management_plane_security/configure_exec_timeout/juniper.j2",
+      "variables": [
+        "exec_timeout_minutes",
+        "login_class"
+      ],
+      "sha256": "e62f7b87a1cdd429612bb3fab8094f165accc130cd8c435fb320fec9a4a1c5b2",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_exec_timeout",
+      "category_id": "management_plane_security",
+      "label": "Session idle timeout",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/management_plane_security/configure_exec_timeout/huawei.j2",
+      "variables": [
+        "exec_timeout_minutes",
+        "exec_timeout_seconds"
+      ],
+      "sha256": "de451ae1a6a960a358ea39319b3102f23777ad383d4d8dc3996b14e99d2a6085",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_login_lockout",
+      "category_id": "management_plane_security",
+      "label": "Login failure lockout",
+      "vendor": "cisco",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_lockout/cisco.j2",
+      "variables": [
+        "login_block_seconds",
+        "login_failure_attempts",
+        "login_failure_window_seconds"
+      ],
+      "sha256": "e985fc92d9ccf4a5f2bfa4fc5f4f71c09e7223c80910ab327b4220104781544a",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_login_lockout",
+      "category_id": "management_plane_security",
+      "label": "Login failure lockout",
+      "vendor": "juniper",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_lockout/juniper.j2",
+      "variables": [
+        "lockout_minutes",
+        "login_failure_attempts"
+      ],
+      "sha256": "d20a2e592459c04ffaf406eff57daf2e492c58e9bca161fa999300df75e71031",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    },
+    {
+      "operation_id": "configure_login_lockout",
+      "category_id": "management_plane_security",
+      "label": "Login failure lockout",
+      "vendor": "huawei",
+      "path": "reference/operation_drafts/management_plane_security/configure_login_lockout/huawei.j2",
+      "variables": [
+        "reviewed_aaa_lockout_commands"
+      ],
+      "sha256": "bc781858e8853686583d94abfb5797cdd024119570b0beae3c748669b5595a32",
+      "status": "reference_draft",
+      "source": "new_translation_draft",
+      "source_release": null,
+      "source_binding": null,
+      "input_contract": null,
+      "verified_runtime_support": false,
+      "version_certification": false
+    }
+  ]
+}

@@ -1,0 +1,3 @@
+{# Editable reference draft: juniper / configure_static_route. Verify syntax, dependencies and device suitability before use. #}
+set routing-options static route {{ destination }} next-hop {{ next_hop }}{% if preference is defined and preference %} preference {{ preference }}{% endif %}
+

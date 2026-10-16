@@ -1,6 +1,7 @@
 """M0 additive schema upgrade; originals are backed up using SQLite's backup API."""
 import sqlite3
 import threading
+from contextlib import closing
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -16,8 +17,8 @@ def backup_database(path, version=VERSION):
     folder.mkdir(exist_ok=True)
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
     dest = folder / f'{path.stem}-before-{version}-{stamp}.db'
-    with sqlite3.connect(f'file:{path.as_posix()}?mode=ro', uri=True) as source:
-        with sqlite3.connect(dest) as target:
+    with closing(sqlite3.connect(f'file:{path.as_posix()}?mode=ro', uri=True)) as source:
+        with closing(sqlite3.connect(dest)) as target:
             source.backup(target)
     return dest
 

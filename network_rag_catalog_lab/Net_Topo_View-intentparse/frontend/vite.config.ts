@@ -8,6 +8,7 @@ export default defineConfig({
   build: { rollupOptions: { input: { app: 'index.html', knowledgeReference: 'knowledge-reference.html' } } },
   server: {
     port: 5173,
+    strictPort: true,
     proxy: {
       // Forward all /api/* and /ws/* requests to the FastAPI backend
       '/api': {

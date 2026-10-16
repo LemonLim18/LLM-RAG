@@ -23,6 +23,7 @@ class LLMMessage:
     role: str              # "system", "user", "assistant", "tool"
     content: str = ""
     tool_calls: List[ToolCall] = field(default_factory=list)
+    images: List[str] = field(default_factory=list)  # Local, normalized base64 image payloads
     tool_call_id: Optional[str] = None   # for tool-response messages
     name: Optional[str] = None           # function name for tool results
 

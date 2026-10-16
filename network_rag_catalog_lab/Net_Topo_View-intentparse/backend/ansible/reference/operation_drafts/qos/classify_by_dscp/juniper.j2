@@ -1,0 +1,4 @@
+{# Editable reference draft: juniper / classify_by_dscp. Verify syntax, dependencies and device suitability before use. #}
+{% for dscp in previous_dscp_values %}delete class-of-service classifiers dscp {{ classifier_name }} forwarding-class {{ forwarding_class }} loss-priority low code-points {{ dscp }}
+{% endfor %}{% for dscp in dscp_values %}set class-of-service classifiers dscp {{ classifier_name }} forwarding-class {{ forwarding_class }} loss-priority low code-points {{ dscp }}
+{% endfor %}

@@ -1,0 +1,4 @@
+{# Editable reference draft: juniper / create_qos_policy. Verify syntax, dependencies and device suitability before use. #}
+{% for term in policy_terms %}set class-of-service schedulers {{ policy_name }}_{{ term.classifier_name }} transmit-rate {{ term.bandwidth_bps }}
+set class-of-service scheduler-maps {{ policy_name }} forwarding-class {{ term.classifier_name }} scheduler {{ policy_name }}_{{ term.classifier_name }}
+{% endfor %}

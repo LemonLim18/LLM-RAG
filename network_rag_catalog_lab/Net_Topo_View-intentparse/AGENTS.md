@@ -13,6 +13,16 @@ Before changing V9, Knowledge Engineering, or Ansible Studio behavior, read:
 
 Treat the sibling repository `../network_rag_catalog_v2` as **read-only**. It is the V9 source used by the adapter; do not modify it.
 
+## Latest continuation — 2026-10-16
+
+Read `docs/UI_RESTORATION_HANDOVER.md` for the current UI/multi-operation work and its limits. The standard ordinary app is frontend **5173** / backend **8000**, launched together by root `run_local.ps1`. Historical 5175/5176/8002 commands below are obsolete. Per the latest user instruction, do not create more isolated application copies: at most one explicitly reused acceptance workspace on 5174/8001, stopped after testing. Unit tests use disposable databases, with actual app/inventory/auth paths asserted before mutation. Do not let import-order environment settings redirect tests into ordinary SQLite.
+
+The latest user request authorizes multi-operation/multi-target **review and generation** through V9. It does not authorize device execution or fabricated playbook support. Native multi-vendor output is verified; combined Ansible output remains gated on reviewed variants and a contained validator. Ordinary R1/R2 compatibility rejection is expected with their recorded IOS versions. Keep all earlier detailed A0–A5 work, ordinary/test knowledge separation and source protection.
+
+### Subsequent authorized assistant expansion — 2026-10-16
+
+The current user authorized authoritative category/operation/template editing, general guarded native-document proposals, Floating read-only network/attachment/question routing, and per-vendor editable reference drafts. These are implemented in the shared gateway; see the latest section of `docs/UI_RESTORATION_HANDOVER.md`. Its 141 reference files are not published runtime support. Ordinary runtime remains 44 operations/78 bindings; three management operations remain reference-only. Verified playbooks and Huawei playbook tooling are still gated. Live reader adapters require an existing collector and explicit local configuration; no live measurements were verified. Future checks must use mixed categories beyond VLAN. Preserve the completed original tests and stop once the current acceptance work is recorded. Earlier F1–F5 blanket deferrals and narrow native-edit-only statements below are historical; durable orchestration, F6/F7, A6 and execution remain deferred.
+
 ## Current verified state — 2026-10-14
 
 The latest requested extensibility verification is complete in an **isolated test workspace**, not the user's ordinary database:
@@ -46,5 +56,9 @@ Useful final evidence:
 - `tmp/extensibility/{banner-rag,timeout-rag-retest,lockout-rag}.json`
 
 ## Working style for a new iteration
+
+### Shared AI continuation — 2026-10-15
+
+Read `docs/SHARED_AI_A0_A5_HANDOVER.md` before continuing the shared Floating/Studio AI work. The local gateway, separate conversations, actual-buffer context, attachments, V9 native review and guarded Monaco proposals are implemented and tested in `tmp/shared-ai-9bn22lf5` (frontend 5176/backend 8002). Verify processes before reuse. Ordinary SQLite and active knowledge were not migrated or promoted during implementation. A5 enablement remains unavailable until an approved contained validator and reviewed playbook variants exist; other native edits beyond the existing IOS-XE VLAN rename remain unsupported. F1–F7, ML, A6 and device execution remain deferred. The coverage report retains ordinary/test authority separately across 47 operations. Final regression/build evidence and model-quality limitations are in the handover.
 
 First inspect the checkpoint, relevant existing changes, and prior targeted test results. Define one user-requested outcome, retain the above completed work, test incrementally in an isolated environment, update the checkpoint only with actual results, create a concise handover, and stop when the accepted scope is complete. Do not rerun broad passing suites without a relevant change.

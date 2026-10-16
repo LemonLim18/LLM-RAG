@@ -1,0 +1,2 @@
+{# Editable reference draft: juniper / modify_vlan. Verify syntax, dependencies and device suitability before use. #}
+{% if vlan_status == "suspend" %}deactivate{% else %}activate{% endif %} vlans {{ vlan_id }}

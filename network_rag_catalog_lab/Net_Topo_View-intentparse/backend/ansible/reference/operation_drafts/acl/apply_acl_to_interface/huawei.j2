@@ -1,0 +1,4 @@
+{# Editable reference draft: huawei / apply_acl_to_interface. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+ traffic-filter {{ "inbound" if direction in ["in","input","inbound"] else "outbound" }} acl name {{ acl_name }}
+quit

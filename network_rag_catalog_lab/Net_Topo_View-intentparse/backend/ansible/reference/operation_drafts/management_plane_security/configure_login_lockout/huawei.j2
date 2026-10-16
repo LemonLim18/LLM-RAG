@@ -1,0 +1,6 @@
+{# Editable reference draft: huawei / configure_login_lockout. Verify syntax, dependencies and device suitability before use. #}
+user-interface vty 0 4
+ authentication-mode aaa
+quit
+{# VRP login-failure lockout is AAA/domain/platform dependent. Fill the reviewed AAA policy; IOS failure-window semantics do not translate directly. #}
+{{ reviewed_aaa_lockout_commands }}

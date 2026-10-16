@@ -1,0 +1,3 @@
+{# Editable reference draft: huawei / configure_static_route. Verify syntax, dependencies and device suitability before use. #}
+ip route-static {{ destination }} {{ next_hop }}{% if preference is defined and preference %} preference {{ preference }}{% endif %}
+

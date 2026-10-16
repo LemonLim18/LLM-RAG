@@ -1,0 +1,4 @@
+{# Editable reference draft: huawei / configure_ospf_redistribution. Verify syntax, dependencies and device suitability before use. #}
+ospf {{ process_id }}
+ import-route {{ "direct" if redistribution_source == "connected" else redistribution_source }} cost {{ ospf_metric }} type {{ metric_type }} route-policy {{ route_policy }}
+quit

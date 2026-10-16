@@ -62,6 +62,7 @@ def build(base, releases, body, actor):
         snapshot = publish(base_dir=base, releases_dir=staging, mode=body.get('mode', 'chroma'),
             expected_release=body['expected_release'], expected_revision=body['expected_revision'],
             actor=actor, reason=body['reason'])
+        snapshot = freeze_playbook_variants(base, staging, snapshot, body['expected_revision'])
         with _publication_lock(releases):
             if active_pointer(releases) != before:
                 raise AuthoringError('STALE_REVISION', 'Active release changed during build; package was not promoted.')
@@ -71,6 +72,54 @@ def build(base, releases, body, actor):
         # Only our unique staging directory, within this workspace, is removed.
         if staging.resolve().parent == base.resolve() and staging.name.startswith('.b-'):
             shutil.rmtree(staging)
+
+
+def freeze_playbook_variants(base, releases, snapshot, expected_revision):
+    """Optional owned extension, finalized only in unpublished staging packages."""
+    import yaml
+    from app.knowledge.authority import authoring_store
+    from app.knowledge.authoring_store import authoring_lock
+    from app.knowledge.runtime import KnowledgeSnapshot
+    from llm.gateway_playbooks import validate_variant, render_template
+    from llm.gateway_validation import validate_ansible
+    with authoring_lock(base):
+        draft=authoring_store(base).snapshot()
+        if draft['revision']!=expected_revision:
+            raise ValueError('Authoring changed during build; package was not promoted')
+        sources={k:v for k,v in draft['sources'].items() if k.startswith('cognishield/playbooks/')}
+        if not sources: return snapshot
+        manifest=snapshot.manifest
+        variants=[]
+        for raw in sources.values():
+            variant=validate_variant(json.loads(raw),draft['catalogs']['operations'])
+            eligible=[b for b in manifest['template_bindings'] if b['operation_id']==variant.operation_id and b['vendor']==variant.vendor and b['platform']==variant.platform and set(variant.versions)<=set(b['versions'])]
+            if len(eligible)!=1: raise ValueError('Playbook variant requires one exact reviewed native binding')
+            from jinja2.sandbox import SandboxedEnvironment
+            from jinja2 import StrictUndefined
+            binding=eligible[0]
+            from jsonschema import Draft202012Validator, FormatChecker
+            Draft202012Validator(snapshot.schema(variant.operation_id,variant.vendor),format_checker=FormatChecker()).validate(variant.fixture_parameters)
+            native=SandboxedEnvironment(undefined=StrictUndefined).from_string((snapshot.root/binding['artifact_path']).read_text()).render(**{**binding['input_contract'].get('optional_defaults',{}),**variant.fixture_parameters})
+            rendered=render_template(variant,variant.fixture_parameters,variant.fixture_host,native)
+            if yaml.safe_load(rendered)!=yaml.safe_load(variant.expected_fixture_yaml):
+                raise ValueError('Rendered playbook differs from the reviewed platform fixture')
+            report=validate_ansible(rendered, {'module':variant.module_fqcns, 'connection':[variant.connection_plugin],
+                'cliconf' if variant.connection_plugin.endswith('network_cli') else 'netconf':[variant.platform_plugin]})
+            if report['status']!='passed' or any(report.get('dependencies',{}).get(k)!=v for k,v in variant.dependencies.items()):
+                raise ValueError('Playbook publication requires contained syntax/lint validation with matching pinned dependencies')
+            artifact='studio/playbooks/'+variant.id+'.json'
+            target=snapshot.root/artifact;target.parent.mkdir(parents=True,exist_ok=True)
+            data=variant.model_dump_json().encode('utf-8');target.write_bytes(data)
+            manifest['artifacts'][artifact]=sha256(data).hexdigest()
+            variants.append({'id':variant.id,'operation_id':variant.operation_id,'operation_version':variant.operation_version,
+                'vendor':variant.vendor,'platform':variant.platform,'versions':variant.versions,'artifact_path':artifact,
+                'compatibility':'reviewed_offline_fixture','device_testing':'not_run','validation':report})
+        manifest['cognishield_playbooks']={'format_version':1,'variants':variants}
+        (snapshot.root/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+        pointer={'release_id':snapshot.release_id,'manifest_sha256':sha256((snapshot.root/'manifest.json').read_bytes()).hexdigest()}
+        verified=KnowledgeSnapshot(releases,pointer)
+        (releases/'active.json').write_text(json.dumps(pointer),encoding='utf-8')
+        return verified
 
 
 def activate(base, releases, body, actor):

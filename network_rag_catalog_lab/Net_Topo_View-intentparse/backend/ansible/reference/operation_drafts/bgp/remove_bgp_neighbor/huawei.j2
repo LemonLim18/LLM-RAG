@@ -1,0 +1,4 @@
+{# Editable reference draft: huawei / remove_bgp_neighbor. Verify syntax, dependencies and device suitability before use. #}
+bgp {{ local_as }}
+ undo peer {{ neighbor_ip }} as-number {{ remote_as }}
+

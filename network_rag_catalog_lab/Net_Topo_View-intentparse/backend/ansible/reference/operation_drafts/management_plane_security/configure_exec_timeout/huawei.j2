@@ -1,0 +1,4 @@
+{# Editable reference draft: huawei / configure_exec_timeout. Verify syntax, dependencies and device suitability before use. #}
+user-interface vty 0 4
+ idle-timeout {{ exec_timeout_minutes }} {{ exec_timeout_seconds | default(0) }}
+quit

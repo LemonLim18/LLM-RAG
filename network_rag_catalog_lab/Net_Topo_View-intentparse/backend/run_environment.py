@@ -39,6 +39,8 @@ def main():
                 mode = desired
                 env = dict(os.environ, COGNISHIELD_MODE=mode, COGNISHIELD_SUPERVISED='1')
                 worker = subprocess.Popen([sys.executable, '-m', 'uvicorn', 'backend:app', '--host', '127.0.0.1', '--port', '8000'], cwd=ROOT, env=env)
+            if worker and worker.poll() is not None:
+                raise SystemExit(f'Backend exited ({worker.returncode}); inspect the startup error. No alternate port was opened.')
             time.sleep(1)
     finally:
         stop_worker(worker)

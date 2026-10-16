@@ -24,9 +24,35 @@ Usage:
 import inspect
 import json
 import logging
+from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Optional, get_type_hints
 
 logger = logging.getLogger("llm.tools")
+
+
+@dataclass(frozen=True)
+class ToolAuthorization:
+    """Server-created context; never constructed from model tool arguments."""
+    principal: str
+    role: str
+    assistant_kind: str
+    conversation_id: str
+    allowed_tools: frozenset[str]
+    mode: str = 'local_lab'
+    permissions: frozenset[str] | None = None
+
+
+@dataclass(frozen=True)
+class Capability:
+    input_model: Any
+    result_model: Any
+    effect: str
+    assistants: frozenset[str]
+    roles: frozenset[str]
+    timeout: float = 30
+    resource_scopes: frozenset[str] = frozenset({'conversation'})
+    required_permissions: frozenset[str] = frozenset()
+    availability: Callable[[], bool] | None = None
 
 
 #: Maps Python types to JSON-schema types
@@ -50,8 +76,42 @@ class ToolRegistry:
         - ``execute(name, args)`` to run a tool by name
     """
 
-    def __init__(self):
+    def __init__(self, require_authorization: bool = False):
         self._tools: Dict[str, Dict] = {}  # name → {fn, schema}
+        self.require_authorization = require_authorization
+
+    def register_capability(self, name: str, fn: Callable, capability: Capability) -> None:
+        self._tools[name] = {'fn': fn, 'capability': capability, 'schema': {
+            'name': name, 'description': fn.__doc__ or name,
+            'parameters': capability.input_model.model_json_schema()}}
+
+    async def invoke(self, name: str, arguments: Dict[str, Any], authorization: ToolAuthorization):
+        """Validate and authorize every invocation, including retries and cache callers."""
+        import asyncio
+        from fastapi import HTTPException
+        entry = self._tools.get(name)
+        capability = entry.get('capability') if entry else None
+        role_permissions = {
+            'admin': frozenset({'network.inventory.read','engineering.propose','validation.syntax'}),
+            'engineer': frozenset({'network.inventory.read','engineering.propose','validation.syntax'}),
+            'auditor': frozenset({'network.inventory.read'})}
+        permissions = authorization.permissions if authorization.permissions is not None else role_permissions.get(authorization.role,frozenset())
+        if (not capability or name not in authorization.allowed_tools
+                or authorization.assistant_kind not in capability.assistants
+                or authorization.role not in capability.roles
+                or not capability.required_permissions <= permissions
+                or authorization.mode != 'local_lab'
+                or capability.effect not in {'read', 'propose', 'validate'}):
+            raise HTTPException(403, 'Capability is not authorized for this conversation')
+        if capability.availability is not None and not capability.availability():
+            raise HTTPException(503, 'Capability is currently unavailable')
+        params = capability.input_model.model_validate(arguments)
+        async def call():
+            if inspect.iscoroutinefunction(entry['fn']):
+                return await entry['fn'](params, authorization)
+            return await asyncio.to_thread(entry['fn'], params, authorization)
+        result = await asyncio.wait_for(call(), timeout=capability.timeout)
+        return capability.result_model.model_validate(result)
 
     # ------------------------------------------------------------------
     # Registration
@@ -157,6 +217,8 @@ class ToolRegistry:
         Returns:
             JSON-serialized result string.
         """
+        if self.require_authorization or (self._tools.get(name) or {}).get('capability'):
+            raise PermissionError('Use the authorized typed invocation boundary')
         if name not in self._tools:
             return json.dumps({"error": f"Unknown tool: {name}"})
 

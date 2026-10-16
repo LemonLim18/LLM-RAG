@@ -1,6 +1,7 @@
+import { registerEditorLanguages as ensureTemplateEditorLanguage } from '../src/monacoLanguages';
 import { useCapability } from '../src/localLab';
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import Editor, { type Monaco } from '@monaco-editor/react';
+import Editor from '@monaco-editor/react';
 import {
   FileCode2,
   FolderOpen,
@@ -25,7 +26,7 @@ const TEMPLATE_EXPANDED_VENDORS_KEY = 'templateStudio.expandedVendors';
 const TEMPLATE_VARIABLES_KEY = 'templateStudio.variables';
 const TEMPLATE_GIT_HEIGHT_KEY = 'templateStudio.gitTerminalHeight';
 const TEMPLATE_GIT_MIN_KEY = 'templateStudio.gitTerminalMinimized';
-const TEMPLATE_EDITOR_LANGUAGE = 'nettopo-jinja';
+const TEMPLATE_EDITOR_LANGUAGE = 'jinja2';
 const HIDDEN_TEMPLATE_FIELDS = new Set(['gateway']);
 
 const TEMPLATE_SCOPE_OPTIONS = [
@@ -52,95 +53,6 @@ interface SchemaProperty {
   items?: SchemaProperty;
   properties?: Record<string, SchemaProperty>;
   required?: string[];
-}
-
-function ensureTemplateEditorLanguage(monaco: Monaco) {
-  if (!monaco.languages.getLanguages().some((lang: { id: string }) => lang.id === TEMPLATE_EDITOR_LANGUAGE)) {
-    monaco.languages.register({
-      id: TEMPLATE_EDITOR_LANGUAGE,
-      extensions: ['.j2', '.jinja2'],
-      aliases: ['Jinja2', 'jinja2'],
-    });
-
-    monaco.languages.setLanguageConfiguration(TEMPLATE_EDITOR_LANGUAGE, {
-      comments: { blockComment: ['{#', '#}'] },
-      brackets: [['{', '}'], ['[', ']'], ['(', ')']],
-      autoClosingPairs: [
-        { open: '{', close: '}' },
-        { open: '[', close: ']' },
-        { open: '(', close: ')' },
-        { open: '"', close: '"' },
-        { open: "'", close: "'" },
-      ],
-      surroundingPairs: [
-        { open: '{', close: '}' },
-        { open: '[', close: ']' },
-        { open: '(', close: ')' },
-        { open: '"', close: '"' },
-        { open: "'", close: "'" },
-      ],
-    });
-
-    monaco.languages.setMonarchTokensProvider(TEMPLATE_EDITOR_LANGUAGE, {
-      tokenizer: {
-        root: [
-          [/\{#-?[\s\S]*?-?#\}/, 'comment'],
-          [/\{\{-?/, { token: 'delimiter', next: '@expression' }],
-          [/\{%-?/, { token: 'delimiter', next: '@statement' }],
-          [/[^\{]+/, ''],
-          [/\{/, ''],
-        ],
-        expression: [
-          [/-?\}\}/, { token: 'delimiter', next: '@pop' }],
-          { include: '@tagBody' },
-        ],
-        statement: [
-          [/-?%\}/, { token: 'delimiter', next: '@pop' }],
-          { include: '@tagBody' },
-        ],
-        tagBody: [
-          [/\s+/, ''],
-          [/"([^"\\]|\\.)*"/, 'string'],
-          [/'([^'\\]|\\.)*'/, 'string'],
-          [/\|[a-zA-Z_][a-zA-Z0-9_]*/, 'predefined'],
-          [/\.[a-zA-Z_][a-zA-Z0-9_]*/, 'variable.member'],
-          [/\b(if|else|elif|endif|for|endfor|in|is|defined|and|or|not|true|false|none|set|with|without|block|endblock|macro|endmacro|filter|endfilter|include|extends|import|from|as)\b/, 'keyword'],
-          [/\b\d+(?:\.\d+)?\b/, 'number'],
-          [/[a-zA-Z_][a-zA-Z0-9_]*/, 'variable.name'],
-          [/[-+*=<>!]+/, 'operator'],
-          [/[()\[\],:]/, 'delimiter.bracket'],
-        ],
-      },
-    });
-  }
-
-  monaco.editor.defineTheme('nettopo-jinja-dark', {
-    base: 'vs-dark',
-    inherit: true,
-    rules: [
-      { token: 'comment', foreground: '6B7280' },
-      { token: 'delimiter', foreground: 'F59E0B' },
-      { token: 'delimiter.bracket', foreground: 'FBBF24' },
-      { token: 'keyword', foreground: 'C084FC' },
-      { token: 'string', foreground: '86EFAC' },
-      { token: 'number', foreground: 'FCA5A5' },
-      { token: 'variable.name', foreground: '60A5FA' },
-      { token: 'variable.member', foreground: '22D3EE' },
-      { token: 'predefined', foreground: '7DD3FC' },
-      { token: 'operator', foreground: 'F9A8D4' },
-    ],
-    colors: {
-      'editor.background': '#0b1220',
-      'editorLineNumber.foreground': '#475569',
-      'editorLineNumber.activeForeground': '#cbd5e1',
-      'editorGutter.background': '#0b1220',
-      'editor.selectionBackground': '#1d4ed833',
-      'editor.inactiveSelectionBackground': '#33415555',
-      'editorCursor.foreground': '#f8fafc',
-      'editorIndentGuide.background1': '#1e293b',
-      'editorIndentGuide.activeBackground1': '#334155',
-    },
-  });
 }
 
 function extractTemplateVariables(content: string): string[] {

@@ -1,0 +1,5 @@
+{# Editable reference draft: huawei / create_qos_policy. Verify syntax, dependencies and device suitability before use. #}
+traffic policy {{ policy_name }}
+{% for term in policy_terms %} classifier {{ term.classifier_name }} behavior {{ term.classifier_name }}
+{% endfor %}quit
+{# Create/review referenced traffic behaviors and bandwidth actions separately. #}

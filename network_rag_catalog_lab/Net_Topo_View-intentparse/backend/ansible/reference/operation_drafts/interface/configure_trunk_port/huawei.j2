@@ -1,0 +1,6 @@
+{# Editable reference draft: huawei / configure_trunk_port. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+ port link-type trunk
+ port trunk allow-pass vlan {{ allowed_vlans | join(" ") }}
+{% if native_vlan is defined %} port trunk pvid vlan {{ native_vlan }}
+{% endif %}quit

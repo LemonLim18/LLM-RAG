@@ -1,6 +1,7 @@
+import { languageForDocument } from '../../src/monacoLanguages';
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import ReactMarkdown from 'react-markdown';
+import AssistantMarkdown from '../AssistantMarkdown';
 import { DiffEditor } from '@monaco-editor/react';
 import { Send, Loader2, Bot, Sparkles, AlertCircle, FileCode, ChevronRight, Paperclip, X, TriangleAlert, ChevronDown, Check, Undo2, Square, History, Plus, Trash2, RefreshCw, User as UserIcon, MessageSquareQuote } from 'lucide-react';
 import PremiumLoaderOverlay from '../PremiumLoaderOverlay';
@@ -23,12 +24,15 @@ import {
   DEFAULT_OLLAMA_MODEL,
 } from '../../src/config';
 import { ANSIBLE_REMEDIATION_INTENT_KEY } from '../../utils/remediationPrompt';
+import { aiApi, type DraftDocument, type EditorSnapshot, type EditProposal } from '../../src/services/ai';
+import NativeGenerationReview from './NativeGenerationReview';
 
 const ANSIBLE_MODEL_STORAGE_KEY = 'ansibleStudio.selectedModel';
 const OLLAMA_BASE_URL_STORAGE_KEY = 'llmRuntimeSelector.ollamaBaseUrl';
 const ANSIBLE_CHAT_SESSIONS_KEY = 'ansibleChat.sessions.v1';
 const ANSIBLE_CHAT_CURRENT_SESSION_KEY = 'ansibleChat.currentSessionId.v1';
 const LOCAL_OLLAMA_URLS = new Set(['http://127.0.0.1:11434', 'http://localhost:11434']);
+const LOCAL_WELCOME = "**What are we working on?**\n\nI can explain your code, inspect an uploaded file, propose edits, or help generate a configuration.\n\n- **Explain** the current document or selected code\n- **Edit** with a diff you can accept or reject\n- **Generate** from published vendor templates\n\nDescribe the change and its target devices to get started.";
 
 const isLocalOllamaUrl = (value?: string | null) => LOCAL_OLLAMA_URLS.has(String(value || '').trim().replace(/\/+$/, ''));
 
@@ -97,10 +101,11 @@ function normalizeSessionRecord(session: {
   createdAt?: string;
   messages: unknown;
 }): AnsibleChatSessionRecord {
+  const timestamp = String(session.updatedAt || '');
   const updatedAt =
     typeof session.updatedAt === 'number'
       ? session.updatedAt
-      : Number(session.updatedAt || Date.now());
+      : /^\d+$/.test(timestamp) ? Number(timestamp) : Date.parse(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(timestamp) ? timestamp.replace(' ', 'T') + 'Z' : timestamp);
   return {
     id: String(session.id || uuidv4()),
     title: String(session.title || 'New Chat'),
@@ -236,6 +241,9 @@ function prettifyModelLabel(providerName: string, modelName: string): string {
 }
 
 interface AnsibleChatPanelProps {
+  getEditorSnapshot?: () => EditorSnapshot | null;
+  onEditProposal?: (proposal: EditProposal) => boolean;
+  onDraftReady?: (draft: DraftDocument) => void;
   onPlaybookReady: (payload: {
     jobId: number;
     content: string;
@@ -728,75 +736,8 @@ function sanitizeIPv4CidrInput(raw: string): string {
   return `${ipPart}/${pfxDigits}`;
 }
 
-// ── VS Code-style markdown renderer ──────────────────────────────────────────
-interface MarkdownProps { content: string; onOpenFile?: (path: string) => void; }
-
-const VscodeMarkdown: React.FC<MarkdownProps> = ({ content, onOpenFile }) => (
-  <ReactMarkdown
-    components={{
-      p:    ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed" style={{ fontSize: 13, color: '#cccccc' }}>{children}</p>,
-      strong: ({ children }) => <strong style={{ fontWeight: 600, color: '#e2c08d' }}>{children}</strong>,
-      em:   ({ children }) => <em style={{ fontStyle: 'italic', color: '#9cdcfe' }}>{children}</em>,
-      code: ({ children, className }) => {
-        if (className?.includes('language-')) return null; // handed by pre
-        return <code style={{ fontFamily: 'monospace', fontSize: 12, background: '#1c1c1c', color: '#ce9178', padding: '1px 6px', borderRadius: 3, border: '1px solid #3c3c3c' }}>{children}</code>;
-      },
-      pre: ({ children }) => {
-        const codeEl = children as React.ReactElement<any>;
-        const rawText = typeof codeEl?.props?.children === 'string' ? codeEl.props.children : String(codeEl?.props?.children ?? '');
-        const lang = (codeEl?.props?.className ?? '').replace('language-', '') || 'yaml';
-        const isFilePath = rawText.trim().includes('/') && !rawText.includes('\n') && rawText.trim().length < 80;
-        if (isFilePath && onOpenFile) {
-          return (
-            <button onClick={() => onOpenFile(rawText.trim())}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '3px 8px', margin: '4px 0', borderRadius: 4, background: '#1e3a5f', color: '#4fc3f7', fontSize: 12, fontFamily: 'monospace', border: '1px solid #264f78', cursor: 'pointer', width: '100%', textAlign: 'left' }}
-            >
-              <FileCode style={{ width: 12, height: 12, flexShrink: 0 }} />
-              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{rawText.trim()}</span>
-              <ChevronRight style={{ width: 10, height: 10, marginLeft: 'auto', opacity: 0.6, flexShrink: 0 }} />
-            </button>
-          );
-        }
-        return (
-          <div style={{ margin: '8px 0', borderRadius: 4, overflow: 'hidden', border: '1px solid #3c3c3c' }}>
-            <div style={{ padding: '3px 10px', background: '#2d2d2d', borderBottom: '1px solid #3c3c3c', display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 10, color: '#858585', fontFamily: 'monospace', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{lang}</span>
-            </div>
-            <pre style={{ background: '#0d0d0d', color: '#d4d4d4', fontFamily: 'monospace', fontSize: 11.5, lineHeight: 1.55, padding: '10px 12px', overflowX: 'auto', margin: 0, whiteSpace: 'pre' }}>{rawText}</pre>
-          </div>
-        );
-      },
-      ul: ({ children }) => <ul style={{ listStyle: 'none', paddingLeft: 0, margin: '6px 0' }}>{children}</ul>,
-      ol: ({ children }) => <ol style={{ paddingLeft: 16, margin: '6px 0', color: '#cccccc', fontSize: 13 }}>{children}</ol>,
-      li: ({ children }) => <li style={{ display: 'flex', gap: 6, color: '#cccccc', fontSize: 13, lineHeight: 1.5, marginBottom: 3 }}><span style={{ color: '#569cd6', flexShrink: 0 }}>›</span><span>{children}</span></li>,
-      blockquote: ({ children }) => (
-        <blockquote style={{ 
-          borderLeft: '3px solid #007acc', 
-          background: 'rgba(0, 122, 204, 0.05)',
-          margin: '8px 0', 
-          padding: '4px 12px',
-          color: '#9cdcfe',
-          fontStyle: 'italic'
-        }}>
-          {children}
-        </blockquote>
-      ),
-      h1: ({ children }) => <h1 style={{ fontSize: 14, fontWeight: 700, color: '#e2e2e2', margin: '10px 0 4px' }}>{children}</h1>,
-      h2: ({ children }) => <h2 style={{ fontSize: 13, fontWeight: 600, color: '#e2e2e2', margin: '8px 0 4px' }}>{children}</h2>,
-      h3: ({ children }) => <h3 style={{ fontSize: 12, fontWeight: 600, color: '#9cdcfe', margin: '6px 0 2px' }}>{children}</h3>,
-      a: ({ href, children }) => {
-        const isRelFile = href && !href.startsWith('http') && (href.includes('/') || /\.(yml|yaml|json|j2|txt)$/.test(href));
-        if (isRelFile && onOpenFile) {
-          return <button onClick={() => onOpenFile(href!)} style={{ display: 'inline-flex', alignItems: 'center', gap: 3, color: '#4fc3f7', fontSize: 12, fontFamily: 'monospace', textDecoration: 'underline', cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}><FileCode style={{ width: 11, height: 11 }} />{children}</button>;
-        }
-        return <a href={href} target="_blank" rel="noopener noreferrer" style={{ color: '#4fc3f7', textDecoration: 'underline' }}>{children}</a>;
-      },
-      hr: () => <hr style={{ border: 'none', borderTop: '1px solid #3c3c3c', margin: '10px 0' }} />,
-    }}
-  >
-    {content}
-  </ReactMarkdown>
-);
+// Both assistants use the same readable Markdown and code-block treatment.
+const VscodeMarkdown = AssistantMarkdown;
 
 // ── Main chat panel ───────────────────────────────────────────────────────────
 interface AnsibleModelSelection {
@@ -812,10 +753,14 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   user,
   explainSelectionRequest,
   onExplainSelectionHandled,
+  getEditorSnapshot,
+  onEditProposal,
+  onDraftReady,
 }) => {
   void _activeJob;
   const localChat = React.useContext(CapabilityContext).providers?.chat === 'local_ollama';
-  const initialStoredSessions = useMemo(() => loadStoredAnsibleSessions(), []);
+  const modelStorageKey = localChat ? `ai.studio.model.${user?.username || 'signed-out'}` : ANSIBLE_MODEL_STORAGE_KEY;
+  const initialStoredSessions = useMemo(() => localChat ? [] : loadStoredAnsibleSessions(), [localChat]);
   const initialStoredSessionId = useMemo(
     () => loadStoredCurrentAnsibleSessionId(initialStoredSessions),
     [initialStoredSessions],
@@ -830,12 +775,46 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   const [sessionsHydrated, setSessionsHydrated] = useState(false);
   const [messages, setMessages] = useState<AnsibleMessage[]>(initialStoredMessages);
   const [input, setInput]               = useState('');
+  useEffect(() => {
+    if (!localChat) return;
+    const applyHandoff = () => {
+      const raw=sessionStorage.getItem('ai.engineeringHandoff');
+      if (!raw) return;
+      sessionStorage.removeItem('ai.engineeringHandoff');
+      try {
+        const handoff=JSON.parse(raw);
+        void aiApi.get(handoff.conversation_id).then(value=>{
+          const selected=normalizeSessionRecord(value);
+          setSessions(previous=>[selected,...previous.filter(item=>item.id!==selected.id)]);
+          setCurrentSessionId(selected.id); setMessages(selected.messages); setInput(handoff.draft || '');
+        }).catch(error=>Toast.error('Handoff unavailable',String(error)));
+      } catch { /* Discard invalid client navigation state; backend remains authoritative. */ }
+    };
+    applyHandoff();
+    window.addEventListener('cognishield:engineering-handoff',applyHandoff);
+    return () => window.removeEventListener('cognishield:engineering-handoff',applyHandoff);
+  }, [localChat]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [commandHistoryIndex, setCommandHistoryIndex] = useState(-1);
   const [isGenerating, setGenerating]   = useState(false);
   const [isGeneratingPlaybook, setGeneratingPlaybook] = useState(false);
   const [isDragOver, setIsDragOver]     = useState(false);
-  const [attachedFiles, setAttachedFiles] = useState<{ name: string; content: string; lang: string; size: number; truncated: boolean }[]>([]);
+  const [attachedFiles, setAttachedFiles] = useState<{ name: string; content: string; lang: string; size: number; truncated: boolean; id?: string }[]>([]);
+  const [gatewayPreview, setGatewayPreview] = useState<{ preview: any; prompt: string; conversation: string } | null>(null);
+  const [rememberedAttachments, setRememberedAttachments] = useState<{ id: string; name: string; byte_size: number }[] | null>(null);
+  const gatewayRequestRef = useRef<{ conversation: string; request: string } | null>(null);
+  const activeSessionRef = useRef(currentSessionId);
+  activeSessionRef.current = currentSessionId;
+  const ensureConversation = useCallback(async () => {
+    const id = currentSessionId || uuidv4();
+    await aiApi.create('studio', id);
+    if (!currentSessionId) setCurrentSessionId(id);
+    return id;
+  }, [currentSessionId]);
+  useEffect(() => () => {
+    const active = gatewayRequestRef.current;
+    if (active) { abortControllerRef.current?.abort(); void aiApi.cancel(active.conversation, active.request).catch(() => {}); }
+  }, []);
   const [runtime, setRuntime]           = useState<LlmRuntimeState | null>(null);
   const [ansibleModel, setAnsibleModel] = useState<AnsibleModelSelection>(() =>
     DEFAULT_LLM_PROVIDER === 'gemini'
@@ -967,6 +946,10 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   }, [previewAccumulatedParams]);
 
   const resetTransientChatState = useCallback(() => {
+    setRememberedAttachments(null);
+    const active = gatewayRequestRef.current;
+    if (active) { void aiApi.cancel(active.conversation, active.request).catch(() => {}); gatewayRequestRef.current = null; }
+    setGatewayPreview(null);
     abortControllerRef.current?.abort();
     abortControllerRef.current = null;
     loadingPhaseTimeoutRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
@@ -1264,11 +1247,11 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
 
   // Load LLM runtime (Gemini + Ollama models) and restore Ansible model selection
   useEffect(() => {
-    const ollamaBaseUrl = localStorage.getItem(OLLAMA_BASE_URL_STORAGE_KEY) || DEFAULT_OLLAMA_BASE_URL;
+    const ollamaBaseUrl = localChat ? undefined : localStorage.getItem(OLLAMA_BASE_URL_STORAGE_KEY) || DEFAULT_OLLAMA_BASE_URL;
     llmApi.getRuntime(ollamaBaseUrl).then((r) => {
       setRuntime(r);
       try {
-        const raw = localStorage.getItem(ANSIBLE_MODEL_STORAGE_KEY);
+        const raw = localStorage.getItem(modelStorageKey);
         if (raw) {
           const parsed = JSON.parse(raw) as AnsibleModelSelection;
           if (parsed?.provider && parsed?.model && r.providers.some(p => p.name === parsed.provider && p.models.includes(parsed.model))) {
@@ -1291,11 +1274,11 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
       const fallbackModel = prov === 'gemini' ? 'gemini-2.5-flash' : DEFAULT_OLLAMA_MODEL;
       setAnsibleModel({
         provider: prov,
-        model: r.active_model || fallbackModel,
+        model: r.active_model || (localChat ? '' : fallbackModel),
         ollama_base_url: r.active_base_url ?? null,
       });
     }).catch(() => { /* keep defaults */ });
-  }, []);
+  }, [modelStorageKey, localChat]);
 
   const combinedModelOptions = useMemo(() => {
     if (!runtime?.providers) return [];
@@ -1321,8 +1304,10 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   }, [combinedModelOptions, modelSearch]);
 
   const currentModelLabel = useMemo(() => {
+    if (localChat && !runtime) return 'Checking local model…';
+    if (localChat && !runtime?.providers.some(p => p.models.includes(ansibleModel.model))) return 'Local AI unavailable';
     return prettifyModelLabel(ansibleModel.provider, ansibleModel.model);
-  }, [ansibleModel.provider, ansibleModel.model]);
+  }, [ansibleModel.provider, ansibleModel.model, localChat, runtime]);
 
   const currentSession = useMemo(
     () => sessions.find((session) => session.id === currentSessionId) ?? null,
@@ -1332,9 +1317,9 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   const persistAnsibleModel = useCallback((sel: AnsibleModelSelection) => {
     setAnsibleModel(sel);
     try {
-      localStorage.setItem(ANSIBLE_MODEL_STORAGE_KEY, JSON.stringify(sel));
+      localStorage.setItem(modelStorageKey, JSON.stringify(sel));
     } catch (_) { /* ignore */ }
-  }, []);
+  }, [modelStorageKey]);
 
   const handleRebuildRag = useCallback(async () => {
     if (isRebuildingRag) return;
@@ -1423,13 +1408,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   }, [messages, hydratedFilePaths]);
 
   // ── File helpers ────────────────────────────────────────────────────────
-  const langFor = (name: string) =>
-    /\.ya?ml$/i.test(name) ? 'yaml' :
-    /\.json$/i.test(name) ? 'json' :
-    /\.j2$/i.test(name)   ? 'jinja2' :
-    /\.conf$/i.test(name) ? 'ini' :
-    /\.py$/i.test(name)   ? 'python' :
-    'text';
+  const langFor = languageForDocument;
 
   const readTextFile = (file: File): Promise<string> =>
     new Promise((res, rej) => {
@@ -1444,6 +1423,18 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
 
   const attachFiles = useCallback(async (files: FileList | File[]) => {
     const arr = Array.from(files);
+    if (localChat) {
+      if (attachedFiles.length + arr.length > 5 || arr.some(f => f.size > 10 * 1024 * 1024) || arr.reduce((n, f) => n + f.size, attachedFiles.reduce((n, f) => n + f.size, 0)) > 25 * 1024 * 1024) {
+        Toast.error('Attachment limit', 'Use at most five files, 10 MiB each and 25 MiB combined.'); return;
+      }
+      try {
+        const id = await ensureConversation();
+        const uploaded: typeof attachedFiles = [];
+        for (const file of arr) { const result = await aiApi.upload(id, file); uploaded.push({ name: result.name, id: result.id, content: '', lang: langFor(result.name), size: result.byte_size, truncated: false }); }
+        setAttachedFiles(prev => [...prev, ...uploaded]);
+      } catch (e) { Toast.error('Attachment failed', describeError(e)); }
+      return;
+    }
     const results = await Promise.allSettled(arr.map(async (f) => {
       const raw = await readTextFile(f);
       const truncated = raw.length > MAX_FILE_BYTES;
@@ -1454,7 +1445,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
       .filter((r): r is PromiseFulfilledResult<{ name: string; content: string; lang: string; size: number; truncated: boolean }> => r.status === 'fulfilled')
       .map(r => r.value);
     setAttachedFiles(prev => [...prev, ...valid]);
-  }, []);
+  }, [localChat, attachedFiles, ensureConversation]);
 
   // Panel-level drag handlers with counter to avoid child-element flicker
   const handlePanelDragEnter = useCallback((e: React.DragEvent) => {
@@ -1487,6 +1478,12 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
     const ansiblePath = String(ansiblePathRaw || '').trim();
     if (ansiblePath) {
       try {
+        if (localChat) {
+          const snapshot = getEditorSnapshot?.();
+          const content = snapshot?.path === ansiblePath ? snapshot.content : (await ansibleApi.readFile(ansiblePath)).content;
+          await attachFiles([new File([content ?? ''], ansiblePath.split('/').pop() ?? ansiblePath, {type:'text/plain'})]);
+          return;
+        }
         const res = await ansibleApi.readFile(ansiblePath);
         const name = ansiblePath.split('/').pop() ?? ansiblePath;
         const raw  = res.content ?? '';
@@ -1501,10 +1498,10 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
         }]);
       } catch (_) { /* ignore — dropped text may not be a valid file path */ }
     }
-  }, [attachFiles]);
+  }, [attachFiles, localChat, getEditorSnapshot]);
 
   const removeAttachment = (idx: number) =>
-    setAttachedFiles(prev => prev.filter((_, i) => i !== idx));
+    setAttachedFiles(prev => { const file = prev[idx]; if (localChat && file?.id && currentSessionId) void aiApi.removeAttachment(currentSessionId, file.id).catch(() => {}); return prev.filter((_, i) => i !== idx); });
 
   const addMsg = useCallback((msg: Omit<AnsibleMessage, 'id' | 'timestamp'>) => {
     setMessages(prev => [...prev, { ...msg, id: uuidv4(), timestamp: Date.now() }]);
@@ -2467,27 +2464,26 @@ setGeneratingPlaybook(false);
     if (isGenerating) return;
     const hasUpload = attachedFiles.length > 0;
 
-    // Explanations remain chat; authoring requests use the original Studio pipeline.
-    const explanationOnly = /^(explain|what\b|why\b|how\b|is\b|are\b|hello\b|hi\b|reply\b)/i.test(baseText) || Boolean(quotedSelection);
-    if (localChat && explanationOnly) {
-      const context = [quotedSelection?.text || '', ...attachedFiles.map(file => `${file.name}\n${file.content}`)].filter(Boolean).join('\n\n');
-      const question = baseText || 'Explain the attached content.';
-      addMsg({ role: 'user', content: question });
-      setInput(''); setAttachedFiles([]); setQuotedSelection(null);
-      setGenerating(true);
-      const ac = new AbortController();
-      abortControllerRef.current = ac;
+    if (localChat) {
+      const question = baseText || 'Explain the attached files.';
+      const ac = new AbortController(); abortControllerRef.current = ac;
+      setGenerating(true); setInput('');
+      addMsg({ role: 'user', content: question + (attachedFiles.length ? '\n\nAttachments: ' + attachedFiles.map(f => f.name).join(', ') : '') });
       try {
-          await llmApi.updateRuntime({provider: 'ollama', model: ansibleModel.model}, {signal: ac.signal});
-        const result = await llmApi.qaPlaybook(context, question,
-          messages.filter(m => !m.isError && (m.role === 'user' || m.role === 'assistant')).slice(-20).map(m => ({ role: m.role, content: m.content })), { signal: ac.signal });
-        addMsg({ role: 'assistant', content: result.answer });
-      } catch (error) {
-        if (!ac.signal.aborted) addMsg({ role: 'assistant', content: describeError(error, 'Local model inference failed.'), isError: true });
-      } finally {
-        abortControllerRef.current = null;
-        setGenerating(false);
-      }
+        const conversation = await ensureConversation();
+        const requestId = uuidv4(); gatewayRequestRef.current = { conversation, request: requestId };
+        const captured = getEditorSnapshot?.();
+        const result = await aiApi.turn(conversation, { request_id: requestId, prompt: question, model: ansibleModel.model || undefined,
+          editor: captured, attachment_ids: attachedFiles.flatMap(f => f.id ? [f.id] : []) }, ac.signal);
+        if (ac.signal.aborted || activeSessionRef.current !== conversation) return;
+        setAttachedFiles([]); setQuotedSelection(null);
+        let answer = result.answer;
+        if (result.context_coverage.complete === false) answer += `\n\nContext coverage: ${result.context_coverage.included_characters}/${result.context_coverage.total_characters} characters. Relevant excerpts were selected.`;
+        addMsg({ role: 'assistant', content: answer, evidence: result.evidence, gatewayReview: result.kind === 'generation_preview' && result.preview ? { preview: result.preview, prompt: question, conversation } : undefined, isError: ['unavailable', 'denied', 'error'].includes(result.status) });
+        if (result.kind === 'generation_preview' && result.preview) setGatewayPreview({ preview: result.preview, prompt: question, conversation });
+        if (result.kind === 'edit_proposal' && result.proposal && !onEditProposal?.(result.proposal)) addMsg({ role: 'assistant', content: 'The document changed while the proposal was prepared. Your current buffer was preserved; request a new edit.', isError: true });
+      } catch (e) { if (!ac.signal.aborted) addMsg({ role: 'assistant', content: describeError(e, 'Shared local AI request failed.'), isError: true }); }
+      finally { if (abortControllerRef.current === ac) { abortControllerRef.current = null; gatewayRequestRef.current = null; setGenerating(false); } }
       return;
     }
 
@@ -2823,6 +2819,9 @@ setGeneratingPlaybook(false);
     }
   }, [
     input,
+    ensureConversation,
+    getEditorSnapshot,
+    onEditProposal,
     localChat,
     messages,
     isGenerating,
@@ -2917,6 +2916,8 @@ setGeneratingPlaybook(false);
   ]);
 
   const handleStop = useCallback(() => {
+    const request = gatewayRequestRef.current;
+    if (request) { void aiApi.cancel(request.conversation, request.request).catch(() => {}); gatewayRequestRef.current = null; }
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
       abortControllerRef.current = null;
@@ -2989,8 +2990,6 @@ setGeneratingPlaybook(false);
     onUndoAll: () => void;
     onOpenFile: (path: string) => void;
   }) {
-    const language = (path: string) =>
-      /\.(ya?ml|json)$/i.test(path) ? 'yaml' : /\.(md|markdown)$/i.test(path) ? 'markdown' : 'plaintext';
     return (
       <div className="mt-4 rounded-lg border border-base-300 bg-base-300 overflow-hidden">
         <div className="px-3 py-2 border-b border-base-300 flex items-center justify-between flex-wrap gap-2">
@@ -3044,7 +3043,7 @@ setGeneratingPlaybook(false);
                 <DiffEditor
                   original={edit.original}
                   modified={edit.suggested}
-                  language={language(edit.path)}
+                  language={languageForDocument(edit.path)}
                   theme="vs-dark"
                   options={{
                     readOnly: true,
@@ -3065,7 +3064,7 @@ setGeneratingPlaybook(false);
   /* ── Panel aligned with app theme (dark) ───────────────────────────────── */
   return (
     <div
-      className="flex flex-col h-full bg-base-200 text-base-content relative select-text font-sans"
+      className="assistant-surface flex flex-col h-full bg-base-200 text-base-content relative select-text font-sans"
       onDragEnter={handlePanelDragEnter}
       onDragLeave={handlePanelDragLeave}
       onDragOver={e => e.preventDefault()}
@@ -3078,6 +3077,10 @@ setGeneratingPlaybook(false);
           subtitle="AI model is compiling Ansible task definitions…"
         />
       )}
+      {gatewayPreview && <NativeGenerationReview initial={gatewayPreview.preview} conversationId={gatewayPreview.conversation} prompt={gatewayPreview.prompt} model={ansibleModel.model || undefined} onClose={() => setGatewayPreview(null)} onPreviewChange={preview => {
+        setGatewayPreview(current => current ? { ...current, preview } : current);
+        setMessages(current => current.map(message => message.gatewayReview?.preview?.parsed_intent?._v9_session === preview.parsed_intent?._v9_session ? { ...message, gatewayReview: { ...message.gatewayReview!, preview } } : message));
+      }} onAccept={draft => { onDraftReady?.(draft); addMsg({ role: 'assistant', content: `Opened **${draft.path.split('/').pop()}** in the editor. Review the result, then **Save** when ready.` }); }} />}
       {/* Playbook Studio overlay: intent categories → RAG templates → confirm → dual editor */}
       <PlaybookStudioOverlay
         open={studioOpen}
@@ -3235,7 +3238,7 @@ setGeneratingPlaybook(false);
           )} */}
           <button
             onClick={handleRebuildRag}
-            disabled={isRebuildingRag}
+            disabled={isRebuildingRag || localChat}
             title="Rebuild RAG (re-ingest reference docs so the LLM uses the latest Ansible reference)"
             className="p-1 rounded text-base-content/60 hover:text-base-content hover:bg-base-content/10 flex items-center gap-1 transition-colors disabled:opacity-50 disabled:cursor-wait"
           >
@@ -4581,11 +4584,15 @@ setGeneratingPlaybook(false);
                       )}
                     </div>
                   ) : (
-                    <VscodeMarkdown content={msg.content} onOpenFile={onOpenFile} />
+                    <>
+                    <VscodeMarkdown content={localChat && idx === 0 && msg.content.startsWith('**Ansible AI** ready.') ? LOCAL_WELCOME : msg.content} onOpenFile={onOpenFile} />
+                    {!!msg.evidence?.length && <details className="text-[11px] text-base-content/50 mt-3"><summary className="cursor-pointer">Sources ({msg.evidence.length})</summary><ul className="mt-2 space-y-1">{msg.evidence.map((e,index) => <li key={e.id} className="break-all">S{index+1} · {e.source} · {e.origin}{e.page ? ` · page ${e.page}` : ''}{e.start_line ? ` · lines ${e.start_line}–${e.end_line}` : ''}</li>)}</ul></details>}
+                    {localChat && msg.gatewayReview && <button className="btn btn-sm btn-outline mt-3" onClick={() => setGatewayPreview(msg.gatewayReview!)}><FileCode size={14} />Review interpretation</button>}
+                    </>
                   )}
 
                   {/* Proposed edits: diff view with Keep / Undo per file and Keep All / Undo All */}
-                  {msg.proposedEdits && msg.proposedEdits.length > 0 && (
+                  {!localChat && msg.proposedEdits && msg.proposedEdits.length > 0 && (
                     <ProposedEditsBlock
                       edits={msg.proposedEdits}
                       onKeepFile={async (path, suggested) => {
@@ -4669,7 +4676,7 @@ setGeneratingPlaybook(false);
           ref={fileInputRef}
           type="file"
           multiple
-          accept=".yml,.yaml,.json,.j2,.conf,.txt,.py,.ini,.log,.csv,.md"
+          accept={localChat ? '.yml,.yaml,.json,.j2,.cfg,.conf,.txt,.py,.log,.pdf,.png,.jpg,.jpeg,.webp,.jinja,.jinja2' : '.yml,.yaml,.json,.j2,.conf,.txt,.py,.ini,.log,.csv,.md'}
           style={{ display: 'none' }}
           onChange={e => {
             if (e.target.files?.length) attachFiles(e.target.files);
@@ -4742,6 +4749,10 @@ setGeneratingPlaybook(false);
             </div>
           )}
 
+          {localChat && currentSessionId && <div className="px-3 text-xs">
+            <button className="btn btn-xs btn-ghost" onClick={() => { if (rememberedAttachments) setRememberedAttachments(null); else void aiApi.listAttachments(currentSessionId).then(r => setRememberedAttachments(r.attachments)).catch(e => Toast.error('Attachments unavailable', describeError(e))); }}>Conversation files</button>
+            {rememberedAttachments?.map(file => <div key={file.id} className="flex gap-2 items-center py-1"><span className="truncate grow">{file.name}</span><button className="btn btn-xs" disabled={/\.(pdf|png|jpe?g|webp)$/i.test(file.name)} onClick={() => void aiApi.attachment(currentSessionId, file.id).then(value => { const name = value.name.replace(/[^a-zA-Z0-9_.-]/g, '_'); onDraftReady?.({ id: value.id, path: `playbooks/imports/${value.id}-${name}`, content: value.content, device_id: '', validation: { status: 'unvalidated', source: 'uploaded_file' } }); }).catch(e => Toast.error('Open failed', describeError(e)))}>Open in editor</button><button className="btn btn-xs btn-ghost" onClick={() => void aiApi.removeAttachment(currentSessionId, file.id).then(() => setRememberedAttachments(prev => prev?.filter(f => f.id !== file.id) || null)).catch(e => Toast.error('Remove failed', describeError(e)))}>Remove</button></div>)}
+          </div>}
           {/* Textarea Area */}
           <div className="p-2 pb-0">
             <textarea
@@ -4824,6 +4835,10 @@ setGeneratingPlaybook(false);
                       style={{ backgroundColor: '#18181b' }} // Solid zinc-900 (fully opaque list)
                       className="overflow-y-auto max-h-60 p-1 custom-scrollbar"
                     >
+                      {localChat && <div className="p-2 text-xs text-base-content/65">
+                        {!filteredModelOptions.length && <p className="mb-2">{runtime?.providers.find(p => p.name === 'ollama')?.error || 'Checking local Ollama availability.'}</p>}
+                        <button className="btn btn-xs btn-ghost" onClick={() => void llmApi.getRuntime().then(r => { setRuntime(r); if (r.active_model) persistAnsibleModel({provider:r.active_provider,model:r.active_model,ollama_base_url:r.active_base_url}); }).catch(e => Toast.error('Model refresh failed', describeError(e)))}><RefreshCw size={12} />Refresh local models</button>
+                      </div>}
                       {filteredModelOptions.map((opt) => {
                         const isSelected = ansibleModel.provider === opt.providerName && ansibleModel.model === opt.modelName;
                         return (

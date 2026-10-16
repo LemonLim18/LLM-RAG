@@ -27,7 +27,9 @@ class AuthoringStore:
             allowed={'playbooks','roles'} if write else {'playbooks','roles','reference','Test_Reference'}
             if parts[0] not in allowed or (write and len(parts)<2):
                 raise HTTPException(403,'Only playbooks/ and roles/ are writable local workspace roots')
-            if kind=='file' and path.suffix.lower() not in {'.yml','.yaml','.json','.j2','.md','.txt'}:
+            ordinary_types={'.yml','.yaml','.json','.j2','.md','.txt','.cfg','.conf','.py','.log'}
+            generated_native = bool(re.fullmatch(r'playbooks/generated/job_\d+/[^/]+', value)) and path.suffix.lower() not in {'.yml','.yaml','.json','.j2','.md','.txt'}
+            if kind=='file' and (path.suffix.lower() not in ordinary_types or generated_native):
                 # A generated text artifact may declare its own suffix in its
                 # frozen template. Trust only the exact persisted job manifest,
                 # not arbitrary filenames or client-supplied extensions.
@@ -104,12 +106,14 @@ class AuthoringStore:
         except Exception as exc:
             raise HTTPException(422,'Invalid source: '+str(exc)) from exc
 
-    def mutate(self,namespace,path,content,actor,operation='save',kind='file'):
+    def mutate(self,namespace,path,content,actor,operation='save',kind='file',expected_revision=None):
         disk=self.resolve(namespace,path,write=True,kind=kind)
         if operation!='delete' and kind=='file': self.validate_content(namespace,path,content)
         with self.db._connect() as c:
             c.execute('BEGIN IMMEDIATE')
             row=self.latest(namespace,path,c)
+            if expected_revision is not None and expected_revision != (row['revision'] if row else 0):
+                raise HTTPException(409,'Saved revision changed; review current saved content before saving again')
             exists=(not row['deleted']) if row else disk.exists()
             if operation=='create' and exists: raise HTTPException(409,'Path already exists')
             if operation in {'save','delete'} and not exists: raise HTTPException(404,'Path not found')

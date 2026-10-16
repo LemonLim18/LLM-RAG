@@ -1,0 +1,5 @@
+{# Editable reference draft: huawei / configure_interface_ip. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+ ip address {{ address }} {{ netmask }}
+{% if admin_up is defined and admin_up %} undo shutdown{% endif %}
+

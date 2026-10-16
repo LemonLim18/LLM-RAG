@@ -1,0 +1,3 @@
+{# Editable reference draft: juniper / assign_vlan_to_trunk_port. Verify syntax, dependencies and device suitability before use. #}
+set interfaces {{ interface }} unit 0 family ethernet-switching vlan members [ {{ allowed_vlans | join(' ') }} ]
+

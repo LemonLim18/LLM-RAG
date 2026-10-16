@@ -20,17 +20,28 @@ export const knowledgeApi = {
 };
 
 // Generic fetch wrapper
-async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+export async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const url = `${BASE_URL}/api/v1${endpoint}`;
   const token = localStorage.getItem('auth_token');
-  const response = await fetch(url, {
+  const fetchOptions: RequestInit = {
     ...options,
     headers: {
-      'Content-Type': 'application/json',
+      ...(options?.body instanceof FormData ? {} : { 'Content-Type': 'application/json' }),
       ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       ...options?.headers,
     },
-  });
+  };
+  let response: Response;
+  try {
+    response = await fetch(url, fetchOptions);
+  } catch (error) {
+    // A local backend restart can invalidate an in-flight browser connection.
+    // Only a read without an HTTP response gets one bounded retry.
+    if (!(error instanceof TypeError) || (options?.method || 'GET').toUpperCase() !== 'GET' || options?.signal?.aborted) throw error;
+    await new Promise(resolve => setTimeout(resolve, 200));
+    if (options?.signal?.aborted) throw error;
+    response = await fetch(url, fetchOptions);
+  }
 
   if (!response.ok) {
     const errorBody = await response.json().catch(() => ({}));
@@ -1884,7 +1895,7 @@ export const ansibleApi = {
 
   /** Read a single file's content from the ansible directory. */
   readFile: (path: string) =>
-    request<{ path: string; content: string; size: number; modified_at: string; read_only?: boolean; writable?: boolean }>(
+    request<{ path: string; content: string; size: number; modified_at: string; read_only?: boolean; writable?: boolean; revision?: number }>(
       `/ansible/files/${encodeURIComponent(path)}`
     ),
 

@@ -1,0 +1,10 @@
+{# Editable reference draft: cisco / configure_shaping. Verify syntax, dependencies and device suitability before use. #}
+policy-map {{ policy_name }}
+ class class-default
+  shape average {{ rate_bps }}
+  exit
+ exit
+interface {{ interface }}
+ service-policy output {{ policy_name }}
+ exit
+

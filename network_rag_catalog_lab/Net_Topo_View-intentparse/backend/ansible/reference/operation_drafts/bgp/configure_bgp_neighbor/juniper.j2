@@ -1,0 +1,8 @@
+{# Editable reference draft: juniper / configure_bgp_neighbor. Verify syntax, dependencies and device suitability before use. #}
+set routing-options autonomous-system {{ local_as }}
+set protocols bgp group {{ peer_group }} type {{ "internal" if local_as == remote_as else "external" }}
+set protocols bgp group {{ peer_group }} peer-as {{ remote_as }}
+set protocols bgp group {{ peer_group }} neighbor {{ neighbor_ip }}
+{% if description %}set protocols bgp group {{ peer_group }} neighbor {{ neighbor_ip }} description "{{ description }}"
+{% endif %}
+

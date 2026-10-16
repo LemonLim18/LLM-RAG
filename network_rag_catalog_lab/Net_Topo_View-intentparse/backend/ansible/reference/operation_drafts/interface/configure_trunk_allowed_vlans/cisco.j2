@@ -1,0 +1,5 @@
+{# Editable reference draft: cisco / configure_trunk_allowed_vlans. Verify syntax, dependencies and device suitability before use. #}
+interface {{ interface }}
+ switchport trunk allowed vlan {{ allowed_vlans | join(',') }}
+ exit
+

@@ -1,0 +1,3 @@
+{# Editable reference draft: juniper / configure_exec_timeout. Verify syntax, dependencies and device suitability before use. #}
+set system login class {{ login_class }} idle-timeout {{ exec_timeout_minutes }}
+{# Junos class timeout is in minutes; IOS seconds require an explicit policy decision. #}

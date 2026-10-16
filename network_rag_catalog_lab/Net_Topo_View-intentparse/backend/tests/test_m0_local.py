@@ -76,16 +76,25 @@ def test_crud_restart_relationships_and_history(client):
     call(c,'DELETE',f"/netbox/devices/{b['id']}")
     assert any(row['action']=='device.delete' for row in call(c,'GET','/audit')['items'])
 
-def test_offline_stable_and_no_remote_entrypoints(client):
+def test_offline_stable_and_no_remote_entrypoints(client, tmp_path, monkeypatch):
     c=client
+    # This test deletes its inventory first. Repository demo telemetry references
+    # device IDs 1/2 and must not become this test's authoritative observations.
+    import local_app
+    from local_providers.observations import JsonObservations
+    (tmp_path/'observations.json').write_text('{"version":1,"defaults":{"availability":"up","metrics":[]}}',encoding='utf-8')
+    monkeypatch.setattr(local_app,'observations',JsonObservations(tmp_path))
     assert call(c,'GET','/lab/capabilities')['scheduled_jobs']==[]
     assert app.state.remote_jobs==[]
     assert call(c,'GET','/monitor/metrics/dashboard-bundle')==call(c,'GET','/monitor/metrics/dashboard-bundle')
     for path in ['/netbox/sync/devices','/netbox/push-all','/topology/crawl','/ssh/sessions',
                  '/ansible/jobs/1/check','/ansible/jobs/1/execute','/agent/execute',
-                 '/monitor/update-config','/common-services/test-ntp','/syslog/sync-server',
+                 '/monitor/update-config','/syslog/sync-server',
                  '/sdn/controllers/1/sync']:
         call(c,'POST',path,{},503)
+    # M0.2 provides a simulated service check; an absent saved NTP profile is
+    # rejected before any check. The socket/process guards above remain active.
+    call(c,'POST','/common-services/test-ntp',{},422)
     assert not {'integrated_backend','paramiko','pynetbox','chromadb','ansible_runner','scheduler.core','monitor.api','sdn.api'} & {name for name, module in sys.modules.items() if getattr(module, '__file__', None)}
     assert call(c,'GET','/ansible/files')['tree']
     with c.websocket_connect('/ws') as ws:

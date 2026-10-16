@@ -15,6 +15,7 @@ import OnboardingView from '../views/OnboardingView';
 import ApprovalQueueView from '../views/ApprovalQueueView';
 import CommonServicesProfilesView from '../views/CommonServicesProfilesView.tsx';
 import FloatingInventoryOverlay from '../components/FloatingInventoryOverlay';
+import SharedInventoryChat from '../components/SharedInventoryChat';
 
 import Login from '../views/Login';
 import NetworkPerformance from '../views/NetworkPerformance';
@@ -108,6 +109,12 @@ const App: React.FC = () => {
         localStorage.removeItem('auth_token');
       })
       .finally(() => setAuthChecked(true));
+  }, []);
+
+  useEffect(() => {
+    const openStudio = () => setView('ansible_studio');
+    window.addEventListener('cognishield:engineering-handoff', openStudio);
+    return () => window.removeEventListener('cognishield:engineering-handoff', openStudio);
   }, []);
 
   useEffect(() => {
@@ -272,7 +279,7 @@ const App: React.FC = () => {
               </div>
 
               {/* Enriched Draggable Toggle Button */}
-              {!localLab && !overlayOpen && (
+              {!overlayOpen && (
                 <>
                   <style>{`
                     @keyframes agent-breath {
@@ -305,7 +312,7 @@ const App: React.FC = () => {
                     <button
                       onClick={() => !hasMoved && setOverlayOpen(true)}
                       className="btn btn-primary btn-circle shadow-xl border-2 border-primary/20 agent-button agent-breathing transition-all active:scale-95 relative"
-                      title="Open Inventory AI & Network Ops Center"
+                      title="Open AI Assistant"
                     >
                       <Bot className="w-6 h-6" />
                     </button>
@@ -315,7 +322,7 @@ const App: React.FC = () => {
 
               {/* The Floating Overlay */}
               {overlayOpen && (
-                <FloatingInventoryOverlay onClose={() => setOverlayOpen(false)} />
+                localLab ? <SharedInventoryChat userKey={String(user.id)} onClose={() => setOverlayOpen(false)} /> : <FloatingInventoryOverlay onClose={() => setOverlayOpen(false)} />
               )}
             </main>
         </div>

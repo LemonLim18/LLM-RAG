@@ -1,0 +1,7 @@
+{# Editable reference draft: huawei / configure_scheduler. Verify syntax, dependencies and device suitability before use. #}
+traffic behavior {{ classifier_name }}
+ queue af bandwidth {{ bandwidth_kbps }}
+quit
+traffic policy {{ policy_name }}
+ classifier {{ classifier_name }} behavior {{ classifier_name }}
+quit

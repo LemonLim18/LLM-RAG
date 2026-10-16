@@ -1,0 +1,2 @@
+{# Editable reference draft: juniper / configure_passive_interface. Verify syntax, dependencies and device suitability before use. #}
+{% if passive %}set{% else %}delete{% endif %} protocols ospf area {{ ospf_area }} interface {{ interface }} passive

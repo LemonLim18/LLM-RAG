@@ -62,6 +62,17 @@ class Publication(BaseModel):
     reason: str = Field(min_length=1, max_length=1000)
 
 
+class PlaybookVariantEdit(BaseModel):
+    expected_revision: str = Field(min_length=1)
+    reason: str = Field(min_length=1,max_length=1000)
+    variant: dict
+
+
+@router.put('/playbook-variant')
+async def save_playbook_variant(body:PlaybookVariantEdit,user=Depends(require_engineer)):
+    return await asyncio.to_thread(invoke,'playbook_variant',body.model_dump(),user['username'])
+
+
 class Initialize(BaseModel):
     reason: str = Field(min_length=1, max_length=1000)
 
