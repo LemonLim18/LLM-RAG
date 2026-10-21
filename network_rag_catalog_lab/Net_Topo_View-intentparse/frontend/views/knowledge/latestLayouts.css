@@ -192,3 +192,27 @@
 /* Allow wheel gestures over tables to reach the page scroll container. */
 .kr-page .kr-scroll{overscroll-behavior:auto}
 
+/* The exact-method review shares Knowledge Engineering's controls and theme. */
+.kr-method-review{flex-shrink:0}
+.kr-method-review .kr-panel-head{justify-content:space-between;gap:12px}
+.kr-method-filters{display:grid;grid-template-columns:minmax(180px,2fr) repeat(2,minmax(130px,1fr));gap:12px}
+.kr-method-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.kr-method-actions>span{font-size:12px;color:var(--kr-muted);margin-left:auto}
+.kr-method-review table{width:100%;border-collapse:collapse;text-align:left;font-size:12px}
+.kr-method-review th{position:sticky;top:0;background:var(--kr-bg);z-index:1}
+.kr-method-review :is(th,td){padding:12px 10px;border-bottom:1px solid var(--kr-border);vertical-align:top}
+.kr-method-review td:first-child{width:28%;min-width:180px}
+.kr-method-review input[type=checkbox]{accent-color:var(--color-authoring);width:16px;height:16px}
+.kr-method-review textarea{min-height:100px;border:1px solid var(--kr-border);border-radius:6px;padding:10px;background:var(--kr-bg)}
+.kr-method-review details{padding:8px 0}
+.kr-method-review li{margin:6px 0;overflow-wrap:anywhere}
+@container(max-width:650px){.kr-method-filters{grid-template-columns:1fr}.kr-method-actions>span{width:100%;margin-left:0}}
+
+/* Keep large draft diffs inside their own panel at every responsive width. */
+.kr-page .kl-publication-grid>.kl-draft-summary{height:auto;min-height:180px;max-height:32rem;align-self:start}
+.kr-page .kl-draft-summary>.kr-scroll{flex:0 1 auto;min-height:0;max-height:24rem;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable}
+.kr-page .kl-draft-summary :is(th,td){overflow-wrap:anywhere;max-width:32rem}
+.kr-page .kl-draft-summary th{position:sticky;top:0;background:var(--kr-bg);z-index:1}
+.kl-publication-inspection{border-top:1px solid var(--kr-border);padding-top:12px}
+.kl-publication-inspection>summary{cursor:pointer;padding:10px;font-weight:600}
+

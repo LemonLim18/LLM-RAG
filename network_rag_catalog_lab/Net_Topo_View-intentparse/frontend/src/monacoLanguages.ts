@@ -7,10 +7,17 @@ export function languageForDocument(path: string, content = ''): string {
       (['yaml', 'yml', 'cfg', 'conf', 'txt'].includes(extension) && /\{[{%#]/.test(content))) return 'jinja2';
   return ({ yml: 'yaml', yaml: 'yaml', json: 'json', py: 'python', md: 'markdown',
     sh: 'shell', bash: 'shell', ini: 'ini', xml: 'xml', html: 'html', js: 'javascript',
-    ts: 'typescript', css: 'css', sql: 'sql', cfg: 'network-config', conf: 'network-config' } as Record<string, string>)[extension] || 'plaintext';
+    ts: 'typescript', css: 'css', sql: 'sql', diff: 'diff', patch: 'diff', cfg: 'network-config', conf: 'network-config' } as Record<string, string>)[extension] || 'plaintext';
 }
 
 export function registerEditorLanguages(monaco: Monaco) {
+  if (!monaco.languages.getLanguages().some((language: {id:string}) => language.id === 'diff')) {
+    monaco.languages.register({id:'diff',extensions:['.diff','.patch'],aliases:['Diff']});
+    monaco.languages.setMonarchTokensProvider('diff',{tokenizer:{root:[
+      [/^(?:diff |index |--- |\+\+\+ ).*$/, 'comment'],
+      [/^@@.*$/, 'keyword'],[/^\+.*$/, 'inserted'],[/^-.*$/, 'deleted'],[/.*$/, ''],
+    ]}});
+  }
   for (const id of ['jinja2', 'network-config', 'ke-jinja', 'nettopo-jinja']) {
     if (monaco.languages.getLanguages().some((language: {id: string}) => language.id === id)) continue;
     monaco.languages.register({ id, ...(id === 'jinja2' ? { extensions: ['.j2', '.jinja', '.jinja2'], aliases: ['Jinja2'] } : {}) });

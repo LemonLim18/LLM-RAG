@@ -178,7 +178,7 @@
         "process_id",
         "router_id"
       ],
-      "sha256": "b53ffeb270a540e0191613e65683d55ab1fe83ad33b5dccb26c9d7a6ca1de438",
+      "sha256": "f8cc87afa9bb0b446823f47fdde0b1a6864034a9dbf8648c0320926735654298",
       "status": "reference_draft",
       "source": "published_cli_copy",
       "source_release": "0690966eb003499380e960a98d1e418f",
@@ -195,7 +195,8 @@
         "derived": {}
       },
       "verified_runtime_support": true,
-      "version_certification": false
+      "version_certification": false,
+      "phase_f_amendment": "Separate CLI statements under trim_blocks; ACL logging applies only to the rule, not undo/quit. Native reference only; publication uses V9."
     },
     {
       "operation_id": "configure_ospf",
@@ -238,7 +239,7 @@
         "process_id",
         "router_id"
       ],
-      "sha256": "ca2eeee6172dce2f6d2fc0af72f81de305b793343808977ce5382fe1c34afc1f",
+      "sha256": "d60f9b8e55aee0f70e7caae12646c27500316f823be734e4988d26d570a044d7",
       "status": "reference_draft",
       "source": "published_cli_copy",
       "source_release": "0690966eb003499380e960a98d1e418f",
@@ -255,7 +256,8 @@
         "derived": {}
       },
       "verified_runtime_support": true,
-      "version_certification": false
+      "version_certification": false,
+      "phase_f_amendment": "Separate CLI statements under trim_blocks; ACL logging applies only to the rule, not undo/quit. Native reference only; publication uses V9."
     },
     {
       "operation_id": "remove_ospf_interface",
@@ -545,9 +547,9 @@
         "level",
         "process_name"
       ],
-      "sha256": "94d5456fd47f826b6c9f63582c64cca7db60b481b33dad736b88eadbe3b73ec9",
+      "sha256": "62d3fd9bfca0c69f806e055251202357c5cd9b1998334b22de25b395c544e69b",
       "status": "reference_draft",
-      "source": "published_cli_copy",
+      "source": "reviewed_authoring_candidate",
       "source_release": "0690966eb003499380e960a98d1e418f",
       "source_binding": "templates/18/template.j2",
       "input_contract": {
@@ -559,8 +561,9 @@
         "optional_defaults": {},
         "derived": {}
       },
-      "verified_runtime_support": true,
-      "version_certification": false
+      "verified_runtime_support": false,
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "configure_isis_interface",
@@ -629,9 +632,9 @@
         "interface",
         "process_name"
       ],
-      "sha256": "5b96c92fb5a1885cb12ca4e0dc4b072e50cd5e2eb5223978c39fa36e9ab91072",
+      "sha256": "b0f1d079f1c5474e9cf528e339613a1a6aee1226d44ab4886921ff63fb2f9b06",
       "status": "reference_draft",
-      "source": "published_cli_copy",
+      "source": "reviewed_authoring_candidate",
       "source_release": "0690966eb003499380e960a98d1e418f",
       "source_binding": "templates/21/template.j2",
       "input_contract": {
@@ -642,8 +645,9 @@
         "optional_defaults": {},
         "derived": {}
       },
-      "verified_runtime_support": true,
-      "version_certification": false
+      "verified_runtime_support": false,
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "disable_isis_interface",
@@ -711,9 +715,9 @@
         "next_hop",
         "preference"
       ],
-      "sha256": "04ec4bc57da479b81a1f6afb04f15f790a8570b84806f7ea29160adb5932c990",
+      "sha256": "11ef68d30067836306472ae29eaa35295d1725c29391a8eb0e5705a8628e778c",
       "status": "reference_draft",
-      "source": "published_cli_adaptation",
+      "source": "reviewed_authoring_candidate",
       "source_release": "0690966eb003499380e960a98d1e418f",
       "source_binding": "templates/24/template.j2",
       "input_contract": {
@@ -730,8 +734,9 @@
           "destination_mask": "destination_mask_v1"
         }
       },
-      "verified_runtime_support": true,
-      "version_certification": false
+      "verified_runtime_support": false,
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "configure_static_route",
@@ -770,13 +775,14 @@
       "vendor": "huawei",
       "path": "reference/operation_drafts/static_routing/configure_static_route/huawei.j2",
       "variables": [
-        "destination",
+        "destination_address",
+        "destination_mask",
         "next_hop",
         "preference"
       ],
-      "sha256": "fd8a14d362c76a347fb570f19076b7d36a2b43bd00624c9e44b0622e5114188f",
+      "sha256": "0281d3a5333b618521111f009a15f235fc9afd53fc9c31678a181c954aeb5926",
       "status": "reference_draft",
-      "source": "published_cli_copy",
+      "source": "reviewed_authoring_candidate",
       "source_release": "0690966eb003499380e960a98d1e418f",
       "source_binding": "templates/25/template.j2",
       "input_contract": {
@@ -788,10 +794,14 @@
         "optional_defaults": {
           "preference": null
         },
-        "derived": {}
+        "derived": {
+          "destination_address": "destination_address_v1",
+          "destination_mask": "destination_mask_v1"
+        }
       },
-      "verified_runtime_support": true,
-      "version_certification": false
+      "verified_runtime_support": false,
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "remove_static_route",
@@ -800,12 +810,13 @@
       "vendor": "cisco",
       "path": "reference/operation_drafts/static_routing/remove_static_route/cisco.j2",
       "variables": [
-        "destination",
+        "destination_address",
+        "destination_mask",
         "next_hop"
       ],
-      "sha256": "323b431e450e51c9ba4e074f82083186488fffbbbffa4a1710567d1d51f61868",
+      "sha256": "13a9790b463581eb892d36eb3b5c04c045fd131620ff39950abb7a6923f91ecf",
       "status": "reference_draft",
-      "source": "published_cli_copy",
+      "source": "reviewed_authoring_candidate",
       "source_release": "0690966eb003499380e960a98d1e418f",
       "source_binding": "templates/27/template.j2",
       "input_contract": {
@@ -814,10 +825,14 @@
           "next_hop"
         ],
         "optional_defaults": {},
-        "derived": {}
+        "derived": {
+          "destination_address": "destination_address_v1",
+          "destination_mask": "destination_mask_v1"
+        }
       },
-      "verified_runtime_support": true,
-      "version_certification": false
+      "verified_runtime_support": false,
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "remove_static_route",
@@ -852,12 +867,13 @@
       "vendor": "huawei",
       "path": "reference/operation_drafts/static_routing/remove_static_route/huawei.j2",
       "variables": [
-        "destination",
+        "destination_address",
+        "destination_mask",
         "next_hop"
       ],
-      "sha256": "b3cebcb4090145501d5c4e86ea41fb980c05e72366d1f38ac8c1f826a9af5220",
+      "sha256": "7f89d6bdc514ce2b17da5a9ce21b896161154b87b726210f20540c403cd33531",
       "status": "reference_draft",
-      "source": "published_cli_copy",
+      "source": "reviewed_authoring_candidate",
       "source_release": "0690966eb003499380e960a98d1e418f",
       "source_binding": "templates/28/template.j2",
       "input_contract": {
@@ -866,10 +882,14 @@
           "next_hop"
         ],
         "optional_defaults": {},
-        "derived": {}
+        "derived": {
+          "destination_address": "destination_address_v1",
+          "destination_mask": "destination_mask_v1"
+        }
       },
-      "verified_runtime_support": true,
-      "version_certification": false
+      "verified_runtime_support": false,
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "configure_interface_ip",
@@ -2642,14 +2662,15 @@
         "source_port",
         "source_wildcard"
       ],
-      "sha256": "27eb9da558f64081e111e4158375cbd332216f6a94bd8d3e315919421c38cda4",
+      "sha256": "26aa29baac4bdf537da1f3a86c91200ff2ce985eb035381110e39923964d820d",
       "status": "reference_draft",
       "source": "new_translation_draft",
       "source_release": null,
       "source_binding": null,
       "input_contract": null,
       "verified_runtime_support": false,
-      "version_certification": false
+      "version_certification": false,
+      "phase_f_amendment": "Separate CLI statements under trim_blocks; ACL logging applies only to the rule, not undo/quit. Native reference only; publication uses V9."
     },
     {
       "operation_id": "modify_acl_rule",
@@ -2745,14 +2766,15 @@
         "source_port",
         "source_wildcard"
       ],
-      "sha256": "19cd1bef50bb682472dc8f3c3e1d74559601fa8af1914a4333d64c8eccdf7071",
+      "sha256": "8d03586a5705673e6fb1d13e5ba4c3d74d2c67a72eefd9d980ac945560264c19",
       "status": "reference_draft",
       "source": "new_translation_draft",
       "source_release": null,
       "source_binding": null,
       "input_contract": null,
       "verified_runtime_support": false,
-      "version_certification": false
+      "version_certification": false,
+      "phase_f_amendment": "Separate CLI statements under trim_blocks; ACL logging applies only to the rule, not undo/quit. Native reference only; publication uses V9."
     },
     {
       "operation_id": "delete_acl_rule",
@@ -3372,14 +3394,21 @@
       "variables": [
         "login_banner_text"
       ],
-      "sha256": "0a62b6727e8bf05cc3a79e979ec3a580eafba06396876d1070accf205fb679e4",
+      "sha256": "a7a1e5ce9d070ae3d34467fc6b4e29b82f7e97486fe299526094a79805cc980b",
       "status": "reference_draft",
-      "source": "new_translation_draft",
+      "source": "reviewed_authoring_candidate",
       "source_release": null,
       "source_binding": null,
-      "input_contract": null,
+      "input_contract": {
+        "fields": [
+          "login_banner_text"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
       "verified_runtime_support": false,
-      "version_certification": false
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "configure_login_banner",
@@ -3427,14 +3456,24 @@
         "exec_timeout_minutes",
         "exec_timeout_seconds"
       ],
-      "sha256": "fd68c0cc8df781b25a404fc848b72e90dbf8ecee859f3e4d35d8cd196d4b8670",
+      "sha256": "9c045189fb6c6304e199ee70d6352f11db7d9be8eb6caa18558483ce38cf3187",
       "status": "reference_draft",
-      "source": "new_translation_draft",
+      "source": "reviewed_authoring_candidate",
       "source_release": null,
       "source_binding": null,
-      "input_contract": null,
+      "input_contract": {
+        "fields": [
+          "exec_timeout_minutes",
+          "exec_timeout_seconds"
+        ],
+        "optional_defaults": {
+          "exec_timeout_seconds": null
+        },
+        "derived": {}
+      },
       "verified_runtime_support": false,
-      "version_certification": false
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "configure_exec_timeout",
@@ -3485,14 +3524,23 @@
         "login_failure_attempts",
         "login_failure_window_seconds"
       ],
-      "sha256": "e985fc92d9ccf4a5f2bfa4fc5f4f71c09e7223c80910ab327b4220104781544a",
+      "sha256": "8a92de35b704439d2c9ef6961198cb78e9f425104a8762e005e28f3f9742073f",
       "status": "reference_draft",
-      "source": "new_translation_draft",
+      "source": "reviewed_authoring_candidate",
       "source_release": null,
       "source_binding": null,
-      "input_contract": null,
+      "input_contract": {
+        "fields": [
+          "login_block_seconds",
+          "login_failure_attempts",
+          "login_failure_window_seconds"
+        ],
+        "optional_defaults": {},
+        "derived": {}
+      },
       "verified_runtime_support": false,
-      "version_certification": false
+      "version_certification": false,
+      "source_authoring_revision": "efb2d7829a1c6cbcdd2c570c654d27a4af2cd9c89d1ae5931b2604e4d7c04823"
     },
     {
       "operation_id": "configure_login_lockout",

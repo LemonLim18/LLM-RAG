@@ -58,6 +58,8 @@ async def lifespan(app):
                 source.backup(target)
     db = DatabaseManager(str(DB_PATH))
     db.initialize()
+    from local_providers.development import attach
+    attach(db)
     from llm.gateway_store import ensure_schema
     ensure_schema(db)
     network.set_db_manager(db)
@@ -114,6 +116,16 @@ include_local(compliance.router, lambda r: (
 include_local(profiles_router, lambda r: not r.path.startswith('/common-services/test-'))
 include_local(config_router, lambda r: True)
 app.include_router(approval.router, dependencies=[Depends(require_any)])
+from local_providers.development_api import router as development_router
+app.include_router(development_router)
+
+@app.middleware('http')
+async def protect_development_inventory(request,call_next):
+    from local_providers.development import active_for
+    path=request.url.path
+    if db and active_for(db) and request.method in {'POST','PUT','DELETE','PATCH'} and path.startswith(('/api/v1/netbox','/api/v1/network','/api/v1/ai/inventory')) and path!='/api/v1/network/config-backup/capture':
+        return JSONResponse(status_code=409,content={'detail':'Edit the authoritative Development Network scenario; ordinary network records were not modified.'})
+    return await call_next(request)
 from ansible.api import router as studio_router, _assert_generated_artifact_unlocked, _locked_generated_artifact
 from local_providers.studio import canonical_path
 include_local(studio_router, lambda r: r.path in {
@@ -360,6 +372,11 @@ def local_ztp_manifest(job_id:int): return _ztp_job(job_id)['manifest']
 
 @app.post('/api/v1/network/config-backup/capture', dependencies=[Depends(require_engineer)])
 def capture_local_config(body: SnapshotCapture, user=Depends(require_any)):
+    from local_providers.development import active_for
+    if manager:=active_for(db):
+        _,meta=manager.snapshot();row=manager.capture(body.device_id,meta['source_revision'])
+        from local_providers.development import snapshot_id
+        return {'snapshot_id':snapshot_id(row),'device_id':row['device_id'],'captured_at':row['timestamp'],'source':'simulated','scenario_revision':manager.snapshot()[1]['source_revision'],'message':'Captured current simulated running configuration into scenario history; no device action or SQLite inventory write.'}
     device=db.get_device_by_id(body.device_id)
     if not device: raise HTTPException(404,'Device not found')
     data,revision=workflow_outcomes.read(db)

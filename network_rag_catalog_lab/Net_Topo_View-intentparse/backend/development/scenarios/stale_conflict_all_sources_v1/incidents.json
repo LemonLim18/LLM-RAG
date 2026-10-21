@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "category": "incidents",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "maintenance-complete",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T00:55:00+00:00",
+        "kind": "incident",
+        "source": "editable-development-observation",
+        "current": false,
+        "depends_on": [],
+        "values": {
+          "severity": "info",
+          "state": "resolved",
+          "summary": "Scheduled routing maintenance completed",
+          "first_observed": "2026-10-18T00:50:00+00:00",
+          "last_observed": "2026-10-18T00:55:00+00:00",
+          "cause_status": "scheduled_change_annotation"
+        }
+      }
+    ]
+  }
+}

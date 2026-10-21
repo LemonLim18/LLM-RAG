@@ -1,0 +1,115 @@
+{
+  "updated_at": "2026-10-19T12:54:58.063978+00:00",
+  "fresh_phase_f_quality_cohort": {
+    "cases": 30,
+    "M0": "PARTIAL_001_009",
+    "M1": "PARTIAL_001_009",
+    "M2": "PARTIAL_001_009_WITH_REPAIRS",
+    "M3": "PARTIAL_001_009",
+    "target_m2_adequacy": 0.85,
+    "gate": "NOT_ESTABLISHED"
+  },
+  "exposed_development_probe": {
+    "scope": "Real qwen/public shared gateway on a disposable backup, not fresh benchmark score.",
+    "before": "Two missing-citation attempts and fallback. Subsequent typed-source inspection found endpoint misattribution and an unsupported live hypothesis wrongly accepted by the old guard.",
+    "captured_bad_answers": "Two saved model drafts rejected by corrected scoped checks; originals retained.",
+    "final": "Cited factual repaired answer; corrected independent oracle passes. First draft malformed/truncated.",
+    "graph_model_calls": 3,
+    "total_provider_calls": "NOT_CAPTURED",
+    "latency_ms": 27595.43,
+    "evidence": "tmp/phase-f/iterations/20261019-topology-synthesis/result.json",
+    "ordinary_browser_acceptance": "Actual Studio edit safeguards/context exclusion and R2 factual follow-up pass. Latest actual browser negation correction, concise assessment and expanded source disclosure PASS; ordinary answer is deterministic fallback."
+  },
+  "claim": "No general quality,85% adequacy, latency or Codex-equivalent intelligence claim.",
+  "exposed_actual_answer_failures": {
+    "status": "FAILURES_RETAINED_NOT_FRESH_30_SCORE",
+    "artifacts": [
+      "tmp/phase-f/iterations/20261019T040325.191470Z-F3-frozen-routing-candidate-712be8/quality-review.json",
+      "tmp/phase-f/iterations/20261019T042435.963025Z-F3-frozen-routing-candidate-120921/quality-review.json",
+      "tmp/phase-f/iterations/20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058/quality-review.json",
+      "tmp/phase-f/iterations/20261019T044724.190934Z-F3-frozen-routing-candidate-18cbd7/quality-review.json"
+    ],
+    "corrected_exact_inventory": "Candidate/legacy verified17.9 with0provider calls; deterministic, not model reasoning. Actual browser R1=16.2.3 and follow-up R2=12.12.11 PASS.",
+    "remaining": "Full30 adequacy incomplete; explicit BGP and failed-path model failures remain. No universal semantic verification. Originals and separate corrections preserved."
+  },
+  "latest_continuation": {
+    "cases_exposed": [
+      "F-QUALITY-001",
+      "F-QUALITY-002",
+      "F-QUALITY-003",
+      "F-QUALITY-004",
+      "F-QUALITY-005",
+      "F-QUALITY-006",
+      "F-QUALITY-007",
+      "F-QUALITY-008",
+      "F-QUALITY-009"
+    ],
+    "aggregate_score": "NOT_REPORTED_MIXED_REVISIONS_AND_EXPOSED_CORRECTIONS",
+    "actual_ui": [
+      "tmp/phase-f/iterations/20261019-general-identity/browser-result.json",
+      "tmp/phase-f/iterations/20261019-interface-distinction/browser-result.json",
+      "tmp/phase-f/iterations/20261019-browser-negation/result.json"
+    ],
+    "corrected": [
+      "Explicit context exclusion",
+      "Recorded prefix/management completeness",
+      "Markdown punctuation false rejection",
+      "Modeled forward/return source selection",
+      "Scoped retrieval bounds",
+      "Successful repair attribution",
+      "Peer-specific and collective AS attribution",
+      "Named diagnostic paraphrases",
+      "Bounded graph-derived transit-device reads",
+      "Current/saved source scope and literal differences",
+      "Instruction negation versus target correction",
+      "Ordinary investigation records moved into existing disclosure"
+    ],
+    "remaining": [
+      "Unseen010\u2013030",
+      "Routing033\u2013120 and complete matched baseline; legacy029 source/workflow rerun now PASS",
+      "Full30>=85% adequacy not established",
+      "BGP/failed-path qwen prose still requires verified fallback",
+      "General translation/Python errors retained",
+      "Some mixed/truncated source assessments are conservatively underqualified"
+    ],
+    "actual_case_results": {
+      "006": {
+        "outcome": "PASS_MODEL_AFTER_REPAIR",
+        "run": "20261019T115756.436643Z-F4-frozen-quality-candidate-6929f8",
+        "scope": "Exposed correction; first draft false loop rejected; source-backed forward and return delivery."
+      },
+      "007": {
+        "outcome": "PASS_GROUNDED_FALLBACK_MODEL_FAIL",
+        "run": "20261019T122514.125920Z-F4-frozen-quality-candidate-60476e",
+        "scope": "Correct peer AS values; both actual model drafts rejected."
+      },
+      "008": {
+        "outcome": "PASS_GROUNDED_FALLBACK_MODEL_FAIL",
+        "run": "20261019T123350.681262Z-F4-frozen-quality-candidate-1c5216",
+        "scope": "Actual authorized transit-device reads; exact down interface in fallback, model answer incomplete."
+      },
+      "009": {
+        "outcome": "PASS_MODEL_WITH_SERVER_SCOPE_CORRECTION",
+        "run": "20261019T123817.513842Z-F4-frozen-quality-candidate-514d9c",
+        "scope": "Actual added command and correct current/saved attribution; raw planner historical scope refined deterministically."
+      }
+    }
+  },
+  "phase_g_metric_exposed_regressions": {
+    "scope": "Exposed real qwen/source acceptance, not30-case fresh cohort",
+    "critical_first_failures": [
+      "Missing status attributed to known numeric timestamp",
+      "Null rendered0percent in compound sentence"
+    ],
+    "corrections": "Timestamp/status/value guards reject original outputs; labelled fallback retains actual records",
+    "actual_browser": "7corrected turns:2model syntheses,5explicit fallbacks; no quality inflation",
+    "evidence": "tmp/phase-g/iterations/20261020-metrics-browser/main-browser-verification.json",
+    "limitations": "Prompt completeness and metric interpretation remain weak; neither85%quality nor universal fact verification established"
+  },
+  "continuation_20261021": {
+    "evidence": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/manual-frozen-078-084-review.json",
+    "raw_model_limit": "Critical marker and BGP/OSPF interpretation errors persist on078/079; verified reconstruction prevents release.",
+    "topology_actual_model": "Final both-surface comparison bd5ec6 passes exposed source-specific manual checks; no new fresh quality score.",
+    "claimed_85_percent": false
+  }
+}

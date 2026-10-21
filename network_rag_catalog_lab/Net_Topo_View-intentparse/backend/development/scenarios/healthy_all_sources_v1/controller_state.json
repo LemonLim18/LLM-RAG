@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "category": "controller_state",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "source-controller",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "controller_state",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "controller": "LAB-SDN",
+          "configured": true,
+          "operational": "connected",
+          "node": "LAB-R1"
+        }
+      }
+    ]
+  }
+}

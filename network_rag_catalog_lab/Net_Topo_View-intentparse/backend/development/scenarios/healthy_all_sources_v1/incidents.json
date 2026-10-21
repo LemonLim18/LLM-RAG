@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "category": "incidents",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "source-incidents",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "incident",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "severity": "info",
+          "message": "Recorded incidents and alerts observation",
+          "state": "resolved"
+        }
+      }
+    ]
+  }
+}

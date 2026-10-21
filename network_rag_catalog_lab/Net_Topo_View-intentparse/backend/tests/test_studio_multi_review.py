@@ -17,6 +17,20 @@ from llm.gateway_v9 import preview, render_draft
 from llm.gateway_playbooks import combine_playbooks
 
 
+class PartialSelectionTests(unittest.TestCase):
+    def test_existing_unresolved_binding_can_be_retained_but_never_forged_or_changed(self):
+        from local_providers.v9_worker import retained_unresolved_task
+        from llm.gateway_api import ReviewSelection
+        task=SimpleNamespace(intent_id='pending-bgp',operation_id='',target_devices=[],parameters={'local_as':65000})
+        resolved=SimpleNamespace(intent_id='static-route',operation_id='configure_static_route',target_devices=[],parameters={})
+        plan=SimpleNamespace(tasks=[resolved,task])
+        entry=ReviewSelection(task_id='pending-bgp',operation_id='',parameters={'local_as':65000}).model_dump()
+        self.assertIs(retained_unresolved_task(plan,entry),task)
+        self.assertIsNone(retained_unresolved_task(plan,{**entry,'operation_id':'configure_bgp_neighbor'}))
+        for change in [{'task_id':'forged'},{'task_id':'static-route'},{'target_host':'R1'},{'parameters':{'local_as':1}},{'template_id':'anything'}]:
+            with self.subTest(change=change),self.assertRaises(ValueError):retained_unresolved_task(plan,{**entry,**change})
+
+
 class MultiReviewTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

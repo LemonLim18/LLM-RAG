@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "category": "routing_state",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "source-routing",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "routing_table",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "device_id": 1100,
+          "complete": true,
+          "routes": [
+            {
+              "id": "aster-cedar",
+              "prefix": "198.19.71.3/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 1,
+                  "address": "10.72.0.2",
+                  "resolved": true
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

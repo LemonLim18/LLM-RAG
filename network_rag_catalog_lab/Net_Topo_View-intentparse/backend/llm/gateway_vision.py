@@ -42,7 +42,7 @@ def normalize_images(rows, pages):
     return images,labels
 
 
-async def vision_context(db, conversation, owner, body):
+async def vision_context(db, conversation, owner, body, documents=None):
     selected=os.getenv('COGNISHIELD_VISION_MODEL') or body.model
     if not selected: return [],[],None
     from local_providers.chat import is_document_only_model
@@ -54,10 +54,13 @@ async def vision_context(db, conversation, owner, body):
             response.raise_for_status()
             if 'vision' not in response.json().get('capabilities',[]): return [],[],None
         with db._connect() as connection:
-            rows=[dict(row) for row in connection.execute('SELECT id,name,original_bytes FROM ai_attachments WHERE conversation_id=? AND owner=? ORDER BY rowid DESC LIMIT 5',(conversation,owner))]
+            rows=[dict(row) for row in connection.execute('SELECT id,name,original_bytes,segments FROM ai_attachments WHERE conversation_id=? AND owner=? ORDER BY rowid DESC LIMIT 5',(conversation,owner))]
         if body.attachment_ids: rows=[row for row in rows if row['id'] in {str(value) for value in body.attachment_ids}]
-        import re
-        pages=[int(value) for value in re.findall(r'\bpage\s+(\d+)\b',body.prompt,re.I) if 0<int(value)<=200]
+        if documents is not None:rows=[row for row in rows if row['name'] in {d['source'] for d in documents}]
+        from llm.gateway_documents import requested_document_pages
+        available={part['page'] for row in rows for part in json.loads(row['segments']) if part.get('page') is not None}
+        selected_pages=sorted({d['page'] for d in documents if d.get('page') is not None}) if documents is not None else requested_document_pages(body.prompt,available)
+        pages=[page for page in selected_pages if page in available and 0<page<=200]
         images,labels=await asyncio.to_thread(normalize_images,rows,pages)
         return images,labels,selected
     except (httpx.HTTPError,ValueError,OSError,RuntimeError,subprocess.TimeoutExpired):

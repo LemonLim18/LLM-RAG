@@ -1,0 +1,121 @@
+{
+  "$defs": {
+    "Clock": {
+      "additionalProperties": false,
+      "properties": {
+        "now": {
+          "format": "date-time",
+          "title": "Now",
+          "type": "string"
+        },
+        "timezone": {
+          "default": "UTC",
+          "title": "Timezone",
+          "type": "string"
+        },
+        "paused": {
+          "const": true,
+          "default": true,
+          "title": "Paused",
+          "type": "boolean"
+        },
+        "rate": {
+          "const": 0,
+          "default": 0,
+          "title": "Rate",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "now"
+      ],
+      "title": "Clock",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "scenario_id": {
+      "pattern": "^[A-Z0-9][A-Z0-9_-]{0,79}$",
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "name": {
+      "maxLength": 150,
+      "minLength": 1,
+      "title": "Name",
+      "type": "string"
+    },
+    "description": {
+      "default": "",
+      "maxLength": 2000,
+      "title": "Description",
+      "type": "string"
+    },
+    "scenario_revision": {
+      "minimum": 1,
+      "title": "Scenario Revision",
+      "type": "integer"
+    },
+    "created_by": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Created By",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "mode": {
+      "const": "development_scenario",
+      "default": "development_scenario",
+      "title": "Mode",
+      "type": "string"
+    },
+    "clock": {
+      "$ref": "#/$defs/Clock"
+    },
+    "source_files": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Source Files",
+      "type": "object"
+    },
+    "source_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Source Hashes",
+      "type": "object"
+    },
+    "policy": {
+      "additionalProperties": {
+        "const": false,
+        "type": "boolean"
+      },
+      "title": "Policy",
+      "type": "object"
+    }
+  },
+  "required": [
+    "scenario_id",
+    "name",
+    "scenario_revision",
+    "created_by",
+    "created_at",
+    "clock",
+    "source_files",
+    "policy"
+  ],
+  "title": "Manifest",
+  "type": "object"
+}

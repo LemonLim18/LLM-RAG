@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "category": "jobs_audit",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "source-job",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "simulated_job",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "job_id": "SIM-JOB-1",
+          "status": "completed",
+          "effect": "simulated_validation_only",
+          "message": "Development validation completed; no deployment"
+        }
+      }
+    ]
+  }
+}

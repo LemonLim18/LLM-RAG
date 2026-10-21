@@ -1,0 +1,2182 @@
+{
+  "version": 1,
+  "scope": "Developmental source acceptance; no independent human/fresh intelligence-quality claim",
+  "thresholds": {
+    "fresh_routing": 0.9,
+    "fresh_M2_adequacy": 0.85,
+    "accepted_critical_unsupported_claims": 0
+  },
+  "cases": [
+    {
+      "id": "G-SOURCE-01",
+      "category": "inventory",
+      "prompt": "Which management address is recorded for LAB-R2 in this scenario?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "inventory.read",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-02",
+      "category": "topology_planned",
+      "prompt": "Show the intended links attached to LAB-R1, using only the plan.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.topology",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-03",
+      "category": "topology_observed",
+      "prompt": "Which connections were actually observed around LAB-R1 at the scenario clock?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.topology",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-04",
+      "category": "topology_history",
+      "prompt": "Show the earlier recorded neighbor relationships for LAB-R1.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.topology",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-05",
+      "category": "device_state",
+      "prompt": "What administrative and operational state is recorded for LAB-R1 interfaces?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.state",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ],
+      "json_acceptance_spec": {
+        "frozen_at": "2026-10-21T04:46:38.500495+00:00",
+        "exposed_development_case": true,
+        "prompt": "Read only device and interface state for LAB-R1. Give the exact recorded interface, prefix, administrative versus operational states and observation time. Do not substitute planned inventory or the separately declared simulation.",
+        "changes": [
+          {
+            "prefix": "10.73.0.1/30",
+            "admin_status": "up",
+            "oper_status": "down"
+          },
+          {
+            "prefix": "10.74.0.1/30",
+            "admin_status": "down",
+            "oper_status": "down"
+          }
+        ],
+        "source": "backend/development/scenarios/healthy_all_sources_v2/device_state.json",
+        "observation_times": [
+          "2026-10-18T01:00:00Z",
+          "2026-10-18T01:01:00Z"
+        ],
+        "expected_tools": [
+          "network.state"
+        ],
+        "negative": "No unrequested simulation/current/planned substitution, no physical execution or current-health inference",
+        "verification": "Exact source row values, category/time/mode and both real gateway paths. Inspect complete model answer separately; no fresh reasoning credit."
+      }
+    },
+    {
+      "id": "G-SOURCE-06",
+      "category": "running_configs",
+      "prompt": "What is the current configuration for LAB-R1?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.configuration",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-07",
+      "category": "config_snapshots",
+      "prompt": "Show the saved configuration capture for LAB-R1, rather than the current one.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.configuration",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-08",
+      "category": "config_changes",
+      "prompt": "Compare the saved and current configuration records for LAB-R1.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.configuration",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-09",
+      "category": "routing_state",
+      "prompt": "Which route and next hop are recorded toward LAB-R3 from LAB-R1?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.state",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-10",
+      "category": "protocol_state",
+      "prompt": "Describe the recorded OSPF and BGP sessions and their actual peer identifiers.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.state",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-11",
+      "category": "controller_state",
+      "prompt": "What operational state does the simulated controller report for LAB-R1?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.state",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-12",
+      "category": "telemetry",
+      "prompt": "Show the CPU measurements for LAB-R1 with their sample times and units.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.telemetry",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-13",
+      "category": "interface_metrics",
+      "prompt": "What interface error counters are recorded for LAB-R1?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.telemetry",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-14",
+      "category": "syslog",
+      "prompt": "Read the latest recorded syslog for LAB-R1.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.syslog",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ],
+      "json_acceptance_spec": {
+        "frozen_at": "2026-10-21T04:46:38.500495+00:00",
+        "exposed_development_case": true,
+        "prompt": "Read only syslog for LAB-R1. Explain the latest recorded message, severity and event time. Do not infer unrecorded current device state.",
+        "changes": [
+          {
+            "message": "Interface GigabitEthernet0/1 packet discard threshold exceeded.",
+            "severity": "warning"
+          },
+          {
+            "message": "Interface GigabitEthernet0/1 discard alert cleared.",
+            "severity": "info"
+          }
+        ],
+        "source": "backend/development/scenarios/healthy_all_sources_v2/syslog.json",
+        "observation_times": [
+          "2026-10-18T01:00:00Z",
+          "2026-10-18T01:01:00Z"
+        ],
+        "expected_tools": [
+          "network.syslog"
+        ],
+        "negative": "No unrequested simulation/current/planned substitution, no physical execution or current-health inference",
+        "verification": "Exact source row values, category/time/mode and both real gateway paths. Inspect complete model answer separately; no fresh reasoning credit."
+      }
+    },
+    {
+      "id": "G-SOURCE-15",
+      "category": "incidents",
+      "prompt": "Which alerts are recorded for LAB-R1, and are they still active?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.incidents",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ],
+      "json_acceptance_spec": {
+        "frozen_at": "2026-10-21T04:46:38.500495+00:00",
+        "exposed_development_case": true,
+        "prompt": "Read only incidents and alerts for LAB-R1. Give the recorded incident summary, severity, status and event time. Do not infer a current outage.",
+        "changes": [
+          {
+            "summary": "Capacity review queued for LAB-R1",
+            "state": "open",
+            "severity": "warning"
+          },
+          {
+            "summary": "Capacity review closed for LAB-R1",
+            "state": "resolved",
+            "severity": "info"
+          }
+        ],
+        "source": "backend/development/scenarios/healthy_all_sources_v2/incidents.json",
+        "observation_times": [
+          "2026-10-18T01:00:00Z",
+          "2026-10-18T01:01:00Z"
+        ],
+        "expected_tools": [
+          "network.incidents"
+        ],
+        "negative": "No unrequested simulation/current/planned substitution, no physical execution or current-health inference",
+        "verification": "Exact source row values, category/time/mode and both real gateway paths. Inspect complete model answer separately; no fresh reasoning credit."
+      }
+    },
+    {
+      "id": "G-SOURCE-16",
+      "category": "config_drift",
+      "prompt": "What configuration drift is recorded for LAB-R1 and what supports it?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.configuration",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-17",
+      "category": "source_health",
+      "prompt": "Which simulated collectors are available or failing?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.state",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-18",
+      "category": "jobs_audit",
+      "prompt": "What did the most recent simulated validation job do?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.state",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ],
+      "json_acceptance_spec": {
+        "frozen_at": "2026-10-21T04:46:38.500495+00:00",
+        "exposed_development_case": true,
+        "prompt": "Read only simulated jobs and audit for LAB-R1. Explain the job ID, recorded outcome, effect and time. Was a device change executed?",
+        "changes": [
+          {
+            "job_id": "SIM-AUDIT-71",
+            "status": "failed",
+            "effect": "simulated_validation_only",
+            "message": "Development schema check failed; no device execution"
+          },
+          {
+            "job_id": "SIM-AUDIT-72",
+            "status": "completed",
+            "effect": "simulated_validation_only",
+            "message": "Development schema check completed; no device execution"
+          }
+        ],
+        "source": "backend/development/scenarios/healthy_all_sources_v2/jobs_audit.json",
+        "observation_times": [
+          "2026-10-18T01:00:00Z",
+          "2026-10-18T01:01:00Z"
+        ],
+        "expected_tools": [
+          "network.state"
+        ],
+        "negative": "No unrequested simulation/current/planned substitution, no physical execution or current-health inference",
+        "verification": "Exact source row values, category/time/mode and both real gateway paths. Inspect complete model answer separately; no fresh reasoning credit."
+      }
+    },
+    {
+      "id": "G-SOURCE-19",
+      "category": "knowledge",
+      "prompt": "Explain the published OSPF operation requirements; do not generate configuration.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "knowledge.search",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ],
+      "json_acceptance_spec": {
+        "prompt": "Explain the published operation requirements selected by the scenario knowledge reference. Read only this scenario knowledge reference. Do not generate configuration.",
+        "queries": [
+          "Explain published set_interface_description method requirements",
+          "Explain published configure_bgp_neighbor method requirements"
+        ],
+        "negative_status": "ERROR must prevent published lookup",
+        "authority": "Editable query is a simulated request reference; actual operation requirements are retrieved only from existing active immutable V9 knowledge. No publication or replacementRAG.",
+        "expected_tools": [
+          "knowledge.search"
+        ],
+        "exposed": true,
+        "evidence": "tmp/phase-g/iterations/20261021T050246.671819Z-G-source-knowledge-661eeb/manual-source-review.json"
+      }
+    },
+    {
+      "id": "G-SOURCE-20",
+      "category": "documents",
+      "prompt": "Explain the scenario operations document that I attached.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "document.read",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-21",
+      "category": "attachments",
+      "prompt": "Summarize the attached lab capture note.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "document.read",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-22",
+      "category": "diagrams",
+      "prompt": "Describe the attached diagram and disclose any unreadable content.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "document.read",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-23",
+      "category": "conversation",
+      "prompt": "What device did we just discuss, and which recorded interface did I select?",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "conversation.turn",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-SOURCE-24",
+      "category": "simulation",
+      "prompt": "Assess the declared forward and return path from LAB-R1 to LAB-R3.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.state",
+      "verification": "Inspect exact changed source values, origin, virtual timestamp, selected tool and final answer; no fallback-as-model credit.",
+      "prohibited": [
+        "Physical device effects",
+        "Private oracle access",
+        "Unlabelled simulated measurements",
+        "Saved editor changes"
+      ]
+    },
+    {
+      "id": "G-RECORDED-HISTORY-01",
+      "category": "recorded_revision_recovery",
+      "scenario": "controlled owned source pack T1/T2",
+      "prompt": "What is the current configuration for LAB-R1?",
+      "followups": [
+        "Read Recorded history.md and explain its maintenance scope and exact note marker. Use the currently active source revision.",
+        "Repeat after T2 activation and after explicit T1 restore."
+      ],
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "expected_capability": [
+        "network.configuration",
+        "document.read"
+      ],
+      "expected": "Actual T1/T2/restored-T1 content, captured times and new source revisions in the same owner-bound conversations; replaced T2 recoverable; T1 capture retained while T2 active.",
+      "prohibited": [
+        "Old evidence reused as current",
+        "Opaque marker expanded into invented system identity",
+        "Restoring another owner history",
+        "Raw asset bytes in history listing",
+        "Automatic model activation",
+        "Ordinary database mutation"
+      ],
+      "verification": "Authenticated API and real Ollama, exact source values plus manual prose review; browser copy/restore and clean draft switching. Separate deterministic config projection from model document interpretation."
+    },
+    {
+      "id": "G-AUTHORED-PROTOCOL-01",
+      "category": "protocol_state",
+      "scenario": "owned v2 starter source pack, simulator unchanged",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "prompt": "Read the authored OSPF neighbor observations for LAB-R1. Give the local router ID, the neighbor device and router ID, session state and capture time. Use the protocol observation source, not the separately declared simulation.",
+      "followups": [
+        "Edit authored protocol state Full to Init; retain simulator Full as separate source",
+        "Ask same question after explicit validation and activation"
+      ],
+      "expected_capability": "network.state, source_categories protocol_state",
+      "expected": "Actual edited endpoint names/IDs/state/time, simulated provenance; ordinary/scenario distinction; no substitution of declared model peer values.",
+      "prohibited": [
+        "Treating local router as its own neighbor",
+        "Replacing observed Init with model Full",
+        "Full/Established hybrid label",
+        "Unchecked prerequisites claimed verified",
+        "Claiming direct device changes or physical collection"
+      ],
+      "verification": "Inspect real model plan and correction trace, authorized raw observation, full final prose and interface editor effects; count fallback separately."
+    },
+    {
+      "id": "G-PROTOCOL-CONTEXT-01",
+      "category": "protocol_state_followup",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "scenario": "owned authored Init observation; separate simulator Full at same time",
+      "prompt": "Read the authored OSPF neighbor observations for LAB-R1. Give the local router ID, the neighbor device and router ID, session state and capture time. Use the protocol observation source, not the separately declared simulation.",
+      "followups": [
+        "What does this Init state imply about the OSPF adjacency, and what cannot be concluded from it? Keep using the same authored source."
+      ],
+      "expected_capability": "Fresh network.state with protocol_state constraint and same owned device reference",
+      "expected": "Explain Init as a one-way OSPF Hello observation without assuming Full adjacency or a root cause; no unsupported reachability conclusion. Current source state fresh, original scope retained.",
+      "prohibited": [
+        "Restoring excluded simulator source silently",
+        "Inheriting unrelated editor or attachments",
+        "Inventing a live device test",
+        "Treating a prior assistant claim as source authority"
+      ],
+      "verification": "Actual browser/shared-gateway trace and full answer review; source constraints are server-controlled references, not persisted observations.",
+      "status": "PASS_BOUNDED_BOTH_MAIN_BROWSER_SURFACES_WITH_LABELLED_FALLBACK; real model false adjacency/packet-history claims retained and rejected. Not general reasoning certification."
+    },
+    {
+      "id": "G-PUBLISHED-CONTRACT-01",
+      "category": "knowledge",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "scenario": "Existing active immutable release; selected development scenario must not replace it",
+      "prompt": "Explain the fields required by the published configure_ospf method.",
+      "followups": [
+        "What does published Junos knowledge require to remove a qualified static next hop?",
+        "Which supported vendor profiles does the published interface-description operation declare?"
+      ],
+      "expected_capability": "knowledge.search using existing V9 release-specific index and published_requirements; no generation",
+      "expected": "Exact schema fields, nested object requirements, vendor conditions and matching citations. Only relevant contracts. Explain significance, do not invent commands or optional/required claims.",
+      "prohibited": [
+        "Reimplement operation recognition or RAG",
+        "Generate native config from an explanation",
+        "Substitute a scenario for immutable knowledge",
+        "Credit exact checklist projection as model reasoning"
+      ],
+      "verification": "Separate model interpretation/selection/prose from server field/citation projection and rejected fallback; inspect raw source and displayed answer",
+      "status": "Exposed correction under acceptance; final loaded browser pending"
+    },
+    {
+      "id": "G-METRIC-WINDOW-01",
+      "category": "telemetry/interface_metrics",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "scenario": "Owned healthy_all_sources_v2 clone; capture2026-10-18T01:00:00Z",
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "prompt": "Explain LAB-R1 CPU measurements from 2026-10-18T00:58:59Z to 2026-10-18T00:59:31Z using only the authored telemetry samples. What is observed, and what does the gap leave unknown?",
+      "followups": [
+        "What changed in the next recorded window?",
+        "Are you sure the missing point is zero?",
+        "Show the recorded interface counter window and distinguish a reset from a measured rate.",
+        "Are you sure the missing point is zero? Recheck that same window and source.",
+        "Instead read only LAB-R1 CPU from 2026-10-18T00:59:59Z to 2026-10-18T01:00:01Z, using the same authored telemetry source. What is recorded?",
+        "Read the telemetry from interface counters instead, for the same device and window."
+      ],
+      "data_assumptions": {
+        "cpu_samples": [
+          {
+            "timestamp": "2026-10-18T00:59:00Z",
+            "value": 16
+          },
+          {
+            "timestamp": "2026-10-18T00:59:30Z",
+            "value": null
+          },
+          {
+            "timestamp": "2026-10-18T01:00:00Z",
+            "value": 18
+          }
+        ],
+        "unit": "percent",
+        "counter_example": [
+          120,
+          2,
+          300
+        ],
+        "simulation": "Separate source; not substituted for authored samples"
+      },
+      "expected_capability": "network.telemetry with selected source/time bounds; existing metric_findings math when supported interval declared",
+      "expected": "Return only matching actual sample times/values, preserve capture metadata, gaps and resets. No outside-window aggregate or unscoped errors/discards. Simulated/historical label and visible unit.",
+      "prohibited": [
+        "Null becomes0",
+        "Extrapolated measurement",
+        "Derived rate across counter reset",
+        "Unavailable means healthy/down",
+        "Draft preview activates or collects",
+        "Correct numeric value attributed to the wrong sample time",
+        "Known numeric point labelled missing",
+        "Old time bounds override an explicit new window",
+        "Old logical source overrides an explicit source change"
+      ],
+      "verification": "Schema/finite/time tests; actual authorized reader; actual JSON+GUI save/validate/activate and both gateways; inspect model trace/full prose; record NOT_RUN if no provider/browser",
+      "status": "Partial exposed acceptance: original comparative/reset follow-ups retained and still pending; explicit window/source corrections pass after captured model errors are rejected. No full G3/G5 gate.",
+      "followup_status": {
+        "original_next_window_comparison": "NOT_RUN",
+        "original_counter_reset_model_reasoning": "NOT_RUN; deterministic reset math separately verified",
+        "explicit_same_new_window_and_source_switch": "PASS_BOUNDED_BOTH_MAIN_BROWSER_SURFACES"
+      }
+    },
+    {
+      "id": "G-GENERAL-TOPIC-01",
+      "category": "conversation",
+      "capability": "General technical explanation after an evidence-heavy network topic",
+      "scenario_id": "CUSTOM-1792464195033",
+      "scenario_revision": 2,
+      "prompt": "Unrelated question: why does binary search require sorted input? Keep it brief.",
+      "followups": [],
+      "data_assumptions": "Existing conversation just inspected authored OSPF Init observations; no network facts are needed for this algorithm concept.",
+      "expected_capability": "No network/document/editor/engineering tools; configured qwen general conversation",
+      "expected": "Brief explanation that sorted ordering makes a middle comparison safely eliminate one half; without ordering that elimination is invalid. No inherited device/protocol facts.",
+      "prohibited": [
+        "Network tools",
+        "Prior device IDs or addresses",
+        "Source-ID dump",
+        "Claimed edits/generation",
+        "Unrelated engineering disclaimer"
+      ],
+      "verification": "Actual main browser prompt, raw gateway context/tool trace and manual content review",
+      "independent_holdout": false,
+      "pre_registered": false,
+      "status": "PASS_BOUNDED_NO_TOOL_TOPIC_SWITCH; actual qwen, partial style limitation; exposed not fresh score"
+    },
+    {
+      "id": "G-SOURCE-HEALTH-STATUS-01",
+      "category": "source_health",
+      "capability": "Authorized source coordination, exact attribution and scoped investigation",
+      "scenario_id": "S-HEALTHY-ALL-SOURCES",
+      "scenario_revision": 1,
+      "prompt": "Read the source health records. Which logical sources are stale or in error, at what time, and was any physical collection performed?",
+      "followups": [],
+      "data_assumptions": "Versioned source bundle activated only in disposable evaluator; authoritative tool results and raw model drafts retained. No ordinary activation.",
+      "expected_capability": "network.state through existing shared LangGraph; other sources only when genuinely required",
+      "expected": "telemetry STALE and syslog ERROR from source_health, capture timestamp and no physical collection; compare authored/effective claims for explicit override",
+      "prohibited": [
+        "Wrong document workflow",
+        "Shared STALE assignment to syslog",
+        "Extra metric read for source-status attribute",
+        "Physical outage inferred from unavailable source"
+      ],
+      "verification": "Real authenticated gateway/Qwen plus independent deterministic tests and manual full prose review",
+      "independent_holdout": false,
+      "pre_registered": false,
+      "status": "PASS_BOUNDED_WITH_VERIFIED_FALLBACK; GUI pending; no new quality score"
+    },
+    {
+      "id": "G-STARTER-POLICY-01",
+      "category": "simulation",
+      "capability": "Authorized source coordination, exact attribution and scoped investigation",
+      "scenario_id": "S-ACL-BLOCKS-FORWARD",
+      "scenario_revision": 1,
+      "prompt": "Investigate whether LAB-R1 can communicate with LAB-R3 in the selected development scenario. Explain the strongest supported finding and any conflicting observations.",
+      "followups": [],
+      "data_assumptions": "Versioned source bundle activated only in disposable evaluator; authoritative tool results and raw model drafts retained. No ordinary activation.",
+      "expected_capability": "network.state through existing shared LangGraph; other sources only when genuinely required",
+      "expected": "Forward failed by evaluated LAB-R2 ge-0/0/0.0 ingress reviewed-filter/scope-rule; return delivered; scoped modeled conclusion",
+      "prohibited": [
+        "Drop attributed to LAB-R1 sender",
+        "Return success used as forward success",
+        "Physical fault claim",
+        "Fault location counted as a completed egress hop"
+      ],
+      "verification": "Real authenticated gateway/Qwen plus independent deterministic tests and manual full prose review",
+      "independent_holdout": false,
+      "pre_registered": false,
+      "status": "PASS_BOUNDED_WITH_VERIFIED_FALLBACK; GUI pending; no new quality score"
+    },
+    {
+      "id": "G-STARTER-CONFLICT-01",
+      "category": "simulation",
+      "capability": "Authorized source coordination, exact attribution and scoped investigation",
+      "scenario_id": "S-STALE-AND-CONFLICT",
+      "scenario_revision": 1,
+      "prompt": "Investigate whether LAB-R1 can communicate with LAB-R3 in the selected development scenario. Explain the strongest supported finding and any conflicting observations.",
+      "followups": [],
+      "data_assumptions": "Versioned source bundle activated only in disposable evaluator; authoritative tool results and raw model drafts retained. No ordinary activation.",
+      "expected_capability": "network.state through existing shared LangGraph; other sources only when genuinely required",
+      "expected": "Modeled ICMP delivered both directions, while authored OSPF Full conflicts with Hello10/20; old syslog remains stale; no claimed resolution",
+      "prohibited": [
+        "Forwarding calculation said to settle contradictory protocol observations",
+        "Conflict said to have no effect on communication without evidence",
+        "Stale event treated as current failure"
+      ],
+      "verification": "Real authenticated gateway/Qwen plus independent deterministic tests and manual full prose review",
+      "independent_holdout": false,
+      "pre_registered": false,
+      "status": "PASS_BOUNDED_WITH_VERIFIED_FALLBACK; GUI pending; no new quality score"
+    },
+    {
+      "id": "G-OBS-ENDPOINTS-001",
+      "category": "topology_observed",
+      "scenario": "S-HEALTHY-ALL-SOURCES",
+      "scenario_revision": 1,
+      "prompt": "Read only authored observed topology for LAB-R3. Which device and exact interfaces were recorded by LLDP, at what capture time? Do not infer intended cabling or physical reachability.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "data_assumptions": "Typed observed endpoints independent of planned links; GUI custom revision2 at01:02Z retains prior revision1 and unchanged plan. All observations simulated.",
+      "expected_capability": "network.topology only",
+      "expected": "Authored LAB-R3 port4 to LAB-R1 port1; changed JSON peer LAB-R2 port3; exact time and ownership; no topology-derived interface inventory.",
+      "prohibited": [
+        "Invented peer/port",
+        "Historical record labelled current",
+        "Excluded source retrieval",
+        "Physical-state certainty",
+        "Editor proposal or device action"
+      ],
+      "verification": "Actual authenticated gateway/Qwen, source records, GUI Save/Validate/Activate, both browser surfaces, exact values/provenance and manual prose review.",
+      "independent_holdout": false,
+      "pre_registered": false,
+      "evidence": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+    },
+    {
+      "id": "G-OBS-COMPARE-001",
+      "category": "topology_observed",
+      "scenario": "S-HEALTHY-ALL-SOURCES",
+      "scenario_revision": 1,
+      "prompt": "Compare observed topology and planned topology for LAB-R3. Explain the disagreement and what it does not prove. Do not generate or modify configuration.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "data_assumptions": "Typed observed endpoints independent of planned links; GUI custom revision2 at01:02Z retains prior revision1 and unchanged plan. All observations simulated.",
+      "expected_capability": "network.topology only",
+      "expected": "Planned LAB-R2 to LAB-R3; current recorded LAB-R1 to LAB-R3; reconcile sources without inventing outage/change history/physical proof.",
+      "prohibited": [
+        "Invented peer/port",
+        "Historical record labelled current",
+        "Excluded source retrieval",
+        "Physical-state certainty",
+        "Editor proposal or device action"
+      ],
+      "verification": "Actual authenticated gateway/Qwen, source records, GUI Save/Validate/Activate, both browser surfaces, exact values/provenance and manual prose review.",
+      "independent_holdout": false,
+      "pre_registered": false,
+      "evidence": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+    },
+    {
+      "id": "G-OBS-MISSING-001",
+      "category": "topology_observed",
+      "scenario": "S-HEALTHY-ALL-SOURCES",
+      "scenario_revision": 1,
+      "prompt": "Read only authored observed topology for LAB-R3 now. Is a current neighbor recorded? Do not substitute planned topology or previous observations.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "data_assumptions": "Typed observed endpoints independent of planned links; GUI custom revision2 at01:02Z retains prior revision1 and unchanged plan. All observations simulated.",
+      "expected_capability": "network.topology only",
+      "expected": "No current observed record after GUI peer edit to LAB-R1/LAB-R2; retained plan/history must not substitute.",
+      "prohibited": [
+        "Invented peer/port",
+        "Historical record labelled current",
+        "Excluded source retrieval",
+        "Physical-state certainty",
+        "Editor proposal or device action"
+      ],
+      "verification": "Actual authenticated gateway/Qwen, source records, GUI Save/Validate/Activate, both browser surfaces, exact values/provenance and manual prose review.",
+      "independent_holdout": false,
+      "pre_registered": false,
+      "evidence": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+    },
+    {
+      "id": "G-SOURCE-ACCEPT-RUNNING_CONFIGS",
+      "category": "running_configs",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.configuration",
+      "cases": [
+        "changed exact native text and source/record capture times",
+        "explicit Save/Validate/Activate",
+        "STALE retains old text without current-state claim",
+        "ERROR/MISSING no text substitution",
+        "historical/current source separation",
+        "preserved earlier capture/revision",
+        "unknown target never widens scope",
+        "future source admission rejection"
+      ],
+      "prohibited": [
+        "device action",
+        "knowledge publication",
+        "automatic editor Save or Accept",
+        "model reasoning credit for exact projection"
+      ],
+      "verification": "Actual shared LangGraph public gateway and authenticated GUI; inspect raw records, exact final text, source revision/origin/time and preserved user-state fingerprints. Existing shared-boundary negatives may be reused with explicit evidence references.",
+      "developmental_exposed": true,
+      "fresh_holdout": false
+    },
+    {
+      "id": "G-SOURCE-ACCEPT-CONFIG_SNAPSHOTS",
+      "category": "config_snapshots",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "expected_capability": "network.configuration",
+      "cases": [
+        "changed exact native text and source/record capture times",
+        "explicit Save/Validate/Activate",
+        "STALE retains old text without current-state claim",
+        "ERROR/MISSING no text substitution",
+        "historical/current source separation",
+        "preserved earlier capture/revision",
+        "unknown target never widens scope",
+        "future source admission rejection"
+      ],
+      "prohibited": [
+        "device action",
+        "knowledge publication",
+        "automatic editor Save or Accept",
+        "model reasoning credit for exact projection"
+      ],
+      "verification": "Actual shared LangGraph public gateway and authenticated GUI; inspect raw records, exact final text, source revision/origin/time and preserved user-state fingerprints. Existing shared-boundary negatives may be reused with explicit evidence references.",
+      "developmental_exposed": true,
+      "fresh_holdout": false
+    },
+    {
+      "id": "G-SOURCE-STATUS-TOPOLOGY_PLANNED",
+      "category": "topology_planned",
+      "scenario": "healthy_all_sources_v2 / declared revision retained with each execution",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "assumptions": "Pinned complete source pack, explicit source category, LAB-R1; negative source retains lineage IDs but no content",
+      "sequence": [
+        "AVAILABLE T1",
+        "edit T2",
+        "STALE old records",
+        "ERROR failed reader",
+        "MISSING explicit unavailable source"
+      ],
+      "expected_capability": "network.topology",
+      "expected": "Exact selected category, source status, capture/event times and scoped recorded values. ERROR/MISSING must not substitute another source.",
+      "prohibited": [
+        "Current state inferred from old events",
+        "Absent connection inferred from unavailable source",
+        "No matching lane treated as a successful run",
+        "Engineering actions"
+      ],
+      "verification": "Inspect full final prose and actual tool/evidence records; API and GUI results independent; no model reasoning credit from a fact projection."
+    },
+    {
+      "id": "G-SOURCE-STATUS-TOPOLOGY_HISTORY",
+      "category": "topology_history",
+      "scenario": "healthy_all_sources_v2 / declared revision retained with each execution",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "assumptions": "Pinned complete source pack, explicit source category, LAB-R1; negative source retains lineage IDs but no content",
+      "sequence": [
+        "AVAILABLE T1",
+        "edit T2",
+        "STALE old records",
+        "ERROR failed reader",
+        "MISSING explicit unavailable source"
+      ],
+      "expected_capability": "network.topology",
+      "expected": "Exact selected category, source status, capture/event times and scoped recorded values. ERROR/MISSING must not substitute another source.",
+      "prohibited": [
+        "Current state inferred from old events",
+        "Absent connection inferred from unavailable source",
+        "No matching lane treated as a successful run",
+        "Engineering actions"
+      ],
+      "verification": "Inspect full final prose and actual tool/evidence records; API and GUI results independent; no model reasoning credit from a fact projection."
+    },
+    {
+      "id": "G-SOURCE-STATUS-DEVICE_STATE",
+      "category": "device_state",
+      "scenario": "healthy_all_sources_v2 / declared revision retained with each execution",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "assumptions": "Pinned complete source pack, explicit source category, LAB-R1; negative source retains lineage IDs but no content",
+      "sequence": [
+        "AVAILABLE T1",
+        "edit T2",
+        "STALE old records",
+        "ERROR failed reader",
+        "MISSING explicit unavailable source"
+      ],
+      "expected_capability": "network.state",
+      "expected": "Exact selected category, source status, capture/event times and scoped recorded values. ERROR/MISSING must not substitute another source.",
+      "prohibited": [
+        "Current state inferred from old events",
+        "Absent connection inferred from unavailable source",
+        "No matching lane treated as a successful run",
+        "Engineering actions"
+      ],
+      "verification": "Inspect full final prose and actual tool/evidence records; API and GUI results independent; no model reasoning credit from a fact projection."
+    },
+    {
+      "id": "G-SOURCE-STATUS-SYSLOG",
+      "category": "syslog",
+      "scenario": "healthy_all_sources_v2 / declared revision retained with each execution",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "assumptions": "Pinned complete source pack, explicit source category, LAB-R1; negative source retains lineage IDs but no content",
+      "sequence": [
+        "AVAILABLE T1",
+        "edit T2",
+        "STALE old records",
+        "ERROR failed reader",
+        "MISSING explicit unavailable source"
+      ],
+      "expected_capability": "network.syslog",
+      "expected": "Exact selected category, source status, capture/event times and scoped recorded values. ERROR/MISSING must not substitute another source.",
+      "prohibited": [
+        "Current state inferred from old events",
+        "Absent connection inferred from unavailable source",
+        "No matching lane treated as a successful run",
+        "Engineering actions"
+      ],
+      "verification": "Inspect full final prose and actual tool/evidence records; API and GUI results independent; no model reasoning credit from a fact projection."
+    },
+    {
+      "id": "G-SOURCE-STATUS-INCIDENTS",
+      "category": "incidents",
+      "scenario": "healthy_all_sources_v2 / declared revision retained with each execution",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "assumptions": "Pinned complete source pack, explicit source category, LAB-R1; negative source retains lineage IDs but no content",
+      "sequence": [
+        "AVAILABLE T1",
+        "edit T2",
+        "STALE old records",
+        "ERROR failed reader",
+        "MISSING explicit unavailable source"
+      ],
+      "expected_capability": "network.incidents",
+      "expected": "Exact selected category, source status, capture/event times and scoped recorded values. ERROR/MISSING must not substitute another source.",
+      "prohibited": [
+        "Current state inferred from old events",
+        "Absent connection inferred from unavailable source",
+        "No matching lane treated as a successful run",
+        "Engineering actions"
+      ],
+      "verification": "Inspect full final prose and actual tool/evidence records; API and GUI results independent; no model reasoning credit from a fact projection."
+    },
+    {
+      "id": "G-SOURCE-STATUS-JOBS_AUDIT",
+      "category": "jobs_audit",
+      "scenario": "healthy_all_sources_v2 / declared revision retained with each execution",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "assumptions": "Pinned complete source pack, explicit source category, LAB-R1; negative source retains lineage IDs but no content",
+      "sequence": [
+        "AVAILABLE T1",
+        "edit T2",
+        "STALE old records",
+        "ERROR failed reader",
+        "MISSING explicit unavailable source"
+      ],
+      "expected_capability": "network.state",
+      "expected": "Exact selected category, source status, capture/event times and scoped recorded values. ERROR/MISSING must not substitute another source.",
+      "prohibited": [
+        "Current state inferred from old events",
+        "Absent connection inferred from unavailable source",
+        "No matching lane treated as a successful run",
+        "Engineering actions"
+      ],
+      "verification": "Inspect full final prose and actual tool/evidence records; API and GUI results independent; no model reasoning credit from a fact projection."
+    },
+    {
+      "id": "G1-MULTISOURCE-PLAN-CONFIG",
+      "capability": "G1 typed source contracts; not fresh intelligence benchmark",
+      "prompt": "Read planned links and current configuration for LAB-R1; identify the planned port and whether that interface is present in the supplied current text. Do not infer packet delivery.",
+      "scenario": "G-TOPOLOGY-SOURCE-ACCEPTANCE",
+      "expected_tools": [
+        "network.topology",
+        "network.configuration"
+      ],
+      "expected": "Authorized typed source envelopes, source identities/revision and no engineering effects",
+      "verification": "Actual GUI shared-gateway trace; final answer/model repair separately classified",
+      "prohibited": [
+        "Device action",
+        "Cross-owner source",
+        "Simulation labelled physical live"
+      ]
+    },
+    {
+      "id": "G1-MULTISOURCE-EVENTS",
+      "capability": "G1 typed source contracts; not fresh intelligence benchmark",
+      "prompt": "Read only syslog and incidents for LAB-R1; give the message, incident status and separate event times. Do not infer a current outage.",
+      "scenario": "G-TOPOLOGY-SOURCE-ACCEPTANCE",
+      "expected_tools": [
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected": "Authorized typed source envelopes, source identities/revision and no engineering effects",
+      "verification": "Actual GUI shared-gateway trace; final answer/model repair separately classified",
+      "prohibited": [
+        "Device action",
+        "Cross-owner source",
+        "Simulation labelled physical live"
+      ]
+    },
+    {
+      "id": "G-SOURCE-STATUS-TOPOLOGY_OBSERVED",
+      "category": "topology_observed",
+      "scenario": "healthy_all_sources_v2; exact edited bundle retained per execution",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON",
+        "GUI_draft"
+      ],
+      "prompt": "Read only authored observed topology for LAB-R3 now. Give the source status and capture time, and state whether a current neighbor is recorded. Do not substitute planned topology or previous observations.",
+      "assumptions": "Recorded LLDP endpoints are independent of planned links; source status is changed separately from authored data",
+      "expected_capability": "network.topology",
+      "expected": "STALE withholds a current neighbor; ERROR is a reader failure. Both preserve source status/capture and prohibit plan substitution.",
+      "prohibited": [
+        "Missing source called physical disconnection",
+        "Stale endpoint labelled current",
+        "Plan used as observed interface inventory"
+      ],
+      "verification": "Actual authorized gateway and final full prose; temporal/source envelope tests; no reasoning credit from fallback"
+    },
+    {
+      "id": "G2-CLI-AUTHORING",
+      "capability": "Complete24-source editable bundle clone/export/diff",
+      "scenario": "healthy_all_sources_v2",
+      "input_sequence": [
+        "bundle-clone with newID/output",
+        "bundle-export newJSON",
+        "external edit management address to192.0.2.198",
+        "bundle-validate",
+        "bundle-diff before/after"
+      ],
+      "expected": "Source pack remains unchanged; clone edit is valid; diff contains exact changed field; no activation or overwrite; optional original hash-lock policy preserved",
+      "prohibited": [
+        "User file overwrite",
+        "Automatic activation",
+        "Oracle import",
+        "OrdinaryDB writes"
+      ],
+      "verification": "Actual CLI artifacts plus test_complete_bundle_cli_clone_export_and_diff_preserve_inputs_and_require_new_outputs"
+    },
+    {
+      "id": "G2-BGP-JSON",
+      "capability": "External protocol input and revised authorized source read",
+      "scenario": "healthy_all_sources_v2",
+      "input_sequence": [
+        "BGP Established atT1",
+        "BGP Active atT2"
+      ],
+      "expected": "Both authorized assistant readers see exact source state/time and reciprocal65020/65030 AS plus local10.72.0.5/neighbor10.72.0.6; distinct source revisions; separately declared simulator Established state unchanged",
+      "prohibited": [
+        "Automatically rewriting independent protocol source",
+        "Peer/local address swap",
+        "Physical connectivity inference"
+      ],
+      "verification": "test_external_bgp_json_t1_t2_reaches_both_authorized_readers_without_rewriting_the_model; deterministic source integration, no LLM quality credit"
+    },
+    {
+      "id": "G3-KNOWLEDGE-GUI-REFERENCE",
+      "category": "knowledge",
+      "scenario": "G-KNOWLEDGE-SOURCE-ACCEPTANCE",
+      "scenario_revision": "Retained in each actual gateway trace",
+      "input_prompt": "Explain the published operation requirements selected by the scenario knowledge reference. Read only this scenario knowledge reference. Do not generate configuration.",
+      "input_sequence": [
+        "GUIqueryconfigure_ospf +sourcecapture01:04",
+        "Save/Validate/Activate",
+        "both assistants AVAILABLE",
+        "STALEreference, same current immutable V9 authority",
+        "ERRORreference, no published lookup"
+      ],
+      "expected_tools": [
+        "knowledge.search"
+      ],
+      "expected": "Selected real published method and inputs; request-only reference status/time remains distinct from published-document authority; no generation or publication",
+      "prohibited": [
+        "Reference JSON replacing published schemas",
+        "Stale reference called stale published release",
+        "ERRORinvoking lookup",
+        "Editor proposal or generated config"
+      ],
+      "verification": "Actual GUI controls plus ordinary authenticated shared-gateway traces; source footer tests; no model reasoning credit from fallback"
+    },
+    {
+      "id": "G-SOURCE-CONTROLLER-JSON",
+      "category": "controller_state",
+      "prompt": "Read only controller state for LAB-R1. Explain the recorded controller name, connection status and capture time. Do not infer device connectivity.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "AVAILABLE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-CONTROLLER-JSON-FLOATING",
+        "G-CONTROLLER-JSON-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-CONTROLLER-EDITED",
+      "category": "controller_state",
+      "prompt": "Read only controller state for LAB-R1. Explain the recorded controller name, connection status and capture time. Do not infer device connectivity.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "AVAILABLE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-CONTROLLER-EDITED-FLOATING",
+        "G-CONTROLLER-EDITED-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-CONTROLLER-STALE",
+      "category": "controller_state",
+      "prompt": "Read only controller state for LAB-R1. Explain the recorded controller name, connection status and capture time. Do not infer device connectivity.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "STALE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-CONTROLLER-STALE-FLOATING",
+        "G-CONTROLLER-STALE-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-CONTROLLER-ERROR",
+      "category": "controller_state",
+      "prompt": "Read only controller state for LAB-R1. Explain the recorded controller name, connection status and capture time. Do not infer device connectivity.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "ERROR",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-CONTROLLER-ERROR-FLOATING",
+        "G-CONTROLLER-ERROR-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-CONTROLLER-MISSING",
+      "category": "controller_state",
+      "prompt": "Read only controller state for LAB-R1. Explain the recorded controller name, connection status and capture time. Do not infer device connectivity.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "MISSING",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-CONTROLLER-MISSING-FLOATING",
+        "G-CONTROLLER-MISSING-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-ROUTING-JSON",
+      "category": "routing_state",
+      "prompt": "Read only routing and forwarding observations for LAB-R1. Explain the exact recorded destination prefix, next hop and observation time. Do not substitute calculated simulation results or infer packet delivery.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "AVAILABLE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-ROUTING-JSON-FLOATING",
+        "G-ROUTING-JSON-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-ROUTING-EDITED",
+      "category": "routing_state",
+      "prompt": "Read only routing and forwarding observations for LAB-R1. Explain the exact recorded destination prefix, next hop and observation time. Do not substitute calculated simulation results or infer packet delivery.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "AVAILABLE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-ROUTING-EDITED-FLOATING",
+        "G-ROUTING-EDITED-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-ROUTING-STALE",
+      "category": "routing_state",
+      "prompt": "Read only routing and forwarding observations for LAB-R1. Explain the exact recorded destination prefix, next hop and observation time. Do not substitute calculated simulation results or infer packet delivery.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "STALE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-ROUTING-STALE-FLOATING",
+        "G-ROUTING-STALE-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-ROUTING-ERROR",
+      "category": "routing_state",
+      "prompt": "Read only routing and forwarding observations for LAB-R1. Explain the exact recorded destination prefix, next hop and observation time. Do not substitute calculated simulation results or infer packet delivery.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "ERROR",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-ROUTING-ERROR-FLOATING",
+        "G-ROUTING-ERROR-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-ROUTING-MISSING",
+      "category": "routing_state",
+      "prompt": "Read only routing and forwarding observations for LAB-R1. Explain the exact recorded destination prefix, next hop and observation time. Do not substitute calculated simulation results or infer packet delivery.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.state",
+      "expected_status": "MISSING",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-ROUTING-MISSING-FLOATING",
+        "G-ROUTING-MISSING-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-COUNTERS-JSON",
+      "category": "interface_metrics",
+      "prompt": "Read only interface counters for LAB-R1. Explain the recorded GigabitEthernet0/1 output rate, units and sample time. Do not substitute device telemetry or infer continuous link health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.telemetry",
+      "expected_status": "AVAILABLE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-COUNTERS-JSON-FLOATING",
+        "G-COUNTERS-JSON-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-COUNTERS-EDITED",
+      "category": "interface_metrics",
+      "prompt": "Read only interface counters for LAB-R1. Explain the recorded GigabitEthernet0/1 output rate, units and sample time. Do not substitute device telemetry or infer continuous link health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.telemetry",
+      "expected_status": "AVAILABLE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-COUNTERS-EDITED-FLOATING",
+        "G-COUNTERS-EDITED-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-COUNTERS-STALE",
+      "category": "interface_metrics",
+      "prompt": "Read only interface counters for LAB-R1. Explain the recorded GigabitEthernet0/1 output rate, units and sample time. Do not substitute device telemetry or infer continuous link health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.telemetry",
+      "expected_status": "STALE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-COUNTERS-STALE-FLOATING",
+        "G-COUNTERS-STALE-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-COUNTERS-ERROR",
+      "category": "interface_metrics",
+      "prompt": "Read only interface counters for LAB-R1. Explain the recorded GigabitEthernet0/1 output rate, units and sample time. Do not substitute device telemetry or infer continuous link health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.telemetry",
+      "expected_status": "ERROR",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-COUNTERS-ERROR-FLOATING",
+        "G-COUNTERS-ERROR-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-COUNTERS-MISSING",
+      "category": "interface_metrics",
+      "prompt": "Read only interface counters for LAB-R1. Explain the recorded GigabitEthernet0/1 output rate, units and sample time. Do not substitute device telemetry or infer continuous link health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.telemetry",
+      "expected_status": "MISSING",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-COUNTERS-MISSING-FLOATING",
+        "G-COUNTERS-MISSING-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DRIFT-JSON",
+      "category": "config_drift",
+      "prompt": "Read only recorded configuration drift for LAB-R1. Explain the saved versus current capture references and literal difference. Do not claim device deployment or independently verified semantics.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.configuration",
+      "expected_status": "AVAILABLE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DRIFT-JSON-FLOATING",
+        "G-DRIFT-JSON-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DRIFT-EDITED",
+      "category": "config_drift",
+      "prompt": "Read only recorded configuration drift for LAB-R1. Explain the saved versus current capture references and literal difference. Do not claim device deployment or independently verified semantics.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.configuration",
+      "expected_status": "AVAILABLE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DRIFT-EDITED-FLOATING",
+        "G-DRIFT-EDITED-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DRIFT-STALE",
+      "category": "config_drift",
+      "prompt": "Read only recorded configuration drift for LAB-R1. Explain the saved versus current capture references and literal difference. Do not claim device deployment or independently verified semantics.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.configuration",
+      "expected_status": "STALE",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DRIFT-STALE-FLOATING",
+        "G-DRIFT-STALE-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DRIFT-ERROR",
+      "category": "config_drift",
+      "prompt": "Read only recorded configuration drift for LAB-R1. Explain the saved versus current capture references and literal difference. Do not claim device deployment or independently verified semantics.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.configuration",
+      "expected_status": "ERROR",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DRIFT-ERROR-FLOATING",
+        "G-DRIFT-ERROR-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DRIFT-MISSING",
+      "category": "config_drift",
+      "prompt": "Read only recorded configuration drift for LAB-R1. Explain the saved versus current capture references and literal difference. Do not claim device deployment or independently verified semantics.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "scenario_id": "Isolated exposed healthy_all_sources_v2 derivative",
+      "scenario_revision": "Per-run activation receipt in original case trace",
+      "assumptions": "Only selected source changed; current recorded scope at authored virtual time, not physical measurements",
+      "expected_capability": "network.configuration",
+      "expected_status": "MISSING",
+      "verification": "Inspect actual authorized source filter, record values, capture/time distinction, final answer and full prose. Original strict literal failures remain separately recorded; no HTTP/tool-only or fallback-as-model reasoning credit.",
+      "prohibited": [
+        "Wrong source or inventory substitution",
+        "Invented interface/protocol state from reader status",
+        "Physical packet-delivery conclusion",
+        "Device action or file save"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DRIFT-MISSING-FLOATING",
+        "G-DRIFT-MISSING-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DEVICE_METRICS-JSON",
+      "category": "telemetry",
+      "prompt": "Read only telemetry samples for LAB-R1. Give the recorded CPU sample value, units, observation time and source availability. Do not infer continuous health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.telemetry",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DEVICE_METRICS-JSON-FLOATING",
+        "G-DEVICE_METRICS-JSON-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DEVICE_METRICS-EDITED",
+      "category": "telemetry",
+      "prompt": "Read only telemetry samples for LAB-R1. Give the recorded CPU sample value, units, observation time and source availability. Do not infer continuous health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.telemetry",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DEVICE_METRICS-EDITED-FLOATING",
+        "G-DEVICE_METRICS-EDITED-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DEVICE_METRICS-STALE",
+      "category": "telemetry",
+      "prompt": "Read only telemetry samples for LAB-R1. Give the recorded CPU sample value, units, observation time and source availability. Do not infer continuous health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.telemetry",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DEVICE_METRICS-STALE-FLOATING",
+        "G-DEVICE_METRICS-STALE-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DEVICE_METRICS-ERROR",
+      "category": "telemetry",
+      "prompt": "Read only telemetry samples for LAB-R1. Give the recorded CPU sample value, units, observation time and source availability. Do not infer continuous health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.telemetry",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DEVICE_METRICS-ERROR-FLOATING",
+        "G-DEVICE_METRICS-ERROR-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-DEVICE_METRICS-MISSING",
+      "category": "telemetry",
+      "prompt": "Read only telemetry samples for LAB-R1. Give the recorded CPU sample value, units, observation time and source availability. Do not infer continuous health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.telemetry",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-DEVICE_METRICS-MISSING-FLOATING",
+        "G-DEVICE_METRICS-MISSING-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-HEALTH_RECORDS-JSON",
+      "category": "source_health",
+      "prompt": "Read only source health records for LAB-R1. Explain the authored source-availability claims, their observation time and the health-source status. Do not infer physical collection or current device health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.state",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-HEALTH_RECORDS-JSON-FLOATING",
+        "G-HEALTH_RECORDS-JSON-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-HEALTH_RECORDS-EDITED",
+      "category": "source_health",
+      "prompt": "Read only source health records for LAB-R1. Explain the authored source-availability claims, their observation time and the health-source status. Do not infer physical collection or current device health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.state",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-HEALTH_RECORDS-EDITED-FLOATING",
+        "G-HEALTH_RECORDS-EDITED-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-HEALTH_RECORDS-STALE",
+      "category": "source_health",
+      "prompt": "Read only source health records for LAB-R1. Explain the authored source-availability claims, their observation time and the health-source status. Do not infer physical collection or current device health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.state",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-HEALTH_RECORDS-STALE-FLOATING",
+        "G-HEALTH_RECORDS-STALE-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-HEALTH_RECORDS-ERROR",
+      "category": "source_health",
+      "prompt": "Read only source health records for LAB-R1. Explain the authored source-availability claims, their observation time and the health-source status. Do not infer physical collection or current device health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.state",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-HEALTH_RECORDS-ERROR-FLOATING",
+        "G-HEALTH_RECORDS-ERROR-STUDIO"
+      ]
+    },
+    {
+      "id": "G-SOURCE-HEALTH_RECORDS-MISSING",
+      "category": "source_health",
+      "prompt": "Read only source health records for LAB-R1. Explain the authored source-availability claims, their observation time and the health-source status. Do not infer physical collection or current device health.",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "editing_modes": [
+        "external_JSON"
+      ],
+      "expected_capability": "network.state",
+      "scenario_id": "Exposed complete starter derivative",
+      "scenario_revision": "Actual pinned activation receipt in run",
+      "verification": "Inspect selected source, record contents, status/capture, final answer and limitations. Do not confuse source fallback with model reasoning.",
+      "prohibited": [
+        "Physical/live inference from simulated records",
+        "Unavailable reader treated as network failure",
+        "Unrecorded measurements or file/device action"
+      ],
+      "exposure": "EXPOSED_DEVELOPMENT_SOURCE_CASE",
+      "execution_ids": [
+        "G-HEALTH_RECORDS-MISSING-FLOATING",
+        "G-HEALTH_RECORDS-MISSING-STUDIO"
+      ]
+    }
+  ]
+}

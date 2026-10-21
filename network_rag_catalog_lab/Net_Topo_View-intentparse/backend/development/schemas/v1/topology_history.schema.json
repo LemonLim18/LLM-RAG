@@ -1,0 +1,168 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "category": {
+      "const": "topology_history"
+    },
+    "status": {
+      "default": "AVAILABLE",
+      "enum": [
+        "AVAILABLE",
+        "MISSING",
+        "UNAVAILABLE",
+        "STALE",
+        "ERROR",
+        "CONFLICTING",
+        "UNSUPPORTED",
+        "NOT_QUERIED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "captured_at": {
+      "format": "date-time",
+      "title": "Captured At",
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "records": {
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "maxLength": 100,
+                "minLength": 1,
+                "title": "Id",
+                "type": "string"
+              },
+              "device_id": {
+                "title": "Device Id",
+                "type": "integer"
+              },
+              "interface_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Interface Id"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "type": "string"
+              },
+              "kind": {
+                "title": "Kind",
+                "type": "string"
+              },
+              "source": {
+                "title": "Source",
+                "type": "string"
+              },
+              "current": {
+                "default": true,
+                "title": "Current",
+                "type": "boolean"
+              },
+              "depends_on": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 30,
+                "title": "Depends On",
+                "type": "array"
+              },
+              "values": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                  "endpoints": {
+                    "additionalProperties": false,
+                    "description": "Device-scoped observed identities; no dependency on a planned link.",
+                    "properties": {
+                      "src_device_id": {
+                        "exclusiveMinimum": 0,
+                        "title": "Src Device Id",
+                        "type": "integer"
+                      },
+                      "src_interface_id": {
+                        "exclusiveMinimum": 0,
+                        "title": "Src Interface Id",
+                        "type": "integer"
+                      },
+                      "dst_device_id": {
+                        "exclusiveMinimum": 0,
+                        "title": "Dst Device Id",
+                        "type": "integer"
+                      },
+                      "dst_interface_id": {
+                        "exclusiveMinimum": 0,
+                        "title": "Dst Interface Id",
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "src_device_id",
+                      "src_interface_id",
+                      "dst_device_id",
+                      "dst_interface_id"
+                    ],
+                    "title": "ObservedEndpoints",
+                    "type": "object"
+                  },
+                  "link_id": {
+                    "type": "integer",
+                    "description": "Optional legacy reference to planned topology; explicit observed endpoints take precedence."
+                  },
+                  "oper_status": {
+                    "enum": [
+                      "up",
+                      "down",
+                      "unknown"
+                    ]
+                  },
+                  "discovery_protocol": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100
+                  }
+                }
+              }
+            },
+            "required": [
+              "id",
+              "device_id",
+              "timestamp",
+              "kind",
+              "source"
+            ],
+            "title": "Record",
+            "type": "object"
+          },
+          "maxItems": 3000
+        }
+      }
+    }
+  },
+  "required": [
+    "category",
+    "captured_at",
+    "data"
+  ],
+  "title": "SourceFile",
+  "type": "object"
+}

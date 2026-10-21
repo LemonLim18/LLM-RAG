@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0",
+  "category": "diagrams",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "files": [
+      {
+        "path": "docs/topology.png",
+        "name": "Lab topology.png"
+      }
+    ],
+    "limitation": "Text is readable through local OCR. OCR alone does not verify the drawn link relationships."
+  }
+}

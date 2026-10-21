@@ -1,0 +1,69 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "category": {
+      "const": "diagrams"
+    },
+    "status": {
+      "default": "AVAILABLE",
+      "enum": [
+        "AVAILABLE",
+        "MISSING",
+        "UNAVAILABLE",
+        "STALE",
+        "ERROR",
+        "CONFLICTING",
+        "UNSUPPORTED",
+        "NOT_QUERIED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "captured_at": {
+      "format": "date-time",
+      "title": "Captured At",
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "files": {
+          "type": "array",
+          "maxItems": 30,
+          "items": {
+            "type": "object",
+            "required": [
+              "path"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "limitation": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "category",
+    "captured_at",
+    "data"
+  ],
+  "title": "SourceFile",
+  "type": "object"
+}

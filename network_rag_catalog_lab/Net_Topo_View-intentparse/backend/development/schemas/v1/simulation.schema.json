@@ -1,0 +1,1217 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "category": {
+      "const": "simulation"
+    },
+    "status": {
+      "default": "AVAILABLE",
+      "enum": [
+        "AVAILABLE",
+        "MISSING",
+        "UNAVAILABLE",
+        "STALE",
+        "ERROR",
+        "CONFLICTING",
+        "UNSUPPORTED",
+        "NOT_QUERIED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "captured_at": {
+      "format": "date-time",
+      "title": "Captured At",
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "network": {
+          "additionalProperties": false,
+          "properties": {
+            "observed_at": {
+              "title": "Observed At",
+              "type": "string"
+            },
+            "policy_attachments_complete": {
+              "default": false,
+              "title": "Policy Attachments Complete",
+              "type": "boolean"
+            },
+            "tables": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "device_id": {
+                    "title": "Device Id",
+                    "type": "integer"
+                  },
+                  "vrf": {
+                    "default": "default",
+                    "title": "Vrf",
+                    "type": "string"
+                  },
+                  "complete": {
+                    "default": false,
+                    "title": "Complete",
+                    "type": "boolean"
+                  },
+                  "routes": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "title": "Id",
+                          "type": "string"
+                        },
+                        "prefix": {
+                          "title": "Prefix",
+                          "type": "string"
+                        },
+                        "origin": {
+                          "enum": [
+                            "connected",
+                            "static",
+                            "ospf",
+                            "bgp"
+                          ],
+                          "title": "Origin",
+                          "type": "string"
+                        },
+                        "preference": {
+                          "maximum": 255,
+                          "minimum": 0,
+                          "title": "Preference",
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "default": 0,
+                          "minimum": 0,
+                          "title": "Metric",
+                          "type": "integer"
+                        },
+                        "action": {
+                          "default": "forward",
+                          "enum": [
+                            "forward",
+                            "discard",
+                            "leak"
+                          ],
+                          "title": "Action",
+                          "type": "string"
+                        },
+                        "next_hops": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "interface_id": {
+                                "anyOf": [
+                                  {
+                                    "type": "integer"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ],
+                                "default": null,
+                                "title": "Interface Id"
+                              },
+                              "address": {
+                                "anyOf": [
+                                  {
+                                    "type": "string"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ],
+                                "default": null,
+                                "title": "Address"
+                              },
+                              "resolved": {
+                                "anyOf": [
+                                  {
+                                    "type": "boolean"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ],
+                                "default": null,
+                                "title": "Resolved"
+                              }
+                            },
+                            "title": "NextHop",
+                            "type": "object"
+                          },
+                          "maxItems": 16,
+                          "title": "Next Hops",
+                          "type": "array"
+                        },
+                        "leak_to_vrf": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "title": "Leak To Vrf"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "prefix",
+                        "origin",
+                        "preference"
+                      ],
+                      "title": "Route",
+                      "type": "object"
+                    },
+                    "maxItems": 500,
+                    "title": "Routes",
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "device_id"
+                ],
+                "title": "Table",
+                "type": "object"
+              },
+              "maxItems": 300,
+              "title": "Tables",
+              "type": "array"
+            },
+            "policies": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "interface_id": {
+                    "title": "Interface Id",
+                    "type": "integer"
+                  },
+                  "direction": {
+                    "enum": [
+                      "ingress",
+                      "egress"
+                    ],
+                    "title": "Direction",
+                    "type": "string"
+                  },
+                  "vrf": {
+                    "default": "default",
+                    "title": "Vrf",
+                    "type": "string"
+                  },
+                  "rules": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "id": {
+                          "title": "Id",
+                          "type": "string"
+                        },
+                        "source": {
+                          "default": "0.0.0.0/0",
+                          "title": "Source",
+                          "type": "string"
+                        },
+                        "destination": {
+                          "default": "0.0.0.0/0",
+                          "title": "Destination",
+                          "type": "string"
+                        },
+                        "protocol": {
+                          "default": "ip",
+                          "enum": [
+                            "ip",
+                            "icmp",
+                            "tcp",
+                            "udp"
+                          ],
+                          "title": "Protocol",
+                          "type": "string"
+                        },
+                        "source_port": {
+                          "anyOf": [
+                            {
+                              "maximum": 65535,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "title": "Source Port"
+                        },
+                        "destination_port": {
+                          "anyOf": [
+                            {
+                              "maximum": 65535,
+                              "minimum": 0,
+                              "type": "integer"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "title": "Destination Port"
+                        },
+                        "action": {
+                          "enum": [
+                            "permit",
+                            "deny"
+                          ],
+                          "title": "Action",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "action"
+                      ],
+                      "title": "ACLRule",
+                      "type": "object"
+                    },
+                    "maxItems": 200,
+                    "title": "Rules",
+                    "type": "array"
+                  },
+                  "default_action": {
+                    "enum": [
+                      "permit",
+                      "deny"
+                    ],
+                    "title": "Default Action",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "interface_id",
+                  "direction",
+                  "default_action"
+                ],
+                "title": "Policy",
+                "type": "object"
+              },
+              "maxItems": 300,
+              "title": "Policies",
+              "type": "array"
+            },
+            "flows": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "source_device_id": {
+                    "title": "Source Device Id",
+                    "type": "integer"
+                  },
+                  "destination_device_id": {
+                    "title": "Destination Device Id",
+                    "type": "integer"
+                  },
+                  "source_address": {
+                    "title": "Source Address",
+                    "type": "string"
+                  },
+                  "destination_address": {
+                    "title": "Destination Address",
+                    "type": "string"
+                  },
+                  "vrf": {
+                    "default": "default",
+                    "title": "Vrf",
+                    "type": "string"
+                  },
+                  "destination_vrf": {
+                    "default": "default",
+                    "title": "Destination Vrf",
+                    "type": "string"
+                  },
+                  "protocol": {
+                    "default": "icmp",
+                    "enum": [
+                      "icmp",
+                      "tcp",
+                      "udp"
+                    ],
+                    "title": "Protocol",
+                    "type": "string"
+                  },
+                  "source_port": {
+                    "anyOf": [
+                      {
+                        "maximum": 65535,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Source Port"
+                  },
+                  "destination_port": {
+                    "anyOf": [
+                      {
+                        "maximum": 65535,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Destination Port"
+                  },
+                  "require_return": {
+                    "default": true,
+                    "title": "Require Return",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "source_device_id",
+                  "destination_device_id",
+                  "source_address",
+                  "destination_address"
+                ],
+                "title": "Flow",
+                "type": "object"
+              },
+              "maxItems": 30,
+              "title": "Flows",
+              "type": "array"
+            },
+            "ospf": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "left": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "device_id": {
+                        "title": "Device Id",
+                        "type": "integer"
+                      },
+                      "interface_id": {
+                        "title": "Interface Id",
+                        "type": "integer"
+                      },
+                      "router_id": {
+                        "title": "Router Id",
+                        "type": "string"
+                      },
+                      "area": {
+                        "title": "Area",
+                        "type": "string"
+                      },
+                      "process": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Process"
+                      },
+                      "area_type": {
+                        "anyOf": [
+                          {
+                            "enum": [
+                              "normal",
+                              "stub",
+                              "nssa"
+                            ],
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Area Type"
+                      },
+                      "hello_seconds": {
+                        "exclusiveMinimum": 0,
+                        "title": "Hello Seconds",
+                        "type": "integer"
+                      },
+                      "dead_seconds": {
+                        "exclusiveMinimum": 0,
+                        "title": "Dead Seconds",
+                        "type": "integer"
+                      },
+                      "network_type": {
+                        "enum": [
+                          "broadcast",
+                          "point_to_point",
+                          "non_broadcast"
+                        ],
+                        "title": "Network Type",
+                        "type": "string"
+                      },
+                      "authentication": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Authentication"
+                      },
+                      "mtu": {
+                        "anyOf": [
+                          {
+                            "maximum": 65535,
+                            "minimum": 576,
+                            "type": "integer"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Mtu"
+                      },
+                      "mtu_ignore": {
+                        "anyOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Mtu Ignore"
+                      },
+                      "passive": {
+                        "default": false,
+                        "title": "Passive",
+                        "type": "boolean"
+                      },
+                      "role": {
+                        "default": "unknown",
+                        "enum": [
+                          "DR",
+                          "BDR",
+                          "DROther",
+                          "point_to_point",
+                          "unknown"
+                        ],
+                        "title": "Role",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "device_id",
+                      "interface_id",
+                      "router_id",
+                      "area",
+                      "hello_seconds",
+                      "dead_seconds",
+                      "network_type"
+                    ],
+                    "title": "OSPFPeer",
+                    "type": "object"
+                  },
+                  "right": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "device_id": {
+                        "title": "Device Id",
+                        "type": "integer"
+                      },
+                      "interface_id": {
+                        "title": "Interface Id",
+                        "type": "integer"
+                      },
+                      "router_id": {
+                        "title": "Router Id",
+                        "type": "string"
+                      },
+                      "area": {
+                        "title": "Area",
+                        "type": "string"
+                      },
+                      "process": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Process"
+                      },
+                      "area_type": {
+                        "anyOf": [
+                          {
+                            "enum": [
+                              "normal",
+                              "stub",
+                              "nssa"
+                            ],
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Area Type"
+                      },
+                      "hello_seconds": {
+                        "exclusiveMinimum": 0,
+                        "title": "Hello Seconds",
+                        "type": "integer"
+                      },
+                      "dead_seconds": {
+                        "exclusiveMinimum": 0,
+                        "title": "Dead Seconds",
+                        "type": "integer"
+                      },
+                      "network_type": {
+                        "enum": [
+                          "broadcast",
+                          "point_to_point",
+                          "non_broadcast"
+                        ],
+                        "title": "Network Type",
+                        "type": "string"
+                      },
+                      "authentication": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Authentication"
+                      },
+                      "mtu": {
+                        "anyOf": [
+                          {
+                            "maximum": 65535,
+                            "minimum": 576,
+                            "type": "integer"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Mtu"
+                      },
+                      "mtu_ignore": {
+                        "anyOf": [
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Mtu Ignore"
+                      },
+                      "passive": {
+                        "default": false,
+                        "title": "Passive",
+                        "type": "boolean"
+                      },
+                      "role": {
+                        "default": "unknown",
+                        "enum": [
+                          "DR",
+                          "BDR",
+                          "DROther",
+                          "point_to_point",
+                          "unknown"
+                        ],
+                        "title": "Role",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "device_id",
+                      "interface_id",
+                      "router_id",
+                      "area",
+                      "hello_seconds",
+                      "dead_seconds",
+                      "network_type"
+                    ],
+                    "title": "OSPFPeer",
+                    "type": "object"
+                  },
+                  "observed_state": {
+                    "enum": [
+                      "Down",
+                      "Init",
+                      "2-Way",
+                      "ExStart",
+                      "Exchange",
+                      "Loading",
+                      "Full",
+                      "unknown"
+                    ],
+                    "title": "Observed State",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "left",
+                  "right",
+                  "observed_state"
+                ],
+                "title": "OSPFSession",
+                "type": "object"
+              },
+              "maxItems": 100,
+              "title": "Ospf",
+              "type": "array"
+            },
+            "bgp": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "left": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "device_id": {
+                        "title": "Device Id",
+                        "type": "integer"
+                      },
+                      "address": {
+                        "title": "Address",
+                        "type": "string"
+                      },
+                      "local_as": {
+                        "maximum": 4294967295,
+                        "minimum": 1,
+                        "title": "Local As",
+                        "type": "integer"
+                      },
+                      "remote_as": {
+                        "maximum": 4294967295,
+                        "minimum": 1,
+                        "title": "Remote As",
+                        "type": "integer"
+                      },
+                      "vrf": {
+                        "default": "default",
+                        "title": "Vrf",
+                        "type": "string"
+                      },
+                      "update_source": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Update Source"
+                      },
+                      "hold_seconds": {
+                        "anyOf": [
+                          {
+                            "maximum": 65535,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Hold Seconds"
+                      },
+                      "keepalive_seconds": {
+                        "anyOf": [
+                          {
+                            "maximum": 21845,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Keepalive Seconds"
+                      },
+                      "shutdown": {
+                        "default": false,
+                        "title": "Shutdown",
+                        "type": "boolean"
+                      },
+                      "authentication": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Authentication"
+                      },
+                      "address_families": {
+                        "items": {
+                          "enum": [
+                            "ipv4_unicast",
+                            "ipv6_unicast"
+                          ],
+                          "type": "string"
+                        },
+                        "maxItems": 2,
+                        "title": "Address Families",
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "device_id",
+                      "address",
+                      "local_as",
+                      "remote_as"
+                    ],
+                    "title": "BGPPeer",
+                    "type": "object"
+                  },
+                  "right": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "device_id": {
+                        "title": "Device Id",
+                        "type": "integer"
+                      },
+                      "address": {
+                        "title": "Address",
+                        "type": "string"
+                      },
+                      "local_as": {
+                        "maximum": 4294967295,
+                        "minimum": 1,
+                        "title": "Local As",
+                        "type": "integer"
+                      },
+                      "remote_as": {
+                        "maximum": 4294967295,
+                        "minimum": 1,
+                        "title": "Remote As",
+                        "type": "integer"
+                      },
+                      "vrf": {
+                        "default": "default",
+                        "title": "Vrf",
+                        "type": "string"
+                      },
+                      "update_source": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Update Source"
+                      },
+                      "hold_seconds": {
+                        "anyOf": [
+                          {
+                            "maximum": 65535,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Hold Seconds"
+                      },
+                      "keepalive_seconds": {
+                        "anyOf": [
+                          {
+                            "maximum": 21845,
+                            "minimum": 0,
+                            "type": "integer"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Keepalive Seconds"
+                      },
+                      "shutdown": {
+                        "default": false,
+                        "title": "Shutdown",
+                        "type": "boolean"
+                      },
+                      "authentication": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Authentication"
+                      },
+                      "address_families": {
+                        "items": {
+                          "enum": [
+                            "ipv4_unicast",
+                            "ipv6_unicast"
+                          ],
+                          "type": "string"
+                        },
+                        "maxItems": 2,
+                        "title": "Address Families",
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "device_id",
+                      "address",
+                      "local_as",
+                      "remote_as"
+                    ],
+                    "title": "BGPPeer",
+                    "type": "object"
+                  },
+                  "observed_state": {
+                    "enum": [
+                      "Idle",
+                      "Connect",
+                      "Active",
+                      "OpenSent",
+                      "OpenConfirm",
+                      "Established",
+                      "unknown"
+                    ],
+                    "title": "Observed State",
+                    "type": "string"
+                  },
+                  "transport_reachable": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Transport Reachable"
+                  },
+                  "accepted_prefixes": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Accepted Prefixes"
+                  },
+                  "rejected_prefixes": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Rejected Prefixes"
+                  },
+                  "received_prefixes": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Received Prefixes"
+                  },
+                  "advertised_prefixes": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Advertised Prefixes"
+                  },
+                  "withdrawn_prefixes": {
+                    "anyOf": [
+                      {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Withdrawn Prefixes"
+                  },
+                  "rib_in_complete": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Rib In Complete"
+                  },
+                  "rib_out_complete": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Rib Out Complete"
+                  },
+                  "next_hop_valid": {
+                    "anyOf": [
+                      {
+                        "type": "boolean"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Next Hop Valid"
+                  },
+                  "policy_observed": {
+                    "default": false,
+                    "title": "Policy Observed",
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "left",
+                  "right",
+                  "observed_state"
+                ],
+                "title": "BGPSession",
+                "type": "object"
+              },
+              "maxItems": 100,
+              "title": "Bgp",
+              "type": "array"
+            },
+            "metrics": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "title": "Id",
+                    "type": "string"
+                  },
+                  "device_id": {
+                    "title": "Device Id",
+                    "type": "integer"
+                  },
+                  "interface_id": {
+                    "anyOf": [
+                      {
+                        "type": "integer"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Interface Id"
+                  },
+                  "metric": {
+                    "enum": [
+                      "in_bps",
+                      "out_bps",
+                      "errors",
+                      "discards",
+                      "queue_drops",
+                      "loss_pct",
+                      "latency_ms",
+                      "jitter_ms",
+                      "cpu_pct",
+                      "memory_pct"
+                    ],
+                    "title": "Metric",
+                    "type": "string"
+                  },
+                  "unit": {
+                    "enum": [
+                      "bps",
+                      "count",
+                      "percent",
+                      "ms"
+                    ],
+                    "title": "Unit",
+                    "type": "string"
+                  },
+                  "sampling_seconds": {
+                    "exclusiveMinimum": 0,
+                    "maximum": 86400,
+                    "title": "Sampling Seconds",
+                    "type": "integer"
+                  },
+                  "samples": {
+                    "items": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "timestamp": {
+                          "title": "Timestamp",
+                          "type": "string"
+                        },
+                        "value": {
+                          "anyOf": [
+                            {
+                              "minimum": 0,
+                              "type": "number"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ],
+                          "default": null,
+                          "title": "Value"
+                        }
+                      },
+                      "required": [
+                        "timestamp"
+                      ],
+                      "title": "Sample",
+                      "type": "object"
+                    },
+                    "maxItems": 300,
+                    "minItems": 1,
+                    "title": "Samples",
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "id",
+                  "device_id",
+                  "metric",
+                  "unit",
+                  "sampling_seconds",
+                  "samples"
+                ],
+                "title": "MetricSeries",
+                "type": "object"
+              },
+              "maxItems": 300,
+              "title": "Metrics",
+              "type": "array"
+            }
+          },
+          "required": [
+            "observed_at"
+          ],
+          "title": "NetworkModel",
+          "type": "object"
+        }
+      }
+    }
+  },
+  "required": [
+    "category",
+    "captured_at",
+    "data"
+  ],
+  "title": "SourceFile",
+  "type": "object"
+}

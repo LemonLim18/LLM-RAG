@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "category": "topology_planned",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "links": [
+      {
+        "id": 1,
+        "src_device_id": 1100,
+        "src_interface_id": 1,
+        "dst_device_id": 1200,
+        "dst_interface_id": 2
+      },
+      {
+        "id": 2,
+        "src_device_id": 1200,
+        "src_interface_id": 3,
+        "dst_device_id": 1300,
+        "dst_interface_id": 4
+      }
+    ]
+  }
+}

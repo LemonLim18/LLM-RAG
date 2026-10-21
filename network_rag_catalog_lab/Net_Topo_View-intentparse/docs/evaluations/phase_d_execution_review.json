@@ -1,0 +1,172 @@
+{
+  "format_version": 1,
+  "reviewed_at": "2026-10-18T06:22:24.283649+00:00",
+  "completion": "INCOMPLETE",
+  "model": "qwen2.5:1.5b",
+  "targets_unchanged": {
+    "routing_accuracy": 0.9,
+    "answer_adequacy": 0.85
+  },
+  "fresh_matched_comparison": {
+    "candidate": {
+      "artifact": "tmp\\phase-d\\20261018T061833.458124Z-D3-routing-candidate-fresh-ecac65\\cases.jsonl",
+      "cases": 8,
+      "source_selection_pass": 6,
+      "latency_ms_total": 26564.46,
+      "model_calls": 7,
+      "scope": "Real model routing only; structured readers resolve exact references; no answer-quality claim",
+      "failed_cases": [
+        {
+          "id": "D-FRESH-004",
+          "expected": [
+            "network.topology"
+          ],
+          "selected": [
+            "inventory.read"
+          ],
+          "classification": "source_selection_error"
+        },
+        {
+          "id": "D-FRESH-007",
+          "expected": [
+            "knowledge.search"
+          ],
+          "selected": [],
+          "classification": "source_selection_error"
+        }
+      ]
+    },
+    "legacy": {
+      "artifact": "tmp\\phase-d\\20261018T062102.023778Z-D3-routing-legacy-fresh-755768\\cases.jsonl",
+      "cases": 8,
+      "source_selection_pass": 6,
+      "latency_ms_total": 5901.91,
+      "model_calls": 2,
+      "scope": "Real model routing only; structured readers resolve exact references; no answer-quality claim",
+      "failed_cases": [
+        {
+          "id": "D-FRESH-004",
+          "expected": [
+            "network.topology"
+          ],
+          "selected": [
+            "inventory.read",
+            "network.configuration",
+            "network.incidents",
+            "network.syslog",
+            "network.telemetry",
+            "network.topology"
+          ],
+          "classification": "source_selection_error"
+        },
+        {
+          "id": "D-FRESH-007",
+          "expected": [
+            "knowledge.search"
+          ],
+          "selected": [],
+          "classification": "source_selection_error"
+        }
+      ]
+    },
+    "verdict": "No demonstrated source-selection improvement: both 6/8. Candidate uses more model calls. No tuning against these fresh results."
+  },
+  "historical_52_case_results": [
+    {
+      "artifact": "tmp/phase-d/20261018T041313.153770Z-D3-routing-candidate-44aee2",
+      "pass": 14,
+      "cases": 52
+    },
+    {
+      "artifact": "tmp/phase-d/20261018T043519.694346Z-D3-routing-legacy-83b913",
+      "pass": 19,
+      "cases": 52
+    },
+    {
+      "artifact": "tmp/phase-d/20261018T061453.381410Z-D3-routing-candidate-e1c668",
+      "pass": 19,
+      "cases": 52
+    }
+  ],
+  "rubric_limitations": [
+    "Exact tool equality penalizes self-resolving readers that do not redundantly call inventory.",
+    "General concepts sometimes incorrectly require local reads.",
+    "Several follow-ups lack prior proposal or investigation fixtures.",
+    "Routing request for a denied effect is not an unauthorized executed tool.",
+    "All original 52 cases have been exposed and now serve as regressions."
+  ],
+  "independent_model_quality_review": [
+    {
+      "artifact": "tmp/phase-d/20261018T032535.795764Z-D4-agent-candidate-a6ed5e",
+      "scope": "M0/M1/M2/M3 representative local fixture comparisons",
+      "outcome": "FAIL",
+      "findings": [
+        "Model-only OSPF explanation wrongly required identical router IDs.",
+        "Early synthesis could overclaim operational health; later guards reject these claims.",
+        "Deterministic bounded simulation assessment is a separate baseline, not a model reasoning success."
+      ]
+    },
+    {
+      "artifact": "tmp/phase-d/20261018T040628.265617Z-D4-agent-candidate-94b64d",
+      "case": "D-REASON-COMPOUND",
+      "outcome": "FAIL",
+      "tool_plan": "configuration and state were relevant actual authorized reads",
+      "synthesis": "Overclaimed fully operational/all routes; released answer uses fallback.",
+      "M1": "Invented route and repeated text; rejected.",
+      "latency_ms": 33444.74
+    },
+    {
+      "artifact": "tmp/phase-d/20261018T044014.660270Z-D4-agent-candidate-2fbdff",
+      "case": "D-REASON-ADAPTIVE",
+      "outcome": "FAIL",
+      "tool_plan": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "model_calls": {
+        "routing": 1,
+        "retrieval": 1,
+        "synthesis": 1
+      },
+      "latency_ms": 15715.04,
+      "finding": "Additional model decision selected no further evidence. Candidate said syslogs both available and unavailable and omitted citations; rejected. Fallback safely withholds diagnosis but does not establish useful model synthesis."
+    }
+  ],
+  "browser_acceptance": {
+    "outcome": "PARTIAL",
+    "artifact": "tmp/phase-d/d5-browser/",
+    "passed": [
+      "Studio literal OSPF/BGP explanation and unsaved markers",
+      "CLI token colors in night and light themes",
+      "Floating CSS 391px bounds and exact interface records after retrieval fix",
+      "Reviewed handoff opens separate unsent Studio draft with zero submitted turns",
+      "Stale source eligibility blocks handoff",
+      "Escape/focus containment and restoration",
+      "Ordinary restoration without development indicator"
+    ],
+    "blocked": [
+      "Copy browser virtual clipboard round trip: clipboard read empty and no data to paste; UI promise resolved and utility contract passes."
+    ],
+    "not_run": [
+      "Normal external-service mode full browser parity"
+    ]
+  },
+  "knowledge": {
+    "matrix": "docs/evaluations/phase_d_vendor_coverage.json",
+    "candidates": 141,
+    "operations": 47,
+    "reviewed_reference_remediations": 9,
+    "native_runtime_fixture_combinations": 11,
+    "candidate_release": "27725812f27742ea95422fed1fd85e40",
+    "ordinary_release": "0690966eb003499380e960a98d1e418f",
+    "ordinary_activated": false,
+    "full_phase_d_semantic_profile_certifications": 0
+  },
+  "preservation": {
+    "artifact": "tmp/phase-d/preservation-final.json",
+    "protected_index_unchanged": true,
+    "ordinary_inventory_and_knowledge_unchanged": true,
+    "conversation_table_difference": "Existing ansible_chat_sessions hash differs; 16 rows unchanged in count, no new ordinary conversations, 13 acceptance-only conversations absent from ordinary. No row-level before-image to prove timestamp-only mutation."
+  },
+  "review_method": "Implementation-agent review of independently specified records/vendor references; not an external blinded human evaluation."
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "category": "syslog",
+  "status": "STALE",
+  "captured_at": "2026-10-18T00:50:00+00:00",
+  "data": {
+    "records": [
+      {
+        "id": "earlier-neighbor-event",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T00:50:00+00:00",
+        "kind": "syslog_event",
+        "source": "editable-development-observation",
+        "current": false,
+        "depends_on": [],
+        "values": {
+          "severity": "warning",
+          "facility": "routing",
+          "message": "Earlier observer reported the OSPF neighbor Down. No later syslog was captured by this source."
+        }
+      }
+    ]
+  }
+}

@@ -85,6 +85,10 @@ class ToolRegistry:
             'name': name, 'description': fn.__doc__ or name,
             'parameters': capability.input_model.model_json_schema()}}
 
+    def capability(self, name: str) -> Capability | None:
+        """Read-only adapter metadata; invocation still requires authorization."""
+        return (self._tools.get(name) or {}).get('capability')
+
     async def invoke(self, name: str, arguments: Dict[str, Any], authorization: ToolAuthorization):
         """Validate and authorize every invocation, including retries and cache callers."""
         import asyncio

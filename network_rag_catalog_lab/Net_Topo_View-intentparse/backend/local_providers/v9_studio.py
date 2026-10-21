@@ -30,12 +30,17 @@ def ensure_schema(db):
 
 
 def inventory(db):
-    with db._connect() as conn:
-        columns = {r[1] for r in conn.execute('PRAGMA table_info(devices)')}
-        extras = ',site,location,aliases_json' if 'site' in columns else ''
-        if 'engineering_facts_json' in columns: extras += ',engineering_facts_json'
-        rows = [dict(r) for r in conn.execute('SELECT id,hostname,management_ip,vendor,model,os_version,role,status'+extras+' FROM devices ORDER BY id')]
-        interfaces = [dict(r) for r in conn.execute('SELECT device_id,name,interface_type,ip_address FROM interfaces ORDER BY id')]
+    from local_providers.development import active_for
+    if manager:=active_for(db):
+        snapshot=manager.inventory();rows=[dict(d,aliases_json=json.dumps(d['aliases']),engineering_facts_json=json.dumps(d['engineering_facts'])) for d in snapshot['devices']]
+        interfaces=[i for d in snapshot['devices'] for i in d['interfaces']]
+    else:
+        with db._connect() as conn:
+            columns = {r[1] for r in conn.execute('PRAGMA table_info(devices)')}
+            extras = ',site,location,aliases_json' if 'site' in columns else ''
+            if 'engineering_facts_json' in columns: extras += ',engineering_facts_json'
+            rows = [dict(r) for r in conn.execute('SELECT id,hostname,management_ip,vendor,model,os_version,role,status'+extras+' FROM devices ORDER BY id')]
+            interfaces = [dict(r) for r in conn.execute('SELECT id,device_id,name,interface_type,ip_address FROM interfaces ORDER BY id')]
     result = []
     for row in rows:
         vendor = {'cisco_ios':'cisco','cisco_xe':'cisco','huawei_vrp':'huawei','juniper_junos':'juniper'}.get(row['vendor'], row['vendor'] or '')
@@ -48,7 +53,9 @@ def inventory(db):
         result.append(project_facts({'id':str(row['id']), 'hostname':row['hostname'], 'display_name':row['hostname'], 'aliases':json.loads(row.get('aliases_json','[]')),
                        'management_ip':row['management_ip'], 'vendor':vendor, 'platform':platform, 'version':version,
                        'role':row['role'], 'status':row['status'], 'site':row.get('site',''), 'location':row.get('location',''),
-                       'interfaces':[{'name':i['name'], 'mode':i['interface_type'], 'aliases':[]} for i in interfaces if i['device_id']==row['id']]},json.loads(row.get('engineering_facts_json','{}'))))
+                       'interfaces':[{'id':i.get('id'), 'name':i['name'], 'mode':i['interface_type'], 'aliases':[]} for i in interfaces if i['device_id']==row['id']]},json.loads(row.get('engineering_facts_json','{}'))))
+    if manager:
+        for item in result:item['scenario_revision']=snapshot['scenario']['source_revision']
     return result
 
 
@@ -98,8 +105,10 @@ async def preview(db, req, user):
     sid = params.get('_v9_session')
     previous = session(db,sid,user['username']) if sid else None
     data = inventory(db)
-    if previous and previous['inventory_hash'] != digest(data):
-        raise HTTPException(409, 'Inventory changed. Start a fresh preview.')
+    inventory_changed=bool(previous and previous['inventory_hash']!=digest(data))
+    refresh=bool(getattr(req,'refresh_inventory',False))
+    if inventory_changed and not refresh and getattr(req,'selection',None) is None:
+        raise HTTPException(409,'Inventory/scenario changed. Revalidate the review against current inventory before confirming.')
     raw = json.loads(previous['body']) if previous else {}
     multi = bool(getattr(req, 'allow_multi', False))
     task_id = getattr(req, 'task_id', None)
@@ -114,14 +123,15 @@ async def preview(db, req, user):
     output = await asyncio.to_thread(worker, {'inventory':data, 'prompt':req.intent_description,
         'plan':json.loads(previous['body'])['plan'] if previous else None, 'hosts':req.target_hosts,
         'corrections':corrections, 'model':req.model, 'allow_multi':multi, 'task_id':task_id,
-        'confirm_order':bool(getattr(req, 'confirm_order', False)), 'selection':selection})
+        'confirm_order':bool(getattr(req, 'confirm_order', False)), 'selection':selection,
+        'refresh_inventory':inventory_changed and (refresh or selection is not None), 'conversation_reply':getattr(req,'conversation_reply',None)})
     if digest(inventory(db)) != digest(data):
         raise HTTPException(409, 'Inventory changed during interpretation. Review again.')
     sid = sid or uuid.uuid4().hex
     with db._connect() as conn:
         conn.execute('BEGIN IMMEDIATE')
         if previous:
-            cursor=conn.execute('UPDATE studio_v9_sessions SET body=?,revision=revision+1 WHERE id=? AND revision=?', (json.dumps(output),sid,previous['revision']))
+            cursor=conn.execute('UPDATE studio_v9_sessions SET body=?,inventory_hash=?,revision=revision+1 WHERE id=? AND revision=?', (json.dumps(output),digest(data),sid,previous['revision']))
             if cursor.rowcount != 1: raise HTTPException(409,'Preview changed concurrently; reopen it.')
         else:
             conn.execute('INSERT INTO studio_v9_sessions(id,owner,prompt,body,inventory_hash) VALUES (?,?,?,?,?)', (sid,user['username'],req.intent_description,json.dumps(output),digest(data)))
@@ -135,11 +145,29 @@ async def preview(db, req, user):
             item = presentation(single, sid, data)
             item.update(task_id=task['intent_id'], status=task['status'],
                         request_text=task['request_text'], reference=output.get('task_references',{}).get(task['intent_id']),
-                        issues=task['issues'], operation_candidates=task.get('operation_candidates', []))
+                        issues=review_issues(task), operation_candidates=task.get('operation_candidates', []))
             result['tasks'].append(item)
         result['plan_status'] = output['plan']['status']
         result['plan_issues'] = output['plan']['issues']
     return result
+
+
+def review_issues(task):
+    # V9 retains rejected dependent values as candidates rather than parameters.
+    # Show these authoritative rejections even when another capability issue
+    # prevents the next missing-field round. Absence from inventory is bounded.
+    issues=list(task['issues'])
+    for candidate in task.get('candidates',[]):
+        if candidate.get('type')=='INVALID_INTERFACE' and candidate.get('validation')=='rejected':
+            issues.append({**candidate,'message':str(candidate.get('device','Selected device'))+': interface '+str(candidate.get('value'))+' is not recorded for this target. Choose a recorded interface or correct inventory.'})
+    return issues
+
+
+def parameter_strings(value):
+    if isinstance(value,str):return {value}
+    if isinstance(value,dict):return set().union(*(parameter_strings(v) for v in value.values())) if value else set()
+    if isinstance(value,list):return set().union(*(parameter_strings(v) for v in value)) if value else set()
+    return set()
 
 
 def presentation(output,sid,data):
@@ -147,7 +175,7 @@ def presentation(output,sid,data):
     fields=[{'field':key,'label':key.replace('_',' ').title(),'type':'number' if spec.get('type') in {'integer','number'} else ('json' if spec.get('type') in {'array','object'} else ('boolean' if spec.get('type')=='boolean' else 'text')),
              'required':key in schema.get('required',[]), 'value':task['parameters'].get(key),
              'min':spec.get('minimum'), 'max':spec.get('maximum'), 'options':spec.get('enum'), 'description':spec.get('description',''), 'schema':spec} for key,spec in schema['properties'].items()]
-    issues=task['issues']+plan['issues']
+    issues=review_issues(task)+plan['issues']
     missing=[f for f in fields if any(i.get('field')==f['field'] and i.get('type')=='MISSING' for i in issues)]
     ambiguity=next((i for i in issues if i.get('type')=='AMBIGUOUS_TARGET'), None)
     errors=[i['message'] for i in issues if i.get('type') not in {'MISSING','MISSING_TARGET','AMBIGUOUS_TARGET'}]
@@ -170,6 +198,12 @@ def presentation(output,sid,data):
         result['params_disambiguation']={'question':question,'fields':[{'field':'target_devices','label':'Target devices','type':'text','required':True}]}
     elif missing:
         result['params_disambiguation']={'question':'V9 requires these values before generation.','fields':missing}
+    if hosts:
+        target=next((d for d in data if d['hostname']==hosts[0]),None)
+        if target:
+            result['recorded_interfaces']=target['interfaces']
+            result['inventory_revision']=target.get('scenario_revision')
+            result['interface_bindings']=[{'device_id':target['id'],'interface_id':i.get('id'),'name':i['name']} for i in target['interfaces'] if i['name'] in parameter_strings(task['parameters'])]
     return result
 
 

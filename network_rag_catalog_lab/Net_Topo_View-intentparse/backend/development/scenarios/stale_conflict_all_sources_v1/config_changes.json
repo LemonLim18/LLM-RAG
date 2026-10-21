@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "category": "config_changes",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "config_changes-1100",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "configuration_change",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [
+          "saved-1100",
+          "active-1100"
+        ],
+        "values": {
+          "basis": "literal_saved_vs_current",
+          "saved_record_id": "saved-1100",
+          "current_record_id": "active-1100",
+          "diff": "",
+          "drift_detected": false,
+          "semantic_or_device_validation": "not_performed"
+        }
+      },
+      {
+        "id": "config_changes-1200",
+        "device_id": 1200,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "configuration_change",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [
+          "saved-1200",
+          "active-1200"
+        ],
+        "values": {
+          "basis": "literal_saved_vs_current",
+          "saved_record_id": "saved-1200",
+          "current_record_id": "active-1200",
+          "diff": "--- saved\n+++ current\n@@ -5,3 +5,4 @@\n set protocols bgp group CEDAR type external\n set protocols bgp group CEDAR peer-as 65030\n set protocols bgp group CEDAR neighbor 10.72.0.6\n+set protocols ospf area 0.0.0.0 interface ge-0/0/0.0 hello-interval 20\n",
+          "drift_detected": true,
+          "semantic_or_device_validation": "not_performed"
+        }
+      },
+      {
+        "id": "config_changes-1300",
+        "device_id": 1300,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "configuration_change",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [
+          "saved-1300",
+          "active-1300"
+        ],
+        "values": {
+          "basis": "literal_saved_vs_current",
+          "saved_record_id": "saved-1300",
+          "current_record_id": "active-1300",
+          "diff": "",
+          "drift_detected": false,
+          "semantic_or_device_validation": "not_performed"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "category": "source_health",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "source-health",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "source_health",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "sources": {
+            "inventory": "AVAILABLE",
+            "topology_planned": "AVAILABLE",
+            "topology_observed": "AVAILABLE",
+            "topology_history": "AVAILABLE",
+            "device_state": "AVAILABLE",
+            "running_configs": "AVAILABLE",
+            "config_snapshots": "AVAILABLE",
+            "config_changes": "AVAILABLE",
+            "routing_state": "AVAILABLE",
+            "protocol_state": "CONFLICTING",
+            "controller_state": "AVAILABLE",
+            "telemetry": "AVAILABLE",
+            "interface_metrics": "AVAILABLE",
+            "syslog": "STALE",
+            "incidents": "AVAILABLE",
+            "config_drift": "AVAILABLE",
+            "source_health": "AVAILABLE",
+            "jobs_audit": "AVAILABLE",
+            "knowledge": "AVAILABLE",
+            "documents": "AVAILABLE",
+            "attachments": "AVAILABLE",
+            "diagrams": "AVAILABLE",
+            "conversation": "AVAILABLE",
+            "simulation": "AVAILABLE"
+          },
+          "collector": "simulated-source-provider",
+          "physical_collection_performed": false
+        }
+      }
+    ],
+    "overrides": []
+  }
+}

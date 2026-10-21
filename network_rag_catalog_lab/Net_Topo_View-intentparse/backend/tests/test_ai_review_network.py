@@ -1,6 +1,7 @@
 """New review/network scope: isolated data, no device connections or validation subprocesses."""
 import os
 os.environ["COGNISHIELD_SEMANTIC_EMBEDDINGS"]="0"
+os.environ["COGNISHIELD_AI_ENGINE"]="legacy"
 import json
 import os
 from pathlib import Path
@@ -39,22 +40,61 @@ class NetworkReviewTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_investigation_retains_sources_and_absent_metrics(self):
         context,evidence,_=await network_context(self.db,self.gateway.registry,self.auth,'Investigate R1 using metrics, syslog and alerts')
-        self.assertEqual(len(context),6)
-        self.assertIn('simulated',{e.origin for e in evidence});self.assertIn('stored',{e.origin for e in evidence})
+        # The explicit source clause is authoritative: no unrelated inventory,
+        # topology or configuration read should be added to this investigation.
+        self.assertEqual({c['tool'] for c in context},{'network.telemetry','network.syslog','network.incidents'})
+        self.assertEqual(len(context),3)
+        self.assertIn('simulated',{e.origin for e in evidence})
         serialized=json.dumps(context)
         self.assertNotIn('PRIVATE-BOB',serialized);self.assertNotIn('secret-value',serialized)
         metrics=next(c for c in context if c['tool']=='network.telemetry')['data']['sources'][0]['data']['records']
         self.assertEqual(metrics[0]['cpu'],25.0);self.assertNotIn('errors',metrics[0])
         self.assertTrue(all(e.origin!='live' for e in evidence))
+        # Keep the original ownership/redaction assertion meaningful by actually
+        # retrieving Alice's stored capture through its authorized capability.
+        saved=self.reader.read('configuration',NetworkQuery(device_refs=['R1'],source_scope='historical'),self.auth)
+        serialized=json.dumps(saved.model_dump())
+        self.assertIn('stored',{e.origin for e in saved.evidence})
+        self.assertIn('description uplink',serialized)
+        self.assertNotIn('PRIVATE-BOB',serialized);self.assertNotIn('secret-value',serialized)
 
     async def test_topology_does_not_establish_reachability(self):
         result=self.reader.read('topology',NetworkQuery(device_refs=['R1','R2']),self.auth)
         self.assertIsNone(result.data['graph_path']);self.assertEqual(result.data['reachability'],'not_measured')
 
+    async def test_bounded_telemetry_preserves_complete_records_and_interface_identity(self):
+        from llm.gateway_network import bounded_record_context
+        from llm.gateway_findings import network_answer
+        from llm.orchestration.verification import verify_records
+        rows=[{'device_id':1,'hostname':'R1','interface':'GigabitEthernet0/1','time':str(i),'cpu':25.0,'memory':40.0} for i in range(30)]
+        result=self.reader.result('json_fixture.telemetry',{'sources':[{'origin':'simulated','status':'success','data':{'records':rows,'total':30}}]},[{'id':1}],origin='simulated')
+        data=bounded_record_context(result.data,1000)
+        self.assertNotIn('excerpt',data)
+        self.assertLessEqual(len(json.dumps(data,default=str)),1000)
+        retained=data['sources'][0]['data']['records']
+        self.assertTrue(retained);self.assertLess(len(retained),30)
+        self.assertTrue(data['sources'][0]['data']['truncated'])
+        self.assertEqual(result.data['sources'][0]['data']['records'],rows)
+        context=[{'tool':'network.telemetry','status':'success','message':'','data':data,'evidence_ids':[result.evidence[0].id]}]
+        self.assertEqual(verify_records(context,result.evidence,[('network.telemetry',result)])['status'],'verified')
+        answer=network_answer(context,result.evidence)
+        self.assertIn('R1 · GigabitEthernet0/1',answer);self.assertIn('25.0',answer)
+        self.assertNotIn('more content than',answer)
+
     async def test_live_disabled_never_returns_simulated_measurements(self):
         with patch.dict(os.environ,{'COGNISHIELD_AI_LIVE_READS':'0'}):
             result=self.reader.read('telemetry',NetworkQuery(live=True),self.auth)
         self.assertEqual(result.status,'unavailable');self.assertFalse(result.evidence)
+
+    async def test_missing_live_evidence_does_not_hide_available_stored_sources(self):
+        from llm.gateway_services import inventory_snapshot
+        data=inventory_snapshot(self.db)
+        prompt='Investigate R1 using available interfaces, topology, saved configurations, telemetry and syslogs. Distinguish missing live evidence from a fault.'
+        domains,query=route_network(prompt,data)
+        self.assertFalse(query['live']);self.assertIn('configuration',domains)
+        topology=self.reader.read('topology',NetworkQuery(**query),self.auth)
+        self.assertEqual(topology.status,'success');self.assertEqual(topology.data['topology_kind'],'planned')
+        self.assertTrue(route_network('Show R1 live telemetry and identify missing live evidence.',data)[1]['live'])
 
     async def test_scope_time_range_and_unknown_target(self):
         result=self.reader.read('telemetry',NetworkQuery(device_refs=['R99']),self.auth)

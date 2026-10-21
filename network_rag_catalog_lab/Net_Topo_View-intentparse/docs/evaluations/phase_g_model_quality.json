@@ -1,0 +1,26 @@
+{
+  "updated_at": "2026-10-20T12:52:02.483485+00:00",
+  "status": "NOT_RUN_FRESH_PHASE_G",
+  "threshold": 0.85,
+  "threshold_changed": false,
+  "model": "qwen2.5:1.5b",
+  "comparison_arms": {
+    "M0": "Incomplete frozen evaluation; see Phase F tracker",
+    "M1": "Incomplete frozen evaluation",
+    "M2": "No complete fresh30 independent adequacy result",
+    "M3": "Exposed safe factual fallbacks retained, not model reasoning credit"
+  },
+  "exposed_increment": {
+    "source_health": "Original wrong-source and false status association fixed; final both fallback",
+    "policy_fault": "Original trace/assessment and causal prose failures fixed; final both fallback",
+    "protocol_conflict": "Original false resolution/dismissal rejected; final both fallback",
+    "saved_ACL_quote": "Direct literal missing-marker response; not generation or model synthesis"
+  },
+  "evidence": [
+    "tmp/phase-g/iterations/20261020T121944.033245Z-G-source-health-ff1652/",
+    "tmp/phase-g/iterations/20261020T124307.555095Z-G-source-starter-8e1f30/",
+    "tmp/phase-g/iterations/20261020T124645.122148Z-G-source-starter-ac205a/",
+    "tmp/phase-f/iterations/20261020T122620.316472Z-F3-frozen-routing-candidate-73832e/"
+  ],
+  "full_seven_capabilities": "NOT_ESTABLISHED"
+}

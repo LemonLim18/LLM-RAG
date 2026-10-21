@@ -1,0 +1,517 @@
+{
+  "format_version": 1,
+  "id": "FAULT-IFDOWN-001",
+  "revision": 2,
+  "title": "Administrative shutdown",
+  "logical_time": "2026-10-17T09:00:00Z",
+  "model_scope": "direct_link",
+  "inventory_complete": true,
+  "devices": [
+    {
+      "id": 9101,
+      "hostname": "R1",
+      "management_ip": "192.0.2.10",
+      "vendor": "cisco_xe",
+      "os_version": "17.9",
+      "model": "C9300",
+      "role": "edge",
+      "site": "Development",
+      "engineering_facts": {
+        "origin": "planned",
+        "model_family": "catalyst9300",
+        "source_refs": {
+          "scenario": "FAULT-IFDOWN-001@2; modeled development facts only",
+          "policy": "V9 app/devices/operation_policies.py PROFILES / physical_interface_v1"
+        },
+        "capabilities": {
+          "validated_policies": [
+            "physical_interface_v1"
+          ]
+        },
+        "interfaces": [
+          {
+            "name": "GigabitEthernet0/0",
+            "type": "ethernet"
+          },
+          {
+            "name": "GigabitEthernet0/1",
+            "type": "ethernet"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9102,
+      "hostname": "R2",
+      "management_ip": "192.0.2.20",
+      "vendor": "cisco_xe",
+      "os_version": "17.9",
+      "model": "C9300",
+      "role": "edge",
+      "site": "Development",
+      "engineering_facts": {
+        "origin": "planned",
+        "model_family": "catalyst9300",
+        "source_refs": {
+          "scenario": "FAULT-IFDOWN-001@2; modeled development facts only",
+          "policy": "V9 app/devices/operation_policies.py PROFILES / physical_interface_v1"
+        },
+        "capabilities": {
+          "validated_policies": [
+            "physical_interface_v1"
+          ]
+        },
+        "interfaces": [
+          {
+            "name": "GigabitEthernet0/0",
+            "type": "ethernet"
+          },
+          {
+            "name": "GigabitEthernet1/0/1",
+            "type": "ethernet"
+          },
+          {
+            "name": "Loopback0",
+            "type": "loopback"
+          }
+        ]
+      }
+    }
+  ],
+  "interfaces": [
+    {
+      "id": 9111,
+      "device_id": 9101,
+      "name": "GigabitEthernet0/0",
+      "prefix": "192.0.2.10/24",
+      "admin_status": "up",
+      "oper_status": "up"
+    },
+    {
+      "id": 9112,
+      "device_id": 9101,
+      "name": "GigabitEthernet0/1",
+      "prefix": "10.23.12.1/30",
+      "admin_status": "down",
+      "oper_status": "down"
+    },
+    {
+      "id": 9121,
+      "device_id": 9102,
+      "name": "GigabitEthernet0/0",
+      "prefix": "192.0.2.20/24",
+      "admin_status": "up",
+      "oper_status": "up"
+    },
+    {
+      "id": 9122,
+      "device_id": 9102,
+      "name": "GigabitEthernet1/0/1",
+      "prefix": "10.23.12.2/30",
+      "admin_status": "up",
+      "oper_status": "up"
+    },
+    {
+      "id": 9123,
+      "device_id": 9102,
+      "name": "Loopback0",
+      "prefix": "198.51.100.2/32",
+      "admin_status": "up",
+      "oper_status": "up"
+    }
+  ],
+  "planned_links": [
+    {
+      "id": 9150,
+      "src_device_id": 9101,
+      "src_interface_id": 9112,
+      "dst_device_id": 9102,
+      "dst_interface_id": 9122
+    }
+  ],
+  "records": {
+    "state": [
+      {
+        "id": "if-9111",
+        "device_id": 9101,
+        "interface_id": 9111,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_state",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "admin_status": "up",
+          "oper_status": "up",
+          "prefix": "192.0.2.10/24"
+        }
+      },
+      {
+        "id": "if-9112",
+        "device_id": 9101,
+        "interface_id": 9112,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_state",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "admin_status": "down",
+          "oper_status": "down",
+          "prefix": "10.23.12.1/30"
+        }
+      },
+      {
+        "id": "if-9121",
+        "device_id": 9102,
+        "interface_id": 9121,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_state",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "admin_status": "up",
+          "oper_status": "up",
+          "prefix": "192.0.2.20/24"
+        }
+      },
+      {
+        "id": "if-9122",
+        "device_id": 9102,
+        "interface_id": 9122,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_state",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "admin_status": "up",
+          "oper_status": "up",
+          "prefix": "10.23.12.2/30"
+        }
+      },
+      {
+        "id": "if-9123",
+        "device_id": 9102,
+        "interface_id": 9123,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_state",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "admin_status": "up",
+          "oper_status": "up",
+          "prefix": "198.51.100.2/32"
+        }
+      },
+      {
+        "id": "routes-9101",
+        "device_id": 9101,
+        "interface_id": null,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "routing_table",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "complete": true,
+          "routes": [
+            {
+              "prefix": "198.51.100.2/32",
+              "next_hop": "10.23.12.2"
+            }
+          ]
+        }
+      },
+      {
+        "id": "routes-9102",
+        "device_id": 9102,
+        "interface_id": null,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "routing_table",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "complete": true,
+          "routes": [
+            {
+              "prefix": "192.0.2.10/32",
+              "next_hop": "10.23.12.1"
+            }
+          ]
+        }
+      },
+      {
+        "id": "probe-r1-r2",
+        "device_id": 9101,
+        "interface_id": null,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "reachability",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "to_device_id": 9102,
+          "destination_ip": "10.23.12.2",
+          "protocol": "icmp",
+          "interface_ids": [
+            9112,
+            9122
+          ],
+          "link_ids": [
+            9150
+          ],
+          "routing_required": false,
+          "success": false
+        }
+      }
+    ],
+    "topology": [
+      {
+        "id": "link-observer",
+        "device_id": 9101,
+        "interface_id": null,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "observed_link",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [
+          "if-9112",
+          "if-9122"
+        ],
+        "values": {
+          "link_id": 9150,
+          "oper_status": "down"
+        }
+      }
+    ],
+    "telemetry": [
+      {
+        "id": "cpu-r1",
+        "device_id": 9101,
+        "interface_id": null,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "device_metrics",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "cpu": 23.4,
+          "memory": 41.2
+        }
+      },
+      {
+        "id": "cpu-r2",
+        "device_id": 9102,
+        "interface_id": null,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "device_metrics",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "cpu": 31.7,
+          "memory": 52.6
+        }
+      },
+      {
+        "id": "counters-9111",
+        "device_id": 9101,
+        "interface_id": 9111,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_counters",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "in_bps": 10000,
+          "out_bps": 8300,
+          "errors": 0,
+          "discards": 0,
+          "utilization_pct": 0.3
+        }
+      },
+      {
+        "id": "counters-9112",
+        "device_id": 9101,
+        "interface_id": 9112,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_counters",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "in_bps": 0,
+          "out_bps": 0,
+          "errors": 1,
+          "discards": 0,
+          "utilization_pct": 0.44
+        }
+      },
+      {
+        "id": "counters-9121",
+        "device_id": 9102,
+        "interface_id": 9121,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_counters",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "in_bps": 24600,
+          "out_bps": 20500,
+          "errors": 2,
+          "discards": 0,
+          "utilization_pct": 0.58
+        }
+      },
+      {
+        "id": "counters-9122",
+        "device_id": 9102,
+        "interface_id": 9122,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_counters",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "in_bps": 31900,
+          "out_bps": 26600,
+          "errors": 3,
+          "discards": 1,
+          "utilization_pct": 0.72
+        }
+      },
+      {
+        "id": "counters-9123",
+        "device_id": 9102,
+        "interface_id": 9123,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "interface_counters",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "in_bps": 39200,
+          "out_bps": 32700,
+          "errors": 4,
+          "discards": 1,
+          "utilization_pct": 0.86
+        }
+      }
+    ],
+    "syslog": [
+      {
+        "id": "event-config",
+        "device_id": 9101,
+        "interface_id": 9112,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "configuration_event",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [
+          "if-9112"
+        ],
+        "values": {
+          "severity": "warning",
+          "message": "Administrator set GigabitEthernet0/1 shutdown"
+        }
+      }
+    ],
+    "incidents": [
+      {
+        "id": "derived-alert",
+        "device_id": 9101,
+        "interface_id": 9112,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "derived_alert",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [
+          "if-9112",
+          "event-config"
+        ],
+        "values": {
+          "severity": "warning",
+          "message": "Interface state change alert"
+        }
+      }
+    ],
+    "configuration": [
+      {
+        "id": "saved-9101",
+        "device_id": 9101,
+        "interface_id": null,
+        "timestamp": "2026-10-17T08:55:00Z",
+        "kind": "configuration_snapshot",
+        "source": "development-observer",
+        "current": false,
+        "depends_on": [],
+        "values": {
+          "config_text": "hostname R1\ninterface GigabitEthernet0/0\n ip address 192.0.2.10 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet0/1\n ip address 10.23.12.1 255.255.255.252\n no shutdown\n!\n",
+          "source_type": "simulated",
+          "captured_at": "2026-10-17T08:55:00Z"
+        }
+      },
+      {
+        "id": "saved-9102",
+        "device_id": 9102,
+        "interface_id": null,
+        "timestamp": "2026-10-17T08:55:00Z",
+        "kind": "configuration_snapshot",
+        "source": "development-observer",
+        "current": false,
+        "depends_on": [],
+        "values": {
+          "config_text": "hostname R2\ninterface GigabitEthernet0/0\n ip address 192.0.2.20 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet1/0/1\n ip address 10.23.12.2 255.255.255.252\n no shutdown\n!\ninterface Loopback0\n ip address 198.51.100.2 255.255.255.255\n no shutdown\n!\n",
+          "source_type": "simulated",
+          "captured_at": "2026-10-17T08:55:00Z"
+        }
+      }
+    ],
+    "running_configuration": [
+      {
+        "id": "running-9101",
+        "device_id": 9101,
+        "interface_id": null,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "running_configuration",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "config_text": "hostname R1\ninterface GigabitEthernet0/0\n ip address 192.0.2.10 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet0/1\n ip address 10.23.12.1 255.255.255.252\n shutdown\n!\n",
+          "source_type": "development_current",
+          "captured_at": "2026-10-17T09:00:00Z"
+        }
+      },
+      {
+        "id": "running-9102",
+        "device_id": 9102,
+        "interface_id": null,
+        "timestamp": "2026-10-17T09:00:00Z",
+        "kind": "running_configuration",
+        "source": "development-observer",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "config_text": "hostname R2\ninterface GigabitEthernet0/0\n ip address 192.0.2.20 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet1/0/1\n ip address 10.23.12.2 255.255.255.252\n no shutdown\n!\ninterface Loopback0\n ip address 198.51.100.2 255.255.255.255\n no shutdown\n!\n",
+          "source_type": "development_current",
+          "captured_at": "2026-10-17T09:00:00Z"
+        }
+      }
+    ]
+  },
+  "availability": {
+    "state": true,
+    "topology": true,
+    "telemetry": true,
+    "syslog": true,
+    "incidents": true,
+    "configuration": true,
+    "running_configuration": true
+  }
+}

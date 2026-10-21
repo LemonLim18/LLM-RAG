@@ -41,8 +41,11 @@ def test_publication_loop():
         call('POST','/knowledge/validate')
         render = {'expected_revision':draft['revision'], 'path':path,
                   'content':draft['data']['templates'][path], 'parameters':{'vlan_id':30}}
-        assert 'vlan 30' in call('POST','/knowledge/render',render)['data']['configuration']
+        rendered=call('POST','/knowledge/render',render)['data']['configuration']
+        assert 'vlan 30' in rendered
         call('POST','/knowledge/render',render|{'parameters':{'vlan_id':5000}},422)
+        # The authenticated Publish action is sufficient authority. No method,
+        # separate sign-off form or external certificate is authored by this test.
         publication = {'expected_revision':draft['revision'],'expected_release':release,'reason':'Approve isolated template change'}
         client.headers['Authorization']='Bearer '+create_access_token(2,'knowledge-engineer','engineer')
         call('POST','/knowledge/publish',publication,403)
@@ -51,6 +54,12 @@ def test_publication_loop():
         assert published['data']['release_id']!=release
         call('POST','/knowledge/publish',publication,409)
         active = published['data']['release_id']
+        after_publish=call('GET','/knowledge')
+        decisions=call('GET','/knowledge/reviews')['data']
+        decision=next(r['approval'] for r in decisions['rows'] if r['binding']['template_path']==path)
+        assert decision['approval_action']=='publish' and decision['approved_by']=='knowledge-admin'
+        assert decision['certifications']['vendor_semantics']=='NOT_VERIFIED'
+        publication={**publication,'expected_revision':after_publish['revision']}
         built = call('POST','/knowledge/build',publication|{'expected_release':active})['data']['release_id']
         assert call('GET','/knowledge')['data']['active_release']['release_id']==active
         frozen = call('GET','/knowledge/releases/'+built)
@@ -62,7 +71,7 @@ def test_publication_loop():
         assert call('GET','/knowledge')['data']['active_release']['release_id']==built
         call('POST','/knowledge/activate',{'release_id':active,'expected_release':built,'reason':'Verify rollback'})
         restored=call('GET','/knowledge')
-        assert restored['revision']==draft['revision']
+        assert restored['revision']==after_publish['revision']
         assert restored['data']['active_release']['release_id']==active
         print('PASS: validated render, build-only isolation, frozen inspection, stale activation rejection, activation and rollback',flush=True)
         call('POST','/netbox/devices',{'hostname':'Knowledge-SW1','management_ip':'192.0.2.88','management_subnet_mask':'24','vendor':'cisco_ios','os_version':'IOS-XE 17.9','status':'planned'})

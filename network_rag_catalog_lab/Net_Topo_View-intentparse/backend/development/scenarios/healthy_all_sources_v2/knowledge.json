@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "category": "knowledge",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "release_policy": "active_immutable_release",
+    "query": "Explain the published OSPF operation requirements",
+    "mutable": false
+  }
+}

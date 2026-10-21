@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "category": "inventory",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "complete": true,
+    "devices": [
+      {
+        "id": 1100,
+        "hostname": "LAB-R1",
+        "management_ip": "192.0.2.11",
+        "vendor": "cisco_xe",
+        "os_version": "17.9",
+        "role": "router",
+        "site": "Development"
+      },
+      {
+        "id": 1200,
+        "hostname": "LAB-R2",
+        "management_ip": "192.0.2.12",
+        "vendor": "juniper_junos",
+        "os_version": "23.4",
+        "role": "router",
+        "site": "Development"
+      },
+      {
+        "id": 1300,
+        "hostname": "LAB-R3",
+        "management_ip": "192.0.2.13",
+        "vendor": "huawei_vrp",
+        "os_version": "8",
+        "role": "router",
+        "site": "Development"
+      }
+    ],
+    "interfaces": [
+      {
+        "id": 1,
+        "device_id": 1100,
+        "name": "GigabitEthernet0/1",
+        "prefix": "10.72.0.1/30",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 2,
+        "device_id": 1200,
+        "name": "ge-0/0/0.0",
+        "prefix": "10.72.0.2/30",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 3,
+        "device_id": 1200,
+        "name": "ge-0/0/1.0",
+        "prefix": "10.72.0.5/30",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 4,
+        "device_id": 1300,
+        "name": "GigabitEthernet0/0/1",
+        "prefix": "10.72.0.6/30",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 5,
+        "device_id": 1100,
+        "name": "Loopback0",
+        "prefix": "198.19.71.1/32",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 6,
+        "device_id": 1200,
+        "name": "lo0.0",
+        "prefix": "198.19.71.2/32",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 7,
+        "device_id": 1300,
+        "name": "LoopBack0",
+        "prefix": "198.19.71.3/32",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      }
+    ]
+  }
+}

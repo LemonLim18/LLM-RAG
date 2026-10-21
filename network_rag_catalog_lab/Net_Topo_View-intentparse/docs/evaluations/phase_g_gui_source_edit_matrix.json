@@ -1,0 +1,270 @@
+{
+  "updated_at": "2026-10-21T15:19:30.955828+00:00",
+  "status": "IN_PROGRESS",
+  "fully_accepted": 12,
+  "scope": "Derived index of existing evidence, not new tests or a completed24x2 gate",
+  "rows": [
+    {
+      "category": "inventory",
+      "json_edit_and_gateway": "PASS_BOUNDED_EXTERNAL_JSON_T1_T2_STALE_ERROR_BOTH_SURFACES",
+      "gui_edit_and_gateway": "PASS_BOUNDED_STRUCTURED_GUI_BOTH_SURFACES_AVAILABLE_STALE_ERROR",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "details": "phase_g_source_matrix.json",
+      "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/inventory-source-acceptance-review.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "topology_planned",
+      "json_edit_and_gateway": "PARTIAL_JSON_T1_T2_STALE_ERROR_WITH_SEPARATE_MODEL_FAILURES",
+      "gui_edit_and_gateway": "PASS_BOUNDED_STRUCTURED_GUI_ACTIVATION_BOTH_SURFACES",
+      "verification": "PARTIAL",
+      "details": "phase_g_source_matrix.json",
+      "evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\planned-source-acceptance-review.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten unique JSON cases + reused GUI edit positive2 + GUI STALE/ERROR4 across both assistants. Event/capture times, category and exact endpoints verified. Original history metadata omission corrected, no prompt tuning or fresh model-quality credit."
+    },
+    {
+      "category": "topology_observed",
+      "json_edit_and_gateway": "PASS_REUSED_T1_T2_CURRENT_MISSING_PLUS_FINAL_STALE_ERROR_BOTH_ASSISTANTS",
+      "gui_edit_and_gateway": "PASS_REUSED_EDIT_ACTIVATION_BOTH_PLUS_STALE_ERROR4_NEW_GUI_TURNS",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "details": "phase_g_source_matrix.json",
+      "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/observed-source-acceptance-review.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "topology_history",
+      "json_edit_and_gateway": "PASS_BOUNDED_JSON_T1_T2_BOTH_SURFACES",
+      "gui_edit_and_gateway": "PASS_BOUNDED_STRUCTURED_GUI_ACTIVATION_BOTH_SURFACES",
+      "verification": "PARTIAL",
+      "details": "phase_g_source_matrix.json",
+      "evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\history-source-acceptance-review.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten unique JSON cases + reused GUI edit positive2 + GUI STALE/ERROR4 across both assistants. Event/capture times, category and exact endpoints verified. Original history metadata omission corrected, no prompt tuning or fresh model-quality credit."
+    },
+    {
+      "category": "device_state",
+      "json_edit_and_gateway": "PASS10_UNIQUE_T1_T2_STALE_ERROR_MISSING_BOTH_ASSISTANTS",
+      "gui_edit_and_gateway": "PASS6_GUI_EDIT_AVAILABLE_STALE_ERROR_BOTH_ASSISTANTS",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "details": "phase_g_source_matrix.json",
+      "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/state-source-acceptance-review.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "running_configs",
+      "json_edit_and_gateway": "PASS",
+      "gui_edit_and_gateway": "PASS",
+      "verification": "COMPLETE",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "IMPLEMENTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\current-source-acceptance-review.json"
+    },
+    {
+      "category": "config_snapshots",
+      "json_edit_and_gateway": "PASS",
+      "gui_edit_and_gateway": "PASS",
+      "verification": "COMPLETE",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "IMPLEMENTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\saved-source-acceptance-review.json"
+    },
+    {
+      "category": "config_changes",
+      "json_edit_and_gateway": "PASS",
+      "gui_edit_and_gateway": "PASS",
+      "verification": "COMPLETE",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "IMPLEMENTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\change-source-acceptance-review.json"
+    },
+    {
+      "category": "routing_state",
+      "json_edit_and_gateway": "PASS10_SOURCE_CASES_T1_T2_STALE_ERROR_MISSING_BOTH_ASSISTANTS",
+      "gui_edit_and_gateway": "PASS_GUI_POSITIVE2_PLUS_SHARED_STALE2_ERROR2_BOTH_ASSISTANTS",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/routing_state-source-acceptance-review.json"
+    },
+    {
+      "category": "protocol_state",
+      "json_edit_and_gateway": "PARTIAL_PASS: external JSON edited IDs and real qwen both surfaces; Init correction a9aedb passes after explicit source constraint",
+      "gui_edit_and_gateway": "IN_PROGRESS: saved/validated/activated203.0.113.81/.82 Init in GUI; first Floating answer correct verified fallback, original model omitted neighbor name; corrective rerun pending",
+      "verification": "PARTIAL",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "controller_state",
+      "json_edit_and_gateway": "PASS10_SOURCE_CASES_T1_T2_STALE_ERROR_MISSING_BOTH_ASSISTANTS",
+      "gui_edit_and_gateway": "PASS_GUI_POSITIVE2_PLUS_SHARED_STALE2_ERROR2_BOTH_ASSISTANTS",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/controller_state-source-acceptance-review.json"
+    },
+    {
+      "category": "telemetry",
+      "json_edit_and_gateway": "PASS_EXPOSED_T1_16_NULL_18_BOTH_SURFACES",
+      "gui_edit_and_gateway": "PASS_BOUNDED_T2_BOTH_MAIN_BROWSER_SURFACES",
+      "verification": "PARTIAL_BOUNDED_SOURCE_ACCEPTANCE",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "interface_metrics",
+      "json_edit_and_gateway": "PASS10_SOURCE_CASES_T1_T2_STALE_ERROR_MISSING_BOTH_ASSISTANTS",
+      "gui_edit_and_gateway": "PASS_GUI_POSITIVE2_PLUS_SHARED_STALE2_ERROR2_BOTH_ASSISTANTS",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/interface_metrics-source-acceptance-review.json"
+    },
+    {
+      "category": "syslog",
+      "json_edit_and_gateway": "NOT_RUN",
+      "gui_edit_and_gateway": "PASS_EXPOSED_BOTH_SURFACES_20261020",
+      "verification": "NOT_VERIFIED",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "incidents",
+      "json_edit_and_gateway": "NOT_RUN",
+      "gui_edit_and_gateway": "NOT_RUN",
+      "verification": "NOT_VERIFIED",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "config_drift",
+      "json_edit_and_gateway": "NOT_RUN",
+      "gui_edit_and_gateway": "NOT_RUN",
+      "verification": "NOT_VERIFIED",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "source_health",
+      "json_edit_and_gateway": "PASS_BOUNDED_BOTH_SURFACES; health-json123a33 and health-overrideff1652; full prose reviewed, verified fallbacks",
+      "gui_edit_and_gateway": "PASS_BOUNDED_BOTH_ASSISTANTS_WITH_LABELLED_FALLBACK",
+      "verification": "PARTIAL_GATE; exact status/time and source selection verified",
+      "details": "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\health-browser-review.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "jobs_audit",
+      "json_edit_and_gateway": "NOT_RUN",
+      "gui_edit_and_gateway": "NOT_RUN",
+      "verification": "NOT_VERIFIED",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "knowledge",
+      "json_edit_and_gateway": "PASS8_BOUNDED_JSON_T1_T2_STALE_ERROR_BOTH_ASSISTANTS",
+      "gui_edit_and_gateway": "PASS6_GUI_EDIT_ACTIVATE_AVAILABLE_STALE_ERROR_BOTH_ASSISTANTS",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "details": "phase_g_source_matrix.json",
+      "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/knowledge-source-acceptance-review.json",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "documents",
+      "json_edit_and_gateway": "PASS_API_BUNDLE_EDIT_EXTERNAL_FILE_REPEAT_PENDING",
+      "gui_edit_and_gateway": "PASS_FLOATING_AND_STUDIO",
+      "verification": "PARTIAL_MODALITY_AND_HISTORY_CASES_PENDING",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "attachments",
+      "json_edit_and_gateway": "NOT_RUN",
+      "gui_edit_and_gateway": "NOT_RUN",
+      "verification": "NOT_VERIFIED",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "diagrams",
+      "json_edit_and_gateway": "NOT_RUN",
+      "gui_edit_and_gateway": "NOT_RUN",
+      "verification": "NOT_VERIFIED",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "conversation",
+      "json_edit_and_gateway": "NOT_RUN",
+      "gui_edit_and_gateway": "NOT_RUN",
+      "verification": "NOT_VERIFIED",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "category": "simulation",
+      "json_edit_and_gateway": "NOT_RUN",
+      "gui_edit_and_gateway": "NOT_RUN",
+      "verification": "NOT_VERIFIED",
+      "details": "phase_g_source_matrix.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    }
+  ],
+  "new_starter_selector": {
+    "status": "PASS_POLICY_STARTER_BROWSER_CREATE",
+    "scenario": "CUSTOM-1792502453576",
+    "note": "Actual Create draft, source edit, Validate and activation succeeded. Other starter variants not claimed browser accepted."
+  },
+  "latest_increment": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+}

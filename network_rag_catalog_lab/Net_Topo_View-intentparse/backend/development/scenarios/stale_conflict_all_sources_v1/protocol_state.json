@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "category": "protocol_state",
+  "status": "CONFLICTING",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "observed-adjacency-aster-birch",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "protocol_observation",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "protocol": "OSPF",
+          "session_id": "adjacency-aster-birch",
+          "observed_state": "Full",
+          "left": {
+            "device_id": 1100,
+            "interface_id": 1,
+            "router_id": "198.19.71.1",
+            "area": "0.0.0.0",
+            "hello_seconds": 10,
+            "dead_seconds": 40,
+            "network_type": "point_to_point",
+            "role": "point_to_point"
+          },
+          "right": {
+            "device_id": 1200,
+            "interface_id": 2,
+            "router_id": "198.19.71.2",
+            "area": "0.0.0.0",
+            "hello_seconds": 20,
+            "dead_seconds": 40,
+            "network_type": "point_to_point",
+            "role": "point_to_point"
+          },
+          "observation_basis": "same declared session as the bounded simulation"
+        }
+      },
+      {
+        "id": "observed-session-birch-cedar",
+        "device_id": 1200,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "protocol_observation",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "protocol": "BGP",
+          "session_id": "session-birch-cedar",
+          "observed_state": "Established",
+          "left": {
+            "device_id": 1200,
+            "address": "10.72.0.5",
+            "local_as": 65020,
+            "remote_as": 65030,
+            "address_families": [
+              "ipv4_unicast"
+            ]
+          },
+          "right": {
+            "device_id": 1300,
+            "address": "10.72.0.6",
+            "local_as": 65030,
+            "remote_as": 65020,
+            "address_families": [
+              "ipv4_unicast"
+            ]
+          },
+          "observation_basis": "same declared session as the bounded simulation"
+        }
+      }
+    ]
+  }
+}

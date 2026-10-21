@@ -6,6 +6,9 @@ export type KnowledgePublication = {expected_revision: string; expected_release:
 export type KnowledgeActivation = {release_id: string; expected_release: string | null; reason: string};
 export type KnowledgeRender = {expected_revision: string; path: string; content: string; parameters: Record<string, unknown>};
 export const knowledgeApi = {
+  reviews: (checks=false) => request<any>(`/knowledge/reviews?checks=${checks}`),
+  reviewMethod: (body:unknown) => request<any>('/knowledge/review-method',{method:'PUT',body:JSON.stringify(body)}),
+  approveMethods: (body:unknown) => request<any>('/knowledge/review-approvals',{method:'POST',body:JSON.stringify(body)}),
   build: (body: KnowledgePublication) => request<any>('/knowledge/build', {method:'POST', body:JSON.stringify(body)}),
   activate: (body: KnowledgeActivation) => request<any>('/knowledge/activate', {method:'POST', body:JSON.stringify(body)}),
   release: (id: string) => request<any>(`/knowledge/releases/${encodeURIComponent(id)}`),
@@ -64,6 +67,7 @@ export async function request<T>(endpoint: string, options?: RequestInit): Promi
 
     if (detail != null) {
       if (typeof detail === 'string') message = detail;
+      else if (Array.isArray(detail)) message = detail.map((issue: any) => `${(issue.loc || []).filter((part: unknown) => part !== 'body').join(' / ')}: ${issue.msg || 'Invalid value'}`).join('\n');
       else if (typeof detail === 'object' && detail.message) {
         message = detail.message;
         if (Array.isArray(detail.issues) && detail.issues.length) {

@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "category": "syslog",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "routing-ready",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T00:59:30+00:00",
+        "kind": "syslog_event",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "severity": "info",
+          "facility": "routing",
+          "message": "OSPF neighbor reached Full; no adjacency transition is recorded after this event."
+        }
+      }
+    ]
+  }
+}

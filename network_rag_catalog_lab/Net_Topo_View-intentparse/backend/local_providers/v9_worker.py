@@ -8,6 +8,18 @@ import tempfile
 sys.dont_write_bytecode = True
 
 
+def retained_unresolved_task(plan, entry):
+    """Keep an untouched unresolved task while another binding is reviewed."""
+    if entry.get('operation_id'):return None
+    matches=[task for task in plan.tasks if task.intent_id==entry.get('task_id') and not task.operation_id]
+    if len(matches)!=1:raise ValueError('Choose a published operation for each new or resolved task.')
+    task=matches[0]
+    host=task.target_devices[0]['hostname'] if len(task.target_devices)==1 else ''
+    if entry.get('target_host','')!=host or entry.get('parameters',{})!=task.parameters or entry.get('template_id'):
+        raise ValueError('Choose a published operation before changing an unresolved task.')
+    return task
+
+
 def protect_source(root):
     root = Path(root).resolve()
     def protect(event, args):
@@ -76,7 +88,8 @@ def main(payload):
                     raise
         model_module.llm = ObservedModel()
         # Configure V9's existing retriever only against the published owned index.
-        from knowledge_lifecycle import configure_embeddings
+        from knowledge_lifecycle import configure_embeddings,guard_native_renderer
+        guard_native_renderer()
         configure_embeddings()
         from app import pipeline
         if snapshot.manifest['retrieval']['mode'] == 'chroma':
@@ -148,18 +161,31 @@ def main(payload):
                     raise ValueError('Published release changed. Start a fresh preview.')
             else:
                 plan = pipeline.run(payload['prompt'], verbose=False)
+            if payload.get('refresh_inventory'):
+                for task in plan.tasks:
+                    task.device_id=None;task.scope_device_ids=[];task.target_devices=[];task.confirmations={}
+                    task.target_queries=[pipeline.parse_description(ref,pipeline.load_inventory()) for ref in task.target_refs]
+                    pipeline._refresh_task(task)
+            if payload.get('conversation_reply'):
+                from v9_clarification import apply_reply
+                plan=apply_reply(pipeline,plan,payload['conversation_reply'],payload.get('task_id'),payload['inventory'])
             if payload.get('selection') is not None:
                 if not payload.get('allow_multi') or not payload.get('plan'):
                     raise ValueError('Selections require an existing shared review.')
                 entries=payload['selection']
-                if len(entries)>24: raise ValueError('At most 24 operation/device bindings are allowed.')
+                if not 1<=len(entries)<=24: raise ValueError('Review between 1 and 24 operation/device bindings.')
                 from uuid import uuid4
                 identities=set(); tasks=[]; intents=[]
                 for entry in entries:
-                    operation=snapshot.service.get_operation(entry['operation_id'])
                     identity=entry.get('task_id') or 'review-'+uuid4().hex
                     if identity in identities: raise ValueError('Duplicate review task identity.')
                     identities.add(identity)
+                    unresolved=retained_unresolved_task(plan,entry)
+                    if unresolved is not None:
+                        tasks.append(unresolved)
+                        intents.append(next(intent for intent in plan.intents if intent.intent_id==identity))
+                        continue
+                    operation=snapshot.service.get_operation(entry['operation_id'])
                     host=entry.get('target_host','')
                     devices=[d for d in payload['inventory'] if d['hostname']==host]
                     if host and len(devices)!=1: raise ValueError('Choose an existing inventory target.')

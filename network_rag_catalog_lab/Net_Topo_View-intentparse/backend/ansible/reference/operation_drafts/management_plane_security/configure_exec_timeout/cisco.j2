@@ -1,3 +1,4 @@
-{# Editable reference draft: cisco / configure_exec_timeout. Verify syntax, dependencies and device suitability before use. #}
+{# Reviewed authoring candidate; not activated runtime support. Verify device prerequisites before use. #}
 line vty 0 4
- exec-timeout {{ exec_timeout_minutes }} {{ exec_timeout_seconds | default(0) }}
+ exec-timeout {{ exec_timeout_minutes }} {{ exec_timeout_seconds if exec_timeout_seconds is not none else 0 }}
+ exit

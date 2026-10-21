@@ -783,7 +783,7 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
         </button>
       </div> */}
       {/* ── Main three-column area ── */}
-      <div className="flex grow min-h-0 overflow-hidden">
+      <div className="flex grow min-h-0 overflow-x-auto overflow-y-hidden">
 
         {/* Left: File tree (slidable width) */}
         <div
@@ -804,7 +804,7 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
         />
 
         {/* Centre: Editor + job status + terminal (terminal scoped here, not behind chat) */}
-        <div className="flex flex-col grow min-w-0 overflow-hidden">
+        <div className="flex flex-col grow min-w-[260px] overflow-hidden">
           <div className="grow min-h-0 overflow-hidden">
             <PlaybookEditor
               onEditableCopy={localLab ? () => {

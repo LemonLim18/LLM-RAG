@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "scenario_id": "S-HEALTHY-ALL-SOURCES",
+  "name": "Editable three-vendor development network",
+  "description": "Source authoring starter. Missing sources remain explicit; adapter acceptance is tracked separately.",
+  "scenario_revision": 1,
+  "created_by": "bundled-development-author",
+  "created_at": "2026-10-18T01:00:00Z",
+  "mode": "development_scenario",
+  "clock": {
+    "now": "2026-10-18T01:00:00Z",
+    "timezone": "UTC",
+    "paused": true,
+    "rate": 0
+  },
+  "source_files": {
+    "inventory": "inventory.json",
+    "topology_planned": "topology_planned.json",
+    "topology_observed": "topology_observed.json",
+    "topology_history": "topology_history.json",
+    "device_state": "device_state.json",
+    "running_configs": "running_configs.json",
+    "config_snapshots": "config_snapshots.json",
+    "config_changes": "config_changes.json",
+    "routing_state": "routing_state.json",
+    "protocol_state": "protocol_state.json",
+    "controller_state": "controller_state.json",
+    "telemetry": "telemetry.json",
+    "interface_metrics": "interface_metrics.json",
+    "syslog": "syslog.json",
+    "incidents": "incidents.json",
+    "config_drift": "config_drift.json",
+    "source_health": "source_health.json",
+    "jobs_audit": "jobs_audit.json",
+    "knowledge": "knowledge.json",
+    "documents": "documents.json",
+    "attachments": "attachments.json",
+    "diagrams": "diagrams.json",
+    "conversation": "conversation.json",
+    "simulation": "simulation.json"
+  },
+  "policy": {
+    "real_device_access": false,
+    "deploy_allowed": false
+  }
+}

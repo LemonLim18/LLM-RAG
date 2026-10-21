@@ -9,9 +9,9 @@ from llm.gateway import authorize_studio
 from local_providers import v9_studio
 
 
-async def preview(db,user,prompt,model,output_kind='native',params=None,hosts=None,task_id=None,expected_revision=None,confirm_order=False,selection=None):
+async def preview(db,user,prompt,model,output_kind='native',params=None,hosts=None,task_id=None,expected_revision=None,confirm_order=False,selection=None,refresh_inventory=False,conversation_reply=None):
     authorize_studio(user)
-    result=await v9_studio.preview(db,SimpleNamespace(intent_description=prompt,model=model,params=params or {},target_hosts=hosts or [],allow_multi=True,task_id=task_id,expected_revision=expected_revision,confirm_order=confirm_order,selection=selection),user)
+    result=await v9_studio.preview(db,SimpleNamespace(intent_description=prompt,model=model,params=params or {},target_hosts=hosts or [],allow_multi=True,task_id=task_id,expected_revision=expected_revision,confirm_order=confirm_order,selection=selection,refresh_inventory=refresh_inventory,conversation_reply=conversation_reply),user)
     result['output_kind']=output_kind
     if output_kind=='playbook':
         from llm.gateway_knowledge import read_release
@@ -48,6 +48,10 @@ async def render_draft(db,user,body):
         raise HTTPException(409,'Preview or inventory changed during rendering')
     if output['plan']['status']!='ready': raise HTTPException(422,'Complete all V9 clarification before rendering')
     tasks=output['plan']['tasks']
+    from llm.gateway_knowledge import read_release,native_method_trust
+    from local_providers.knowledge import knowledge_root
+    published,manifest,pointer=read_release(knowledge_root()/'storage/catalog_releases')
+    if pointer['release_id']!=output['release_id']:raise HTTPException(409,'Published knowledge changed; review again')
     drafts=[]
     for index,task in enumerate(tasks):
         if len(task['configs'])!=1 or len(task['target_devices'])!=1:
@@ -56,7 +60,8 @@ async def render_draft(db,user,body):
             content=task['configs'][0]['configuration']
             suffix=(output.get('task_artifacts',{}).get(task['intent_id']) or output.get('artifact_metadata') or {}).get('extension','.cfg')
             validation={'status':'passed','scope':'v9_operation','knowledge_release':output['release_id'],
-                'device_testing':'not_run','deployment_authorized':False}
+                'device_testing':'not_run','deployment_authorized':False,
+                'knowledge_approval':native_method_trust(published,manifest,task['operation_id'],task['target_devices'][0])}
         else:
             from llm.gateway_playbooks import render_playbook
             content,validation=await render_playbook(output,task)

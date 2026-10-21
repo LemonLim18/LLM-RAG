@@ -1,0 +1,208 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "category": {
+      "const": "inventory"
+    },
+    "status": {
+      "default": "AVAILABLE",
+      "enum": [
+        "AVAILABLE",
+        "MISSING",
+        "UNAVAILABLE",
+        "STALE",
+        "ERROR",
+        "CONFLICTING",
+        "UNSUPPORTED",
+        "NOT_QUERIED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "captured_at": {
+      "format": "date-time",
+      "title": "Captured At",
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "devices": {
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "exclusiveMinimum": 0,
+                "title": "Id",
+                "type": "integer"
+              },
+              "hostname": {
+                "pattern": "^[\\w.-]{1,80}$",
+                "title": "Hostname",
+                "type": "string"
+              },
+              "management_ip": {
+                "title": "Management Ip",
+                "type": "string"
+              },
+              "vendor": {
+                "title": "Vendor",
+                "type": "string"
+              },
+              "os_version": {
+                "title": "Os Version",
+                "type": "string"
+              },
+              "model": {
+                "default": "",
+                "title": "Model",
+                "type": "string"
+              },
+              "role": {
+                "default": "edge",
+                "title": "Role",
+                "type": "string"
+              },
+              "site": {
+                "default": "Development",
+                "title": "Site",
+                "type": "string"
+              },
+              "location": {
+                "default": "",
+                "title": "Location",
+                "type": "string"
+              },
+              "status": {
+                "default": "active",
+                "title": "Status",
+                "type": "string"
+              },
+              "aliases": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 20,
+                "title": "Aliases",
+                "type": "array"
+              },
+              "engineering_facts": {
+                "additionalProperties": true,
+                "title": "Engineering Facts",
+                "type": "object"
+              }
+            },
+            "required": [
+              "id",
+              "hostname",
+              "management_ip",
+              "vendor",
+              "os_version"
+            ],
+            "title": "Device",
+            "type": "object"
+          },
+          "maxItems": 3000
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "exclusiveMinimum": 0,
+                "title": "Id",
+                "type": "integer"
+              },
+              "device_id": {
+                "title": "Device Id",
+                "type": "integer"
+              },
+              "name": {
+                "maxLength": 100,
+                "minLength": 1,
+                "title": "Name",
+                "type": "string"
+              },
+              "interface_type": {
+                "default": "routed",
+                "title": "Interface Type",
+                "type": "string"
+              },
+              "prefix": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Prefix"
+              },
+              "admin_status": {
+                "default": "unknown",
+                "pattern": "^(up|down|unknown)$",
+                "title": "Admin Status",
+                "type": "string"
+              },
+              "oper_status": {
+                "default": "unknown",
+                "pattern": "^(up|down|unknown)$",
+                "title": "Oper Status",
+                "type": "string"
+              },
+              "vrf": {
+                "default": "default",
+                "maxLength": 80,
+                "minLength": 1,
+                "title": "Vrf",
+                "type": "string"
+              },
+              "speed_bps": {
+                "anyOf": [
+                  {
+                    "exclusiveMinimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Speed Bps"
+              }
+            },
+            "required": [
+              "id",
+              "device_id",
+              "name"
+            ],
+            "title": "Interface",
+            "type": "object"
+          },
+          "maxItems": 3000
+        },
+        "complete": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "required": [
+    "category",
+    "captured_at",
+    "data"
+  ],
+  "title": "SourceFile",
+  "type": "object"
+}

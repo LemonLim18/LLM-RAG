@@ -6,7 +6,26 @@ from uuid import uuid4
 from fastapi import HTTPException
 
 _migration_lock = threading.RLock()
-VERSION = 'shared-ai-3'
+VERSION = 'shared-ai-4-b2'
+
+
+def create_agent_tables(c):
+    c.execute('''CREATE TABLE IF NOT EXISTS ai_agent_investigations (
+        id TEXT PRIMARY KEY, conversation_id TEXT NOT NULL, owner TEXT NOT NULL,
+        assistant TEXT NOT NULL, schema_version INTEGER NOT NULL,
+        request_id TEXT NOT NULL, status TEXT NOT NULL,
+        updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(conversation_id,owner,assistant))''')
+    c.execute('''CREATE TABLE IF NOT EXISTS ai_agent_checkpoints (
+        thread_id TEXT NOT NULL, namespace TEXT NOT NULL, checkpoint_id TEXT NOT NULL,
+        body TEXT NOT NULL, metadata TEXT NOT NULL,
+        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY(thread_id,namespace,checkpoint_id))''')
+
+
+def finish_investigation(c,identity,request_id,status):
+    c.execute("UPDATE ai_agent_investigations SET status=?,updated_at=CURRENT_TIMESTAMP WHERE conversation_id=? AND request_id=? AND status NOT IN ('cancelled','interrupted')",(status,identity,request_id))
+
 
 
 def ensure_schema(db):
@@ -38,6 +57,7 @@ def ensure_schema(db):
                 id TEXT PRIMARY KEY, conversation_id TEXT NOT NULL, request_id TEXT NOT NULL,
                 body TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)''')
             c.execute('''CREATE TABLE IF NOT EXISTS ai_handoffs (id TEXT PRIMARY KEY, owner TEXT NOT NULL, source_conversation TEXT NOT NULL, body TEXT NOT NULL, studio_conversation TEXT)''')
+            create_agent_tables(c)
             # Inventory metadata augments the existing records; no parallel inventory.
             columns = {r[1] for r in c.execute('PRAGMA table_info(devices)')}
             for name, default in [('site', ''), ('location', ''), ('aliases_json', '[]')]:
@@ -85,6 +105,8 @@ class ConversationStore:
         with self.db._connect() as c:
             c.execute('BEGIN IMMEDIATE')
             self.get(identity, owner, kind, c)
+            c.execute('DELETE FROM ai_agent_checkpoints WHERE thread_id IN (SELECT id FROM ai_agent_investigations WHERE conversation_id=?)',(identity,))
+            c.execute('DELETE FROM ai_agent_investigations WHERE conversation_id=?',(identity,))
             c.execute('DELETE FROM ai_handoffs WHERE source_conversation=? OR studio_conversation=?',(identity,identity))
             for table in ('ai_turns', 'ai_evidence', 'ai_attachments'):
                 c.execute(f'DELETE FROM {table} WHERE conversation_id=?', (identity,))
@@ -118,9 +140,10 @@ class ConversationStore:
             changed = c.execute("UPDATE ai_turns SET result=?,state='completed' WHERE conversation_id=? AND request_id=? AND state='running'", (json.dumps(response), identity, request_id))
             if not changed.rowcount:
                 raise HTTPException(409, 'Turn was cancelled; late results were discarded')
+            finish_investigation(c,identity,request_id,'completed')
             prompt = c.execute('SELECT prompt FROM ai_turns WHERE conversation_id=? AND request_id=?', (identity, request_id)).fetchone()[0]
             messages = session['messages'] + [dict(id=request_id+'-user', role='user', content=prompt, timestamp=stamp),
-                dict(id=request_id, role='assistant', content=response['answer'], timestamp=stamp, evidence=response.get('evidence', []))]
+                dict(id=request_id, role='assistant', content=response['answer'], timestamp=stamp, evidence=response.get('evidence', []), evidence_details=response.get('context_coverage',{}).get('agent',{}).get('record_details','')[:24000])]
             c.execute("UPDATE ansible_chat_sessions SET messages_json=?,title=CASE WHEN title='New Chat' THEN ? ELSE title END,updated_at=datetime('now') WHERE id=?", (json.dumps(messages[-1000:]), prompt[:80], identity))
             for evidence in response.get('evidence', []):
                 c.execute('INSERT INTO ai_evidence(id,conversation_id,request_id,body) VALUES (?,?,?,?)', (evidence['id'], identity, request_id, json.dumps(evidence)))
@@ -129,6 +152,7 @@ class ConversationStore:
         self.get(identity, owner)
         with self.db._connect() as c:
             c.execute("UPDATE ai_turns SET state='cancelled' WHERE conversation_id=? AND request_id=? AND state='running'", (identity, request_id))
+            finish_investigation(c,identity,request_id,'cancelled')
 
     def history(self, identity, user=None):
         with self.db._connect() as c:
@@ -140,3 +164,15 @@ class ConversationStore:
         while sum(len(message['content']) for message in messages)>12000:
             messages=messages[2:]
         return messages
+
+    def last_result(self, identity, owner):
+        with self.db._connect() as c:
+            self.get(identity,owner,connection=c)
+            row=c.execute("SELECT result FROM ai_turns WHERE conversation_id=? AND state='completed' ORDER BY rowid DESC LIMIT 1",(identity,)).fetchone()
+        return json.loads(row['result']) if row else None
+
+    def result_for(self,identity,owner,request_id):
+        with self.db._connect() as c:
+            self.get(identity,owner,connection=c)
+            row=c.execute("SELECT result FROM ai_turns WHERE conversation_id=? AND request_id=? AND state='completed'",(identity,request_id)).fetchone()
+        return json.loads(row[0]) if row else None

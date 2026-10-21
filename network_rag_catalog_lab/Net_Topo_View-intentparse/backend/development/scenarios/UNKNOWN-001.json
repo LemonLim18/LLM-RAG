@@ -1,0 +1,150 @@
+{
+  "format_version": 1,
+  "id": "UNKNOWN-001",
+  "revision": 2,
+  "title": "Insufficient operational evidence",
+  "logical_time": "2026-10-17T09:00:00Z",
+  "model_scope": "direct_link",
+  "inventory_complete": true,
+  "devices": [
+    {
+      "id": 9101,
+      "hostname": "R1",
+      "management_ip": "192.0.2.10",
+      "vendor": "cisco_xe",
+      "os_version": "17.9",
+      "model": "C9300",
+      "role": "edge",
+      "site": "Development",
+      "engineering_facts": {
+        "origin": "planned",
+        "model_family": "catalyst9300",
+        "source_refs": {
+          "scenario": "UNKNOWN-001@2; modeled development facts only",
+          "policy": "V9 app/devices/operation_policies.py PROFILES / physical_interface_v1"
+        },
+        "capabilities": {
+          "validated_policies": [
+            "physical_interface_v1"
+          ]
+        },
+        "interfaces": [
+          {
+            "name": "GigabitEthernet0/0",
+            "type": "ethernet"
+          },
+          {
+            "name": "GigabitEthernet0/1",
+            "type": "ethernet"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9102,
+      "hostname": "R2",
+      "management_ip": "192.0.2.20",
+      "vendor": "cisco_xe",
+      "os_version": "17.9",
+      "model": "C9300",
+      "role": "edge",
+      "site": "Development",
+      "engineering_facts": {
+        "origin": "planned",
+        "model_family": "catalyst9300",
+        "source_refs": {
+          "scenario": "UNKNOWN-001@2; modeled development facts only",
+          "policy": "V9 app/devices/operation_policies.py PROFILES / physical_interface_v1"
+        },
+        "capabilities": {
+          "validated_policies": [
+            "physical_interface_v1"
+          ]
+        },
+        "interfaces": [
+          {
+            "name": "GigabitEthernet0/0",
+            "type": "ethernet"
+          },
+          {
+            "name": "GigabitEthernet1/0/1",
+            "type": "ethernet"
+          },
+          {
+            "name": "Loopback0",
+            "type": "loopback"
+          }
+        ]
+      }
+    }
+  ],
+  "interfaces": [
+    {
+      "id": 9111,
+      "device_id": 9101,
+      "name": "GigabitEthernet0/0",
+      "prefix": "192.0.2.10/24",
+      "admin_status": "unknown",
+      "oper_status": "unknown"
+    },
+    {
+      "id": 9112,
+      "device_id": 9101,
+      "name": "GigabitEthernet0/1",
+      "prefix": "10.23.12.1/30",
+      "admin_status": "unknown",
+      "oper_status": "unknown"
+    },
+    {
+      "id": 9121,
+      "device_id": 9102,
+      "name": "GigabitEthernet0/0",
+      "prefix": "192.0.2.20/24",
+      "admin_status": "unknown",
+      "oper_status": "unknown"
+    },
+    {
+      "id": 9122,
+      "device_id": 9102,
+      "name": "GigabitEthernet1/0/1",
+      "prefix": "10.23.12.2/30",
+      "admin_status": "unknown",
+      "oper_status": "unknown"
+    },
+    {
+      "id": 9123,
+      "device_id": 9102,
+      "name": "Loopback0",
+      "prefix": "198.51.100.2/32",
+      "admin_status": "unknown",
+      "oper_status": "unknown"
+    }
+  ],
+  "planned_links": [
+    {
+      "id": 9150,
+      "src_device_id": 9101,
+      "src_interface_id": 9112,
+      "dst_device_id": 9102,
+      "dst_interface_id": 9122
+    }
+  ],
+  "records": {
+    "state": [],
+    "topology": [],
+    "telemetry": [],
+    "syslog": [],
+    "incidents": [],
+    "configuration": [],
+    "running_configuration": []
+  },
+  "availability": {
+    "state": false,
+    "topology": false,
+    "telemetry": false,
+    "syslog": false,
+    "incidents": false,
+    "configuration": true,
+    "running_configuration": false
+  }
+}

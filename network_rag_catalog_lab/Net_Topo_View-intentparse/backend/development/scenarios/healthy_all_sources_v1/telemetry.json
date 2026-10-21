@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "category": "telemetry",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "source-telemetry",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "metric_sample",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "metric": "cpu_pct",
+          "value": 18,
+          "unit": "percent"
+        }
+      }
+    ]
+  }
+}

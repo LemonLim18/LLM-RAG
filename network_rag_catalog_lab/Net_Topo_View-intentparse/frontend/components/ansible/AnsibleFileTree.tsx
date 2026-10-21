@@ -19,6 +19,7 @@ import { ansibleApi } from '../../src/services/api';
 import type { AnsibleFileNode } from '../../typesLLM';
 import ContextMenu, { type ContextMenuAction } from '../ContextMenu';
 import { Confirm, Toast } from '../../src/utils/swal';
+import { creationDirectory, creationBranch } from './workspaceCreation';
 
 interface AnsibleFileTreeProps {
   onFileOpen: (node: AnsibleFileNode) => void;
@@ -153,13 +154,14 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   onCreateCancel,
 }) => {
   const isCreatingHere = creatingParentPath === node.path;
+  const isCreationBranch = creationBranch(node, creatingParentPath);
   const [open, setOpen] = useState(defaultOpen || isCreatingHere);
 
   useEffect(() => {
-    if (isCreatingHere) {
+    if (isCreationBranch) {
       setOpen(true);
     }
-  }, [isCreatingHere]);
+  }, [isCreationBranch]);
   const [editValue, setEditValue] = useState(node.name);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const isRenaming = renamingPath === node.path;
@@ -424,10 +426,11 @@ const AnsibleFileTree: React.FC<AnsibleFileTreeProps> = ({ onFileOpen, selectedP
         Toast.successEmphasis('Folder created', fullPath);
       }
       await load();
+      if (type === 'file') onFileOpen({ path: fullPath, name: trimmed, type: 'file' });
     } catch (e: any) {
       handleApiError(e);
     }
-  }, [load, handleApiError]);
+  }, [load, handleApiError, onFileOpen]);
 
   const cancelCreate = useCallback(() => {
     setCreatingNode(null);
@@ -436,13 +439,8 @@ const AnsibleFileTree: React.FC<AnsibleFileTreeProps> = ({ onFileOpen, selectedP
 
 
   const preferredDir = useCallback(() => {
-    if (!selectedPath) return 'playbooks';
-    const dir = selectedPath.includes('.') ? getParentDir(selectedPath) || getRoot(selectedPath) : selectedPath;
-    if (canCreateUnder(dir)) {
-      return dir;
-    }
-    return 'playbooks';
-  }, [selectedPath]);
+    return creationDirectory(tree, selectedPath, canCreateUnder) || '';
+  }, [tree, selectedPath]);
 
   const createFileAt = useCallback((baseDir: string) => {
     if (!canMutatePath(baseDir)) return;

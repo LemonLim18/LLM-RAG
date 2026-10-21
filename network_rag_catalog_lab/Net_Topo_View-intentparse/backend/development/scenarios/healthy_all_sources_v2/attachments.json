@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "category": "attachments",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "files": [
+      {
+        "path": "docs/capture.txt",
+        "name": "Lab capture.txt"
+      }
+    ]
+  }
+}

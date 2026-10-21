@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "category": "syslog",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "policy-change",
+        "device_id": 1200,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "syslog_event",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [
+          "active-1200"
+        ],
+        "values": {
+          "severity": "warning",
+          "facility": "configuration",
+          "message": "Recorded current configuration contains the reviewed-filter input attachment on LAB-R2 ge-0/0/0.0. This event is authored development data."
+        }
+      }
+    ]
+  }
+}

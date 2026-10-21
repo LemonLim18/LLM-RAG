@@ -1,0 +1,573 @@
+{
+  "updated_at": "2026-10-21T15:19:30.955828+00:00",
+  "mapped": 24,
+  "fully_accepted": 12,
+  "sources": [
+    {
+      "key": "inventory",
+      "title": "Planned inventory",
+      "tool": "inventory.read",
+      "domain": null,
+      "kind": "inventory",
+      "editor": "inventory",
+      "json_schema": "backend/development/schemas/v1/inventory.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/inventory.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_BOUNDED_EXTERNAL_JSON_T1_T2_STALE_ERROR_BOTH_SURFACES",
+      "actual_gui_gateway": "PASS_BOUNDED_STRUCTURED_GUI_BOTH_SURFACES_AVAILABLE_STALE_ERROR",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Reused13b2b1 JSON12+GUI8; new recoveryb932a4 13PASS and GUI restore2PASS. Correct management address/version/interfaces/capture; STALE/ERROR; ownership/unknown-device/revision-refresh; no model-reasoning credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/inventory.json"
+      ],
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T041755.868727Z-G-source-inventory-13b2b1/result.json",
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/inventory-status-availability-fixed.xml",
+        "tmp/phase-g/iterations/20261021T041755.868727Z-G-source-inventory-13b2b1/inventory-gui-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\inventory-source-acceptance-review.json"
+      ],
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "topology_planned",
+      "title": "Planned links",
+      "tool": "network.topology",
+      "domain": null,
+      "kind": "planned_links",
+      "editor": "links",
+      "json_schema": "backend/development/schemas/v1/topology_planned.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/topology_planned.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PARTIAL_JSON_T1_T2_STALE_ERROR_WITH_SEPARATE_MODEL_FAILURES",
+      "actual_gui_gateway": "PASS_BOUNDED_STRUCTURED_GUI_ACTIVATION_BOTH_SURFACES",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten unique JSON cases + reused GUI edit positive2 + GUI STALE/ERROR4 across both assistants. Event/capture times, category and exact endpoints verified. Original history metadata omission corrected, no prompt tuning or fresh model-quality credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/topology_planned.json"
+      ],
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T044343.762580Z-G-source-planned-486f0e/gui-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\planned-source-acceptance-review.json"
+      ],
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "topology_observed",
+      "title": "Observed links",
+      "tool": "network.topology",
+      "domain": "topology",
+      "kind": "observed_link",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/topology_observed.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/topology_observed.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_REUSED_T1_T2_CURRENT_MISSING_PLUS_FINAL_STALE_ERROR_BOTH_ASSISTANTS",
+      "actual_gui_gateway": "PASS_REUSED_EDIT_ACTIVATION_BOTH_PLUS_STALE_ERROR4_NEW_GUI_TURNS",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Reused independently inspected typed endpoint T1/T2, changed GUI peer/ports/time, history and missing-current evidence. Four new JSON and four new GUI STALE/ERROR checks pass after common no-observation boundary, no further wording repair. Original prose failures retained, final fallback receives no reasoning credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/topology_observed.json"
+      ],
+      "evidence": [
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json",
+        "tmp/phase-g/iterations/20261020T232833.066489Z-G-source-topology-bd5ec6",
+        "tmp/phase-g/iterations/20261020T233458.059130Z-G-source-topology-c5b8d2",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/observed-negative-first-red-full-review.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/observed-source-acceptance-review.json"
+      ],
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "latest_failed_acceptance": "Original freshness/update/scope failures retained; final verified source-limitation outputs pass bounded source gate. No general model-quality acceptance."
+    },
+    {
+      "key": "topology_history",
+      "title": "Topology history",
+      "tool": "network.topology",
+      "domain": "topology",
+      "kind": "observed_link",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/topology_history.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/topology_history.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_BOUNDED_JSON_T1_T2_BOTH_SURFACES",
+      "actual_gui_gateway": "PASS_BOUNDED_STRUCTURED_GUI_ACTIVATION_BOTH_SURFACES",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten unique JSON cases + reused GUI edit positive2 + GUI STALE/ERROR4 across both assistants. Event/capture times, category and exact endpoints verified. Original history metadata omission corrected, no prompt tuning or fresh model-quality credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/topology_history.json"
+      ],
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T044502.941017Z-G-source-history-4cc3e4/gui-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\history-source-acceptance-review.json"
+      ],
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "device_state",
+      "title": "Device and interface state",
+      "tool": "network.state",
+      "domain": "state",
+      "kind": "interface_state",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/device_state.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/device_state.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS10_UNIQUE_T1_T2_STALE_ERROR_MISSING_BOTH_ASSISTANTS",
+      "actual_gui_gateway": "PASS6_GUI_EDIT_AVAILABLE_STALE_ERROR_BOTH_ASSISTANTS",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Exact prefix/admin/oper/event-time retained; source capture distinct. Six actual GUI turns after structured edits/revisions. Original readerERROR falsely converted by model to interface state retained and manually FAILED despite literal matcher PASS. Shared no-successful-sources boundary47PASS and final actual negative safe fallback; no reasoning credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/device_state.json"
+      ],
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T045135.233813Z-G-source-state-8adf11/result.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/state-source-acceptance-review.json"
+      ],
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "running_configs",
+      "title": "Current configuration",
+      "tool": "network.configuration",
+      "domain": "running_configuration",
+      "kind": "running_configuration",
+      "editor": "configuration",
+      "json_schema": "backend/development/schemas/v1/running_configs.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/running_configs.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_COMPLETE_SOURCE_CONTRACT",
+      "actual_gui_gateway": "PASS_COMPLETE_SOURCE_CONTRACT_BOTH_SURFACES",
+      "consumption_gate": "COMPLETE",
+      "notes": "Individual source closed independently of model-quality gates: complete24-source bundle, JSON/GUI activation, exactT1/T2, STALE/ERROR/MISSING, unknown target, future rejection and retained historicalT1. No reasoning credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/running_configs.json"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\current-source-acceptance-review.json"
+    },
+    {
+      "key": "config_snapshots",
+      "title": "Saved configurations",
+      "tool": "network.configuration",
+      "domain": "configuration",
+      "kind": "configuration_snapshot",
+      "editor": "configuration",
+      "json_schema": "backend/development/schemas/v1/config_snapshots.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/config_snapshots.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_COMPLETE_SOURCE_CONTRACT",
+      "actual_gui_gateway": "PASS_COMPLETE_SOURCE_CONTRACT_BOTH_SURFACES",
+      "consumption_gate": "COMPLETE",
+      "notes": "10 unique API cases:6 originalPASS,4 originalFAIL then corrected4/4;10 GUI gateway turns. T1 retained beside addedT2, STALE/ERROR/MISSING and current/saved separation verified. Exact projection, no model reasoning credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/config_snapshots.json"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\saved-source-acceptance-review.json"
+    },
+    {
+      "key": "config_changes",
+      "title": "Configuration changes",
+      "tool": "network.configuration",
+      "domain": "configuration",
+      "kind": "configuration_change",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/config_changes.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/config_changes.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_COMPLETE_SOURCE_CONTRACT",
+      "actual_gui_gateway": "PASS_COMPLETE_SOURCE_CONTRACT_BOTH_SURFACES",
+      "consumption_gate": "COMPLETE",
+      "notes": "10 corrected API cases and8 GUI gateway turns. Original2 wrong-source failures preserved. Explicit typed change source, coherentT2/current text, STALE/ERROR/MISSING and source times verified. Actual colored multiline diff and copying work; no model reasoning credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/config_changes.json"
+      ],
+      "implementation_status": "IMPLEMENTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T100756.972144Z-G-source-changes-6681f6",
+        "tmp/phase-g/iterations/20261021T104246.195217Z-G-source-changes-ff9d33",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\change-source-fixed.xml"
+      ],
+      "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\change-source-acceptance-review.json"
+    },
+    {
+      "key": "routing_state",
+      "title": "Routing and forwarding",
+      "tool": "network.state",
+      "domain": "state",
+      "kind": "routing_table",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/routing_state.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/routing_state.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS10_SOURCE_CASES_T1_T2_STALE_ERROR_MISSING_BOTH_ASSISTANTS",
+      "actual_gui_gateway": "PASS_GUI_POSITIVE2_PLUS_SHARED_STALE2_ERROR2_BOTH_ASSISTANTS",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten JSON source cases and six per-source GUI cases. Four shared status turns reused across three categories; ten unique final GUI turns total. Source/observation/capture verified; original temporal errors retained, final fallback not reasoning credit. Original strict literal hostname omissions separately retained.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/routing_state.json"
+      ],
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/routing_state-source-acceptance-review.json"
+      ]
+    },
+    {
+      "key": "protocol_state",
+      "title": "OSPF and BGP",
+      "tool": "network.state",
+      "domain": "state",
+      "kind": "protocol_observation",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/protocol_state.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/protocol_state.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PARTIAL_PASS: external JSON edited IDs and real qwen both surfaces; Init correction a9aedb passes after explicit source constraint",
+      "actual_gui_gateway": "IN_PROGRESS: saved/validated/activated203.0.113.81/.82 Init in GUI; first Floating answer correct verified fallback, original model omitted neighbor name; corrective rerun pending",
+      "consumption_gate": "PARTIAL",
+      "notes": "Typed GUI activation and initial both-assistant values verified. Follow-up source context repaired and restart memory restored; later model Init interpretation/OSPF label errors retained, final guards not yet loaded/reverified in browser.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/protocol_state.json"
+      ],
+      "evidence": [
+        "tmp/phase-g/iterations/20261020T023616.486593Z-G-source-protocol-989ee1",
+        "tmp/phase-g/iterations/20261020T024224.287394Z-G-source-protocol-a9aedb",
+        "tmp/phase-g/iterations/20261020-protocol-browser/floating-first-fallback.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "controller_state",
+      "title": "Controller state",
+      "tool": "network.state",
+      "domain": "state",
+      "kind": "controller_state",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/controller_state.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/controller_state.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS10_SOURCE_CASES_T1_T2_STALE_ERROR_MISSING_BOTH_ASSISTANTS",
+      "actual_gui_gateway": "PASS_GUI_POSITIVE2_PLUS_SHARED_STALE2_ERROR2_BOTH_ASSISTANTS",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten JSON source cases and six per-source GUI cases. Four shared status turns reused across three categories; ten unique final GUI turns total. Source/observation/capture verified; original temporal errors retained, final fallback not reasoning credit. Original strict literal hostname omissions separately retained.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/controller_state.json"
+      ],
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/controller_state-source-acceptance-review.json"
+      ]
+    },
+    {
+      "key": "telemetry",
+      "title": "Telemetry samples",
+      "tool": "network.telemetry",
+      "domain": "telemetry",
+      "kind": "metric_sample",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/telemetry.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/telemetry.json",
+      "gui": "Scenario Workbench: structured sample/metric fields; draft-only chart and UTC window preview; explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_EXPOSED_T1_16_NULL_18_BOTH_SURFACES",
+      "actual_gui_gateway": "PASS_BOUNDED_T2_BOTH_MAIN_BROWSER_SURFACES",
+      "consumption_gate": "PARTIAL_BOUNDED_SOURCE_ACCEPTANCE",
+      "notes": "JSON16/null/18 and GUI27/null/18 read by actual authorized gateway on both surfaces. Final seven browser turns preserve old/new windows and switch source;2model syntheses,5labelled fallbacks. Null/time/compound errors retained and corrected; full24-source/negative/model-quality gates remain open.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/telemetry.json"
+      ],
+      "evidence": [
+        "tmp/phase-g/iterations/20261020T070924.369161Z-G-source-telemetry-7c9551/",
+        "tmp/phase-g/iterations/20261020T073935.806137Z-G-source-telemetry-cd199f/quality-review.json",
+        "tmp/phase-g/iterations/20261020-metrics-browser/"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "interface_metrics",
+      "title": "Interface counters",
+      "tool": "network.telemetry",
+      "domain": "telemetry",
+      "kind": "interface_counters",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/interface_metrics.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/interface_metrics.json",
+      "gui": "Scenario Workbench: structured sample/metric fields; draft-only chart and UTC window preview; explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS10_SOURCE_CASES_T1_T2_STALE_ERROR_MISSING_BOTH_ASSISTANTS",
+      "actual_gui_gateway": "PASS_GUI_POSITIVE2_PLUS_SHARED_STALE2_ERROR2_BOTH_ASSISTANTS",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten JSON source cases and six per-source GUI cases. Four shared status turns reused across three categories; ten unique final GUI turns total. Source/observation/capture verified; original temporal errors retained, final fallback not reasoning credit. Original strict literal hostname omissions separately retained.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/interface_metrics.json"
+      ],
+      "read_followup_acceptance": "PASS_BOUNDED_BOTH_BROWSER_SURFACES",
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/interface_metrics-source-acceptance-review.json"
+      ]
+    },
+    {
+      "key": "syslog",
+      "title": "Syslog",
+      "tool": "network.syslog",
+      "domain": "syslog",
+      "kind": "syslog_event",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/syslog.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/syslog.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "PASS_EXPOSED_BOTH_SURFACES_20261020",
+      "consumption_gate": "NOT_VERIFIED",
+      "notes": "Created from an empty source through GUI fields and read by both actual assistants. External-JSON edit proof and broader stale/error conformance still incomplete.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/syslog.json"
+      ],
+      "gui_artifact": "tmp/phase-g/iterations/20261020-browser-v2/browser-results.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "incidents",
+      "title": "Incidents and alerts",
+      "tool": "network.incidents",
+      "domain": "incidents",
+      "kind": "incident",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/incidents.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/incidents.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "consumption_gate": "NOT_VERIFIED",
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/incidents.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "config_drift",
+      "title": "Configuration drift",
+      "tool": "network.configuration",
+      "domain": "configuration",
+      "kind": "configuration_drift",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/config_drift.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/config_drift.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "consumption_gate": "NOT_VERIFIED",
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/config_drift.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "source_health",
+      "title": "Source health",
+      "tool": "network.state",
+      "domain": "state",
+      "kind": "source_health",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/source_health.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/source_health.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_BOUNDED_BOTH_SURFACES; health-json123a33 and health-overrideff1652; full prose reviewed, verified fallbacks",
+      "actual_gui_gateway": "PASS_BOUNDED_FLOATING_AND_STUDIO; GUI draft edit/validate/activate then actual network.state; exact statuses/time via labelled fallback",
+      "consumption_gate": "PARTIAL_JSON_AND_GUI_VERIFIED; full source-specific temporal/negative and all24 gate remain incomplete",
+      "notes": "Fresh browser available; source-name and document-topic precedence failures reproduced/corrected. Source health authoredAVAILABLE/effectiveERROR preserved. Restore-ordinary action blocked by approval-service usage limit, not browser availability.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/source_health.json"
+      ],
+      "latest_evidence": "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\health-browser-review.json",
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "jobs_audit",
+      "title": "Simulated jobs and audit",
+      "tool": "network.state",
+      "domain": "state",
+      "kind": "simulated_job",
+      "editor": "records",
+      "json_schema": "backend/development/schemas/v1/jobs_audit.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/jobs_audit.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "consumption_gate": "NOT_VERIFIED",
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/jobs_audit.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "knowledge",
+      "title": "Published V9 references",
+      "tool": "knowledge.search",
+      "domain": null,
+      "kind": "knowledge",
+      "editor": "knowledge",
+      "json_schema": "backend/development/schemas/v1/knowledge.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/knowledge.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS8_BOUNDED_JSON_T1_T2_STALE_ERROR_BOTH_ASSISTANTS",
+      "actual_gui_gateway": "PASS6_GUI_EDIT_ACTIVATE_AVAILABLE_STALE_ERROR_BOTH_ASSISTANTS",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Eight unique JSON and six final GUI checks through actual authorized shared gateways. GUI configure_ospf query/capture changed; STALE reference remains distinct from immutable published authority; ERROR performs no published lookup. Original failed metadata answer retained; shared footer49PASS. All six GUI answers verified fallback, zero model reasoning credit.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/knowledge.json"
+      ],
+      "evidence": [
+        "tmp/phase-g/iterations/20261021T050246.671819Z-G-source-knowledge-661eeb/manual-source-review.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/knowledge-source-acceptance-review.json"
+      ],
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "documents",
+      "title": "Technical documents",
+      "tool": "document.read",
+      "domain": null,
+      "kind": "document",
+      "editor": "files",
+      "json_schema": "backend/development/schemas/v1/documents.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/documents.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "PASS_API_BUNDLE_EDIT_EXTERNAL_FILE_REPEAT_PENDING",
+      "actual_gui_gateway": "PASS_FLOATING_AND_STUDIO",
+      "consumption_gate": "PARTIAL_MODALITY_AND_HISTORY_CASES_PENDING",
+      "notes": "Actual qwen summarizes edited document in both assistants; original T1/T2 and GUI19:35 outputs retained. No fresh adequacy benchmark inferred.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/documents.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "IN_PROGRESS",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "attachments",
+      "title": "Conversation attachments",
+      "tool": "document.read",
+      "domain": null,
+      "kind": "attachment",
+      "editor": "files",
+      "json_schema": "backend/development/schemas/v1/attachments.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/attachments.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "consumption_gate": "NOT_VERIFIED",
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/attachments.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "diagrams",
+      "title": "Images and diagrams",
+      "tool": "document.read",
+      "domain": null,
+      "kind": "diagram",
+      "editor": "files",
+      "json_schema": "backend/development/schemas/v1/diagrams.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/diagrams.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "consumption_gate": "NOT_VERIFIED",
+      "notes": "v2 contains a real PNG. Actual original-image/extraction preview and both-surface OCR reads; unsupported visual prose rejected. Full vision NOT VERIFIED.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/diagrams.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "conversation",
+      "title": "Conversation setup",
+      "tool": "conversation.turn",
+      "domain": null,
+      "kind": "conversation",
+      "editor": "conversation",
+      "json_schema": "backend/development/schemas/v1/conversation.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/conversation.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "consumption_gate": "NOT_VERIFIED",
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/conversation.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    },
+    {
+      "key": "simulation",
+      "title": "Bounded simulation",
+      "tool": "network.state",
+      "domain": "state",
+      "kind": "simulation",
+      "editor": "simulation",
+      "json_schema": "backend/development/schemas/v1/simulation.schema.json",
+      "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/simulation.json",
+      "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "consumption_gate": "NOT_VERIFIED",
+      "notes": "Selected-source filter/status defect fixed; bounded derived results carry simulation source label. Broader independent conformance pending.",
+      "previous_bundled_sources": [
+        "backend/development/scenarios/healthy_all_sources_v1/simulation.json"
+      ],
+      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
+      "individual_acceptance": "NOT_RUN",
+      "stage_status": "IN_PROGRESS"
+    }
+  ],
+  "note": "24 mapped/populated declarations are not24 fully accepted categories; every JSON+GUI+both-surface gate remains independently tracked.",
+  "latest_increment": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+}

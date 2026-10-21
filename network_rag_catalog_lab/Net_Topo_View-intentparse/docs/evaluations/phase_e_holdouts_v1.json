@@ -1,0 +1,1034 @@
+{
+  "format_version": 1,
+  "scope": "60 single-turn source/workflow routing holdouts. No content-answer, permission-effect or native-tool-call certification is inferred.",
+  "created_before_execution": true,
+  "scoring": "All required tools and only declared optional identity inventory; no tuning during first execution. Each run exposes its cases for future use as regressions. Multi-turn actual-agent cases remain separate.",
+  "routing_target": 0.9,
+  "seed": 2027,
+  "cases": [
+    {
+      "id": "E-HOLDOUT-001",
+      "group": "conversation",
+      "prompt": "Hi there!",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-002",
+      "group": "conversation",
+      "prompt": "What is 19 plus 24?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-003",
+      "group": "conversation",
+      "prompt": "Explain binary versus hexadecimal.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-004",
+      "group": "conversation",
+      "prompt": "How does TCP acknowledge data?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-005",
+      "group": "conversation",
+      "prompt": "Why use version control?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-006",
+      "group": "conversation",
+      "prompt": "What does idempotent mean?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-007",
+      "group": "conversation",
+      "prompt": "Explain DNS caching.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-008",
+      "group": "conversation",
+      "prompt": "How do a list and a set differ in Python?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-009",
+      "group": "conversation",
+      "prompt": "What is a subnet mask in general?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-010",
+      "group": "conversation",
+      "prompt": "How do OSPF and BGP differ conceptually?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-011",
+      "group": "inventory",
+      "prompt": "Which interfaces are recorded on {B}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "inventory.read"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-012",
+      "group": "inventory",
+      "prompt": "Tell me the management address of {A}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "inventory.read"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-013",
+      "group": "inventory",
+      "prompt": "List the vendors of the recorded devices.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "inventory.read"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-014",
+      "group": "inventory",
+      "prompt": "Which addresses belong to interfaces on {C}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "inventory.read"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-015",
+      "group": "inventory",
+      "prompt": "How many interfaces are recorded for {B}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "inventory.read"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-016",
+      "group": "inventory",
+      "prompt": "What software version is recorded for {A}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "inventory.read"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-017",
+      "group": "inventory",
+      "prompt": "What is the recorded role of {C}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "inventory.read"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-018",
+      "group": "inventory",
+      "prompt": "Which site contains {B}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "inventory.read"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-019",
+      "group": "topology",
+      "prompt": "Describe the planned topology between {A} and {B}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.topology"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-020",
+      "group": "topology",
+      "prompt": "Show the recorded network path from {A} to {C}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.topology"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-021",
+      "group": "topology",
+      "prompt": "Which recorded links touch {B}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.topology"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-022",
+      "group": "topology",
+      "prompt": "Explain the planned connection between {B} and {C}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.topology"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-023",
+      "group": "configuration",
+      "prompt": "Read the saved configuration for {C}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.configuration"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-024",
+      "group": "configuration",
+      "prompt": "Show the latest stored backup of {B}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.configuration"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-025",
+      "group": "configuration",
+      "prompt": "Compare {A} current configuration with its saved snapshot.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.configuration"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-026",
+      "group": "configuration",
+      "prompt": "What running configuration is available for {B}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.configuration"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-027",
+      "group": "configuration",
+      "prompt": "Retrieve configuration history for {A}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.configuration"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-028",
+      "group": "configuration",
+      "prompt": "List the recorded configuration captures for {C}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.configuration"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-029",
+      "group": "operational",
+      "prompt": "Which recent syslogs exist for {B}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.syslog"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-030",
+      "group": "operational",
+      "prompt": "Get the latest available log from {A}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.syslog"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-031",
+      "group": "operational",
+      "prompt": "Read available CPU measurements for {C}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.telemetry"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-032",
+      "group": "operational",
+      "prompt": "What interface traffic is recorded on {B}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.telemetry"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-033",
+      "group": "operational",
+      "prompt": "What incident records concern {C}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.incidents"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-034",
+      "group": "operational",
+      "prompt": "Show recorded alerts on {A}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.incidents"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-035",
+      "group": "protocol",
+      "prompt": "Does {A} have a recorded OSPF adjacency with {B}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.state"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-036",
+      "group": "protocol",
+      "prompt": "What BGP peer session state is recorded for {C}?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.state"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-037",
+      "group": "documents",
+      "prompt": "What does page 4 of this PDF explain?",
+      "assistant": "floating",
+      "attachments": true,
+      "required_tools": [
+        "document.read"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-038",
+      "group": "documents",
+      "prompt": "Summarize the attached design document.",
+      "assistant": "floating",
+      "attachments": true,
+      "required_tools": [
+        "document.read"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-039",
+      "group": "documents",
+      "prompt": "Can you read the contents of this uploaded file?",
+      "assistant": "floating",
+      "attachments": true,
+      "required_tools": [
+        "document.read"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-040",
+      "group": "documents",
+      "prompt": "What text is visible in the attached screenshot?",
+      "assistant": "floating",
+      "attachments": true,
+      "required_tools": [
+        "document.read"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-041",
+      "group": "documents",
+      "prompt": "Explain the diagram in the uploaded PDF.",
+      "assistant": "floating",
+      "attachments": true,
+      "required_tools": [
+        "document.read"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-042",
+      "group": "documents",
+      "prompt": "What limitations are stated on page 2?",
+      "assistant": "floating",
+      "attachments": true,
+      "required_tools": [
+        "document.read"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-043",
+      "group": "published",
+      "prompt": "Explain the published OSPF operation parameter requirements.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "knowledge.search"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-044",
+      "group": "published",
+      "prompt": "Which inputs does the catalog require for a BGP operation?",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "knowledge.search"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-045",
+      "group": "editor",
+      "prompt": "Explain the actual unsaved configuration without changing it.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "editor.read"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-046",
+      "group": "editor",
+      "prompt": "Describe the BGP section in the open file.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "editor.read"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-047",
+      "group": "editor",
+      "prompt": "Replace the BGP neighbor address in the active file with 192.0.2.44; retain OSPF.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "document.propose"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-048",
+      "group": "editor",
+      "prompt": "Change the router ID in the selected OSPF section of my open buffer.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "document.propose"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-049",
+      "group": "editor",
+      "prompt": "Add a comment to the current code explaining the neighbor statement.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "document.propose"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-050",
+      "group": "editor",
+      "prompt": "Correct the description in the open template.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "document.propose"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-051",
+      "group": "generation",
+      "prompt": "Generate new native OSPF configuration on {A}.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "v9.preview"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-052",
+      "group": "generation",
+      "prompt": "Create a static-route configuration on {C} to 203.0.113.0/24 via 192.0.2.2.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "v9.preview"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-053",
+      "group": "generation",
+      "prompt": "Configure BGP on {B} using local AS 65020 and remote AS 65030.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "v9.preview"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-054",
+      "group": "generation",
+      "prompt": "Generate interface description Uplink on {A} GigabitEthernet0/1.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "v9.preview"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-055",
+      "group": "generation",
+      "prompt": "Create native QoS policing configuration on {C}; ask for missing rate values.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "v9.preview"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-056",
+      "group": "generation",
+      "prompt": "Generate native configuration combining OSPF and static routing on {A}.",
+      "assistant": "studio",
+      "attachments": false,
+      "required_tools": [
+        "v9.preview"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-057",
+      "group": "compound",
+      "prompt": "Check {B} current configuration and its BGP peer session state.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.configuration",
+        "network.state"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-058",
+      "group": "compound",
+      "prompt": "Read available syslogs and current configuration for {A}.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "allowed_extra_tools": [],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-059",
+      "group": "compound",
+      "prompt": "Compare published OSPF operation requirements with {B} stored configuration.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "knowledge.search",
+        "network.configuration"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    },
+    {
+      "id": "E-HOLDOUT-060",
+      "group": "compound",
+      "prompt": "Explain the catalog BGP parameter requirements alongside {C} saved configuration.",
+      "assistant": "floating",
+      "attachments": false,
+      "required_tools": [
+        "knowledge.search",
+        "network.configuration"
+      ],
+      "allowed_extra_tools": [
+        "inventory.read"
+      ],
+      "prohibited": [
+        "unrequested write effect",
+        "fabricated source facts",
+        "unrelated old context"
+      ]
+    }
+  ]
+}

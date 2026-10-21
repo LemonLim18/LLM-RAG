@@ -1,0 +1,169 @@
+{
+  "format_version": 1,
+  "stages": {
+    "E0": {
+      "status": "verified",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "VERIFIED_WITH_PRESERVED_LEGACY_HISTORY_DELTA",
+      "dependencies": [],
+      "verified_scope": "See linked results and unmet gates",
+      "remaining_gate": "See PHASE_E_RESULTS.md"
+    },
+    "E1": {
+      "status": "verified",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "AUTHORED_APPLICATION_CHECKED",
+      "dependencies": [
+        "E0"
+      ],
+      "verified_scope": "Declared application fixture/profile checks only; no external certification inferred",
+      "remaining_gate": "See PHASE_E_RESULTS.md"
+    },
+    "E2": {
+      "status": "verified",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "141_NATIVE_METHODS_RENDER_TESTED",
+      "dependencies": [
+        "E1"
+      ],
+      "verified_scope": "Declared application fixture/profile checks only; no external certification inferred",
+      "remaining_gate": "See PHASE_E_RESULTS.md"
+    },
+    "E3": {
+      "status": "verified",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "ENGINEER_PUBLICATION_ACTION_AND_141_ACTIVE_RUNTIME_BINDINGS",
+      "dependencies": [
+        "E2"
+      ],
+      "verified_scope": "Actual authenticated GUI publication, immutable manifest/index, 141 profiles and 142 current V9 renders",
+      "remaining_gate": "No separate method sign-off or external certification required"
+    },
+    "E4": {
+      "status": "verified",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "ENGINEER_PUBLICATION_ACTION_AND_141_ACTIVE_RUNTIME_BINDINGS",
+      "dependencies": [
+        "E3"
+      ],
+      "verified_scope": "Actual authenticated GUI publication, immutable manifest/index, 141 profiles and 142 current V9 renders",
+      "remaining_gate": "No separate method sign-off or external certification required"
+    },
+    "E5": {
+      "status": "in_progress",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "PARTIAL_SEEDED_SCENARIO_CONFORMANCE",
+      "dependencies": [
+        "E0"
+      ],
+      "verified_scope": "See linked results and unmet gates",
+      "remaining_gate": "See PHASE_E_RESULTS.md"
+    },
+    "E6": {
+      "status": "in_progress",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "60_CASE_BASELINE_RECORDED_GATE_NOT_MET",
+      "dependencies": [
+        "E0",
+        "E5"
+      ],
+      "verified_scope": "See linked results and unmet gates",
+      "remaining_gate": "See PHASE_E_RESULTS.md"
+    },
+    "E7": {
+      "status": "in_progress",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "PARTIAL_MODEL_QUALITY_GATE_NOT_MET",
+      "dependencies": [
+        "E6"
+      ],
+      "verified_scope": "See linked results and unmet gates",
+      "remaining_gate": "See PHASE_E_RESULTS.md"
+    },
+    "E8": {
+      "status": "in_progress",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "REGRESSIONS_PRESERVED_FULL_NEW_RUNTIME_PENDING",
+      "dependencies": [
+        "E4"
+      ],
+      "verified_scope": "See linked results and unmet gates",
+      "remaining_gate": "All-binding full Studio journeys and separate genuine playbook tooling remain unverified; native publication is active"
+    },
+    "E9": {
+      "status": "in_progress",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "SIMPLIFIED_GUI_PUBLICATION_AND_INTERNAL_DRAFT_SCROLL_VERIFIED",
+      "dependencies": [
+        "E0"
+      ],
+      "verified_scope": "See linked results and unmet gates",
+      "remaining_gate": "Historical clipboard/normal-mode parity work remains outside this change"
+    },
+    "E10": {
+      "status": "blocked",
+      "evidence": [
+        "PHASE_E_RESULTS.md",
+        "phase_e_vendor_progress.json"
+      ],
+      "detail_status": "NOT_COMPLETE",
+      "dependencies": [
+        "E4",
+        "E5",
+        "E6",
+        "E7",
+        "E8",
+        "E9"
+      ],
+      "verified_scope": "See linked results and unmet gates",
+      "remaining_gate": "See PHASE_E_RESULTS.md"
+    }
+  },
+  "phase_complete": false,
+  "human_approvals_inferred": false,
+  "updated_at": "2026-10-18T13:33:17.639498+00:00",
+  "head": "90ea74d3ebec92dfc0f95ad9a6468a5b820a9561",
+  "source_state": "Uncommitted; protected 52-file staged index unchanged",
+  "ordinary_candidate": "f72cf2ae1b66407b8a389c383e6634a8",
+  "ordinary_active": "f0e33c357dd54988ba7e651d813c76a7",
+  "authored_bindings": 141,
+  "structurally_checked_bindings": 141,
+  "human_approved_bindings": 0,
+  "new_active_bindings": 141,
+  "latest_evidence_manifest": "tmp/phase-e/20261018T133833.302546Z-simple-publication-final-source/manifest.json",
+  "latest_snapshot_scope": "Final source after newline-only cleanup; actual GUI publication, enabled qwen flags, scoped tests, preserved existing history",
+  "engineer_authorized_bindings": 141,
+  "planning_enabled": true,
+  "synthesis_enabled": true,
+  "user_policy_revision": "2026-10-18 authenticated Publish/Activate authorizes exact pack; no extra sign-off ceremony"
+}

@@ -40,4 +40,7 @@ starlette==1.7.0
 typing-inspection==0.4.4
 typing_extensions==4.16.0
 uvicorn==0.54.0
-websockets==17.2
+websockets==16.1.1
+
+# B1 shared orchestration and transitive pins
+-r requirements-agent-b1.lock.txt

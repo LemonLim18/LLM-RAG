@@ -1,6 +1,8 @@
 {# Editable reference draft: huawei / configure_ospf. Verify syntax, dependencies and device suitability before use. #}
 ospf {{ process_id }}
-{% if router_id is defined and router_id %} router-id {{ router_id }}{% endif %}
+{% if router_id is defined and router_id %}
+ router-id {{ router_id }}
+{% endif %}
 {% for x in interfaces %}interface {{ x.name }}
  ospf enable {{ process_id }} area {{ x.area }}
 {% endfor %}

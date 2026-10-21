@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "category": "running_configs",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "active-1100",
+        "device_id": 1100,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "running_configuration",
+        "source": "scenario_author",
+        "current": true,
+        "values": {
+          "config_file": "configs/running_configs/1100.cfg"
+        }
+      },
+      {
+        "id": "active-1200",
+        "device_id": 1200,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "running_configuration",
+        "source": "scenario_author",
+        "current": true,
+        "values": {
+          "config_file": "configs/running_configs/1200.cfg"
+        }
+      },
+      {
+        "id": "active-1300",
+        "device_id": 1300,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "running_configuration",
+        "source": "scenario_author",
+        "current": true,
+        "values": {
+          "config_file": "configs/running_configs/1300.cfg"
+        }
+      }
+    ]
+  }
+}

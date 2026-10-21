@@ -1,7 +1,7 @@
 import { languageForDocument } from '../../src/monacoLanguages';
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import AssistantMarkdown from '../AssistantMarkdown';
+import AssistantMarkdown, { CopyResponse } from '../AssistantMarkdown';
 import { DiffEditor } from '@monaco-editor/react';
 import { Send, Loader2, Bot, Sparkles, AlertCircle, FileCode, ChevronRight, Paperclip, X, TriangleAlert, ChevronDown, Check, Undo2, Square, History, Plus, Trash2, RefreshCw, User as UserIcon, MessageSquareQuote } from 'lucide-react';
 import PremiumLoaderOverlay from '../PremiumLoaderOverlay';
@@ -1037,6 +1037,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
         setSessions([fresh]);
         setCurrentSessionId(fresh.id);
         setMessages(fresh.messages);
+        if (localChat) return; // Gateway creates/persists the owned conversation on a real turn.
         try {
           await ansibleApi.upsertChatSession({
             id: fresh.id,
@@ -1159,12 +1160,13 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   }, [currentSessionId, messages]);
 
   useEffect(() => {
+    if (localChat) return; // Server-owned gateway history must not enter the legacy client cache.
     try {
       localStorage.setItem(ANSIBLE_CHAT_SESSIONS_KEY, JSON.stringify(sessions));
     } catch {
       // ignore persistence failures
     }
-  }, [sessions]);
+  }, [sessions, localChat]);
 
   useEffect(() => {
     try {
@@ -1176,7 +1178,9 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   }, [currentSessionId]);
 
   useEffect(() => {
-    if (!sessionsHydrated || sessionsHydratingRef.current || !currentSessionId) return;
+    // Shared AI turns already persist atomically in ConversationStore. A stale
+    // tab's legacy upsert could overwrite newer server history even on mount.
+    if (localChat || !sessionsHydrated || sessionsHydratingRef.current || !currentSessionId) return;
     const current = sessions.find((session) => session.id === currentSessionId);
     if (!current) return;
     if (sessionPersistTimeoutRef.current) clearTimeout(sessionPersistTimeoutRef.current);
@@ -1192,7 +1196,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
     return () => {
       if (sessionPersistTimeoutRef.current) clearTimeout(sessionPersistTimeoutRef.current);
     };
-  }, [currentSessionId, sessions, sessionsHydrated]);
+  }, [currentSessionId, sessions, sessionsHydrated, localChat]);
 
   // Auto-fill params wizard interface fields when user explicitly asks for "all interfaces".
   // This avoids forcing another manual interface selection step.
@@ -2925,7 +2929,7 @@ setGeneratingPlaybook(false);
     loadingPhaseTimeoutRef.current.forEach(clearTimeout);
     loadingPhaseTimeoutRef.current = [];
     setMessages(prev => prev.filter(m => !(m as AnsibleMessage & { isLoading?: boolean }).isLoading));
-    addMsg({ role: 'assistant', content: 'The generation was cancelled by the user.' });
+    addMsg({ role: 'assistant', content: 'Response cancelled. No pending proposal was accepted or saved.' });
     setGeneratingPlaybook(false);
     setGenerating(false);
   }, [addMsg]);
@@ -4590,6 +4594,8 @@ setGeneratingPlaybook(false);
                     {localChat && msg.gatewayReview && <button className="btn btn-sm btn-outline mt-3" onClick={() => setGatewayPreview(msg.gatewayReview!)}><FileCode size={14} />Review interpretation</button>}
                     </>
                   )}
+
+                  {!msg.isLoading && <CopyResponse content={localChat && idx === 0 && msg.content.startsWith('**Ansible AI** ready.') ? LOCAL_WELCOME : msg.content} />}
 
                   {/* Proposed edits: diff view with Keep / Undo per file and Keep All / Undo All */}
                   {!localChat && msg.proposedEdits && msg.proposedEdits.length > 0 && (

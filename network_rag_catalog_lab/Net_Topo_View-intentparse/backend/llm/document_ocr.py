@@ -50,7 +50,7 @@ def complete_ocr(data, segments, executable, image=False):
         for segment in segments:
             if not segment.get('needs_ocr'): continue
             segment['visual_understanding']='unavailable; OCR reads text, not diagram relationships'
-            if not powershell and not ocr_model:
+            if not powershell and not ocr_model and not image:
                 segment['limitation']='Local Windows OCR is unavailable on this host'; continue
             if attempts>=24 or time.monotonic()-started>90:
                 segment['limitation']='OCR processing limit reached (24 pages / 90 seconds)'; continue
@@ -62,11 +62,15 @@ def complete_ocr(data, segments, executable, image=False):
                         json.dumps({'data':base64.b64encode(data).decode('ascii'),'image_path':str(raster)}),timeout=20)
                     decoded=json.loads(result.stdout)
                     if not decoded.get('ok'): raise ValueError(decoded.get('error','Image decoding failed'))
+                    segment['image_decoded']=True
                 else:
                     if not renderer: raise ValueError('PDF OCR needs local Poppler pdftoppm; configure COGNISHIELD_PDF_RENDERER')
                     result=bounded_process([renderer,'-f',str(segment['page']),'-l',str(segment['page']),'-scale-to','2500',
                         '-singlefile','-png',str(source),str(root/'page')],'',timeout=15)
                     if result.returncode or not raster.exists(): raise ValueError('PDF page rendering failed')
+                if not powershell and not ocr_model:
+                    segment['limitation']='Local Windows OCR is unavailable on this host'
+                    continue
                 if ocr_model:
                     import asyncio
                     output=asyncio.run(ollama_ocr(raster,ocr_model,timeout=max(1,min(30,90-(time.monotonic()-started)))))

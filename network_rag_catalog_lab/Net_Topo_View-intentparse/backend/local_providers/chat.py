@@ -26,7 +26,7 @@ async def runtime():
         'providers':[{'name':'ollama','label':'Local Ollama','base_url':LOCAL_OLLAMA_URL,'models':models,'available':available,'reachable':bool(models),'error':error}],
         'source':'real','scope':'process','execution_available':False}
 
-async def generate(messages, structured=False, model=None):
+async def generate(messages, structured=False, model=None, *, max_output_tokens=None, temperature=None):
     state = await runtime()
     if not state['providers'][0]['models'] or (model is None and not state['providers'][0]['available']):
         raise HTTPException(503, state['providers'][0]['error'])
@@ -34,11 +34,14 @@ async def generate(messages, structured=False, model=None):
     if selected not in state['providers'][0]['models']:
         raise HTTPException(422, 'Select an installed local chat model')
     from llm.ollama_provider import OllamaProvider
+    budget=max_output_tokens if max_output_tokens is not None else (4096 if structured else 1536)
+    if not isinstance(budget,int) or not 1<=budget<=4096:
+        raise ValueError('Local response budget must be between 1 and 4096 tokens')
     provider = OllamaProvider(base_url=LOCAL_OLLAMA_URL, model=selected, timeout=180,
-        response_format=('json' if structured is True else structured or None), max_output_tokens=4096 if structured else 1536,
+        response_format=('json' if structured is True else structured or None), max_output_tokens=budget,
         context_tokens=8192 if sum(len(message['content']) for message in messages)<24000 else 16384)
     try:
-        response = await provider.generate([LLMMessage(role=m['role'], content=m['content'], images=m.get('images',[])) for m in messages], temperature=0 if structured else 0.2)
+        response = await provider.generate([LLMMessage(role=m['role'], content=m['content'], images=m.get('images',[])) for m in messages], temperature=temperature if temperature is not None else 0 if structured else 0.2)
         content = response.content.strip()
     except (httpx.HTTPError, ValueError, KeyError, ConnectionError, RuntimeError) as exc:
         raise HTTPException(502, 'Local Ollama inference failed. Check the configured endpoint and installed model; no artificial reply was substituted.') from exc

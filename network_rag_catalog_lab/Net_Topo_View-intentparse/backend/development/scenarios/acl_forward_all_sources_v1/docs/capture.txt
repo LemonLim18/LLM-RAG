@@ -1,0 +1,1 @@
+LAB-R1 simulated operational note: interface state is an observation; planned links alone do not establish packet delivery.

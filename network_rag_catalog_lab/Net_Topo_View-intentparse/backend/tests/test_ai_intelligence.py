@@ -1,6 +1,5 @@
 """Behavioral contracts: real context/tool/output boundaries; disposable SQLite only."""
 import os
-os.environ["COGNISHIELD_SEMANTIC_EMBEDDINGS"]="0"
 import json
 from pathlib import Path
 import sys
@@ -19,6 +18,11 @@ from llm.gateway_store import ensure_schema
 
 class IntelligenceTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
+        # Other suites import their engine settings during collection. Bind this
+        # legacy contract fixture per test, rather than leaking import-order state.
+        environment=patch.dict(os.environ,{'COGNISHIELD_SEMANTIC_EMBEDDINGS':'0','COGNISHIELD_AI_ENGINE':'legacy',
+            'COGNISHIELD_AI_PLANNING':'0','COGNISHIELD_AI_SYNTHESIS':'0'})
+        environment.start();self.addCleanup(environment.stop)
         self.folder=tempfile.TemporaryDirectory(); self.addCleanup(self.folder.cleanup)
         self.db=DatabaseManager(str(Path(self.folder.name)/'behavior.db'))
         self.db.initialize(); ensure_schema(self.db); self.addCleanup(self.db.close)
@@ -66,7 +70,8 @@ class IntelligenceTests(unittest.IsolatedAsyncioTestCase):
         with patch('local_providers.chat.generate',model):
             result=await self.gateway.turn(identity,self.user,TurnRequest(request_id=uuid4(),prompt='What do we know about R1?'))
         self.assertEqual(result.context_coverage['routing']['network_domains'],['inventory'])
-        self.assertIn('R1',json.dumps(model.call_args.args)); self.assertNotIn('unrelated R9',json.dumps(model.call_args.args))
+        model.assert_not_awaited()
+        self.assertIn('R1',result.answer); self.assertNotIn('R9',result.answer)
 
     async def test_legacy_pdf_coverage_is_not_full_visual_coverage(self):
         identity=self.gateway.store.create('tester','floating')['id']
@@ -138,6 +143,56 @@ class IntelligenceTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(c.execute('SELECT count(*) FROM ai_turns WHERE conversation_id=?',(accepted['conversation_id'],)).fetchone()[0],0)
             c.execute("DELETE FROM ai_evidence WHERE id='handoff-record'")
         self.assertEqual(history_context(self.db,accepted['conversation_id'],self.user),[])
+
+    async def test_references_use_fresh_rows_and_exact_interface_scope(self):
+        identity=self.gateway.store.create('tester','floating')['id']
+        with self.db._connect() as c:
+            c.execute("INSERT INTO devices(id,hostname,vendor,management_ip) VALUES(1,'R2','cisco','192.168.1.251')")
+            c.execute("INSERT INTO interfaces(id,device_id,name,ip_address) VALUES(1,1,'GigabitEthernet0/0','192.168.1.251')")
+            c.execute("INSERT INTO interfaces(id,device_id,name,ip_address) VALUES(2,1,'GigabiEthernet0/1','10.1.1.2')")
+        async def ask(prompt):return await self.gateway.turn(identity,self.user,TurnRequest(request_id=uuid4(),prompt=prompt))
+        with patch('local_providers.chat.generate',AsyncMock()) as model:
+            first=await ask("What are R2's interfaces?")
+            self.assertIn('GigabiEthernet0/1',first.answer)
+            with self.db._connect() as c:c.execute("UPDATE interfaces SET ip_address='10.2.2.2' WHERE id=2")
+            checked=await ask('Are you sure?')
+            self.assertIn('10.2.2.2',checked.answer);self.assertNotIn('10.1.1.2',checked.answer)
+            ambiguous=await ask('What is its IP?')
+            self.assertEqual(ambiguous.kind,'clarification')
+            chosen=await ask('What is the IP of R2 GigabiEthernet0/1?')
+            self.assertIn('10.2.2.2',chosen.answer);self.assertNotIn('192.168.1.251',chosen.answer)
+            unknown=await ask('What is the IP of R2 Loopback99?')
+            self.assertEqual(unknown.kind,'clarification')
+        model.assert_not_awaited()
+
+    async def test_explicit_active_buffer_read_survives_classifier_error(self):
+        identity=self.gateway.store.create('tester','studio')['id']
+        with patch('local_providers.chat.generate',AsyncMock(return_value=('The comment is ! unsaved.','test'))) as model:
+            result=await self.gateway.turn(identity,self.user,TurnRequest(request_id=uuid4(),prompt='Explain the active configuration and quote its unsaved comment. Do not modify it.',editor=self.editor))
+        self.assertEqual(model.await_count,1)
+        self.assertTrue(result.context_coverage['routing']['editor'])
+        self.assertIn('! unsaved',str(model.call_args))
+        self.assertIsNone(result.proposal)
+
+    async def test_saved_configs_and_plural_syslogs_do_not_read_attachments(self):
+        identity=self.gateway.store.create('tester','floating')['id']
+        with self.db._connect() as c:c.execute("INSERT INTO devices(hostname) VALUES('R1')")
+        await upload_attachment(self.db,identity,'tester','unrelated.txt',b'IGNORE_NETWORK_OLD_DOC')
+        for prompt,tool in [('Show saved configs','network.configuration'),('Show R1 syslogs','network.syslog')]:
+            result=await self.gateway.turn(identity,self.user,TurnRequest(request_id=uuid4(),prompt=prompt))
+            self.assertEqual([r['tool'] for r in result.observations],[tool])
+            self.assertFalse(result.context_coverage['routing']['attachments'])
+            self.assertNotIn('IGNORE_NETWORK_OLD_DOC',result.answer)
+
+    async def test_cached_network_result_cannot_survive_role_change(self):
+        from fastapi import HTTPException
+        identity=self.gateway.store.create('tester','floating')['id']
+        with self.db._connect() as c:c.execute("INSERT INTO devices(hostname) VALUES('R1')")
+        body=TurnRequest(request_id=uuid4(),prompt='Show R1 interfaces')
+        await self.gateway.turn(identity,self.user,body)
+        with self.assertRaises(HTTPException) as error:
+            await self.gateway.turn(identity,{**self.user,'role':'auditor'},body)
+        self.assertEqual(error.exception.status_code,403)
 
     async def test_image_invalid_oversize_and_ocr_failure(self):
         from fastapi import HTTPException

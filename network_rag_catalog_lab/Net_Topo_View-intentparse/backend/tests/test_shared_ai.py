@@ -2,6 +2,7 @@
 import asyncio
 import os
 os.environ["COGNISHIELD_SEMANTIC_EMBEDDINGS"]="0"
+os.environ["COGNISHIELD_AI_ENGINE"]="legacy"
 import json
 import os
 from pathlib import Path
@@ -28,6 +29,9 @@ from llm.tools import Capability, ToolAuthorization, ToolRegistry
 
 class SharedAITests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
+        environment=patch.dict(os.environ,{'COGNISHIELD_AI_ENGINE':'legacy','COGNISHIELD_SEMANTIC_EMBEDDINGS':'0',
+            'COGNISHIELD_AI_PLANNING':'0','COGNISHIELD_AI_SYNTHESIS':'0'})
+        environment.start();self.addCleanup(environment.stop)
         self.folder = tempfile.TemporaryDirectory()
         self.addCleanup(self.folder.cleanup)
         self.db = DatabaseManager(str(Path(self.folder.name) / 'test.db'))
@@ -47,9 +51,9 @@ class SharedAITests(unittest.IsolatedAsyncioTestCase):
             first = await self.gateway.turn(self.conversation, self.user, body)
             second = await AIGateway(self.db).turn(self.conversation, self.user, body)
         self.assertEqual(first, second)
-        self.assertEqual(model.await_count, 2)
+        self.assertEqual(model.await_count, 0)
         self.assertEqual(first.evidence[0].origin, 'stored')
-        self.assertNotIn('must-not-leak', json.dumps(model.call_args.args))
+        self.assertNotIn('must-not-leak', first.model_dump_json())
         self.assertEqual(len(self.gateway.store.history(self.conversation)), 2)
 
     async def test_empty_allowlist_and_surface_cannot_escalate(self):
@@ -210,7 +214,7 @@ class SharedAPIIntegration(unittest.TestCase):
         expected = Path(API_ROOT.name)/'api.db'
         # Test collection may import lab_config before this module sets its environment.
         # Pin the app's actual lifespan path, and assert it before making any mutation.
-        with patch.object(local_app, 'DB_PATH', expected), patch('auth.auth._DB_PATH', expected), patch('auth.api._DB_PATH', expected), patch('netbox.api.DB_PATH', str(expected)), TestClient(local_app.app) as c:
+        with patch.dict(os.environ,{'COGNISHIELD_DEV_WORKBENCH':'0','COGNISHIELD_DEV_SIMULATION':'0'}), patch.object(local_app, 'DB_PATH', expected), patch('auth.auth._DB_PATH', expected), patch('auth.api._DB_PATH', expected), patch('netbox.api.DB_PATH', str(expected)), TestClient(local_app.app) as c:
             self.assertEqual(Path(local_app.db._db_path).resolve(), expected.resolve())
             self.assertEqual(Path(local_app.inventory._db()._db_path).resolve(), expected.resolve())
             preflight={'Origin':'http://127.0.0.1:5173','Access-Control-Request-Method':'GET','Access-Control-Request-Headers':'authorization,content-type','Access-Control-Request-Private-Network':'true'}

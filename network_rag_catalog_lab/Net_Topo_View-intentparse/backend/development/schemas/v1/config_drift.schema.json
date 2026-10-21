@@ -1,0 +1,117 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "category": {
+      "const": "config_drift"
+    },
+    "status": {
+      "default": "AVAILABLE",
+      "enum": [
+        "AVAILABLE",
+        "MISSING",
+        "UNAVAILABLE",
+        "STALE",
+        "ERROR",
+        "CONFLICTING",
+        "UNSUPPORTED",
+        "NOT_QUERIED"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "captured_at": {
+      "format": "date-time",
+      "title": "Captured At",
+      "type": "string"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "records": {
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "maxLength": 100,
+                "minLength": 1,
+                "title": "Id",
+                "type": "string"
+              },
+              "device_id": {
+                "title": "Device Id",
+                "type": "integer"
+              },
+              "interface_id": {
+                "anyOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "title": "Interface Id"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "type": "string"
+              },
+              "kind": {
+                "title": "Kind",
+                "type": "string"
+              },
+              "source": {
+                "title": "Source",
+                "type": "string"
+              },
+              "current": {
+                "default": true,
+                "title": "Current",
+                "type": "boolean"
+              },
+              "depends_on": {
+                "items": {
+                  "type": "string"
+                },
+                "maxItems": 30,
+                "title": "Depends On",
+                "type": "array"
+              },
+              "values": {
+                "additionalProperties": true,
+                "title": "Values",
+                "type": "object"
+              }
+            },
+            "required": [
+              "id",
+              "device_id",
+              "timestamp",
+              "kind",
+              "source"
+            ],
+            "title": "Record",
+            "type": "object"
+          },
+          "maxItems": 3000
+        }
+      }
+    }
+  },
+  "required": [
+    "category",
+    "captured_at",
+    "data"
+  ],
+  "title": "SourceFile",
+  "type": "object"
+}

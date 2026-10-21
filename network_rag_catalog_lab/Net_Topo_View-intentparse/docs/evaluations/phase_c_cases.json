@@ -1,0 +1,1416 @@
+{
+  "format_version": 1,
+  "cases": [
+    {
+      "test_id": "C1-001",
+      "milestone": "C1",
+      "capability": "Cross-service scenario switch",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001",
+        "CONFLICT-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "What interfaces does R2 have?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology",
+        "network.configuration",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcome": "Exact device-scoped state changes across readers; unavailable sources remain unavailable",
+      "expected_clarification_or_diagnosis": "Exact device-scoped state changes across readers; unavailable sources remain unavailable",
+      "prohibited_outputs": [
+        "physical live claims",
+        "ordinary inventory mutation"
+      ],
+      "verification_method": "test_phase_c.C1Tests.test_C1_001_switch_all_readers_and_v9_inventory"
+    },
+    {
+      "test_id": "C1-002",
+      "milestone": "C1",
+      "capability": "Modeled state event and current configuration capture",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Apply administrative down to interface 9112; capture current simulated R1 configuration"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [],
+      "expected_outcome": "State/configuration/dependent events change atomically; capture equals current configuration; no SQLite snapshot",
+      "expected_clarification_or_diagnosis": "State/configuration/dependent events change atomically; capture equals current configuration; no SQLite snapshot",
+      "prohibited_outputs": [
+        "SSH",
+        "capture from old saved configuration"
+      ],
+      "verification_method": "test_phase_c.C1Tests.test_C1_002_event_capture_and_no_ordinary_mutation"
+    },
+    {
+      "test_id": "C1-003",
+      "milestone": "C1",
+      "capability": "Revision, restart, import and reset",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [],
+      "expected_outcome": "Stale write rejected; restart retains selection; reset changes epoch; invalid definition rejected",
+      "expected_clarification_or_diagnosis": "Stale write rejected; restart retains selection; reset changes epoch; invalid definition rejected",
+      "prohibited_outputs": [
+        "stale acceptance",
+        "silent fallback"
+      ],
+      "verification_method": "test_phase_c.C1Tests.test_C1_003_revision_reset_restart_and_invalid_inputs"
+    },
+    {
+      "test_id": "C1-004",
+      "milestone": "C1",
+      "capability": "Authorization and production isolation",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [],
+      "expected_outcome": "Anonymous 401; engineer scenario write 403; normal mode uses SQLite",
+      "expected_clarification_or_diagnosis": "Anonymous 401; engineer scenario write 403; normal mode uses SQLite",
+      "prohibited_outputs": [
+        "model-enabled simulation",
+        "production simulation fallback"
+      ],
+      "verification_method": "test_phase_c.C1Tests.test_C1_004_authorization_and_production_isolation"
+    },
+    {
+      "test_id": "C1-005",
+      "milestone": "C1",
+      "capability": "Monitoring projection",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "network.telemetry"
+      ],
+      "expected_outcome": "Distinct exact interface counters; absent packet observations are null/absent",
+      "expected_clarification_or_diagnosis": "Distinct exact interface counters; absent packet observations are null/absent",
+      "prohibited_outputs": [
+        "default zero measurements",
+        "invented per-interface CPU"
+      ],
+      "verification_method": "test_phase_c.C1Tests.test_C1_005_monitoring_uses_real_scenario_counters_without_defaults"
+    },
+    {
+      "test_id": "C1-006",
+      "milestone": "C1",
+      "capability": "Authorized state reader",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "network.state"
+      ],
+      "expected_outcome": "Existing registry authorization and exact scoped reachability observation",
+      "expected_clarification_or_diagnosis": "Existing registry authorization and exact scoped reachability observation",
+      "prohibited_outputs": [
+        "arbitrary SQL",
+        "device execution"
+      ],
+      "verification_method": "test_phase_c.C1Tests.test_C1_006_registry_authorization_current_state_reader"
+    },
+    {
+      "test_id": "C1-007",
+      "milestone": "C1",
+      "capability": "Browser scenario control and actual agent",
+      "scenario_id": "FAULT-IFDOWN-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "What interfaces does R2 have?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read"
+      ],
+      "expected_outcome": "UI selects authoritative scenario, actual gateway returns 10.23.12.2 on recorded R2 port",
+      "expected_clarification_or_diagnosis": "UI selects authoritative scenario, actual gateway returns 10.23.12.2 on recorded R2 port",
+      "prohibited_outputs": [
+        "ordinary R2 addresses",
+        "physical connectivity assertion"
+      ],
+      "verification_method": "Browser DOM + stored sanitized gateway response"
+    },
+    {
+      "test_id": "C1-008",
+      "milestone": "C1",
+      "capability": "Actual local chat with simulation enabled",
+      "scenario_id": "FAULT-IFDOWN-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Hello, what is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [],
+      "expected_outcome": "12, without unrelated document/network context",
+      "expected_clarification_or_diagnosis": "12, without unrelated document/network context",
+      "prohibited_outputs": [
+        "unnecessary configuration generation"
+      ],
+      "verification_method": "Actual Ollama + gateway response"
+    },
+    {
+      "test_id": "C2-001",
+      "milestone": "C2",
+      "capability": "Cascading device/interface clarification",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcome": "Same V9 session; R1 target, description retained; unrecorded R1 interface blocks render until chosen",
+      "expected_clarification_or_diagnosis": "Same V9 session; R1 target, description retained; unrecorded R1 interface blocks render until chosen",
+      "prohibited_outputs": [
+        "invented interface",
+        "old R2 interface identity",
+        "premature rendering"
+      ],
+      "verification_method": "Actual V9 review/API/browser + controlled schema regression"
+    },
+    {
+      "test_id": "C2-002",
+      "milestone": "C2",
+      "capability": "Same-name rebinding, operation/vendor/revision changes",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Change target while interface name is shared"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcome": "Rebind recorded identity, invalidate dependencies and stale scenario/template assumptions",
+      "expected_clarification_or_diagnosis": "Rebind recorded identity, invalidate dependencies and stale scenario/template assumptions",
+      "prohibited_outputs": [
+        "stale confirmation",
+        "unaffected task loss"
+      ],
+      "verification_method": "Focused V9 adapter regression and browser"
+    },
+    {
+      "test_id": "C3-001",
+      "milestone": "C3",
+      "capability": "Evidence-driven competing hypotheses",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate whether R1 can communicate with R2 and identify any issues.",
+        "What evidence supports that?",
+        "Could the problem instead be routing?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology",
+        "network.configuration",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcome": "Scoped successful reachability; no invented fault",
+      "expected_clarification_or_diagnosis": "Scoped successful reachability; no invented fault",
+      "prohibited_outputs": [
+        "scenario-ID-based diagnosis",
+        "fabricated probability",
+        "derived incident counted as independent evidence",
+        "physical production claim"
+      ],
+      "verification_method": "Actual gateway scenario benchmark + deterministic and browser validation"
+    },
+    {
+      "test_id": "C3-002",
+      "milestone": "C3",
+      "capability": "Evidence-driven competing hypotheses",
+      "scenario_id": "FAULT-IFDOWN-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate whether R1 can communicate with R2 and identify any issues.",
+        "What evidence supports that?",
+        "Could the problem instead be routing?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology",
+        "network.configuration",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcome": "Administrative shutdown established within bounded scenario",
+      "expected_clarification_or_diagnosis": "Administrative shutdown established within bounded scenario",
+      "prohibited_outputs": [
+        "scenario-ID-based diagnosis",
+        "fabricated probability",
+        "derived incident counted as independent evidence",
+        "physical production claim"
+      ],
+      "verification_method": "Actual gateway scenario benchmark + deterministic and browser validation"
+    },
+    {
+      "test_id": "C3-003",
+      "milestone": "C3",
+      "capability": "Evidence-driven competing hypotheses",
+      "scenario_id": "FAULT-SUBNET-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate whether R1 can communicate with R2 and identify any issues.",
+        "What evidence supports that?",
+        "Could the problem instead be routing?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology",
+        "network.configuration",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcome": "Link subnet incompatibility with exact network calculation",
+      "expected_clarification_or_diagnosis": "Link subnet incompatibility with exact network calculation",
+      "prohibited_outputs": [
+        "scenario-ID-based diagnosis",
+        "fabricated probability",
+        "derived incident counted as independent evidence",
+        "physical production claim"
+      ],
+      "verification_method": "Actual gateway scenario benchmark + deterministic and browser validation"
+    },
+    {
+      "test_id": "C3-004",
+      "milestone": "C3",
+      "capability": "Evidence-driven competing hypotheses",
+      "scenario_id": "FAULT-ROUTE-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate whether R1 can communicate with R2 and identify any issues.",
+        "What evidence supports that?",
+        "Could the problem instead be routing?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology",
+        "network.configuration",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcome": "Missing destination route in explicit complete table; scoped failed reachability",
+      "expected_clarification_or_diagnosis": "Missing destination route in explicit complete table; scoped failed reachability",
+      "prohibited_outputs": [
+        "scenario-ID-based diagnosis",
+        "fabricated probability",
+        "derived incident counted as independent evidence",
+        "physical production claim"
+      ],
+      "verification_method": "Actual gateway scenario benchmark + deterministic and browser validation"
+    },
+    {
+      "test_id": "C3-005",
+      "milestone": "C3",
+      "capability": "Evidence-driven competing hypotheses",
+      "scenario_id": "CONFLICT-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate whether R1 can communicate with R2 and identify any issues.",
+        "What evidence supports that?",
+        "Could the problem instead be routing?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology",
+        "network.configuration",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcome": "Conflicting current observers; no confirmed diagnosis",
+      "expected_clarification_or_diagnosis": "Conflicting current observers; no confirmed diagnosis",
+      "prohibited_outputs": [
+        "scenario-ID-based diagnosis",
+        "fabricated probability",
+        "derived incident counted as independent evidence",
+        "physical production claim"
+      ],
+      "verification_method": "Actual gateway scenario benchmark + deterministic and browser validation"
+    },
+    {
+      "test_id": "C3-006",
+      "milestone": "C3",
+      "capability": "Evidence-driven competing hypotheses",
+      "scenario_id": "UNKNOWN-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate whether R1 can communicate with R2 and identify any issues.",
+        "What evidence supports that?",
+        "Could the problem instead be routing?"
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology",
+        "network.configuration",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcome": "Insufficient evidence and useful next checks",
+      "expected_clarification_or_diagnosis": "Insufficient evidence and useful next checks",
+      "prohibited_outputs": [
+        "scenario-ID-based diagnosis",
+        "fabricated probability",
+        "derived incident counted as independent evidence",
+        "physical production claim"
+      ],
+      "verification_method": "Actual gateway scenario benchmark + deterministic and browser validation"
+    },
+    {
+      "test_id": "C3-007",
+      "milestone": "C3",
+      "capability": "Revision-aware reassessment",
+      "scenario_id": "FAULT-IFDOWN-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "The interface is back up. Reassess."
+      ],
+      "data_assumptions": [
+        "Only explicit selected development scenario is authoritative",
+        "Ordinary SQLite and published releases remain unchanged"
+      ],
+      "expected_authorized_tools": [
+        "network.state",
+        "inventory.read"
+      ],
+      "expected_outcome": "Fresh authorized reads; user statement alone cannot change scenario; stale conclusions not retained",
+      "expected_clarification_or_diagnosis": "Fresh authorized reads; user statement alone cannot change scenario; stale conclusions not retained",
+      "prohibited_outputs": [
+        "LLM changes source state",
+        "reused stale diagnosis"
+      ],
+      "verification_method": "Scenario transition followed by actual checkpointed conversation"
+    },
+    {
+      "test_id": "C2-003",
+      "milestone": "C2",
+      "capability": "Named network configuration request cannot propose edits to unrelated editor",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Named network configuration request cannot propose edits to unrelated editor"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Named network configuration request cannot propose edits to unrelated editor",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-004",
+      "milestone": "C2",
+      "capability": "V9 rejected interface candidate is projected into actionable review issue",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "V9 rejected interface candidate is projected into actionable review issue"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "V9 rejected interface candidate is projected into actionable review issue",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-API-INITIAL",
+      "milestone": "C2",
+      "capability": "Actual local-model generation dispatch",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Actual local-model generation dispatch"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Actual local-model generation dispatch",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-REVIEW",
+      "milestone": "C2",
+      "capability": "Review selected published operation",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Review selected published operation"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Review selected published operation",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-VALID-INTERFACE",
+      "milestone": "C2",
+      "capability": "Correct interface validates against planned reviewed V9 profile",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Correct interface validates against planned reviewed V9 profile"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Correct interface validates against planned reviewed V9 profile",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-NATIVE-RENDER",
+      "milestone": "C2",
+      "capability": "Explicit native rendering contains reviewed description and remains unsaved",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Explicit native rendering contains reviewed description and remains unsaved"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Explicit native rendering contains reviewed description and remains unsaved",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-STALE-SCENARIO",
+      "milestone": "C2",
+      "capability": "Scenario changes reject stale confirmation",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Scenario changes reject stale confirmation"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Scenario changes reject stale confirmation",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-REBASE",
+      "milestone": "C2",
+      "capability": "Explicit refresh revalidates against current scenario",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Explicit refresh revalidates against current scenario"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Explicit refresh revalidates against current scenario",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-SHARED-NAME",
+      "milestone": "C2",
+      "capability": "Same interface spelling is rebound to new device identity",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Same interface spelling is rebound to new device identity"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Same interface spelling is rebound to new device identity",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-MULTI-MISSING-AS",
+      "milestone": "C2",
+      "capability": "Second BGP task requests missing remote AS",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Second BGP task requests missing remote AS"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Second BGP task requests missing remote AS",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-MULTI-CORRECTION",
+      "milestone": "C2",
+      "capability": "BGP correction preserves independent first task",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "BGP correction preserves independent first task"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "BGP correction preserves independent first task",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-OPERATION-STALE-FIELDS",
+      "milestone": "C2",
+      "capability": "Operation replacement rejects stale predecessor fields",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Operation replacement rejects stale predecessor fields"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Operation replacement rejects stale predecessor fields",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-OPERATION-CORRECTED",
+      "milestone": "C2",
+      "capability": "Operation replacement with its own schema succeeds",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Operation replacement with its own schema succeeds"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Operation replacement with its own schema succeeds",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-VENDOR-CHANGE",
+      "milestone": "C2",
+      "capability": "Developer-only incompatible vendor scenario mutation",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Developer-only incompatible vendor scenario mutation"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Developer-only incompatible vendor scenario mutation",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C2-VENDOR-REVALIDATE",
+      "milestone": "C2",
+      "capability": "Unsupported vendor/platform remains blocked",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Configure interface GigabitEthernet1/0/1 on R2.",
+        "Sorry, I meant R1. Set its description to Uplink."
+      ],
+      "data_assumptions": [
+        "Modeled planned C9300/IOS-XE 17.9 physical-interface policy facts; not physical device certification",
+        "Expected state changes in the HTTP harness are development-only"
+      ],
+      "expected_authorized_tools": [
+        "v9.preview"
+      ],
+      "expected_outcomes": [
+        "Unsupported vendor/platform remains blocked"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Unsupported vendor/platform remains blocked",
+      "prohibited_outputs": [
+        "Accepted stale target/interface binding",
+        "Automatic save, deployment, publication",
+        "Ordinary inventory changes"
+      ],
+      "verification_method": "Focused real registry/HTTP/browser checks; mocked boundary cases explicitly labeled"
+    },
+    {
+      "test_id": "C3-008",
+      "milestone": "C3",
+      "capability": "Unrelated conversation excludes investigation context",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Unrelated conversation excludes investigation context"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Unrelated conversation excludes investigation context",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-009",
+      "milestone": "C3",
+      "capability": "Investigation follow-ups refresh relevant sources and hypotheses",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Investigation follow-ups refresh relevant sources and hypotheses"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Investigation follow-ups refresh relevant sources and hypotheses",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-010",
+      "milestone": "C3",
+      "capability": "User assertion alone cannot change simulated observations",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "User assertion alone cannot change simulated observations"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "User assertion alone cannot change simulated observations",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-011",
+      "milestone": "C3",
+      "capability": "Changed source revision corrects an old diagnosis",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Changed source revision corrects an old diagnosis"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Changed source revision corrects an old diagnosis",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-012",
+      "milestone": "C3",
+      "capability": "Explicit R2 scope overrides earlier R1/R2 investigation",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Explicit R2 scope overrides earlier R1/R2 investigation"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Explicit R2 scope overrides earlier R1/R2 investigation",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-013",
+      "milestone": "C3",
+      "capability": "Real model arithmetic ignores old investigation context",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Real model arithmetic ignores old investigation context"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Real model arithmetic ignores old investigation context",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-014",
+      "milestone": "C3",
+      "capability": "Missing prefixes prevent conclusive diagnosis",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Missing prefixes prevent conclusive diagnosis"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Missing prefixes prevent conclusive diagnosis",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-015",
+      "milestone": "C3",
+      "capability": "Stale observations cannot establish current diagnosis",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Stale observations cannot establish current diagnosis"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Stale observations cannot establish current diagnosis",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-016",
+      "milestone": "C3",
+      "capability": "Derived incidents do not add independent confirmation",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Derived incidents do not add independent confirmation"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Derived incidents do not add independent confirmation",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C3-017",
+      "milestone": "C3",
+      "capability": "Mid-read revision changes withhold mixed-source conclusions",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001",
+        "UNKNOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate why R1 cannot communicate with R2.",
+        "What evidence supports your conclusion?",
+        "Are you sure? Check the other sources.",
+        "Could the problem instead be routing?",
+        "What changed before the failure?",
+        "The interface is back up. Reassess.",
+        "Now investigate R2 instead.",
+        "hello, how much is 7 + 5?"
+      ],
+      "data_assumptions": [
+        "Only fresh authorized observations may establish diagnosis",
+        "Derived events retain dependency edges",
+        "User statements cannot mutate a source"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.configuration",
+        "network.state",
+        "network.telemetry",
+        "network.syslog",
+        "network.incidents"
+      ],
+      "expected_outcomes": [
+        "Mid-read revision changes withhold mixed-source conclusions"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Mid-read revision changes withhold mixed-source conclusions",
+      "prohibited_outputs": [
+        "Physical/live claims from simulation",
+        "Automatic network action or generation",
+        "Unsupported confirmed root cause",
+        "Borrowed stale conclusion"
+      ],
+      "verification_method": "Real graph/registry and actual HTTP/local-model + browser; any mock boundary is labeled"
+    },
+    {
+      "test_id": "C1-009",
+      "milestone": "C1",
+      "capability": "Current running state, stored captures and source availability are distinct",
+      "scenario_id": "HEALTHY-001",
+      "scenario_revision": 2,
+      "prompts": [
+        "Show R1 current running configuration",
+        "Show R1 stored configuration history"
+      ],
+      "data_assumptions": [
+        "Current running source can be disabled independently of history"
+      ],
+      "expected_authorized_tools": [
+        "network.configuration"
+      ],
+      "expected_outcomes": [
+        "Running-only query returns only current running records",
+        "History-only query returns historical records",
+        "Disabled running source remains unavailable despite available saved history"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "No substitution of stored captures for unavailable current state",
+      "prohibited_outputs": [
+        "Historical capture labeled current running configuration",
+        "Physical/live claim"
+      ],
+      "verification_method": "Existing reader and real scenario manager using disposable SQLite"
+    },
+    {
+      "test_id": "C3-018",
+      "milestone": "C3",
+      "capability": "Scenario-aware owned handoff and stale evidence invalidation",
+      "scenario_id": [
+        "HEALTHY-001",
+        "FAULT-IFDOWN-001"
+      ],
+      "scenario_revision": 2,
+      "prompts": [
+        "Investigate R1 and R2.",
+        "Review the recorded shutdown on R1 in Studio. Explain a correction without editing, saving or deploying."
+      ],
+      "data_assumptions": [
+        "Simulated IDs exist only in the authoritative overlay, not ordinary SQLite",
+        "Old turn may predate scenario changes"
+      ],
+      "expected_authorized_tools": [
+        "inventory.read",
+        "network.configuration",
+        "network.state"
+      ],
+      "expected_outcomes": [
+        "Explicit acceptance creates a distinct Studio conversation and unsent draft",
+        "No engineering turn is submitted",
+        "Repeated acceptance is idempotent",
+        "Changed scenario withholds old observation payload",
+        "Cross-user and simulation-to-ordinary handoffs are rejected",
+        "Engineers retain authorized shared scenario evidence without gaining private snapshot access"
+      ],
+      "expected_clarification_hypothesis_or_diagnosis": "Refresh outdated evidence before V9 engineering",
+      "prohibited_outputs": [
+        "Automatic generation, edit, save or deployment",
+        "Ordinary SQLite used as scenario authority",
+        "Old observation claims restored as current"
+      ],
+      "verification_method": "Real graph/SQLite/registry handoff regression, existing private-snapshot regression, actual browser review/open and zero-turn query"
+    }
+  ]
+}

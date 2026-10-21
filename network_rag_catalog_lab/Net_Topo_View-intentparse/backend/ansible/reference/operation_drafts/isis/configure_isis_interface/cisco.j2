@@ -1,5 +1,5 @@
-{# Editable reference draft: cisco / configure_isis_interface. Verify syntax, dependencies and device suitability before use. #}
-router isis {{ process_name }}
- interface {{ interface }}
-  ip router isis {{ process_name }} {{ level }}
-
+{# Reviewed authoring candidate; not activated runtime support. Verify device prerequisites before use. #}
+interface {{ interface }}
+ ip router isis {{ process_name }}
+ isis circuit-type {{ "level-2-only" if level == "level-2" else level }}
+ exit

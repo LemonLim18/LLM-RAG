@@ -1,0 +1,286 @@
+{
+  "phase_complete": false,
+  "stages": {
+    "G0": {
+      "status": "BLOCKED",
+      "evidence": [
+        "docs/evaluations/phase_g_baseline.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\preservation.json"
+      ],
+      "acceptance_gate": "BLOCKED_MISSING_PRECHANGE_FREEZE_AND_INDEXED_BASELINE",
+      "preservation_gate": "PASS",
+      "implementation_status": "PRESERVATION_VERIFIED_BASELINE_PARTIAL",
+      "latest_increment": "Read-only current snapshot confirms protected52-file staged hash, immutable active release141 bindings and SQLite integrity. Missing original pre-change holdout freeze cannot be backdated; does not block independent source acceptance."
+    },
+    "G1": {
+      "status": "PASS",
+      "evidence": [
+        "tmp/phase-g/iterations/G1-first-red.xml",
+        "tmp/phase-g/iterations/G1-adjacent-green.xml",
+        "tmp/phase-g/iterations/20261021T041755.868727Z-G-source-inventory-13b2b1/inventory-gui-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\G1-stage-acceptance-review.json"
+      ],
+      "acceptance_gate": "PASS_SOURCE_REGISTRY_AND_NORMALIZED_PROTOCOL",
+      "latest_increment": "24 mappings, all8network statuses and both-assistant authorization, capture/revision integrity; two actual browser multi-source contract traces. Final answer quality partial and explicitly left open underG5; does not closeG3.",
+      "implementation_status": "COMPLETE"
+    },
+    "G2": {
+      "status": "PASS",
+      "evidence": [
+        "tmp/phase-g/iterations/G2-api.xml",
+        "tmp/phase-g/iterations/G2-schema.xml",
+        "tmp/phase-g/iterations/20261019T153900.608970Z-G2-current-config-1dbeef/",
+        "tmp/phase-g/iterations/G2-simulation-selector-red.xml",
+        "tmp/phase-g/iterations/G2-simulation-selector-final.xml",
+        "tmp/phase-g/iterations/G2-simulation-selector-corrected.xml",
+        "tmp/phase-g/iterations/20261020-metrics-browser/complete-starters-api-fixed.xml",
+        "tmp/phase-g/iterations/20261020-metrics-browser/linked-starter-cli-fixed.xml",
+        "tmp/phase-g/iterations/20261020-metrics-browser/policy-location-asymmetry-fixed.xml",
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json",
+        "tmp/phase-g/iterations/20261021T041755.868727Z-G-source-inventory-13b2b1/inventory-gui-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\G2-stage-acceptance-review.json"
+      ],
+      "acceptance_gate": "PASS_SCENARIO_JSON_AUTHORING_AND_REVISION_FOUNDATION",
+      "notes": "Three distinct complete source bundles and linked-file CLI added and compiled. Real policy/conflict gateway evidence retained; full G2 time/revision/oracle gate not established by these checks alone.",
+      "latest_increment": "Complete24-source schemas/starters, private isolated starter expectations, real CLI clone/export/diff and source edit validation, frozen revision/time and authorized source contracts. G3source UI/consumption and G5prose remain independently open.",
+      "implementation_status": "COMPLETE"
+    },
+    "G3": {
+      "status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261019-G3-browser/result.json",
+        "tmp/phase-g/iterations/G3-documents-first-red.xml",
+        "tmp/phase-g/iterations/G3-document-schema-final.xml",
+        "tmp/phase-g/iterations/20261019T160129.844576Z-G3-documents-d6d11a/result.json",
+        "tmp/phase-g/iterations/20261020-browser-v2/browser-results.json",
+        "tmp/phase-g/iterations/G3-history-copy-api-final.xml",
+        "tmp/phase-g/iterations/G3-capture-history-green.xml",
+        "tmp/phase-g/iterations/20261020T015031.796844Z-G3-recorded-history-2519f3/quality-review.json",
+        "tmp/phase-g/iterations/20261020-history-browser/browser-results.json",
+        "tmp/phase-g/iterations/G3-protocol-schema-conflict.xml",
+        "tmp/phase-g/iterations/G3-metric-aggregate-scope-final.xml",
+        "tmp/phase-g/iterations/G3-metrics-source-neighbors.xml",
+        "tmp/phase-g/iterations/G3-metric-aggregate-validation.xml",
+        "tmp/phase-g/iterations/20261020-protocol-browser/local-combined-run-status.json",
+        "tmp/phase-g/iterations/20261020-metrics-browser/",
+        "tmp/phase-g/iterations/20261020T073935.806137Z-G-source-telemetry-cd199f/quality-review.json",
+        "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\increment-review.json",
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json",
+        "tmp/phase-g/iterations/20261021T041755.868727Z-G-source-inventory-13b2b1/inventory-gui-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\current-source-acceptance-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\current-source-acceptance-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\saved-source-acceptance-review.json",
+        "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\change-source-acceptance-review.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/knowledge-source-acceptance-review.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/state-source-acceptance-review.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/controller_state-source-acceptance-review.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/routing_state-source-acceptance-review.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/interface_metrics-source-acceptance-review.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/observed-source-acceptance-review.json"
+      ],
+      "notes": "Recorded snapshot seek/restore and copy-to-draft verified via actual GUI and shared gateways; full continuous timeline and24/24 acceptance still incomplete. Typed OSPF/BGP source GUI currently under acceptance.",
+      "acceptance_gate": "NOT_RUN",
+      "latest_increment": "12/24 source acceptances COMPLETE. Observed topology final STALE/ERROR JSON4/GUI4 passes with reused positive/history/current-missing proofs. Source gate only; G5 fallback quality remainsopen. Nexttelemetry reuse and remaining12."
+    },
+    "G4": {
+      "status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/G4-source-filter-red.xml",
+        "tmp/phase-g/iterations/G4-source-filter-corrected.xml",
+        "tmp/phase-g/iterations/G4-controller-fallback-corrected.xml",
+        "tmp/phase-g/iterations/G4-plural-provenance-red.xml",
+        "tmp/phase-g/iterations/G4-plural-provenance-green.xml",
+        "tmp/phase-g/iterations/G4-published-filter-confirmed-red.xml",
+        "tmp/phase-g/iterations/G4-published-filter-green.xml",
+        "tmp/phase-g/iterations/20261020-browser-v2/published-reader.json",
+        "tmp/phase-g/iterations/G4-explicit-target-first-red.xml",
+        "tmp/phase-g/iterations/G4-explicit-target-green.xml",
+        "tmp/phase-g/iterations/G4-explicit-source-scope-reconnected.xml",
+        "tmp/phase-g/iterations/G4-followup-scope-first-red.xml",
+        "tmp/phase-g/iterations/G4-followup-scope-corrected.xml",
+        "tmp/phase-g/iterations/G4-known-host-semantic-final.xml",
+        "tmp/phase-g/iterations/G4-published-query-corrected.xml",
+        "tmp/phase-g/iterations/20261020-metrics-browser/",
+        "tmp/phase-g/iterations/20261020T073935.806137Z-G-source-telemetry-cd199f/quality-review.json",
+        "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\increment-review.json",
+        "tmp/phase-g/iterations/20261020T130151.701511Z-G9-document-grounding-resume-7f63c9/manual-document-review-final.json",
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+      ],
+      "notes": "Typed logical source filters now reach existing readers; bounded qwen source selection is evaluated separately. Plural list/provenance failure repaired. Full fresh routing and implicit/compound GoalSpec gates remain open.",
+      "acceptance_gate": "NOT_RUN",
+      "latest_increment": "Independent observed topology JSON/GUI/both-gateway acceptance; comparison/source-prohibition/history/provenance failures fixed. Studio078/079 exposed and guarded. Full specified gate remains open."
+    },
+    "G5": {
+      "status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/G5-healthy-assessment-first-red.json",
+        "tmp/phase-g/iterations/G5-assessment-green.xml",
+        "tmp/phase-g/iterations/G5-conflict-packet-green.xml",
+        "tmp/phase-g/iterations/20261019T162917.427701Z-G-source-investigation-b56d60/",
+        "tmp/phase-g/iterations/20261019T163809.761586Z-G-source-investigation-86ebab/",
+        "tmp/phase-g/iterations/G5-multihop-browser-red.xml",
+        "tmp/phase-g/iterations/G5-multihop-browser-green.xml",
+        "tmp/phase-g/iterations/20261020T005559.569314Z-G-source-investigation-756f69/",
+        "tmp/phase-g/iterations/G5-protocol-history-regression.xml",
+        "tmp/phase-g/iterations/G5-router-id-unavailable-green.xml",
+        "tmp/phase-g/iterations/G5-router-id-unavailable-corrected.xml",
+        "tmp/phase-g/iterations/20261020T024224.287394Z-G-source-protocol-a9aedb/quality-review.json",
+        "tmp/phase-g/iterations/20261020T030022.712174Z-G-source-protocol-dbb9a4/quality-review.json",
+        "tmp/phase-g/iterations/20261020T030216.073327Z-G-source-protocol-a3bd45/quality-review.json",
+        "tmp/phase-g/iterations/G5-Init-history-scope.xml",
+        "tmp/phase-g/iterations/G5-knowledge-required-flags-final.xml",
+        "tmp/phase-f/iterations/20261020T034344.134200Z-F3-frozen-routing-candidate-fd33c6/quality-review.json",
+        "tmp/phase-g/iterations/20261020-metrics-browser/",
+        "tmp/phase-g/iterations/20261020T073935.806137Z-G-source-telemetry-cd199f/quality-review.json",
+        "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\increment-review.json",
+        "tmp/phase-g/iterations/20261020T130151.701511Z-G9-document-grounding-resume-7f63c9/manual-document-review-final.json",
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+      ],
+      "notes": "Manual review039\u00e2\u20ac\u201c050 exposed task-scope, temporal-inference, OSPF role/state/prerequisite, router-ID and unavailable-source errors despite tool-only scores. Original drafts retained; bounded corrections verified separately from fallback and general quality gates.",
+      "acceptance_gate": "FAILED_EXPOSED_PROSE_FRESH_GATE_NOT_RUN",
+      "latest_increment": "Original model ERROR-as-interface-state, capture-as-observation-time and OSPF process/area drift errors retained. Shared source/fact boundaries and diff renderer121affectedPASS. No fresh quality or fallback reasoning credit."
+    },
+    "G6": {
+      "status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261020-metrics-browser/policy-location-first-red.xml",
+        "tmp/phase-g/iterations/20261020-metrics-browser/policy-location-asymmetry-fixed.xml",
+        "tmp/phase-g/iterations/20261020-metrics-browser/starter-conflict-precision-fixed.xml",
+        "tmp/phase-g/iterations/20261020T124645.122148Z-G-source-starter-ac205a/quality-review.json"
+      ],
+      "acceptance_gate": "NOT_RUN"
+    },
+    "G7": {
+      "status": "NOT_RUN",
+      "evidence": [],
+      "acceptance_gate": "NOT_RUN"
+    },
+    "G8": {
+      "status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json",
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/manual-edit-081-083-final-review.json"
+      ],
+      "acceptance_gate": "NOT_RUN",
+      "latest_increment": "Actual081 model comment plus exact-anchor reviewed insertion;082/083 prerequisites, selected-region and indentation preservation guards. Browser first-red/fixed proposal+Reject and204LF preservation. Multi-file gate remains open."
+    },
+    "G9": {
+      "status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/G3-configured-pdf.xml",
+        "tmp/phase-g/iterations/G3-file-selection-red.xml",
+        "tmp/phase-g/iterations/G3-file-selection-green.xml",
+        "tmp/phase-g/iterations/20261019T164124.894351Z-G-source-diagram-967bb5/",
+        "tmp/phase-g/iterations/20261019T164905.486274Z-G-source-diagram-b7110f/",
+        "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\increment-review.json",
+        "tmp/phase-g/iterations/20261020T130151.701511Z-G9-document-grounding-resume-7f63c9/manual-document-review-final.json",
+        "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/ordinary-counter-routing-remaining.json"
+      ],
+      "notes": "Real document bytes and OCR consumed; unsupported visual prose found and narrowed guard added. Full image understanding and multimodal acceptance are not established.",
+      "acceptance_gate": "NOT_RUN",
+      "latest_increment": "Ordinary named-port counter query still selectsinventory without logical_source_categories; unresolved parity defect retained. FullG9 remainsopen."
+    },
+    "G10": {
+      "status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261020-browser-v2/cancellation.json",
+        "tmp/phase-g/iterations/20261020-browser-v2/browser-results.json",
+        "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\increment-review.json",
+        "tmp/phase-g/iterations/20261020T130151.701511Z-G9-document-grounding-resume-7f63c9/manual-document-review-final.json",
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+      ],
+      "notes": "Actual browser owner-bound cancellation PASS; schema fields and unsaved-close/Undo tested. OS clipboard and complete runtime budget/concurrency acceptance remain incomplete.",
+      "acceptance_gate": "NOT_RUN",
+      "latest_increment": "Independent observed topology JSON/GUI/both-gateway acceptance; comparison/source-prohibition/history/provenance failures fixed. Studio078/079 exposed and guarded. Full specified gate remains open."
+    },
+    "G11": {
+      "status": "IN_PROGRESS",
+      "evidence": [
+        "tmp/phase-g/iterations/20261020T130151.701511Z-G9-document-grounding-resume-7f63c9/manual-document-review-final.json",
+        "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+      ],
+      "acceptance_gate": "NOT_RUN",
+      "latest_increment": "Independent observed topology JSON/GUI/both-gateway acceptance; comparison/source-prohibition/history/provenance failures fixed. Studio078/079 exposed and guarded. Full specified gate remains open."
+    },
+    "G12": {
+      "status": "NOT_RUN",
+      "evidence": [],
+      "acceptance_gate": "NOT_RUN"
+    }
+  },
+  "model": "qwen2.5:1.5b",
+  "quality_gate": "NOT_RUN_FRESH_PHASE_G",
+  "phase_f_remaining": "Retained in existing Phase F tracker; no completion inferred.",
+  "updated_at": "2026-10-21T13:29:29.883554+00:00",
+  "acceptance_gate_scope": "Full specified stage gate, not partial implementation or exposed regression outcomes; inspect evidence and notes for actual passes/failures.",
+  "continuation_limits": {
+    "browser": "Available after fresh recheck and standard launcher restoration. GUI revision restore and both-assistant consumption verified.",
+    "active_scenario": "None; ordinary sources restored after inventory acceptance. Preserved custom draft9 and all prior acceptance drafts.",
+    "full_model_quality": "NOT_COMPLETE: raw Qwen078/079 critical errors require verified reconstruction",
+    "full_24_source_gate": "NOT_COMPLETE"
+  },
+  "latest_progress_audit": "docs/evaluations/PHASE_G_PROGRESS_AUDIT_2026-10-21.md",
+  "mandatory_stages": [
+    "G0",
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9",
+    "G10",
+    "G11",
+    "G12"
+  ],
+  "scope_unchanged": true,
+  "execution_priority": [
+    "G1",
+    "G2",
+    "G3",
+    "G7",
+    "G8",
+    "G4",
+    "G5",
+    "G6",
+    "G9",
+    "G10",
+    "G11",
+    "G12"
+  ],
+  "next_incomplete_milestone": "G3: remaining18 individual source gates; observed source has unresolved prose quality; published-knowledge GUI acceptance in progress. Then G7/G8 and all mandatory incomplete stages.",
+  "subsequent_priority": "G7 all141 nativeStudio journeys/genuine separately supported Ansible; G8 related files and coordinated exact-base proposals; then every remaining incompleteG0-G12 gate",
+  "holdout_policy": "Reserve full unseen intelligence benchmark until source/Studio/integration foundations are ready; exposed corrections are not generalization",
+  "model_correction_policy": {
+    "maximum_focused_development_attempts_per_recurring_failure_class": 2,
+    "critical_false_claims": "Must be rejected or safely reconstructed; no weakened validator",
+    "source_envelope_planned_status_class": "2 shared corrections exhausted; remaining synthesis quality recorded; safety-only status rejection added and tested"
+  },
+  "individual_source_acceptance": {
+    "complete": [
+      "running_configs",
+      "config_snapshots",
+      "config_changes",
+      "inventory",
+      "topology_planned",
+      "topology_history"
+    ],
+    "accepted_count": 6,
+    "total": 24,
+    "next_source": "topology_observed",
+    "in_progress": [
+      "topology_observed"
+    ],
+    "other_source_paths": "Registry/schema/editor/provider paths exist; not evidence of complete end-to-end acceptance.",
+    "evidence": [
+      "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\current-source-acceptance-review.json",
+      "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\saved-source-acceptance-review.json",
+      "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\change-source-acceptance-review.json",
+      "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\inventory-source-acceptance-review.json",
+      "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\planned-source-acceptance-review.json",
+      "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\history-source-acceptance-review.json"
+    ]
+  }
+}

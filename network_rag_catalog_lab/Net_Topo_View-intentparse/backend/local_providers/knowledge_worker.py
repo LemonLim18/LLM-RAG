@@ -18,6 +18,8 @@ def main(payload):
         raise ValueError('Knowledge workspace cannot be inside the preserved V9 repository.')
     protect_source(root)
     sys.path.insert(1, str(Path(__file__).resolve().parents[1]))
+    from local_providers.knowledge_lifecycle import configure_native_contracts
+    configure_native_contracts()
     from app.knowledge.management import KnowledgeManagementService
     from app.knowledge.runtime import active_snapshot, active_pointer
     from app.knowledge.sqlite_repository import SQLiteAuthoringStore
@@ -29,7 +31,54 @@ def main(payload):
     body = payload.get('body', {})
     actor = payload['actor']
     reason = body.get('reason', '').strip()
-    if action not in {'inspect', 'schema', 'validate', 'release', 'render'} and not reason:
+    if action in {'published_requirements','published_search'}:
+        # Read-only exit before constructing/migrating any authoring store.
+        snapshot=active_snapshot(releases)
+        if snapshot is None or snapshot.release_id!=body.get('release_id'):
+            raise ValueError('Published knowledge changed; retrieve it again.')
+        if action=='published_search':
+            query=body.get('query');limit=body.get('limit',3)
+            if not isinstance(query,str) or not query.strip() or len(query)>4000 or type(limit) is not int or not 1<=limit<=3:
+                raise ValueError('Published retrieval requires a bounded query and one to three results.')
+            retrieval=snapshot.manifest['retrieval']
+            index=Path(retrieval.get('index_path','')).resolve()
+            if not index.is_relative_to(base) or not index.is_dir():raise ValueError('Published index must exist inside the owned knowledge workspace.')
+            from local_providers.knowledge_lifecycle import configure_embeddings
+            configure_embeddings(timeout=10)
+            from app.knowledge.runtime import snapshot_scope
+            from app.vectorstore import get_vectorstore
+            from langsmith import tracing_context
+            import math
+            hits=[]
+            with snapshot_scope(snapshot),tracing_context(enabled=False):
+                # Existing release-specific V9 index; never create/rebuild one.
+                for document,distance in get_vectorstore().similarity_search_with_score(query,k=limit,filter={'release_id':snapshot.release_id}):
+                    operation=snapshot.service.get_operation(document.metadata['operation_id'])
+                    if document.metadata.get('release_id')!=snapshot.release_id or document.metadata.get('operation_version')!=operation.version or document.metadata.get('category')!=operation.category_id:
+                        raise ValueError('Published retrieval metadata does not match the immutable operation contract.')
+                    if not math.isfinite(float(distance)):raise ValueError('Invalid retrieval distance.')
+                    hits.append({'operation_id':operation.operation_id,'distance':float(distance)})
+            snapshot.assert_active()
+            return {'ok':True,'data':{'release_id':snapshot.release_id,'hits':hits,'retrieval':'existing_v9_published_index'}}
+        identities=body.get('operation_ids',[])
+        if not isinstance(identities,list) or len(identities)>3 or any(not isinstance(v,str) or not re.fullmatch(r'[a-z][a-z0-9_]*',v) for v in identities):
+            raise ValueError('Invalid published operation references.')
+        operations=[]
+        for identity in identities:
+            operation=snapshot.service.get_operation(identity)
+            from llm.gateway_knowledge import native_method_trust
+            profiles=[]
+            for binding in snapshot.manifest['template_bindings']:
+                if binding['operation_id']!=identity:continue
+                profile={k:binding[k] for k in ['vendor','platform','versions']}
+                profile['knowledge_approval']=native_method_trust(snapshot.root,snapshot.manifest,identity,
+                    {'vendor':binding['vendor'],'platform':binding['platform'],'version':binding['versions'][0]})
+                profiles.append(profile)
+            operations.append({'operation_id':identity,'description':operation.description,
+                'schema':snapshot.schema(identity),'profiles':profiles})
+        snapshot.assert_active()
+        return {'ok':True,'data':{'release_id':snapshot.release_id,'operations':operations}}
+    if action not in {'inspect', 'schema', 'validate', 'release', 'render','review_status'} and not reason:
         raise ValueError('A change reason is required.')
 
     if action == 'initialize':
@@ -90,10 +139,30 @@ def main(payload):
         if connection.execute("SELECT 1 FROM sqlite_master WHERE name='cognishield_playbook_variants'").fetchone():
             for identity, content in connection.execute('SELECT id,body FROM cognishield_playbook_variants ORDER BY id'):
                 result['sources']['cognishield/playbooks/'+identity+'.json'] = content.encode('utf-8')
+        if connection.execute("SELECT 1 FROM sqlite_master WHERE name='cognishield_method_specs'").fetchone():
+            for identity,content in connection.execute('SELECT identity,body FROM cognishield_method_specs ORDER BY identity'):
+                result['sources']['cognishield/methods/'+sha256(identity.encode()).hexdigest()+'.json']=content.encode('utf-8')
         result['revision'] = sha256(f"sqlite:{result['generation']}:{_source_digest(result['sources'])}".encode()).hexdigest()
         return result
     SQLiteAuthoringStore._snapshot = with_templates
     service = KnowledgeManagementService(base)
+
+    if action=='review_status':
+        from local_providers.knowledge_review import review_status
+        with service.store._connection() as connection:
+            return {'ok':True,'data':review_status(service,connection,service.store._snapshot(connection),checks=body.get('checks',False))}
+    if action in {'review_method','review_approve'}:
+        from local_providers.knowledge_review import save_method,approve
+        with authoring_lock(base),service.store._connection() as connection:
+            if not connection.execute("SELECT 1 FROM sqlite_master WHERE name='cognishield_method_specs'").fetchone():
+                backup=database.with_name('catalog.before-engineer-reviews.sqlite3')
+                if not backup.exists():
+                    with sqlite3.connect(database.resolve().as_uri()+'?mode=ro',uri=True) as source,sqlite3.connect(backup) as target:source.backup(target)
+            connection.execute('BEGIN IMMEDIATE')
+            before=service.store._snapshot(connection)
+            result=(save_method if action=='review_method' else approve)(service,connection,before,body,actor,releases)
+            connection.commit()
+            return result
 
     if action == 'playbook_variant':
         from llm.gateway_playbooks import validate_variant
@@ -156,6 +225,9 @@ def main(payload):
                 validate_preset({**definitions.get(change['entity_id'], {}), **change['values']})
         return service.apply({**body, 'actor': actor}).model_dump()
     if action in {'publish', 'build'}:
+        if action=='publish':
+            from local_providers.knowledge_review import authorize_publication
+            body={**body,'expected_revision':authorize_publication(service,base,releases,body,actor)}
         identity = build(base, releases, body, actor)
         if action == 'publish':
             activate(base, releases, {**body, 'release_id':identity}, actor)
@@ -202,7 +274,14 @@ def main(payload):
                         'platform':platform,'versions':body.get('versions') or [],'template_path':path,
                         'input_contract':{'fields':list(schema['properties']),
                             'optional_defaults':{k:None for k in schema['properties'] if k not in required},'derived':{}}}
+                    from jinja2 import Environment,meta
+                    from app.knowledge.rule_registry import TEMPLATE_DERIVATIONS
+                    variables=meta.find_undeclared_variables(Environment().parse(content))
+                    binding['input_contract']['derived']={name:handler for name,(handler,source) in TEMPLATE_DERIVATIONS.items() if name in variables and source in schema['properties']}
                     candidate['template_bindings'].append(binding)
+                    operation.setdefault('vendor_knowledge',{})[vendor]={'status':'generation_supported',
+                        'reason':'Native authoring binding; exact senior approval and application gates are required before changed knowledge is activated.',
+                        'requirements':['Review the method scope, prerequisites and limitations. Independent certification remains separate.']}
                     bound = [binding]
                 if not bound or len(content.encode('utf-8')) > 200000:
                     raise ValueError('Select a bound template or provide a new variant; maximum size is 200 KB.')

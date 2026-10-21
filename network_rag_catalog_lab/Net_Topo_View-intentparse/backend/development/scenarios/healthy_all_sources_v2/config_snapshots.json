@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "category": "config_snapshots",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "saved-1100",
+        "device_id": 1100,
+        "timestamp": "2026-10-18T00:59:50Z",
+        "kind": "configuration_snapshot",
+        "source": "scenario_author",
+        "current": false,
+        "values": {
+          "config_text": "hostname LAB-R1\ninterface GigabitEthernet0/1\n ip address 10.72.0.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.71.1\n"
+        }
+      },
+      {
+        "id": "saved-1200",
+        "device_id": 1200,
+        "timestamp": "2026-10-18T00:59:50Z",
+        "kind": "configuration_snapshot",
+        "source": "scenario_author",
+        "current": false,
+        "values": {
+          "config_text": "set system host-name LAB-R2\nset interfaces ge-0/0/0 unit 0 family inet address 10.72.0.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65020\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65030\nset protocols bgp group CEDAR neighbor 10.72.0.6\n"
+        }
+      },
+      {
+        "id": "saved-1300",
+        "device_id": 1300,
+        "timestamp": "2026-10-18T00:59:50Z",
+        "kind": "configuration_snapshot",
+        "source": "scenario_author",
+        "current": false,
+        "values": {
+          "config_text": "sysname LAB-R3\ninterface GigabitEthernet0/0/1\n ip address 10.72.0.6 255.255.255.252\nquit\nbgp 65030\n peer 10.72.0.5 as-number 65020\n"
+        }
+      }
+    ]
+  }
+}

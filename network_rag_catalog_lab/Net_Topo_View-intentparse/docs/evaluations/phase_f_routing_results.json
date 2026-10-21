@@ -1,0 +1,2531 @@
+{
+  "evaluated_at": "2026-10-19T02:26:50.944390+00:00",
+  "cohort": "EXPOSED_PHASE_E_REGRESSIONS",
+  "historical_first_run": {
+    "candidate": 52,
+    "legacy": 57,
+    "cases": 60
+  },
+  "current_matched": {
+    "candidate": {
+      "source_manifest": {
+        "model": "qwen2.5:1.5b",
+        "spec_sha256": "2ea8e158a294d587ce99d26941b0b2235621c207a10efc4e181db98acfe7aaed",
+        "scenario_id": "GENERATED-02027-00",
+        "scenario_sha256": "570bb839f47cd36fb98947c0a084174aaf685a69b8e5bfa24386efb8db8fef16",
+        "source_digest": "19ce31dc260f93a550ce1aba41d808b03e2e6b4c91248b48ac769bd0bfa8c15c",
+        "cohort": "exposed_phase_e_regression"
+      },
+      "artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8",
+      "cases": 60,
+      "passed": 60,
+      "model_calls": 29,
+      "median_latency_ms": 1657.605,
+      "p95_latency_ms": 3679.94,
+      "plan_modes": {
+        "existing_semantic_conversation": 2,
+        "existing_short_path_or_classifier": 31,
+        "validated_model_plan": 19,
+        "model_plan_invalid_fallback": 1,
+        "explicit_published_source": 4,
+        "explicit_editor_effect": 3
+      },
+      "rows": [
+        {
+          "id": "E-HOLDOUT-001",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "Hi there!",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_semantic_conversation",
+          "model_calls": 0,
+          "latency_ms": 1274.54,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0001-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-002",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "What is 19 plus 24?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 3541.7,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0002-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-003",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "Explain binary versus hexadecimal.",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 3556.52,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0003-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-004",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "How does TCP acknowledge data?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 3593.47,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0004-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-005",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "Why use version control?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 3623.7,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0005-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-006",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "What does idempotent mean?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 3646.25,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0006-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-007",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "Explain DNS caching.",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 3693.19,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0007-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-008",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "How do a list and a set differ in Python?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 3679.94,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0008-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-009",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "What is a subnet mask in general?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 3796.03,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0009-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-010",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "How do OSPF and BGP differ conceptually?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_semantic_conversation",
+          "model_calls": 0,
+          "latency_ms": 1381.02,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0010-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-011",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "Which interfaces are recorded on Spruce-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.59,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0011-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-012",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "Tell me the management address of Maple-2027.",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2015.6,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0012-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-013",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "List the vendors of the recorded devices.",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.22,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0013-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-014",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "Which addresses belong to interfaces on Cedar-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.25,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0014-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-015",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "How many interfaces are recorded for Spruce-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.22,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0015-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-016",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "What software version is recorded for Maple-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.23,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0016-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-017",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "What is the recorded role of Cedar-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.24,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0017-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-018",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "Which site contains Spruce-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.21,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0018-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-019",
+          "group": "topology",
+          "outcome": "PASS",
+          "prompt": "Describe the planned topology between Maple-2027 and Spruce-2027.",
+          "required_tools": [
+            "network.topology"
+          ],
+          "selected_tools": [
+            "network.topology"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.33,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0019-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-020",
+          "group": "topology",
+          "outcome": "PASS",
+          "prompt": "Show the recorded network path from Maple-2027 to Cedar-2027.",
+          "required_tools": [
+            "network.topology"
+          ],
+          "selected_tools": [
+            "network.topology"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2074.68,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0020-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-021",
+          "group": "topology",
+          "outcome": "PASS",
+          "prompt": "Which recorded links touch Spruce-2027?",
+          "required_tools": [
+            "network.topology"
+          ],
+          "selected_tools": [
+            "network.topology"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2019.86,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0021-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-022",
+          "group": "topology",
+          "outcome": "PASS",
+          "prompt": "Explain the planned connection between Spruce-2027 and Cedar-2027.",
+          "required_tools": [
+            "network.topology"
+          ],
+          "selected_tools": [
+            "network.topology"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2128.29,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0022-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-023",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "Read the saved configuration for Cedar-2027.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2018.08,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0023-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-024",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "Show the latest stored backup of Spruce-2027.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2089.03,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0024-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-025",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "Compare Maple-2027 current configuration with its saved snapshot.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2795.6,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0025-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-026",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "What running configuration is available for Spruce-2027?",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2030.6,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0026-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-027",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "Retrieve configuration history for Maple-2027.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 1993.83,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0027-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-028",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "List the recorded configuration captures for Cedar-2027.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2062.13,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0028-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-029",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "Which recent syslogs exist for Spruce-2027?",
+          "required_tools": [
+            "network.syslog"
+          ],
+          "selected_tools": [
+            "network.syslog"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2082.33,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0029-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-030",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "Get the latest available log from Maple-2027.",
+          "required_tools": [
+            "network.syslog"
+          ],
+          "selected_tools": [
+            "network.syslog"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2011.55,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0030-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-031",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "Read available CPU measurements for Cedar-2027.",
+          "required_tools": [
+            "network.telemetry"
+          ],
+          "selected_tools": [
+            "network.telemetry"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2046.32,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0031-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-032",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "What interface traffic is recorded on Spruce-2027?",
+          "required_tools": [
+            "network.telemetry"
+          ],
+          "selected_tools": [
+            "network.telemetry"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2162.04,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0032-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-033",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "What incident records concern Cedar-2027?",
+          "required_tools": [
+            "network.incidents"
+          ],
+          "selected_tools": [
+            "network.incidents"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2378.95,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0033-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-034",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "Show recorded alerts on Maple-2027.",
+          "required_tools": [
+            "network.incidents"
+          ],
+          "selected_tools": [
+            "network.incidents"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2013.89,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0034-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-035",
+          "group": "protocol",
+          "outcome": "PASS",
+          "prompt": "Does Maple-2027 have a recorded OSPF adjacency with Spruce-2027?",
+          "required_tools": [
+            "network.state"
+          ],
+          "selected_tools": [
+            "network.state"
+          ],
+          "plan_mode": "model_plan_invalid_fallback",
+          "model_calls": 1,
+          "latency_ms": 2266.86,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0035-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-036",
+          "group": "protocol",
+          "outcome": "PASS",
+          "prompt": "What BGP peer session state is recorded for Cedar-2027?",
+          "required_tools": [
+            "network.state"
+          ],
+          "selected_tools": [
+            "network.state"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2202.51,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0036-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-037",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "What does page 4 of this PDF explain?",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1462.89,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0037-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-038",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "Summarize the attached design document.",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1618.64,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0038-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-039",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "Can you read the contents of this uploaded file?",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1696.57,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0039-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-040",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "What text is visible in the attached screenshot?",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1535.07,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0040-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-041",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "Explain the diagram in the uploaded PDF.",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1463.75,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0041-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-042",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "What limitations are stated on page 2?",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 7613.92,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0042-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-043",
+          "group": "published",
+          "outcome": "PASS",
+          "prompt": "Explain the published OSPF operation parameter requirements.",
+          "required_tools": [
+            "knowledge.search"
+          ],
+          "selected_tools": [
+            "knowledge.search"
+          ],
+          "plan_mode": "explicit_published_source",
+          "model_calls": 0,
+          "latency_ms": 0.52,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0043-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-044",
+          "group": "published",
+          "outcome": "PASS",
+          "prompt": "Which inputs does the catalog require for a BGP operation?",
+          "required_tools": [
+            "knowledge.search"
+          ],
+          "selected_tools": [
+            "knowledge.search"
+          ],
+          "plan_mode": "explicit_published_source",
+          "model_calls": 0,
+          "latency_ms": 0.2,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0044-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-045",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Explain the actual unsaved configuration without changing it.",
+          "required_tools": [
+            "editor.read"
+          ],
+          "selected_tools": [
+            "editor.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.69,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0045-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-046",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Describe the BGP section in the open file.",
+          "required_tools": [
+            "editor.read"
+          ],
+          "selected_tools": [
+            "editor.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.4,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0046-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-047",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Replace the BGP neighbor address in the active file with 192.0.2.44; retain OSPF.",
+          "required_tools": [
+            "document.propose"
+          ],
+          "selected_tools": [
+            "document.propose"
+          ],
+          "plan_mode": "explicit_editor_effect",
+          "model_calls": 0,
+          "latency_ms": 0.41,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0047-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-048",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Change the router ID in the selected OSPF section of my open buffer.",
+          "required_tools": [
+            "document.propose"
+          ],
+          "selected_tools": [
+            "document.propose"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1417.02,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0048-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-049",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Add a comment to the current code explaining the neighbor statement.",
+          "required_tools": [
+            "document.propose"
+          ],
+          "selected_tools": [
+            "document.propose"
+          ],
+          "plan_mode": "explicit_editor_effect",
+          "model_calls": 0,
+          "latency_ms": 0.13,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0049-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-050",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Correct the description in the open template.",
+          "required_tools": [
+            "document.propose"
+          ],
+          "selected_tools": [
+            "document.propose"
+          ],
+          "plan_mode": "explicit_editor_effect",
+          "model_calls": 0,
+          "latency_ms": 0.12,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0050-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-051",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Generate new native OSPF configuration on Maple-2027.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1400.42,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0051-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-052",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Create a static-route configuration on Cedar-2027 to 203.0.113.0/24 via 192.0.2.2.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1421.63,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0052-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-053",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Configure BGP on Spruce-2027 using local AS 65020 and remote AS 65030.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1555.44,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0053-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-054",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Generate interface description Uplink on Maple-2027 GigabitEthernet0/1.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1464.57,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0054-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-055",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Create native QoS policing configuration on Cedar-2027; ask for missing rate values.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1433.14,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0055-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-056",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Generate native configuration combining OSPF and static routing on Maple-2027.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1467.45,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0056-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-057",
+          "group": "compound",
+          "outcome": "PASS",
+          "prompt": "Check Spruce-2027 current configuration and its BGP peer session state.",
+          "required_tools": [
+            "network.configuration",
+            "network.state"
+          ],
+          "selected_tools": [
+            "network.configuration",
+            "network.state"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 3038.33,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0057-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-058",
+          "group": "compound",
+          "outcome": "PASS",
+          "prompt": "Read available syslogs and current configuration for Maple-2027.",
+          "required_tools": [
+            "network.configuration",
+            "network.syslog"
+          ],
+          "selected_tools": [
+            "network.configuration",
+            "network.syslog"
+          ],
+          "plan_mode": "validated_model_plan",
+          "model_calls": 1,
+          "latency_ms": 2771.94,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0058-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-059",
+          "group": "compound",
+          "outcome": "PASS",
+          "prompt": "Compare published OSPF operation requirements with Spruce-2027 stored configuration.",
+          "required_tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "plan_mode": "explicit_published_source",
+          "model_calls": 0,
+          "latency_ms": 0.39,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0059-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-060",
+          "group": "compound",
+          "outcome": "PASS",
+          "prompt": "Explain the catalog BGP parameter requirements alongside Cedar-2027 saved configuration.",
+          "required_tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "plan_mode": "explicit_published_source",
+          "model_calls": 0,
+          "latency_ms": 0.21,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021009.979113Z-F3-exposed-regressions-candidate-10a5e8/0060-case.json"
+        }
+      ]
+    },
+    "legacy": {
+      "source_manifest": {
+        "model": "qwen2.5:1.5b",
+        "spec_sha256": "2ea8e158a294d587ce99d26941b0b2235621c207a10efc4e181db98acfe7aaed",
+        "scenario_id": "GENERATED-02027-00",
+        "scenario_sha256": "570bb839f47cd36fb98947c0a084174aaf685a69b8e5bfa24386efb8db8fef16",
+        "source_digest": "19ce31dc260f93a550ce1aba41d808b03e2e6b4c91248b48ac769bd0bfa8c15c",
+        "cohort": "exposed_phase_e_regression"
+      },
+      "artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095",
+      "cases": 60,
+      "passed": 60,
+      "model_calls": 9,
+      "median_latency_ms": 0.475,
+      "p95_latency_ms": 2330.34,
+      "plan_modes": {
+        "existing_short_path_or_classifier": 53,
+        "explicit_published_source": 4,
+        "explicit_editor_effect": 3
+      },
+      "rows": [
+        {
+          "id": "E-HOLDOUT-001",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "Hi there!",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1298.25,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0001-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-002",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "What is 19 plus 24?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2310.7,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0002-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-003",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "Explain binary versus hexadecimal.",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2324.7,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0003-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-004",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "How does TCP acknowledge data?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2291.04,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0004-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-005",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "Why use version control?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2464.9,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0005-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-006",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "What does idempotent mean?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2316.06,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0006-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-007",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "Explain DNS caching.",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2330.34,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0007-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-008",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "How do a list and a set differ in Python?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2319.38,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0008-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-009",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "What is a subnet mask in general?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2483.91,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0009-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-010",
+          "group": "conversation",
+          "outcome": "PASS",
+          "prompt": "How do OSPF and BGP differ conceptually?",
+          "required_tools": [],
+          "selected_tools": [],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1372.06,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0010-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-011",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "Which interfaces are recorded on Spruce-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.57,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0011-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-012",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "Tell me the management address of Maple-2027.",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.25,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0012-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-013",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "List the vendors of the recorded devices.",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.25,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0013-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-014",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "Which addresses belong to interfaces on Cedar-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.25,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0014-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-015",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "How many interfaces are recorded for Spruce-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.19,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0015-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-016",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "What software version is recorded for Maple-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.24,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0016-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-017",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "What is the recorded role of Cedar-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.24,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0017-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-018",
+          "group": "inventory",
+          "outcome": "PASS",
+          "prompt": "Which site contains Spruce-2027?",
+          "required_tools": [
+            "inventory.read"
+          ],
+          "selected_tools": [
+            "inventory.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.22,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0018-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-019",
+          "group": "topology",
+          "outcome": "PASS",
+          "prompt": "Describe the planned topology between Maple-2027 and Spruce-2027.",
+          "required_tools": [
+            "network.topology"
+          ],
+          "selected_tools": [
+            "network.topology"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.3,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0019-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-020",
+          "group": "topology",
+          "outcome": "PASS",
+          "prompt": "Show the recorded network path from Maple-2027 to Cedar-2027.",
+          "required_tools": [
+            "network.topology"
+          ],
+          "selected_tools": [
+            "network.topology"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.23,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0020-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-021",
+          "group": "topology",
+          "outcome": "PASS",
+          "prompt": "Which recorded links touch Spruce-2027?",
+          "required_tools": [
+            "network.topology"
+          ],
+          "selected_tools": [
+            "network.topology"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.56,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0021-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-022",
+          "group": "topology",
+          "outcome": "PASS",
+          "prompt": "Explain the planned connection between Spruce-2027 and Cedar-2027.",
+          "required_tools": [
+            "network.topology"
+          ],
+          "selected_tools": [
+            "network.topology"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.32,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0022-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-023",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "Read the saved configuration for Cedar-2027.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.52,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0023-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-024",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "Show the latest stored backup of Spruce-2027.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.26,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0024-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-025",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "Compare Maple-2027 current configuration with its saved snapshot.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.32,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0025-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-026",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "What running configuration is available for Spruce-2027?",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.26,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0026-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-027",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "Retrieve configuration history for Maple-2027.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.25,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0027-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-028",
+          "group": "configuration",
+          "outcome": "PASS",
+          "prompt": "List the recorded configuration captures for Cedar-2027.",
+          "required_tools": [
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "network.configuration"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.26,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0028-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-029",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "Which recent syslogs exist for Spruce-2027?",
+          "required_tools": [
+            "network.syslog"
+          ],
+          "selected_tools": [
+            "network.syslog"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.47,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0029-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-030",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "Get the latest available log from Maple-2027.",
+          "required_tools": [
+            "network.syslog"
+          ],
+          "selected_tools": [
+            "network.syslog"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.26,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0030-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-031",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "Read available CPU measurements for Cedar-2027.",
+          "required_tools": [
+            "network.telemetry"
+          ],
+          "selected_tools": [
+            "network.telemetry"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.26,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0031-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-032",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "What interface traffic is recorded on Spruce-2027?",
+          "required_tools": [
+            "network.telemetry"
+          ],
+          "selected_tools": [
+            "inventory.read",
+            "network.telemetry"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.23,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0032-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-033",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "What incident records concern Cedar-2027?",
+          "required_tools": [
+            "network.incidents"
+          ],
+          "selected_tools": [
+            "network.incidents"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.29,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0033-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-034",
+          "group": "operational",
+          "outcome": "PASS",
+          "prompt": "Show recorded alerts on Maple-2027.",
+          "required_tools": [
+            "network.incidents"
+          ],
+          "selected_tools": [
+            "network.incidents"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.74,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0034-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-035",
+          "group": "protocol",
+          "outcome": "PASS",
+          "prompt": "Does Maple-2027 have a recorded OSPF adjacency with Spruce-2027?",
+          "required_tools": [
+            "network.state"
+          ],
+          "selected_tools": [
+            "network.state"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.48,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0035-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-036",
+          "group": "protocol",
+          "outcome": "PASS",
+          "prompt": "What BGP peer session state is recorded for Cedar-2027?",
+          "required_tools": [
+            "network.state"
+          ],
+          "selected_tools": [
+            "network.state"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.3,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0036-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-037",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "What does page 4 of this PDF explain?",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1431.35,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0037-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-038",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "Summarize the attached design document.",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1472.14,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0038-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-039",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "Can you read the contents of this uploaded file?",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1424.04,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0039-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-040",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "What text is visible in the attached screenshot?",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1361.91,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0040-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-041",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "Explain the diagram in the uploaded PDF.",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1399.69,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0041-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-042",
+          "group": "documents",
+          "outcome": "PASS",
+          "prompt": "What limitations are stated on page 2?",
+          "required_tools": [
+            "document.read"
+          ],
+          "selected_tools": [
+            "document.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 1,
+          "latency_ms": 2330.73,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0042-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-043",
+          "group": "published",
+          "outcome": "PASS",
+          "prompt": "Explain the published OSPF operation parameter requirements.",
+          "required_tools": [
+            "knowledge.search"
+          ],
+          "selected_tools": [
+            "knowledge.search"
+          ],
+          "plan_mode": "explicit_published_source",
+          "model_calls": 0,
+          "latency_ms": 0.49,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0043-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-044",
+          "group": "published",
+          "outcome": "PASS",
+          "prompt": "Which inputs does the catalog require for a BGP operation?",
+          "required_tools": [
+            "knowledge.search"
+          ],
+          "selected_tools": [
+            "knowledge.search"
+          ],
+          "plan_mode": "explicit_published_source",
+          "model_calls": 0,
+          "latency_ms": 0.18,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0044-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-045",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Explain the actual unsaved configuration without changing it.",
+          "required_tools": [
+            "editor.read"
+          ],
+          "selected_tools": [
+            "editor.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.91,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0045-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-046",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Describe the BGP section in the open file.",
+          "required_tools": [
+            "editor.read"
+          ],
+          "selected_tools": [
+            "editor.read"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.38,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0046-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-047",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Replace the BGP neighbor address in the active file with 192.0.2.44; retain OSPF.",
+          "required_tools": [
+            "document.propose"
+          ],
+          "selected_tools": [
+            "document.propose"
+          ],
+          "plan_mode": "explicit_editor_effect",
+          "model_calls": 0,
+          "latency_ms": 0.39,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0047-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-048",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Change the router ID in the selected OSPF section of my open buffer.",
+          "required_tools": [
+            "document.propose"
+          ],
+          "selected_tools": [
+            "document.propose"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1415.37,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0048-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-049",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Add a comment to the current code explaining the neighbor statement.",
+          "required_tools": [
+            "document.propose"
+          ],
+          "selected_tools": [
+            "document.propose"
+          ],
+          "plan_mode": "explicit_editor_effect",
+          "model_calls": 0,
+          "latency_ms": 0.13,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0049-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-050",
+          "group": "editor",
+          "outcome": "PASS",
+          "prompt": "Correct the description in the open template.",
+          "required_tools": [
+            "document.propose"
+          ],
+          "selected_tools": [
+            "document.propose"
+          ],
+          "plan_mode": "explicit_editor_effect",
+          "model_calls": 0,
+          "latency_ms": 0.18,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0050-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-051",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Generate new native OSPF configuration on Maple-2027.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1381.64,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0051-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-052",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Create a static-route configuration on Cedar-2027 to 203.0.113.0/24 via 192.0.2.2.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1473.26,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0052-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-053",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Configure BGP on Spruce-2027 using local AS 65020 and remote AS 65030.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1434.68,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0053-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-054",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Generate interface description Uplink on Maple-2027 GigabitEthernet0/1.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1597.06,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0054-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-055",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Create native QoS policing configuration on Cedar-2027; ask for missing rate values.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1422.57,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0055-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-056",
+          "group": "generation",
+          "outcome": "PASS",
+          "prompt": "Generate native configuration combining OSPF and static routing on Maple-2027.",
+          "required_tools": [
+            "v9.preview"
+          ],
+          "selected_tools": [
+            "v9.preview"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 1419.94,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0056-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-057",
+          "group": "compound",
+          "outcome": "PASS",
+          "prompt": "Check Spruce-2027 current configuration and its BGP peer session state.",
+          "required_tools": [
+            "network.configuration",
+            "network.state"
+          ],
+          "selected_tools": [
+            "network.configuration",
+            "network.state"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.39,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0057-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-058",
+          "group": "compound",
+          "outcome": "PASS",
+          "prompt": "Read available syslogs and current configuration for Maple-2027.",
+          "required_tools": [
+            "network.configuration",
+            "network.syslog"
+          ],
+          "selected_tools": [
+            "network.configuration",
+            "network.syslog"
+          ],
+          "plan_mode": "existing_short_path_or_classifier",
+          "model_calls": 0,
+          "latency_ms": 0.32,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0058-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-059",
+          "group": "compound",
+          "outcome": "PASS",
+          "prompt": "Compare published OSPF operation requirements with Spruce-2027 stored configuration.",
+          "required_tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "plan_mode": "explicit_published_source",
+          "model_calls": 0,
+          "latency_ms": 0.41,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0059-case.json"
+        },
+        {
+          "id": "E-HOLDOUT-060",
+          "group": "compound",
+          "outcome": "PASS",
+          "prompt": "Explain the catalog BGP parameter requirements alongside Cedar-2027 saved configuration.",
+          "required_tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "selected_tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "plan_mode": "explicit_published_source",
+          "model_calls": 0,
+          "latency_ms": 0.22,
+          "raw_case_artifact": "tmp/phase-f/iterations/20261019T021224.502100Z-F3-exposed-regressions-legacy-c8c095/0060-case.json"
+        }
+      ]
+    }
+  },
+  "interpretation": "Both current paths select correct source groups60/60. Candidate has actual validated model plans and a retained rejected-plan fallback; no answer adequacy or fresh generalization score is inferred. Full source digests differ because audit/report files were added; the routing implementation was not edited between these two serial arms.",
+  "fresh_phase_f": {
+    "routing": 120,
+    "quality": 30,
+    "permissions": 10,
+    "status": "NOT_RUN",
+    "registry_sha256": "a46e3e01c76c1e9895a60fbb5413b3932c28544300bf4eba8d9c71a96159cd7b"
+  },
+  "remaining": [
+    "Fresh120 case evaluation including real setup turns",
+    "Scope-specific planning review",
+    "Adaptive retrieval and actual response quality"
+  ],
+  "frozen_phase_f_progress": {
+    "updated_at": "2026-10-19T04:54:04.230655+00:00",
+    "full120_gate": "NOT_COMPLETE",
+    "first_recorded_unique_cases": 32,
+    "first_recorded_tool_workflow_passed": 26,
+    "first_recorded_rows": [
+      {
+        "id": "F-HOLDOUT-001",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0001-case.json",
+        "selected_tools": [],
+        "provider_requests": 2,
+        "latency_ms": 5995.18
+      },
+      {
+        "id": "F-HOLDOUT-002",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0002-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 4804.34
+      },
+      {
+        "id": "F-HOLDOUT-003",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0003-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 8242.11
+      },
+      {
+        "id": "F-HOLDOUT-004",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0004-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 63562.71
+      },
+      {
+        "id": "F-HOLDOUT-005",
+        "outcome": "FAIL",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0005-case.json",
+        "selected_tools": [],
+        "provider_requests": 1,
+        "latency_ms": 1677.03
+      },
+      {
+        "id": "F-HOLDOUT-006",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0006-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 10611.37
+      },
+      {
+        "id": "F-HOLDOUT-007",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0007-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 22278.98
+      },
+      {
+        "id": "F-HOLDOUT-008",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0008-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 14916.88
+      },
+      {
+        "id": "F-HOLDOUT-009",
+        "outcome": "FAIL",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0009-case.json",
+        "selected_tools": [
+          "inventory.read"
+        ],
+        "provider_requests": 1,
+        "latency_ms": 12128.68
+      },
+      {
+        "id": "F-HOLDOUT-010",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0010-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 9104.61
+      },
+      {
+        "id": "F-HOLDOUT-011",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0011-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 15138.48
+      },
+      {
+        "id": "F-HOLDOUT-012",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0012-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 8286.74
+      },
+      {
+        "id": "F-HOLDOUT-013",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0013-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 15586.94
+      },
+      {
+        "id": "F-HOLDOUT-014",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0014-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 18470.25
+      },
+      {
+        "id": "F-HOLDOUT-015",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0015-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 23852.08
+      },
+      {
+        "id": "F-HOLDOUT-016",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0016-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 11472.17
+      },
+      {
+        "id": "F-HOLDOUT-017",
+        "outcome": "FAIL",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0017-case.json",
+        "selected_tools": [],
+        "provider_requests": 3,
+        "latency_ms": 4213.07
+      },
+      {
+        "id": "F-HOLDOUT-018",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0018-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 5228.58
+      },
+      {
+        "id": "F-HOLDOUT-019",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0019-case.json",
+        "selected_tools": [],
+        "provider_requests": 4,
+        "latency_ms": 11555.52
+      },
+      {
+        "id": "F-HOLDOUT-020",
+        "outcome": "FAIL",
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/0020-case.json",
+        "selected_tools": [],
+        "provider_requests": 3,
+        "latency_ms": 4391.28
+      },
+      {
+        "id": "F-HOLDOUT-021",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T041716.132621Z-F3-frozen-routing-candidate-39fb68/0001-case.json",
+        "selected_tools": [
+          "inventory.read"
+        ],
+        "provider_requests": 2,
+        "latency_ms": 32535.02
+      },
+      {
+        "id": "F-HOLDOUT-022",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T041716.132621Z-F3-frozen-routing-candidate-39fb68/0002-case.json",
+        "selected_tools": [
+          "inventory.read"
+        ],
+        "provider_requests": 2,
+        "latency_ms": 14389.71
+      },
+      {
+        "id": "F-HOLDOUT-023",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T041716.132621Z-F3-frozen-routing-candidate-39fb68/0003-case.json",
+        "selected_tools": [
+          "inventory.read"
+        ],
+        "provider_requests": 1,
+        "latency_ms": 13839.64
+      },
+      {
+        "id": "F-HOLDOUT-024",
+        "outcome": "FAIL",
+        "artifact": "tmp/phase-f/iterations/20261019T041716.132621Z-F3-frozen-routing-candidate-39fb68/0004-case.json",
+        "selected_tools": [
+          "network.configuration"
+        ],
+        "provider_requests": 2,
+        "latency_ms": 10906.22
+      },
+      {
+        "id": "F-HOLDOUT-025",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T041716.132621Z-F3-frozen-routing-candidate-39fb68/0005-case.json",
+        "selected_tools": [
+          "inventory.read"
+        ],
+        "provider_requests": 1,
+        "latency_ms": 8902.06
+      },
+      {
+        "id": "F-HOLDOUT-026",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T041716.132621Z-F3-frozen-routing-candidate-39fb68/0006-case.json",
+        "selected_tools": [
+          "inventory.read"
+        ],
+        "provider_requests": 1,
+        "latency_ms": 8349.91
+      },
+      {
+        "id": "F-HOLDOUT-027",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058/0001-case.json",
+        "selected_tools": [
+          "inventory.read"
+        ],
+        "provider_requests": 0,
+        "latency_ms": 4396.46
+      },
+      {
+        "id": "F-HOLDOUT-028",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058/0002-case.json",
+        "selected_tools": [
+          "inventory.read"
+        ],
+        "provider_requests": 2,
+        "latency_ms": 27760.0
+      },
+      {
+        "id": "F-HOLDOUT-029",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058/0003-case.json",
+        "selected_tools": [
+          "network.topology"
+        ],
+        "provider_requests": 2,
+        "latency_ms": 16409.11
+      },
+      {
+        "id": "F-HOLDOUT-030",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058/0004-case.json",
+        "selected_tools": [
+          "inventory.read",
+          "network.topology"
+        ],
+        "provider_requests": 5,
+        "latency_ms": 42296.66
+      },
+      {
+        "id": "F-HOLDOUT-031",
+        "outcome": "PASS",
+        "artifact": "tmp/phase-f/iterations/20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058/0005-case.json",
+        "selected_tools": [
+          "inventory.read",
+          "network.topology"
+        ],
+        "provider_requests": 5,
+        "latency_ms": 22799.5
+      },
+      {
+        "id": "F-HOLDOUT-032",
+        "outcome": "FAIL",
+        "artifact": "tmp/phase-f/iterations/20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058/0006-case.json",
+        "selected_tools": [
+          "network.state"
+        ],
+        "provider_requests": 2,
+        "latency_ms": 24407.42
+      }
+    ],
+    "uncertain_prior_interrupted_exposure": [
+      "F-HOLDOUT-027"
+    ],
+    "caveat": "High-level tool/workflow score only; source-scope and answer quality failures separately retained. Different source revisions across correction runs; not a uniform full paired120 benchmark. Exposed reruns are not added as new successes.",
+    "runs": [
+      {
+        "artifact": "tmp/phase-f/iterations/20261019T035018.125532Z-F3-frozen-routing-candidate-6db331/result.json",
+        "summary": {
+          "run": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\tmp\\phase-f\\iterations\\20261019T035018.125532Z-F3-frozen-routing-candidate-6db331",
+          "cases": 20,
+          "passed": 16,
+          "failed": 4,
+          "answer_adequacy": "NOT_GRADED",
+          "browser_acceptance": "NOT_INFERRED",
+          "registry_unchanged": true
+        },
+        "source_digest": "d0ab0b704842b2b7333112ec8d468cc440ee6e514dc7a68d354ec83aaa04581c"
+      },
+      {
+        "artifact": "tmp/phase-f/iterations/20261019T035737.325622Z-F3-frozen-routing-candidate-2da2a0/result.json",
+        "summary": {
+          "run": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\tmp\\phase-f\\iterations\\20261019T035737.325622Z-F3-frozen-routing-candidate-2da2a0",
+          "cases": 5,
+          "passed": 5,
+          "failed": 0,
+          "answer_adequacy": "NOT_GRADED",
+          "browser_acceptance": "NOT_INFERRED",
+          "registry_unchanged": true
+        },
+        "source_digest": "460692d744f9761e564fe5ac0176770ab9649ad720e63a689458500cd571a279"
+      },
+      {
+        "artifact": "tmp/phase-f/iterations/20261019T040149.423373Z-F3-frozen-routing-candidate-f24027/result.json",
+        "summary": {
+          "run": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\tmp\\phase-f\\iterations\\20261019T040149.423373Z-F3-frozen-routing-candidate-f24027",
+          "cases": 1,
+          "passed": 1,
+          "failed": 0,
+          "answer_adequacy": "NOT_GRADED",
+          "browser_acceptance": "NOT_INFERRED",
+          "registry_unchanged": true
+        },
+        "source_digest": "3e0437571c80820207391f4c49a727a161399549250adbd5330640b646eb06cf"
+      },
+      {
+        "artifact": "tmp/phase-f/iterations/20261019T040325.191470Z-F3-frozen-routing-candidate-712be8/result.json",
+        "summary": {
+          "run": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\tmp\\phase-f\\iterations\\20261019T040325.191470Z-F3-frozen-routing-candidate-712be8",
+          "cases": 4,
+          "passed": 4,
+          "failed": 0,
+          "answer_adequacy": "NOT_GRADED",
+          "browser_acceptance": "NOT_INFERRED",
+          "registry_unchanged": true
+        },
+        "source_digest": "226d170fdefc354f75a4aca7fa2af55844ca05f1f3f3fc057f764b89cc8c9724"
+      },
+      {
+        "artifact": "tmp/phase-f/iterations/20261019T042435.963025Z-F3-frozen-routing-candidate-120921/result.json",
+        "summary": {
+          "run": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\tmp\\phase-f\\iterations\\20261019T042435.963025Z-F3-frozen-routing-candidate-120921",
+          "cases": 1,
+          "passed": 1,
+          "failed": 0,
+          "requested_cases": 1,
+          "stopped_after_failure": false,
+          "answer_adequacy": "NOT_GRADED",
+          "browser_acceptance": "NOT_INFERRED",
+          "registry_unchanged": true
+        },
+        "source_digest": "5cbbe9c4f7aa8e65c091fe0c2f618365517e7ffc69f1de098641812c7ea862a5"
+      },
+      {
+        "artifact": "tmp/phase-f/iterations/20261019T043441.316846Z-F3-frozen-routing-candidate-81bdbd/result.json",
+        "summary": {
+          "run": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\tmp\\phase-f\\iterations\\20261019T043441.316846Z-F3-frozen-routing-candidate-81bdbd",
+          "cases": 1,
+          "passed": 1,
+          "failed": 0,
+          "requested_cases": 1,
+          "stopped_after_failure": false,
+          "answer_adequacy": "NOT_GRADED",
+          "browser_acceptance": "NOT_INFERRED",
+          "registry_unchanged": true
+        },
+        "source_digest": "a1418df1f2b32e0a5c4aea45ffec01ff6c36628ddff4728bfa7a0312f556540e"
+      },
+      {
+        "artifact": "tmp/phase-f/iterations/20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058/result.json",
+        "summary": {
+          "run": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\tmp\\phase-f\\iterations\\20261019T043527.111357Z-F3-frozen-routing-candidate-ef8058",
+          "cases": 6,
+          "passed": 5,
+          "failed": 1,
+          "requested_cases": 14,
+          "stopped_after_failure": true,
+          "answer_adequacy": "NOT_GRADED",
+          "browser_acceptance": "NOT_INFERRED",
+          "registry_unchanged": true
+        },
+        "source_digest": "a1418df1f2b32e0a5c4aea45ffec01ff6c36628ddff4728bfa7a0312f556540e"
+      },
+      {
+        "artifact": "tmp/phase-f/iterations/20261019T044724.190934Z-F3-frozen-routing-candidate-18cbd7/result.json",
+        "summary": {
+          "run": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\tmp\\phase-f\\iterations\\20261019T044724.190934Z-F3-frozen-routing-candidate-18cbd7",
+          "cases": 5,
+          "passed": 5,
+          "failed": 0,
+          "requested_cases": 5,
+          "stopped_after_failure": false,
+          "answer_adequacy": "NOT_GRADED",
+          "browser_acceptance": "NOT_INFERRED",
+          "registry_unchanged": true
+        },
+        "source_digest": "9fdcd55f415893a4572eb6b45b29eb374556f53e0d991d4487660c33bbbca5a5"
+      }
+    ]
+  },
+  "latest_matched_legacy_case_029": {
+    "outcome": "PASS_SOURCE_WORKFLOW_ONLY",
+    "run": "tmp/phase-f/iterations/20261019T125105.168621Z-F3-frozen-routing-legacy-ef4f47",
+    "tools": [
+      "network.topology"
+    ],
+    "provider_calls": 1,
+    "latency_ms": 10206.43,
+    "answer_adequacy": "NOT_GRADED; two-ended port ownership is ambiguous in the prose; no quality success claimed.",
+    "scope": "Exposed rerun, not a full matched120 score."
+  },
+  "continuation_20261020": {
+    "first_exposure": {
+      "artifact": "tmp/phase-f/iterations/20261020T010703.181156Z-F3-frozen-routing-candidate-746717/result.json",
+      "range": "033-036",
+      "routing_pass": 3,
+      "routing_fail": 1,
+      "quality_review": "Adjacent quality-review.json; case033 endpoint wording remains ambiguous, no adequacy credit."
+    },
+    "corrected_followup_and_next_cases": {
+      "artifact": "tmp/phase-f/iterations/20261020T011145.973187Z-F3-frozen-routing-candidate-4b98b2/result.json",
+      "range": "036-038",
+      "routing_pass": 3,
+      "routing_fail": 0,
+      "attribution": "036/037 deterministic context/source resolution;038 uses two actual model calls."
+    },
+    "unique_cases_in_these_runs": 6,
+    "full_120_gate": "NOT_ESTABLISHED",
+    "next_unexecuted_case": "F-HOLDOUT-039",
+    "registry_modified": false,
+    "score_scope": "Source/workflow selection, not independent answer adequacy. Original failure is preserved."
+  },
+  "updated_at": "2026-10-20T03:06:22.660727+00:00",
+  "continuation_20261020_midday": {
+    "first_039_042": {
+      "artifact": "tmp/phase-f/iterations/20261020T015511.638154Z-F3-frozen-routing-candidate-0cec41",
+      "source_workflow": "4/4",
+      "manual_answer_failure": "039 explicitly excluded Cypress but answer returned both devices"
+    },
+    "corrected_039": {
+      "artifact": "tmp/phase-f/iterations/20261020T015630.481790Z-F3-frozen-routing-candidate-5e4f73",
+      "manual_result": "Correct Pine-only ports/addresses, deterministic; browser ordinary R2-only also verified on both surfaces"
+    },
+    "first_043_046": {
+      "artifact": "tmp/phase-f/iterations/20261020T015706.878992Z-F3-frozen-routing-candidate-42ee3e",
+      "source_workflow": "4/4",
+      "manual_answer_failures": [
+        "043 inferred no intervening changes from identical endpoint captures",
+        "045 local ID became neighbor; unrelated routes; first model synthesis timed out"
+      ]
+    },
+    "corrected_043": {
+      "artifact": "tmp/phase-f/iterations/20261020T020203.793086Z-F3-frozen-routing-candidate-25580d",
+      "result": "Actual model correctly limits claim to two identical records"
+    },
+    "corrected_045": {
+      "original_and_partial_reruns": [
+        "tmp/phase-f/iterations/20261020T020049.158090Z-F3-frozen-routing-candidate-898d9f",
+        "tmp/phase-f/iterations/20261020T020300.443595Z-F3-frozen-routing-candidate-1b218c"
+      ],
+      "accepted_exposed_correction": "tmp/phase-f/iterations/20261020T020349.089761Z-F3-frozen-routing-candidate-fce576",
+      "result": "Actual qwen repair: correct named neighbor, local/neighbor IDs, Full state/capture; no false complete-prerequisite claim",
+      "latency_ms": 20147.22,
+      "provider_calls": 3
+    },
+    "unique_new_cases": 8,
+    "next_unexecuted_case": "F-HOLDOUT-051",
+    "registry_modified": false,
+    "full_120_or_30_quality_gate": "NOT_ESTABLISHED",
+    "grading": "Tool selection and full-answer/manual review separated; overlapping reruns are not new successes.",
+    "next_four": {
+      "artifact": "tmp/phase-f/iterations/20261020T024326.958855Z-F3-frozen-routing-candidate-0ace42",
+      "range": "047-050",
+      "source_workflow": "4/4",
+      "manual_full_answer": "All4 had factual/relevance/task-completion defects; see retained quality-review.json",
+      "corrected_artifact": "tmp/phase-f/iterations/20261020T024735.829762Z-F3-frozen-routing-candidate-a0263b",
+      "correction": "047 no explicit router-ID command;048 unavailable syslog;049 honest verified fallback, not model credit;050 unavailable measurements, no unrelated inventory profile"
+    }
+  },
+  "continuation_20261020_late": {
+    "unique_new_cases": [
+      "F-HOLDOUT-051",
+      "F-HOLDOUT-052",
+      "F-HOLDOUT-053",
+      "F-HOLDOUT-054",
+      "F-HOLDOUT-055",
+      "F-HOLDOUT-056"
+    ],
+    "next_unexecuted_case": "F-HOLDOUT-057",
+    "registry_modified": false,
+    "initial_failures": [
+      "9b07f8:052",
+      "6c52ad:053",
+      "657036:056"
+    ],
+    "manual_critical_failures": [
+      "Wrong/missing published contract context",
+      "Invented required fields and vendor commands",
+      "Unavailable reader mistaken for stopped recording",
+      "Incorrect lexical method and irrelevant alternatives"
+    ],
+    "corrected_evidence": {
+      "051": "0804b6 truthful fallback",
+      "052": "fd33c6 truthful contract fallback",
+      "053_054_055": "4b3fc5 (052 in that run fails manual review)",
+      "056": "0717d2 actual qwen scoped incident read"
+    },
+    "adequacy_threshold": "NOT_ESTABLISHED",
+    "quality_notes": "Model prose and deterministic required-field/citation projection are separately retained. Published OSPF required flags still exceed small model capability on exposed prompt; final answer uses labelled fallback. Final source reload/browser not completed."
+  },
+  "continuation_20261020_source_health_and_read_facts": {
+    "updated_at": "2026-10-20T12:29:33.099152+00:00",
+    "unique_new_cases": [
+      "F-HOLDOUT-057",
+      "F-HOLDOUT-058",
+      "F-HOLDOUT-059"
+    ],
+    "next_unexecuted_case": "F-HOLDOUT-060",
+    "registry_modified": false,
+    "first_exposure": {
+      "057": "12784e wrong inventory tool",
+      "058": "8e7add correct tool but critical false protocol/connectivity prose",
+      "059": "714169 wrong generation workflow"
+    },
+    "corrected": {
+      "057": "8e7add exact interface records via labelled fallback; model omitted requested facts",
+      "058": "714169 model repaired; deterministic source/test-scope presentation separately credited",
+      "059": "73832e read-only exact missing-marker answer"
+    },
+    "full_120_or_30_gate": "NOT_ESTABLISHED",
+    "browser": "Fresh capability check denied; actual GUI reruns pending"
+  },
+  "continuation_20261020_documents_and_studio_effects": {
+    "updated_at": "2026-10-20T14:59:01.408864+00:00",
+    "unique_new_cases": [
+      "F-HOLDOUT-060",
+      "F-HOLDOUT-061",
+      "F-HOLDOUT-062",
+      "F-HOLDOUT-063",
+      "F-HOLDOUT-064",
+      "F-HOLDOUT-065",
+      "F-HOLDOUT-066",
+      "F-HOLDOUT-067",
+      "F-HOLDOUT-068",
+      "F-HOLDOUT-069",
+      "F-HOLDOUT-070",
+      "F-HOLDOUT-071",
+      "F-HOLDOUT-072",
+      "F-HOLDOUT-073",
+      "F-HOLDOUT-074",
+      "F-HOLDOUT-075",
+      "F-HOLDOUT-076"
+    ],
+    "next_unexecuted_case": "F-HOLDOUT-077",
+    "registry_modified": false,
+    "manual_review": "tmp/phase-g/iterations/20261020T130151.701511Z-G9-document-grounding-resume-7f63c9/manual-document-review-final.json",
+    "original_failures_retained": true,
+    "full120_or30_gate": "NOT_ESTABLISHED",
+    "evaluator_correction": "Missing-page reads count as prerequisite clarification only with consistent actual reader metadata and no fabricated evidence."
+  },
+  "continuation_20261021_topology_and_editor": {
+    "updated_at": "2026-10-21T01:40:40.706114+00:00",
+    "unique_new_cases": [
+      "F-HOLDOUT-077",
+      "F-HOLDOUT-078",
+      "F-HOLDOUT-079",
+      "F-HOLDOUT-080",
+      "F-HOLDOUT-081",
+      "F-HOLDOUT-082",
+      "F-HOLDOUT-083",
+      "F-HOLDOUT-084",
+      "F-HOLDOUT-085",
+      "F-HOLDOUT-086",
+      "F-HOLDOUT-087"
+    ],
+    "next_unexecuted_case": "F-HOLDOUT-088",
+    "registry_modified": false,
+    "manual_review": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/manual-frozen-078-084-review.json",
+    "077": "Earlier selection prerequisite correction retained; actual missing selection is clarification, not code explanation.",
+    "078_079": "Tool route and final safe source answer repaired; raw model failures remain, not adequate model reasoning.",
+    "080": "Exact requested address diff preserves unrelated buffer; proposal only.",
+    "081_082_083": "Final8e7b13:081 useful model-authored comment+exact reviewed insertion;082/083 pending required selection/new-name,0 model calls, no completed-edit claim. Actual browser proposal/Reject and selection clarification pass; original AS-as-BGP-ID comment failure retained and fixed.",
+    "084": "V9 preview only, not complete generation journey",
+    "full120_or30_gate": "NOT_ESTABLISHED",
+    "edit_review": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/manual-edit-081-083-final-review.json",
+    "browser_edit_evidence": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/browser-edit-081-083-final-review.json",
+    "085": "96bc26 V9 preserves static-route+description tasks; parameter/operation clarification, not rendered completion.",
+    "086": "Playbook preview mode, unresolved operation/target; not playbook runtime support.",
+    "087": "b9ed04 actual model invented BGP router ID; corrected prerequisite asks observed issue and intended value. Latest52687 batch pending088\u2013090;087 safe clarification0calls, not completed edit.",
+    "observer": "Stream bodies left unread; buffered model drafts retained, embedding vector payloads summarized."
+  }
+}

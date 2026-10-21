@@ -8,14 +8,57 @@ from pathlib import Path
 from uuid import uuid4
 
 
-def configure_embeddings():
+def configure_embeddings(timeout=120):
     from langchain_ollama import OllamaEmbeddings
     import app.config as config
     import app.embeddings as module
     config.OLLAMA_EMBED_MODEL = os.getenv('COGNISHIELD_KNOWLEDGE_EMBED_MODEL', 'nomic-embed-text')
-    module.embeddings = OllamaEmbeddings(model=config.OLLAMA_EMBED_MODEL,
+    class BoundedEmbeddings(OllamaEmbeddings):
+        def embed_documents(self,texts):
+            # Full catalogs can exceed a CPU model's request timeout as one
+            # giant batch. Preserve the same index/model and vector ordering,
+            # with small bounded requests instead of extending inference forever.
+            vectors=[]
+            for start in range(0,len(texts),4):
+                vectors.extend(super().embed_documents(texts[start:start+4]))
+            return vectors
+    module.embeddings = BoundedEmbeddings(model=config.OLLAMA_EMBED_MODEL,
         base_url=os.getenv('COGNISHIELD_LOCAL_OLLAMA_URL', 'http://127.0.0.1:11434'),
-        client_kwargs={'timeout': 120, 'trust_env': False})
+        client_kwargs={'timeout': timeout, 'trust_env': False})
+
+
+def configure_native_contracts():
+    """Code-owned exact unit conversions; never catalog-supplied Python."""
+    from app.knowledge import rule_registry as registry
+    if getattr(registry,'_cognishield_exact_kbps',False):return
+    original=registry.derive_template_value
+    specs={'rate_kbps':('exact_rate_kbps_v1','rate_bps'),'bandwidth_kbps':('exact_bandwidth_kbps_v1','bandwidth_bps')}
+    registry.TEMPLATE_DERIVATIONS.update(specs)
+    def derive(handler,parameters):
+        field=next((source for name,(identity,source) in specs.items() if identity==handler),None)
+        if field:
+            value=parameters.get(field)
+            if type(value) is not int or value<=0 or value%1000:
+                raise ValueError('This native method requires a positive exact integer kbit/s rate; no rounding is permitted.')
+            return value//1000
+        return original(handler,parameters)
+    registry.derive_template_value=derive
+    registry._cognishield_exact_kbps=True
+
+
+def guard_native_renderer():
+    """Keep the existing V9 renderer under the same sandbox as preview.
+
+    Hosting-process configuration only; sibling source and immutable templates
+    stay unchanged. Native template authoring is never permission to run Python.
+    """
+    from jinja2.sandbox import SandboxedEnvironment
+    configure_native_contracts()
+    import app.templates.renderer as renderer
+    renderer.Environment=SandboxedEnvironment
+    from app.knowledge.rule_registry import derive_template_value
+    renderer.derive_template_value=derive_template_value
+    return renderer.render
 
 
 def pointer_for(root, identity):
@@ -35,10 +78,14 @@ def release_rows(root):
             continue
         _, snapshot = pointer_for(root, folder.name)
         m = snapshot.manifest
-        rows.append({'release_id': folder.name, 'status': 'Active' if active and active['release_id']==folder.name else 'Available',
+        reviews=m.get('cognishield_engineer_reviews')
+        status='Built' if reviews and reviews['approved']<reviews['bindings'] else 'Available'
+        rows.append({'release_id': folder.name, 'status': 'Active' if active and active['release_id']==folder.name else status,
             'published_at': m['created_at'], 'published_by': m['actor'], 'reason': m['reason'],
             'authoring_revision': m['authoring_revision'], 'retrieval': m['retrieval'],
-            'objects': len(m['schemas']) + len(m['template_bindings'])})
+            'objects': len(m['schemas']) + len(m['template_bindings']),
+            'native_review':reviews or {'status':'legacy_no_bound_attestation'},
+            'certification':'Independent vendor/device/Ansible certification is separate from publication approval'})
     return sorted(rows, key=lambda row: row['published_at'], reverse=True)
 
 
@@ -63,6 +110,8 @@ def build(base, releases, body, actor):
             expected_release=body['expected_release'], expected_revision=body['expected_revision'],
             actor=actor, reason=body['reason'])
         snapshot = freeze_playbook_variants(base, staging, snapshot, body['expected_revision'])
+        from local_providers.knowledge_review import freeze_reviews
+        snapshot = freeze_reviews(base, staging, snapshot, body['expected_revision'])
         with _publication_lock(releases):
             if active_pointer(releases) != before:
                 raise AuthoringError('STALE_REVISION', 'Active release changed during build; package was not promoted.')
@@ -77,13 +126,15 @@ def build(base, releases, body, actor):
 def freeze_playbook_variants(base, releases, snapshot, expected_revision):
     """Optional owned extension, finalized only in unpublished staging packages."""
     import yaml
-    from app.knowledge.authority import authoring_store
+    from app.knowledge.authority import authoring_snapshot_unlocked
     from app.knowledge.authoring_store import authoring_lock
     from app.knowledge.runtime import KnowledgeSnapshot
     from llm.gateway_playbooks import validate_variant, render_template
     from llm.gateway_validation import validate_ansible
     with authoring_lock(base):
-        draft=authoring_store(base).snapshot()
+        # The public snapshot method acquires this same non-reentrant file lock.
+        # Keep the lock through freezing, using V9's existing locked-caller API.
+        draft=authoring_snapshot_unlocked(base)
         if draft['revision']!=expected_revision:
             raise ValueError('Authoring changed during build; package was not promoted')
         sources={k:v for k,v in draft['sources'].items() if k.startswith('cognishield/playbooks/')}
@@ -132,6 +183,14 @@ def activate(base, releases, body, actor):
         if (previous or {}).get('release_id') != body['expected_release']:
             raise AuthoringError('STALE_REVISION', 'Active release changed; refresh before activation.')
         pointer, snapshot = pointer_for(releases, body['release_id'])
+        from local_providers.knowledge_review import assert_activation_authorized,authorize_activation
+        from app.knowledge.authority import authoring_store
+        old=pointer_for(releases,previous['release_id'])[1] if previous else None
+        with authoring_store(base)._connection() as connection:
+            # The authenticated Activate action is the engineer's authorization
+            # of this exact immutable pack. No separate sign-off form is needed.
+            authorize_activation(connection,snapshot,actor,body['reason'],releases)
+            assert_activation_authorized(connection,snapshot,old)
         retrieval = snapshot.manifest['retrieval']
         if retrieval['mode'] == 'chroma':
             # Verify the actual index as well as the frozen release files before switching.
@@ -188,29 +247,38 @@ def validate_preset(parameter):
         Draft202012Validator(schema, format_checker=FormatChecker()).validate(preset['default'])
 
 
-def render_preview(service, body):
+def render_preview(service, body, *, draft=None, _catalog_validated=False, _schema=None):
     from app.knowledge.schema_compiler import compile_schema
     from app.knowledge.document_repository import DocumentKnowledgeRepository
     from app.knowledge.services import KnowledgeService
     from jsonschema import Draft202012Validator, FormatChecker
     from jinja2.sandbox import SandboxedEnvironment
     from jinja2 import StrictUndefined
-    draft = service.store.snapshot()
+    draft = draft if draft is not None else service.store.snapshot()
     if draft['revision'] != body['expected_revision']:
         raise ValueError('Authoring changed; refresh the preview.')
     binding = next((b for b in draft['catalogs']['template_bindings'] if b['template_path']==body['path']), None)
     if binding is None:
         raise ValueError('Select a saved template variant.')
-    knowledge = KnowledgeService(DocumentKnowledgeRepository(draft['catalogs']))
-    schema = compile_schema(knowledge, binding['operation_id'])
-    from app.parameters.schema_loader import _apply_vendor_requirements
-    schema = _apply_vendor_requirements(schema, [{'vendor':binding['vendor']}])
+    schema=_schema
+    if schema is None:
+        knowledge = KnowledgeService(DocumentKnowledgeRepository(draft['catalogs']))
+        schema = compile_schema(knowledge, binding['operation_id'])
+        from app.parameters.schema_loader import _apply_vendor_requirements
+        schema = _apply_vendor_requirements(schema, [{'vendor':binding['vendor']}])
     values = body['parameters']
     Draft202012Validator(schema, format_checker=FormatChecker()).validate(values)
     sources = {**draft['sources'], body['path']:body['content'].encode('utf-8')}
-    service._validate(draft['catalogs'], sources, complete=True)
-    if binding['input_contract'].get('derived'):
-        raise ValueError('This variant requires runtime-derived inventory context; preview it through Studio.')
+    if not _catalog_validated:service._validate(draft['catalogs'], sources, complete=True)
+    from app.parameters.validator import validate_parameter_result
+    validated = validate_parameter_result(values,schema)
+    if not validated.valid:
+        raise ValueError('V9 parameter validation rejected this preview: '+str(validated.issues))
     context = {**binding['input_contract'].get('optional_defaults',{}), **values}
+    # Reuse V9's code-owned, allowlisted pure derivations. No catalog expression
+    # evaluation or invented inventory context is introduced by previewing.
+    from app.knowledge.rule_registry import derive_template_value
+    for output,handler in binding['input_contract'].get('derived',{}).items():
+        context[output] = derive_template_value(handler,values)
     output = SandboxedEnvironment(undefined=StrictUndefined, trim_blocks=True, lstrip_blocks=True).from_string(body['content']).render(**context)
     return {'ok':True, 'revision':draft['revision'], 'data':{'configuration':output,'schema':schema,'output_format':'native_cli'}}

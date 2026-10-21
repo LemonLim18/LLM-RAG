@@ -191,7 +191,7 @@ class DatabaseManager:
                         logger.warning(f"Migration error for {table}.{col}: {e}")
                 except Exception as e:
                     logger.warning(f"Unexpected migration error for {table}.{col}: {e}")
-            
+
             # Add Unique Index for netbox_id
             try:
                 conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_devices_netbox_id ON devices(netbox_id) WHERE netbox_id IS NOT NULL")
@@ -784,8 +784,10 @@ class DatabaseManager:
     # DEVICES  (persistent)
     # =============================================================
     def upsert_device(self, device: Device, *, create_only: bool = False) -> int:
+        from local_providers.development import protect_inventory_write
+        protect_inventory_write(self)
         """
-        Insert a new device or update an existing one. Matches by ID if provided, 
+        Insert a new device or update an existing one. Matches by ID if provided,
         otherwise falls back to hostname.
         """
         now = datetime.now(tz=TZ_UTC8).isoformat(timespec="seconds")
@@ -794,11 +796,11 @@ class DatabaseManager:
             row = None
             if not create_only and device.id is not None:
                 row = conn.execute("SELECT id FROM devices WHERE id = ?", (device.id,)).fetchone()
-            
+
             # 2. Match by NetBox ID
             if not create_only and not row and device.netbox_id is not None:
                 row = conn.execute("SELECT id FROM devices WHERE netbox_id = ?", (device.netbox_id,)).fetchone()
-            
+
             # 3. Match by hostname fallback
             if not create_only and not row:
                 row = conn.execute(
@@ -842,6 +844,9 @@ class DatabaseManager:
                 return cur2.lastrowid
 
     def get_device_by_hostname(self, hostname: str) -> Optional[Device]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'devices')
+        if scenario_rows is not None:return next((d for d in scenario_rows if d.hostname.casefold()==hostname.casefold()),None)
         with self._connect() as conn:
             row = conn.execute(
                 "SELECT * FROM devices WHERE hostname = ?", (hostname,)
@@ -849,6 +854,9 @@ class DatabaseManager:
         return self._row_to_device(row) if row else None
 
     def get_device_by_management_ip(self, management_ip: str) -> Optional[Device]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'devices')
+        if scenario_rows is not None:return next((d for d in scenario_rows if d.management_ip==management_ip),None)
         """Return the device with this management IP, if any. When multiple rows
         share the same IP, returns the one with smallest id (first registered)."""
         if not management_ip or not str(management_ip).strip():
@@ -861,6 +869,9 @@ class DatabaseManager:
         return self._row_to_device(row) if row else None
 
     def get_device_by_id(self, device_id: int) -> Optional[Device]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'devices')
+        if scenario_rows is not None:return next((d for d in scenario_rows if d.id==device_id),None)
         with self._connect() as conn:
             row = conn.execute(
                 "SELECT * FROM devices WHERE id = ?", (device_id,)
@@ -868,11 +879,16 @@ class DatabaseManager:
         return self._row_to_device(row) if row else None
 
     def get_all_devices(self) -> List[Device]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'devices')
+        if scenario_rows is not None:return scenario_rows
         with self._connect() as conn:
             rows = conn.execute("SELECT * FROM devices ORDER BY hostname").fetchall()
         return [self._row_to_device(r) for r in rows]
 
     def delete_device(self, device_id: int) -> bool:
+        from local_providers.development import protect_inventory_write
+        protect_inventory_write(self)
         with self._connect() as conn:
             cur = conn.execute("DELETE FROM devices WHERE id = ?", (device_id,))
             return cur.rowcount > 0
@@ -907,6 +923,8 @@ class DatabaseManager:
     # INTERFACES  (persistent)
     # =============================================================
     def upsert_interface(self, iface: Interface) -> int:
+        from local_providers.development import protect_inventory_write
+        protect_inventory_write(self)
         now = datetime.now(tz=TZ_UTC8).isoformat(timespec="seconds")
         with self._connect() as conn:
             cur = conn.execute(
@@ -944,6 +962,9 @@ class DatabaseManager:
                 return cur2.lastrowid
 
     def get_interfaces_for_device(self, device_id: int) -> List[Interface]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'interfaces')
+        if scenario_rows is not None:return [i for i in scenario_rows if i.device_id==device_id]
         with self._connect() as conn:
             rows = conn.execute(
                 "SELECT * FROM interfaces WHERE device_id = ? ORDER BY name",
@@ -972,6 +993,8 @@ class DatabaseManager:
     # LINKS  (persistent)
     # =============================================================
     def upsert_link(self, link: Link) -> int:
+        from local_providers.development import protect_inventory_write
+        protect_inventory_write(self)
         now = datetime.now(tz=TZ_UTC8).isoformat(timespec="seconds")
         with self._connect() as conn:
             cur = conn.execute(
@@ -1004,6 +1027,9 @@ class DatabaseManager:
                 return cur2.lastrowid
 
     def get_links_for_device(self, device_id: int) -> List[Link]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'links')
+        if scenario_rows is not None:return [l for l in scenario_rows if device_id in (l.src_device_id,l.dst_device_id)]
         with self._connect() as conn:
             rows = conn.execute(
                 """SELECT * FROM links
@@ -1013,6 +1039,9 @@ class DatabaseManager:
         return [self._row_to_link(r) for r in rows]
 
     def get_all_links(self) -> List[Link]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'links')
+        if scenario_rows is not None:return scenario_rows
         with self._connect() as conn:
             rows = conn.execute("SELECT * FROM links").fetchall()
         return [self._row_to_link(r) for r in rows]
@@ -1034,6 +1063,8 @@ class DatabaseManager:
     # CONFIG SNAPSHOTS  (persistent)
     # =============================================================
     def save_config_snapshot(self, snapshot: ConfigSnapshot) -> int:
+        from local_providers.development import protect_inventory_write
+        protect_inventory_write(self)
         captured_at = (
             snapshot.captured_at
             or datetime.now(tz=TZ_UTC8).isoformat(timespec="seconds")
@@ -1083,6 +1114,9 @@ class DatabaseManager:
         return snapshot_id
 
     def get_config_snapshot(self, snapshot_id: int) -> Optional[ConfigSnapshot]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'snapshots')
+        if scenario_rows is not None:return next((s for s in scenario_rows if s.id==snapshot_id),None)
         """Return a single config snapshot by id, or None if not found."""
         with self._connect() as conn:
             row = conn.execute(
@@ -1118,6 +1152,9 @@ class DatabaseManager:
         owner_username: Optional[str] = None,
         is_admin: bool = False,
     ) -> List[ConfigSnapshot]:
+        from local_providers.development import projection
+        scenario_rows=projection(self,'snapshots')
+        if scenario_rows is not None:return [s for s in scenario_rows if s.device_id==device_id and (is_admin or s.owner_username in {None,owner_username})][:limit]
         """Return config snapshots for a device, optionally filtered by ownership.
 
         - ``is_admin=True``  → all snapshots (no ownership filter).
@@ -1171,6 +1208,8 @@ class DatabaseManager:
             return cur.rowcount > 0
 
     def update_snapshot_owner(self, snapshot_id: int, owner_username: Optional[str]) -> bool:
+        from local_providers.development import protect_inventory_write
+        protect_inventory_write(self)
         """Set or backfill the owner for a config snapshot."""
         with self._connect() as conn:
             cur = conn.execute(
@@ -1550,16 +1589,16 @@ class DatabaseManager:
             else:
                 query = "SELECT * FROM drift_events ORDER BY timestamp DESC LIMIT ?"
                 params = (limit,)
-            
+
             rows = conn.execute(query, params).fetchall()
-        
+
         events = []
         for r in rows:
             # Query hostname if needed for complete model hydration
             # For efficiency we might want a JOIN in the SQL query instead
             dev = self.get_device_by_id(r["device_id"])
             hostname = dev.hostname if dev else "unknown"
-            
+
             events.append(DriftEvent(
                 id=r["id"],
                 device_id=r["device_id"],

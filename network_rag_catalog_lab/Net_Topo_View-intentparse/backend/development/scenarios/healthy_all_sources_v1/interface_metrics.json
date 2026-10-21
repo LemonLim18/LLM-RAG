@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "category": "interface_metrics",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "source-interface_metrics",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "interface_counters",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "metric": "errors",
+          "value": 0,
+          "unit": "count"
+        }
+      }
+    ]
+  }
+}

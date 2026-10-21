@@ -1,0 +1,508 @@
+{
+  "audited_at": "2026-10-21T04:10:33.806588+00:00",
+  "goal": "Existing full PhaseG G0\u2013G12 plus remainingPhaseF; unchanged",
+  "phase_complete": false,
+  "status_basis": "Source/evidence inspection, not previous handover claims",
+  "stages": {
+    "G0": {
+      "title": "Baseline/preservation",
+      "status": "IN PROGRESS"
+    },
+    "G1": {
+      "title": "Registry and evidence contracts",
+      "status": "IN PROGRESS"
+    },
+    "G2": {
+      "title": "Scenario JSON/time/CLI",
+      "status": "IN PROGRESS"
+    },
+    "G3": {
+      "title": "24-category GUI and dual edit acceptance",
+      "status": "IN PROGRESS"
+    },
+    "G4": {
+      "title": "Intent/source selection/adaptive reads",
+      "status": "IN PROGRESS"
+    },
+    "G5": {
+      "title": "Grounded answer composition and model quality",
+      "status": "IN PROGRESS",
+      "quality_gate": "FAILED_ON_EXPOSED_CASES; fresh >=85% unestablished"
+    },
+    "G6": {
+      "title": "Independent simulator conformance",
+      "status": "IN PROGRESS"
+    },
+    "G7": {
+      "title": "141 Studio native journeys / Ansible",
+      "status": "NOT RUN"
+    },
+    "G8": {
+      "title": "Multi-file editor and handoff",
+      "status": "IN PROGRESS"
+    },
+    "G9": {
+      "title": "Documents/parity/memory",
+      "status": "IN PROGRESS"
+    },
+    "G10": {
+      "title": "UI/service/clipboard stability",
+      "status": "IN PROGRESS"
+    },
+    "G11": {
+      "title": "Independent evaluation",
+      "status": "IN PROGRESS",
+      "quality_gate": "NOT_RUN_FRESH_COMPLETE_COHORT"
+    },
+    "G12": {
+      "title": "Final integration and handover",
+      "status": "NOT RUN"
+    }
+  },
+  "source_categories": [
+    {
+      "category": "inventory",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "topology_planned",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "topology_observed",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "PASS_EXPOSED_TYPED_ENDPOINTS_BOTH_SURFACES",
+      "actual_gui_gateway": "PASS_EDIT_ACTIVATE_REFRESH_BOTH_SURFACES",
+      "full_gate": false,
+      "notes": "Independent typed endpoints with membership validation, GUI named selectors/preview, actual changed peer/ports/time on both assistants and missing-current negative. Full G3 and all24 gates remain incomplete."
+    },
+    {
+      "category": "topology_history",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "device_state",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "running_configs",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "PASS_EXPOSED_CURRENT_CONFIG",
+      "actual_gui_gateway": "PASS_FLOATING_AND_STUDIO",
+      "full_gate": false,
+      "notes": "Exact current text T1/T2 and retained T1 capture pass; not a model reasoning score."
+    },
+    {
+      "category": "config_snapshots",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "config_changes",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "routing_state",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "protocol_state",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "PARTIAL_PASS: external JSON edited IDs and real qwen both surfaces; Init correction a9aedb passes after explicit source constraint",
+      "actual_gui_gateway": "IN_PROGRESS: saved/validated/activated203.0.113.81/.82 Init in GUI; first Floating answer correct verified fallback, original model omitted neighbor name; corrective rerun pending",
+      "full_gate": false,
+      "notes": "Typed GUI activation and initial both-assistant values verified. Follow-up source context repaired and restart memory restored; later model Init interpretation/OSPF label errors retained, final guards not yet loaded/reverified in browser."
+    },
+    {
+      "category": "controller_state",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Authorized category filtering and real qwen source-selection traces retained. Model explanation fails exposed cases; verified fallback is not model reasoning credit."
+    },
+    {
+      "category": "telemetry",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "PASS_EXPOSED_T1_16_NULL_18_BOTH_SURFACES",
+      "actual_gui_gateway": "PASS_BOUNDED_T2_BOTH_MAIN_BROWSER_SURFACES",
+      "full_gate": false,
+      "notes": "JSON16/null/18 and GUI27/null/18 read by actual authorized gateway on both surfaces. Final seven browser turns preserve old/new windows and switch source;2model syntheses,5labelled fallbacks. Null/time/compound errors retained and corrected; full24-source/negative/model-quality gates remain open."
+    },
+    {
+      "category": "interface_metrics",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Explicit source switch passes in both main browser panels:18000bits_per_second at01:00 for LAB-R1/GigabitEthernet0/1, same retained window. No editor/proposal effects. Independent JSON/GUI edit lanes and category-specific negatives remain NOT_RUN."
+    },
+    {
+      "category": "syslog",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "PASS_EXPOSED_BOTH_SURFACES_20261020",
+      "full_gate": false,
+      "notes": "Created from an empty source through GUI fields and read by both actual assistants. External-JSON edit proof and broader stale/error conformance still incomplete."
+    },
+    {
+      "category": "incidents",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "config_drift",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "source_health",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "PASS_BOUNDED_BOTH_SURFACES; health-json123a33 and health-overrideff1652; full prose reviewed, verified fallbacks",
+      "actual_gui_gateway": "PASS_BOUNDED_FLOATING_AND_STUDIO; GUI draft edit/validate/activate then actual network.state; exact statuses/time via labelled fallback",
+      "full_gate": false,
+      "notes": "Fresh browser available; source-name and document-topic precedence failures reproduced/corrected. Source health authoredAVAILABLE/effectiveERROR preserved. Restore-ordinary action blocked by approval-service usage limit, not browser availability."
+    },
+    {
+      "category": "jobs_audit",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "knowledge",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Exact literal contracts and existing V9 published semantic index reused; retrieval relevance fixed for interface description. Qwen explanation plus separately attributed exact checklist; wrong required flags rejected. Final both-UI acceptance pending."
+    },
+    {
+      "category": "documents",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "PASS_API_BUNDLE_EDIT_EXTERNAL_FILE_REPEAT_PENDING",
+      "actual_gui_gateway": "PASS_FLOATING_AND_STUDIO",
+      "full_gate": false,
+      "notes": "Actual qwen summarizes edited document in both assistants; original T1/T2 and GUI19:35 outputs retained. No fresh adequacy benchmark inferred."
+    },
+    {
+      "category": "attachments",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "diagrams",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "v2 contains a real PNG. Actual original-image/extraction preview and both-surface OCR reads; unsupported visual prose rejected. Full vision NOT VERIFIED."
+    },
+    {
+      "category": "conversation",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Registry mapping and an authored value do not prove answer-level acceptance."
+    },
+    {
+      "category": "simulation",
+      "schema_exists": true,
+      "bundle_file_exists": true,
+      "actual_json_gateway": "NOT_RUN",
+      "actual_gui_gateway": "NOT_RUN",
+      "full_gate": false,
+      "notes": "Selected-source filter/status defect fixed; bounded derived results carry simulation source label. Broader independent conformance pending."
+    }
+  ],
+  "source_summary": {
+    "mapped": 24,
+    "schemas_present": 24,
+    "healthy_bundle_files_present": 24,
+    "full_json_gui_both_assistants_all_negative_temporal_gates": 0,
+    "bounded_dual_edit_both_assistants": [
+      "topology_observed",
+      "running_configs",
+      "telemetry",
+      "source_health"
+    ],
+    "partial_dual_edit": [
+      "protocol_state",
+      "documents"
+    ],
+    "gui_only_bounded": [
+      "syslog"
+    ],
+    "other_reads_do_not_prove_edit_gate": true
+  },
+  "capabilities": [
+    {
+      "id": "C1",
+      "name": "Implicit intent",
+      "status": "PARTIAL",
+      "basis": "Real paraphrases and explicit effect/source guards work; first-exposure workflow failures and no complete untouched capability score."
+    },
+    {
+      "id": "C2",
+      "name": "Unfamiliar-prompt generalization",
+      "status": "NOT DEMONSTRATED",
+      "basis": "93/120 initial exposures span34 code digests; exposed corrections are not unseen generalization."
+    },
+    {
+      "id": "C3",
+      "name": "Authorized tool/source planning",
+      "status": "PARTIAL",
+      "basis": "Actual shared-gateway reads and permission rejection verified;091 omitted config and093 added telemetry before corrections."
+    },
+    {
+      "id": "C4",
+      "name": "Adaptive multi-source investigation",
+      "status": "PARTIAL",
+      "basis": "Bounded retrieval/checkpoint machinery, modeled fault/conflict examples exist; no independent broad adaptive-sufficiency score."
+    },
+    {
+      "id": "C5",
+      "name": "Multi-turn understanding",
+      "status": "PARTIAL",
+      "basis": "Device/interface ordinals, topic switching, PDF relative pages and proposal explanation have actual traces; broad fresh multi-turn/restart matrix unfinished."
+    },
+    {
+      "id": "C6",
+      "name": "Complete useful grounded reasoning/answers",
+      "status": "FAILED ON EXPOSED CASES",
+      "basis": "Raw qwen repeatedly invents causality/state, temporal continuity or protocol facts. Guards/fallback protect several cases;092 still accepted a false continuous-state claim."
+    },
+    {
+      "id": "C7",
+      "name": "Vendor engineering generation/revision/validation",
+      "status": "PARTIAL",
+      "basis": "141 active native bindings and12 independent corrected-family runtime replays; zero complete all-141 PhaseF/G NL Studio ledger; multi-file and genuine Ansible gates open."
+    }
+  ],
+  "routing": {
+    "first_exposure": {
+      "cases": 93,
+      "recorded_outcomes": {
+        "PASS": 67,
+        "FAIL": 26
+      },
+      "minimum_workflow_rate": 0.7204,
+      "groups": {
+        "concept": {
+          "cases": 20,
+          "pass": 16
+        },
+        "inventory_topology": {
+          "cases": 20,
+          "pass": 17
+        },
+        "protocol_history": {
+          "cases": 20,
+          "pass": 15
+        },
+        "documents": {
+          "cases": 15,
+          "pass": 9
+        },
+        "studio": {
+          "cases": 15,
+          "pass": 9
+        },
+        "compound": {
+          "cases": 3,
+          "pass": 1
+        }
+      },
+      "automatic_synthesis_labels": {
+        "no_graph_synthesis_status": 64,
+        "literal_checks_passed": 25,
+        "repaired_literal_checks_passed": 2,
+        "editor_reconstruction": 1,
+        "rejected_fallback": 1
+      },
+      "source_digests": 34,
+      "median_latency_ms": 10611.37,
+      "scope": "Recorded minimum workflow checks across different source revisions; neither fresh final-code benchmark nor independent answer adequacy."
+    },
+    "latest_exposed": {
+      "cases": 93,
+      "recorded_outcomes": {
+        "PASS": 93
+      },
+      "minimum_workflow_rate": 1.0,
+      "groups": {
+        "concept": {
+          "cases": 20,
+          "pass": 20
+        },
+        "inventory_topology": {
+          "cases": 20,
+          "pass": 20
+        },
+        "protocol_history": {
+          "cases": 20,
+          "pass": 20
+        },
+        "documents": {
+          "cases": 15,
+          "pass": 15
+        },
+        "studio": {
+          "cases": 15,
+          "pass": 15
+        },
+        "compound": {
+          "cases": 3,
+          "pass": 3
+        }
+      },
+      "automatic_synthesis_labels": {
+        "no_graph_synthesis_status": 57,
+        "literal_checks_passed": 24,
+        "repaired_literal_checks_passed": 3,
+        "rejected_fallback": 5,
+        "editor_reconstruction": 4
+      },
+      "source_digests": 44,
+      "median_latency_ms": 8902.06,
+      "scope": "Recorded minimum workflow checks across different source revisions; neither fresh final-code benchmark nor independent answer adequacy."
+    }
+  },
+  "model_quality": {
+    "fresh_complete30": false,
+    "target_m2_adequacy": 0.85,
+    "true_model_reasoning_frequency": "NOT_ESTABLISHED; automatic literal_checks_passed is not independent correctness",
+    "latest_exposed_case_review": {
+      "089": "Guarded AS reconstruction, raw qwen failed",
+      "090": "Actual model arithmetic correct; no editor evidence",
+      "091": "Correct three readers; two model drafts rejected; grounded fallback",
+      "092": "Correct three readers, raw model accepted but false operational-since-start claim: FAIL full answer",
+      "093": "Corrected initial readers and transit role; latest prose is scoped simulated delivery; broader health phrasing needs independent audit"
+    },
+    "no_aggregate_model_success_claim": true
+  },
+  "engineering": {
+    "active_native_bindings": 141,
+    "active_release": "7a14a351e52b49aeb87f65d1192f0937",
+    "full_141_nl_studio_journeys_verified": 0,
+    "manifest_playbook_variants": 0,
+    "multi_file_exact_base_review_implemented": false,
+    "single_file_review": "Actual proposal/explain/Reject passes; earlier Accept/Undo evidence exists; no new Save/Accept in this increment"
+  },
+  "current_defects": [
+    {
+      "id": "F092",
+      "status": "OPEN",
+      "root_cause": "Full prose guard accepts continuity from a point-in-time observation; model says operational since simulation start. Joint source projection exists but did not verify this temporal claim."
+    },
+    {
+      "id": "ORDINARY-COMPOSE",
+      "status": "OPEN",
+      "root_cause": "engine.compose permits synthesis only for validated_model_plan, published explanation or assessment hypotheses. Invalid planner fallback with correctly retrieved ordinary records therefore bypasses model explanation and dumps records."
+    },
+    {
+      "id": "F093",
+      "status": "FIXED_BOUNDED_PENDING_LATEST_BROWSER",
+      "root_cause": "Initial explicit source list admitted telemetry; endpoint at later position in transit list escaped role guard. Unit130 pass and actual corrected source replay retained."
+    }
+  ],
+  "tests_now": {
+    "latest_response_quality": "128 passed +21subtests; response-quality-final-regression.xml",
+    "source_role_rollback": "130 passed;093-scope-role-rollback-fixed.xml",
+    "joint_projection": "88 passed;092-joint-source-fixed.xml",
+    "frontend_types": "exit0",
+    "warning": "Overlapping runs, not additive; latest full prose FAIL exists despite green tests."
+  },
+  "preservation": {
+    "staged_files": 52,
+    "staged_patch_sha256": "d6aa68e47ae3b44449d1f832404ad925a373791b845ec064d067b8e8b028d7f8",
+    "active_release": "7a14a351e52b49aeb87f65d1192f0937",
+    "manifest_sha256": "bdb1cad94c4275081ce9b9aaaa3bbfadd9b38a73b201f67277aa1d7be69694b5",
+    "integrity": "ok",
+    "foreign_key_errors": 0,
+    "editor_base_sha256": "b4c9fe532f11100c172b383f5766de4cb5e0ae5cd165378b258395ca83a93632",
+    "snapshot": "tmp/phase-f/iterations/20261021T020638.059703Z-F3-grounded-response-resume-053acd/progress-audit-preservation.json"
+  },
+  "continuation": {
+    "runtime_last_verified": "5173/8000 owned launcher session5175/backend6208; recheck live owners before reuse",
+    "browser": "IAB2/tab1 phaseGResumeTab; Floating open on ordinary compound query. Studio original204LF buffer preserved. Fresh browser access works.",
+    "pending_test_process": "68968 handle missing; authoritative result702683 terminal2/2workflow only; no restart",
+    "next_unexposed_routing": "094; suspend further exposed prompt tuning after current defects.",
+    "next_major_priority": "Complete24-source dual edit/activate/both actual gateway acceptance, beginning inventory/plannedlinks/history/state/configsnapshots; repair any real source defects. Then G7/G8 major unfinished engineering gates.",
+    "no_commit_or_publication": true
+  },
+  "evidence_root": "tmp/phase-f/iterations/20261021T020638.059703Z-F3-grounded-response-resume-053acd",
+  "subsequent_source_acceptance": {
+    "accepted": [
+      "running_configs"
+    ],
+    "in_progress": [
+      "config_snapshots"
+    ],
+    "full_phase_complete": false,
+    "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/current-source-acceptance-review.json",
+    "note": "Original audit snapshot is preserved; this is subsequent progress, no model reasoning credit."
+  }
+}

@@ -73,6 +73,12 @@ export const DeviceProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
   }, [hasLoadedInitially, refreshAll]);
 
+  useEffect(() => {
+    const changed=()=>{void refreshDevices(false);void refreshLinks(false);};
+    window.addEventListener('cognishield:scenario-changed',changed);
+    return ()=>window.removeEventListener('cognishield:scenario-changed',changed);
+  },[refreshDevices,refreshLinks]);
+
   return (
     <DeviceContext.Provider value={{ devices, links, isLoading, refreshDevices, refreshLinks, refreshAll }}>
       {children}

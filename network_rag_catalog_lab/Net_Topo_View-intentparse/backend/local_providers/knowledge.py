@@ -9,8 +9,70 @@ from pydantic import BaseModel, Field
 from typing import Literal
 from auth.rbac import require_any, require_engineer, require_admin
 from lab_config import PROJECT_DIR
+from llm.gateway_api import require_ai_user
+from llm.gateway_models import StrictModel
+from auth.auth import normalize_role
 
 router = APIRouter(prefix='/knowledge', tags=['Knowledge Engineering'])
+
+
+async def require_senior_knowledge(user=Depends(require_ai_user)):
+    # Existing admin is the project's senior knowledge/publish role. This does
+    # not honor the legacy AUTH_BYPASS_ROLES switch or a client-supplied identity.
+    if normalize_role(user.get('role'))!='admin':
+        raise HTTPException(403,'Senior knowledge reviewer/publisher role is required')
+    return user
+
+
+class NativeFixture(StrictModel):
+    parameters: dict
+    expected_output: str = Field(min_length=1,max_length=200000)
+
+
+class ReviewedMethod(StrictModel):
+    assumptions: list[str] = Field(max_length=30)
+    limitations: list[str] = Field(max_length=30)
+    material_risks: list[str] = Field(max_length=30)
+    fixtures: list[NativeFixture] = Field(min_length=1,max_length=5)
+    invalid_inputs: list[dict] = Field(min_length=1,max_length=20)
+
+
+class MethodEdit(StrictModel):
+    expected_revision: str
+    identity: str = Field(min_length=1,max_length=300)
+    method: ReviewedMethod
+    reason: str = Field(min_length=1,max_length=1000)
+
+
+class ReviewDecision(StrictModel):
+    identity: str = Field(min_length=1,max_length=300)
+    fingerprint: str = Field(pattern='^[a-f0-9]{64}$')
+    decision: Literal['approve','reject']
+    resolved_risks: list[str] = Field(max_length=30)
+
+
+class ReviewApproval(StrictModel):
+    expected_revision: str
+    request_id: str = Field(min_length=8,max_length=100)
+    acknowledgement: str
+    decisions: list[ReviewDecision] = Field(min_length=1,max_length=141)
+    reason: str = Field(min_length=1,max_length=1000)
+
+
+@router.get('/reviews')
+async def reviews(checks:bool=False,user=Depends(require_ai_user)):
+    return await asyncio.to_thread(invoke,'review_status',{'checks':checks},user['username'])
+
+
+@router.put('/review-method')
+async def review_method(body:MethodEdit,user=Depends(require_ai_user)):
+    if normalize_role(user.get('role')) not in {'admin','engineer'}:raise HTTPException(403,'Knowledge authoring role is required')
+    return await asyncio.to_thread(invoke,'review_method',body.model_dump(),user['username'])
+
+
+@router.post('/review-approvals')
+async def review_approve(body:ReviewApproval,user=Depends(require_senior_knowledge)):
+    return await asyncio.to_thread(invoke,'review_approve',body.model_dump(),user['username'])
 
 
 def knowledge_root():
@@ -26,10 +88,12 @@ def invoke(action, body, actor):
     payload = dict(root=str(root), base=str(knowledge_root()), action=action, body=body, actor=actor)
     try:
         result = subprocess.run([str(python), '-B', str(Path(__file__).with_name('knowledge_worker.py'))],
-            input=json.dumps(payload), capture_output=True, text=True, encoding='utf-8', timeout=300,
+            input=json.dumps(payload), capture_output=True, text=True, encoding='utf-8', timeout=900 if action in {'build','publish'} else 20 if action=='published_search' else 300,
             cwd=PROJECT_DIR, env={**os.environ, 'PYTHONDONTWRITEBYTECODE':'1'})
         output = json.loads(result.stdout)
-    except (OSError, ValueError, subprocess.TimeoutExpired) as exc:
+    except subprocess.TimeoutExpired as exc:
+        raise HTTPException(503,f'V9 knowledge service timed out after {exc.timeout} seconds; no fallback or activation used.') from exc
+    except (OSError, ValueError) as exc:
         raise HTTPException(503, 'V9 knowledge service unavailable; no fallback used.') from exc
     if not output.get('ok'):
         issues = output.get('issues', [])
@@ -108,7 +172,7 @@ async def schema(operation_id: str, user=Depends(require_any)):
 
 
 @router.post('/publish')
-async def publish(body: Publication, user=Depends(require_admin)):
+async def publish(body: Publication, user=Depends(require_senior_knowledge)):
     return await asyncio.to_thread(invoke, 'publish', body.model_dump(), user['username'])
 
 class Activation(BaseModel):
@@ -127,7 +191,7 @@ async def build_release(body: Publication, user=Depends(require_engineer)):
     return await asyncio.to_thread(invoke, 'build', body.model_dump(), user['username'])
 
 @router.post('/activate')
-async def activate_release(body: Activation, user=Depends(require_admin)):
+async def activate_release(body: Activation, user=Depends(require_senior_knowledge)):
     return await asyncio.to_thread(invoke, 'activate', body.model_dump(), user['username'])
 
 @router.get('/releases/{release_id}')

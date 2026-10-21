@@ -1,0 +1,68 @@
+{
+  "updated_at": "2026-10-19T12:54:58.063978+00:00",
+  "phase_complete": false,
+  "stages": {
+    "F0": {
+      "status": "PASS",
+      "scope": "Protected baseline, current runtime/index/data and pre-inference registry verified; ongoing preservation remains mandatory.",
+      "evidence": [
+        "tmp/phase-f/F0-baseline.json",
+        "docs/evaluations/phase_f_case_registry.json",
+        "tmp/phase-f/iterations/20261019-native-statements/preservation-after.json"
+      ]
+    },
+    "F1": {
+      "status": "IN_PROGRESS",
+      "completed": "Four defects corrected, published and independently replayed;141 bindings retained.",
+      "remaining": "Broader independent risk-family branch coverage.",
+      "evidence": [
+        "docs/evaluations/phase_f_native_output_audit.json"
+      ]
+    },
+    "F2": {
+      "status": "NOT_RUN_PHASE_F"
+    },
+    "F3": {
+      "status": "IN_PROGRESS",
+      "completed": "Exposed60/60 candidate and60/60 matched current legacy; real auth gateway/tool path. Explicit source scopes and conceptual-context guard verified; first20 fresh routing16/20 with failures retained; exposed correction cohorts pass. Pending matched legacy029 cabling source/workflow rerun PASS; answer adequacy not inferred.",
+      "remaining": "Complete fresh120/paired baseline and per-group/adaptive source gates. Reruns are exposed.",
+      "evidence": [
+        "docs/evaluations/phase_f_routing_results.json"
+      ]
+    },
+    "F4": {
+      "status": "IN_PROGRESS",
+      "completed": "Actual quality001\u2013009 exposed; raw failures retained. Scoped model path repair and literal configuration comparison succeed. AS-role and transit fault verification reject bad drafts and release correct labelled fallback. Default ordinary investigations retain raw records in existing disclosure.",
+      "remaining": "Full30 M0/M1/M2/M3 adequacy>=85% unproven; BGP/failed-path qwen synthesis and general translation/Python errors remain. No fallback counted as model reasoning.",
+      "evidence": [
+        "tmp/phase-f/iterations/20261019-topology-synthesis/result.json",
+        "tmp/phase-f/iterations/20261019-bgp-explanation/result.json",
+        "docs/evaluations/phase_f_model_quality.json"
+      ]
+    },
+    "F5": {
+      "status": "NOT_RUN_PHASE_F"
+    },
+    "F6": {
+      "status": "NOT_RUN_PHASE_F"
+    },
+    "F7": {
+      "status": "IN_PROGRESS",
+      "completed": "Fresh publication GUI, scroll caps, standard ports verified. Restart loaded latest backend; actual browser Floating retrieval/topic switch, Studio unsaved explanation/Reject/Accept/Undo, browser clipboard copy/paste passed. Fresh IAB4 browser checks: Studio isolated323, Floating R2 management/interface distinction and ordinal lookup PASS. Latest actual browser: instruction negation no longer replaces a target; correct unavailable-data assessment with expandable actual records PASS,740-character answer/1833-character disclosure.",
+      "remaining": "OS clipboard unverified; full mode/provider/cancellation/accessibility/recovery matrix pending.",
+      "evidence": [
+        "tmp/phase-f/iterations/20261019T031601Z-runtime-browser/result.json",
+        "tmp/phase-f/iterations/20261019T041315.422464Z-F7-browser-resumption-f911e9/result.json",
+        "tmp/phase-f/iterations/20261019-browser-negation/result.json"
+      ]
+    },
+    "F8": {
+      "status": "IN_PROGRESS",
+      "completed": "Frozen registry and immutable failure/correction records. Actual frozen registry executor uses authenticated gateway, real setup and attachments, isolated SQLite and full provider-call tracing. Existing frozen evaluator now records separate M0/M1/M2/M3 arms, runtime decoding options, per-case scenario revisions and independent quality reviews. Preserved genuine browser negation failure, raw-table presentation failure and subsequent targeted regressions. Frozen registry unchanged.",
+      "remaining": "Complete applicable matrix."
+    },
+    "F9": {
+      "status": "NOT_RUN"
+    }
+  }
+}

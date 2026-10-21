@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "scope": "Exposed G2 starter conformance expectations, held outside all source bundles. Not an unseen intelligence benchmark or a physical-device result.",
+  "cases": [
+    {
+      "id": "G2-STARTER-HEALTHY",
+      "bundle": "healthy_all_sources_v2",
+      "flow": "branch-edge-icmp",
+      "expected_forward": "delivered",
+      "expected_return": "delivered",
+      "basis": "The three declared routers have a complete forward and return static path and no denying policy.",
+      "prohibited_conclusion": "Physical network connectivity established"
+    },
+    {
+      "id": "G2-STARTER-ACL",
+      "bundle": "acl_forward_all_sources_v1",
+      "flow": "branch-edge-icmp",
+      "expected_forward": "failed",
+      "expected_return": "delivered",
+      "expected_drop_reason": "policy",
+      "basis": "The ingress filter on interface 2 denies the exact forward source/destination; its reverse tuple does not match the deny rule and the default is permit.",
+      "prohibited_conclusion": "Both directions failed"
+    },
+    {
+      "id": "G2-STARTER-CONFLICT",
+      "bundle": "stale_conflict_all_sources_v1",
+      "flow": "branch-edge-icmp",
+      "expected_forward": "delivered",
+      "expected_return": "delivered",
+      "expected_protocol_conflict": true,
+      "expected_syslog_status": "STALE",
+      "basis": "The declared forwarding paths remain modeled as delivered, while incompatible protocol observations and an old event prevent a single current operational diagnosis.",
+      "prohibited_conclusion": "Old neighbor Down event proves a current outage"
+    }
+  ]
+}

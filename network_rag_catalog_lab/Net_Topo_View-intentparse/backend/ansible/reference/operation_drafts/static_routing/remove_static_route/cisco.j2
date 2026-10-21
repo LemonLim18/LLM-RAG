@@ -1,3 +1,2 @@
-{# Editable reference draft: cisco / remove_static_route. Verify syntax, dependencies and device suitability before use. #}
-no ip route {{ destination }} {{ next_hop }}
-
+{# Reviewed authoring candidate; not activated runtime support. Verify device prerequisites before use. #}
+no ip route {{ destination_address }} {{ destination_mask }} {{ next_hop }}

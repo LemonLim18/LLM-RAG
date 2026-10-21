@@ -14,12 +14,12 @@ EXAMPLES={
  'edit':['Change the OSPF router ID in the open configuration','Refactor this Python code','Modify that parameter in the previous configuration','Fix the indentation in this YAML file','Adjust the BGP timers in the open code buffer'],
  'generate_native':['Generate native OSPF and BGP configuration on R1','Configure a static route on R2','Create vendor CLI configuration for Cisco and Juniper devices'],
  'generate_playbook':['Create an Ansible YAML playbook to set up OSPF','Generate an Ansible automation playbook for multiple vendors'],
- 'network_inventory':['List the routers recorded in our inventory','How many Cisco devices are stored?','Which devices are in our Penang site?'],
+ 'network_inventory':['List the routers recorded in our inventory','How many Cisco devices are stored?','Which devices are in our Penang site?','Give an overview of the equipment registered in our environment','Describe what our network setup contains',"What are R2's interfaces?",'List every stored port and IP address for R1','What management address is recorded for this router?'],
  'network_topology':['Show current network topology','What is connected to R1?','Find the planned path between R1 and R2'],
  'network_telemetry':['Show CPU and memory measurements','What is R1 bandwidth utilization?','Show live packet loss statistics'],
  'network_syslog':['Read recent device syslog events','Show the network logs for R1'],
  'network_incidents':['Show incident and anomaly history','What alerts were recorded yesterday?'],
- 'network_configuration':['Show configuration history for that router','Read the stored running configuration for R1'],
+ 'network_configuration':['Show configuration history for that router','Read the stored running configuration for R1','Show saved configuration captures for R2','Retrieve the actual stored configuration, not a new script'],
  'network_investigation':['Investigate R1 packet loss using logs and metrics','Diagnose the cause of this network outage using available evidence','Correlate topology, telemetry and configuration changes'],
 }
 

@@ -1,0 +1,23 @@
+{
+  "updated_at": "2026-10-20T12:52:02.483485+00:00",
+  "status": "IN_PROGRESS",
+  "full_G6_gate": "NOT_RUN",
+  "implemented_increment": {
+    "ingress_egress_policy_location": "PASS_FOCUSED; location retains actual receiver/interface/rule, completed-hop count unchanged",
+    "asymmetric_policy_drop": "PASS_FOCUSED; model-scoped failed direction can be conclusive while reverse succeeds",
+    "conflict": "PASS_BOUNDED_REAL_GATEWAY_BOTH; detailed Hello10/20 versus Full with truthful fallback",
+    "starter_source_contracts": "Three distinct24-category bundles compile; linked current/saved files remain separate"
+  },
+  "evidence": [
+    "tmp/phase-g/iterations/20261020-metrics-browser/policy-location-first-red.xml",
+    "tmp/phase-g/iterations/20261020-metrics-browser/policy-location-asymmetry-fixed.xml",
+    "tmp/phase-g/iterations/20261020-metrics-browser/starter-conflict-precision-fixed.xml",
+    "tmp/phase-g/iterations/20261020T124645.122148Z-G-source-starter-ac205a/quality-review.json"
+  ],
+  "limitations": [
+    "Not full independent10-case matrix",
+    "No actual browser acceptance for new selector",
+    "No physical collection or protocol emulator certification",
+    "Model faults retained separately; safe fallback is not model reasoning"
+  ]
+}

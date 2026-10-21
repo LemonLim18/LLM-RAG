@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "category": "device_state",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "interface-1",
+        "device_id": 1100,
+        "interface_id": 1,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "interface_state",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "prefix": "10.72.0.1/30",
+          "admin_status": "up",
+          "oper_status": "up"
+        }
+      },
+      {
+        "id": "interface-2",
+        "device_id": 1200,
+        "interface_id": 2,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "interface_state",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "prefix": "10.72.0.2/30",
+          "admin_status": "up",
+          "oper_status": "up"
+        }
+      },
+      {
+        "id": "interface-3",
+        "device_id": 1200,
+        "interface_id": 3,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "interface_state",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "prefix": "10.72.0.5/30",
+          "admin_status": "up",
+          "oper_status": "up"
+        }
+      },
+      {
+        "id": "interface-4",
+        "device_id": 1300,
+        "interface_id": 4,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "interface_state",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "prefix": "10.72.0.6/30",
+          "admin_status": "up",
+          "oper_status": "up"
+        }
+      },
+      {
+        "id": "interface-5",
+        "device_id": 1100,
+        "interface_id": 5,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "interface_state",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "prefix": "198.19.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up"
+        }
+      },
+      {
+        "id": "interface-6",
+        "device_id": 1200,
+        "interface_id": 6,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "interface_state",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "prefix": "198.19.71.2/32",
+          "admin_status": "up",
+          "oper_status": "up"
+        }
+      },
+      {
+        "id": "interface-7",
+        "device_id": 1300,
+        "interface_id": 7,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "interface_state",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "prefix": "198.19.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up"
+        }
+      }
+    ]
+  }
+}

@@ -109,6 +109,8 @@ class JsonObservations:
         self.path = Path(directory) / 'observations.json'
 
     def read(self, db, range_minutes=60):
+        from local_providers.development import active_for,observation_set
+        if manager:=active_for(db):return observation_set(manager)
         try:
             raw = self.path.read_bytes()
             if len(raw) > 10000000:

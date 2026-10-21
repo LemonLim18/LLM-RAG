@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "category": "telemetry",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "cpu-1100",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "metric_sample",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "metric": "cpu_pct",
+          "value": 18,
+          "unit": "percent",
+          "samples": [
+            {
+              "timestamp": "2026-10-18T00:59:00+00:00",
+              "value": 16
+            },
+            {
+              "timestamp": "2026-10-18T00:59:30+00:00",
+              "value": 17
+            },
+            {
+              "timestamp": "2026-10-18T01:00:00Z",
+              "value": 18
+            }
+          ]
+        }
+      },
+      {
+        "id": "cpu-1200",
+        "device_id": 1200,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "metric_sample",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "metric": "cpu_pct",
+          "value": 24,
+          "unit": "percent",
+          "samples": [
+            {
+              "timestamp": "2026-10-18T00:59:00+00:00",
+              "value": 22
+            },
+            {
+              "timestamp": "2026-10-18T00:59:30+00:00",
+              "value": 23
+            },
+            {
+              "timestamp": "2026-10-18T01:00:00Z",
+              "value": 24
+            }
+          ]
+        }
+      },
+      {
+        "id": "cpu-1300",
+        "device_id": 1300,
+        "interface_id": null,
+        "timestamp": "2026-10-18T01:00:00Z",
+        "kind": "metric_sample",
+        "source": "editable-development-observation",
+        "current": true,
+        "depends_on": [],
+        "values": {
+          "metric": "cpu_pct",
+          "value": 15,
+          "unit": "percent",
+          "samples": [
+            {
+              "timestamp": "2026-10-18T00:59:00+00:00",
+              "value": 13
+            },
+            {
+              "timestamp": "2026-10-18T00:59:30+00:00",
+              "value": 14
+            },
+            {
+              "timestamp": "2026-10-18T01:00:00Z",
+              "value": 15
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

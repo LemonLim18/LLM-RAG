@@ -89,6 +89,8 @@ def main():
         'configure_exec_timeout':'line vty 0 4\n exec-timeout {{ exec_timeout_minutes }} {{ exec_timeout_seconds | default(0) }}',
         'configure_login_lockout':'login block-for {{ login_block_seconds }} attempts {{ login_failure_attempts }} within {{ login_failure_window_seconds }}'}
     target=ROOT/'backend/ansible/reference/operation_drafts'
+    if (target/'index.json').exists():
+        raise SystemExit('The editable reference library already exists. It was preserved; use reviewed authoring and selective reference updates instead of regenerating over engineers\' changes.')
     rows=[]; env=Environment()
     for operation in operations:
         op=operation['operation_id']; category=operation['category_id']

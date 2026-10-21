@@ -1,0 +1,275 @@
+{
+  "format_version": 2,
+  "id": "MIXED-PATH-001",
+  "revision": 1,
+  "title": "Three-vendor routed observation example",
+  "logical_time": "2026-10-18T01:00:00Z",
+  "model_scope": "ipv4_observation",
+  "inventory_complete": true,
+  "devices": [
+    {
+      "id": 1100,
+      "hostname": "Branch-Aster",
+      "management_ip": "192.0.2.11",
+      "vendor": "cisco_xe",
+      "os_version": "17.9",
+      "model": "",
+      "role": "router",
+      "site": "Development",
+      "location": "",
+      "status": "active",
+      "aliases": [],
+      "engineering_facts": {}
+    },
+    {
+      "id": 1200,
+      "hostname": "Core-Birch",
+      "management_ip": "192.0.2.12",
+      "vendor": "juniper_junos",
+      "os_version": "23.4",
+      "model": "",
+      "role": "router",
+      "site": "Development",
+      "location": "",
+      "status": "active",
+      "aliases": [],
+      "engineering_facts": {}
+    },
+    {
+      "id": 1300,
+      "hostname": "Edge-Cedar",
+      "management_ip": "192.0.2.13",
+      "vendor": "huawei_vrp",
+      "os_version": "8",
+      "model": "",
+      "role": "router",
+      "site": "Development",
+      "location": "",
+      "status": "active",
+      "aliases": [],
+      "engineering_facts": {}
+    }
+  ],
+  "interfaces": [
+    {
+      "id": 1,
+      "device_id": 1100,
+      "name": "GigabitEthernet0/1",
+      "interface_type": "routed",
+      "prefix": "10.44.0.1/30",
+      "admin_status": "up",
+      "oper_status": "up",
+      "vrf": "default",
+      "speed_bps": null
+    },
+    {
+      "id": 2,
+      "device_id": 1200,
+      "name": "ge-0/0/0.0",
+      "interface_type": "routed",
+      "prefix": "10.44.0.2/30",
+      "admin_status": "up",
+      "oper_status": "up",
+      "vrf": "default",
+      "speed_bps": null
+    },
+    {
+      "id": 3,
+      "device_id": 1200,
+      "name": "ge-0/0/1.0",
+      "interface_type": "routed",
+      "prefix": "10.44.0.5/30",
+      "admin_status": "up",
+      "oper_status": "up",
+      "vrf": "default",
+      "speed_bps": null
+    },
+    {
+      "id": 4,
+      "device_id": 1300,
+      "name": "GigabitEthernet0/0/1",
+      "interface_type": "routed",
+      "prefix": "10.44.0.6/30",
+      "admin_status": "up",
+      "oper_status": "up",
+      "vrf": "default",
+      "speed_bps": null
+    },
+    {
+      "id": 5,
+      "device_id": 1100,
+      "name": "Loopback0",
+      "interface_type": "routed",
+      "prefix": "198.18.0.1/32",
+      "admin_status": "up",
+      "oper_status": "up",
+      "vrf": "default",
+      "speed_bps": null
+    },
+    {
+      "id": 6,
+      "device_id": 1200,
+      "name": "lo0.0",
+      "interface_type": "routed",
+      "prefix": "198.18.0.2/32",
+      "admin_status": "up",
+      "oper_status": "up",
+      "vrf": "default",
+      "speed_bps": null
+    },
+    {
+      "id": 7,
+      "device_id": 1300,
+      "name": "LoopBack0",
+      "interface_type": "routed",
+      "prefix": "198.18.0.3/32",
+      "admin_status": "up",
+      "oper_status": "up",
+      "vrf": "default",
+      "speed_bps": null
+    }
+  ],
+  "planned_links": [
+    {
+      "id": 1,
+      "src_device_id": 1100,
+      "src_interface_id": 1,
+      "dst_device_id": 1200,
+      "dst_interface_id": 2
+    },
+    {
+      "id": 2,
+      "src_device_id": 1200,
+      "src_interface_id": 3,
+      "dst_device_id": 1300,
+      "dst_interface_id": 4
+    }
+  ],
+  "records": {
+    "state": [],
+    "telemetry": [],
+    "syslog": [],
+    "incidents": [],
+    "configuration": [],
+    "running_configuration": [],
+    "topology": []
+  },
+  "availability": {
+    "state": true,
+    "telemetry": false,
+    "syslog": false,
+    "incidents": false,
+    "configuration": false,
+    "running_configuration": false,
+    "topology": true
+  },
+  "network": {
+    "observed_at": "2026-10-18T01:00:00Z",
+    "policy_attachments_complete": true,
+    "tables": [
+      {
+        "device_id": 1100,
+        "vrf": "default",
+        "complete": true,
+        "routes": [
+          {
+            "id": "aster-cedar",
+            "prefix": "198.18.0.3/32",
+            "origin": "static",
+            "preference": 10,
+            "metric": 0,
+            "action": "forward",
+            "next_hops": [
+              {
+                "interface_id": 1,
+                "address": "10.44.0.2",
+                "resolved": true
+              }
+            ],
+            "leak_to_vrf": null
+          }
+        ]
+      },
+      {
+        "device_id": 1200,
+        "vrf": "default",
+        "complete": true,
+        "routes": [
+          {
+            "id": "birch-cedar",
+            "prefix": "198.18.0.3/32",
+            "origin": "static",
+            "preference": 10,
+            "metric": 0,
+            "action": "forward",
+            "next_hops": [
+              {
+                "interface_id": 3,
+                "address": "10.44.0.6",
+                "resolved": true
+              }
+            ],
+            "leak_to_vrf": null
+          },
+          {
+            "id": "birch-aster",
+            "prefix": "198.18.0.1/32",
+            "origin": "static",
+            "preference": 10,
+            "metric": 0,
+            "action": "forward",
+            "next_hops": [
+              {
+                "interface_id": 2,
+                "address": "10.44.0.1",
+                "resolved": true
+              }
+            ],
+            "leak_to_vrf": null
+          }
+        ]
+      },
+      {
+        "device_id": 1300,
+        "vrf": "default",
+        "complete": true,
+        "routes": [
+          {
+            "id": "cedar-aster",
+            "prefix": "198.18.0.1/32",
+            "origin": "static",
+            "preference": 10,
+            "metric": 0,
+            "action": "forward",
+            "next_hops": [
+              {
+                "interface_id": 4,
+                "address": "10.44.0.5",
+                "resolved": true
+              }
+            ],
+            "leak_to_vrf": null
+          }
+        ]
+      }
+    ],
+    "policies": [],
+    "flows": [
+      {
+        "id": "branch-edge-icmp",
+        "source_device_id": 1100,
+        "destination_device_id": 1300,
+        "source_address": "198.18.0.1",
+        "destination_address": "198.18.0.3",
+        "vrf": "default",
+        "destination_vrf": "default",
+        "protocol": "icmp",
+        "source_port": null,
+        "destination_port": null,
+        "require_return": true
+      }
+    ],
+    "ospf": [],
+    "bgp": []
+  }
+}

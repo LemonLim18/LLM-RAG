@@ -13,3 +13,6 @@ PyYAML
 # Verification
 httpx
 pytest
+
+# B1 shared LangChain / LangGraph foundation (no model downloads).
+-r requirements-agent-b1.lock.txt

@@ -31,7 +31,9 @@ class CreateConversation(StrictModel):
 
 class ReviewSelection(StrictModel):
     task_id: str | None = Field(default=None,max_length=200)
-    operation_id: str = Field(min_length=1,max_length=100)
+    # Empty only retains an existing unresolved server task; the worker rejects
+    # new or altered unresolved entries and rendering still requires V9 ready.
+    operation_id: str = Field(max_length=100)
     target_host: str = Field(default='',max_length=200)
     parameters: dict = Field(default_factory=dict)
     template_id: str | None = Field(default=None,max_length=240)
@@ -47,6 +49,7 @@ class StudioPreview(StrictModel):
     task_id: str | None = None
     expected_revision: int | None = Field(default=None,ge=1)
     confirm_order: bool = False
+    refresh_inventory: bool = False
     selection: list[ReviewSelection] | None = Field(default=None,max_length=24)
 
 
@@ -102,7 +105,7 @@ def studio_catalog(user=Depends(require_ai_user)):
 async def studio_preview(body: StudioPreview,service=Depends(gateway),user=Depends(require_ai_user)):
     service.store.get(body.conversation_id,user['username'],'studio')
     from llm.gateway_v9 import preview
-    return await preview(service.db,user,body.prompt,body.model,body.output_kind,body.params,body.hosts,body.task_id,body.expected_revision,body.confirm_order,[entry.model_dump() for entry in body.selection] if body.selection is not None else None)
+    return await preview(service.db,user,body.prompt,body.model,body.output_kind,body.params,body.hosts,body.task_id,body.expected_revision,body.confirm_order,[entry.model_dump() for entry in body.selection] if body.selection is not None else None,body.refresh_inventory)
 
 
 @router.post('/studio/render')
@@ -269,6 +272,12 @@ def remove_attachment(identity: str, attachment_id: UUID, service=Depends(gatewa
 class PrepareHandoff(StrictModel):
     source_turn: UUID
     requested_action: str = Field(min_length=1,max_length=4000)
+
+
+@router.get('/conversations/{identity}/turns/{request_id}/handoff-eligibility')
+def handoff_eligibility(identity:str,request_id:UUID,service=Depends(gateway),user=Depends(require_ai_user)):
+    from llm.gateway_handoff import eligibility
+    return eligibility(service,user,identity,str(request_id))
 
 
 @router.post('/conversations/{identity}/handoffs')

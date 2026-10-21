@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "category": "topology_history",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "topology_history-1",
+        "device_id": 1100,
+        "interface_id": null,
+        "timestamp": "2026-10-18T00:55:00+00:00",
+        "kind": "observed_link",
+        "source": "editable-development-observation",
+        "current": false,
+        "depends_on": [],
+        "values": {
+          "oper_status": "up",
+          "discovery_protocol": "LLDP",
+          "endpoints": {
+            "src_device_id": 1100,
+            "src_interface_id": 1,
+            "dst_device_id": 1200,
+            "dst_interface_id": 2
+          }
+        }
+      },
+      {
+        "id": "topology_history-2",
+        "device_id": 1200,
+        "interface_id": null,
+        "timestamp": "2026-10-18T00:55:00+00:00",
+        "kind": "observed_link",
+        "source": "editable-development-observation",
+        "current": false,
+        "depends_on": [],
+        "values": {
+          "oper_status": "up",
+          "discovery_protocol": "LLDP",
+          "endpoints": {
+            "src_device_id": 1200,
+            "src_interface_id": 3,
+            "dst_device_id": 1300,
+            "dst_interface_id": 4
+          }
+        }
+      }
+    ]
+  }
+}

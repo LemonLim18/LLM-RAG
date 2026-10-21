@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "category": "config_snapshots",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "records": [
+      {
+        "id": "saved-1100",
+        "device_id": 1100,
+        "timestamp": "2026-10-18T00:59:50Z",
+        "kind": "configuration_snapshot",
+        "source": "scenario_author",
+        "current": false,
+        "values": {
+          "config_file": "configs/config_snapshots/1100.cfg"
+        }
+      },
+      {
+        "id": "saved-1200",
+        "device_id": 1200,
+        "timestamp": "2026-10-18T00:59:50Z",
+        "kind": "configuration_snapshot",
+        "source": "scenario_author",
+        "current": false,
+        "values": {
+          "config_file": "configs/config_snapshots/1200.cfg"
+        }
+      },
+      {
+        "id": "saved-1300",
+        "device_id": 1300,
+        "timestamp": "2026-10-18T00:59:50Z",
+        "kind": "configuration_snapshot",
+        "source": "scenario_author",
+        "current": false,
+        "values": {
+          "config_file": "configs/config_snapshots/1300.cfg"
+        }
+      }
+    ]
+  }
+}

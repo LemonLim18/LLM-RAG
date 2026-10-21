@@ -2,6 +2,7 @@
 from collections import deque
 from datetime import datetime, timezone, timedelta
 import json
+from copy import deepcopy
 import os
 import re
 from typing import Literal
@@ -11,7 +12,39 @@ from pydantic import Field, field_validator, model_validator
 from llm.gateway_models import Evidence, StrictModel, ToolResult, text_digest
 
 READ_TOOLS = frozenset({'inventory.read', 'network.topology', 'network.telemetry',
-    'network.syslog', 'network.incidents', 'network.configuration', 'knowledge.search'})
+    'network.state', 'network.syslog', 'network.incidents', 'network.configuration', 'knowledge.search'})
+
+# These qualified attributes describe observations, not interface identity or a
+# planned inventory status. Recognize field-style and natural separators without
+# rewriting hostnames, and leave semantic planning/authorization to their layers.
+INTERFACE_OBSERVATION = (r'\b(?:(?:interfaces?|ports?)[\s_\-\u2010-\u2015]+'
+    r'(?:(?:operational|administrative|oper|admin)[\s_\-\u2010-\u2015]+)?(?:state|status)'
+    r'|(?:operational(?:ly)?|administrative(?:ly)?|oper|admin)[\s_\-\u2010-\u2015]+(?:state|status|up|down))\b')
+OTHER_STATE_TOPIC = r'\b(?:routes?|routing|ospf|bgp|isis|controllers?|collectors?|reachability|forwarding|jobs?|audit|source[\s_-]+health|collection[\s_-]+status|investigat\w*|diagnos\w*|troubleshoot\w*|causes?|why)\b'
+
+
+def interface_state_request(prompt):
+    """A scoped attribute read, never a diagnosis or operation recognizer."""
+    return bool(re.search(INTERFACE_OBSERVATION,prompt,re.I) and not re.search(OTHER_STATE_TOPIC,prompt,re.I))
+
+
+def bounded_record_context(data, limit):
+    """Keep complete authoritative rows instead of an unreadable JSON fragment."""
+    projected=deepcopy(data)
+    if not isinstance(projected,dict):return {'excerpt':json.dumps(data,default=str)[:limit],'truncated':True}
+    containers=[]
+    def collect(value):
+        if not isinstance(value,dict):return
+        if isinstance(value.get('records'),list):containers.append(value)
+        for source in value.get('sources',[]):collect(source.get('data'))
+    collect(projected)
+    while len(json.dumps(projected,default=str))>limit:
+        candidates=[value for value in containers if len(value['records'])>1]
+        if not candidates:return {'excerpt':json.dumps(data,default=str)[:limit],'truncated':True}
+        largest=max(candidates,key=lambda value:len(json.dumps(value['records'],default=str)))
+        largest['records'].pop();largest['truncated']=True
+        projected['truncated']=True
+    return projected
 
 
 class NetworkQuery(StrictModel):
@@ -21,6 +54,9 @@ class NetworkQuery(StrictModel):
     start: str | None = None
     end: str | None = None
     live: bool = False
+    source_scope: Literal['auto','current','historical','planned','observed','both'] = 'auto'
+    record_kinds: list[str] = Field(default_factory=list,max_length=8)
+    source_categories: list[str] = Field(default_factory=list,max_length=24)
     window_minutes: int = Field(default=60,ge=1,le=10080)
 
     @field_validator('start','end')
@@ -28,6 +64,19 @@ class NetworkQuery(StrictModel):
     def validate_time(cls,value):
         if value and (len(value)>50 or not timestamp(value)):raise ValueError('Invalid time range timestamp')
         return value
+
+    @field_validator('source_categories')
+    @classmethod
+    def validate_categories(cls,value):
+        from development.source_registry import BY_KEY
+        if any(key not in BY_KEY for key in value):raise ValueError('Unknown scenario source category')
+        return list(dict.fromkeys(value))
+
+    @field_validator('record_kinds')
+    @classmethod
+    def validate_record_kinds(cls,value):
+        if any(not kind or len(kind)>100 for kind in value):raise ValueError('Invalid record kind filter')
+        return list(dict.fromkeys(value))
 
     @model_validator(mode='after')
     def validate_range(self):
@@ -43,8 +92,54 @@ def timestamp(value):
     except ValueError: return None
 
 
+def explicit_topology_scope(text):
+    """Narrow explicit source qualifiers; ambiguous requests retain auto scope.
+
+    This constrains retrieval, not network intent recognition or diagnosis.
+    Model-selected scope remains useful for implicit questions.
+    """
+    from llm.gateway_references import read_intent_text
+    text=read_intent_text(text)
+    text=re.sub(r'\b(?:not|without|excluding|ignore|instead of|rather than)\s+(?:the\s+)?(?:planned|intended|design|observed|discovered|operational|current|historical|previous|past)\b','',text,flags=re.I)
+    planned=bool(re.search(r'\b(planned|intended|design)\b',text,re.I))
+    observed=bool(re.search(r'\b(observed|discovered|operational|current)\b',text,re.I))
+    historical=bool(re.search(r'\b(historical|previous|past)\b',text,re.I))
+    if sum([planned,observed,historical])>1:return 'both'
+    return 'planned' if planned else 'observed' if observed else 'historical' if historical else 'auto'
+
+
 def redact(text):
     return re.sub(r'(?im)^([^\n]*(?:password|secret|community|private-key|authentication-key)[^\n]*).*$', '[credential line redacted]', str(text))
+
+
+def explicit_configuration_scope(text):
+    """Explicit temporal qualifiers constrain a reader, not CLI semantics."""
+    # Capture metadata describes the requested source; it does not request a
+    # different historical source. Keep explicit saved snapshots distinguishable.
+    text=re.sub(r'\b(?:capture(?:d)?|retrieval|collection)\s+(?:time|timestamp|date)\b','',text,flags=re.I)
+    text=re.sub(r'\b(?:not|without|excluding|ignore|instead of|rather than)\s+(?:(?:the|its|their)\s+)?(?:current|active|running|stored|saved|historical|previous|planned|intended)\b','',text,flags=re.I)
+    current=bool(re.search(r'\b(current|active|running)\b',text,re.I))
+    historical=bool(re.search(r'\b(stored|saved|historical|previous|backups?|snapshots?|captures?)\b',text,re.I))
+    if current and historical:return 'both'
+    if current:return 'current'
+    if historical:return 'historical'
+    if re.search(r'\b(planned|intended)\b',text,re.I):return 'planned'
+    return 'auto'
+
+
+def planned_graph_path(devices,links,names):
+    """One recorded undirected graph calculation shared by both source adapters."""
+    if len(devices)!=2:return None
+    queue=deque([(devices[0]['id'],[devices[0]['id']])]);seen={devices[0]['id']}
+    while queue:
+        node,trail=queue.popleft()
+        if node==devices[1]['id']:return [names[i] for i in trail]
+        for link in links:
+            if node in (link['src_device_id'],link['dst_device_id']):
+                other=link['dst_device_id'] if node==link['src_device_id'] else link['src_device_id']
+                if other not in seen:
+                    seen.add(other);queue.append((other,trail+[other]))
+    return None
 
 
 class NetworkReader:
@@ -74,14 +169,45 @@ class NetworkReader:
     def read(self, domain, query, authorization):
         try: devices, inventory=self.devices(query)
         except ValueError as exc: return ToolResult(status='unavailable',message=str(exc))
+        from local_providers.development import active_for
+        if query.source_categories:
+            from development.source_registry import BY_KEY
+            expected_tool='knowledge.search' if domain=='knowledge' else 'network.'+domain
+            if any(BY_KEY[key].tool!=expected_tool for key in query.source_categories):
+                raise ValueError('Logical source filter is incompatible with the requested reader')
+        if domain!='knowledge' and (manager:=active_for(self.db)):
+            return manager.result(domain,query,devices)
+        if query.source_categories and domain!='knowledge':
+            return ToolResult(status='unavailable',data={'source_available':False,'requested_source_categories':query.source_categories},
+                message='These logical source filters belong to a development scenario. Ordinary records were not substituted; use the ordinary reader without a scenario filter.')
+        if domain=='state':return ToolResult(status='unavailable',message='Structured routing/protocol/reachability observations are unavailable in this environment')
         if query.live:
             return self.live(domain,query,devices,authorization)
         if domain=='topology': return self.topology(query,devices,inventory)
         if domain=='configuration': return self.configuration(query,devices,authorization)
         if domain=='knowledge':
             from llm.gateway_knowledge import documentation_context
-            documents, evidence=documentation_context(query.query)
-            return ToolResult(status='success' if documents else 'unavailable',data=documents,evidence=evidence,
+            reference=None;reference_evidence=[];lookup=query.query
+            if query.source_categories==['knowledge'] and (manager:=active_for(self.db)):
+                bundle=manager.activated_bundle();scenario,meta=manager.snapshot()
+                if bundle:
+                    source=bundle['sources']['knowledge'];state=scenario['source_statuses']['knowledge']
+                    reference={'query':source['data']['query'][:4000],'status':state['status'],'captured_at':state['captured_at'],
+                        'source_revision':meta['source_revision'],'authority':'retrieval_request_only; active immutable V9 knowledge remains authoritative'}
+                    reference_evidence=[Evidence(id=uuid4().hex,source='development.knowledge_reference',origin='simulated',
+                        authority='development_scenario_reference',captured_at=state['captured_at'],source_revision=meta['source_revision'],
+                        freshness='stale' if state['status']=='STALE' else 'not_applicable')]
+                    if state['status'] not in {'AVAILABLE','STALE','CONFLICTING'}:
+                        return ToolResult(status='error' if state['status']=='ERROR' else 'unavailable',data=[],evidence=reference_evidence,
+                            message='Scenario knowledge reference source is '+state['status']+'; no published lookup was performed.')
+                    lookup=reference['query']
+            documents, evidence=documentation_context(lookup)
+            if reference:
+                published={item.id for item in evidence if item.authority=='published_operation_documentation'}
+                documents=[row for row in documents if row.get('evidence_id') in published and row.get('source','').startswith('published:')]
+                evidence=[item for item in evidence if item.id in {row.get('evidence_id') for row in documents}]
+            if reference and documents:documents=[{**row,'scenario_reference':reference} if i==0 else row for i,row in enumerate(documents)]
+            return ToolResult(status='success' if documents else 'unavailable',data=documents,evidence=evidence+reference_evidence,
                 message='' if documents else 'No matching local documentation was retrieved. General engineering knowledge may be used, labelled separately.')
         return self.observations(domain,query,devices)
 
@@ -128,22 +254,15 @@ class NetworkReader:
         return ToolResult(status='unavailable',message='This domain has stored history only; no live collector is connected.')
 
     def topology(self,query,devices,inventory):
+        scope=query.source_scope if query.source_scope!='auto' else explicit_topology_scope(query.query)
+        if scope in {'current','observed','historical'}:
+            kind='historical' if scope=='historical' else 'observed'
+            return ToolResult(status='unavailable',data={'records':[],'topology_kind':kind,'source_available':False},message=kind.capitalize()+' link observations are unavailable; planned topology was not substituted.')
         ids={d['id'] for d in devices}; interfaces={i['id']:i for d in inventory['devices'] for i in d['interfaces']}
         names={d['id']:d['hostname'] for d in inventory['devices']}
         links=[dict(link,source=names.get(link['src_device_id']),target=names.get(link['dst_device_id']),
             source_interface=interfaces.get(link['src_interface_id'],{}).get('name'),target_interface=interfaces.get(link['dst_interface_id'],{}).get('name')) for link in inventory['links']]
-        path=None
-        if len(devices)==2:
-            queue=deque([(devices[0]['id'],[devices[0]['id']])]); seen=set()
-            while queue:
-                node, trail=queue.popleft()
-                if node==devices[1]['id']: path=[names[i] for i in trail]; break
-                if node in seen: continue
-                seen.add(node)
-                for link in links:
-                    if node in (link['src_device_id'],link['dst_device_id']):
-                        other=link['dst_device_id'] if node==link['src_device_id'] else link['src_device_id']
-                        if other not in seen: queue.append((other,trail+[other]))
+        path=planned_graph_path(devices,links,names)
         selected=[link for link in links if link['src_device_id'] in ids or link['dst_device_id'] in ids]
         return self.result('sqlite.planned_topology',{'nodes':[{'id':d['id'],'hostname':d['hostname'],'role':d['role']} for d in devices],
             'links':selected[:query.limit],'total_links':len(selected),'truncated':len(selected)>query.limit,
@@ -208,16 +327,21 @@ class NetworkReader:
             message='Local mode has no live measurements. Simulated and stored records retain their source and original timestamps.')
 
     def configuration(self,query,devices,auth):
+        current=query.source_scope=='current' or query.source_scope=='auto' and bool(re.search(r'\b(current|running)\b',query.query,re.I)) and not re.search(r'\b(stored|saved|historical|backup|not the current|not running)\b',query.query,re.I)
+        if current:
+            return ToolResult(status='unavailable',data={'records':[],'current_available':False},message='The current running configuration source is unavailable. Stored snapshots are a separate historical source; none was substituted.')
+        if query.source_scope=='planned':return ToolResult(status='unavailable',message='Intended configuration is not available from the stored-snapshot reader.')
         ids={d['id'] for d in devices}
         with self.db._connect() as c:
             rows=[dict(r) for r in c.execute('SELECT id,device_id,config_text,captured_at,source_type,snapshot_type,owner_username FROM config_snapshots WHERE device_id IN ('+','.join('?' for _ in ids)+') ORDER BY id DESC LIMIT 100',tuple(ids))] if ids else []
         rows=[r for r in rows if (auth.role=='admin' or r['owner_username']==auth.principal) and self.in_range(r,query)]
         for row in rows:
+            row['hostname']=next((d['hostname'] for d in devices if d['id']==row['device_id']),None)
             row['config_text']=redact(row['config_text'])[:12000]
             source=str(row.get('source_type') or '').lower()
             row['origin']='simulated' if 'simulat' in source or 'fixture' in source else 'sample' if 'sample' in source else 'stored'
         result=self.result('sqlite.config_snapshots',{'records':rows[:query.limit],'truncated':len(rows)>query.limit,
-            'live_available':False,'coverage':'Stored captures; configurations are truncated to 12000 characters and credential lines removed.'},devices,
+            'live_available':False,'current_available':False,'coverage':'Stored captures; configurations are truncated to 12000 characters and credential lines removed.'},devices,
             captured=rows[0]['captured_at'] if rows else None,status='success' if rows else 'unavailable',message='' if rows else 'No authorized stored configuration snapshots match this scope.')
         if rows:
             result.evidence=[]
@@ -230,77 +354,183 @@ class NetworkReader:
         return result
 
 
-def route_network(prompt, inventory):
+def investigation_source_domains(prompt):
+    """An explicit evidence list bounds initial reads, not later gap retrieval."""
+    clause=re.search(r'\b(?:using|based on|consulting)\s+(.+?)(?:[;!?\n]|$)',prompt,re.I)
+    if not clause or re.search(r'\ball\s+(?:available\s+)?(?:sources|evidence|information)\b',clause[1],re.I):return []
+    requested=clause[1]
+    domains,_=route_network('Read '+requested,{'devices':[]},expand_investigation=False)
+    if re.search(r'\b(?:routes?|routing tables?|reachability|forwarding)\b',requested,re.I):domains.append('state')
+    domains=list(dict.fromkeys(domains))
+    # Unknown/implicit source descriptions remain the semantic planner's job.
+    return domains if len(domains)>=2 else []
+
+
+def route_network(prompt, inventory, *, expand_investigation=True):
     """Bounded domain routing; never recognizes engineering operations or executes actions."""
+    from llm.gateway_references import read_intent_text
+    prompt=read_intent_text(prompt)
     domains=[]; text=prompt.lower()
     for domain,pattern in [('inventory',r'\b(inventory|devices?|routers?|switches?|interfaces?|vendors?|platforms?)\b'),
-        ('topology',r'\b(topology|path|neighbou?r|links?|connected|connectivity)\b'),
-        ('telemetry',r'\b(telemetry|metrics?|cpu|memory|traffic|bandwidth|utilization|latency|packet loss|statistics)\b'),
-        ('syslog',r'\b(syslog|logs?|logging)\b'),('incidents',r'\b(incidents?|anomal\w*|alerts?|drift|outage|failures?)\b'),
-        ('configuration',r'\b(configurations?|running.config|config history|snapshots?|backups?)\b')]:
+        ('topology',r'\b(topology|cabling|paths?|hops?|neighbou?r|links?|connections?|connected|connectivity)\b'),
+        ('telemetry',r'\b(telemetry|metrics?|measurements?|cpu|memory|traffic|bandwidth|utilization|latency|packet loss|statistics)\b'),
+        ('syslog',r'\b(syslogs?|logs?|logging)\b'),('incidents',r'\b(incidents?|anomal\w*|alerts?|drift|outage|failures?)\b'),
+        ('state',r'\b(controllers?|collectors?|source health|collection status)\b|'+INTERFACE_OBSERVATION),
+        ('configuration',r'\b(configs?|configurations?|running[ .-]?config|snapshots?|backups?)\b')]:
         if re.search(pattern,text): domains.append(domain)
     investigation=bool(re.search(r'\b(investigat\w*|diagnos\w*|root cause|correlat\w*|troubleshoot\w*)\b',text))
-    if investigation: domains=['inventory','topology','telemetry','syslog','incidents','configuration']
+    if investigation and expand_investigation:
+        # Preserve the explicit legacy rollback path; the enabled shared planner
+        # uses the named initial list and can retrieve more after evaluating gaps.
+        scoped=investigation_source_domains(prompt) if os.getenv('COGNISHIELD_AI_PLANNING','0')=='1' else []
+        domains=scoped or ['inventory','topology','telemetry','syslog','incidents','configuration']
     # Conceptual questions do not need all network records.
     general=bool(re.match(r'\s*(what (is|are|does)|explain|compare|difference|how (does|do|to))\b',text)) and not re.search(r'\b(my|our|this network|current|planned|stored|live|history)\b',text)
     refs=[d['hostname'] for d in inventory['devices'] if any(re.search(r'(?<![\w-])'+re.escape(str(ref))+r'(?![\w-])',prompt,re.I) for ref in [d['hostname'], d.get('management_ip') or '', *d.get('aliases',[])] if ref)]
-    unknown=[name for name in re.findall(r'\b(?:R|SW|RTR|EDGE|CORE)[-_]?\d+\b',prompt,re.I) if not any(name.casefold() in {d['hostname'].casefold(), *[alias.casefold() for alias in d.get('aliases',[])]} for d in inventory['devices'])]
+    recognized_spans=[match.span() for d in inventory['devices'] for ref in [d['hostname'],*d.get('aliases',[])] if ref
+        for match in re.finditer(r'(?<![\w-])'+re.escape(ref)+r'(?![\w-])',prompt,re.I)]
+    unknown=[match[0] for match in re.finditer(r'\b(?:R|SW|RTR|EDGE|CORE)[-_]?\d+\b',prompt,re.I)
+        if not any(left<=match.start() and match.end()<=right for left,right in recognized_spans)]
     refs.extend(unknown)
+    from llm.gateway_references import configuration_text_request
+    if configuration_text_request(prompt):
+        target=re.search(r'\b(?:for|on)\s+(?:(?:device|router|switch)\s+)?[`\"\']?([A-Za-z][\w.:-]{0,99})',prompt,re.I)
+        target_name=target[1].rstrip('.') if target else ''
+        if target_name and target_name.casefold() not in {'all','each','every','the','that','this','it','its','our','my','these','those'}:
+            # A literal target supplied by the user must reach the existing
+            # resolver even when unknown. An empty scope means all devices and
+            # must not silently replace an unrecorded hostname.
+            if not any(target_name.casefold() in {str(ref).casefold() for ref in [d['hostname'],d.get('management_ip'),*d.get('aliases',[])]} for d in inventory['devices']):refs.append(target_name)
     refs=list(dict.fromkeys(refs))[:8]
+    from llm.gateway_references import configuration_text_request,configuration_record_request
+    if refs and (configuration_record_request(prompt) or configuration_text_request(prompt) and re.search(r'\b(?:saved|stored|running|current)\b',text)):
+        domains=list(dict.fromkeys(domains+['configuration']))
+    if refs and re.search(r'\b(?:find|identify|determine)\b.{0,60}\b(?:cause|fault|reason)\b',text):
+        # A named diagnostic paraphrase is a record investigation, not a
+        # request for a generic list of possible networking problems.
+        domains=list(dict.fromkeys(domains+['inventory','topology','state','configuration']))
+    if refs and re.search(r'\b(ospf|bgp|is-is|isis)\b',text) and re.search(r'\b(adjacenc\w*|neighbou?rs?|peers?|sessions?)\b',text):
+        # Inventory and physical links cannot establish protocol adjacency.
+        domains=list(dict.fromkeys([d for d in domains if d!='topology']+['state']))
+    if refs and re.search(r'\b(?:forward(?:ing)?|return|reverse)\s+(?:paths?|directions?)\b|\b(?:modeled|modelled|simulated)\s+(?:paths?|forwarding)\b|\bbidirectional\s+(?:paths?|reachability|forwarding)\b',text):
+        # Graph links alone cannot establish either forwarding direction. The
+        # existing state reader supplies scoped model traces/observations.
+        domains=list(dict.fromkeys(domains+['topology','state']))
     if general and not refs and not investigation:
         if re.search(r'\b(ospf|bgp|isis|ansible|junos|cisco|juniper|huawei|qos|acl|routing|switching|netconf)\b',text):return ['knowledge'],{'query':prompt[:4000]}
         return [],{}
     if refs and not domains: domains=['inventory']
-    live=bool(re.search(r'\b(live|real[- ]?time|right now)\b',text))
-    dates=re.findall(r'\d{4}-\d{2}-\d{2}(?:T[\d:.]+Z)?',prompt)
+    # Mentioning absent live evidence is not a request to replace every stored
+    # reader with a live collector. Keep this query modifier separate from the
+    # semantic capability decision; explicit positive live requests still apply.
+    observation_request=re.sub(r'\b(?:missing|unavailable|without|no|lack of|absence of)\s+(?:fresh\s+)?(?:live|real[- ]?time)(?:\s+(?:evidence|data|observations|measurements))?', '', text)
+    observation_request=re.sub(r'\b(?:do not|don.t|never)\s+(?:infer|assume|claim)\s+(?:a\s+)?live\b', '', observation_request)
+    live=bool(re.search(r'\b(live|real[- ]?time|right now)\b',observation_request))
+    dates=re.findall(r'\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2}))?',prompt)
     query={'device_refs':refs,'query':prompt[:4000],'live':live}
+    if re.search(r'\b(latest|most recent)\b',text):query['limit']=1
     relative=re.search(r'(?:last|past)\s+(\d+)\s*(minutes?|mins?|hours?|hrs?|days?)',text)
     if relative:
         scale=1440 if relative[2].startswith('day') else 60 if relative[2].startswith(('hour','hr')) else 1
         query['window_minutes']=max(1,min(10080,int(relative[1])*scale))
-        query['start']=(datetime.now(timezone.utc)-timedelta(minutes=query['window_minutes'])).isoformat()
+        anchor=timestamp((inventory.get('scenario') or {}).get('logical_time')) or datetime.now(timezone.utc)
+        query['start']=(anchor-timedelta(minutes=query['window_minutes'])).isoformat()
     if dates: query['start']=dates[0] if 'T' in dates[0] else dates[0]+'T00:00:00Z'
     if len(dates)>1: query['end']=dates[1] if 'T' in dates[1] else dates[1]+'T23:59:59Z'
     return domains,query
 
 
-async def network_context(db, registry, authorization, prompt, domains_override=None):
+async def network_context(db, registry, authorization, prompt, domains_override=None,device_refs_override=None,source_requests=None):
     from llm.gateway_services import inventory_snapshot
     inventory=inventory_snapshot(db)
     domains,query=route_network(prompt,inventory)
+    # A validated semantic plan may select a reader even when the legacy
+    # heuristic classifies this as general conversation. Never drop its input.
+    query.setdefault('query',prompt[:4000])
+    if device_refs_override is not None:
+        query['device_refs']=device_refs_override
     if domains_override is not None:
-        allowed={"inventory","topology","telemetry","syslog","incidents","configuration","knowledge"}
+        allowed={"inventory","topology","telemetry","syslog","incidents","configuration","knowledge","state"}
         domains=list(dict.fromkeys(domain for domain in domains_override if domain in allowed))
+    path_scope=(len(query.get('device_refs',[]))==2 and 'topology' in domains
+        and bool({'state','configuration'} & set(domains))
+        and bool(re.search(r'\b(paths?|forwarding|communicat\w*|connectivity|reachability)\b',prompt,re.I)))
+    if path_scope:domains=['topology']+[d for d in domains if d!='topology']
+    path_device_refs=[];path_scope_limitation=None
     contexts=[]; evidence=[]
     for domain in domains:
+        effective_query=query
         tool='inventory.read' if domain=='inventory' else 'knowledge.search' if domain=='knowledge' else 'network.'+domain
         if domain=='inventory':
             result=await registry.invoke(tool,{},authorization)
-            data=result.data
+            data=result.data or {'devices':[]}
             references=query.get('device_refs',[])
             if references:
-                matched=[d for d in data['devices'] if d['hostname'] in references]
-                missing=[name for name in references if name not in {d['hostname'] for d in matched}]
+                def matches(d,ref):return str(ref).casefold() in {str(d['id']),d['hostname'].casefold(),str(d['management_ip'] or '').casefold(),*[a.casefold() for a in d.get('aliases',[])]}
+                matched=[d for d in data['devices'] if any(matches(d,ref) for ref in references)]
+                missing=[ref for ref in references if not any(matches(d,ref) for d in matched)]
                 data={**data,'devices':matched,'unresolved_devices':missing}
             for column,choices in [('vendor',['cisco','juniper','huawei']),('role',['core','distribution','access','edge']),('status',['planned','active','offline','staged'])]:
                 requested=[choice for choice in choices if re.search(r'\b'+choice+r'\b',prompt,re.I)]
-                if len(requested)==1:data={**data,'devices':[d for d in data['devices'] if requested[0] in str(d[column]).lower()]}
+                # A hostname such as Core-Birch is an identity, not a request
+                # to filter it out unless its stored role also happens to be core.
+                if len(requested)==1 and not references:data={**data,'devices':[d for d in data['devices'] if requested[0] in str(d[column]).lower()]}
             summary={'device_count':len(data['devices']),'interface_count':sum(len(d['interfaces']) for d in data['devices'])}
             for column in ['vendor','role','status','site']:
                 summary['by_'+column]={key:sum(str(d[column] or 'unspecified')==key for d in data['devices']) for key in sorted({str(d[column] or 'unspecified') for d in data['devices']})}
             data={**data,'summary':summary,'devices':data['devices'][:100],'truncated':len(data['devices'])>100}
+            for ref in result.evidence:
+                ref.device_refs=[str(d['id']) for d in data['devices']]
+                ref.source_revision=text_digest(json.dumps(data,sort_keys=True))
 
         else:
-            result=await registry.invoke(tool,query,authorization); data=result.data
-        contexts.append({'tool':tool,'status':result.status,'message':result.message,'data':data,'evidence_ids':[e.id for e in result.evidence]})
+            scope=(source_requests or {}).get(domain,{})
+            # Source/time intent only, never identity or permission data. An
+            # explicit new window replaces the WHOLE old window, including an
+            # old end bound when the new request supplies only a start.
+            override={k:v for k,v in scope.items() if k in {'source_scope','record_kinds','source_categories','start','end','window_minutes'}}
+            if any(key in query for key in ('start','end','window_minutes')):
+                override={k:v for k,v in override.items() if k not in {'start','end','window_minutes'}}
+            effective_query={**query,**override}
+            if domain=='state':
+                from development.source_registry import BY_KEY
+                categories=effective_query.get('source_categories',[])
+                interface_sources=not categories or all(BY_KEY.get(key) and BY_KEY[key].kind in {'interface_state','simulation'} for key in categories)
+                if interface_state_request(prompt) and interface_sources:effective_query['record_kinds']=['interface_state']
+                elif re.search(OTHER_STATE_TOPIC,prompt,re.I):effective_query.pop('record_kinds',None)
+            result=await registry.invoke(tool,effective_query,authorization); data=result.data
+        requested=query.get('device_refs',[])
+        scoped=[str(d['id']) for d in inventory['devices'] if not requested or any(str(ref).casefold() in {str(d['id']),d['hostname'].casefold(),str(d['management_ip'] or '').casefold(),*[a.casefold() for a in d.get('aliases',[])]} for ref in requested)]
+        from llm.gateway_references import source_scope_references
+        retained_scope=source_scope_references({domain:{k:v for k,v in effective_query.items()
+            if k in {'source_scope','source_categories','record_kinds','start','end','window_minutes'}}})[domain]
+        contexts.append({'tool':tool,'status':result.status,'message':result.message,'data':data,'source_request':retained_scope,
+            'scope_devices':[{'id':d['id'],'hostname':d['hostname']} for d in inventory['devices'] if str(d['id']) in scoped][:8],
+            'device_refs':list(dict.fromkeys(ref for e in result.evidence for ref in e.device_refs)) or scoped,
+            'evidence_ids':[e.id for e in result.evidence]})
         for item in result.evidence:
-            if query.get('start') or query.get('end'):item.requested_time_range={key:query[key] for key in ['start','end'] if query.get(key)}
+            if effective_query.get('start') or effective_query.get('end'):item.requested_time_range={key:effective_query[key] for key in ['start','end'] if effective_query.get(key)}
         evidence.extend(result.evidence)
+        if path_scope and domain=='topology' and result.status=='success' and isinstance(data,dict):
+            path=data.get('graph_path')
+            if isinstance(path,list) and len(path)>=2:
+                # Expand only from the actual authorized graph result. The
+                # subsequent existing readers retain their own input/output
+                # validation, provenance and permissions; no new reader or
+                # guessed transit device is introduced.
+                named={d['hostname']:str(d['id']) for d in inventory['devices']}
+                if all(isinstance(name,str) and name in named for name in path):
+                    refs=list(dict.fromkeys(named[name] for name in path))
+                    if len(refs)<=8:
+                        path_device_refs=refs;query['device_refs']=refs
+                    else:path_scope_limitation='The returned path exceeds the eight-device read scope; transit records are incomplete.'
     total=sum(len(json.dumps(c,default=str)) for c in contexts)
     # Keep each source independently represented when context is bounded.
     per_source=max(1000,24000//max(1,len(contexts)))
     for context in contexts:
         encoded=json.dumps(context['data'],default=str)
-        if len(encoded)>per_source: context['data']={'excerpt':encoded[:per_source],'truncated':True}
+        budget=max(per_source,10000) if context['tool']=='network.state' else per_source
+        if len(encoded)>budget: context['data']=bounded_record_context(context['data'],budget)
     included=sum(len(json.dumps(c,default=str)) for c in contexts)
-    return contexts,evidence,{'complete':included>=total,'total_characters':total,'included_characters':included,'domains':domains}
+    return contexts,evidence,{'complete':included>=total and not path_scope_limitation,'total_characters':total,'included_characters':included,'domains':domains,
+        **({'path_device_refs':path_device_refs} if path_device_refs else {}),**({'path_scope_limitation':path_scope_limitation} if path_scope_limitation else {})}

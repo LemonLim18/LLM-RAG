@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "category": "simulation",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "network": {
+      "observed_at": "2026-10-18T01:00:00Z",
+      "policy_attachments_complete": true,
+      "tables": [
+        {
+          "device_id": 1100,
+          "complete": true,
+          "routes": [
+            {
+              "id": "aster-cedar",
+              "prefix": "198.19.71.3/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 1,
+                  "address": "10.72.0.2",
+                  "resolved": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "device_id": 1200,
+          "complete": true,
+          "routes": [
+            {
+              "id": "birch-cedar",
+              "prefix": "198.19.71.3/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 3,
+                  "address": "10.72.0.6",
+                  "resolved": true
+                }
+              ]
+            },
+            {
+              "id": "birch-aster",
+              "prefix": "198.19.71.1/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 2,
+                  "address": "10.72.0.1",
+                  "resolved": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "device_id": 1300,
+          "complete": true,
+          "routes": [
+            {
+              "id": "cedar-aster",
+              "prefix": "198.19.71.1/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 4,
+                  "address": "10.72.0.5",
+                  "resolved": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "flows": [
+        {
+          "id": "branch-edge-icmp",
+          "source_device_id": 1100,
+          "destination_device_id": 1300,
+          "source_address": "198.19.71.1",
+          "destination_address": "198.19.71.3"
+        }
+      ],
+      "ospf": [
+        {
+          "id": "adjacency-aster-birch",
+          "left": {
+            "device_id": 1100,
+            "interface_id": 1,
+            "router_id": "198.19.71.1",
+            "area": "0.0.0.0",
+            "hello_seconds": 10,
+            "dead_seconds": 40,
+            "network_type": "point_to_point",
+            "role": "point_to_point"
+          },
+          "right": {
+            "device_id": 1200,
+            "interface_id": 2,
+            "router_id": "198.19.71.2",
+            "area": "0.0.0.0",
+            "hello_seconds": 10,
+            "dead_seconds": 40,
+            "network_type": "point_to_point",
+            "role": "point_to_point"
+          },
+          "observed_state": "Full"
+        }
+      ],
+      "bgp": [
+        {
+          "id": "session-birch-cedar",
+          "left": {
+            "device_id": 1200,
+            "address": "10.72.0.5",
+            "local_as": 65020,
+            "remote_as": 65030,
+            "address_families": [
+              "ipv4_unicast"
+            ]
+          },
+          "right": {
+            "device_id": 1300,
+            "address": "10.72.0.6",
+            "local_as": 65030,
+            "remote_as": 65020,
+            "address_families": [
+              "ipv4_unicast"
+            ]
+          },
+          "observed_state": "Established",
+          "transport_reachable": true,
+          "accepted_prefixes": [
+            "198.19.71.3/32"
+          ],
+          "rejected_prefixes": [],
+          "policy_observed": true
+        }
+      ]
+    }
+  }
+}

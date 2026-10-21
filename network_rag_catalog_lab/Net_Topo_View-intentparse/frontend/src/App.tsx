@@ -1,6 +1,7 @@
 import { useLocalLab } from './localLab';
 import React, { useState, useEffect, useRef } from 'react';
 import Header from '../components/Header';
+import DevelopmentNetwork from '../components/DevelopmentNetwork';
 import { authApi } from './services/api';
 import Sidebar from '../components/Sidebar';
 import OverviewDashboard from '../views/OverviewDashboard';
@@ -147,6 +148,16 @@ const App: React.FC = () => {
   }, [sidebarCollapsed]);
 
   // --- Button Dragging Logic ---
+  useEffect(() => {
+    const clamp = () => setButtonPos(position => ({
+      x: Math.max(8, Math.min(position.x, window.innerWidth - 60)),
+      y: Math.max(8, Math.min(position.y, window.innerHeight - 60)),
+    }));
+    clamp();
+    window.addEventListener('resize', clamp);
+    return () => window.removeEventListener('resize', clamp);
+  }, []);
+
   const handleButtonMouseDown = (e: React.MouseEvent) => {
     setIsDraggingButton(true);
     setHasMoved(false);
@@ -262,6 +273,7 @@ const App: React.FC = () => {
       <DeviceProvider>
         <div data-theme={theme} className="w-screen h-screen flex flex-col font-sans">
         <Header theme={theme} setTheme={setTheme} setView={setView} />
+        <DevelopmentNetwork isAdmin={user.role==='admin'} />
         <div className="flex grow overflow-hidden">
             <Sidebar
                 currentView={view}

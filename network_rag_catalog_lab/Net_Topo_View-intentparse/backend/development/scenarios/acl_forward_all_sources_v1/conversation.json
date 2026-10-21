@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "category": "conversation",
+  "status": "AVAILABLE",
+  "captured_at": "2026-10-18T01:00:00Z",
+  "data": {
+    "turns": [
+      "What devices are in the development inventory?"
+    ],
+    "assistant_kind": "floating"
+  }
+}
