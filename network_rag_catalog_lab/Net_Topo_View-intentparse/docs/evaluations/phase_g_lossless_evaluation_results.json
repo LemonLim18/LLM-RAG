@@ -1,0 +1,225 @@
+{
+  "updated_at": "2026-10-24T00:26:35.252015+00:00",
+  "phase_complete": false,
+  "new_full_stage_closures": [],
+  "routing": {
+    "raw_original": {
+      "PASS": 78,
+      "FAIL": 42,
+      "cases": 120
+    },
+    "invalid_setups": 4,
+    "separate_valid_replacements": {
+      "PASS": 3,
+      "FAIL": 1
+    },
+    "valid_unique_cohort": {
+      "PASS": 81,
+      "FAIL": 39,
+      "cases": 120,
+      "percent": 67.5
+    },
+    "required_percent": 90,
+    "status": "FAILED",
+    "actual_observed_original_model_calls": 241,
+    "mean_case_latency_ms": 23351.87
+  },
+  "quality": {
+    "original_rows": 30,
+    "invalid_oracle_rows": 2,
+    "separately_frozen_replacements": 2,
+    "valid_unique_cases": 30,
+    "outcomes": {
+      "M2": {
+        "PASS": 7,
+        "FAIL": 23
+      },
+      "M0": {
+        "PASS": 2,
+        "FAIL": 28
+      },
+      "M1": {
+        "PASS": 12,
+        "FAIL": 18
+      },
+      "M3": {
+        "FAIL": 26,
+        "PASS": 4
+      }
+    },
+    "adequate_M2_attribution": {
+      "model_written_answers": [
+        "001",
+        "007",
+        "023",
+        "024"
+      ],
+      "model_generated_guarded_patch": [
+        "027"
+      ],
+      "deterministic_unavailable_or_extraction_limitation": [
+        "019",
+        "025"
+      ],
+      "independent_causal_discovery": 0,
+      "basic_correct_model_interpretation_of_verifier_projected_fault": 1
+    },
+    "required_percent": 85,
+    "adequate_percent": 23.33,
+    "critical_released_failures": [
+      "G-LOSSLESS-QUALITY-009",
+      "G-LOSSLESS-QUALITY-010",
+      "G-LOSSLESS-QUALITY-011",
+      "G-LOSSLESS-QUALITY-029",
+      "G-LOSSLESS-QUALITY-032"
+    ],
+    "comparison_limitations": [
+      "M1/M3useboundeddisplaycontextinstead of recovered originalauthorizedstate records; no fair endtoend superiority claim.",
+      "Authored and graded by implementation assistant, not external blind humanreview.",
+      "Same previously verified controlledsourcefixtures, new literalprompts; no novelphysicalscenario or productiongeneralization.",
+      "V9subprocess modelcalls not fully observed by inprocessHTTPcounter; not treated aszero.",
+      "Content adequacy and declared workflow are assessed separately in reasons; neither API200 nor citation presence certifies technical semantics."
+    ],
+    "status": "FAILED",
+    "external_blind_human_grading": false
+  },
+  "architecture_corrective_replays": {
+    "timestamp": "2026-10-24T00:26:35.252015+00:00",
+    "classification": "EXPOSED_CORRECTIVE_REPLAY_NOT_FRESH_GENERALIZATION",
+    "run": "tmp/phase-g/iterations/20261023T233343.685025Z-G11-fresh-quality-candidate-2b2027",
+    "minimum_workflow": {
+      "PASS": 7,
+      "FAIL": 3
+    },
+    "whole_task_adequacy": {
+      "PASS": 3,
+      "FAIL": 7
+    },
+    "grader": "Implementation assistant, not external blind human assessor",
+    "cases": [
+      {
+        "id": "001",
+        "quality": "PASS",
+        "attribution": "model_written",
+        "reason": "Correct Python minimum function, no private readers."
+      },
+      {
+        "id": "002",
+        "quality": "PASS",
+        "attribution": "model_written",
+        "reason": "Correct management192.0.2.12 versus routed addresses10.177.27.2/10.177.27.5/198.19.177.2."
+      },
+      {
+        "id": "003",
+        "quality": "FAIL",
+        "attribution": "unavailable_fallback",
+        "reason": "State+inventory instead of required state+topology; both synthesis calls time out. Typed forwarding facts survive, but fallback dumps unrelated protocol/table data."
+      },
+      {
+        "id": "004",
+        "quality": "FAIL",
+        "attribution": "model_written_incomplete",
+        "reason": "Retains the device reference and state reader, but only says interface observation is decisive without identifying the actual interface/why; required comparison tool omitted."
+      },
+      {
+        "id": "005",
+        "quality": "FAIL",
+        "attribution": "unavailable_fallback",
+        "reason": "Actual conflict values preserved but not all declared comparison sources; model timeouts; source/fact safety is distinct from explanatory adequacy."
+      },
+      {
+        "id": "006",
+        "quality": "PASS",
+        "attribution": "deterministic_owned_proposal_comparison",
+        "reason": "Explains the pending exact-base diff and explicitly proposes/saves no additional change."
+      },
+      {
+        "id": "007",
+        "quality": "FAIL",
+        "attribution": "rejected_fallback",
+        "reason": "Real published contract and saved text retained, but insufficient explicit mapping of supplied settings; full raw source dump does not meet quality requirement."
+      },
+      {
+        "id": "008",
+        "quality": "FAIL",
+        "attribution": "unavailable_fallback",
+        "reason": "Exact AS roles and Active state retrieved but full request left as raw tables/configurations after model timeouts."
+      },
+      {
+        "id": "009",
+        "quality": "FAIL_CRITICAL",
+        "attribution": "repaired_model_synthesis",
+        "reason": "Released unsupported yes: healthy transport settles peer-AS disagreement, despite correct mismatch records. Original retained; later typed protocol safety boundary withholds this entire unsupported synthesis class."
+      },
+      {
+        "id": "010",
+        "quality": "FAIL",
+        "attribution": "rejected_fallback",
+        "reason": "Model candidate correctly explained modeled transit flow, but app required citation for model-selected auxiliary reader despite cited state source supporting same flow. Later separates user-required source citations from auxiliary choices; original actual released fallback remains FAIL."
+      }
+    ],
+    "critical_original_preserved": true,
+    "no_rescoring_after_corrections": true
+  },
+  "protocol_safety_rerun": {
+    "run": "tmp/phase-g/iterations/20261023T235256.918724Z-G11-fresh-quality-candidate-8de34a",
+    "case_ids": [
+      "G-CONTRACT-CORRECTION-008",
+      "G-CONTRACT-CORRECTION-009"
+    ],
+    "source_gate": "PASS_2_OF_2",
+    "synthesis": "protocol_constraints_fallback",
+    "model_reasoning_credit": false
+  },
+  "G6_latest_metric_replay": {
+    "run": "tmp/phase-g/iterations/20261024T000337.941876Z-G6-causal-model-conformance-ff642c",
+    "unique_fixture_ids": [
+      "G6-CONFORMANCE-027",
+      "G6-CONFORMANCE-028"
+    ],
+    "assistant_surfaces": [
+      "floating",
+      "studio"
+    ],
+    "actual_source_conformance": "PASS_4_OF_4",
+    "released_synthesis": "verified_fallback_4_OF_4",
+    "facts": "98percent modeled utilization/drop trend and counter-reset rate limitation reach both assistants. Qwen invents windows/utilization or misattributes counters; validator rejects drafts.",
+    "gate_status": "SOURCE_GAP_REPAIRED_CAUSAL_EXPLANATION_NOT_PASSED"
+  },
+  "preserved_stage_status": {
+    "G0": "BLOCKED_HISTORICAL_FREEZE_DEPRIORITIZED",
+    "G1": "COMPLETE",
+    "G2": "COMPLETE",
+    "G3": "COMPLETE_24_OF_24",
+    "G4": "FAILED",
+    "G5": "FAILED",
+    "G6": "FAILED_CAUSAL_EXPLANATION",
+    "G7": "PARTIAL_BLOCKED_113_OF_141",
+    "G8": "COMPLETE_BOUNDED_WORKFLOW",
+    "G9": "COMPLETE",
+    "G10": "COMPLETE",
+    "G11": "FAILED",
+    "G12": "PASS_RELEASE_SAFETY_AND_PARTIAL_HANDOVER_ONLY"
+  },
+  "G7_current_blockers": [
+    "28 Huawei profile/policy version conflicts remain; no relabeling or immutable modification.",
+    "Docker client installed but Docker Linux engine pipe absent in fresh unsandboxed check; WSL installed, reviewed pinned validator profile is not configured. No package/model/image installed.",
+    "Zero active validated Ansible variants. Published native bindings do not imply genuine playbook support.",
+    "Unrelated workflow-constraint clauses split into extra V9 tasks in quality030; authoritative splitter is in read-only sibling, not replaced by app-side operation recognition."
+  ],
+  "new_browser_failure": {
+    "trace": "C:/Users/limmi/OneDrive/Desktop/LLM_RAG_Practice/network_rag_catalog_lab/Net_Topo_View-intentparse/tmp/phase-g/iterations/20261023T145834.153954Z-G4-G6-lossless-context-c723d1/browser-general-code-wrong-v9-trace.json",
+    "status": "ORIGINAL_FAILURE_PRESERVED_CORRECTION_TESTED_BROWSER_RERUN_PENDING",
+    "root_cause": "Explicit program artifact type was not enforced before a model generation decision; an ordinary Python function request reached V9.",
+    "correction": "Shared explicit program artifact boundary selects ordinary answer and prevents V9/edit promotion; existing-buffer requests and native/Ansible outputs retain their own services."
+  },
+  "tests": {
+    "final_context_protocol_safety": 165,
+    "source_authority_graph": 151,
+    "source_conformance": 125,
+    "program_artifact_context_V9": 124,
+    "overlapping_runs_not_summed": true
+  },
+  "post_correction_fresh_full_benchmark": "NOT_RUN; exposed correction runs cannot replace original scores",
+  "evidence_root": "C:/Users/limmi/OneDrive/Desktop/LLM_RAG_Practice/network_rag_catalog_lab/Net_Topo_View-intentparse/tmp/phase-g/iterations/20261023T145834.153954Z-G4-G6-lossless-context-c723d1"
+}

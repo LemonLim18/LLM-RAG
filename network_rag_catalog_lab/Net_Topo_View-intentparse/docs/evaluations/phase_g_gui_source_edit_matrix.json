@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-10-21T15:19:30.955828+00:00",
-  "status": "IN_PROGRESS",
-  "fully_accepted": 12,
-  "scope": "Derived index of existing evidence, not new tests or a completed24x2 gate",
+  "updated_at": "2026-10-22T06:49:26.981879+00:00",
+  "status": "PASS_G3_SOURCE_AUTHORING_AND_CONSUMPTION",
+  "fully_accepted": 24,
+  "scope": "Index of24 individually accepted JSON/GUI/both-assistant source gates, reusing hashed proof; not new tests or reasoning-quality acceptance.",
   "rows": [
     {
       "category": "inventory",
@@ -13,7 +13,7 @@
       "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/inventory-source-acceptance-review.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "category": "topology_planned",
@@ -24,7 +24,7 @@
       "evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\planned-source-acceptance-review.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "notes": "Ten unique JSON cases + reused GUI edit positive2 + GUI STALE/ERROR4 across both assistants. Event/capture times, category and exact endpoints verified. Original history metadata omission corrected, no prompt tuning or fresh model-quality credit."
     },
@@ -37,7 +37,7 @@
       "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/observed-source-acceptance-review.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "category": "topology_history",
@@ -48,7 +48,7 @@
       "evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\history-source-acceptance-review.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "notes": "Ten unique JSON cases + reused GUI edit positive2 + GUI STALE/ERROR4 across both assistants. Event/capture times, category and exact endpoints verified. Original history metadata omission corrected, no prompt tuning or fresh model-quality credit."
     },
@@ -61,7 +61,7 @@
       "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/state-source-acceptance-review.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "category": "running_configs",
@@ -71,7 +71,7 @@
       "details": "phase_g_source_matrix.json",
       "implementation_status": "IMPLEMENTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\current-source-acceptance-review.json"
     },
     {
@@ -82,7 +82,7 @@
       "details": "phase_g_source_matrix.json",
       "implementation_status": "IMPLEMENTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\saved-source-acceptance-review.json"
     },
     {
@@ -93,7 +93,7 @@
       "details": "phase_g_source_matrix.json",
       "implementation_status": "IMPLEMENTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\change-source-acceptance-review.json"
     },
     {
@@ -104,18 +104,19 @@
       "details": "phase_g_source_matrix.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/routing_state-source-acceptance-review.json"
     },
     {
       "category": "protocol_state",
-      "json_edit_and_gateway": "PARTIAL_PASS: external JSON edited IDs and real qwen both surfaces; Init correction a9aedb passes after explicit source constraint",
-      "gui_edit_and_gateway": "IN_PROGRESS: saved/validated/activated203.0.113.81/.82 Init in GUI; first Floating answer correct verified fallback, original model omitted neighbor name; corrective rerun pending",
-      "verification": "PARTIAL",
+      "json_edit_and_gateway": "PASS_EDITED_VALUES_AND_NEGATIVES_BOTH",
+      "gui_edit_and_gateway": "PASS_EDITED_VALUES_DISTINCT_TIMES_STALE_ERROR_BOTH",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/protocol_state-source-acceptance-review.json"
     },
     {
       "category": "controller_state",
@@ -125,18 +126,19 @@
       "details": "phase_g_source_matrix.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/controller_state-source-acceptance-review.json"
     },
     {
       "category": "telemetry",
-      "json_edit_and_gateway": "PASS_EXPOSED_T1_16_NULL_18_BOTH_SURFACES",
-      "gui_edit_and_gateway": "PASS_BOUNDED_T2_BOTH_MAIN_BROWSER_SURFACES",
-      "verification": "PARTIAL_BOUNDED_SOURCE_ACCEPTANCE",
+      "json_edit_and_gateway": "PASS_EDITED_VALUES_AND_NEGATIVE_CASES_BOTH",
+      "gui_edit_and_gateway": "PASS_EDITED_VALUES_WINDOWS_AND_STALE_ERROR_BOTH",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/telemetry-source-acceptance-review.json"
     },
     {
       "category": "interface_metrics",
@@ -146,58 +148,65 @@
       "details": "phase_g_source_matrix.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/interface_metrics-source-acceptance-review.json"
     },
     {
       "category": "syslog",
-      "json_edit_and_gateway": "NOT_RUN",
-      "gui_edit_and_gateway": "PASS_EXPOSED_BOTH_SURFACES_20261020",
-      "verification": "NOT_VERIFIED",
+      "json_edit_and_gateway": "PASS_EDITED_VALUES_AND_NEGATIVES_BOTH",
+      "gui_edit_and_gateway": "PASS_EDITED_VALUES_DISTINCT_TIMES_STALE_ERROR_BOTH",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/syslog-source-acceptance-review.json"
     },
     {
       "category": "incidents",
-      "json_edit_and_gateway": "NOT_RUN",
-      "gui_edit_and_gateway": "NOT_RUN",
-      "verification": "NOT_VERIFIED",
+      "json_edit_and_gateway": "PASS_EDITED_VALUES_AND_NEGATIVES_BOTH",
+      "gui_edit_and_gateway": "PASS_EDITED_VALUES_DISTINCT_TIMES_STALE_ERROR_BOTH",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/incidents-source-acceptance-review.json"
     },
     {
       "category": "config_drift",
-      "json_edit_and_gateway": "NOT_RUN",
-      "gui_edit_and_gateway": "NOT_RUN",
-      "verification": "NOT_VERIFIED",
+      "json_edit_and_gateway": "PASS_EDITED_VALUES_AND_NEGATIVES_BOTH",
+      "gui_edit_and_gateway": "PASS_EDITED_VALUES_DISTINCT_TIMES_STALE_ERROR_BOTH",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/config_drift-source-acceptance-review.json"
     },
     {
       "category": "source_health",
-      "json_edit_and_gateway": "PASS_BOUNDED_BOTH_SURFACES; health-json123a33 and health-overrideff1652; full prose reviewed, verified fallbacks",
-      "gui_edit_and_gateway": "PASS_BOUNDED_BOTH_ASSISTANTS_WITH_LABELLED_FALLBACK",
-      "verification": "PARTIAL_GATE; exact status/time and source selection verified",
+      "json_edit_and_gateway": "PASS_EDITED_AND_NEGATIVE_BOTH",
+      "gui_edit_and_gateway": "PASS_EDITED_AND_STALE_ERROR_BOTH",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\health-browser-review.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/source-health-source-acceptance-review.json"
     },
     {
       "category": "jobs_audit",
-      "json_edit_and_gateway": "NOT_RUN",
-      "gui_edit_and_gateway": "NOT_RUN",
-      "verification": "NOT_VERIFIED",
+      "json_edit_and_gateway": "PASS_REAL_RECORD_EDITS_BOTH_STATUSES",
+      "gui_edit_and_gateway": "PASS_NEW_MARKER_BOTH_PLUS_REUSED_STATUSES",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/jobs_audit-source-acceptance-review.json",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "JSON T1/T2 validation-only outcomes, required record time, no device execution; GUI new job marker and distinct observation/capture times. Prior GUI STALE/ERROR shared turns and JSON ERROR/MISSING reused unchanged. No model-reasoning credit."
     },
     {
       "category": "knowledge",
@@ -208,57 +217,72 @@
       "evidence": "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/knowledge-source-acceptance-review.json",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "category": "documents",
-      "json_edit_and_gateway": "PASS_API_BUNDLE_EDIT_EXTERNAL_FILE_REPEAT_PENDING",
-      "gui_edit_and_gateway": "PASS_FLOATING_AND_STUDIO",
-      "verification": "PARTIAL_MODALITY_AND_HISTORY_CASES_PENDING",
+      "json_edit_and_gateway": "PASS_EXTERNAL_JSON_REAL_ASSET_T1_T2_STALE_ERROR_MISSING_BOTH",
+      "gui_edit_and_gateway": "PASS_EDIT_ASSET_ACTIVATION_BOTH_STATUSES",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten actual JSON cases plus6 GUI source checks; four shared status turns across two categories, not eight unique requests. Original omitted/wrong label answers and incomplete summaries retained as model failures. No universal document interpretation or vision claim.",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/documents-source-acceptance-review.json"
     },
     {
       "category": "attachments",
-      "json_edit_and_gateway": "NOT_RUN",
-      "gui_edit_and_gateway": "NOT_RUN",
-      "verification": "NOT_VERIFIED",
+      "json_edit_and_gateway": "PASS_EXTERNAL_JSON_REAL_ASSET_T1_T2_STALE_ERROR_MISSING_BOTH",
+      "gui_edit_and_gateway": "PASS_EDIT_ASSET_ACTIVATION_BOTH_STATUSES",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten actual JSON cases plus6 GUI source checks; four shared status turns across two categories, not eight unique requests. Original omitted/wrong label answers and incomplete summaries retained as model failures. No universal document interpretation or vision claim.",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/attachments-source-acceptance-review.json"
     },
     {
       "category": "diagrams",
-      "json_edit_and_gateway": "NOT_RUN",
-      "gui_edit_and_gateway": "NOT_RUN",
-      "verification": "NOT_VERIFIED",
+      "json_edit_and_gateway": "PASS_REAL_PNG_OCR_TRANSCRIPTION_BOTH",
+      "gui_edit_and_gateway": "PASS_UPLOAD_REPLACE_BOTH_STATUSES",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Actual PNG upload/replacement, saved GUI extraction preview, readable OCR transcription through both assistants; captured/status/revision metadata and no extraction when unavailable. OCR readings are uncertain; visual diagram relationships remain unsupported. Zero model-reasoning credit. General label explanation failures remain underG5.",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/diagrams-source-acceptance-review.json"
     },
     {
       "category": "conversation",
-      "json_edit_and_gateway": "NOT_RUN",
-      "gui_edit_and_gateway": "NOT_RUN",
-      "verification": "NOT_VERIFIED",
+      "json_edit_and_gateway": "PASS_REAL_USER_SEEDS_AND_FOLLOWUPS_BOTH",
+      "gui_edit_and_gateway": "PASS_REAL_USER_SEEDS_AND_FOLLOWUPS_BOTH_STATUSES",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "JSON and GUI-authored user requests replayed through actual owner-bound gateway conversations, not injected assistant messages. Positive references select independently authored LAB-R2/R3 (JSON) and LAB-R1 (GUI). STALE/ERROR/MISSING setup does not replay into a fresh conversation; unknown references clarify without reads. No advanced model-reasoning credit.",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/conversation-source-acceptance-review.json"
     },
     {
       "category": "simulation",
-      "json_edit_and_gateway": "NOT_RUN",
-      "gui_edit_and_gateway": "NOT_RUN",
-      "verification": "NOT_VERIFIED",
+      "json_edit_and_gateway": "PASS_BOUNDED_SIMULATION_BOTH",
+      "gui_edit_and_gateway": "PASS_ROUTE_EDIT_BOTH_STATUSES",
+      "verification": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
       "details": "phase_g_source_matrix.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Declared bounded IPv4 flow results; independent route edit in JSON and GUI propagates to actual authorized state reader. Forward failure and return delivery are separate; missing/STALE/ERROR and capture/observation roles retained. Not physical measurements or a full G6 simulator conformance pass. Zero model-reasoning credit; original model failures retained.",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/simulation-source-acceptance-review.json"
     }
   ],
   "new_starter_selector": {
@@ -266,5 +290,5 @@
     "scenario": "CUSTOM-1792502453576",
     "note": "Actual Create draft, source edit, Validate and activation succeeded. Other starter variants not claimed browser accepted."
   },
-  "latest_increment": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+  "latest_increment": "G3 COMPLETE:24 individually verified source contracts/JSON/GUI/both assistants. Independent model reasoning remains open."
 }

@@ -3,6 +3,7 @@ import { useCapability } from '../../src/localLab';
 import React, { useCallback, useState, useEffect, useLayoutEffect, useRef } from 'react';
 import Editor, { DiffEditor } from '@monaco-editor/react';
 import { aiApi, type EditorSnapshot, type EditProposal } from '../../src/services/ai';
+import { applyWorkspaceChanges, openDocumentModel } from '../../src/utils/workspaceProposal';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
@@ -25,6 +26,7 @@ interface PlaybookEditorProps {
   onTabSelect:     (id: string) => void;
   onTabClose:      (id: string) => void;
   onChange:        (id: string, content: string) => void;
+  onBatchChange?: (changes:{id:string;content:string;isDirty:boolean}[])=>void;
   onSave:          (id: string) => void;
   onCheck:         () => void;
   onApprove:       () => void;
@@ -35,6 +37,7 @@ interface PlaybookEditorProps {
 
 export interface EditorBridge {
   snapshot: () => EditorSnapshot | null;
+  relatedSnapshots: () => EditorSnapshot[];
   review: (proposal: EditProposal) => boolean;
 }
 
@@ -58,7 +61,7 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
   onCheck, onApprove, onDeploy, onRegenerate,
   onExplainSelection,
   onEditorBridge,
-  onDocumentDevice, onEditableCopy,
+  onDocumentDevice, onEditableCopy,onBatchChange,
 }) => {
   const executionAvailable = useCapability('execution.deploy');
   const aiAvailable = useCapability('ai.generate');
@@ -66,10 +69,15 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
   const { themeName } = useMonacoTheme();
   const activeTabRef = useRef<HTMLDivElement>(null);
   const editorInstanceRef = useRef<any>(null);
+  const monacoRef=useRef<any>(null);
+  const allTabs=useRef(tabs);allTabs.current=tabs;
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const selectionDisposeRef = useRef<{ dispose?: () => void } | null>(null);
   const activeTab = tabs.find(t => t.id === activeTabId) ?? null;
   const [proposal, setProposal] = useState<EditProposal | null>(null);
+  const [reviewPath,setReviewPath]=useState('');
+  const [undoBundle,setUndoBundle]=useState<EditProposal|null>(null);
+  const [applyingBundle,setApplyingBundle]=useState(false);
   const reviewEditor = useRef<any>(null);
   const detachReview = useCallback(() => {
     const editor = reviewEditor.current; reviewEditor.current = null;
@@ -104,16 +112,61 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
     return !!now && now.document_id === p.document_id && now.path === p.path && now.model_id === p.model_id &&
       now.model_version === p.model_version && now.buffer_epoch === p.buffer_epoch && now.saved_revision === p.saved_revision && now.content === p.original && !now.read_only;
   }, [snapshot]);
+  const modelFor=useCallback((path:string)=>{
+    const monaco=monacoRef.current;
+    if(!monaco)return null;
+    // Restored inactive tabs have unsaved text before Monaco lazily mounts them.
+    // Materialize only an already-open document, using the same URI as Editor.
+    // Never reload its saved file or replace an existing (possibly newer) model.
+    return openDocumentModel(path,allTabs.current,
+      key=>monaco.editor.getModel(monaco.Uri.parse(key)),
+      (key,content)=>monaco.editor.createModel(content,languageForDocument(key,content),monaco.Uri.parse(key)));
+  },[]);
+  const snapshotFor=useCallback((path:string):EditorSnapshot|null=>{
+    if(currentTab.current?.path===path)return snapshot();
+    const tab=allTabs.current.find(t=>t.path===path),model=modelFor(path);
+    if(!tab||!model)return null;
+    return {document_id:tab.id,path:tab.path,content:model.getValue(undefined,true),language:model.getLanguageId(),model_id:model.id,
+      model_version:model.getVersionId(),buffer_epoch:epoch.current,saved_revision:tab.savedRevision??0,is_dirty:tab.isDirty,read_only:tab.isReadOnly,device_id:tab.deviceId};
+  },[snapshot,modelFor]);
+  const relatedSnapshots=useCallback(()=>{
+    const content=snapshot()?.content||'';
+    const score=(tab:AnsibleTab)=>Number(content.includes(tab.path)||content.includes(tab.path.split('/').pop()||'\u0000'));
+    return [...allTabs.current].reverse().filter(t=>t.path!==currentTab.current?.path && /^(playbooks|roles|reference|Test_Reference)\//.test(t.path)).sort((a,b)=>score(b)-score(a)).slice(0,8).map(t=>snapshotFor(t.path)).filter((s):s is EditorSnapshot=>!!s);
+  },[snapshotFor,snapshot]);
+  const bundleMatches=useCallback((p:EditProposal)=>matches(p) && (p.files||[]).every(file=>{
+    const now=snapshotFor(file.path);
+    return !!now && !now.read_only && now.document_id===file.document_id && now.model_id===file.model_id && now.model_version===file.model_version && now.buffer_epoch===file.buffer_epoch && now.saved_revision===file.saved_revision && now.content===file.original;
+  }),[matches,snapshotFor]);
   useEffect(() => {
-    onEditorBridge?.({ snapshot, review: p => {
-      if (!matches(p) || p.original === p.suggested) return false;
-      setReviewError(''); setProposal(p); return true;
+    onEditorBridge?.({ snapshot,relatedSnapshots, review: p => {
+      if (!bundleMatches(p) || !p.files?.length && p.original === p.suggested) return false;
+      setReviewError('');setReviewPath(p.files?.[0]?.path||p.path); setProposal(p); return true;
     } });
     return () => onEditorBridge?.(null);
-  }, [onEditorBridge, snapshot, matches]);
+  }, [onEditorBridge, snapshot, bundleMatches,relatedSnapshots]);
   useEffect(() => { epoch.current++; dismissReview(); setReviewError(''); }, [activeTabId, activeTab?.deviceId, dismissReview]);
   useEffect(() => () => changeDispose.current?.dispose(), []);
-  const acceptProposal = () => {
+  const acceptProposal = async () => {
+    if(proposal?.files?.length){
+      if(!bundleMatches(proposal)){setReviewError('The coordinated proposal is stale. Every buffer was preserved.');return;}
+      const files=proposal.files;
+      const before=files.map(file=>({id:file.document_id,content:file.original,isDirty:allTabs.current.find(t=>t.id===file.document_id)?.isDirty||false}));
+      setApplyingBundle(true);
+      try{
+        const checks=[...new Set([proposal.path,...files.map(f=>f.path)])].map(path=>snapshotFor(path)).filter((s):s is EditorSnapshot=>!!s);
+        await aiApi.checkRevisions(checks);
+        if(!bundleMatches(proposal))throw Error('A workspace buffer changed during revision verification. Nothing was applied.');
+        applyWorkspaceChanges(files,modelFor);
+        onBatchChange?.(files.map(file=>({id:file.document_id,content:file.suggested,isDirty:true})));
+        setUndoBundle(proposal);dismissReview();setReviewError('');
+      }catch(error){
+        onBatchChange?.(before.map(file=>{const text=modelFor(files.find(f=>f.document_id===file.id)!.path)?.getValue(undefined,true)??file.content;return {...file,content:text,isDirty:text===file.content?file.isDirty:true};}));
+        setReviewError(error instanceof Error?error.message:String(error));
+      }
+      finally{setApplyingBundle(false);}
+      return;
+    }
     if (!proposal || !matches(proposal)) { setReviewError('This proposal is stale. Your current buffer was preserved. Request a new edit.'); return; }
     const next = proposal.suggested;
     const eols: string[] = next.match(/\r\n|\r|\n/g) || [];
@@ -128,6 +181,20 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
     editor.pushUndoStop(); editor.restoreViewState(view);
     if (applied) { dismissReview(); setReviewError(''); editor.focus(); }
     else setReviewError('Monaco refused the edit. The proposal was not accepted.');
+  };
+  const undoCoordinated=async()=>{
+    if(!undoBundle?.files)return;
+    const files=undoBundle.files;
+    setApplyingBundle(true);
+    try{
+      const checks=files.map(file=>snapshotFor(file.path));
+      if(checks.some((s,i)=>!s||s.read_only||s.content!==files[i].suggested||s.saved_revision!==files[i].saved_revision))throw Error('The workspace changed after acceptance. Group undo was not applied; use the individual editor undo controls.');
+      await aiApi.checkRevisions(checks as EditorSnapshot[]);
+      applyWorkspaceChanges(files.map(f=>({path:f.path,original:f.suggested,suggested:f.original})),modelFor);
+      onBatchChange?.(files.map(file=>({id:file.document_id,content:file.original,isDirty:true})));
+      setUndoBundle(null);setReviewError('');
+    }catch(error){setReviewError(error instanceof Error?error.message:String(error));}
+    finally{setApplyingBundle(false);}
   };
   const isMarkdownActiveTab = Boolean(activeTab?.name.toLowerCase().endsWith('.md'));
   const canEdit   = userRole === 'admin' || userRole === 'engineer';
@@ -483,12 +550,14 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
                 </button>
               )}
               <Editor
+                keepCurrentModel
                 path={activeTab.path}
                 height="100%"
                 language={languageForDocument(activeTab.path, activeTab.content)}
                 theme={themeName}
                 value={activeTab.content}
-                onMount={(editor) => {
+                onMount={(editor,monaco) => {
+                  monacoRef.current=monaco;
                   selectionDisposeRef.current?.dispose?.();
                   editorInstanceRef.current = editor;
                   changeDispose.current?.dispose();
@@ -528,11 +597,14 @@ const PlaybookEditor: React.FC<PlaybookEditorProps> = ({
             <span className="text-sm">Open a file from the explorer or generate a playbook via the AI chat</span>
           </div>
         )}
+        {!proposal && undoBundle && <div className="p-2 flex items-center gap-2 border-t border-base-300"><span className="text-xs grow">Coordinated changes are unsaved.</span><button className="btn btn-sm" disabled={applyingBundle} onClick={undoCoordinated}>Undo coordinated changes</button></div>}
+        {!proposal && reviewError && <p role="alert" className="text-error p-2">{reviewError}</p>}
         {proposal && <div className="h-full flex flex-col" aria-label="Review AI changes">
-          <div className="p-2 border-b border-base-300 flex gap-2 items-center"><strong className="text-sm">Review proposed changes</strong><span className="text-xs opacity-60 grow">Accept changes the buffer. Save is separate.</span><button className="btn btn-success btn-sm" onClick={acceptProposal}>Accept</button><button className="btn btn-ghost btn-sm" onClick={() => { dismissReview(); setReviewError(''); }}>Reject</button></div>
+          <div className="p-2 border-b border-base-300 flex gap-2 items-center"><strong className="text-sm">Review proposed changes</strong><span className="text-xs opacity-60 grow">{proposal.files?.length?`${proposal.files.length} files. `:''}Accept changes buffers. Save is separate.</span><button className="btn btn-success btn-sm" disabled={applyingBundle} onClick={acceptProposal}>{proposal.files?.length?'Accept all':'Accept'}</button><button className="btn btn-ghost btn-sm" disabled={applyingBundle} onClick={() => { dismissReview(); setReviewError(''); }}>{proposal.files?.length?'Reject all':'Reject'}</button></div>
+          {proposal.files && <div className="flex gap-1 p-1 overflow-x-auto" aria-label="Coordinated proposal files">{proposal.files.map(file=><button key={file.path} className={`btn btn-xs ${reviewPath===file.path?'btn-primary':''}`} onClick={()=>setReviewPath(file.path)}>{file.path}</button>)}</div>}
           {reviewError && <p role="alert" className="text-error p-2">{reviewError}</p>}
           <pre className="text-xs p-2 max-h-24 overflow-auto">{JSON.stringify(proposal.validation, null, 2)}</pre>
-          <div className="grow min-h-0"><DiffEditor onMount={editor => { reviewEditor.current = editor; }} original={proposal.original} modified={proposal.suggested} theme={themeName} language={languageForDocument(activeTab?.path || "", proposal.suggested)} originalModelPath={`ai-review/${proposal.id}/base`} modifiedModelPath={`ai-review/${proposal.id}/proposal`} options={{ readOnly: true, originalEditable: false, renderSideBySide: false, automaticLayout: true }} /></div>
+          <div className="grow min-h-0"><DiffEditor key={reviewPath||proposal.path} onMount={editor => { reviewEditor.current = editor; }} original={(proposal.files?.find(f=>f.path===reviewPath)||proposal).original} modified={(proposal.files?.find(f=>f.path===reviewPath)||proposal).suggested} theme={themeName} language={languageForDocument(reviewPath||proposal.path, (proposal.files?.find(f=>f.path===reviewPath)||proposal).suggested)} originalModelPath={`ai-review/${proposal.id}/${reviewPath}/base`} modifiedModelPath={`ai-review/${proposal.id}/${reviewPath}/proposal`} options={{ readOnly: true, originalEditable: false, renderSideBySide: false, automaticLayout: true }} /></div>
         </div>}
       </div>
     </div>

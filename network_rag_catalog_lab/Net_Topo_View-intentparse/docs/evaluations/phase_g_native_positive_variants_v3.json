@@ -1,0 +1,83 @@
+{
+  "version": 3,
+  "frozen_at": "2026-10-23T14:29:54.744247+00:00",
+  "knowledge_release": "7a14a351e52b49aeb87f65d1192f0937",
+  "scope": "Four existing compatible Huawei V200R024C10 bindings; corrected fixture port only, not version-policy bypass or runtime knowledge change.",
+  "cases": [
+    {
+      "id": "G7-NATIVE-HUAWEI-ASSIGN_VLAN_TO_TRUNK_PORT-V3",
+      "binding_case_id": "G7-NATIVE-HUAWEI-ASSIGN_VLAN_TO_TRUNK_PORT",
+      "vendor": "huawei",
+      "operation_id": "assign_vlan_to_trunk_port",
+      "fixture": {
+        "parameters": {
+          "interface": "10GE1/0/2",
+          "allowed_vlans": [
+            240,
+            241
+          ]
+        },
+        "expected_output": "interface 10GE1/0/2\n port trunk allow-pass vlan 240\n port trunk allow-pass vlan 241\n quit"
+      },
+      "input_prompt": "Generate native configuration for LAB-R3: Add VLANs to trunk. Use interface = \"10GE1/0/2\"; allowed vlans = [240, 241]. Prepare an unsaved draft for explicit review only.",
+      "reason": "Use the existing ce6800 V200R024C10 planned profile's actual 10GE1/0/2 port; original GigabitEthernet0/0/5 input remains a rejected negative. Existing fixture prerequisites explicitly author requested VLAN pre-state without changing device/model/NOS or policy.",
+      "expectation_authority": "Hand-authored literal native regression statements frozen before inference; no independent vendor/device certification.",
+      "holdout": false,
+      "preserve_original_negative": true
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-SET_INTERFACE_ADMIN_STATE-V3",
+      "binding_case_id": "G7-NATIVE-HUAWEI-SET_INTERFACE_ADMIN_STATE",
+      "vendor": "huawei",
+      "operation_id": "set_interface_admin_state",
+      "fixture": {
+        "parameters": {
+          "interface": "10GE1/0/2",
+          "admin_up": true
+        },
+        "expected_output": "interface 10GE1/0/2\nundo shutdown\n quit"
+      },
+      "input_prompt": "Generate native configuration for LAB-R3: Set interface admin state. Use interface = \"10GE1/0/2\"; admin up = true. Prepare an unsaved draft for explicit review only.",
+      "reason": "Use the existing ce6800 V200R024C10 planned profile's actual 10GE1/0/2 port; original GigabitEthernet0/0/5 input remains a rejected negative. Existing fixture prerequisites explicitly author requested VLAN pre-state without changing device/model/NOS or policy.",
+      "expectation_authority": "Hand-authored literal native regression statements frozen before inference; no independent vendor/device certification.",
+      "holdout": false,
+      "preserve_original_negative": true
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-SET_INTERFACE_DESCRIPTION-V3",
+      "binding_case_id": "G7-NATIVE-HUAWEI-SET_INTERFACE_DESCRIPTION",
+      "vendor": "huawei",
+      "operation_id": "set_interface_description",
+      "fixture": {
+        "parameters": {
+          "interface": "10GE1/0/2",
+          "description": "Reviewed uplink"
+        },
+        "expected_output": "interface 10GE1/0/2\n description Reviewed uplink\n quit"
+      },
+      "input_prompt": "Generate native configuration for LAB-R3: Set interface description. Use interface = \"10GE1/0/2\"; description = \"Reviewed uplink\". Prepare an unsaved draft for explicit review only.",
+      "reason": "Use the existing ce6800 V200R024C10 planned profile's actual 10GE1/0/2 port; original GigabitEthernet0/0/5 input remains a rejected negative. Existing fixture prerequisites explicitly author requested VLAN pre-state without changing device/model/NOS or policy.",
+      "expectation_authority": "Hand-authored literal native regression statements frozen before inference; no independent vendor/device certification.",
+      "holdout": false,
+      "preserve_original_negative": true
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-SET_NATIVE_VLAN-V3",
+      "binding_case_id": "G7-NATIVE-HUAWEI-SET_NATIVE_VLAN",
+      "vendor": "huawei",
+      "operation_id": "set_native_vlan",
+      "fixture": {
+        "parameters": {
+          "interface": "10GE1/0/2",
+          "native_vlan": 240
+        },
+        "expected_output": "interface 10GE1/0/2\n port trunk pvid vlan 240\n quit"
+      },
+      "input_prompt": "Generate native configuration for LAB-R3: Set native VLAN. Use interface = \"10GE1/0/2\"; native vlan = 240. Prepare an unsaved draft for explicit review only.",
+      "reason": "Use the existing ce6800 V200R024C10 planned profile's actual 10GE1/0/2 port; original GigabitEthernet0/0/5 input remains a rejected negative. Existing fixture prerequisites explicitly author requested VLAN pre-state without changing device/model/NOS or policy.",
+      "expectation_authority": "Hand-authored literal native regression statements frozen before inference; no independent vendor/device certification.",
+      "holdout": false,
+      "preserve_original_negative": true
+    }
+  ]
+}

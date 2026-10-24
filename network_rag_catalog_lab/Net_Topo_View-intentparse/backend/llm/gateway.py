@@ -28,6 +28,11 @@ def authorize_studio(user):
 def constrain_route(route, prompt):
     """Honor explicit read-only/output preferences without interpreting operations."""
     if route.intent=='clarify' and route.question:return route
+    from llm.gateway_references import read_only_request,requested_program_artifact
+    if route.intent in {'edit','generate_native','generate_playbook'} and requested_program_artifact(prompt):
+        return Route(intent='answer')
+    if route.intent in {'edit','generate_native','generate_playbook'} and read_only_request(prompt):
+        return Route(intent='explain')
     global_read_only=re.search(r'\b(?:do not (?:modify|edit|change)|no (?:edits|changes))(?:\s+(?:to\s+)?(?:the\s+)?(?:file|document|buffer|code|anything|it))?\s*(?:[.!;,]|$)',prompt,re.I)
     if global_read_only or re.search(r'\b(explain only|answer only)\b',prompt,re.I):
         return Route(intent='explain')
@@ -74,7 +79,7 @@ class AIGateway:
         owner = user['username']
         conversation = self.store.get(identity, owner)
         kind = conversation['assistant_kind']
-        if kind == 'floating' and body.editor is not None:
+        if kind == 'floating' and (body.editor is not None or body.related_editors):
             raise HTTPException(403, 'Floating Chat does not accept automatic editor context')
         request_id = str(body.request_id)
         cached = self.store.begin(identity, owner, request_id, text_digest(body.model_dump_json()), body.prompt)
@@ -85,6 +90,13 @@ class AIGateway:
             if cached.get('kind') in {'generation_preview', 'edit_proposal'}:
                 authorize_studio(user)
             if cached.get('kind') == 'edit_proposal':
+                if (cached.get('proposal') or {}).get('files'):
+                    from llm.gateway_workspace import check_saved_revisions
+                    from llm.orchestration.studio import validate_proposal
+                    from llm.gateway_models import ToolResult
+                    validate_proposal(ToolResult(status='success',data={'proposal':cached['proposal']}),body)
+                    paths={file['path'] for file in cached['proposal']['files']}
+                    check_saved_revisions(self.db,[s for s in [body.editor,*body.related_editors] if s and s.path in paths])
                 from ansible.api import _assert_generated_artifact_unlocked
                 from local_providers.authoring import AuthoringStore
                 editor = body.editor
@@ -109,6 +121,8 @@ class AIGateway:
             status = 'denied' if isinstance(exc, HTTPException) and exc.status_code == 403 else 'unavailable'
             result = TurnResponse(request_id=request_id, status=status,
                 answer=str(exc.detail) if isinstance(exc, HTTPException) else 'AI request timed out; no document was changed.')
+            if getattr(exc,'engineering_diagnostics',None):
+                result.context_coverage['engineering_failure']=exc.engineering_diagnostics
         except Exception:
             self.store.cancel(identity, owner, request_id)
             raise
@@ -332,9 +346,10 @@ class AIGateway:
                 coverage['editor_focus']={'kind':'bgp_as_commands','lines':[row['line'] for row in as_commands],
                     'model_characters':sum(len(message['content']) for message in messages),'scope':'Actual single-process AS commands; full buffer identity and literal verification retained'}
         from llm.gateway_findings import network_answer
-        from llm.gateway_documents import document_transcription,single_value_document_comparison
+        from llm.gateway_documents import document_transcription,single_value_document_comparison,unavailable_document_answer
         transcription=document_transcription(body.prompt,[d for d in context if 'source' in d]) if use_files else None
         document_comparison=single_value_document_comparison(body.prompt,[d for d in context if 'source' in d]) if use_files else None
+        unavailable_document=unavailable_document_answer(coverage.get('files',{}).get('source_availability',[])) if use_files and not use_editor else None
         factual_network=bool(route.network_domains and ('knowledge' not in route.network_domains or agent_info and agent_info.get('engine') in {'langgraph_b2','langgraph_b3'}) and not use_files and not use_editor)
         if studio_answer:
             answer,model=studio_answer,None
@@ -342,6 +357,10 @@ class AIGateway:
             answer,model=(verified_answer if network_bundle else network_answer(context,evidence,route.attributes,route.interface_refs,question=body.prompt)),None
             synthesis=(agent_info or {}).get('verification',{}).get('synthesis',{})
             if synthesis.get('status') in {'literal_checks_passed','repaired_literal_checks_passed'}:model=synthesis.get('model')
+        elif unavailable_document:
+            answer,model=unavailable_document,None
+            coverage['document_verification']={'status':'source_unavailable','model_synthesis':False,
+                'scope':'Selected source availability metadata only; no extraction or substitute document content'}
         elif use_files and not images and not any(d.get('text','').strip() for d in context if 'source' in d):
             selected_docs=list(dict.fromkeys(d['source'] for d in context if 'source' in d))
             limits=list(dict.fromkeys(d.get('limitation') for d in context if d.get('limitation')))
@@ -377,7 +396,7 @@ class AIGateway:
             coverage['editor_verification']={'router_id_scope_reconstructed':reconstructed,'literal_claims_reconstructed':reconstructed,'scope':'Selected literal IOS-style router IDs, OSPF prefixes, BGP AS attribution, interface addresses, static-route next hops, runtime claims and comment-to-state attribution; other explanation prose and vendor semantics are not certified'}
             if reconstructed:
                 coverage['editor_verification'].update(status='literal_editor_reconstruction',model_synthesis=False,original_answer=editor_candidate)
-        if use_files and not transcription and not document_comparison:
+        if use_files and not transcription and not document_comparison and not unavailable_document:
             from functools import partial
             from llm.orchestration.verification import verify_ocr_answer
             answer,model,document_review=await verify_ocr_answer(body.prompt,answer,model,[d for d in context if 'text' in d],
@@ -389,13 +408,16 @@ class AIGateway:
             answer=verified_answer+'\n\n**Uploaded content interpretation**\n\n'+answer
             coverage['interpretation_scope']='Network records verified separately; document prose is an interpretation, not a network observation'
         if use_files:
-            locations=list(dict.fromkeys(e.source+(', page '+str(e.page) if e.page else ', lines '+str(e.start_line)+'–'+str(e.end_line)) for e in evidence if e.authority=='untrusted_document_context'))
+            locations=list(dict.fromkeys(e.source+(', page '+str(e.page) if e.page else ', lines '+str(e.start_line)+'–'+str(e.end_line) if e.start_line is not None else ', source metadata') for e in evidence if e.authority=='untrusted_document_context'))
             if locations:answer+='\n\nSources: '+'; '.join(locations)+'.'
             if any(e.origin=='simulated' and e.authority=='untrusted_document_context' for e in evidence):
                 answer+='\n\n*Development scenario document · '+str(next(e.captured_at for e in evidence if e.origin=='simulated' and e.authority=='untrusted_document_context'))+'.*'
+            statuses=coverage.get('files',{}).get('source_availability',[])
+            if any(row['status']=='STALE' for row in statuses):
+                answer+='\n\n**Document source status:** '+'; '.join(row['name']+': **'+str(row['status'])+'** · captured `'+str(row['captured_at'])+'`' for row in statuses)+'.'
             if any('ocr' in str(item.get('extraction','')) for item in context) and coverage.get('document_verification',{}).get('status')!='verified_text_fallback':
                 answer+='\n\n*OCR was used. Small or unclear labels may be inaccurate; diagram layout and relationships were not interpreted.*'
-        if use_files and not coverage.get('files',{}).get('complete',True) and coverage.get('document_verification',{}).get('status')!='unreadable_source':
+        if use_files and not coverage.get('files',{}).get('complete',True) and coverage.get('document_verification',{}).get('status') not in {'unreadable_source','source_unavailable'}:
             selection=coverage.get('files',{}).get('page_selection') or {}
             if selection.get('missing'):
                 answer+='\n\n*Requested page(s) '+', '.join(map(str,selection['missing']))+' were not found in the selected extracted content.*'

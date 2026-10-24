@@ -242,6 +242,7 @@ function prettifyModelLabel(providerName: string, modelName: string): string {
 
 interface AnsibleChatPanelProps {
   getEditorSnapshot?: () => EditorSnapshot | null;
+  getRelatedEditorSnapshots?: () => EditorSnapshot[];
   onEditProposal?: (proposal: EditProposal) => boolean;
   onDraftReady?: (draft: DraftDocument) => void;
   onPlaybookReady: (payload: {
@@ -754,6 +755,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   explainSelectionRequest,
   onExplainSelectionHandled,
   getEditorSnapshot,
+  getRelatedEditorSnapshots,
   onEditProposal,
   onDraftReady,
 }) => {
@@ -801,6 +803,8 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   const [isDragOver, setIsDragOver]     = useState(false);
   const [attachedFiles, setAttachedFiles] = useState<{ name: string; content: string; lang: string; size: number; truncated: boolean; id?: string }[]>([]);
   const [gatewayPreview, setGatewayPreview] = useState<{ preview: any; prompt: string; conversation: string } | null>(null);
+  const [restoringReview, setRestoringReview] = useState<string | null>(null);
+  const gatewayReviewReturnFocus = useRef<HTMLElement | null>(null);
   const [rememberedAttachments, setRememberedAttachments] = useState<{ id: string; name: string; byte_size: number }[] | null>(null);
   const gatewayRequestRef = useRef<{ conversation: string; request: string } | null>(null);
   const activeSessionRef = useRef(currentSessionId);
@@ -825,6 +829,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   const [modelDropdownOpen, setModelDropdownOpen] = useState(false);
   const [isRebuildingRag, setIsRebuildingRag] = useState(false);
   const bottomRef      = useRef<HTMLDivElement>(null);
+  const messageScrollRef = useRef<HTMLDivElement>(null);
   const textareaRef    = useRef<HTMLTextAreaElement>(null);
   const fileInputRef   = useRef<HTMLInputElement>(null);
   const historyDropdownRef = useRef<HTMLDivElement>(null);
@@ -1001,7 +1006,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
     const hydrateSessions = async () => {
       sessionsHydratingRef.current = true;
       try {
-        const remote = await ansibleApi.listChatSessions();
+        const remote = localChat ? await aiApi.list('studio') : await ansibleApi.listChatSessions();
         if (cancelled) return;
         const remoteSessions = (remote.sessions || []).map(normalizeSessionRecord).sort((a, b) => b.updatedAt - a.updatedAt);
         if (remoteSessions.length > 0) {
@@ -1072,7 +1077,7 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
     return () => {
       cancelled = true;
     };
-  }, [initialStoredSessionId, initialStoredSessions]);
+  }, [initialStoredSessionId, initialStoredSessions, localChat]);
 
   const startNewSession = useCallback(() => {
     resetTransientChatState();
@@ -1355,7 +1360,8 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   }, [runtime?.providers, persistAnsibleModel]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const pane = messageScrollRef.current;
+    pane?.scrollTo({ top: pane.scrollHeight, behavior: 'smooth' });
   }, [messages]);
 
   useEffect(() => {
@@ -2478,13 +2484,13 @@ setGeneratingPlaybook(false);
         const requestId = uuidv4(); gatewayRequestRef.current = { conversation, request: requestId };
         const captured = getEditorSnapshot?.();
         const result = await aiApi.turn(conversation, { request_id: requestId, prompt: question, model: ansibleModel.model || undefined,
-          editor: captured, attachment_ids: attachedFiles.flatMap(f => f.id ? [f.id] : []) }, ac.signal);
+          editor: captured, related_editors:getRelatedEditorSnapshots?.()||[], attachment_ids: attachedFiles.flatMap(f => f.id ? [f.id] : []) }, ac.signal);
         if (ac.signal.aborted || activeSessionRef.current !== conversation) return;
         setAttachedFiles([]); setQuotedSelection(null);
         let answer = result.answer;
         if (result.context_coverage.complete === false) answer += `\n\nContext coverage: ${result.context_coverage.included_characters}/${result.context_coverage.total_characters} characters. Relevant excerpts were selected.`;
-        addMsg({ role: 'assistant', content: answer, evidence: result.evidence, gatewayReview: result.kind === 'generation_preview' && result.preview ? { preview: result.preview, prompt: question, conversation } : undefined, isError: ['unavailable', 'denied', 'error'].includes(result.status) });
-        if (result.kind === 'generation_preview' && result.preview) setGatewayPreview({ preview: result.preview, prompt: question, conversation });
+        addMsg({ role: 'assistant', content: answer, evidence: result.evidence, gatewayReviewRequestId:result.kind === 'generation_preview' ? requestId : undefined, gatewayReview: result.kind === 'generation_preview' && result.preview ? { preview: result.preview, prompt: question, conversation } : undefined, isError: ['unavailable', 'denied', 'error'].includes(result.status) });
+        if (result.kind === 'generation_preview' && result.preview) { gatewayReviewReturnFocus.current = textareaRef.current; setGatewayPreview({ preview: result.preview, prompt: question, conversation }); }
         if (result.kind === 'edit_proposal' && result.proposal && !onEditProposal?.(result.proposal)) addMsg({ role: 'assistant', content: 'The document changed while the proposal was prepared. Your current buffer was preserved; request a new edit.', isError: true });
       } catch (e) { if (!ac.signal.aborted) addMsg({ role: 'assistant', content: describeError(e, 'Shared local AI request failed.'), isError: true }); }
       finally { if (abortControllerRef.current === ac) { abortControllerRef.current = null; gatewayRequestRef.current = null; setGenerating(false); } }
@@ -2825,6 +2831,7 @@ setGeneratingPlaybook(false);
     input,
     ensureConversation,
     getEditorSnapshot,
+    getRelatedEditorSnapshots,
     onEditProposal,
     localChat,
     messages,
@@ -3081,7 +3088,7 @@ setGeneratingPlaybook(false);
           subtitle="AI model is compiling Ansible task definitions…"
         />
       )}
-      {gatewayPreview && <NativeGenerationReview initial={gatewayPreview.preview} conversationId={gatewayPreview.conversation} prompt={gatewayPreview.prompt} model={ansibleModel.model || undefined} onClose={() => setGatewayPreview(null)} onPreviewChange={preview => {
+      {gatewayPreview && <NativeGenerationReview initial={gatewayPreview.preview} conversationId={gatewayPreview.conversation} prompt={gatewayPreview.prompt} model={ansibleModel.model || undefined} returnFocus={gatewayReviewReturnFocus.current || textareaRef.current} onClose={() => setGatewayPreview(null)} onPreviewChange={preview => {
         setGatewayPreview(current => current ? { ...current, preview } : current);
         setMessages(current => current.map(message => message.gatewayReview?.preview?.parsed_intent?._v9_session === preview.parsed_intent?._v9_session ? { ...message, gatewayReview: { ...message.gatewayReview!, preview } } : message));
       }} onAccept={draft => { onDraftReady?.(draft); addMsg({ role: 'assistant', content: `Opened **${draft.path.split('/').pop()}** in the editor. Review the result, then **Save** when ready.` }); }} />}
@@ -3257,7 +3264,7 @@ setGeneratingPlaybook(false);
       </div>
 
       {/* Message list */}
-      <div className="grow overflow-y-auto" style={{ padding: '6px 0' }}>
+      <div ref={messageScrollRef} className="grow min-h-0 overflow-y-auto" style={{ padding: '6px 0' }}>
         {messages.map((msg, idx) => (
           <div key={msg.id}>
             {idx > 0 && <div className="h-px bg-base-300 my-0.5" />}
@@ -4591,7 +4598,17 @@ setGeneratingPlaybook(false);
                     <>
                     <VscodeMarkdown content={localChat && idx === 0 && msg.content.startsWith('**Ansible AI** ready.') ? LOCAL_WELCOME : msg.content} onOpenFile={onOpenFile} />
                     {!!msg.evidence?.length && <details className="text-[11px] text-base-content/50 mt-3"><summary className="cursor-pointer">Sources ({msg.evidence.length})</summary><ul className="mt-2 space-y-1">{msg.evidence.map((e,index) => <li key={e.id} className="break-all">S{index+1} · {e.source} · {e.origin}{e.page ? ` · page ${e.page}` : ''}{e.start_line ? ` · lines ${e.start_line}–${e.end_line}` : ''}</li>)}</ul></details>}
-                    {localChat && msg.gatewayReview && <button className="btn btn-sm btn-outline mt-3" onClick={() => setGatewayPreview(msg.gatewayReview!)}><FileCode size={14} />Review interpretation</button>}
+                    {localChat && msg.gatewayReviewRequestId && <button className="btn btn-sm btn-outline mt-3" disabled={restoringReview!==null} onClick={async (event) => {
+                      const conversation = currentSessionId;
+                      if (!conversation) return;
+                      gatewayReviewReturnFocus.current = event.currentTarget;
+                      setRestoringReview(msg.id);
+                      try {
+                        const restored = await aiApi.restoreReview(conversation, msg.gatewayReviewRequestId!);
+                        if (activeSessionRef.current === conversation) setGatewayPreview(restored);
+                      } catch (error) { Toast.error('Review unavailable', describeError(error)); }
+                      finally { setRestoringReview(null); }
+                    }}><FileCode size={14} />{restoringReview===msg.id ? 'Restoring review…' : 'Review interpretation'}</button>}
                     </>
                   )}
 

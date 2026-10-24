@@ -16,6 +16,19 @@ class Source:
     editor:str='records'
     description:str=''
     aliases:tuple[str,...]=()
+    additional_readers:tuple[str,...]=()
+    reader_record_kinds:tuple[tuple[str,tuple[str,...]],...]=()
+
+    def supports(self, tool):
+        """Compatibility metadata only; each reader still authorizes execution."""
+        return tool==self.tool or tool in self.additional_readers
+
+    @property
+    def readers(self):
+        return (self.tool,*self.additional_readers)
+
+    def record_kinds(self, tool):
+        return dict(self.reader_record_kinds).get(tool,(self.kind,)) if self.supports(tool) else ()
 
 
 SOURCES=(
@@ -31,7 +44,7 @@ SOURCES=(
     Source('protocol_state','OSPF and BGP','network.state','state','protocol_observation'),
     Source('controller_state','Controller state','network.state','state','controller_state',description='Controller name, configured connection, capabilities and associated device. Describes the controller connection, not router health.'),
     Source('telemetry','Telemetry samples','network.telemetry','telemetry','metric_sample'),
-    Source('interface_metrics','Interface counters','network.telemetry','telemetry','interface_counters'),
+    Source('interface_metrics','Interface counters','network.telemetry','telemetry','interface_counters',description='Authored per-interface traffic/error counter records and their samples. Preserve units and sample windows. The separately declared observation model exposes calculated metric_series through the simulation source on the same telemetry reader.'),
     Source('syslog','Syslog','network.syslog','syslog','syslog_event'),
     Source('incidents','Incidents and alerts','network.incidents','incidents','incident'),
     Source('config_drift','Configuration drift','network.configuration','configuration','configuration_drift'),
@@ -42,13 +55,33 @@ SOURCES=(
     Source('attachments','Conversation attachments','document.read',None,'attachment','files'),
     Source('diagrams','Images and diagrams','document.read',None,'diagram','files'),
     Source('conversation','Conversation setup','conversation.turn',None,'conversation','conversation'),
-    Source('simulation','Bounded simulation','network.state','state','simulation','simulation'),
+    Source('simulation','Bounded simulation','network.state','state','simulation','simulation',
+        description='Declared observation model: forwarding paths, routing and protocol assessments through network.state; modeled measurement series, counter rates and utilization through network.telemetry. Calculations retain their declared inputs, units, sampling window and limitations.',
+        additional_readers=('network.telemetry',),
+        reader_record_kinds=(('network.state',('forwarding_assessment','protocol_assessment','routing_table','interface_state')),
+            ('network.telemetry',('metric_series',)))),
 )
 BY_KEY={source.key:source for source in SOURCES}
 STATUSES=('AVAILABLE','MISSING','UNAVAILABLE','STALE','ERROR','CONFLICTING','UNSUPPORTED','NOT_QUERIED')
 
 
 def catalog():return [asdict(source) for source in SOURCES]
+
+
+def reader_domains(keys, preferred=()):
+    """Keep a compatible chosen reader; use the primary only when unresolved.
+
+    This maps source identity to reader shape. It neither selects entities nor
+    grants capabilities, and an unrelated preferred reader is never admitted.
+    """
+    domains=[]
+    for key in keys:
+        source=BY_KEY[key]
+        selected=[domain for domain in preferred if source.supports(
+            {'inventory':'inventory.read','knowledge':'knowledge.search'}.get(domain,'network.'+domain))]
+        domains.extend(selected or ['knowledge' if source.tool=='knowledge.search' else
+            'inventory' if source.tool=='inventory.read' else source.tool.removeprefix('network.')])
+    return list(dict.fromkeys(domains))
 
 
 def explicit_read_sources(prompt,available):
@@ -76,6 +109,11 @@ def explicit_read_sources(prompt,available):
             names={source.title,*source.aliases} if key=='knowledge' else {key.replace('_',' '),source.title,*source.aliases}
             if key!='knowledge' and sum(other.kind==source.kind for other in SOURCES)==1:names.add(source.kind.replace('_',' '))
             matches=[match for name in names for match in re.finditer(r'(?<![\w-])'+re.escape(name)+r's?(?![\w-])',clause,re.I)]
+            if key==source.domain:
+                # Naming the shared telemetry reader authorizes that reader's
+                # domain, not only its CPU/memory logical source. Let the
+                # existing source planner choose the requested measurement.
+                matches=[match for match in matches if not re.match(r'\s+(?:reader|tool)\b',clause[match.end():],re.I)]
             # A named category's health claim/status is an attribute of the
             # health record, not a request for its measurements or documents.
             if health_attributes and key!='source_health':

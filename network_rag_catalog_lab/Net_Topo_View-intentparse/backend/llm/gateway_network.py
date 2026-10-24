@@ -57,6 +57,7 @@ class NetworkQuery(StrictModel):
     source_scope: Literal['auto','current','historical','planned','observed','both'] = 'auto'
     record_kinds: list[str] = Field(default_factory=list,max_length=8)
     source_categories: list[str] = Field(default_factory=list,max_length=24)
+    interface_refs: list[str] = Field(default_factory=list,max_length=64)
     window_minutes: int = Field(default=60,ge=1,le=10080)
 
     @field_validator('start','end')
@@ -169,11 +170,17 @@ class NetworkReader:
     def read(self, domain, query, authorization):
         try: devices, inventory=self.devices(query)
         except ValueError as exc: return ToolResult(status='unavailable',message=str(exc))
+        if query.interface_refs:
+            recorded={str(i['id']) for d in devices for i in d['interfaces']}
+            if domain!='telemetry' or not set(query.interface_refs)<=recorded:
+                return ToolResult(status='unavailable',message='The requested interface scope is not recorded for these devices or this reader.')
+            if query.live:
+                return ToolResult(status='unavailable',message='This live reader does not support an exact interface scope; no broader measurements were substituted.')
         from local_providers.development import active_for
         if query.source_categories:
             from development.source_registry import BY_KEY
             expected_tool='knowledge.search' if domain=='knowledge' else 'network.'+domain
-            if any(BY_KEY[key].tool!=expected_tool for key in query.source_categories):
+            if any(not BY_KEY[key].supports(expected_tool) for key in query.source_categories):
                 raise ValueError('Logical source filter is incompatible with the requested reader')
         if domain!='knowledge' and (manager:=active_for(self.db)):
             return manager.result(domain,query,devices)
@@ -282,18 +289,21 @@ class NetworkReader:
         return any(str(entry).casefold() in refs for entry in entries)
 
     def observations(self,domain,query,devices):
-        from lab_config import FIXTURE_DIR
+        from lab_config import FIXTURE_DIR,LOCAL_LAB
         from local_providers.observations import JsonObservations, FixtureError
         ids={d['id'] for d in devices}; results=[]
         try:
+            if not LOCAL_LAB:
+                raise FixtureError('Simulated JSON observations are disabled in normal mode; no external measurements were substituted.')
             obs=JsonObservations(FIXTURE_DIR).read(self.db,range_minutes=1440)
             if domain=='telemetry':
                 rows=[]
                 for device in devices:
-                    for point in obs.device(device['id']).metrics:
+                    for point in ([] if query.interface_refs else obs.device(device['id']).metrics):
                         value={key:getattr(point,key) for key in point.model_fields_set}
                         rows.append({'device_id':device['id'],'hostname':device['hostname'],**value})
                     for interface in device['interfaces']:
+                        if query.interface_refs and str(interface['id']) not in query.interface_refs:continue
                         for point in obs.interface(interface['id']).metrics:
                             rows.append({'device_id':device['id'],'hostname':device['hostname'],'interface':interface['name'],**{key:getattr(point,key) for key in point.model_fields_set}})
             else:
@@ -373,9 +383,9 @@ def route_network(prompt, inventory, *, expand_investigation=True):
     domains=[]; text=prompt.lower()
     for domain,pattern in [('inventory',r'\b(inventory|devices?|routers?|switches?|interfaces?|vendors?|platforms?)\b'),
         ('topology',r'\b(topology|cabling|paths?|hops?|neighbou?r|links?|connections?|connected|connectivity)\b'),
-        ('telemetry',r'\b(telemetry|metrics?|measurements?|cpu|memory|traffic|bandwidth|utilization|latency|packet loss|statistics)\b'),
+        ('telemetry',r'\b(telemetry|metrics?|measurements?|counters?|discards?|cpu|memory|traffic|bandwidth|utilization|latency|packet loss|statistics)\b|\b(?:interface|port)\s+(?:(?:input|output)\s+)?errors?\b'),
         ('syslog',r'\b(syslogs?|logs?|logging)\b'),('incidents',r'\b(incidents?|anomal\w*|alerts?|drift|outage|failures?)\b'),
-        ('state',r'\b(controllers?|collectors?|source health|collection status)\b|'+INTERFACE_OBSERVATION),
+        ('state',r'\b(controllers?|collectors?|source health|collection status)\b|\bprotocol\s+(?:state|observations?|sessions?|adjacenc\w*)\b|'+INTERFACE_OBSERVATION),
         ('configuration',r'\b(configs?|configurations?|running[ .-]?config|snapshots?|backups?)\b')]:
         if re.search(pattern,text): domains.append(domain)
     investigation=bool(re.search(r'\b(investigat\w*|diagnos\w*|root cause|correlat\w*|troubleshoot\w*)\b',text))
@@ -440,7 +450,7 @@ def route_network(prompt, inventory, *, expand_investigation=True):
     return domains,query
 
 
-async def network_context(db, registry, authorization, prompt, domains_override=None,device_refs_override=None,source_requests=None):
+async def network_context(db, registry, authorization, prompt, domains_override=None,device_refs_override=None,source_requests=None,interface_refs_override=None):
     from llm.gateway_services import inventory_snapshot
     inventory=inventory_snapshot(db)
     domains,query=route_network(prompt,inventory)
@@ -492,6 +502,8 @@ async def network_context(db, registry, authorization, prompt, domains_override=
             if any(key in query for key in ('start','end','window_minutes')):
                 override={k:v for k,v in override.items() if k not in {'start','end','window_minutes'}}
             effective_query={**query,**override}
+            if domain=='telemetry' and interface_refs_override:
+                effective_query['interface_refs']=interface_refs_override
             if domain=='state':
                 from development.source_registry import BY_KEY
                 categories=effective_query.get('source_categories',[])
@@ -528,6 +540,11 @@ async def network_context(db, registry, authorization, prompt, domains_override=
     # Keep each source independently represented when context is bounded.
     per_source=max(1000,24000//max(1,len(contexts)))
     for context in contexts:
+        # The knowledge adapter already bounds document count/text and returns
+        # typed immutable contracts. A sliced JSON string destroys that shape
+        # and fails exact provenance checks. Keep the authoritative read here;
+        # synthesis builds its own bounded contract case-file afterwards.
+        if context['tool']=='knowledge.search':continue
         encoded=json.dumps(context['data'],default=str)
         budget=max(per_source,10000) if context['tool']=='network.state' else per_source
         if len(encoded)>budget: context['data']=bounded_record_context(context['data'],budget)

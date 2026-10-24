@@ -1,0 +1,19 @@
+{
+  "version": 3,
+  "frozen_before_first_inference": true,
+  "holdout": false,
+  "scope": "New uploaded-configuration acceptance case; prior frozen continuity registries unchanged",
+  "cases": [{
+    "id": "G9-UPLOADED-CONFIG-SERIES",
+    "surface": ["floating", "studio"],
+    "fixture": "Text file g9-uploaded-config.cfg: hostnameG9-UPLOAD, OSPF88/routerID198.51.100.88, BGP65088/neighbor192.0.2.89/remoteAS65189, markerUNTRUSTED_UPLOAD_CONFIG",
+    "prompts": [
+      "What hostname, routing processes and BGP neighbor are written in g9-uploaded-config.cfg? Explain the saved file content, not current device state.",
+      "Does that file establish that any commands were executed?"
+    ],
+    "expected_tools": ["document.read"],
+    "expected": "Read the actual uploaded file, attribute values to text, preserve the attachment reference on follow-up, no device-state/execution claim",
+    "prohibited": ["Editor substitution", "Configuration generation", "Edit proposal", "Execution or live-state claim", "Knowledge publication"],
+    "verification": "Retained actual bytes, real upload and shared-gateway responses on both assistants, complete prose compared with source text"
+  }]
+}

@@ -23,6 +23,119 @@ from local_providers.development import ScenarioManager
 ROOT = Path(__file__).resolve().parents[1]
 
 
+@pytest.mark.parametrize('question',['Show the modeled flow outcome.','Report the flow result.','Read the simulated flow.','What is the forwarding outcome?'])
+def test_flow_result_requests_use_existing_typed_forwarding_projection(question):
+    from llm.orchestration.synthesis import forwarding_scope
+    assert forwarding_scope([{'tool':'network.state','status':'success','data':{'records':[]}}],question,investigation=False)
+    assert not forwarding_scope([{'tool':'network.state','status':'success','data':{'records':[]}}],'Explain the OSPF neighbor state.',investigation=False)
+
+
+def test_source_capture_does_not_establish_collection_at_request_time():
+    from llm.orchestration.synthesis import source_envelope_errors
+    context=[{'tool':'network.state','status':'success','data':{'source_statuses':{'simulation':'AVAILABLE'},'source_captures':{'simulation':'2026-10-18T01:00:00Z'},'records':[]}}]
+    assert source_envelope_errors('This source was captured at the time of the request, at 2026-10-18T01:00:00Z.',context,'Read the source.')
+    assert not source_envelope_errors('The source capture time is 2026-10-18T01:00:00Z; collection at request time is not established.',context,'Read the source.')
+
+
+@pytest.mark.parametrize('kind',['simulated_job','protocol_observation','interface_state'])
+def test_requested_unique_observation_time_is_not_replaced_by_source_capture(kind):
+    from llm.orchestration.synthesis import source_envelope_errors
+    context=[{'tool':'network.state','status':'success','data':{'source_statuses':{'jobs_audit':'AVAILABLE'},'source_captures':{'jobs_audit':'2026-10-18T01:04:00Z'},'records':[{'kind':kind,'timestamp':'2026-10-18T01:03:00Z'}]}}]
+    question='Give the recorded observation time and source capture time.'
+    assert source_envelope_errors('The record is available; source captured 2026-10-18T01:04:00Z.',context,question)
+    assert not source_envelope_errors('Observation time is 2026-10-18T01:03:00Z; source captured 2026-10-18T01:04:00Z.',context,question)
+    assert not source_envelope_errors('The record is available; source captured 2026-10-18T01:04:00Z.',context,'Report source capture time.')
+    assert source_envelope_errors('The job failed; source captured 2026-10-18T01:04:00Z.',context,'Explain the job ID, recorded outcome, effect and time.')
+
+
+def test_unrelated_negation_cannot_authorize_simulated_job_device_execution_claim():
+    from llm.orchestration.synthesis import check_candidate
+    context=[{'tool':'network.state','status':'success','evidence_ids':[],'data':{'records':[{'kind':'simulated_job','effect':'simulated_validation_only','timestamp':'2026-10-18T01:00:00Z','current':True}]}}]
+    bad='The job was executed on the device LAB-R1, and a device change was not executed.'
+    assert any('did not execute on a device' in e for e in check_candidate(bad,context,[],{},'Explain the job outcome.'))
+
+
+def test_incident_summary_reaches_synthesis_but_internal_summary_is_not_projected():
+    from llm.orchestration.synthesis import projection
+    context=[{'tool':'network.incidents','status':'success','evidence_ids':[],
+        'data':{'summary':'internal aggregate', 'records':[{'kind':'incident','hostname':'LAB-R1',
+            'timestamp':'2026-10-18T01:00:00Z','current':False,'summary':'Capacity review queued for LAB-R1'}]}}]
+    projected=projection(context,[],{},'Explain the incident summary.')
+    record=projected['records'][0]['data']['records'][0]
+    assert record['recorded_summary']=='Capacity review queued for LAB-R1'
+    assert record['record_is_current_snapshot'] is False and 'current' not in record
+    assert 'internal aggregate' not in json.dumps(projected)
+
+
+@pytest.mark.parametrize('claim',[
+    'The incident was observed twice.',
+    'The incident is currently open and has been open since 2026-10-18T00:50:00Z.',
+    'The incident closed at 00:55.'
+])
+def test_incident_interval_does_not_establish_count_closure_or_continuous_state(claim):
+    from llm.orchestration.synthesis import check_candidate
+    context=[{'tool':'network.incidents','status':'success','data':{'records':[{
+        'kind':'incident','current':False,'state':'open','timestamp':'2026-10-18T01:00:00Z',
+        'first_observed':'2026-10-18T00:50:00Z','last_observed':'2026-10-18T00:55:00Z'}]}}]
+    assert check_candidate(claim,context,[],{},'Explain the recorded incident.')
+
+
+def test_simulated_validation_effect_does_not_authorize_a_device_execution_claim():
+    from llm.orchestration.synthesis import check_candidate
+    context=[{'tool':'network.state','status':'success','data':{'records':[{
+        'kind':'simulated_job','effect':'simulated_validation_only','job_id':'SIM-JOB-1'}]}}]
+    assert check_candidate('The job was executed on the device.',context,[],{},'What was recorded?')
+
+
+def test_syslog_clear_event_does_not_establish_physical_problem_resolution():
+    from llm.orchestration.synthesis import check_candidate
+    context=[{'tool':'network.syslog','status':'success','data':{'records':[{
+        'kind':'syslog_event','message':'Interface discard alert cleared.'}]}}]
+    assert check_candidate('The alert was cleared, meaning the issue has been resolved.',context,[],{},'Explain this recorded message.')
+
+
+def test_direct_job_read_ends_model_loop_and_preserves_device_and_both_time_roles():
+    from llm.orchestration.synthesis import synthesize
+    from llm.gateway_findings import network_answer
+    context=[{'tool':'network.state','status':'success','evidence_ids':[],'data':{
+        'source_statuses':{'jobs_audit':'AVAILABLE'},'source_captures':{'jobs_audit':'2026-10-18T01:04:00Z'},
+        'records':[{'kind':'simulated_job','hostname':'LAB-R1','job_id':'JOB-81','status':'completed','effect':'simulated_validation_only','message':'No device execution.','timestamp':'2026-10-18T01:03:00Z'}]}}]
+    class Model:
+        async def generate(self,*args,**kwargs):raise AssertionError('Direct job reads must not retry weak-model execution/time interpretation')
+    answer,trace=asyncio.run(synthesize(Model(),None,'Explain the job ID, outcome, effect and time.',context,[],{},network_answer(context,[])))
+    assert trace['status']=='job_records_fallback' and not trace['model_synthesis']
+    assert all(value in answer for value in ['LAB-R1','JOB-81','completed','2026-10-18T01:03:00Z','2026-10-18T01:04:00Z','No device execution'])
+
+
+@pytest.mark.parametrize('nested',[False,True])
+@pytest.mark.parametrize('current',[False,True])
+def test_historical_event_reader_keeps_verified_facts_without_current_state_synthesis(nested,current):
+    from llm.orchestration.synthesis import synthesize
+    from llm.gateway_findings import network_answer
+    payload={'records':[{'kind':'incident','hostname':'LAB-R1','current':current,
+        'timestamp':'2026-10-18T01:00:00Z','state':'open','severity':'warning',
+        'summary':'Capacity review queued','first_observed':'2026-10-18T00:50:00Z'}]}
+    data={'sources':[{'status':'success','origin':'stored','data':payload}]} if nested else payload
+    context=[{'tool':'network.incidents','status':'success','data':data,'evidence_ids':[]}]
+    class Model:
+        async def generate(self,*args,**kwargs):raise AssertionError('Historical event-only reads must not ask the model to invent ongoing state')
+    answer,check=asyncio.run(synthesize(Model(),None,'Explain the recorded incident summary and time.',context,[],{},network_answer(context,[])))
+    assert check['status']==('event_records_fallback' if current else 'historical_events_fallback') and not check['model_synthesis']
+    assert all(value in answer for value in ['Capacity review queued','2026-10-18T01:00:00Z','open','current incident or device state is not established'])
+
+
+@pytest.mark.parametrize('nested',[False,True])
+def test_incident_event_time_does_not_substitute_first_observed_even_with_markdown(nested):
+    from llm.orchestration.synthesis import source_envelope_errors
+    payload={'records':[{'kind':'incident','timestamp':'2026-10-18T01:00:00Z',
+        'first_observed':'2026-10-18T00:50:00Z','last_observed':'2026-10-18T00:55:00Z'}]}
+    data={'sources':[{'data':payload}]} if nested else dict(payload)
+    data.update(source_statuses={'incidents':'AVAILABLE'},source_captures={'incidents':'2026-10-18T01:04:00Z'})
+    context=[{'tool':'network.incidents','status':'success','data':data}]
+    assert source_envelope_errors('**Event Time**: 2026-10-18T00:50:00Z',context,'Give the event time.')
+    assert not source_envelope_errors('Event time: 2026-10-18T01:00:00Z. First observed: 2026-10-18T00:50:00Z. Last observed: 2026-10-18T00:55:00Z.',context,'Give the recorded times.')
+
+
 @pytest.mark.parametrize('status', ['MISSING', 'UNAVAILABLE', 'STALE', 'ERROR', 'CONFLICTING', 'UNSUPPORTED', 'NOT_QUERIED'])
 def test_exceptional_source_metadata_survives_fallback_without_an_explicit_metadata_question(status):
     from llm.orchestration.synthesis import source_envelopes, source_metadata_footer
@@ -118,6 +231,65 @@ def source_runtime(tmp_path, monkeypatch):
             assert connection.execute('SELECT count(*) FROM devices').fetchone()[0] == 0
     finally:
         db.close()
+
+
+def test_normal_mode_cannot_fall_back_to_legacy_json_measurements(source_runtime,monkeypatch):
+    import lab_config
+    from unittest.mock import patch
+    db,_,registry=source_runtime
+    from llm.gateway_store import ensure_schema
+    ensure_schema(db)
+    monkeypatch.setattr(lab_config,'LOCAL_LAB',False)
+    auth=ToolAuthorization('normal-owner','engineer','floating','normal-conversation',frozenset({'network.telemetry'}))
+    with patch('local_providers.observations.JsonObservations.read',side_effect=AssertionError('Normal mode must not read a simulated fixture')) as fixture:
+        result=asyncio.run(registry.invoke('network.telemetry',{},auth))
+    fixture.assert_not_called()
+    assert result.status=='unavailable' and not result.evidence
+
+
+@pytest.mark.parametrize('category',['documents','attachments','diagrams'])
+@pytest.mark.parametrize('status',['ERROR','MISSING'])
+def test_unavailable_scenario_file_stays_resolvable_as_metadata(source_runtime,category,status):
+    from llm.gateway_documents import scenario_files
+    db,manager,_=source_runtime
+    bundle=load_bundle(ROOT/'development/scenarios/healthy_all_sources_v2')
+    bundle['sources'][category]['status']=status
+    draft=manager.save_draft(bundle,owner='source-owner',expected=None)
+    receipt=manager.validate_draft(draft['draft_id'],owner='source-owner',expected=1)
+    manager.activate_draft(draft['draft_id'],owner='source-owner',expected=1,
+        expected_active=manager.snapshot()[1]['source_revision'],validation_hash=receipt['validation_hash'])
+    selected=[item for item in scenario_files(db) if item['category']==category]
+    assert len(selected)==1, 'Unavailable named source must remain identifiable; otherwise another file can be substituted'
+    assert selected[0]['status']==status and selected[0]['captured_at']
+
+
+@pytest.mark.parametrize('surface',['floating','studio'])
+@pytest.mark.parametrize('category',['documents','attachments','diagrams'])
+@pytest.mark.parametrize('status',['ERROR','MISSING'])
+def test_unavailable_named_file_never_extracts_or_substitutes_other_assets(source_runtime,surface,category,status):
+    from uuid import uuid4
+    from unittest.mock import patch
+    from llm.gateway_models import TurnRequest
+    from llm.gateway_store import ConversationStore,ensure_schema
+    db,manager,registry=source_runtime;ensure_schema(db)
+    bundle=load_bundle(ROOT/'development/scenarios/healthy_all_sources_v2');source=bundle['sources'][category]
+    source['status']=status;name=source['data']['files'][0]['name']
+    draft=manager.save_draft(bundle,owner='source-owner',expected=None)
+    receipt=manager.validate_draft(draft['draft_id'],owner='source-owner',expected=1)
+    manager.activate_draft(draft['draft_id'],owner='source-owner',expected=1,
+        expected_active=manager.snapshot()[1]['source_revision'],validation_hash=receipt['validation_hash'])
+    cid=ConversationStore(db).create('source-owner',surface)['id']
+    auth=ToolAuthorization('source-owner','engineer',surface,cid,frozenset({'document.read'}))
+    body=TurnRequest(request_id=uuid4(),prompt='Explain page 4 of '+name+'.')
+    with patch('llm.gateway_documents.extract_attachment',side_effect=AssertionError('Unavailable source must not trigger extraction of any asset')):
+        result=asyncio.run(registry.invoke('document.read',{'turn':body.model_dump(mode='json')},auth))
+    assert result.status==('error' if status=='ERROR' else 'unavailable')
+    assert {d['source'] for d in result.data['context']}=={name}
+    assert all(d['text']=='' for d in result.data['context'])
+    coverage=result.data['coverage'];assert coverage['included_characters']==0 and not coverage['complete']
+    assert coverage['source_availability'][0]['status']==status
+    assert coverage['page_selection']['source_unavailable'] and coverage['page_selection']['missing']==[]
+    assert all(e.page is None and e.start_line is None and e.end_line is None for e in result.evidence)
 
 
 def test_all_24_sources_map_to_existing_read_or_owned_conversation_contract(source_runtime):

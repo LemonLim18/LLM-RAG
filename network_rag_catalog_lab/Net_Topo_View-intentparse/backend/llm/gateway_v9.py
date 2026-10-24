@@ -12,6 +12,11 @@ from local_providers import v9_studio
 async def preview(db,user,prompt,model,output_kind='native',params=None,hosts=None,task_id=None,expected_revision=None,confirm_order=False,selection=None,refresh_inventory=False,conversation_reply=None):
     authorize_studio(user)
     result=await v9_studio.preview(db,SimpleNamespace(intent_description=prompt,model=model,params=params or {},target_hosts=hosts or [],allow_multi=True,task_id=task_id,expected_revision=expected_revision,confirm_order=confirm_order,selection=selection,refresh_inventory=refresh_inventory,conversation_reply=conversation_reply),user)
+    return output_support(db, result, output_kind)
+
+
+def output_support(db, result, output_kind):
+    """Use the same published variant checks for new and restored reviews."""
     result['output_kind']=output_kind
     if output_kind=='playbook':
         from llm.gateway_knowledge import read_release
@@ -82,6 +87,28 @@ async def render_draft(db,user,body):
     if read_release(knowledge_root()/'storage/catalog_releases')[2]['release_id']!=output['release_id'] or v9_studio.digest(v9_studio.inventory(db))!=previous['inventory_hash'] or v9_studio.session(db,body.session_id,user['username'])['revision']!=body.expected_revision:
         raise HTTPException(409,'Knowledge, inventory or review changed during generation. Review again.')
     return {**drafts[0], 'documents':drafts, 'task_count':len(tasks), 'output_kind':body.output_kind}
+
+
+def restore_review(db, user, result):
+    """Read the latest owned review, never replay an old turn or render output."""
+    authorize_studio(user)
+    if not result or result.get('kind') != 'generation_preview':
+        raise HTTPException(404, 'This turn has no configuration review')
+    sid = (result.get('preview') or {}).get('parsed_intent', {}).get('_v9_session')
+    if not sid:
+        raise HTTPException(404, 'This turn has no V9 review session')
+    previous = v9_studio.session(db, sid, user['username'])
+    data = v9_studio.inventory(db)
+    if v9_studio.digest(data) != previous['inventory_hash']:
+        raise HTTPException(409, 'Inventory/scenario changed since this review. Start a fresh interpretation against current sources.')
+    output = json.loads(previous['body'])
+    from llm.gateway_knowledge import read_release
+    from local_providers.knowledge import knowledge_root
+    if read_release(knowledge_root()/'storage/catalog_releases')[2]['release_id'] != output['release_id']:
+        raise HTTPException(409, 'Published knowledge changed since this review. Start a fresh interpretation.')
+    restored = v9_studio.review_presentation(output, sid, data, previous['revision'])
+    kind = (result.get('preview') or {}).get('output_kind', 'native')
+    return output_support(db, restored, kind), previous['prompt']
 
 
 

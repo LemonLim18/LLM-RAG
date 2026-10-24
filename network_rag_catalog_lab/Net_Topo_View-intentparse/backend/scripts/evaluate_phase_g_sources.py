@@ -8,6 +8,23 @@ from pathlib import Path
 from uuid import uuid4
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT/'backend'))
+FILE_LANES={
+    'diagram_files':{'category':'diagrams','asset':'docs/topology.png','name':'Review topology.png',
+        'prompt':'Read the device/vendor labels and review label in Review topology.png. Give the source capture time and distinguish OCR text from verified visual links.',
+        'image_texts':['Review AMBER-46: Cisco IOS-XE; Junos; Huawei VRP.\nLabels are not evidence of connectivity.',
+                       'Review VIOLET-73: Cisco IOS-XE; Junos; Huawei VRP.\nLabels are not evidence of connectivity.'],
+        'literals':['AMBER-46','VIOLET-73']},
+    'document_files':{'category':'documents','asset':'docs/operations.md','name':'Maintenance brief.md',
+        'prompt':'Summarize Maintenance brief.md and explain its recorded maintenance window. Use only this document and give its source capture time.',
+        'texts':['# Maintenance brief\nThe planned lab maintenance window starts at 19:10 UTC and lasts 20 minutes. This is a proposed schedule, not a record that maintenance was executed.\n',
+                 '# Maintenance brief\nThe planned lab maintenance window starts at 20:40 UTC and lasts 20 minutes. This is a proposed schedule, not a record that maintenance was executed.\n'],
+        'literals':['19:10','20:40']},
+    'attachment_files':{'category':'attachments','asset':'docs/capture.txt','name':'Maintenance capture.txt',
+        'prompt':'Explain what Maintenance capture.txt records. Include its maintenance label and source capture time; do not infer device execution.',
+        'texts':['Maintenance label: COPPER-41. This is an untrusted planning note for a lab change review; no device command was executed.\n',
+                 'Maintenance label: SILVER-72. This is an untrusted planning note for a lab change review; no device command was executed.\n'],
+        'literals':['COPPER-41','SILVER-72']},
+}
 RECORD_LANES={
     'changes':{'category':'config_changes','tool':'network.configuration',
         'prompt':'Show only recorded configuration changes for LAB-R1, including the capture references and literal diff.',
@@ -61,10 +78,17 @@ RECORD_LANES={
         'prompt':'Read only source health records for LAB-R1. Explain the authored source-availability claims, their observation time and the health-source status. Do not infer physical collection or current device health.',
         'values':[{'physical_collection_performed':False},
                   {'physical_collection_performed':False}]},
+    'protocol_records':{'category':'protocol_state','tool':'network.state',
+        'prompt':'Read only authored OSPF protocol observations for LAB-R1. Give the recorded local and neighbor router IDs, neighbor device, state, observation time and source capture time. Do not substitute the separately declared simulation.',
+        'values':[{'protocol':'OSPF','observed_state':'Full'},
+                  {'protocol':'OSPF','observed_state':'Init'}],
+        # The source title "OSPF and BGP" remains valid metadata when unavailable.
+        'negative_literals':['198.19.71.1','198.19.71.2','Full','Init'],
+        'literals':[['198.19.71.1','198.19.71.2','Full'],['198.19.71.1','198.19.71.2','Init']]},
 }
 
 
-async def main(lane,selected_case=None,recovery=False):
+async def main(lane,selected_case=None,recovery=False,transcribe=False):
     import httpx
     from fastapi import FastAPI
     from auth.auth import create_access_token
@@ -76,7 +100,7 @@ async def main(lane,selected_case=None,recovery=False):
     from development.starter import starter_bundle
     from scripts.phase_d_audit import Run,source_manifest,digest
     os.environ.update(COGNISHIELD_DEV_WORKBENCH='1',COGNISHIELD_DEV_SIMULATION='0',COGNISHIELD_AI_ENGINE='langgraph_b3',COGNISHIELD_AI_PLANNING='1',COGNISHIELD_AI_SYNTHESIS='1')
-    run=Run('G-source-'+lane,'real_model_full_agent',{'model':'qwen2.5:1.5b','source_digest':digest(json.dumps(source_manifest(),sort_keys=True).encode()),'independent_holdout':False},phase='phase-g')
+    run=Run('G-source-'+lane,'real_model_full_agent',{'model':'qwen2.5:1.5b','source_digest':digest(json.dumps(source_manifest(),sort_keys=True).encode()),'independent_holdout':False,'file_task':'literal_transcription' if transcribe else 'interpretation'},phase='phase-g')
     failed=False
     with tempfile.TemporaryDirectory(dir=ROOT/'tmp/phase-g',prefix='sources-') as directory:
         folder=Path(directory);db=DatabaseManager(str(folder/'app.db'));db.initialize();ensure_schema(db)
@@ -105,7 +129,10 @@ async def main(lane,selected_case=None,recovery=False):
                     except Exception as exc:entry['error']=type(exc).__name__;raise
                     finally:entry['elapsed_ms']=round((time.monotonic()-started)*1000,2)
                 prefix='/api/v1/development-network/workbench';state=await call('GET',prefix)
-                cases=(['knowledge-json','knowledge-edited','knowledge-stale','knowledge-error'] if lane=='knowledge' else
+                cases=(['simulation-json','simulation-edited','simulation-stale','simulation-error','simulation-missing'] if lane=='simulation_context' else
+                    ['conversation-json','conversation-edited','conversation-stale','conversation-error','conversation-missing'] if lane=='conversation_context' else
+                    ['knowledge-json','knowledge-edited','knowledge-stale','knowledge-error'] if lane=='knowledge' else
+                    [lane+suffix for suffix in ['-json','-edited','-stale','-error','-missing']] if lane in FILE_LANES else
                     [lane+suffix for suffix in ['-json','-edited','-stale','-error','-missing']] if lane in RECORD_LANES else
                     [lane+suffix for suffix in ['-json','-edited','-stale','-error','-missing']] if lane in {'planned','history'} else
                     ['inventory-json','inventory-edited','inventory-stale','inventory-error'] if lane=='inventory' else ['topology-json','topology-edited','topology-compare','topology-missing','topology-stale','topology-error'] if lane=='topology' else ['starter-acl','starter-conflict'] if lane=='starter' else ['healthy','conflict'] if lane=='investigation' else ['health-json','health-override'] if lane=='health' else ['controller'] if lane=='coordination' else ['protocol-json','protocol-edited'] if lane=='protocol' else ['metric-json','metric-edited'] if lane=='telemetry' else ['diagram'])
@@ -116,6 +143,49 @@ async def main(lane,selected_case=None,recovery=False):
                 conversation_ids={};activated_contexts={}
                 for case in cases:
                     bundle=starter_bundle()
+                    if lane=='simulation_context':
+                        import shutil
+                        from development.bundles import load_bundle
+                        editable=folder/case;shutil.copytree(ROOT/'backend/development/scenarios/healthy_all_sources_v2',editable)
+                        source=editable/'simulation.json';external=json.loads(source.read_text(encoding='utf-8'))
+                        if case.endswith('edited'):
+                            next(t for t in external['data']['network']['tables'] if t['device_id']==1100)['routes']=[]
+                        external['status']='STALE' if case.endswith('stale') else 'ERROR' if case.endswith('error') else 'MISSING' if case.endswith('missing') else 'AVAILABLE'
+                        external['captured_at']='2026-10-18T01:01:00Z' if case.endswith('edited') else '2026-10-18T01:00:00Z'
+                        source.write_text(json.dumps(external,indent=2),encoding='utf-8')
+                        manifest_path=editable/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['clock']['now']='2026-10-18T01:02:00Z';manifest_path.write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+                        bundle=load_bundle(editable)
+                    if lane=='conversation_context':
+                        import shutil
+                        from development.bundles import load_bundle
+                        editable=folder/case;shutil.copytree(ROOT/'backend/development/scenarios/healthy_all_sources_v2',editable)
+                        source=editable/'conversation.json';external=json.loads(source.read_text(encoding='utf-8'))
+                        selected_device='LAB-R3' if case.endswith('edited') else 'LAB-R2'
+                        external['data']['turns']=['For this conversation use '+selected_device+' as my selected device. Read its recorded inventory.']
+                        external['status']='STALE' if case.endswith('stale') else 'ERROR' if case.endswith('error') else 'MISSING' if case.endswith('missing') else 'AVAILABLE'
+                        external['captured_at']='2026-10-18T01:01:00Z' if case.endswith('edited') else '2026-10-18T01:00:00Z'
+                        manifest_path=editable/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['clock']['now']='2026-10-18T01:02:00Z';manifest_path.write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+                        source.write_text(json.dumps(external,indent=2),encoding='utf-8');bundle=load_bundle(editable)
+                    if lane in FILE_LANES:
+                        import shutil
+                        from development.bundles import load_bundle
+                        spec=FILE_LANES[lane];edited=case.endswith('edited')
+                        editable=folder/case;shutil.copytree(ROOT/'backend/development/scenarios/healthy_all_sources_v2',editable)
+                        source=editable/(spec['category']+'.json');external=json.loads(source.read_text(encoding='utf-8'))
+                        external['data']['files']=[{'path':spec['asset'],'name':spec['name']}]
+                        external['status']='STALE' if case.endswith('stale') else 'ERROR' if case.endswith('error') else 'MISSING' if case.endswith('missing') else 'AVAILABLE'
+                        external['captured_at']='2026-10-18T01:01:00Z' if edited else '2026-10-18T01:00:00Z'
+                        source.write_text(json.dumps(external,indent=2),encoding='utf-8')
+                        if 'image_texts' in spec:
+                            # Independent readable image fixtures, not model answers
+                            # or OCR strings inserted into the extraction service.
+                            from scripts.evaluate_phase_f_registry import attachment_bytes
+                            fixture={'name':spec['name'],'expected_ocr_text':spec['image_texts'][int(edited)]}
+                            (editable/spec['asset']).write_bytes(attachment_bytes(fixture)[0][1])
+                        else:
+                            (editable/spec['asset']).write_text(spec['texts'][int(edited)],encoding='utf-8')
+                        manifest_path=editable/'manifest.json';manifest=json.loads(manifest_path.read_text());manifest['clock']['now']='2026-10-18T01:02:00Z';manifest_path.write_text(json.dumps(manifest,indent=2),encoding='utf-8')
+                        bundle=load_bundle(editable)
                     if lane=='knowledge':
                         import shutil
                         from development.bundles import load_bundle
@@ -252,7 +322,21 @@ async def main(lane,selected_case=None,recovery=False):
                     for surface in ['floating','studio']:
                         cid=(await call('POST','/api/v1/ai/conversations',{'assistant_kind':surface}))['id']
                         conversation_ids[surface]=cid
-                        prompt=('Explain the published operation requirements selected by the scenario knowledge reference. Read only this scenario knowledge reference. Do not generate configuration.' if lane=='knowledge' else
+                        if lane=='conversation_context':
+                            # Same path as Workbench's explicit setup checkbox:
+                            # authenticated, actual user requests; never synthetic
+                            # completed assistant messages or checkpoint injection.
+                            setup=await call('GET',prefix);setup_turns=[]
+                            for setup_prompt in setup['conversation_setup']['turns']:
+                                provider_calls.clear();setup_started=time.monotonic()
+                                with patch.object(httpx.AsyncClient,'send',traced_send):
+                                    setup_result=await call('POST','/api/v1/ai/conversations/'+cid+'/turns',{'request_id':str(uuid4()),'prompt':setup_prompt,'model':'qwen2.5:1.5b'})
+                                setup_turns.append({'prompt':setup_prompt,'response':setup_result,'provider_calls':list(provider_calls),'latency_ms':round((time.monotonic()-setup_started)*1000,2)})
+                            with (run.path/(case+'-'+surface+'-setup.json')).open('x',encoding='utf-8') as file:json.dump({'setup':setup['conversation_setup'],'turns':setup_turns},file,indent=2)
+                        prompt=('Read only the bounded simulation source for LAB-R1 and LAB-R3. Show its modeled flow outcome and source capture time. Distinguish it from physical measurements.' if lane=='simulation_context' else
+                            'What is that device\'s recorded management IP?' if lane=='conversation_context' else
+                            'Explain the published operation requirements selected by the scenario knowledge reference. Read only this scenario knowledge reference. Do not generate configuration.' if lane=='knowledge' else
+                            ('Transcribe the readable text in '+FILE_LANES[lane]['name']+'. Give its source capture time and extraction limitations. Do not infer visual connections.' if transcribe else FILE_LANES[lane]['prompt']) if lane in FILE_LANES else
                             RECORD_LANES[lane]['prompt'] if lane in RECORD_LANES else
                             ('Read only planned links for LAB-R1. Give the intended peer and exact interface at each endpoint, source capture time and source availability. Do not infer an observed connection or packet delivery.' if lane=='planned' else
                             'Read only topology history for LAB-R1. Give the historical LLDP peer, exact endpoint interfaces, event time and recorded link state. Do not substitute the current plan or current observed links.') if lane in {'planned','history'} else
@@ -276,7 +360,46 @@ async def main(lane,selected_case=None,recovery=False):
                         with (run.path/(case+'-'+surface+'-response.json')).open('x',encoding='utf-8') as file:
                             json.dump({'response':result,'provider_calls':provider_calls},file,indent=2)
                         answer=result['answer'];agent=result.get('context_coverage',{}).get('agent',{});assessment=agent.get('assessment',{});tools=[i['tool'] for i in result.get('observations',[])]
-                        if lane=='knowledge':
+                        if lane=='simulation_context':
+                            negative=external['status'] in {'ERROR','MISSING'}
+                            expected={'source_status':external['status'],'source_capture':external['captured_at'],'forward_status':'failed' if case.endswith('edited') else 'delivered','scope':'Declared forwarding model, not physical testing; independent simulator conformance is a separate G6 gate'}
+                            observed=result.get('observations',[]);records=observed[0].get('data',{}).get('records',[]) if len(observed)==1 else []
+                            flows=[r for r in records if r.get('kind')=='forwarding_assessment']
+                            ok=result['status']=='success' and tools==['network.state'] and not result.get('proposal') and not result.get('generation_preview')
+                            ok=ok and expected['source_capture'].removesuffix('Z') in answer
+                            if negative:
+                                ok=ok and not records and external['status'] in answer
+                            else:
+                                ok=ok and len(flows)==1 and flows[0]['assessment']['forward']['status']==expected['forward_status']
+                                ok=ok and all(r.get('source_category')=='simulation' for r in records)
+                                ok=ok and expected['forward_status'] in answer.lower()
+                                if case.endswith('stale'):ok=ok and 'STALE' in answer
+                            ok=ok and bool(result.get('evidence')) and all(e['origin']=='simulated' for e in result['evidence'])
+                        elif lane=='conversation_context':
+                            available=external['status']=='AVAILABLE'
+                            inventory=bundle['sources']['inventory']['data']['devices']
+                            expected_device=next(d for d in inventory if d['hostname']==selected_device)
+                            expected={'source_status':external['status'],'seeded_user_turns':1 if available else 0,'selected_device':selected_device if available else None,'management_ip':expected_device['management_ip'] if available else None,'scope':'Explicit scenario-owned user requests replayed through authorized gateway; unavailable/stale setup is not silently replayed'}
+                            ok=len(setup_turns)==int(available) and not result.get('proposal') and not result.get('generation_preview')
+                            if available:
+                                ok=ok and result['status']=='success' and tools==['inventory.read'] and expected['management_ip'] in answer and selected_device in answer
+                                ok=ok and all(t['response']['status']=='success' and not t['response'].get('proposal') for t in setup_turns)
+                            else:
+                                ok=ok and not tools and result['status']=='clarification_required' and all(d['management_ip'] not in answer for d in inventory)
+                        elif lane in FILE_LANES:
+                            spec=FILE_LANES[lane];negative=case.endswith(('error','missing'));files=result.get('context_coverage',{}).get('files',{})
+                            selected=files.get('selected_documents',[])
+                            expected={'name':spec['name'],'category':spec['category'],'status':external['status'],'capture':external['captured_at'],'content':spec['literals'][int(case.endswith('edited'))],'unavailable_must_not_extract_or_substitute':negative}
+                            ok=result['status']=='success' and files.get('tool')=='document.read' and {d['name'] for d in selected}=={spec['name']} and not result.get('proposal') and not result.get('generation_preview')
+                            ok=ok and expected['capture'].removesuffix('Z') in answer and spec['name'] in answer
+                            if negative:
+                                ok=ok and external['status'] in answer and files.get('included_characters')==0 and all(v not in answer for v in spec['literals'])
+                                ok=ok and result.get('context_coverage',{}).get('document_verification',{}).get('status')=='source_unavailable'
+                            else:
+                                ok=ok and files.get('included_characters',0)>0 and expected['content'] in answer
+                                if case.endswith('stale'):ok=ok and 'STALE' in answer
+                            ok=ok and bool(result.get('evidence')) and all(e['origin']=='simulated' for e in result['evidence'])
+                        elif lane=='knowledge':
                             rows=result.get('observations',[]);data=rows[0].get('data',[]) if len(rows)==1 else []
                             expected={'method':method,'query':external['data']['query'],'status':external['status'],'active_release':'7a14a351e52b49aeb87f65d1192f0937','capture':external['captured_at']}
                             ok=result['status']=='success' and tools==['knowledge.search'] and not result.get('proposal') and not result.get('generation_preview')
@@ -296,7 +419,8 @@ async def main(lane,selected_case=None,recovery=False):
                             negative=case.endswith(('error','missing'))
                             ok=result['status']=='success' and tools==[spec['tool']] and len(records)==(0 if negative else 1)
                             if negative:
-                                ok=ok and external['status'] in answer and all(value not in answer for value in spec['values'][0].values() if isinstance(value,str))
+                                forbidden=spec.get('negative_literals',[value for value in spec['values'][0].values() if isinstance(value,str)])
+                                ok=ok and external['status'] in answer and all(value not in answer for value in forbidden)
                             else:ok=ok and records[0].get('source_category')==spec['category'] and all(records[0].get(key)==value for key,value in spec['values'][int(case.endswith('edited'))].items())
                             ok=ok and all(e['origin']=='simulated' for e in result.get('evidence',[])) and bool(result.get('evidence'))
                             ok=ok and (negative or 'LAB-R1' in answer) and expected['capture'].removesuffix('Z') in answer
@@ -435,7 +559,8 @@ async def main(lane,selected_case=None,recovery=False):
                         synthesis=agent.get('verification',{}).get('synthesis',{})
                         repaired=synthesis.get('status')=='repaired_literal_checks_passed' or result.get('context_coverage',{}).get('document_verification',{}).get('status')=='model_repair'
                         attribution=('MODEL_REPAIRED' if repaired else 'MODEL_ACCEPTED') if result.get('model') else 'VERIFIED_FALLBACK'
-                        if result['status']!='success':attribution='FAILED'
+                        if result['status']!='success':
+                            attribution='VALIDATED_CLARIFICATION' if lane=='conversation_context' and ok else 'FAILED'
                         run.record('G-'+case.upper()+'-'+surface.upper(),'PASS' if ok else 'FAIL',expected=expected,actual={'response':result,'active_revision':state['context'],'selected_tools':tools,'attribution':attribution,'provider_calls':list(provider_calls),'provider_call_count':len(provider_calls)},prompt=prompt,latency_ms=round((time.monotonic()-started)*1000,2))
                         print(json.dumps({'run':str(run.path),'case':case,'surface':surface,'pass':ok,'attribution':attribution,'answer':answer}),flush=True)
                         if lane=='inventory' and case in {'inventory-json','inventory-edited'} and ok:
@@ -520,6 +645,8 @@ if __name__=='__main__':
     # existing inventory cases; it does not create another evaluation service.
     parser=argparse.ArgumentParser()
     parser.add_argument('--recovery',action='store_true',help='Verify inventory revision restoration and unknown-device scope')
-    parser.add_argument('lane',choices=['knowledge',*RECORD_LANES,'planned','history','inventory','investigation','diagram','coordination','protocol','telemetry','health','starter','topology']);parser.add_argument('--case',choices=['knowledge-json','knowledge-edited','knowledge-stale','knowledge-error',*[lane+suffix for lane in RECORD_LANES for suffix in ['-json','-edited','-stale','-error','-missing']],'planned-json','planned-edited','planned-stale','planned-error','planned-missing','history-json','history-edited','history-stale','history-error','history-missing','inventory-json','inventory-edited','inventory-stale','inventory-error','healthy','conflict','diagram','controller','protocol-json','protocol-edited','metric-json','metric-edited','health-json','health-override','starter-acl','starter-conflict','topology-json','topology-edited','topology-compare','topology-missing','topology-stale','topology-error']);args=parser.parse_args()
+    parser.add_argument('--transcribe',action='store_true',help='Evaluate the existing literal file-reading capability separately from model interpretation; gives no model-reasoning credit')
+    parser.add_argument('lane',choices=['simulation_context','conversation_context','knowledge',*FILE_LANES,*RECORD_LANES,'planned','history','inventory','investigation','diagram','coordination','protocol','telemetry','health','starter','topology']);parser.add_argument('--case',choices=['simulation-json','simulation-edited','simulation-stale','simulation-error','simulation-missing','conversation-json','conversation-edited','conversation-stale','conversation-error','conversation-missing','knowledge-json','knowledge-edited','knowledge-stale','knowledge-error',*[lane+suffix for lane in {**RECORD_LANES,**FILE_LANES} for suffix in ['-json','-edited','-stale','-error','-missing']],'planned-json','planned-edited','planned-stale','planned-error','planned-missing','history-json','history-edited','history-stale','history-error','history-missing','inventory-json','inventory-edited','inventory-stale','inventory-error','healthy','conflict','diagram','controller','protocol-json','protocol-edited','metric-json','metric-edited','health-json','health-override','starter-acl','starter-conflict','topology-json','topology-edited','topology-compare','topology-missing','topology-stale','topology-error']);args=parser.parse_args()
     if args.recovery and args.lane!='inventory':parser.error('--recovery requires inventory')
-    raise SystemExit(0 if asyncio.run(main(args.lane,args.case,getattr(args,'recovery',False))) else 1)
+    if args.transcribe and args.lane not in FILE_LANES:parser.error('--transcribe requires a file source lane')
+    raise SystemExit(0 if asyncio.run(main(args.lane,args.case,getattr(args,'recovery',False),args.transcribe)) else 1)

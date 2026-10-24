@@ -61,9 +61,17 @@ def contextual_studio_route(prompt,editor,previous):
     return None
 
 
-def proposal_explanation(previous,editor):
+def proposal_explanation(previous,editor,related_editors=()):
     proposal=(previous or {}).get('proposal')
     if not proposal or not editor or proposal['document_id']!=editor.document_id or proposal['path']!=editor.path:return ''
+    if proposal.get('files'):
+        current={s.path:s for s in [editor,*related_editors]};parts=[]
+        for file in proposal['files']:
+            now=current.get(file['path'])
+            status='Current buffer was not supplied; acceptance cannot be established.' if not now else 'Current buffer matches the original; this change remains proposed.' if now.content==file['original'] else 'Current buffer matches the proposed text; saving is a separate action and is not established.' if now.content==file['suggested'] else 'Current buffer differs from both versions; reconcile it before another edit.'
+            diff=''.join(difflib.unified_diff(file['original'].splitlines(keepends=True),file['suggested'].splitlines(keepends=True),fromfile=file['path']+' (original)',tofile=file['path']+' (proposed)',n=2))[:6000]
+            parts.append('**`'+file['path']+'`**\n\n'+status+'\n\n```diff\n'+diff+'\n```')
+        return '\n\n'.join(parts)+'\n\nNo additional modification was proposed or saved by this explanation.'
     if editor.content==proposal['original']:state='The current buffer still matches the original. These changes remain a proposal.'
     elif editor.content==proposal['suggested']:state='The current buffer matches the proposed text. Acceptance and saving are separate actions; I cannot infer that it was saved.'
     else:state='The current buffer has changed since this proposal. This explanation describes the previous proposal; a new edit must use the current buffer.'
@@ -78,10 +86,30 @@ def validate_proposal(result,body):
         raise HTTPException(409,'Proposal no longer matches the supplied editor identity and revision')
     if proposal.get('original')!=editor.content or proposal.get('base_digest')!=text_digest(editor.content):
         raise HTTPException(409,'Proposal exact base did not match the current buffer')
-    if not isinstance(proposal.get('suggested'),str) or proposal['suggested']==editor.content:
-        raise HTTPException(422,'No changes were proposed; the current buffer was preserved')
+    files=proposal.get('files',[])
+    if files:
+        supplied={s.path:s for s in [editor,*body.related_editors]};seen=set()
+        for item in files:
+            snapshot=supplied.get(item.get('path'))
+            if not snapshot or item['path'] in seen or snapshot.read_only:
+                raise HTTPException(409,'Coordinated proposal is outside the supplied editable workspace')
+            seen.add(item['path'])
+            if any(item.get(k)!=getattr(snapshot,k) for k in ['document_id','model_id','model_version','buffer_epoch','saved_revision']):
+                raise HTTPException(409,'Coordinated proposal document identity/revision changed')
+            if item.get('original')!=snapshot.content or item.get('base_digest')!=text_digest(snapshot.content):
+                raise HTTPException(409,'Coordinated proposal exact base does not match')
+            if not isinstance(item.get('suggested'),str) or item['suggested']==snapshot.content:
+                raise HTTPException(422,'Coordinated proposal includes an unchanged or invalid file')
+    if not isinstance(proposal.get('suggested'),str) or not files and proposal['suggested']==editor.content:
+        from llm.gateway_workspace import WorkspaceProposalFailure
+        raise WorkspaceProposalFailure('No changes were proposed; the current buffer was preserved', {
+            'scope':'proposal_effect_validation','proposal':proposal,
+            'supplied_paths':[snapshot.path for snapshot in [editor,*body.related_editors]],
+            'applied':False,'saved':False})
     literals=re.findall(r'\b(?:to|with)\s+((?:\d{1,3}\.){3}\d{1,3})\b',body.prompt,re.I)
-    if literals and literals[-1] not in editor.content and literals[-1] not in proposal['suggested']:
+    proposed_text='\n'.join(item['suggested'] for item in files) if files else proposal['suggested']
+    original_text='\n'.join(item['original'] for item in files) if files else editor.content
+    if literals and literals[-1] not in original_text and literals[-1] not in proposed_text:
         raise HTTPException(422,'The proposal missed the explicitly requested address; the current buffer was preserved')
 
 
@@ -137,7 +165,7 @@ def as_command_context(question,documents,path):
     return commands if len(commands)>1 else []
 
 
-def verify_editor_router_ids(answer, documents, path, *, question=''):
+def verify_editor_router_ids(answer, documents, path, *, question='', source_kind='editor'):
     """Do not attribute a literal OSPF router-id to BGP (or vice versa).
 
     Selected literal AS/interface/route checks augment the original router-ID
@@ -145,6 +173,9 @@ def verify_editor_router_ids(answer, documents, path, *, question=''):
     interpretations, not certified CLI semantics.
     On failure reconstruct a source outline instead of releasing the claim.
     """
+    uploaded = source_kind == 'uploaded'
+    source_description = ('This describes uploaded configuration text; current device state is unverified. An upload to a device is not established. **No editor changes or device actions were performed.**'
+                          if uploaded else 'This describes the supplied editor buffer; current device state is not established. **No changes were proposed or saved.**')
     comments=[line.strip() for document in documents if document.get('source')==path
               for line in document.get('text','').splitlines() if line.lstrip().startswith(('!','#','//'))][:12]
     comment_violation=False
@@ -159,7 +190,7 @@ def verify_editor_router_ids(answer, documents, path, *, question=''):
                 comment_violation=True
         marker_only=comment_only_request(question)
         if comment_violation and marker_only:
-            return ('The open buffer contains these author-written comments:\n\n'+'\n'.join('- `'+line.replace('`','\\`')+'`' for line in comments)+
+            return (('The uploaded file' if uploaded else 'The open buffer')+' contains these author-written comments:\n\n'+'\n'.join('- `'+line.replace('`','\\`')+'`' for line in comments)+
                 '\n\nA comment labels or annotates the text; it does not execute a protocol command. The label alone **does not establish** protocol state, whether the configuration is saved, or why the author chose it. Check editor status or an actual device/configuration record for those facts.\n\n**Source:** `'+path+'`. No changes were proposed or saved.'),True
     sections=router_sections(documents,path)
     from .editor_facts import literal_facts, contradicted_claims
@@ -171,6 +202,18 @@ def verify_editor_router_ids(answer, documents, path, *, question=''):
          if (match:=re.fullmatch(r'(?:bgp\s+)?router-id\s+(\S+)',command,re.I))}
          for protocol in {section['protocol'] for section in sections}}
     scope=None;invalid=bool(violations) or comment_violation
+    # Author comments/filenames cannot change the actual editor access state.
+    access={document['read_only'] for document in documents if document.get('source')==path and isinstance(document.get('read_only'),bool)}
+    if access=={False} and re.search(r'\b(?:buffer|document|file|draft|configuration)\b.{0,120}\b(?:not editable|not modifiable|read[- ]only|cannot be (?:edited|modified))\b',answer,re.I):
+        invalid=True
+    if re.search(r'\bAS\s+(?:roles?|values?|numbers?)\b|\blocal\s+and\s+remote\s+AS\b',question,re.I):
+        required=set(facts['local_as'])|{value for values in facts['neighbors'].values() for value in values}
+        explanatory_prose=re.sub(r'```.*?```','',answer,flags=re.S)
+        mentioned=set(re.findall(r'(?:\bAS\s*|(?<!\w))(\d+)\b',explanatory_prose,re.I))
+        if required and not required<=mentioned:invalid=True
+    if facts['local_as'] and re.search(r'\b(?:AS\)?\s+roles?|autonomous system\s+(?:role|identifier))\s*[*:=-]*\s*OSPF\b',answer,re.I):invalid=True
+    if uploaded and re.search(r'\b(?:was|were|has been)\s+(?:uploaded|saved|applied)\s+(?:to|on)\s+(?:the|a)\s+(?:router|device)\b',answer,re.I):
+        invalid=True
     if as_only_request(question):
         if path and re.search(r'\b(?:filename|file name)\b.{0,50}\b(?:not provided|not supplied|unavailable|unknown)\b',answer,re.I):invalid=True
         if len(facts['local_as'])==1 and len(facts['neighbors'])==1:
@@ -180,6 +223,7 @@ def verify_editor_router_ids(answer, documents, path, *, question=''):
                     if re.search(r'\b(?:not|cannot|could|may|might|if)\b',clause,re.I):continue
                     if re.search(r'\b(?:ensur\w*|indicat\w*|means?|therefore)\b.{0,90}\b(?:same|one)\s+(?:network|autonomous system|AS)\b',clause,re.I):invalid=True
     if 'BGP' in ids:
+        if not ids['BGP'] and re.search(r'\bBGP\s+router[ -]?id\b.{0,100}\b(?:infer\w*|assum\w*|deriv\w*)\b.{0,30}\b\d',answer,re.I):invalid=True
         for value in re.findall(r'\bBGP\s+(?:router[ -]?)?ID\s*(?:(?:is|of|as|equals)\s+|[:=]\s*)?([\d.]+)',answer,re.I):
             if value.rstrip('.') not in ids['BGP']:invalid=True
     for protocol,configured in ids.items():
@@ -187,7 +231,8 @@ def verify_editor_router_ids(answer, documents, path, *, question=''):
         for clause in re.split(r'(?<=[.!?;])\s+|\n|\b(?:while|whereas|but)\b',answer,flags=re.I):
             claim=re.search(r'\b'+protocol+r'\b.{0,55}\b(?:specifies|configures|sets|includes|defines)\b.{0,45}\brouter[ -]?id\b',clause,re.I)
             claim=claim or re.search(r'\b'+protocol+r'\s+router[ -]?id\b.{0,20}\b(?:is|was)\s+(?:explicitly\s+)?(?:configured|set|specified|present)\b',clause,re.I)
-            if claim and not re.search(r'\b(?:no|not|without|doesn.t)\b',claim[0],re.I):invalid=True
+            negated_prefix=claim and re.search(r'\b(?:no(?:\s+explicit)?|without(?:\s+an?)?)\s*$',clause[:claim.start()],re.I)
+            if claim and not negated_prefix and not re.search(r'\b(?:no|not|without|doesn.t)\b',claim[0],re.I):invalid=True
     for line in answer.splitlines():
         plain=re.sub(r'[*`#]','',line).strip()
         heading=re.match(r'^(?:[-\d.)]+\s*)?(BGP|OSPF)\b',plain,re.I)
@@ -215,13 +260,14 @@ def verify_editor_router_ids(answer, documents, path, *, question=''):
     if re.search(r'\b(?:not currently active|not (?:currently )?running on (?:the |a )?device|currently (?:active|running) on (?:the |a )?device)\b',answer,re.I):invalid=True
     if not invalid:return answer,False
     if as_only_request(question) and len(facts['local_as'])==1 and facts['neighbors']:
-        parts=['The draft distinguishes **this router’s AS** from **its peer’s AS**:']
+        parts=[('The uploaded configuration' if uploaded else 'The draft')+' distinguishes **this router’s AS** from **its peer’s AS**:']
         parts.extend('- **Local AS:** `'+value+'`, from the BGP process heading.' for value in sorted(facts['local_as']))
         for peer,remote in facts['neighbors'].items():
             parts.append('- **Neighbor `'+peer+'`:** expected **remote AS** `'+', '.join(sorted(remote))+'`, from its `remote-as` command.')
         parts.append('The local AS identifies this router’s autonomous system; `remote-as` declares the autonomous system expected from that peer. These values configure the relationship; they do not establish that a BGP session is up.\n\n**Source:** `'+path+'`. No changes were proposed or saved.')
         return '\n\n'.join(parts),True
-    parts=['The supplied **editor buffer** contains the routing sections below. The explanation is limited to commands explicitly present in this buffer.']
+    parts=[('The uploaded configuration contains the routing sections below. The explanation is limited to commands explicitly present in this file.' if uploaded else
+            'The supplied **editor buffer** contains the routing sections below. The explanation is limited to commands explicitly present in this buffer.')]
     if re.search(r'\b(?:compare|contrast|comparison)\b',question,re.I) and {'OSPF','BGP'}.issubset(ids):
         summary=[]
         for protocol in ['OSPF','BGP']:
@@ -253,5 +299,5 @@ def verify_editor_router_ids(answer, documents, path, *, question=''):
     additional=[(number,line) for number,line in facts['lines'] if re.match(r'\s*(?:interface |ip address |ip route )',line)]
     if additional:
         parts.append('**Additional source commands**\n\n```ios\n'+'\n'.join(line for _,line in additional[:40])+'\n```')
-    parts.append('**Source:** `'+path+'`. This describes the supplied editor buffer; current device state is not established. **No changes were proposed or saved.**')
+    parts.append('**Source:** `'+path+'`. '+source_description)
     return '\n\n'.join(parts),True

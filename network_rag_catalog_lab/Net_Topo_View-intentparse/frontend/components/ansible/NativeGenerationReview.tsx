@@ -5,9 +5,10 @@ import StructuredParameterEditor from './StructuredParameterEditor';
 import AssistantMarkdown from '../AssistantMarkdown';
 import { aiApi, type DraftDocument } from '../../src/services/ai';
 
-export default function NativeGenerationReview({ initial, conversationId, prompt, model, onClose, onAccept, onPreviewChange }: {
+export default function NativeGenerationReview({ initial, conversationId, prompt, model, onClose, onAccept, onPreviewChange, returnFocus }: {
   initial: any; conversationId: string; prompt: string; model?: string;
   onClose: () => void; onAccept: (draft: DraftDocument) => void; onPreviewChange?: (preview: any) => void;
+  returnFocus?: HTMLElement | null;
 }) {
   const [preview, setPreview] = useState(initial);
   const [inventoryChecking,setInventoryChecking]=useState(true);
@@ -57,7 +58,7 @@ export default function NativeGenerationReview({ initial, conversationId, prompt
     setValues(Object.fromEntries((task.schema_editable_fields || []).map((f: any) => [f.field, typeof f.value === 'object' && f.value !== null ? JSON.stringify(f.value, null, 2) : String(f.value ?? '')])));
     setHost(task.target_hosts?.[0] || ''); setOperation(task.parsed_intent?.action || ''); setDirty(false);
   }, [preview, taskIndex]);
-  useEffect(() => { const prior = document.activeElement as HTMLElement; dialog.current?.focus(); return () => prior?.focus?.(); }, []);
+  useEffect(() => { const prior = returnFocus || document.activeElement as HTMLElement; dialog.current?.focus(); return () => { if (prior?.isConnected) prior.focus(); }; }, []);
   useEffect(()=>{const changed=()=>{setInventoryStale(true);setDrafts([]);setError('Development scenario changed. Revalidate targets and dependent parameters before confirmation.');void aiApi.inventory().then(r=>setHosts(r.data.devices));};window.addEventListener('cognishield:scenario-changed',changed);return ()=>window.removeEventListener('cognishield:scenario-changed',changed);},[]);
   const selections = () => (preview.tasks || []).map((t: any) => ({ task_id:t.task_id, operation_id:t.parsed_intent.action || '', target_host:t.target_hosts?.[0] || '', parameters:t.parsed_intent.parameters || {} }));
   const mutate = async (selection: any[]) => {

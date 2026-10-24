@@ -3,7 +3,7 @@ from hashlib import sha256
 from typing import Any, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, model_validator, model_serializer
 
 
 class StrictModel(BaseModel):
@@ -49,6 +49,15 @@ class TurnRequest(StrictModel):
     model: str | None = Field(default=None, max_length=150)
     editor: EditorSnapshot | None = None
     attachment_ids: list[UUID] = Field(default_factory=list, max_length=5)
+    related_editors: list[EditorSnapshot] = Field(default_factory=list,max_length=8)
+
+    @model_serializer(mode='wrap')
+    def preserve_legacy_request_identity(self, handler):
+        result=handler(self)
+        # Existing idempotency hashes predate related-editor support. Omit the
+        # optional empty field so replay of an old unchanged request still works.
+        if not self.related_editors:result.pop('related_editors',None)
+        return result
 
 
 class Evidence(StrictModel):

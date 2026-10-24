@@ -181,6 +181,7 @@ export interface AnsibleProposedEdit {
 export interface AnsibleMessage {
   evidence?: { id: string; source: string; origin: string; page?: number; start_line?: number; end_line?: number }[];
   gatewayReview?: { preview: any; prompt: string; conversation: string };
+  gatewayReviewRequestId?: string;
 
   id: string;
   role: 'user' | 'assistant' | 'system';

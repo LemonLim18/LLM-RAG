@@ -60,6 +60,23 @@ def render_template(variant,parameters,host,native):
     play=yaml.safe_load(output)
     if not isinstance(play,list) or not play or any(not isinstance(p,dict) or p.get('hosts') not in [host,[host]] for p in play):
         raise ValueError('Playbooks must target exactly the resolved inventory hostname')
+    # Match the existing prototype's inventory/Vault separation. A hosts
+    # selector binds the reviewed target; it is not a credential declaration.
+    # Connection identity/secrets are supplied by managed inventory, including
+    # Vault references, and must not be copied into generated editor output.
+    managed={'ansible_user','ansible_password','ansible_ssh_user','ansible_ssh_pass',
+        'ansible_ssh_password','ansible_become_user','ansible_become_pass',
+        'ansible_become_password','ansible_private_key_file','ansible_ssh_private_key_file'}
+    def check_credentials(value):
+        if isinstance(value,dict):
+            if managed.intersection(value):
+                raise ValueError('Connection credentials belong to managed inventory; omit credential variables from the playbook')
+            for item in value.values():check_credentials(item)
+        elif isinstance(value,list):
+            for item in value:check_credentials(item)
+    check_credentials(play)
+    if any('remote_user' in p or 'become_user' in p for p in play):
+        raise ValueError('Connection identity belongs to managed inventory, not the generated playbook')
     from config_engine.safety import _scan_patterns, _DANGEROUS_PLAYBOOK_PATTERNS
     if _scan_patterns(output,_DANGEROUS_PLAYBOOK_PATTERNS):
         raise ValueError('Playbook failed structural safety checks')

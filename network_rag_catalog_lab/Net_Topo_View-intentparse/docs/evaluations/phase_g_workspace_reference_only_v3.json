@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "holdout": false,
+  "scope": "Independent authoritative-variable-only browser subcase; earlier two changed-file model failures remain failed, not retried or erased",
+  "prompt": "Use the active playbook's vars_files reference. In g8_browser_vars_20261022.yml, change neighbor_ip from 192.0.2.22 to 192.0.2.24. Keep the playbook and every comment unchanged. Propose this as a reviewable diff only.",
+  "expected": {
+    "main_unchanged": true,
+    "variable_file": "neighbor_ip: 192.0.2.24\n# KEEP_BROWSER_VARIABLE\n",
+    "review_only": true,
+    "save": false
+  },
+  "acceptance": "Actual related source read, correct only-variable diff, Reject leaves both unchanged; if valid later proposals available, test AcceptAll/Undo. Does not by itself close all G8 coordinated-edit gates."
+}

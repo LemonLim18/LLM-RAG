@@ -16,6 +16,99 @@ INVENTORY={'devices':[{'id':91,'hostname':'Leaf-Alder','aliases':[],
     'management_ip':'192.0.2.91','interfaces':[]}]}
 
 
+@pytest.mark.parametrize('wording',[
+    'Read only interface counters for Leaf-Alder Gi0/1.',
+    'Show the recorded discards for Leaf-Alder Gi0/1.',
+    'Get interface errors on Leaf-Alder Gi0/1.',
+])
+def test_ordinary_named_port_measurements_bind_entity_without_inventory_substitution(wording):
+    from copy import deepcopy
+    inventory=deepcopy(INVENTORY)
+    inventory['devices'][0]['interfaces']=[{'id':901,'name':'Gi0/1'}]
+    result=resolve_read(wording,None,inventory)
+    assert result['domains']==['telemetry']
+    assert result['device_refs']==['91'] and result['interface_refs']==['901']
+    assert not result.get('source_requests'), 'Ordinary reads must not acquire scenario-only source filters'
+
+
+def test_named_port_compound_attributes_keep_both_authoritative_readers():
+    from copy import deepcopy
+    inventory=deepcopy(INVENTORY)
+    inventory['devices'][0]['interfaces']=[{'id':901,'name':'Gi0/1'}]
+    result=resolve_read('Show the recorded IP address and counters for Leaf-Alder Gi0/1.',None,inventory)
+    assert set(result['domains'])=={'inventory','telemetry'}
+    assert 'addresses' in result['attributes']
+    assert resolve_read('Show the recorded IP address for Leaf-Alder Gi0/1.',None,inventory)['domains']==['inventory']
+
+
+@pytest.mark.parametrize('surface',['floating','studio'])
+def test_model_information_plan_retains_server_resolved_named_port(surface):
+    from copy import deepcopy
+    inventory=deepcopy(INVENTORY)
+    inventory['devices'][0]['interfaces']=[{'id':901,'name':'Gi0/1'}]
+    model=AsyncMock(return_value=(json.dumps({'intent':'answer','device_refs':['Leaf-Alder'],
+        'information_needs':[{'domain':'telemetry','question':'Recorded interface counters'}]}),'test'))
+    with patch.dict(os.environ,{'COGNISHIELD_AI_PLANNING':'1'}):
+        route=asyncio.run(select_context('Read only counters for Leaf-Alder Gi0/1.',None,surface,None,[],[],inventory=inventory,generate_fn=model))
+    assert route.network_domains==['telemetry']
+    assert route.device_refs==['91'] and route.interface_refs==['901']
+    assert not route.use_history
+
+
+def test_ordinary_telemetry_port_scope_is_authorized_and_does_not_expand(tmp_path,monkeypatch):
+    from db.manager import DatabaseManager
+    from llm.gateway_store import ensure_schema
+    from llm.gateway_network import NetworkReader,NetworkQuery
+    from llm.tools import ToolAuthorization
+    from local_providers.development import ScenarioManager
+    import lab_config
+    fixture={'version':1,'interfaces':[
+        {'device_id':91,'interface_id':901,'metrics':[{'time':'2026-10-22T23:45:00Z','cpu':0,'memory':0,'errors':13,'discards':4}]},
+        {'device_id':91,'interface_id':902,'metrics':[{'time':'2026-10-22T23:45:00Z','cpu':0,'memory':0,'errors':97,'discards':28}]}]}
+    (tmp_path/'observations.json').write_text(json.dumps(fixture),encoding='utf-8')
+    monkeypatch.setattr(lab_config,'FIXTURE_DIR',tmp_path)
+    db=DatabaseManager(str(tmp_path/'ordinary.db'));db.initialize();ensure_schema(db)
+    db._development_scenario=ScenarioManager(tmp_path/'scenario.json',enabled_default=False)
+    try:
+        with db._connect() as c:
+            c.execute("INSERT INTO devices(id,hostname,vendor) VALUES(91,'Leaf-Alder','cisco')")
+            for identity,name in [(901,'Gi0/1'),(902,'Gi0/2')]:
+                c.execute('INSERT INTO interfaces(id,device_id,name,interface_type) VALUES(?,91,?,?)',(identity,name,'ethernet'))
+        auth=ToolAuthorization('scope-owner','engineer','floating','scope-conversation',frozenset({'network.telemetry'}))
+        reader=NetworkReader(db)
+        broad=reader.read('telemetry',NetworkQuery(device_refs=['91']),auth)
+        assert {r['interface'] for s in broad.data['sources'] for r in s['data']['records']}=={'Gi0/1','Gi0/2'}
+        scoped=reader.read('telemetry',NetworkQuery(device_refs=['91'],interface_refs=['901']),auth)
+        rows=[r for s in scoped.data['sources'] for r in s['data']['records']]
+        assert len(rows)==1 and rows[0]['interface']=='Gi0/1'
+        assert rows[0]['errors']==13 and rows[0]['discards']==4
+        denied=reader.read('telemetry',NetworkQuery(device_refs=['91'],interface_refs=['999']),auth)
+        assert denied.status=='unavailable' and denied.data is None
+    finally:db.close()
+
+
+@pytest.mark.parametrize('surface',['floating','studio'])
+@pytest.mark.parametrize('prompt',["What is that device's recorded management IP?",'Show the addresses on that router.','What is the state of those interfaces?'])
+def test_unbound_entity_reference_cannot_expand_into_all_inventory(surface,prompt):
+    from development.source_registry import SOURCES
+    inventory={**INVENTORY,'logical_source_categories':[s.key for s in SOURCES]}
+    model=AsyncMock()
+    route=asyncio.run(select_context(prompt,None,surface,None,[],[],inventory=inventory,generate_fn=model))
+    assert route.intent=='clarify' and not route.network_domains
+    model.assert_not_awaited()
+
+
+@pytest.mark.parametrize('name',['Architecture notes.txt','Schedule brief.md','Design reference.pdf'])
+def test_named_file_anchors_its_attributes_before_generic_pronoun_clarification(name):
+    model=AsyncMock()
+    prompt='Explain what '+name+' records. Include its review label and source capture time.'
+    route=asyncio.run(select_context(prompt,None,'floating',None,[{'name':name}],[],inventory=INVENTORY,generate_fn=model))
+    assert route.intent=='analyze_files' and route.use_attachments and not route.network_domains
+    model.assert_not_awaited()
+    ambiguous=asyncio.run(select_context('What is its IP address?',None,'floating',None,[],[],inventory=INVENTORY,generate_fn=model))
+    assert ambiguous.intent=='clarify'
+
+
 def test_explicit_artifact_preparation_is_v9_authoring_not_an_interface_attribute_read():
     from llm.gateway_routing import requested_authoring_artifact
     prompt='Prepare a native static route and an interface description for Leaf-Alder.'

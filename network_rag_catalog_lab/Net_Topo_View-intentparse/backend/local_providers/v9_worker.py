@@ -4,8 +4,42 @@ import os
 from pathlib import Path
 import sys
 import tempfile
+import time
 
 sys.dont_write_bytecode = True
+
+
+def planning_model(model, base_url):
+    """V9's parsers request JSON; bound completion instead of streaming forever.
+
+    This configures transport only. V9 still owns interpretation, schema and
+    evidence validation, including rejection of malformed or truncated output.
+    """
+    from langchain_ollama import ChatOllama
+    return ChatOllama(model=model, base_url=base_url, temperature=0,
+                      format='json', num_predict=1024, num_ctx=8192,
+                      client_kwargs={'timeout': 45.0, 'trust_env': False})
+
+
+def observed_invocation(counters, invoke, *args, **kwargs):
+    """Keep bounded actual model evidence; transport success is not correctness."""
+    started=time.monotonic()
+    try:
+        response=invoke(*args,**kwargs)
+    except Exception as exc:
+        counters['failed']+=1
+        observation={'transport_outcome':'failed','error_type':type(exc).__name__}
+        raise
+    else:
+        counters['succeeded']+=1
+        content=response.content if isinstance(response.content,str) else json.dumps(response.content)
+        observation={'transport_outcome':'success','response':content[:8000],'response_truncated':len(content)>8000,
+                     'usage':getattr(response,'usage_metadata',None),'semantic_correctness':'not_established_by_transport'}
+        return response
+    finally:
+        observation['elapsed_ms']=round((time.monotonic()-started)*1000,2)
+        if len(counters.setdefault('observations',[]))<32:counters['observations'].append(observation)
+        else:counters['observations_omitted']=counters.get('observations_omitted',0)+1
 
 
 def retained_unresolved_task(plan, entry):
@@ -59,10 +93,8 @@ def main(payload):
         snapshot = active_snapshot()
         if snapshot is None:
             raise ValueError('An active published V9 release is required; no source fallback.')
-        from langchain_ollama import ChatOllama
         import app.llm as model_module
-        engine = ChatOllama(model=payload['model'], base_url=payload['ollama_url'], temperature=0,
-                            client_kwargs={'timeout': 45.0, 'trust_env': False})
+        engine = planning_model(payload['model'], payload['ollama_url'])
         model_calls = {'succeeded':0, 'failed':0}
         class ObservedModel:
             temperature = 0
@@ -70,22 +102,10 @@ def main(payload):
                 bound = engine.bind(**kwargs)
                 class Bound:
                     def invoke(self, *args, **values):
-                        try:
-                            response = bound.invoke(*args, **values)
-                            model_calls['succeeded'] += 1
-                            return response
-                        except Exception:
-                            model_calls['failed'] += 1
-                            raise
+                        return observed_invocation(model_calls,bound.invoke,*args,**values)
                 return Bound()
             def invoke(self, *args, **kwargs):
-                try:
-                    response = engine.invoke(*args, **kwargs)
-                    model_calls['succeeded'] += 1
-                    return response
-                except Exception:
-                    model_calls['failed'] += 1
-                    raise
+                return observed_invocation(model_calls,engine.invoke,*args,**kwargs)
         model_module.llm = ObservedModel()
         # Configure V9's existing retriever only against the published owned index.
         from knowledge_lifecycle import configure_embeddings,guard_native_renderer

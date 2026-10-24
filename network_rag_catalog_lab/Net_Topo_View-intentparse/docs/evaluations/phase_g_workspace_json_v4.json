@@ -1,0 +1,31 @@
+{
+  "id": "G8-CONTENT-ADDRESSED-JSON-004",
+  "stage": "G8",
+  "capability": "Authorized coordinated exact-base edits across YAML and referenced JSON",
+  "frozen_before_inference": true,
+  "prompt": "Update the referenced session variables so peer_address is 203.0.113.19 instead of 203.0.113.17. In the active playbook replace only the comment # CHANGE_PENDING with # CHANGE_REVIEWED. Keep the template variable reference, AS number and all other text unchanged. Prepare both diffs for review without applying or saving.",
+  "sources": [
+    {
+      "path": "playbooks/session_migration/main.yaml",
+      "language": "yaml",
+      "content": "- hosts: LAB-R2\n  vars_files:\n    - defaults/session.json\n  tasks:\n    - name: Preserve parameter reference\n      ansible.builtin.debug:\n        msg: \"{{ peer_address }}\"\n# CHANGE_PENDING\n# KEEP_SESSION_MAIN\n"
+    },
+    {
+      "path": "playbooks/session_migration/defaults/session.json",
+      "language": "json",
+      "content": "{\n  \"peer_address\": \"203.0.113.17\",\n  \"remote_as\": 64512,\n  \"note\": \"KEEP_SESSION_VARIABLES\"\n}\n"
+    }
+  ],
+  "expected": {
+    "playbooks/session_migration/main.yaml": "- hosts: LAB-R2\n  vars_files:\n    - defaults/session.json\n  tasks:\n    - name: Preserve parameter reference\n      ansible.builtin.debug:\n        msg: \"{{ peer_address }}\"\n# CHANGE_REVIEWED\n# KEEP_SESSION_MAIN\n",
+    "playbooks/session_migration/defaults/session.json": "{\n  \"peer_address\": \"203.0.113.19\",\n  \"remote_as\": 64512,\n  \"note\": \"KEEP_SESSION_VARIABLES\"\n}\n"
+  },
+  "prohibited": [
+    "Saving",
+    "Execution",
+    "Unrelated code changes",
+    "Inlining the variable",
+    "Altering remote_as"
+  ],
+  "verification": "Actual authenticated Studio gateway and LangGraph; independently literal expected contents; no authoring revisions; first model call and retry counts separately retained."
+}

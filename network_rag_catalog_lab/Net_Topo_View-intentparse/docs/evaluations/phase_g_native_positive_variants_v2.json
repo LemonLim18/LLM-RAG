@@ -1,0 +1,112 @@
+{
+  "version": 2,
+  "frozen_at": "2026-10-23T00:40:51.667263+00:00",
+  "knowledge_release": "7a14a351e52b49aeb87f65d1192f0937",
+  "scope": "Additional valid positive inputs for bindings whose original fixture parameters fail existing contracts; no knowledge or validation changes",
+  "cases": [
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_LOOPBACK_INTERFACE-V2",
+      "binding_case_id": "G7-NATIVE-JUNIPER-CONFIGURE_LOOPBACK_INTERFACE",
+      "vendor": "juniper",
+      "operation_id": "configure_loopback_interface",
+      "fixture": {
+        "parameters": {
+          "interface": "lo0",
+          "address": "10.25.0.1",
+          "prefix_length": 24,
+          "description": "Reviewed uplink"
+        },
+        "expected_output": "set interfaces lo0 unit 0 family inet address 10.25.0.1/24\nset interfaces lo0 description \"Reviewed uplink\""
+      },
+      "input_prompt": "Generate native configuration for LAB-R2: Configure loopback interface. Use interface = \"lo0\"; address = \"10.25.0.1\"; prefix length = 24; description = \"Reviewed uplink\". Prepare an unsaved draft for explicit review only.",
+      "reason": "Use the reviewed lo0 scope; original lo0.10 remains a rejected fixture",
+      "expectation_authority": "Hand-authored positive regression statements before inference; no vendor/device certification",
+      "holdout": false,
+      "preserve_original_negative": true
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CREATE_OSPF_AREA-V2",
+      "binding_case_id": "G7-NATIVE-CISCO-CREATE_OSPF_AREA",
+      "vendor": "cisco",
+      "operation_id": "create_ospf_area",
+      "fixture": {
+        "parameters": {
+          "area": "2",
+          "area_type": "stub",
+          "process_id": 200
+        },
+        "expected_output": "router ospf 200\n area 2 stub\n exit"
+      },
+      "input_prompt": "Generate native configuration for LAB-R1: create ospf area. Use area = \"2\"; area type = \"stub\"; process id = 200. Prepare an unsaved draft for explicit review only.",
+      "reason": "Backbone area0 cannot be stub; original invalid fixture remains rejected",
+      "expectation_authority": "Hand-authored positive regression statements before inference; no vendor/device certification",
+      "holdout": false,
+      "preserve_original_negative": true
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CREATE_OSPF_AREA-V2",
+      "binding_case_id": "G7-NATIVE-JUNIPER-CREATE_OSPF_AREA",
+      "vendor": "juniper",
+      "operation_id": "create_ospf_area",
+      "fixture": {
+        "parameters": {
+          "area": "2",
+          "area_type": "stub",
+          "process_id": 200
+        },
+        "expected_output": "set protocols ospf area 2 stub"
+      },
+      "input_prompt": "Generate native configuration for LAB-R2: create ospf area. Use area = \"2\"; area type = \"stub\"; process id = 200. Prepare an unsaved draft for explicit review only.",
+      "reason": "Use a new non-backbone area; original area0 fixture remains rejected",
+      "expectation_authority": "Hand-authored positive regression statements before inference; no vendor/device certification",
+      "holdout": false,
+      "preserve_original_negative": true
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_TRUNK_PORT-V2",
+      "binding_case_id": "G7-NATIVE-CISCO-CONFIGURE_TRUNK_PORT",
+      "vendor": "cisco",
+      "operation_id": "configure_trunk_port",
+      "fixture": {
+        "parameters": {
+          "interface": "GigabitEthernet1/0/5",
+          "native_vlan": 1,
+          "allowed_vlans": [
+            1,
+            240,
+            241
+          ]
+        },
+        "expected_output": "interface GigabitEthernet1/0/5\n switchport mode trunk\n switchport trunk allowed vlan 1,240,241\n switchport trunk native vlan 1\n\n exit"
+      },
+      "input_prompt": "Generate native configuration for LAB-R1: Configure trunk port. Use interface = \"GigabitEthernet1/0/5\"; native vlan = 1; allowed vlans = [1, 240, 241]. Prepare an unsaved draft for explicit review only.",
+      "reason": "Explicit allowed list retains requested native VLAN1",
+      "expectation_authority": "Hand-authored positive regression statements before inference; no vendor/device certification",
+      "holdout": false,
+      "preserve_original_negative": true
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_TRUNK_PORT-V2",
+      "binding_case_id": "G7-NATIVE-JUNIPER-CONFIGURE_TRUNK_PORT",
+      "vendor": "juniper",
+      "operation_id": "configure_trunk_port",
+      "fixture": {
+        "parameters": {
+          "interface": "ge-0/0/5",
+          "native_vlan": 1,
+          "allowed_vlans": [
+            1,
+            240,
+            241
+          ]
+        },
+        "expected_output": "set interfaces ge-0/0/5 unit 0 family ethernet-switching interface-mode trunk\nset interfaces ge-0/0/5 unit 0 family ethernet-switching vlan members 1\nset interfaces ge-0/0/5 unit 0 family ethernet-switching vlan members 240\nset interfaces ge-0/0/5 unit 0 family ethernet-switching vlan members 241\nset interfaces ge-0/0/5 native-vlan-id 1"
+      },
+      "input_prompt": "Generate native configuration for LAB-R2: Configure trunk port. Use interface = \"ge-0/0/5\"; native vlan = 1; allowed vlans = [1, 240, 241]. Prepare an unsaved draft for explicit review only.",
+      "reason": "Explicit allowed list retains requested native VLAN1",
+      "expectation_authority": "Hand-authored positive regression statements before inference; no vendor/device certification",
+      "holdout": false,
+      "preserve_original_negative": true
+    }
+  ]
+}

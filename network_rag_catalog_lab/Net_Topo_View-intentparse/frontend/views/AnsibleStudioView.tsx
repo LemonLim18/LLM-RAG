@@ -820,6 +820,7 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
               onTabSelect={handleTabSelect}
               onTabClose={closeTab}
               onChange={updateTabContent}
+              onBatchChange={changes=>setTabs(prev=>prev.map(tab=>{const change=changes.find(c=>c.id===tab.id);return change?{...tab,content:change.content,isDirty:change.isDirty}:tab;}))}
               onSave={() => handleSave()}
               onCheck={handleCheck}
               onApprove={handleApprove}
@@ -895,6 +896,7 @@ const AnsibleStudioView: React.FC<AnsibleStudioViewProps> = ({ user }) => {
         >
           <AnsibleChatPanel
             getEditorSnapshot={() => editorBridge.current?.snapshot() ?? null}
+            getRelatedEditorSnapshots={()=>editorBridge.current?.relatedSnapshots()||[]}
             onEditProposal={proposal => editorBridge.current?.review(proposal) ?? false}
             onDraftReady={(draft: DraftDocument) => {
               openTab(draft.path, draft.path.split('/').pop() || 'draft.cfg', draft.content, true, false);

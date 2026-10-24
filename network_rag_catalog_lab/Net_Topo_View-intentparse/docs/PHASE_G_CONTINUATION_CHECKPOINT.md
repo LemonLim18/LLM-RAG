@@ -1,3 +1,387 @@
+# G4–G6 continuation in progress — 2026-10-23T15:20:12.955777+00:00
+
+G1–G3/G8–G10 remain complete; G12 release-safe handover remains a partial-phase report. No new stage closure. G7 remains113/141 with28upstreamprofile conflicts and no active validated Ansible variant. G0 historicalfreeze remainsdeprioritized. Existing G4/G5/G6/G11 failed scores are unchanged.
+
+Coherent architectural change: indexed source-to-need refinement preserves every original clause/question/scope; compatible registry authority may correct one reader guess without fanout. Exclusive specialization prevents one projection replacing other requested evidence; planner obligations reach synthesis. Context-bearing explanation hints require explicit editor/attachment binding.140affected+18subtests,118context+18subtests,163simulator/sharedagent testsPASS in separate overlapping runs, not summed. Original red outputs preserved. Actual new inference is underway; no adequacy claim yet.
+
+New frozen120routing+30quality spec:`docs/evaluations/phase_g_lossless_holdout_v1.json`, SHA80ba0b6751f328b3f8718e4d21dad8b26da05c4de36350c10fc673f63b290d42. Currentrun:`tmp/phase-g/iterations/20261023T151104.495310Z-G11-fresh-routing-candidate-4a3fbb`, session66222, log`tmp/phase-g/iterations/G11-lossless-routing120.log`. Do not change runtime or tune prompts while this cohort runs. Four invalidFloating+editor setups(001/007/013/019) correctly403; recorddatasetdefect, notappfailure. Original120unchanged. Fournewvalidreplacementprompts separatelyfrozen at`docs/evaluations/phase_g_lossless_replacements_v1.json`, notrun. Quality30notrun; serialexecutionavoidsmodelcontention. Fullindependentgradingpending.
+
+Freshbrowserworks; apppairstopped, restoredstandard5173/8000 launcher59406/backend29856/frontend10380, existingOllama20988untouched. Browser2/tab2loadedafterstartupnavigationtimeout; all17tabsandprotected204LFhashb4c9fe...unchanged. NoSave/stage/commit/publication/modeldownload/deviceaction. Exactrootcauses/results/nextsteps:`C:\Users\limmi\OneDrive\Desktop\LLM_RAG_Practice\network_rag_catalog_lab\Net_Topo_View-intentparse\tmp\phase-g\iterations\20261023T145834.153954Z-G4-G6-lossless-context-c723d1/iteration-status.json`. Continue runningcohort, thenquality andindependentreview before anynewacceptanceclaim.
+
+---
+
+# Current verified Phase G continuation — 2026-10-23T14:40:52.460179+00:00
+
+**Newly verified complete: G8's source-aware editing and review workflow.** Completed stages are G1, G2, G3, G8, G9 and G10. G12's release-safety and honest handover gate is verified. **Overall Phase G remains partially complete.** G0's missing historical baseline remains deprioritized and does not block other work.
+
+| Stage | Implementation and verified acceptance |
+|---|---|
+| G0 | BLOCKED historical baseline; current preservation passes. No backdating. |
+| G1 | COMPLETE: authorized source registry and normalized evidence. |
+| G2 | COMPLETE: centralized JSON, revisions, virtual time and CLI authoring. |
+| G3 | COMPLETE: all 24 sources accepted through JSON, GUI, activation and both assistants. |
+| G4 | Implemented; FAILED fresh routing: 86/120, below 90%. Compound task completeness remains deficient. |
+| G5 | Implemented; FAILED fresh full-task adequacy: 5/30, below 85%; no adequate substantive causal model explanations. |
+| G6 | Implemented; 28 deterministic conformance cases / 56 reads pass. Corrected source projections pass; causal explanation acceptance fails. |
+| G7 | PARTIAL/BLOCKED: 113/141 native Studio/V9 journeys pass. Remaining 28 have genuine Huawei binding/policy version conflicts. Active validated Ansible variants: zero. |
+| G8 | COMPLETE: source-aware exact-base proposals and multi-file review. Universal compound-instruction completion is not claimed. |
+| G9 | COMPLETE: supported document/OCR/page, memory and ordinary/scenario isolation gate. |
+| G10 | COMPLETE: UI/service gate, including its documented allowance for an external OS clipboard BLOCKED result. |
+| G11 | Evaluations implemented and cohorts finished; acceptance FAILED because routing, reasoning and engineering criteria remain unmet. No external blind human grading claimed. |
+| G12 | PASS for release safety, integration and honest partial handover; not overall Phase G acceptance. |
+
+## G8 root cause, correction and actual verification
+
+The old patch protocol required qwen to assign replacement anchors to filenames. Saved failed outputs swapped otherwise valid text between files. A first attempt using source-local inference also failed and remains archived.
+
+The implemented protocol requests exact replacements with optional opaque source references. The server resolves a unique anchor across offered immutable snapshots, then requires its source to be editable and authorized. Explicit mismatched references are rejected; they are never moved to another source. Shared anchors, including anchors in preserved context files, require an unambiguous reference. Every proposed file must pass the existing path, revision, exact-base, structural, intent and overlap checks before one bundle is released. Existing public API and Accept/Reject/Undo/explicit Save behavior remain. Capacity remains one active plus eight related snapshots, with at most eight changed files. No new framework, database, model or renderer was introduced.
+
+The original two-file request passes through the actual LangGraph/qwen/API path with one patch call. The same browser request also passes with one patch call per proposal. Both expected edits are exact. Reject preserves both files; Accept All changes only the requested unsaved lines; coordinated Undo restores both baselines. Editing the active buffer while inference is pending rejects the stale proposal and preserves the manual edit. A subsequent cold restart and page reload retain all 17 tabs and the exact protected 204-character LF buffer. No Save was clicked.
+
+Verification: 29 focused backend contracts pass, 140 adjacent backend tests pass in a separate overlapping suite, five frontend transaction tests pass, and two handoff ownership/revision/unsent-draft checks pass. All 105 frontend source/test files match the starting snapshot; the prior TypeScript pass is reused. Evidence: `tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/G8-stage-acceptance-review.json`.
+
+An additional frozen YAML/JSON case **fails task completion**: both actual sources reach qwen, but it proposes only the playbook comment change and omits the JSON peer-address change. No wrong-source edit or automatic application occurs. The original result remains under `tmp/phase-g/iterations/20261023T142051.262402Z-G8-real-workspace-c3d4d5/actual.json`; its specification is `docs/evaluations/phase_g_workspace_json_v4.json`. This is retained under G4/G5 compound-intent adequacy, without a wording retry, authored fallback, fresh benchmark credit or completed-task claim. G8 closure concerns the verified source-binding/review workflow.
+
+## G7 progress and exact remaining dependency
+
+The previous blanket classification of 32 compatibility conflicts was inaccurate. Four bindings already support V200R024C10, but their original fixture named an unrecorded GigabitEthernet port. Separately frozen positive inputs use the existing ce6800 planned profile's recorded `10GE1/0/2`, retaining the original rejected inputs. Actual V9 preflight passes all four. Real qwen Studio → V9 → engineer review → explicit confirmation → native rendering → unsaved output also passes all four, for trunk VLAN addition, interface administrative state, interface description and native VLAN. All 113 unique successful artifacts have been rechecked against exact expected output, device, release, digest and no-save/no-execution flags. This does not establish one-shot parameter extraction. Specification: `docs/evaluations/phase_g_native_positive_variants_v3.json`.
+
+The remaining 28 bindings require VRP `8`, while the upstream reviewed policy requires VRP `V200R024C10` / ce6800. Fresh authorized OSPF router-ID and default-route preflights reproduce that conflict. Resolving it requires a reviewed upstream binding/policy correction. The sibling V9 source remains read-only under AGENTS.md, and the active immutable release is preserved. No alias, relabeling, monkeypatch or compatibility bypass was used.
+
+A fresh WSL probe confirms the existing unprivileged Ubuntu environment has no `ansible-playbook`, `ansible-lint`, `bwrap` or approved pinned validation profile. The actual validator returns unavailable, with syntax/lint not run. No tooling was installed and no genuine Ansible validation or device testing is claimed. Evidence: `G7-current-contract-and-tooling-review.json` in the current audit directory.
+
+## Intelligence and evaluation status
+
+The frozen 120-case routing and 30-case quality cohorts were neither rerun nor rescored. Report fields that still said RUNNING/PENDING were corrected from their existing completed reviews; previous metadata remains preserved. Strict fresh results are M0 2/30, M1 2/30, M2 5/30 (24 FAIL plus one invalid-context BLOCKED), and M3 1/30. M2's adequate results comprise four factual/review/reconstruction paths and one simple model-written negative lookup; none demonstrates adequate substantive causal reasoning. Source correctness, verifier repair and fallback are not counted as model reasoning. These scores do not establish that every residual defect is intrinsic model capacity; no universal impossibility claim or lowered threshold is made.
+
+The seven capabilities remain separately assessed: semantic intent is partial; authorized tool calling and bounded source/document/V9 retrieval are demonstrated; owner-bound memory survives restart and refresh; multi-step causal reasoning is unaccepted; factual verification has concrete successes and retained failures; editor/document/reference context is demonstrated, while compound completion remains partial. The additional G8 JSON omission remains a failed regression.
+
+## Preserved state and exact continuation
+
+The final standard 5173/8000 pair runs under launcher session 8117 / backend PID 3980; existing Ollama PID 20988 is unchanged. Fresh IAB access works. Tab 2 in browser 2 is retained. Development-network simulation is disabled. Final browser checks show Floating retrieving R2's stored management address `192.168.1.251` using only inventory.read, then answering 7+8=15 without sources. Studio also answers 7+8=15 without editor, attachment, network or history context. The running API returns 404 for another owner's request to the controlled Studio conversation.
+
+All 17 editor tabs and the exact protected/playbook/variable buffers remain intact. Protected LF SHA-256: `b4c9fe532f11100c172b383f5766de4cb5e0ae5cd165378b258395ca83a93632`. No pending proposal or running ordinary turn remains. Ordinary business and saved-authoring table fingerprints are unchanged; only controlled AI conversation/evidence/checkpoint records changed. Active release `7a14a351e52b49aeb87f65d1192f0937`, 141 bindings and all 341 artifact hashes are unchanged. HEAD `6e8597c`, empty index and archived 52-file patch SHA `d6aa68...` are preserved. No staging, commit, publication, model download, Save, deployment or device action occurred.
+
+Final evidence is under `tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/`, especially `G12-current-continuation-acceptance.json`, `G12-final-preservation.json`, `G12-final-browser-runtime-traces.json` and the retained screenshots.
+
+Remaining work is G4 compound-goal completeness and scoped planning, G5/G6 evidence-complete causal explanations, G7's reviewed upstream contract correction and genuine Ansible dependencies, and G11's unmet quality thresholds. Do not rerun exposed cases as fresh, lower thresholds or resume individual wording repairs. Any substantive orchestration correction requires untouched evaluation after its dependencies are ready. G0's historical absence remains deprioritized.
+
+Focused reproduction: `.\backend\.venv-m0\Scripts\python.exe -B -m pytest backend/tests/test_workspace_source_binding.py backend/tests/test_phase_g_workspace.py -q -p no:cacheprovider`. Windows sandbox asyncio restrictions require the approved out-of-sandbox test workflow. The V3 native evaluator cases use `--positive-variants docs/evaluations/phase_g_native_positive_variants_v3.json`; accepted cases skip and original negatives remain. For rollback, revert only this continuation's source-binding hunks using the audit's `source-before.py` and `tests-before.py`; never reset the repository or discard earlier Phase G/context-restoration changes. No rollback was performed.
+
+---
+
+# G8 source-bound workflow verified — 2026-10-23T14:25:40.562216+00:00
+
+Completed workflow stages: **G1, G2, G3, G8, G9, G10**. G12 release-safety/honest handover remains complete subject to this continuation's final preservation check. Overall Phase G remains **partially complete**. G0 historical baseline remains deprioritized/BLOCKED; G4/G5/G6/G11 acceptance FAILED; G7 remains109/141 with32Huawei conflicts.
+
+G8 original two-file request now passes through actual shared LangGraph/qwen/API and browser with1patch call per successful proposal. Content-addressed exact anchors are bound by the server to authorized unsaved snapshots; explicit refs must match their own source and are never relocated. Existing revision, exact-base, structural, preservation and authorization checks remain. Reject keeps both files byte-equivalent; AcceptAll makes only variable22-to23 and markerBEFORE-toAFTER; coordinatedUndo restores exact baselines; a concurrent manual editor edit causes stale rejection and is preserved. No Save. Protected204LFbuffer hash remains b4c9fe532f11100c172b383f5766de4cb5e0ae5cd165378b258395ca83a93632. All17tabs retained.28focused contracts,140adjacent(overlap),5frontendtransactions,2handoff checks PASS. Ordinary business/saved authoring records, HEAD/index and341V9artifacts unchanged; no running turns. Evidence: `tmp\phase-g\iterations\20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/G8-stage-acceptance-review.json`.
+
+Original wrong-file failures and failed first architectural attempt are preserved. Additional frozen YAML+JSON variant FAILS task completeness: qwen saw both sources but proposed only the main comment change, omitting the JSON peer update. Retained underG4 compound understanding/G5 adequacy; no success credit. G8 closure is the source-aware proposal/review gate, not universal prompt completion. No wording retry or fallback authoring. Frozen120routing and30quality scores unchanged.
+
+Current runtime: standard5173/8000 launcher29302/backend8104, ordinary mode; Ollama20988 unchanged. Fresh built-in browser works; protected tabs restored. Next: remaining G7 contracts/current validator availability, then G12 integration. Do not bypass profiles, mutate active knowledge, download models, stage or commit.
+
+---
+
+# Verified continuation and acceptance report — 2026-10-23T13:16:40.782159+00:00
+
+**Completed stages: G1, G2, G3, G9, G10 and G12 (release-safety/handover only). Phase G is partially complete.** “Implemented” never means the original acceptance gate passed.
+
+| Stage | Implementation and acceptance |
+|---|---|
+| G0 | Partial/BLOCKED: current preservation passes; original pre-change frozen registry and fully attributed baseline are missing. Cannot backdate. |
+| G1 | COMPLETE: authorized source registry and normalized protocol. |
+| G2 | COMPLETE: 24-source JSON, revision, clock and CLI foundation. |
+| G3 | COMPLETE: all 24 sources individually accepted through JSON, GUI, activation and both assistants; actual proofs reused. |
+| G4 | Implemented, FAILED acceptance: fresh routing 86/120 (71.7%), matched legacy 71/120; required-tool recall 105/126; 20 unexpected of 129 selected instances; no-tool cases 12/23. |
+| G5 | Implemented, FAILED acceptance: fresh full-task M2 adequacy 5/30 (24 FAIL, 1 invalid-context BLOCKED), below 85%. Four factual/review paths and one simple model negative lookup; zero adequate causal model explanations. Original implementation defects and residual model limits are distinguished. |
+| G6 | Implemented, FAILED acceptance: 28 independent deterministic cases / 56 authorized reads pass. Corrected extended evidence covers 24 unique case/surface pairs; causal prose still fails. The latest four metric cases retrieve calculations correctly but all release factual fallback. |
+| G7 | Partial, BLOCKED acceptance: 109/141 native Studio-to-V9 journeys; 32 Huawei profile/policy conflicts. All 141 bindings are active, which does not establish 141 successful journeys. Zero active validated Ansible variants. No compatibility bypass or knowledge change. |
+| G8 | Partial, FAILED acceptance: reference-only real-model and GUI Reject/Accept All/Undo pass; the original two-file qwen anchor-to-file assignment fails safely. No further exposed wording loop. |
+| G9 | COMPLETE: nine document/OCR/page/reference/restart/ordinary-isolation criteria verified; proposed documents establish neither use nor non-use on devices. No general vision or model-quality claim. |
+| G10 | COMPLETE: actual browser, restart, review, copy and service gate; external OS clipboard remains blocked under the specification's explicit exception. |
+| G11 | Evaluation implemented, FAILED acceptance: fresh 120-case routing and 30-case full-answer cohorts finished; original failures retained. Intelligence, engineering and causal non-regression criteria are unmet. No external blind human assessment claimed. |
+| G12 | COMPLETE for release-safe verification and honest partial handover, not overall Phase G acceptance. Current authenticated runtime, 373 affected tests, unchanged frontend and reused UI proofs, 141 bindings / 341 artifacts, ordinary data and index preserved; zero running turns. Fresh browser-tool failure is disclosed. |
+
+This continuation repaired two confirmed shared-service root causes. First, the simulation source was incorrectly assumed to have one reader although its typed data spans state and telemetry. The registry now declares compatible readers and record kinds, reused by planning, input validation, restored references and status/capture projection. Second, metric synthesis discarded computed utilization/reset/correlation fields and cut off correlated series after eight rows. Those typed facts and dependencies now reach actual model inputs; the existing global input budget remains enforced. The factual fallback formats calculations readably. No new database, parser, model, RAG pipeline or device capability was introduced. Original failures are archived and frozen benchmark scores are unchanged.
+
+Evidence: `tmp\phase-g\iterations\20261023-G7-resume/G9-stage-acceptance-review.json`, `tmp\phase-g\iterations\20261023-G7-resume/G12-stage-acceptance-review.json`, `tmp\phase-g\iterations\20261023-G7-resume/G6-metric-contract-full-answer-review.json`. Final affected suite: 373 PASS; adjacent scenario suite: 91 PASS. Overlapping earlier 131/115/372 runs are not added. Current runtime API: both assistants return R2's stored management IP 192.168.1.251, then answer 7+8=15 without network/editor/attachment context; another owner's GET returns 404. API checks are not browser acceptance. All four metric reruns have correct records and actual model inputs, but incorrect/unavailable model prose and factual fallback: no reasoning-quality credit. The seven original source-contract failures and first projection failure remain preserved.
+
+Fresh browser reconnection attempted `cua.rewriteDocumentation()` and, after reset, `cua.getTab('1', { browser:'2' })`. Both returned **failed to write kernel assets: The system cannot find the path specified. (os error 3)** before accessing the page. This independently verifies tool initialization failure. Browser-settings disablement, website permission denial and browser connectivity failure are not established. Prior actual G9/G10 GUI proofs are reused; no fresh buffer read or GUI pass is claimed. The last exact protected 204-character LF buffer / 17-tab proof is `G11-resumed-buffer-proof.json`. No editor or saved-file changes were made. All 100 frontend runtime files match the previously frozen, browser-tested build.
+
+Current runtime: launcher 79621 / backend PID 28856 on 5173/8000; Ollama PID 20988 on 11434 untouched. Ordinary mode; no scenario activation on the ordinary database. Active V9 release: 7a14a351e52b49aeb87f65d1192f0937, 141 bindings and 341 verified artifacts. HEAD 6e8597c and the empty Git index are unchanged; the original 52-file patch archive hash d6aa68... is preserved. No staging, commit, publication, model download, Save, deployment or device action. Source changes remain uncommitted.
+
+Exact continuation: recover browser-tool kernel asset initialization before new mandatory GUI acceptance. The next unresolved engineering deliverable is G8's original transaction changing two files; it needs source-bound coordination, not more prompt wording. Its exposed correction limit has been reached. G7's 32 Huawei conflicts cannot pass by editing the read-only sibling V9 repository, immutable releases or device identities. G4/G5/G6/G11 remain failed pending substantive improvements and independently frozen new evaluation after the foundations are ready. Do not count exposed 120/30 cases as fresh, weaken thresholds or mark overall Phase G complete. Preserve current code, proofs and state. Resume commands and complete traces remain in the audit directory above.
+
+---
+
+# G9 verified stage closure — 2026-10-23T12:52:53.591771+00:00
+
+**Completed: G1, G2, G3, G9 and G10. Phase G is incomplete.** G9's nine criteria passed: existing document/OCR/page retrieval, both actual browser assistants, source-bound follow-ups, unsaved editor identity, durable reference refresh, ownership and ordinary/simulation isolation. Proof: `tmp\phase-g\iterations\20261023-G7-resume/G9-stage-acceptance-review.json`. Actual controlled browser turns and screenshots are retained. Proposed-only documents establish neither current use nor non-use; their final answers use a labelled source-insufficiency fallback. No model-reasoning credit or general vision claim.
+
+G0 is blocked by the missing original historical freeze; current preservation passes. G4 routing failed86/120 (legacy71/120). G5 fresh quality failed5/30 adequate full tasks with0adequate causal reasoning. G6 extended actual source checks20/24, explanations inadequate; metric logical-source filtering is the next service defect. G7 remains109/141 with32Huawei contract conflicts and0activevalidatedAnsiblevariants. G8's original two-file model test fails safely; reference-only Accept/Undo passes. G11 evaluation infrastructure/results exist but quality acceptance fails. G12 final integration is open. Implemented does not mean accepted.
+
+Current next work: repair the shared source-contract mismatch for modeled metric series without relabelling their provenance; run affected authorized-reader and real-gateway checks; finish final integration and preservation. Do not rerun or alter frozen scores, reset/stage/commit, change active V9 artifacts, download models or execute device actions. Standard app5173/8000, ordinary sources, retained17unsavedtabs/protected204LFbuffer. Prior failures and bounded correction limits remain in force.
+
+---
+
+# Verified continuation checkpoint — 2026-10-23T10:19:48.423468+00:00
+
+**Complete stages: G1, G2, G3 and G10. Current: G6 extended conformance / G9 context acceptance. Phase G remains incomplete.**
+
+| Stage | Status | Exact remaining gate |
+|---|---|---|
+| G0 | BLOCKED | Current preservation passes; original pre-change freeze absent, cannot backdate. |
+| G1–G3 | COMPLETE | Source protocol,24-source JSON/revisions and24/24 GUI/both-assistant acceptance reused. |
+| G4 | FAILED | Fresh120candidate86/120 versuslegacy71/120; below90%. |
+| G5 | FAILED | Fresh30full-task M2adequacy5/30;24FAIL+1invalid-contextBLOCKED. Four direct/review/reconstruction answers, one simple model negative lookup;0adequate causal reasoning. |
+| G6 | IN PROGRESS |28deterministiccases/56readspass. Extendedactual protocol/metric source defects corrected;16case/surface reruns pending full-answer review. |
+| G7 | BLOCKED |109/141nativejourneys;32Huawei contract/profile conflicts;0activevalidatedAnsiblevariants. |
+| G8 | FAILED | Reference-only coordinated Accept/Undo passes; original two-changed-file browser assignment fails safely. |
+| G9 | IN PROGRESS | Document/page/editor shared binding fixed; new actual content replays and retained restart/OCR/isolation proof awaiting criterion closure. |
+| G10 | COMPLETE | Existing UI/service acceptance, browserclipboardPASS; OSclipboard externalBLOCKEDexception retained. |
+| G11 | IN PROGRESS | Fresh120+30 executions and full reviews complete; required intelligence/engineering acceptance still fails. |
+| G12 | IN PROGRESS | Current ordinaryDB/341artifact/index/protectedbuffer preservation PASS; final integration/report pending. |
+
+Fresh quality comparisons: M0=2/30adequate, rawunrepairedM1=2/30, M2=5/30, M3=1/30. SevenM1additional factual/code partials explicitly recorded, not full task passes. No external blind human reviewer claimed. Source workflow successes and fallback do not earn reasoning credit. Original sevencritical failures retained. Frozen specs/runtime unmodified through execution; postcohort fixes are exposed only. Reports:`tmp\phase-g\iterations\20261023-G7-resume/G11-fresh30-full-answer-review.json` and`G11-fresh120-matched-review.json`.
+
+One grouped safety/context correction passes293tests+7subtests. Shared path/protocol routing increment passes295+7 and124focused source/conformance checks, overlapping runs not summed. Saved original state/direction/scope/protocol drafts reject under bounded verifier; this is not universal semantic certification. Actual document replays preserve uploaded note, second/third page values and honest missingpage9; Floating editor-snapshot request remains403bydesign. No full30 rerun or score rewriting.
+
+G6 first20extendedcase/surface outputs:8correctsource paths,12protocolrequests wronglyreturned inventory; separate4metric paths read CPU samples rather than interface series. Original answers retained. Corrected8variant/16surface run session26486 at`tmp\phase-g\iterations\20261023-G7-resume/G6-extended-corrected-8.log`. Next: inspect exact records AND fullprose, record remaining failures, then G9browser/criterion audit and G12integration. Do not open another exposed-prompt tuning loop.
+
+Standard app launcher22395/backend29396,5173/8000; Ollama20988untouched. Server loaded document/safety fixes before latest source-domain edits; reload ownedpair once before final browser acceptance. Fresh browser tab1/browser2 works;17unsavedtabs retained. Protected204LFbuffer SHA b4c9fe532f11100c172b383f5766de4cb5e0ae5cd165378b258395ca83a93632 unchanged. OrdinaryDBintegrityOK, zeroordinarytableschanged, active release7a14a351e52b49aeb87f65d1192f0937/141bindings/341artifacts and index/archivedpatch unchanged. Existing userHEAD6e8597c incorporated historical52-file checkpoint; indexempty. No commit, stage, Save, publication, download or device action.
+
+---
+
+# Frozen routing cohort complete — 2026-10-23T09:09:28.152941+00:00
+
+Current stage: **G4/G11**. Completed full stages: **G1, G2, G3, G10**. No new full-stage closure.
+
+- Fresh120 candidate: **86 PASS /34 FAIL**; matched legacy: **71 PASS /49 FAIL**. Candidate uplift15 workflow passes,12.5 percentage points. G4 fails its90% gate. No answer-quality inference.
+- Runtime446-file freeze and registry unchanged through both cohorts. Original answers, plans, source/evidence and errors retained in `tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-matched-review.json`.
+- Confirmed application defects: typed documentation lists reached dictionary-only gap planning, record disclosure and AS-role verification; available ambient files biased unrelated questions; a capture comparison could authorize unsupported interval-stability prose. One shared correction passes **287 affected tests**; original red results retained. This is application verification, not fresh reasoning success.
+- Six exposed class replays run in session67570, `tmp/phase-g/iterations/20261023-G7-resume/G4-exposed-shared-boundary-replay.log`. Reuse completed cases; do not rerun the entire routing cohort or count these as unseen.
+- Next untouched30-case quality spec: `docs/evaluations/phase_g_fresh_quality_v3.json`, SHA87c24c9cfcb80b3c8b91496b6aa437cfd1db4ec523446ab69c9e5e9b1d42b8a1. Frozen before inference. Raw M1 gets independently specified transit context and no verifier repair/fallback; M0/M2/M3 remain separately attributed. Runtime freeze `tmp/phase-g/iterations/20261023-G7-resume/G11-quality-runtime-freeze.json`. Do not edit runtime/spec during the quality cohort.
+- G0 historical baseline BLOCKED; G7 **109/141**,32Huawei contract/profile conflicts;0active validated Ansible variants. G8 original two-changed-file browser case safely FAILED; reference-only Accept/Undo proof retained. G6/G9/G11/G12 remain open. G5 model-quality hard gate unproven.
+- Browser access works, tab2 preserved, all17unsaved tabs retained. Standard pair launcher8907/backend17112 uses the earlier runtime until an owned reload; Ollama20988 untouched. Protected204LFbuffer proof and ordinaryDB/active141binding/341artifact/index preservation PASS. No stage, commit, Save, publication, model download or device action.
+
+Continue the existing scope after the quality cohort: remaining G6 independent causal cases, G9 gate review, G12 preservation/integration; keep genuine FAIL/BLOCKED conditions explicit. Do not claim PhaseG complete.
+
+---
+
+# Active frozen cohort — 2026-10-23T08:19:44.654815+00:00
+
+**G4/G11 active**, fresh120candidate session53909, log`tmp\phase-g\iterations\20261023-G7-resume/G11-fresh-120-candidate.log`; actualrun`tmp/phase-g/iterations/20261023T075121.759998Z-G11-fresh-routing-candidate-4fde39`. Historical120COMPLETE:101candidate/94legacy;19/26failurespreserved. CompletedfullstagesremainG1,G2,G3,G10.
+
+Fresh runtime remains unchanged SHA81c2232ee0278ef0175e5545d4ac7b243bc8d31a3ddccfc48eb0e176c7b0accc. Currentnewfailuresarearchived;donotpatchmidcohort. Sharedmetadata/exclusive-readboundary and adaptive-document-list bug have redtests. Temporaldriftprosealsooverclaimsintervalstabilityfromtwomatchingcaptures. Pendingexactstate:`tmp\phase-g\iterations\20261023-G7-resume/G11-pending-boundary-checkpoint.json`. Afterall120:onecoherentsharedcorrection+affectedtests+boundedactualreplays,thenunexecutedfresh30qualityV2(SHA76b82f02a16df5ef64b2138fe614b8ed81f1aa0c601f2feaebe606c9901e15d4),notanotherindividualpromptloop. Current223affectedtestsPASSprecedethenewexpected-redtests;donotclaimentirecurrenttesttreegreen.
+
+Standardserversreloadedwiththeearlierprovenancefix:launcher8907/backend17112,5173/8000;Ollama20988unchanged. Browser tab2retained. Protected204LFbufferandall17tabs preserved; ordinarymode,141bindings/341artifacts unchanged. NoSave/stage/commit/publication/deviceaction.
+
+---
+
+# Frozen evaluation continuation — 2026-10-23T07:37:54.909410+00:00
+
+Completed full stages remain **G1, G2, G3, G10**. G0 historical baseline BLOCKED; G7 109/141,32Huawei contract blockers,0validatedAnsiblevariants; G8 two-changed-file browser case FAILED. No new fullstage closure.
+
+Historical120 candidate completed: **101/120 routing/workflow PASS**,19FAIL. Compound12/30, othergroups89/90; no answerqualitycredit. Matchedlegacy session70102 runs in `tmp\phase-g\iterations\20261023-G7-resume/G4-frozen-120-legacy.log`; inspect final result before retry. Historical30 M2fullreview14adequate/30(4modeltext,10fallback/direct). M0/M1/M3fullreviews3/11/6adequate of29executed;one case NOTRUN afterrealsetupfailure. Noexternalhumanrevieworfreshgatecredit. Evidence:`tmp\phase-g\iterations\20261023-G7-resume/G4-complete-frozen120-candidate-review.json` and `G5-frozen-30-comparison-arm-review.json`.
+
+Freshspecs frozenbeforeinference: `docs/evaluations/phase_g_fresh_routing_v2.json` SHA91c820af570052694ec645307390a12d202018f7bb79a580c4841a18d9b33d90(120,existingcomplete24sourcebundle); `phase_g_fresh_quality_v1.json` SHA733ed224b95f55fb389c35d0ce4a1434a7986f1e2cbc647a5c60ea5b2228bc5a(30,newprompts/editor/PDF/rubrics). BothNOTRUN. Evaluator --registry validatescontainedinput,uniqueIDs,scenarios and realownedbundleactivation;20focusedtestsPASS. Sourcecredit requires returnedreader envelopes,not a modelplan.
+
+Confirmed applicationdefect: genericcontextbounder turnslarge publishedcontracts intoopaqueJSONexcerpts, thenprovenanceverificationrejectsthem. Repeatedread verificationmatches toolname instead of readidentity. Three redtests retained. Next: finish legacyruntimeboundary,retain typedcontract andbindverifytoactualevidenceIDs,keep tamperchecks;affectedtests+actualread;thenfreshcohorts. Noindividualpromptrepairloop.
+
+Runtime launcher24090/backend24232,5173/8000;Ollama20988unchanged. Freshbrowserworks;all17tabs andprotected204LFbufferexacthashPASS. `G11-current-preservation.json` confirms141bindings,341artifacts,intactindex/archive,SQLiteintegrityok andzerotablechangesversuslastG12proof. NoSave/stage/commit/publication/deviceaction.
+
+---
+
+# Safe continuation — 2026-10-23T05:07:56.806287+00:00
+
+Completed full stages: **G1,G2,G3,G10**. G7 remains **109/141**;32Huawei profile/policy conflicts and0activevalidatedAnsiblevariants retained. G8 reference-only browser edit now PASS: correct unsaved var-file patch in1qwen attempt, active playbook unchanged, RejectAll proof reused, AcceptAll/Undo exact, no save. A real application bug omitted restored inactive tabs without Monaco models; fixed using existing open-tab content/URI, bounded8. New5frontendtransactiontests andTypeScriptPASS;139affectedbackendtests+7subtestsPASS, overlaps not added. Original two-changed-file browser rerun still fails model file-assignment safely. FullG8 **FAILED**, not complete; correction loop ended. Raw proposals/red/green proofs preserved under `tmp\phase-g\iterations\20261023-G7-resume`.
+
+Prototype ZIP inspected read-only from Downloads; no archive code executed or unpacked. Its builder.py561–587 DOES include hosts;inventory.py40–154 supplies inventory and Vault credential references, runner supplies inventory separately. G8hosts/vars_files were a synthetic edit fixture, not nativeoutput or credentials. Findings:`tmp\phase-g\iterations\20261023-G7-resume/prototype-inventory-architecture.json`. Preserve validtargetselector and keepconnectioncredentialsoutsidegeneratedcode.
+
+G4generalized scope correction: exclusive registered source constraints precede generic path→topology hints; extra model readers still rejected. Source-health subject no longer mistaken for unresolved document pronoun.139affectedtests+7subtestsPASS; real-model retest pending. Not modelreasoning credit.
+
+Current standard launcher58844/backend29648,5173/8000;Ollama20988 unchanged. Ordinarysourcesactive,protected204LFbuffer and all17tabs retained; finalpreservation recheck pending. Next execute existing frozenF cohorts with optional --continue-on-failure, preserving per-case failures rather than another microfix loop. This flag changesexecutionorderonly, no acceptance criteria. FreshG11≥120/≥30 cohorts still required separately. No commits/staging/publication/newmodel/deviceaction.
+
+---
+
+# Safe continuation — 2026-10-23T04:32:30.605528+00:00
+
+**Completed stages:G1,G2,G3,G10. G7:109/141unique nativejourneys,32Huawei policy/profile blockers;0activevalidatedAnsiblevariants. PhaseG incomplete.** G9new actualmemory across2separateOSprocesses restores bothassistantinterface refs, rereads changed192.0.2.88, isolates14arithmetic and otherowner404. Actual scannedPDFWindowsOCR reads88/12/48,page1onboth, followupsproposed. Normal-modegateway branch refuses validlocalJSONCPU97.375 with livereads0; no physicalcollection. Firstuploadedcfg4answers had wrongBGProuterID/deviceupload assertions despite literalPASS. ExistingMonacoCLIguard nowreused insharedverify_ocr_answer;61tests+7subtestsPASS and corrected4actualresponses use labelledliteralreconstruction. Source/metadataandmodelcredit distinct. ScannedFloatingunrequestedglossremainsqualitylimitation; no fullG9closure. Review:`tmp\phase-g\iterations\20261023-G7-resume/G9-continuity-full-review.json`.
+
+Current G8: independentreference-only browsercase producesvalidanchor2fileproposal, butaddsduplicateplaybookcomments despitenochangeinstruction. Rejectedall; exactmain/varsbaselinepreserved. FirstobserverswitchedMonacotooquickly and copiedprotectedbuffer; wrongobserverretained, correctedbaselineverified viafreshDOMbeforecopy. No contentchanged. Storedproposal+failure:`G8-reference-original-failure.json`;Rejectproof:`G8-reference-reject-proof.json`. No Accept/Undo credit. Nextfix isapplication-level explicitpreservation inexistingvalidate_edit_intent/propose_related, not another exposedpromptrewrite.
+
+Standard app97363/backend21708 on5173/8000 isrunning, butpredates uploadedfileguard; loadthat testedfixatnextsafeownedrestart. Browser2/tab1phaseGTab, activeG8main, protected204LFtabretained, ordinarysources. NewG9evaluations reuse tmp/g7-native-47236e/app.db andone disabledg9scenario store; no ordinaryDBfixtureswritten. seed/resume refs areg9-continuity-reference.json. FrozenV1hash2ad1c5ee18d7f2961b4b5a7cac3bf092c41b7c92dd600719ada370d928ceb8e6verified, normalV2/configV3separate. No newdependencies/models/publication/stage/commit/savedfiles/deviceactions. Continueallopengates.
+
+---
+
+# Verified stage closure — 2026-10-23T03:51:36.228109+00:00
+
+**G10 COMPLETE/PASS** under its specified allowance for a documented external OSclipboard BLOCKED result. G1–G3 remain COMPLETE. No OSclipboard success is claimed; exact browser-session whole-answer/code/UnicodeCopy passes in both assistants. Latest ownedV9review revision2/routerID198.51.100.144 reopens after reload; stale scenario reviews reject; Escape returns focus; exact204LFbuffer unchanged; no saved-file/business/active341artifact/index changes or runningturns.237affectedbackendtestsPASS, TypeScriptPASS; overlapping34+3subtest and11flow runs are not summed. Proof:`tmp\phase-g\iterations\20261023-G7-resume/G10-stage-acceptance-review.json`.
+
+G7 is109/141 verified unique native journeys;32Huawei compatibility blockers remain, zero activevalidatedAnsiblevariants. G8browser coordinatedpatch class remains safely failed. G0 historicalfreeze remainsblocked. G4/G5/G6/G9/G11/G12 remainopen.
+
+G6actual20unique cases:20correct source reads but6released qwen answers were incorrect despite literal checks. Original reports retained; latest corrected coverage uses4adequatemodelanswers and16fallbacks. Unknown-flow class exhausted2corrections; bothunknowndirections now return scoped calculatedfacts/time/nextread with zero synthesis calls. No freshbenchmark/humanrating credit. Newexplicit-generation+negativeeditor-clause browserprompt wrongly routed to explanation; archived underG4, no prompt-tuning loop.
+
+Current app launcher97363/backend21708,5173/8000; Ollama20988untouched. Ordinarysources active, all unsavedtabs retained. Current nextindependent gate:G9scannedPDF and real persisted-reference/revision continuation, reusing earlier document/OCRsource results. Continue all mandatoryopengates; no commit/stage/publication/download/deviceaction.
+
+---
+
+# Current verified continuation — 2026-10-23T02:02:34.936872+00:00
+
+**G1–G3 COMPLETE. G7:109/141 unique native journeys PASS;32Huawei compatibility blockers. No new full-stage closure.** The109artifacts have been rechecked against exact frozen expected output, V9 ready/release metadata, explicitconfirmation, no-save and no-execution flags. Five valid positive V2 inputs retain original V1 negatives. Three-vendor browser slice and actual compound+five rejection checks pass. Active validated Ansible variants:0. These are reviewed native workflow results, not one-shot extraction/model-reasoning or device certification. Raw119executions are not119unique passes. Proof:`tmp\phase-g\iterations\20261023-G7-resume/109-native-journeys-review.json`.
+
+G0 historical pre-change freeze remains BLOCKED; current preservation passes. G4–G6/G8–G12remain open.221affectedtestsPASS; G10revisionpresentation16tests+3subtestsPASS(overlap). G6private independent deterministic28cases/56readsPASS; actual causal both-assistant10case evaluation now running session50047, log`tmp\phase-g\iterations\20261023-G7-resume/G6-causal-model.log`; prose and model-vs-fallback review pending. Do not claim source-only checks are causal-quality acceptance.
+
+Fresh browser access succeeds. App servers had stopped; restored exactly5173/8000 launcher64530/backend10312 with latest source. Ollama20988unchanged. Reload browser at safe boundary and verify exact protectedbufferSHA b4c9fe532f11100c172b383f5766de4cb5e0ae5cd165378b258395ca83a93632. Ordinary sources were restored before interruption. Existing active release7a14a351e52b49aeb87f65d1192f0937/index/archive/user records remain protected. No commit/stage/publication/download/save/device action.
+
+Next: inspect causal evaluator outputs, independently grade complete answers, preserve failures and continue next feasible opengate. G8two browser patch-source failures remain safe and unaccepted; do not repeat exposedprompt loop. G10history review-modal rehydration remains a distinct open defect. Huawei conflicting contracts require proper authoring correction, not false profilefacts or sibling edits.
+
+---
+
+# Live continuation — 2026-10-23T00:29:59.376411+00:00
+
+**Current G7: 79/141 unique native journeys PASS. G1–G3 COMPLETE; all24sources accepted. No new whole-stage closure.** G7 compound three-vendor and five negative gates pass (schema, missing value, wrong template, stale revision, no Ansible variant). API batch for32newly compatible bindings is running in session87732; latest log `tmp/phase-g/iterations/20261023-G7-resume/G7-newly-compatible-journeys.log`. Do not start another model batch or edit its critical sources while it runs.
+
+All141 preflights now reconcile to100ready/41blocked after explicit disposable prerequisites; zero journey credit. Original store hit413quota after120; preserved15.76MB `tmp/g7-native-47236e/state.json`, no quota raised. Remaining preflight used `prerequisite-state-v2.json`;24overlapping cases counted once. A summary indentation defect after all45raw tasks was corrected; raw evidence retained. ThreeQoS creation pre-states were mistakenly seeded as existing; corrected and3realpreflightsPASS. Current actual journey uses fresh bounded `native-prerequisites-v3.json` in the SAME disposable workspace/SQLite; old stores retained. Eligibility is `tmp/phase-g/iterations/20261023-G7-resume/authored-prerequisites-all-141-review.json`.
+
+G9 named-port parity: domain selection, server-resolved interface binding and exact ordinary/scenario telemetry scope fixed. First real rerun returned both ports; second returned correct port but qwen swapped counts/omitted one. Full review overrides the weak numeric observer's floatingPASS. Ordinary nested samples now use shared typed metric evidence and a bounded label/value check. Third real both-assistant run returns exact13errors/4discards as verified fallback, no accepted model credit. Its correct model repair was falsely rejected by an overly narrow literal check; guard now accepts that wording in replay tests. Do not count replay as new model synthesis. No further prompt tuning for this class. Normal-mode legacy JSON fallback reproduced and blocked; current production-isolation unit passes.
+
+Latest affected suite before the last normal-mode guard:220PASS. Added isolation test passes; full221test rerun pending. Standard launcher8906/backend9000 is running on5173/8000, but predates the last normal-mode guard and literal wording correction; reload ownedpair at a safe boundary before claiming those are loaded in browser. Fresh cold browser recovery preserves204LFhash and ordinarymode; all unsaved native/G8/user tabs retained. Ordinary user database and active knowledge unchanged except authorized browser test history/V9 preview audit. No save, publication, stage, commit, new model or device action.
+
+After current native batch: inspect final traces and exact outputs, update unique matrix/ledger. Remaining41 compatibility/input failures need proper positive fixtures or contract repair without bypassing Huawei's hardcoded policy/profile conflict. G0 historicalfreeze remainsblocked; G4–G6,G8–G12 remain mandatory/open. Continue independent remaining gates, not another exposed counter-prompt loop.
+
+---
+
+# Current execution — 23 October 2026
+
+Verified at 2026-10-22T23:44:47.796816+00:00. **G7 IN PROGRESS: 59/141 unique native journeys pass; the compatible batch is running in exec session 36365. G1, G2 and G3 COMPLETE; all 24 sources accepted.** G0 preservation passes, but its original historical baseline is blocked. G4–G6 and G8–G12 remain mandatory and open. Phase G is incomplete.
+
+The fresh browser check works. Standard app restored: launcher session 57502, backend 8520, ports 5173/8000. Existing Ollama 20988 uses installed qwen2.5:1.5b. Juniper static-route and Huawei BGP browser journeys now pass, joining Cisco OSPF. Explicit selections, two confirmations, published methods and exact unsaved Monaco output were checked. Ordinary sources are restored. The protected 204-character LF buffer retains SHA256 b4c9fe532f11100c172b383f5766de4cb5e0ae5cd165378b258395ca83a93632. All unsaved tabs remain open.
+
+Active release 7a14a351e52b49aeb87f65d1192f0937, 141 bindings, 341 immutable artifacts, empty Git index and original 52-file patch archive are unchanged. Ordinary non-AI tables and pre-existing authoring/audit/evidence rows are unchanged. Evidence is under tmp/phase-g/iterations/20261023-G7-resume/. The first preservation observer omitted ai_evidence from authorized AI writes; its failure is retained and the corrected check verifies all old evidence rows. No file content was saved.
+
+Twelve new independent conformance cases pass: ECMP alternatives, ACL first-match order, OSPF/BGP mismatches/conflicts, congestion correlation and counter reset. First run: 10 passes and two harness failures from using a state-only logical selector in telemetry. The query now uses the existing authorized contract; unchanged independent expectations pass all 12. Together with the previous 16 cases: 28 unique cases, 56 authorized reads, no LLM reasoning credit.
+
+**Next:** let the current native batch finish, inspect its traces and update unique counts. Then run `backend/scripts/evaluate_phase_g_generation_boundaries.py --resume tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6` serially; it activates the same disposable scenario and must not run concurrently. This new evaluator still needs actual runtime verification. Continue controlled prerequisite repairs for rejected cohorts without bypassing Huawei's version/profile conflict. G8's two browser model/file-assignment failures remain open; group controls are not accepted. Continue every incomplete G4–G12 gate. No new model, commit, stage, publication or device action.
+
+---
+
+# G7 current execution — 22October2026
+
+G1/G2/G3 COMPLETE; all24 sources accepted. G7 IN_PROGRESS, frozen141 native journey registry and authenticated public-gateway evaluator implemented;8 observer tests PASS, not journey evidence. FirstCiscoOSPF attempt failed with V9worker180s timeout in sandbox, retained under20261022T082839.745087Z-G7-native-journeys-2a3cb6. Outside-sandbox retry pending;0/141 journey passes established. Standard app restored launcher44762/backend25208 on5173/8000; fresh actual browser recovery shows protected204LF unsaved configuration and ordinary sources disabled. Ollama17328 unchanged. Next inspect real journey, correct underlying workflow defects, execute remaining141 with per-case trace and explicit review/render; browser representative3vendors plus genuine Ansible lane remain open. No save/stage/commit/publication/device action.
+
+---
+
+# Phase G milestone closed —G3 COMPLETE,22October2026,06:50UTC
+
+**G3 COMPLETE/PASS.24/24 sources individually accepted. G1/G2 remain COMPLETE. Current next milestone G7, thenG8 and every incompleteG4–G12. Overall PhaseG remains incomplete; G0 historical baseline blocked, G5 quality open/failed, no fresh benchmark credit.** Gate proof G3-stage-acceptance-review.json hashes all24 individual review files. Existing complete starter G3-ALL-SOURCES-FINAL-20261022 created/validated/activated in actual standard browser, all24 source cards AVAILABLE. Actual exported bundle retained. Ordinary sources RESTORED after acceptance. TypeScript command D:/node-js/node.exe frontend/node_modules/typescript/bin/tsc -b frontend passed(session90245). Latest affected source/synthesis suite134PASS; earlier suites overlap and must not be added.341immutable artifacts, active7a14.../141bindings, ordinary business/knowledge tables, empty index, original52patch archive and exact protected204LF buffer SHA b4c9fe... all verified unchanged. No commit/stage/model/publication/device changes.
+
+Runtime standard app launcher24968/backend27076 on5173/8000 loads all source metadata, document identifier, unresolved entity, flow projection/time-role and direct job-record boundaries. Ollama17328 unchanged. Browser2/tab1 phaseGTab, Workbench closed, main unsaved protected buffer visible. G-RECORD-SOURCE-ACCEPTANCEdraft32 retained with GUI job96; final complete starter draft2 retained separately, simulation disabled after restoration. No pending browser request.
+
+Sources23simulation and24jobs reviews now COMPLETE. Simulation JSON10+GUI6 verifies route edit forwardfailed/noroute versus returndelivered, source observation/capture distinction and STALE/ERROR. All final simulation answers use recorded-calculation fallback. Job direct models exhausted bounded correction attempts and still omitted time/invented device execution; direct audit reads now use existing friendly verified record renderer with device identity and forced source metadata. Original failures retained; multi-source investigations retain synthesis. Job final JSON6PASS plus4negative reused; fresh GUI positive2 plus4prior shared STALE/ERROR turns verified. No model-reasoning credit.
+
+Current actual changes: gateway.py/documents/services/routing/references/findings, orchestration/synthesis.py, existing source evaluator with document/image/conversation/simulation lanes, regression tests, matrices/case registry/audit/checkpoint. No frontend source or dependency changes. Runtime SQLite contains only authorized test-conversation changes and must not be staged. Source-review root tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/; previous source reviews reused under20261021T072218... .
+
+Next safe execution G7: inspect gateway_api StudioPreview/StudioRender and gateway_v9 render_draft, v9_studio worker/session, active engineer-review fixture artifact and compatible profiles. Build resumable controlled47x3 actual public-gateway NL->V9->authoritative selection/correction->explicitrender->unsaved output payload evaluator using disposableSQLite/scenario and ordinary immutable knowledge READ ONLY. Do not repeat141 publication or modify siblingV9. Active47x3 fixtures are engineer-approved references, not independent CLI certification. Gate requires141actual Studio journeys, representative browser3vendors, negative/profile/multioperation clauses, and truthful separately supported Ansible lane. Existing native binding count is NOT journey evidence. Then implement G8 related files/coordinated exact-base edits and all remaining gates.
+
+---
+
+# Phase G conversation source accepted —22October2026,06:12UTC
+
+**G3:22/24 individually COMPLETE. Conversation source closed; G1/G2 COMPLETE, no new whole-stage closure. G0 historical baseline BLOCKED; G4–G12 mandatory/open.** Review conversation-source-acceptance-review.json and actual GUI rows323–330 in current auditroot. JSON4 positive follow-ups +4 real seed requests;6 negative clarifications. GUI2 positive follow-ups +2 real seeds;4 fresh negative clarifications. Original unbound-reference expansion and observer status/clock failures retained. No advanced model-reasoning credit. Image source21 remains bounded OCR transcription only; original6 general interpretation failures remain underG5.
+
+Standard app session42206/backend22656 on5173/8000 includes unresolved-reference fix. G-RECORD-SOURCE-ACCEPTANCEdraft28 (conversationERROR, imageERROR, earlier recordERROR) active; setup checkbox checked, zero setup turns for current source, no pending browser turn. Main204LF buffer untouched. Current simulations use own scenario revisions; ordinary data and active knowledge were verified unchanged after file-source closure, final preservation check still needed after remaining sources.
+
+Next bounded-simulation source: ERROR20a67e and MISSINGc87ef6 both-assistant source cases PASS. Original positive62ec19 and edited215145 omit flow semantics and invent route/capture-time claims despite correct authorized data. Confirmed existing forwarding_scope omitted modeled-flow/outcome questions from typed forwarding projection. Shared scope now includes the result type, and source-time verifier rejects capture-at-request claims. Original focused suite128PASS/1FAIL due malformed new test envelope (nested status object instead of strings); fixture fixed, five selected tests and three actual positive/edited/STALE reruns are pending session in functions cell94. Inspect before duplicating. This is the first shared context correction for this class; max2 model corrections policy remains. Runtime22656 does NOT yet load the newest synthesis correction. Reload only after tests pass and no pending GUI request, preserving owned buffers. Complete simulation GUI, then general requested-time completion for jobs; no further exposed prompt tuning.
+
+After all24source gates, automatically proceed to unfinishedG7/G8 and everyG4–G12. No commits, model downloads, new publication, device changes or sibling V9 edits.
+
+---
+
+# Phase G image source accepted —22October2026,05:57UTC
+
+**G3:21/24 individually COMPLETE. Newly closed diagrams (bounded OCR reading only). G1/G2 COMPLETE; all other stages remain open/blocked as recorded.** Review diagrams-source-acceptance-review.json, six actual GUI rows317–322 in gui-image-source-actual-gateway-trace.json, real exported revision in gui-image-source-export.json. PNG uploaded through browser file chooser; old reference removed; saved extraction preview matches TURQUOISE-94 and three vendors. JSON T1/T2 changed actual PNG bytes. Six explicit transcription plus4 unavailable-source cases PASS, no model-reasoning credit. Six original general label-interpretation failures remain underG5; transcription acceptance does not turn them into passing synthesis. Source21 does not prove visual link semantics.
+
+Current server session42206/backend22656 on5173/8000 loads tested unresolved-reference correction. No pending browser turn; Workbench closed after reload, G-RECORD-SOURCE-ACCEPTANCEdraft26 saved with GUI conversation setup selecting LAB-R1 (independent of JSON LAB-R2/R3). Activate after validation, turn on explicit setup checkbox, use new owned conversations in both assistants, then ask management-IP follow-up. Image ERROR revision25 remains active until next activation; ordinary restoration at next safe boundary. Main protected buffer visually unchanged, last exact proof204LF b4c9fe... after files closure.
+
+Conversation JSON baseline3052f1 bothPASS actual user setup+follow-up; edited first execution failed scenario validation because evaluator did not advance virtual time (observer correction now applied). STALE/ERROR/MISSING original six responses incorrectly expanded unbound that-device reference into whole inventory; originala0198c/69af3e/c1a2a8 retained. Shared resolve_read now asks for an unresolved entity before broad source planning, without affecting named-file precedence.121 affected tests PASS. Corrected four-case batch session77237 running, logs conversation-*-corrected.log. Do not duplicate; inspect full results, including exact status returned for clarification. This is one reference-class correction, not model prompt tuning.
+
+Next: finish conversation GUI, then bounded simulation and jobs requested-time completeness; G3 remains open until24 genuinely accepted. Continue G7/G8 and remaining G4–G12. No new model, commit, publication or device action.
+
+---
+
+# Phase G files accepted —22October2026,05:42UTC
+
+**G3:20/24 individually COMPLETE. Newly closed documents and attachments. G1/G2 COMPLETE; no new whole-stage closure. G0 historical prechange freeze BLOCKED; G4–G12 mandatory/open.** Each file source has10 actual JSON cases and6 GUI source checks. Four shared STALE/ERROR turns across both categories are four unique requests, not eight. Exact copied browser answers match stored authorized gateway rows306–316. Final unique GUI turns8, original failures/follow-up3 separately retained. Reviews documents-source-acceptance-review.json and attachments-source-acceptance-review.json, actual trace gui-file-sources-actual-gateway-trace.json, export gui-file-source-export.json in current auditroot.
+
+Shared requested single-identifier verification now rejects wrong/omitted unambiguous direct-text identifiers; multiple labels/OCR uncertainty are not guessed.123 affected tests plus7subtests PASS; overlapping earlier suites never summed. Sandbox initial identifier pytest stalled and was stopped by exact command identity; no completed red test result claimed. Original browser wrong-label/omission failures remain. Corrected attachment GUI answers are verified text fallback, not model reasoning. Paired STALE answers retain source status/time but omit requested summaries: G5 quality FAIL remains. JSON file answers often require date repair because capture dates are not text dates; this verifier scope limitation remains documented.
+
+Ordinary sources RESTORED, G-RECORD-SOURCE-ACCEPTANCEdraft22 retained, latest app launcher81458/backend6740 on5173/8000 includes identifier correction. Ollama17328 unchanged. Exact protected204LF SHA b4c9fe... verified through browser; ordinary business/authoring tables, active7a14.../341 artifacts, empty index and original52-file archive unchanged in preservation-after-file-source-batch.json. No stage/commit/publication/device/model actions.
+
+Next G3 source diagrams: new real PNG fixture lane reuses existing configured document interpreter through PhaseF attachment_bytes; initial API interpreter missingPillow evaluator error preserved, no install. ERROR/MISSING4 actual cases PASS. Positive/edited/STALE6 original model answers FAIL by omitting actual readable labels despite correct OCR reaching model. Do not rewrite prompts/orchestration indefinitely: validate existing explicit OCR transcription path separately for source acceptance, leave general synthesis failures inG5. Original PNG runs55aadb/bd24b3/0460d3 preserved. Follow with conversation setup via actual gateway requests, bounded simulation, jobs response completeness. Then every remaining G4–G12 including G7/G8. No fresh benchmark credit.
+
+---
+
+# Phase G document continuation —22October2026, runtime restored
+
+**G3 remains18/24 individually COMPLETE.** G1/G2 COMPLETE; G0 historical baseline BLOCKED; G4–G12 mandatory/open. Fresh browser tab2/1 access succeeds; initial backend connectivity failure independently confirmed with no5173/8000 listeners. Standard launcher session14187/backend13228 now runs5173/8000 and loads current source/router fixes; Ollama17328 unchanged. Protected unsaved204LF buffer remains visibly present. No automatic stage/commit.
+
+Document first-red actual run0b7d5c selected unrelated assets after unavailable named files were dropped from routing metadata; Studio invented a maintenance window. Shared existing file service now retains identity/status/capture but does not extract unavailable content or substitute files. Unknown page4 remains unknown, not confirmed missing. Corrected actual document run20261022T033458.418350Z-G-source-document_files-cd793e:10/10 source cases PASS, GUI pending. Attachments original04c5d0 all10 blocked by generic pronoun clarification despite explicit named file; exact named-file context now precedes generic unresolved-reference clarification. Corrected actual20261022T040208.686463Z-G-source-attachment_files-c580a7:10/10 PASS. Neither source is closed until GUI acceptance. Positive document verification may reconstruct/repair source text, not independent reasoning credit. Original failures preserved.
+
+Focused checks this continuation:18 unavailable-source/page regressions,108 affected tests plus5subtests,47 named-document/conversation regressions PASS. These overlap and must not be summed. Initial failed tests and long Windows pytest path observer failures retained; short fresh basetemp dirs used for corrected checks. Current source changes10 backend files plus durable ledgers; runtime SQLite history changed only through actual authorized tests, never stage it.
+
+Next: select retained G-RECORD-SOURCE-ACCEPTANCEdraft18 in Scenario Workbench; edit actual document/attachment assets through GUI, Save/Validate/Activate, both assistants positive/STALE/ERROR, inspect actual stored traces and timestamps. Then diagrams/conversation/simulation and jobs completeness. Do not rerun passed10-case file lanes or start unrelated prompt tuning. Continue every remaining G stage after source foundation.
+
+---
+
+# Phase G source batch accepted —22October2026
+
+**Current G3:18/24 individually COMPLETE. Newly closed: protocol_state, syslog, incidents, config_drift.** G1/G2 remain COMPLETE; G0 historical baseline BLOCKED; G4–G12 mandatory/open. No new whole-stage closure. Actual final browser trace tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/gui-five-record-sources-actual-gateway-trace.json contains14 unique final requests across5categories; four shared STALE/ERROR turns must not be counted20times. Jobs GUI is green, but JSON replies omit requested time: individual source remainsIN_PROGRESS. Do not claim19/24.
+
+Ordinary sources RESTORED viaGUI. G-RECORD-SOURCE-ACCEPTANCEdraft18/revision16 retained with fiveERROR statuses, sourcecapt01:04; exported actual saved bundle retained. Current app launcher26715/backend20740 on5173/8000 loads all event-record boundaries, protocol negation/time-label fixes. Ollama unchanged. Protected204LF exactSHA b4c9fe... verified after scenario codepaste and restart. Ordinary business/knowledge authoring unchanged; active7a14.../47ops/141bindings/341hashes verified. Existing user commit6e8597c, index empty, original52-file archiveSHA d6aa68... preserved; no automatic commit/stage. Preservation first audit comparison failed only because authoring paths were relative versus absolute; diagnostic/review retained and corrected check passed.
+
+Next independent source documents: add externalJSON/real-file selection/status evaluations to existing evaluator, reuse existing GUI reading proof. Static unavailable-named-file metadata filtering risk is NOT yet reproduced; test first, no claimed defect. Then attachments/diagrams/conversation/simulation; jobs JSON response completeness remains parked after two model corrections for later general coverage work. Continue G7/G8 and every incomplete G4–G12 after foundations, not another routing-prompt loop. Fresh intelligence benchmark NOTRUN; direct event/drift and status fallbacks get no reasoning credit. Mixed-source STALE answers still dump records, G5 remainsFAILED/open.
+
+Detailed source reviews, original failures, actual model traces, tests and GUIexport are in tmp/phase-g/iterations/20261022-G3-source-acceptance-resume.
+
+---
+
+# Phase G exact continuation —22October2026
+
+**G3:14/24 individually accepted. G1/G2 COMPLETE, G0 missing historical baseline BLOCKED, G4–G12 remain mandatory/open.** Source13telemetry and14source_health are closed in both source matrices and stage ledger using archived JSON/GUI positive and negative actual-gateway proof. No full new Gstage closure.
+
+Standard launcher7605/backend22712 currently running5173/8000; latest event-only factual boundary, protocol negation and fallback observation-label fixes are ON DISK/TESTED but not loaded in that app. No in-flight browserturn now. Browser2/tab1 phaseGTab; modal open at Configuration drift AdvancedJSON input saved into draft16, validated; active G-RECORD-SOURCE-ACCEPTANCE revision13 fromdraft15. Draft16 contains coherent current configuration +G_GUI_DRIFT_93 and literal saved/current diff, sourcecapture01:04/event01:03. GUI inputs archived alongside proof. Root launcher identification waiting functions cell73 before safe reload; inspect its exact identity, stop onlythatapp tree, use ordinary dev_local.py, do not kill Ollama. Then reselect owned draft16, validate/activate, rerun Studio protocol positive, both incidents/syslog/drift positives and five-source STALE/ERROR GUI batch. Protocol+jobs positives partly recorded; source15 is not closed.
+
+Actual source defects fixed: incident summary was dropped by projection; restored as recorded_summary; event current flag labelled snapshot currency; Markdown-aware ISO event-time roles; unsupported count/closure/continuous-state and simulated device-execution claims rejected; job fallback now retains eventtimestamp. Model still confused time/currentness after two bounded corrections. Direct syslog/incident-only reads now use existing verified friendly records and no synthesis, labelled event_records_fallback or historical_events_fallback. This is safety/factual fallback, NOT model-reasoning improvement. Multi-source investigations remain on existing synthesis path. Exact event-time paraphrase verification remains limited.
+
+Original failures remain: syslog/incident/job first actual runs, corrected source-model drafts, Studio protocol claims no unverified prerequisites despite authentication/area_type unknown (gui-protocol-positive-first-red-studio.md plus protocol-first-red-full-review.json), syslog eventtime01:04 rather than01:03 (gui-syslog-time-followup-first-red-studio.md), positive syslog answers omit eventtime. Do not count automatic literal/model-accepted flags as factual certification. New narrow protocol coordinated-negation guard rejects the preserved false claim; protocol fallback labels record time observed-at, not source capture. No further prompt tuning this class.
+
+Tests: first sandbox run77PASS/16ERROR/4FAIL due pytest temp-path permissions, preserved XML. Unsandboxed97PASS; extended102PASS; protocol/synthesis59PASS; historical-event/source/protocol51PASS; final direct-event subset12PASS. These overlap and must never be summed. No frontend source change, no TS rerun justified yet.
+
+Actual JSON batch33704 completed syslog/incidents/jobs original all exit1; mostly literal paraphrase/time/name omissions plus genuine false event/closure/execution claims. Corrected batch39874 completed affected six positive cases and protocol statuses: STALEprotocol2PASS; ERROR/MISSING protocol original literalFAIL because metadata title OSPF matches forbidden positive value, raw records empty and source status/time correct—manual review needed, do not overwrite failures. Final incident historical-boundary API batch63985 pending/result logs incidents-*-historical-boundary.log; reuse ERROR/MISSING positives, no duplicate. Syslog final boundary JSON json/edited still needed; old STALE/error/missing source evidence reusable after full review.
+
+Existing user commit6e8597c predates work; index empty, original52-file patch archive SHA d6aa68... verified. Active7a14.../141 and ordinary business/authoring tables unchanged in continuation-preservation.json. Main protected204LF unsaved config visible intact, exact copy/hash at next batch boundary. No commit/stage/download/publication/deviceeffect. Next unfinished sources after batch: documents/attachments/diagrams/conversation/simulation; static inspection suggests unavailable named scenario files may be omitted from routing metadata, must reproduce rather than claim defect. After G3 continue G7/G8 and every mandatory incomplete G4–G12, not only sources.
+
+Auditroot tmp/phase-g/iterations/20261022-G3-source-acceptance-resume; previous reusedproofroot20261021T072218.626454Z-G0-source-closure-resume-9e4418 unchanged.
+
+---
+
+# Phase G source14 accepted —22October2026
+
+**Current G3:14/24 individually COMPLETE. Source-health accepted.** G1/G2 COMPLETE; G0 historical baseline blocked; G4–G12 mandatory/open. Review tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/source-health-source-acceptance-review.json. Old positive JSON/GUI collector/claims/override evidence reused; six extra JSONstatus cases and four fresh GUIstatus turns checked. Original STALE name-literal false negatives retained separately. No model reasoning credit. Runtime8869/backend4820 latest source metadata/empty wording loaded, but incident fix below not yet loaded. Main unsaved buffer still visible intact.
+
+Next record-source batch protocol/drift/syslog/incidents/jobs. Existing source evaluator syslog/incidents/jobs run33704 underway. Incident actual676dff exposed summary removed by projection plus first-observed/event-time mislabelling; projection and narrow Markdown-aware time guard corrected on disk, focused tests rerun outside sandbox (first run77PASS/16ERROR/4FAIL all temporary-directory permissions retained). No prompt-specific response rule added. Need actual post-fix rerun and safe backend restart after pending requests. Sourcehealth GUI draft14/revision12 ERROR active, no pending browserturn. User prior commit6e8597c recorded; no new commit/staging.
+
+---
+
+# Phase G source13 accepted —22October2026
+
+**G3:13/24 individually COMPLETE; telemetry now accepted. G1/G2 COMPLETE; G0 historical baseline BLOCKED; all G4–G12 open/mandatory.** tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/telemetry-source-acceptance-review.json records reused positive JSON/GUI gap/window evidence, six extra JSON status cases and four GUI STALE/ERROR cases. Original failed drafts retained. No model-reasoning credit for GUI fallbacks.
+
+Runtime standard launcher8869/backend4820,5173/8000; latest on-disk safeguards now loaded. Fresh browser succeeds. User commit6e8597c predates this continuation; index empty and archived original52-file patch hash verified. Ordinary business and knowledge tables unchanged; active7a14.../141 verified. No automatic commit. Next source_health: GUI draft13 savingSTALE/capture01:04; validate/activate then both assistants. Reuse prior six extra JSON status cases and old positive authored edits. Main protected unsaved204LF visible intact; exact buffer verification at batch boundary.
+
+---
+
 # Phase G halfway through source acceptance —21October2026,15:18UTC
 
 **Current G3:12/24 individually COMPLETE. G1/G2 PASS; G0 historical baseline BLOCKED; all G4–G12 mandatory/open.** topology_observed is source12: reused independent authored endpoints JSONT1/T2, GUIchangedpeer/ports/time, history integrity and missing-current source proofs. Four final STALE/ERROR JSON replies and four new GUI replies pass through real both-assistant gateways, using common no-observation boundary. Original freshness/temporal/scope model failures retained, no extra prompt tuning. No reasoning credit for final fallbacks. Review `tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/observed-source-acceptance-review.json`; new trace/preservation alongside.

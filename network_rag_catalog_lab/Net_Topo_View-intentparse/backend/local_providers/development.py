@@ -537,7 +537,9 @@ class ScenarioManager:
         s,meta=self.snapshot();ids={int(d['id']) for d in devices}
         if query.live:return ToolResult(status='unavailable',data={'scenario':meta},message='Physical live data is unavailable; development observations are not live measurements.')
         available=s['availability'].get(domain,False)
-        source_states={key:value for key,value in s.get('source_statuses',{}).items() if value.get('domain')==domain or domain=='configuration' and value.get('domain')=='running_configuration' or domain=='topology' and key=='topology_planned'}
+        from development.source_registry import BY_KEY
+        source_states={key:value for key,value in s.get('source_statuses',{}).items()
+            if key in BY_KEY and BY_KEY[key].supports('network.'+domain)}
         categories=list(query.source_categories)
         if not categories and domain=='configuration' and s.get('source_statuses'):
             from llm.gateway_network import explicit_configuration_scope
@@ -546,6 +548,7 @@ class ScenarioManager:
             elif temporal=='historical':categories=['config_snapshots','config_changes']
         if categories:source_states={key:value for key,value in source_states.items() if key in categories}
         source_statuses={key:value['status'] for key,value in source_states.items()}
+        if source_states:available=any(value in {'AVAILABLE','STALE','CONFLICTING'} for value in source_statuses.values())
         records=[]
         source_rows=list(s['records'].get(domain,[])) if available else []
         if domain=='state' and available and s.get('network'):
@@ -675,6 +678,7 @@ class ScenarioManager:
                 row['link_endpoints'].update({side:next(i['name'] for i in s['interfaces'] if i['id']==link[field])
                     for side,field in [('source_interface','src_interface_id'),('target_interface','dst_interface_id')]})
                 row['endpoint_basis']=endpoint_basis
+            if domain=='telemetry' and query.interface_refs and str(row.get('interface_id')) not in query.interface_refs:continue
             records.append(row)
         from llm.gateway_network import redact
         for row in records:

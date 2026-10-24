@@ -125,7 +125,8 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
 
     async def execute(state):
         contexts,evidence,coverage=await network_context(service.db,tools,auth,state.route.network_request or body.prompt,
-            domains_override=[step.domain for step in state.plan],device_refs_override=state.device_refs or None,source_requests=state.route.source_requests)
+            domains_override=[step.domain for step in state.plan],device_refs_override=state.device_refs or None,
+            source_requests=state.route.source_requests,interface_refs_override=state.interface_refs)
         return update(state,'execute_tools',results=state.results+contexts,evidence=state.evidence+evidence,
             coverage=coverage,rounds=state.rounds+1)
 
@@ -195,7 +196,9 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
                         else (knowledge+'\n\n' if knowledge else '')+summary)
             else:answer='The returned evidence failed verification. No network conclusion was released.'
         if not factual:validation['scope']='Documentation provenance only; model paraphrases are not certified'
-        exact_inventory=(state.route.network_domains==['inventory'] and bool(state.route.attributes or state.interface_refs))
+        from llm.gateway_references import relational_read
+        exact_inventory=(state.route.network_domains==['inventory'] and bool(state.route.attributes or state.interface_refs)
+            and not relational_read(body.prompt,state.route.planning.get('proposed',{}).get('desired_response','direct')))
         from llm.gateway_references import configuration_text_request
         exact_configuration=state.route.network_domains==['configuration'] and configuration_text_request(body.prompt)
         if exact_inventory and validation.get('status')=='verified':
@@ -215,8 +218,16 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
             # actual scoped reads, so display trimming cannot remove the decisive
             # trace before relevance selection or source-grounded verification.
             synthesis_context=assessment_context(state.results,tools.results)
+            from llm.gateway_network import route_network
+            from development.source_registry import explicit_read_sources,BY_KEY,reader_domains
+            explicit_domains=set(route_network(body.prompt,inventory,expand_investigation=False)[0])-{'inventory'}
+            named_sources=explicit_read_sources(body.prompt,BY_KEY)
+            explicit_domains.update(reader_domains(named_sources,state.route.network_domains))
+            required_readers={('inventory.read' if domain=='inventory' else 'knowledge.search' if domain=='knowledge' else 'network.'+domain) for domain in explicit_domains}
             answer,synthesis=await synthesize(model,body.model,body.prompt,synthesis_context,state.evidence,state.assessment,answer,
-                investigation=is_investigation(state.request) or state.route.use_history and is_investigation(state.memory.get('goal','')))
+                investigation=is_investigation(state.request) or state.route.use_history and is_investigation(state.memory.get('goal','')),
+                objectives=state.route.planning.get('proposed',{}).get('information_needs',[]),
+                reference_requests=state.context_references.get('user_history',[]),required_readers=required_readers)
             validation={**validation,'synthesis':synthesis}
         values={'answer':answer,'validation':validation}
         if b2:
@@ -243,7 +254,7 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
             # read or engineering action. Preserve exact proposal explanations.
             from llm.gateway_documents import build_context
             documents,refs,coverage=await asyncio.to_thread(build_context,service.db,identity,user,document_body,False)
-        explanation=proposal_explanation(prior_engineering,body.editor) if state.route.use_history and state.route.intent=='explain' else ''
+        explanation=proposal_explanation(prior_engineering,body.editor,body.related_editors) if state.route.use_history and state.route.intent=='explain' else ''
         return update(state,'read_studio_context',studio_context=documents,studio_evidence=refs,studio_coverage=coverage,studio_answer=explanation)
 
     async def authorize_engineering(state):
@@ -319,7 +330,8 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
         'included_characters':sizes,'domains':[item['tool'] for item in final.results],
         'agent':{'engine':'langgraph_b3' if b3 else 'langgraph_b2' if b2 else 'langgraph_b1','nodes':final.trace,'rounds':final.rounds,
         'tool_calls':tools.calls,'routing_model_calls':model.purposes.get('routing',0),'model_calls':model.calls,'model_call_breakdown':model.purposes,'elapsed_ms':round((time.monotonic()-started)*1000,2),
-        'tool_call_mode':'validated_plan','planning':final.route.planning,'checkpointing':restore_status,'verification':final.validation,'limitations':final.limitations,
+        'tool_call_mode':'validated_plan','planning':final.route.planning,'inference_diagnostics':getattr(model,'inference_trace',[]),
+        'checkpointing':restore_status,'verification':final.validation,'limitations':final.limitations,
         **({'assessment':final.assessment,'recovery':'fresh authorized reads; no pending-tool replay','restored_status':saver.restored_status,
         'document_refs':final.memory.get('documents',[]),
         'budgets':{'rounds':3,'tools':8,'model_calls':model.max_calls,'model_stages':model.stage_limits,'input_characters':model.max_input_characters,'maximum_output_tokens_per_call':512,'wall_seconds':timeout,'concurrency':1}} if b2 else {})}}

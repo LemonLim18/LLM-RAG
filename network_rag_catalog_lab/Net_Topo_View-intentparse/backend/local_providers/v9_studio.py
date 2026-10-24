@@ -136,8 +136,13 @@ async def preview(db, req, user):
         else:
             conn.execute('INSERT INTO studio_v9_sessions(id,owner,prompt,body,inventory_hash) VALUES (?,?,?,?,?)', (sid,user['username'],req.intent_description,json.dumps(output),digest(data)))
         conn.execute('INSERT INTO audit_log(user_id,action,target,details) VALUES (?,?,?,?)', (user['username'],'v9.preview',sid,json.dumps({'release':output['release_id']})))
-    result = presentation(output,sid,data)
-    result['session_revision'] = previous['revision'] + 1 if previous else 1
+    return review_presentation(output, sid, data, previous['revision'] + 1 if previous else 1, multi)
+
+
+def review_presentation(output, sid, data, revision, multi=True):
+    """Present an existing plan; no interpretation, validation mutation or render."""
+    result = presentation(output, sid, data)
+    result['session_revision'] = revision
     if multi:
         result['tasks'] = []
         for task in output['plan']['tasks']:
@@ -187,6 +192,10 @@ def presentation(output,sid,data):
         'reasoning':reasoning,'policy_approved':False,'target_hosts':hosts,'schema_editable_fields':fields,
         'parsed_intent':{'engine':'v9','_v9_session':sid,'action':task['operation_id'],'feature':task['category'],'parameters':task['parameters'],
                          'resolved_devices':hosts,'validation_errors':errors,'knowledge_snapshot_id':output['release_id']}}
+    # Snapshot freshness exists independently of target clarification. Omitting
+    # it until a host is selected made a fresh review look like a scenario change.
+    revisions={d['scenario_revision'] for d in data if d.get('scenario_revision')}
+    if len(revisions)==1:result['inventory_revision']=next(iter(revisions))
     proposal = next((i for i in issues if i.get('type')=='OPERATION_PROPOSAL'), None)
     if proposal:
         result['params_disambiguation']={'question':proposal['message'], 'fields':[{'field':'operation_id','label':f"Confirm proposed operation: {task['operation_id']}",'type':'text','required':True,'value':task['operation_id']}]}

@@ -99,7 +99,22 @@ class ConversationStore:
     def list(self, owner, kind):
         with self.db._connect() as c:
             ids = [r[0] for r in c.execute('SELECT id FROM ansible_chat_sessions WHERE owner_username=? AND assistant_kind=? ORDER BY updated_at DESC', (owner, kind))]
-        return [self.get(i, owner, kind) for i in ids]
+        return [self.present(i, owner, kind) for i in ids]
+
+    def present(self, identity, owner, kind=None):
+        result = self.get(identity, owner, kind)
+        if result['assistant_kind'] == 'studio':
+            # Recover only a server-owned reference, never a saved editor patch
+            # or an old preview that could overwrite the current V9 review.
+            with self.db._connect() as c:
+                reviews = {row[0] for row in c.execute(
+                    "SELECT request_id FROM ai_turns WHERE conversation_id=? AND state='completed' "
+                    "AND json_extract(result,'$.kind')='generation_preview' ORDER BY rowid DESC LIMIT 100",
+                    (identity,))}
+            for message in result['messages']:
+                if message.get('role') == 'assistant' and message.get('id') in reviews:
+                    message['gatewayReviewRequestId'] = message['id']
+        return result
 
     def delete(self, identity, owner, kind=None):
         with self.db._connect() as c:

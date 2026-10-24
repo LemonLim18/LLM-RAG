@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "frozen_before_first_inference": true,
+  "holdout": false,
+  "expectation_authority": "Implementation assistant authored source/context assertions; full prose independently assessed from model outputs after execution, no human assessment claimed",
+  "cases": [
+    {
+      "id": "G9-MEMORY-RECOVERY-SERIES",
+      "requirement": "Existing owner-bound SQLite memory across separate OS processes and ordinary-source updates",
+      "surface": ["floating", "studio"],
+      "fixture": "Reused disposable G7 SQLite; G9-Edge interfaces GigabitEthernet0/1=10.88.1.2 and GigabitEthernet0/2=10.88.2.2; first address later192.0.2.88",
+      "prompts": [
+        "What interfaces are recorded for G9-Edge? Include their IP addresses.",
+        "What is the IP address of the first one?",
+        "Are you sure? Check that interface's recorded address again.",
+        "New topic: what is 8 plus 6?"
+      ],
+      "expected_tools": ["inventory.read"],
+      "expected": "Restore references from the real seed turn in another process, reread changed address, leave unrelated topic free of readers/evidence; another owner gets404",
+      "prohibited": ["Fabricated conversational setup", "Old address asserted as refreshed current", "Cross-owner access", "Source or editor changes outside controlled fixture"],
+      "verification": "Actual authenticated shared gateway, raw responses, persisted checkpoint metadata, process IDs and exact authoritative values; answer review separate from HTTP/tool assertions"
+    },
+    {
+      "id": "G9-SCANNED-PDF-SERIES",
+      "requirement": "Actual image-only PDF upload, existing OCR, page citation and attachment follow-up",
+      "surface": ["floating", "studio"],
+      "fixture": "One image-only PDF: G9-Edge, proposed OSPF process88, hello12seconds, dead48seconds, explicitly not a device measurement",
+      "prompts": [
+        "What OSPF process and timer values appear on page 1 of the scanned PDF? Explain its actual content.",
+        "Does that page describe proposed settings or an actual device measurement?"
+      ],
+      "expected_tools": ["document.read"],
+      "expected": "Meaningful content and page1 evidence; actual extraction contains the supplied values; follow-up describes proposed settings, no claim of deployment or physical observation",
+      "prohibited": ["Metadata/UUID answer replacing content", "Invented values", "Executed settings", "Generic vision certification", "V9 ingestion/publication"],
+      "verification": "Retained PDF bytes, real attachment extraction records and actual both-assistant gateway responses; OCR only, no model/dependency download"
+    }
+  ]
+}

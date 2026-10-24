@@ -2177,6 +2177,252 @@
         "G-HEALTH_RECORDS-MISSING-FLOATING",
         "G-HEALTH_RECORDS-MISSING-STUDIO"
       ]
+    },
+    {
+      "id": "G-REG-INCIDENT-SUMMARY-001",
+      "category": "incidents",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "requirement": "Actual recorded incident descriptions must reach synthesis; internal aggregate summaries remain excluded.",
+      "scenario_id": "S-HEALTHY-ALL-SOURCES",
+      "scenario_revision": "pinned per execution",
+      "prompt": "Read only incidents and alerts for LAB-R1. Give the recorded incident summary, severity, status and event time. Do not infer a current outage.",
+      "expected_capability": "network.incidents",
+      "expected": "Recorded summary and timestamp preserved; first/last-observed roles do not imply a count, closure or continuous state.",
+      "prohibited": [
+        "First-observed as the record timestamp",
+        "Unrecorded closure/count/current outage"
+      ],
+      "verification": "Actual original/corrected gateway traces plus source projection and record release-boundary regressions.",
+      "exposed": true
+    },
+    {
+      "id": "G-REG-SYSLOG-TIME-ROLE-001",
+      "category": "syslog",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "requirement": "Event observation time differs from source capture time.",
+      "scenario_id": "G-RECORD-SOURCE-ACCEPTANCE",
+      "scenario_revision": 13,
+      "prompt": "Read only syslog for LAB-R1. Explain the latest recorded message, severity, event time and source capture time. Do not infer unrecorded current device state.",
+      "followups": [
+        "What is that syslog event\u2019s own recorded timestamp, distinct from the source capture time?"
+      ],
+      "expected_capability": "network.syslog",
+      "expected": {
+        "event_time": "2026-10-18T01:03:00Z",
+        "source_capture": "2026-10-18T01:04:00Z"
+      },
+      "prohibited": [
+        "Capture time substituted for event time",
+        "Alert clear proves physical fault resolution"
+      ],
+      "verification": "Original GUI answer and raw actual reader fields; corrected factual renderer must be browser verified.",
+      "exposed": true
+    },
+    {
+      "id": "G-REG-PROTOCOL-PREREQ-001",
+      "category": "protocol_state",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "requirement": "A coordinated no-conflicts/no-prerequisites claim cannot contradict explicit unknown_prerequisites.",
+      "scenario_id": "G-RECORD-SOURCE-ACCEPTANCE",
+      "scenario_revision": 13,
+      "prompt": "Read the authored OSPF neighbor observations for LAB-R1. Give the local router ID, the neighbor device and router ID, session state, observation time and capture time. Use the protocol observation source, not the separately declared simulation.",
+      "expected_capability": "network.state",
+      "expected": {
+        "local_router_id": "203.0.113.181",
+        "neighbor_router_id": "203.0.113.182",
+        "neighbor": "LAB-R2",
+        "state": "Init",
+        "unknown_prerequisites": [
+          "authentication",
+          "area_type"
+        ]
+      },
+      "prohibited": [
+        "There are no conflicting observations or unverified prerequisites",
+        "BGP Established label for OSPF",
+        "Observation time labelled source capture"
+      ],
+      "verification": "Full answer manually compared with actual authorized record, not literal fields only.",
+      "exposed": true
+    },
+    {
+      "id": "G-REG-FILE-UNAVAILABLE-001",
+      "category": [
+        "documents",
+        "attachments",
+        "diagrams"
+      ],
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "requirement": "Unavailable named files remain selectable as metadata without extracting or substituting content.",
+      "scenario_id": "S-HEALTHY-ALL-SOURCES",
+      "scenario_revision": "pinned per execution",
+      "prompt": "Read the named document and report its content and capture time.",
+      "data_assumptions": "Only the requested file source is ERROR/MISSING; other scenario files remain readable.",
+      "expected_capability": "document.read",
+      "expected": "Selected name/status/capture retained;0 included characters; no substitute file or fabricated page count.",
+      "prohibited": [
+        "Unrelated file content",
+        "Claimed extraction of failed source",
+        "Unverified missing-page assertion"
+      ],
+      "verification": "Actual first-red/corrected public-gateway runs plus both-assistant GUI ERROR and shared service regressions.",
+      "exposed": true
+    },
+    {
+      "id": "G-REG-DOCUMENT-IDENTIFIER-001",
+      "category": "attachments",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "requirement": "A requested unambiguous direct-text identifier cannot be replaced by a filename.",
+      "scenario_id": "G-RECORD-SOURCE-ACCEPTANCE",
+      "scenario_revision": "pinned per execution",
+      "prompt": "Explain the attachment including its recorded label and planned duration.",
+      "data_assumptions": "One explicit change-request identifier; no device execution.",
+      "expected_capability": "document.read",
+      "expected": "Exact source identifier and duration with capture attribution; fallback labelled if model fails.",
+      "prohibited": [
+        "Filename as label",
+        "Omitted requested unique identifier",
+        "OCR label certified as exact"
+      ],
+      "verification": "Original GUI wrong/omitted labels retained; corrected actual both-assistant fallback and bounded verifier regressions.",
+      "exposed": true
+    },
+    {
+      "id": "G7-NATIVE-SERIES-V1",
+      "stage": "G7",
+      "capability": "All47x3 controlled native generation journeys",
+      "external_case_registry": "docs/evaluations/phase_g_native_journey_cases_v1.json",
+      "expected": "Each actual shared gateway request, owned V9 interpretation/correction, explicit render and exact unsaved output; no fake playbook/device validation",
+      "verification": "Per-case API/worker traces, exact engineer-regression output, target/release/digest and explicit effect checks. Browser representatives separately verified.",
+      "holdout": false
+    },
+    {
+      "id": "G8-COORDINATED-EDIT-001",
+      "stage": "G8",
+      "capability": "Authoritative related-variable edit plus independent playbook marker",
+      "surface": [
+        "studio"
+      ],
+      "scenario_id": "disposable_authorized_workspace",
+      "input_prompt": "In the active playbook and its referenced group_vars file, change neighbor_ip from 192.0.2.2 to 192.0.2.3 in its authoritative variable file. Also replace only # REVIEW_BEFORE with # REVIEW_AFTER in the playbook. Preserve other lines and propose both changes without applying or saving.",
+      "assumptions": "Two open unsaved YAML buffers; literal vars_files reference; valid owner and current saved revisions.",
+      "expected_authorized_tools": [
+        "document.propose"
+      ],
+      "expected": "Exactly two reviewable per-file replacements, unchanged unrelated text, no authoring mutation; actual qwen/API path.",
+      "prohibited": [
+        "Writing another path",
+        "Inlining the variable",
+        "Claiming application/saving",
+        "Unaccepted Monaco overwrite"
+      ],
+      "verification": "Exact complete before/after content, real LangGraph nodes/model/registry, persisted turn count and authoring table unchanged.",
+      "holdout": false
+    },
+    {
+      "id": "G8-BROWSER-COORDINATED-002",
+      "stage": "G8",
+      "capability": "Actual browser coordinated review and newline fidelity",
+      "surface": [
+        "studio"
+      ],
+      "input_prompt": "In the active playbook and its referenced variable file, change neighbor_ip from 192.0.2.22 to 192.0.2.23 in its authoritative variable file. Also replace only # BROWSER_REVIEW_BEFORE with # BROWSER_REVIEW_AFTER in the playbook. Preserve all other lines and comments. Propose both file changes for review; do not apply or save.",
+      "assumptions": "Actual New File empty fixtures; content stays unsaved; browser Monaco has CRLF; protected204LF buffer retained.",
+      "expected_authorized_tools": [
+        "document.propose"
+      ],
+      "expected": "Valid exact two-file proposal; then genuine browser RejectAll, AcceptAll and coordinated Undo without saving. Invalid source/anchors must fail safely.",
+      "prohibited": [
+        "Cross-file anchor application",
+        "Hidden Save",
+        "Claiming controls passed without valid proposal"
+      ],
+      "verification": "Browser actions, source/result traces, exact clipboard buffer hashes and ordinary authoring fingerprint exclusions for two explicitly created empty fixtures.",
+      "holdout": false
+    },
+    {
+      "id": "G6-CONFORMANCE-SERIES-V3",
+      "stage": "G6",
+      "capability": "Hand-defined deterministic forwarding/source conformance",
+      "external_evaluator_only_registry": "backend/development/test_oracles/phase_g_forwarding_conformance_v3.json",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "expected_authorized_tools": [
+        "network.state"
+      ],
+      "expected": "16 private hand-defined outcomes through both actual authorized readers; oracle IDs/expected fields unavailable to runtime. Model causal-answer acceptance remains separate.",
+      "verification": "Scenario authoring validation/activation, source pin, exact forward/return/reason and equal two-surface projections. Preserve failed v1/v2 specimens.",
+      "holdout": false
+    },
+    {
+      "id": "G6-EXTENDED-CONFORMANCE-V1",
+      "stage": "G6",
+      "external_evaluator_only_registry": "backend/development/test_oracles/phase_g_extended_conformance_v1.json",
+      "capability": "Twelve independent ECMP, ACL order, OSPF/BGP conflict, congestion and counter-reset cases on both surfaces",
+      "holdout": false,
+      "verification": "Exact hand-declared expected values, real scenario validation/activation and registered authorized readers; no model credit"
+    },
+    {
+      "id": "G7-COMPOUND-BOUNDARIES-V1",
+      "stage": "G7",
+      "external_evaluator": "backend/scripts/evaluate_phase_g_generation_boundaries.py",
+      "capability": "Actual three-vendor compound generation with schema/missing/binding/revision/playbook negatives",
+      "holdout": false,
+      "expected": "Three exact unsaved native outputs; invalid or stale selections cannot render; missing playbook variants remain unavailable",
+      "verification": "Actual authenticated gateway/V9 requests in the existing disposable G7 DB, preserving full request/response traces"
+    },
+    {
+      "id": "G8-SOURCE-BOUND-TRANSACTION-005",
+      "category": "workspace",
+      "surface": [
+        "studio"
+      ],
+      "prompt": "Original two-file browser request retained in browser-exact-proposal-proof.json",
+      "requirement": "Exact authorized source binding and coordinated review, without saving",
+      "expected_outcome": "Two exact proposed file changes; Reject/AcceptAll/Undo and stale rejection preserve buffers",
+      "prohibited": [
+        "Wrong-source relocation",
+        "Silent saving",
+        "Partial stale application",
+        "Permission elevation"
+      ],
+      "verification": "Actual qwen/LangGraph/API plus browser and exact buffer hashes",
+      "evidence": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/G8-stage-acceptance-review.json",
+      "outcome": "PASS",
+      "reasoning_holdout_credit": false
+    },
+    {
+      "id": "G8-CONTENT-ADDRESSED-JSON-004",
+      "category": "compound_edit_task",
+      "surface": [
+        "studio"
+      ],
+      "specification": "docs/evaluations/phase_g_workspace_json_v4.json",
+      "expected_outcome": "Both YAML marker and JSON peer changes",
+      "outcome": "FAIL_COMPOUND_INSTRUCTION_OMISSION",
+      "evidence": "tmp/phase-g/iterations/20261023T142051.262402Z-G8-real-workspace-c3d4d5/actual.json",
+      "prohibited": [
+        "Treating one changed file as complete two-file task"
+      ],
+      "reasoning_holdout_credit": false
     }
-  ]
+  ],
+  "updated_at": "2026-10-23T14:38:54.868936+00:00"
 }

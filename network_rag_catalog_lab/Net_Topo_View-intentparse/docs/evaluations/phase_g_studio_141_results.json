@@ -1,0 +1,2326 @@
+{
+  "timestamp": "2026-10-23T14:34:18.119371+00:00",
+  "knowledge_release": "7a14a351e52b49aeb87f65d1192f0937",
+  "required_native_journeys": 141,
+  "unique_native_journeys_passed": 113,
+  "review_preflight_ready": 113,
+  "review_preflight_blocked": 28,
+  "active_validated_ansible_variants": 0,
+  "journey_audit_root": "tmp\\phase-g\\iterations\\20261022T082839.745087Z-G7-native-journeys-2a3cb6",
+  "preflight_audit_root": "tmp\\phase-g\\iterations\\20261022T092942.209999Z-G7-all-binding-review-preflight-799b3d",
+  "scope": "Partial. Preflight success is not NL journey, browser, model reasoning, device or Ansible certification.",
+  "cases": [
+    {
+      "id": "G7-NATIVE-CISCO-ADD_ACL_RULE",
+      "operation_id": "add_acl_rule",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/010-cisco-attempt-79.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-ADD_ACL_RULE",
+      "operation_id": "add_acl_rule",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/012-juniper-attempt-80.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-ADD_ACL_RULE",
+      "operation_id": "add_acl_rule",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-3: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-3"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-ADD_DEFAULT_ROUTE",
+      "operation_id": "add_default_route",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/013-cisco-attempt-16.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-ADD_DEFAULT_ROUTE",
+      "operation_id": "add_default_route",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/015-juniper-attempt-17.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-ADD_DEFAULT_ROUTE",
+      "operation_id": "add_default_route",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-6: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-6"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-ADD_FLOATING_STATIC_ROUTE",
+      "operation_id": "add_floating_static_route",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/016-cisco-attempt-18.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-ADD_FLOATING_STATIC_ROUTE",
+      "operation_id": "add_floating_static_route",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/018-juniper-attempt-19.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-ADD_FLOATING_STATIC_ROUTE",
+      "operation_id": "add_floating_static_route",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-9: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-9"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-ADVERTISE_NETWORK",
+      "operation_id": "advertise_network",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/019-cisco-attempt-81.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-ADVERTISE_NETWORK",
+      "operation_id": "advertise_network",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/021-juniper-attempt-82.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-ADVERTISE_NETWORK",
+      "operation_id": "advertise_network",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-12: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-12"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-APPLY_ACL_TO_INTERFACE",
+      "operation_id": "apply_acl_to_interface",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/022-cisco-attempt-83.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-APPLY_ACL_TO_INTERFACE",
+      "operation_id": "apply_acl_to_interface",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/024-juniper-attempt-84.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-APPLY_ACL_TO_INTERFACE",
+      "operation_id": "apply_acl_to_interface",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-15: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-15"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-APPLY_QOS_POLICY_TO_INTERFACE",
+      "operation_id": "apply_qos_policy_to_interface",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/025-cisco-attempt-85.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-APPLY_QOS_POLICY_TO_INTERFACE",
+      "operation_id": "apply_qos_policy_to_interface",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/027-juniper-attempt-86.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-APPLY_QOS_POLICY_TO_INTERFACE",
+      "operation_id": "apply_qos_policy_to_interface",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-18: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-18"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-ASSIGN_INTERFACE_TO_OSPF_AREA",
+      "operation_id": "assign_interface_to_ospf_area",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/028-cisco-attempt-87.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-ASSIGN_INTERFACE_TO_OSPF_AREA",
+      "operation_id": "assign_interface_to_ospf_area",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/030-juniper-attempt-20.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-ASSIGN_INTERFACE_TO_OSPF_AREA",
+      "operation_id": "assign_interface_to_ospf_area",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-21: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-21"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-ASSIGN_VLAN_TO_TRUNK_PORT",
+      "operation_id": "assign_vlan_to_trunk_port",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/031-cisco-attempt-88.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-ASSIGN_VLAN_TO_TRUNK_PORT",
+      "operation_id": "assign_vlan_to_trunk_port",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "V200R024C10"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/032-huawei-attempt-120.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "original_failed_fixture": {
+        "journey_status": "BLOCKED_COMPATIBILITY",
+        "journey_trace": null,
+        "v9_review_preflight": "BLOCKED",
+        "issues": [
+          {
+            "type": "DEVICE_CONTEXT",
+            "field": "interface",
+            "message": "G7-huawei-23: Use a recorded switchport-capable physical port that is not an aggregate member.",
+            "device": "G7-huawei-23",
+            "value": "GigabitEthernet0/0/5",
+            "source": "user",
+            "evidence": "Explicit review: assign_vlan_to_trunk_port",
+            "device_id": "3023",
+            "operation_id": "assign_vlan_to_trunk_port",
+            "validation": "rejected"
+          },
+          {
+            "type": "MISSING",
+            "field": "interface",
+            "message": "Required parameter 'interface' was not specified."
+          }
+        ]
+      },
+      "positive_variant": "G7-NATIVE-HUAWEI-ASSIGN_VLAN_TO_TRUNK_PORT-V3",
+      "positive_variant_spec": "docs/evaluations/phase_g_native_positive_variants_v3.json"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-ASSIGN_VLAN_TO_TRUNK_PORT",
+      "operation_id": "assign_vlan_to_trunk_port",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/033-juniper-attempt-89.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CLASSIFY_BY_DSCP",
+      "operation_id": "classify_by_dscp",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/034-cisco-attempt-90.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CLASSIFY_BY_DSCP",
+      "operation_id": "classify_by_dscp",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/036-juniper-attempt-91.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CLASSIFY_BY_DSCP",
+      "operation_id": "classify_by_dscp",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-27: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-27"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_ACCESS_PORT",
+      "operation_id": "configure_access_port",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/037-cisco-attempt-92.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_ACCESS_PORT",
+      "operation_id": "configure_access_port",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/039-juniper-attempt-93.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_ACCESS_PORT",
+      "operation_id": "configure_access_port",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-30: This operation requires an explicitly reviewed hardware/NOS profile and capability facts.",
+          "device": "G7-huawei-30"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_BGP_NEIGHBOR",
+      "operation_id": "configure_bgp_neighbor",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/004-cisco-attempt-14.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_BGP_NEIGHBOR",
+      "operation_id": "configure_bgp_neighbor",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/005-huawei-attempt-8.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_BGP_NEIGHBOR",
+      "operation_id": "configure_bgp_neighbor",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/006-juniper-attempt-15.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_EXEC_TIMEOUT",
+      "operation_id": "configure_exec_timeout",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/040-cisco-attempt-21.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_EXEC_TIMEOUT",
+      "operation_id": "configure_exec_timeout",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/042-juniper-attempt-23.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_EXEC_TIMEOUT",
+      "operation_id": "configure_exec_timeout",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/041-huawei-attempt-22.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_INTERFACE_IP",
+      "operation_id": "configure_interface_ip",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/043-cisco-attempt-24.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_INTERFACE_IP",
+      "operation_id": "configure_interface_ip",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/044-huawei-attempt-25.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_INTERFACE_IP",
+      "operation_id": "configure_interface_ip",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/045-juniper-attempt-26.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_ISIS_INTERFACE",
+      "operation_id": "configure_isis_interface",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/046-cisco-attempt-27.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_ISIS_INTERFACE",
+      "operation_id": "configure_isis_interface",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/047-huawei-attempt-28.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_ISIS_INTERFACE",
+      "operation_id": "configure_isis_interface",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/048-juniper-attempt-29.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_LOGIN_BANNER",
+      "operation_id": "configure_login_banner",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/049-cisco-attempt-30.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_LOGIN_BANNER",
+      "operation_id": "configure_login_banner",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/051-juniper-attempt-32.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_LOGIN_BANNER",
+      "operation_id": "configure_login_banner",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/050-huawei-attempt-31.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_LOGIN_LOCKOUT",
+      "operation_id": "configure_login_lockout",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/052-cisco-attempt-36.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_LOGIN_LOCKOUT",
+      "operation_id": "configure_login_lockout",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/054-juniper-attempt-38.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_LOGIN_LOCKOUT",
+      "operation_id": "configure_login_lockout",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/053-huawei-attempt-37.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_LOOPBACK_INTERFACE",
+      "operation_id": "configure_loopback_interface",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/055-cisco-attempt-94.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_LOOPBACK_INTERFACE",
+      "operation_id": "configure_loopback_interface",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/057-juniper-attempt-115.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "positive_test_id": "G7-NATIVE-JUNIPER-CONFIGURE_LOOPBACK_INTERFACE-V2",
+      "original_invalid_fixture_preserved": true
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_LOOPBACK_INTERFACE",
+      "operation_id": "configure_loopback_interface",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-51: This operation requires an explicitly reviewed hardware/NOS profile and capability facts.",
+          "device": "G7-huawei-51"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_OSPF",
+      "operation_id": "configure_ospf",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/058-cisco-attempt-39.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_OSPF",
+      "operation_id": "configure_ospf",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/059-huawei-attempt-40.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_OSPF",
+      "operation_id": "configure_ospf",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/060-juniper-attempt-41.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_OSPF_REDISTRIBUTION",
+      "operation_id": "configure_ospf_redistribution",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/061-cisco-attempt-95.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_OSPF_REDISTRIBUTION",
+      "operation_id": "configure_ospf_redistribution",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/063-juniper-attempt-96.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_OSPF_REDISTRIBUTION",
+      "operation_id": "configure_ospf_redistribution",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-57: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-57"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_PASSIVE_INTERFACE",
+      "operation_id": "configure_passive_interface",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/064-cisco-attempt-97.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_PASSIVE_INTERFACE",
+      "operation_id": "configure_passive_interface",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/066-juniper-attempt-42.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_PASSIVE_INTERFACE",
+      "operation_id": "configure_passive_interface",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-60: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-60"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_PORT_CHANNEL",
+      "operation_id": "configure_port_channel",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/070-cisco-attempt-98.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_PORT_CHANNEL",
+      "operation_id": "configure_port_channel",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/072-juniper-attempt-111.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_PORT_CHANNEL",
+      "operation_id": "configure_port_channel",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-63: This operation requires an explicitly reviewed hardware/NOS profile and capability facts.",
+          "device": "G7-huawei-63"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_SCHEDULER",
+      "operation_id": "configure_scheduler",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/073-cisco-attempt-99.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_SCHEDULER",
+      "operation_id": "configure_scheduler",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/075-juniper-attempt-45.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_SCHEDULER",
+      "operation_id": "configure_scheduler",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-66: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-66"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_SHAPING",
+      "operation_id": "configure_shaping",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/076-cisco-attempt-46.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_SHAPING",
+      "operation_id": "configure_shaping",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/078-juniper-attempt-47.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_SHAPING",
+      "operation_id": "configure_shaping",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-69: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-69"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_STATIC_ROUTE",
+      "operation_id": "configure_static_route",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/007-cisco-attempt-10.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_STATIC_ROUTE",
+      "operation_id": "configure_static_route",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/008-huawei-attempt-11.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_STATIC_ROUTE",
+      "operation_id": "configure_static_route",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/009-juniper-attempt-12.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_TRUNK_ALLOWED_VLANS",
+      "operation_id": "configure_trunk_allowed_vlans",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/079-cisco-attempt-112.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_TRUNK_ALLOWED_VLANS",
+      "operation_id": "configure_trunk_allowed_vlans",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/081-juniper-attempt-100.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_TRUNK_ALLOWED_VLANS",
+      "operation_id": "configure_trunk_allowed_vlans",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-75: This operation requires an explicitly reviewed hardware/NOS profile and capability facts.",
+          "device": "G7-huawei-75"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_TRUNK_PORT",
+      "operation_id": "configure_trunk_port",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/082-cisco-attempt-116.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "positive_test_id": "G7-NATIVE-CISCO-CONFIGURE_TRUNK_PORT-V2",
+      "original_invalid_fixture_preserved": true
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_TRUNK_PORT",
+      "operation_id": "configure_trunk_port",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/084-juniper-attempt-117.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "positive_test_id": "G7-NATIVE-JUNIPER-CONFIGURE_TRUNK_PORT-V2",
+      "original_invalid_fixture_preserved": true
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_TRUNK_PORT",
+      "operation_id": "configure_trunk_port",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-78: This operation requires an explicitly reviewed hardware/NOS profile and capability facts.",
+          "device": "G7-huawei-78"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CREATE_ACL",
+      "operation_id": "create_acl",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/085-cisco-attempt-48.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CREATE_ACL",
+      "operation_id": "create_acl",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/087-juniper-attempt-49.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CREATE_ACL",
+      "operation_id": "create_acl",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-81: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-81"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CREATE_CLASSIFIER",
+      "operation_id": "create_classifier",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/088-cisco-attempt-101.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CREATE_CLASSIFIER",
+      "operation_id": "create_classifier",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/090-juniper-attempt-102.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CREATE_CLASSIFIER",
+      "operation_id": "create_classifier",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-84: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-84"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CREATE_OSPF_AREA",
+      "operation_id": "create_ospf_area",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/091-cisco-attempt-118.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "positive_test_id": "G7-NATIVE-CISCO-CREATE_OSPF_AREA-V2",
+      "original_invalid_fixture_preserved": true
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CREATE_OSPF_AREA",
+      "operation_id": "create_ospf_area",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/093-juniper-attempt-119.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "positive_test_id": "G7-NATIVE-JUNIPER-CREATE_OSPF_AREA-V2",
+      "original_invalid_fixture_preserved": true
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CREATE_OSPF_AREA",
+      "operation_id": "create_ospf_area",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-87: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-87"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CREATE_QOS_POLICY",
+      "operation_id": "create_qos_policy",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/094-cisco-attempt-50.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CREATE_QOS_POLICY",
+      "operation_id": "create_qos_policy",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/096-juniper-attempt-51.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CREATE_QOS_POLICY",
+      "operation_id": "create_qos_policy",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-90: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-90"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CREATE_VLAN",
+      "operation_id": "create_vlan",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/130-cisco-attempt-73.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CREATE_VLAN",
+      "operation_id": "create_vlan",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/131-huawei-attempt-74.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CREATE_VLAN",
+      "operation_id": "create_vlan",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/132-juniper-attempt-75.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-DELETE_ACL_RULE",
+      "operation_id": "delete_acl_rule",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/097-cisco-attempt-103.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-DELETE_ACL_RULE",
+      "operation_id": "delete_acl_rule",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/099-juniper-attempt-104.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-DELETE_ACL_RULE",
+      "operation_id": "delete_acl_rule",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-96: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-96"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-DELETE_VLAN",
+      "operation_id": "delete_vlan",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/133-cisco-attempt-76.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-DELETE_VLAN",
+      "operation_id": "delete_vlan",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/134-huawei-attempt-77.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-DELETE_VLAN",
+      "operation_id": "delete_vlan",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/135-juniper-attempt-78.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-DISABLE_ISIS_INTERFACE",
+      "operation_id": "disable_isis_interface",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/100-cisco-attempt-52.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-DISABLE_ISIS_INTERFACE",
+      "operation_id": "disable_isis_interface",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/101-huawei-attempt-53.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-DISABLE_ISIS_INTERFACE",
+      "operation_id": "disable_isis_interface",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/102-juniper-attempt-54.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-ENABLE_OSPF_PROCESS",
+      "operation_id": "enable_ospf_process",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/103-cisco-attempt-55.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-ENABLE_OSPF_PROCESS",
+      "operation_id": "enable_ospf_process",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/105-juniper-attempt-56.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-ENABLE_OSPF_PROCESS",
+      "operation_id": "enable_ospf_process",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-105: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-105"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-MODIFY_ACL_RULE",
+      "operation_id": "modify_acl_rule",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/106-cisco-attempt-105.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-MODIFY_ACL_RULE",
+      "operation_id": "modify_acl_rule",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/108-juniper-attempt-106.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-MODIFY_ACL_RULE",
+      "operation_id": "modify_acl_rule",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-108: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-108"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-MODIFY_VLAN",
+      "operation_id": "modify_vlan",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/136-cisco-attempt-107.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-MODIFY_VLAN",
+      "operation_id": "modify_vlan",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/138-juniper-attempt-108.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-MODIFY_VLAN",
+      "operation_id": "modify_vlan",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-111: This operation requires an explicitly reviewed hardware/NOS profile and capability facts.",
+          "device": "G7-huawei-111"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-REMOVE_BGP_NEIGHBOR",
+      "operation_id": "remove_bgp_neighbor",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/109-cisco-attempt-57.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-REMOVE_BGP_NEIGHBOR",
+      "operation_id": "remove_bgp_neighbor",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/110-huawei-attempt-58.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-REMOVE_BGP_NEIGHBOR",
+      "operation_id": "remove_bgp_neighbor",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/111-juniper-attempt-59.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-REMOVE_INTERFACE_IP",
+      "operation_id": "remove_interface_ip",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/112-cisco-attempt-60.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-REMOVE_INTERFACE_IP",
+      "operation_id": "remove_interface_ip",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/113-huawei-attempt-61.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-REMOVE_INTERFACE_IP",
+      "operation_id": "remove_interface_ip",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/114-juniper-attempt-62.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-REMOVE_OSPF_INTERFACE",
+      "operation_id": "remove_ospf_interface",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/115-cisco-attempt-63.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-REMOVE_OSPF_INTERFACE",
+      "operation_id": "remove_ospf_interface",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/116-huawei-attempt-64.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-REMOVE_OSPF_INTERFACE",
+      "operation_id": "remove_ospf_interface",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/117-juniper-attempt-65.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-RENAME_VLAN",
+      "operation_id": "rename_vlan",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/139-cisco-attempt-109.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-RENAME_VLAN",
+      "operation_id": "rename_vlan",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/141-juniper-attempt-110.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-RENAME_VLAN",
+      "operation_id": "rename_vlan",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-123: This operation requires an explicitly reviewed hardware/NOS profile and capability facts.",
+          "device": "G7-huawei-123"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-SET_INTERFACE_ADMIN_STATE",
+      "operation_id": "set_interface_admin_state",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/121-cisco-attempt-69.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-SET_INTERFACE_ADMIN_STATE",
+      "operation_id": "set_interface_admin_state",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "V200R024C10"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/122-huawei-attempt-121.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "original_failed_fixture": {
+        "journey_status": "BLOCKED_COMPATIBILITY",
+        "journey_trace": null,
+        "v9_review_preflight": "BLOCKED",
+        "issues": [
+          {
+            "type": "DEVICE_CONTEXT",
+            "field": "interface",
+            "message": "G7-huawei-125: This profile supports physical Ethernet interface properties only.",
+            "device": "G7-huawei-125",
+            "value": "GigabitEthernet0/0/5",
+            "source": "user",
+            "evidence": "Explicit review: set_interface_admin_state",
+            "device_id": "3125",
+            "operation_id": "set_interface_admin_state",
+            "validation": "rejected"
+          },
+          {
+            "type": "MISSING",
+            "field": "interface",
+            "message": "Required parameter 'interface' was not specified."
+          }
+        ]
+      },
+      "positive_variant": "G7-NATIVE-HUAWEI-SET_INTERFACE_ADMIN_STATE-V3",
+      "positive_variant_spec": "docs/evaluations/phase_g_native_positive_variants_v3.json"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-SET_INTERFACE_ADMIN_STATE",
+      "operation_id": "set_interface_admin_state",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/123-juniper-attempt-70.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-SET_INTERFACE_DESCRIPTION",
+      "operation_id": "set_interface_description",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/124-cisco-attempt-71.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-SET_INTERFACE_DESCRIPTION",
+      "operation_id": "set_interface_description",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "V200R024C10"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/125-huawei-attempt-122.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "original_failed_fixture": {
+        "journey_status": "BLOCKED_COMPATIBILITY",
+        "journey_trace": null,
+        "v9_review_preflight": "BLOCKED",
+        "issues": [
+          {
+            "type": "DEVICE_CONTEXT",
+            "field": "interface",
+            "message": "G7-huawei-128: This profile supports physical Ethernet interface properties only.",
+            "device": "G7-huawei-128",
+            "value": "GigabitEthernet0/0/5",
+            "source": "user",
+            "evidence": "Explicit review: set_interface_description",
+            "device_id": "3128",
+            "operation_id": "set_interface_description",
+            "validation": "rejected"
+          },
+          {
+            "type": "MISSING",
+            "field": "interface",
+            "message": "Required parameter 'interface' was not specified."
+          }
+        ]
+      },
+      "positive_variant": "G7-NATIVE-HUAWEI-SET_INTERFACE_DESCRIPTION-V3",
+      "positive_variant_spec": "docs/evaluations/phase_g_native_positive_variants_v3.json"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-SET_INTERFACE_DESCRIPTION",
+      "operation_id": "set_interface_description",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/126-juniper-attempt-72.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-SET_NATIVE_VLAN",
+      "operation_id": "set_native_vlan",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/127-cisco-attempt-113.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-SET_NATIVE_VLAN",
+      "operation_id": "set_native_vlan",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "V200R024C10"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/128-huawei-attempt-123.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT",
+      "original_failed_fixture": {
+        "journey_status": "BLOCKED_COMPATIBILITY",
+        "journey_trace": null,
+        "v9_review_preflight": "BLOCKED",
+        "issues": [
+          {
+            "type": "DEVICE_CONTEXT",
+            "field": "interface",
+            "message": "G7-huawei-131: Use a recorded switchport-capable physical port that is not an aggregate member.",
+            "device": "G7-huawei-131",
+            "value": "GigabitEthernet0/0/5",
+            "source": "user",
+            "evidence": "Explicit review: set_native_vlan",
+            "device_id": "3131",
+            "operation_id": "set_native_vlan",
+            "validation": "rejected"
+          },
+          {
+            "type": "DEVICE_CONTEXT",
+            "field": "native_vlan",
+            "message": "G7-huawei-131: The requested native VLAN must already be in the recorded allowed list.",
+            "device": "G7-huawei-131",
+            "value": 240,
+            "source": "user",
+            "evidence": "Explicit review: set_native_vlan",
+            "device_id": "3131",
+            "operation_id": "set_native_vlan",
+            "validation": "rejected"
+          },
+          {
+            "type": "MISSING",
+            "field": "interface",
+            "message": "Required parameter 'interface' was not specified."
+          },
+          {
+            "type": "MISSING",
+            "field": "native_vlan",
+            "message": "Required parameter 'native_vlan' was not specified."
+          }
+        ]
+      },
+      "positive_variant": "G7-NATIVE-HUAWEI-SET_NATIVE_VLAN-V3",
+      "positive_variant_spec": "docs/evaluations/phase_g_native_positive_variants_v3.json"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-SET_NATIVE_VLAN",
+      "operation_id": "set_native_vlan",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/129-juniper-attempt-114.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-SET_OSPF_ROUTER_ID",
+      "operation_id": "set_ospf_router_id",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/001-cisco-attempt-4.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-SET_OSPF_ROUTER_ID",
+      "operation_id": "set_ospf_router_id",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/003-juniper-attempt-6.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-SET_OSPF_ROUTER_ID",
+      "operation_id": "set_ospf_router_id",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-135: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-135"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-CONFIGURE_POLICING",
+      "operation_id": "configure_policing",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/067-cisco-attempt-43.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-CONFIGURE_POLICING",
+      "operation_id": "configure_policing",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/069-juniper-attempt-44.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-CONFIGURE_POLICING",
+      "operation_id": "configure_policing",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "BLOCKED_COMPATIBILITY",
+      "journey_trace": null,
+      "v9_review_preflight": "BLOCKED",
+      "issues": [
+        {
+          "type": "UNSUPPORTED_OPERATION",
+          "field": "operation_id",
+          "message": "G7-huawei-138: Unsupported or unreviewed resource-policy profile.",
+          "device": "G7-huawei-138"
+        }
+      ],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-CISCO-REMOVE_STATIC_ROUTE",
+      "operation_id": "remove_static_route",
+      "vendor": "cisco",
+      "platform": "iosxe",
+      "versions": [
+        "17.9"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/118-cisco-attempt-66.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-HUAWEI-REMOVE_STATIC_ROUTE",
+      "operation_id": "remove_static_route",
+      "vendor": "huawei",
+      "platform": "vrp",
+      "versions": [
+        "8"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/119-huawei-attempt-67.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    },
+    {
+      "id": "G7-NATIVE-JUNIPER-REMOVE_STATIC_ROUTE",
+      "operation_id": "remove_static_route",
+      "vendor": "juniper",
+      "platform": "junos",
+      "versions": [
+        "23.4"
+      ],
+      "journey_status": "PASS",
+      "journey_trace": "tmp/phase-g/iterations/20261022T082839.745087Z-G7-native-journeys-2a3cb6/120-juniper-attempt-68.json",
+      "v9_review_preflight": "PASS",
+      "issues": [],
+      "playbook_variant_status": "UNSUPPORTED_NO_ACTIVE_VALIDATED_VARIANT"
+    }
+  ],
+  "unique_native_cases_attempted": 43,
+  "actual_attempts": 52,
+  "initial_single_operation_parameter_match_among_passed": 0,
+  "initial_match_scope": "Exact pre-review single-operation+parameter match on final-passed exposed cases; not held-out reasoning accuracy. Explicit engineer review corrects all successful outputs.",
+  "browser_vendor_acceptance": {
+    "cisco": "PASS",
+    "juniper": "PASS",
+    "huawei": "PASS",
+    "scope": "Representative single-operation native workflows; not all branch/multioperation/browser gates"
+  },
+  "latest_acceptance": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/G7-current-contract-and-tooling-review.json"
+}

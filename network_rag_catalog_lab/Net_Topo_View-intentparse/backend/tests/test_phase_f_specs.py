@@ -201,3 +201,85 @@ def test_followup_setup_requires_the_actual_proposal_not_just_http_success():
     prompt='Propose changing the active BGP neighbor address to 192.0.2.71; do not accept or save.'
     assert not setup_turn_completed(prompt,{'status':'success','kind':'answer','answer':'Here is an explanation.'})
     assert setup_turn_completed(prompt,{'status':'success','kind':'edit_proposal','proposal':{'original':'actual','suggested':'reviewable'}})
+
+
+def test_fresh_registry_is_explicit_and_does_not_fall_back_to_historical_facts():
+    import sys
+    sys.path.insert(0,str(ROOT/'backend'))
+    from scripts.evaluate_phase_f_registry import load_registry
+    path,spec,fixture=load_registry('docs/evaluations/phase_g_fresh_routing_v1.json')
+    assert path.name=='phase_g_fresh_routing_v1.json'
+    assert len(spec['routing_cases'])==120 and fixture['id']=='G11-CONTROLLED-48271'
+    assert fixture['devices'][0]['hostname']=='Amber-Edge'
+    historical,_,old_fixture=load_registry(None)
+    assert historical.name=='phase_f_case_registry.json' and old_fixture['id']=='F-FROZEN-34941'
+
+
+def test_registry_file_scope_and_unique_case_contracts_are_checked(tmp_path):
+    import sys,pytest
+    sys.path.insert(0,str(ROOT/'backend'))
+    from scripts.evaluate_phase_f_registry import load_registry,validate_registry
+    outside=tmp_path/'private.json';outside.write_text('{}')
+    with pytest.raises(ValueError,match='evaluation directory'):load_registry(str(outside))
+    spec=registry();spec['routing_cases'][1]['id']=spec['routing_cases'][0]['id']
+    with pytest.raises(ValueError,match='unique'):validate_registry(spec)
+
+
+def test_logical_source_credit_requires_reader_result_not_a_model_plan():
+    import sys
+    sys.path.insert(0,str(ROOT/'backend'))
+    from scripts.evaluate_phase_f_registry import selected_logical_sources
+    request={'source_categories':['routing_state']}
+    assert not selected_logical_sources({'observations':[], 'context_coverage':{'tool_plan':request}})
+    assert not selected_logical_sources({'observations':[{'tool':'network.state','source_request':request,'data':{}}]})
+    record={'observations':[{'tool':'network.state','source_request':request,
+        'data':{'records':[{'source_category':'routing_state'}],'source_statuses':{'routing_state':'STALE'}}}]}
+    assert selected_logical_sources(record)=={'routing_state'}
+    assert selected_logical_sources({'observations':[{'tool':'network.state','status':'error',
+        'data':{'source_statuses':{'routing_state':'ERROR'}}}]})=={'routing_state'}
+
+
+def test_full_source_registry_activation_reuses_owned_bundle_lifecycle(tmp_path):
+    import sys
+    sys.path.insert(0,str(ROOT/'backend'))
+    from development.bundles import load_bundle,compile_bundle
+    from scripts.evaluate_phase_f_registry import activate_registry,validate_registry
+    from local_providers.development import ScenarioManager
+    bundle=load_bundle(ROOT/'backend/development/scenarios/healthy_all_sources_v2')
+    fixture=compile_bundle(bundle)
+    spec={'routing_bundle':bundle,'routing_fixture':fixture}
+    validate_registry(spec)
+    manager=ScenarioManager(tmp_path/'state.json',enabled_default=False)
+    activate_registry(manager,spec,fixture)
+    scenario,meta=manager.snapshot()
+    assert len(scenario['source_statuses'])==24
+    assert manager.activated_bundle()['sources']['documents']['data']['files']
+    assert meta['source_revision']
+
+
+def test_curated_arm_keeps_raw_model_failure_without_verifier_repair():
+    import asyncio
+    from types import SimpleNamespace
+    from unittest.mock import AsyncMock
+    import sys
+    sys.path.insert(0,str(ROOT/'backend'))
+    from scripts.evaluate_phase_f_registry import curated_model_answer
+    raw='An unsupported diagnosis retained for independent grading.'
+    model=SimpleNamespace(generate=AsyncMock(return_value=(raw,'qwen2.5:1.5b')))
+    answer,report=asyncio.run(curated_model_answer(model,'Explain the evidence',[],[],[],{},[]))
+    assert answer==raw and report['repair_attempts']==0 and not report['fallback']
+    assert model.generate.await_count==1
+    assert model.generate.call_args.kwargs['purpose']=='model_only'
+
+
+def test_curated_scope_includes_frozen_transit_evidence_and_rejects_unknown_refs():
+    import pytest
+    import sys
+    sys.path.insert(0,str(ROOT/'backend'))
+    from scripts.evaluate_phase_f_registry import curated_references
+    inventory={'devices':[{'hostname':name} for name in ['Edge','Transit','Exit']]}
+    expand=lambda token:{'{A}':'Edge','{B}':'Transit','{C}':'Exit'}[token]
+    row={'curated_device_tokens':['{A}','{B}','{C}']}
+    assert curated_references(row,inventory,['Investigate Edge to Exit'],expand)==['Edge','Transit','Exit']
+    with pytest.raises(ValueError,match='controlled fixture'):
+        curated_references(row,{'devices':[{'hostname':'Edge'}]},[],expand)

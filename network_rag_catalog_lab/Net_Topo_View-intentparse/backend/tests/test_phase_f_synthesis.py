@@ -98,6 +98,7 @@ def test_protocol_roles_do_not_make_the_local_router_its_own_neighbor():
     assert check_candidate(good.replace('state Full','healthy state'),context,evidence,{},question)
     assert check_candidate(good.replace('state Full','Full/Established state'),context,evidence,{},question)
     assert check_candidate(good+' There are no unverified prerequisites.',context,evidence,{},question)
+    assert check_candidate(good+' There are no conflicting observations or unverified prerequisites.',context,evidence,{},question)
     assert check_candidate(good.replace('Birch-Core','an unnamed peer'),context,evidence,{},question)
     assert not check_candidate(good+' Authentication remains unchecked.',context,evidence,{},question)
 
@@ -345,7 +346,10 @@ def test_direct_reachability_question_uses_flow_records_not_protocol_health():
     good='The recorded ICMP forward result is delivered, but the return result is failed. These development-simulation observations do not establish full connectivity. [S1]'
     assert not check_candidate(good,context,evidence,{},question)
     unrelated=projection(context,evidence,{},'Explain the recorded OSPF state.')
-    assert unrelated['forwarding_results']==[]
+    # Source constraints survive phrasing changes, while presentation focus
+    # still leaves an OSPF question on its actual protocol records.
+    assert unrelated['forwarding_focus'] is False
+    assert any(row.get('protocol')=='OSPF' for row in unrelated['records'][0]['data']['records'])
 
 
 def test_forwarding_synthesis_cannot_hide_current_observation_conflicts():
@@ -756,11 +760,10 @@ def test_source_health_answer_preserves_statuses_time_and_override_disagreement(
             packets.append(messages[-1]['content']);raise ValueError('Controlled unavailable model')
         def available(self,purpose):return False
     answer,report=asyncio.run(synthesize(Model(),'test','Which source categories are stale or in error?',context,evidence,{},'fallback'))
-    assert 'telemetry' in packets[0] and 'STALE' in packets[0] and 'AVAILABLE' in packets[0]
-    assert 'syslog' in packets[0] and 'ERROR' in packets[0]
+    assert packets==[]  # Availability metadata cannot authorize device-health prose.
     assert all(token in answer for token in ['telemetry','STALE','AVAILABLE','syslog','ERROR','2026-10-18T01:00:00Z'])
     assert 'disagree' in answer.lower() and 'No collection from physical devices' in answer
-    assert report['status']=='unavailable_fallback'
+    assert report['status']=='source_metadata_fallback' and not report['model_synthesis']
     bad='The logical sources that are stale or in error are `telemetry` and `syslog`, both with an authored health claim of **STALE** and an effective selected-revision status of **STALE**. Recorded at 2026-10-18T01:00:00Z. [S1]'
     errors=check_candidate(bad,context,evidence,{},'Which source categories are stale or in error?')
     assert any('category' in error and 'match' in error for error in errors)
@@ -780,7 +783,7 @@ def test_source_health_disagreement_accepts_negative_agreement_and_rejects_denia
         assert check_candidate(base+explanation,context,[],{},'Does the source health record agree?')
 
 
-def test_source_health_time_caption_is_exact_and_never_replaces_a_model_time_claim():
+def test_source_health_projection_keeps_actual_time_without_releasing_model_time_claims():
     context=[{'tool':'network.state','status':'success','evidence_ids':['health'],'data':{'records':[
         {'kind':'source_health','timestamp':'2026-10-18T01:01:00Z','sources':{'telemetry':'AVAILABLE'},'physical_collection_performed':False}],
         'effective_source_statuses':{'telemetry':{'status':'ERROR'}}}}]
@@ -791,13 +794,14 @@ def test_source_health_time_caption_is_exact_and_never_replaces_a_model_time_cla
         async def generate(self,*args,**kwargs):return json.dumps({'answer':self.text,'sources':['S1'],'hypotheses':[]}), 'test'
         def available(self,purpose):return True
     answer,report=asyncio.run(synthesize(Model(original),'test','Read source health.',context,evidence,{},'fallback'))
-    assert report['status']=='literal_checks_passed'
+    assert report['status']=='source_metadata_fallback' and not report['model_synthesis']
     assert '2026-10-18T01:01:00Z' in answer
-    assert report['attempts'][0]['observation_time_projected']
-    assert report['attempts'][0]['model_candidate']['answer']==original
-    _,bad=asyncio.run(synthesize(Model(original+' Captured at 2026-10-18T02:00:00Z.'),'test','Read source health.',context,evidence,{},'fallback'))
-    assert bad['status']=='rejected_fallback'
-    assert not any(attempt.get('observation_time_projected') for attempt in bad['attempts'])
+    assert report['attempts']==[]
+    wrong=original+' Captured at 2026-10-18T02:00:00Z.'
+    bad_answer,bad=asyncio.run(synthesize(Model(wrong),'test','Read source health.',context,evidence,{},'fallback'))
+    assert bad['status']=='source_metadata_fallback' and bad['attempts']==[]
+    assert '2026-10-18T02:00:00Z' not in bad_answer
+    assert check_candidate(wrong,context,evidence,{},'Read source health.')
 
 def test_missing_section_in_returned_capture_does_not_establish_absence_on_device():
     from llm.orchestration.synthesis import comparison_gap_errors
@@ -842,4 +846,19 @@ def test_interface_projection_retains_requested_observed_prefix_and_complete_sta
     assert facts[0]['prefix']=='10.73.0.1/30'
     omitted='GigabitEthernet0/1; operational down; recorded2026-10-18T01:00:00Z. [S1]'
     assert check_candidate(omitted,context,[Evidence(id='state',source='development.state',origin='simulated')],{},question)
+
+def test_ordinary_nested_counter_projection_preserves_field_value_association():
+    from llm.orchestration.synthesis import metric_observations,counter_field_errors
+    context=[{'tool':'network.telemetry','status':'success','data':{'sources':[{'data':{'records':[
+        {'hostname':'R1','interface':'Gi0/1','time':'2026-10-23T00:02:53Z','errors':13.0,'discards':4.0}
+    ]}}]}}]
+    facts=metric_observations(context)
+    assert {f['metric']:f['samples'][0]['value'] for f in facts}=={'errors':13.0,'discards':4.0}
+    question='Read the errors and discards counters.'
+    assert counter_field_errors('There are 4 errors and 13 discards.',facts,question)
+    assert counter_field_errors('The errors and discards counters are 4.0.',facts,question)
+    assert not counter_field_errors('R1 Gi0/1 has 13 errors and 4 discards in the recorded sample.',facts,question)
+    assert not counter_field_errors('Recorded errors: 13.0; discards: 4.',facts,question)
+    assert not counter_field_errors('The recorded errors counter for R1 Gi0/1 is 13.0. The discards counter is 4.0.',facts,question)
+    assert counter_field_errors('The errors counter for R1 Gi0/1 is 4.0. The discards counter is 13.0.',facts,question)
 

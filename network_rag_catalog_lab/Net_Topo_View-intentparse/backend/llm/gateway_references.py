@@ -6,6 +6,21 @@ resolved request still passes through the existing authorized service registry.
 import re
 
 
+def requested_program_artifact(prompt):
+    """An explicit program output is not authorization for a V9 artifact.
+
+    This constrains the requested artifact type, not network operations or
+    their schemas. Existing-buffer requests retain the reviewed editing lane.
+    """
+    request=re.match(r'\s*(?:please\s+)?(?:(?:can|could|would)\s+you\s+)?(?:write|create|generate|produce|build|draft)\b(.+)',prompt,re.I|re.S)
+    if not request:return False
+    subject=request[1].split(';',1)[0][:240]
+    if re.search(r'\b(?:active|current|open|unsaved|selected|existing|this|that)\s+(?:[\w-]+\s+){0,2}(?:file|buffer|code|script|program|function|document|template)\b|\b(?:editor|Monaco)\b',subject,re.I):return False
+    language=re.search(r'\b(?:Python|JavaScript|TypeScript|Java|Rust|Ruby|PowerShell|Bash|SQL|JSON)\b|(?<!\w)C\+\+(?!\w)',subject,re.I)
+    artifact=re.search(r'\b(?:function|script|program|class|module|snippet|code|example|query|object)\b',subject,re.I)
+    return bool(language and artifact)
+
+
 def requested_authoring_artifact(prompt):
     """Explicit output-language requests constrain workflow, not V9 operations."""
     request=re.match(r'\s*(?:please\s+)?(?:(?:can|could|would)\s+you\s+)?(?:prepare|draft|write|produce|build|generate|create)\b(.+)',prompt,re.I|re.S)
@@ -30,6 +45,46 @@ def read_intent_text(prompt):
         r'(?:(?!\b(?:but|instead|rather|then)\b)[^.!?;,\n]){0,300}', '',prompt,flags=re.I)
 
 
+def read_only_request(prompt):
+    """An information speech act cannot authorize an engineering proposal.
+
+    Operation recognition remains V9-owned. This only distinguishes a request
+    to explain an edit from a request to perform one, including compound asks.
+    """
+    text=read_intent_text(prompt)
+    read=re.match(r'\s*(?:please\s+)?(?:(?:can|could|would)\s+you\s+)?(?:explain|describe|summari[sz]e|compare|contrast|read|show|tell|what|which|why|how|where|when)\b',text,re.I)
+    effect=re.search(r'(?:[;.!]\s*|\b(?:then|and|but)\s+)(?:please\s+)?(?:replace|modify|edit|change|correct|fix|refactor|rename|add|remove|delete|generate|create|build|write|prepare|configure|enable|disable)\b',text,re.I)
+    return bool(read and not effect)
+
+
+def relational_read(prompt,response_kind='direct'):
+    """Direct attribute projections cannot fulfill comparisons/explanations."""
+    return response_kind in {'explanation','comparison','investigation'} or bool(re.search(
+        r'\b(?:compar\w*|contrast\w*|distinguish\w*|explain\w*|interpret\w*|difference|significance|why)\b',prompt,re.I))
+
+
+def previous_context_reference(previous):
+    """Owner-bound intent/source identities, never prior assistant facts."""
+    if not previous:return {}
+    old=previous.get('context_coverage',{}).get('retrieval',{})
+    result={}
+    if old.get('domains'):
+        try:
+            scopes=source_scope_references(old.get('source_requests'))
+            if any(domain not in {'inventory','topology','configuration','state','syslog','telemetry','incidents','knowledge'} for domain in old['domains']):raise ValueError('Unknown prior reader')
+            result['read']={key:old.get(key,[])[:10] for key in ['domains','device_refs','interface_refs','attributes']}
+            result['read']['source_requests']=scopes
+        except (ValueError,TypeError):
+            pass  # An obsolete/corrupt reference never becomes authority.
+    proposal=previous.get('proposal') if previous.get('kind')=='edit_proposal' else None
+    if proposal:
+        result['engineering']={'kind':'edit_proposal','document_id':proposal.get('document_id'),
+            'path':proposal.get('path'),'request_id':previous.get('request_id')}
+    elif previous.get('kind')=='generation_preview':
+        result['engineering']={'kind':'generation_preview','request_id':previous.get('request_id')}
+    return result
+
+
 def source_scope_references(value):
     """Bounded intent references only; no observations, SQL or permission state."""
     if not value:return {}
@@ -43,7 +98,7 @@ def source_scope_references(value):
         if set(query)-fields:raise ValueError('Only source/time scope references may be retained')
         parsed=NetworkQuery.model_validate(query)
         tool={'inventory':'inventory.read','knowledge':'knowledge.search'}.get(domain,'network.'+domain)
-        if any(BY_KEY[key].tool!=tool for key in parsed.source_categories):raise ValueError('Stored source category does not match reader')
+        if any(not BY_KEY[key].supports(tool) for key in parsed.source_categories):raise ValueError('Stored source category does not match reader')
         # Keep old checkpoints compatible without manufacturing a 60-minute
         # window. Only explicitly supplied time bounds are durable intent.
         result[domain]=parsed.model_dump(mode='json',exclude_none=True,
@@ -76,7 +131,11 @@ def attributes(prompt):
         ('addresses',r'\b(ip|ips|addresses?|addressing)\b'),('vendor',r'\bvendors?\b'),
         ('model',r'\bmodels?\b'),('os_version',r'\b(versions?|os|firmware)\b|\b(?:software|operating system)\s+release\b'),
         ('role',r'\broles?\b'),('site',r'\b(sites?|locations?)\b'),('status',r'\bstatus\b')]:
-        if re.search(pattern,prompt,re.I):result.append(name)
+        # A peer's protocol role is not the device's inventory role. Keep
+        # explicit device-role questions available without letting a protocol
+        # comparison become an exact inventory-only lookup.
+        wording=re.sub(r'\b(?:peer|neighbou?r|protocol)\s+(?:operational\s+)?roles?\b','',prompt,flags=re.I) if name=='role' else prompt
+        if re.search(pattern,wording,re.I):result.append(name)
     return result
 
 
@@ -86,14 +145,32 @@ def published_knowledge_read(prompt,inventory):
     V9 still resolves the operation and supplies its actual contract. This only
     selects the existing source capability, with no prompt-specific operation ID.
     """
-    if re.search(r'\b(editor|buffer|open file|active document|selected code)\b',prompt,re.I):return None
-    from development.source_registry import explicit_read_sources,BY_KEY
+    from development.source_registry import explicit_read_sources,BY_KEY,reader_domains
     explicit=explicit_read_sources(prompt,(inventory or {}).get('logical_source_categories',[]))
     scenario_reference='knowledge' in explicit
-    wording=re.sub(r'\b(?:do not|don.t|without)\s+(?:generat\w*|creat\w*|edit\w*|modif\w*)\b','',prompt,flags=re.I)
+    wording=read_intent_text(prompt)
     if re.search(r'\b(generate|create|edit|modify|apply|deploy|publish)\b',wording,re.I):return None
-    if not scenario_reference and not (re.search(r'\b(published|catalog)\b',prompt,re.I) and re.search(r'\b(knowledge|operations?|methods?|schemas?|contracts?|parameters?|fields?|requirements?|inputs?)\b',prompt,re.I)
-            and re.search(r'\b(what|which|explain|describe|compare|list|show|require\w*)\b',prompt,re.I)):return None
+    # A method located in the supplied document is a document subject. An
+    # explicit comparison with the published catalog still reads both sources.
+    if (not re.search(r'\b(?:compar\w*|contrast\w*|against)\b',wording,re.I)
+            and re.search(r'\b(?:method|operation|schema|contract)\s+(?:(?:shown|described)\s+)?(?:in|inside|from)\s+(?:(?:the|my|this)\s+)?(?:open|active|unsaved)\s+(?:file|buffer|document)\b',wording,re.I)):
+        return None
+    catalog_read=bool(re.search(r'\b(published|catalog)\b',prompt,re.I)
+        and re.search(r'\b(what|which|explain|describe|compare|list|show|require\w*)\b',prompt,re.I))
+    catalog_subject=bool(re.search(r'\b(knowledge|operations?|methods?|schemas?|contracts?|parameters?|fields?|requirements?|inputs?)\b',prompt,re.I))
+    if catalog_read and not catalog_subject:
+        # A qualified immutable catalog identifier is a source identity even
+        # when its requested attribute is not in a keyword list. This does not
+        # recognize operations or render: V9's existing reader does that.
+        from local_providers.knowledge import knowledge_root
+        from llm.gateway_knowledge import read_release
+        try:
+            _,manifest,_=read_release(knowledge_root()/'storage/catalog_releases')
+            catalog_subject=any(re.search(r'(?<![\w-])'+re.escape(binding['operation_id'])+r'(?![\w-])',prompt,re.I)
+                for binding in manifest['template_bindings'])
+        except (OSError,ValueError,KeyError):
+            catalog_subject=False
+    if not scenario_reference and not (catalog_read and catalog_subject):return None
     from llm.gateway_network import route_network
     _,query=route_network(prompt,inventory or {'devices':[]})
     domains=['knowledge']
@@ -102,8 +179,8 @@ def published_knowledge_read(prompt,inventory):
     if scenario_reference:
         # Shared by both ordinary routing and B2/B3 contextual routing. Binding
         # here prevents an early context path from dropping the source filter.
-        result['network_domains']=list(dict.fromkeys(domains+['knowledge' if BY_KEY[key].tool=='knowledge.search' else BY_KEY[key].tool.removeprefix('network.') for key in explicit]))
-        result['source_requests']={domain:{'source_categories':[key for key in explicit if BY_KEY[key].tool==('knowledge.search' if domain=='knowledge' else 'network.'+domain)]} for domain in result['network_domains']}
+        result['network_domains']=list(dict.fromkeys(domains+reader_domains(explicit,domains)))
+        result['source_requests']={domain:{'source_categories':[key for key in explicit if BY_KEY[key].supports('knowledge.search' if domain=='knowledge' else 'network.'+domain)]} for domain in result['network_domains']}
     return result
 
 
@@ -118,7 +195,7 @@ def resolve_read(prompt, previous, inventory):
     dependent=bool(re.search(r'\b(its|their|that|those|these|they|them|first|second|third|last|other|same|previous|sure|certain|verify|again|instead|it)\b|\bwhich are\b',prompt,re.I))
     old=(previous or {}).get('context_coverage',{}).get('retrieval',{})
     old_route=(previous or {}).get('context_coverage',{}).get('routing',{})
-    from development.source_registry import explicit_read_sources,BY_KEY
+    from development.source_registry import explicit_read_sources,BY_KEY,reader_domains
     explicit_sources=explicit_read_sources(prompt,inventory.get('logical_source_categories',[]))
     explicit_network_source=bool(explicit_sources)
     if re.search(r'\b(in general|unrelated question|forget (?:about )?the previous)\b',prompt,re.I):return None
@@ -146,12 +223,19 @@ def resolve_read(prompt, previous, inventory):
         # Resolving an exact interface binds the entity, not the information
         # source. A counter/configuration/state request must not become an
         # inventory lookup merely because it names a recorded port.
-        selected=list(dict.fromkeys(BY_KEY[key].tool.removeprefix('network.')
-            for key in explicit_sources if BY_KEY[key].tool.startswith('network.')))
+        selected=reader_domains([key for key in explicit_sources if BY_KEY[key].tool.startswith('network.')],domains)
+        if not selected:
+            # Ordinary inventory has no scenario category catalogue. Retain
+            # the resolved reader domain instead of substituting inventory
+            # merely because the entity is a named interface.
+            selected=[domain for domain in domains if domain!='inventory']
+            if 'telemetry' in selected and set(attrs)-{'interfaces','status'}:
+                selected=['inventory',*selected]
+        source_domains=[domain for domain in selected if any(BY_KEY[key].supports('network.'+domain) for key in explicit_sources)]
         return {'domains':selected or ['inventory'],'device_refs':[str(d['id'])],'interface_refs':[str(i['id'])],
             'attributes':attrs or ['interfaces'],'use_history':False,
             **({'source_requests':{domain:{'source_categories':[key for key in explicit_sources
-                if BY_KEY[key].tool=='network.'+domain]} for domain in selected}} if selected else {})}
+                if BY_KEY[key].supports('network.'+domain)]} for domain in source_domains}} if source_domains else {})}
     if refs and re.search(r'\b(?:GigabitEthernet|FastEthernet|Loopback|Ethernet|Gi|Eth|Lo)\d+[\w/.:-]*',prompt,re.I):
         return {'question':'That interface is not recorded for the selected device. Which stored interface do you mean?'}
     if dependent and not refs and old.get('domains'):
@@ -188,18 +272,25 @@ def resolve_read(prompt, previous, inventory):
         # repeats exactly the last read, with fresh authorization and source data.
         provenance=bool(re.search(r'\b(taken from|come from|came from|guessed|assumed|invented|source of|derived from|based on)\b',prompt,re.I))
         same_source=bool(re.search(r'\bsame\s+(?:(?:authored|recorded|selected|previous)\s+)?(?:sources?|observations?|data)\b',prompt,re.I))
+        comparison=bool(re.search(r'\b(?:compar\w*|contrast\w*|reconcil\w*)\b',prompt,re.I))
         chosen=old['domains'] if provenance or same_source else domains if domains and domains!=['inventory'] else ['inventory'] if attrs else old['domains']
+        if comparison:
+            # A comparison has two operands. Old source references supply its
+            # first operand, not cached observations or assistant-written facts.
+            chosen=list(dict.fromkeys(old['domains']+chosen))
         selected_attrs=attrs or old.get('attributes',[])
         if provenance:selected_attrs=list(dict.fromkeys(selected_attrs+['provenance']))
         return {'domains':chosen,'device_refs':refs,'interface_refs':ifaces,
                 'attributes':selected_attrs,'use_history':True,
+                **({'comparison_domains':old['domains']} if comparison else {}),
                 'source_requests':{domain:query for domain,query in source_scope_references(old.get('source_requests')).items() if domain in chosen}}
     # Unresolved document follow-ups reuse only document context, never network
     # subjects from older turns. The router decides their semantic explanation.
     if dependent and not refs and old_route.get('attachments') and not explicit_network_source:
         return {'documents':True}
-    if dependent and not refs and not domains and not old:
-        if re.search(r'\b(first|second|third|its|their|that router)\b',prompt,re.I):
+    if dependent and not refs and not old:
+        entity_reference=re.search(r'\b(?:its|their|(?:that|this|those|these|previous|same|other)\s+(?:devices?|routers?|switches?|interfaces?|ports?))\b',prompt,re.I)
+        if entity_reference or not domains and re.search(r'\b(first|second|third)\b',prompt,re.I):
             return {'question':'Which device, interface or document do you mean?'}
     if refs and old.get('domains') and re.search(r'\bwhat about\b',prompt,re.I) and not attrs and domains==['inventory']:
         return {'domains':old['domains'],'device_refs':refs,'interface_refs':[], 'attributes':old.get('attributes',[]),'use_history':True}

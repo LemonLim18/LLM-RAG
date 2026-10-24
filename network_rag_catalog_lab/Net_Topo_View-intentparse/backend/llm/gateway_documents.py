@@ -135,11 +135,61 @@ def scenario_files(db):
     for category in ['documents','attachments','diagrams']:
         source=bundle['sources'][category]
         status=scenario.get('source_statuses',{}).get(category,{}).get('status','NOT_QUERIED')
-        if status not in {'AVAILABLE','STALE','CONFLICTING'}:continue
+        # Keep the catalogue identity even when reading its bytes is unavailable.
+        # Removing it can make an explicit file question select unrelated files.
         for entry in source['data'].get('files',[]):
             result.append({'name':Path(entry.get('name') or entry['path']).name,'category':category,
                 'path':entry['path'],'captured_at':scenario['source_statuses'][category]['captured_at'],'status':status,'source_revision':meta['source_revision']})
     return result
+
+
+def file_context_requested(prompt,metadata=(),previous=None):
+    """Bind file context to the request, not merely to available library entries.
+
+    This selects eligible existing sources; it grants no read permission and
+    never treats text inside a document as an instruction.
+    """
+    if any(item['name'].casefold() in prompt.casefold() for item in metadata):return True
+    # Possessive/deictic source identities may include ordinary descriptions
+    # (a four-page attachment, uploaded note, attached report). Do not treat an
+    # explicit editor-buffer reference as a request for ambient library files.
+    # A configuration is also a network record/topic. It identifies a file only
+    # through an actual filename, upload qualifier or owned prior file context.
+    nouns=r'(?:pdfs?|documents?|files?|attachments?|scans?|screenshots?|images?|diagrams?|pictures?|photos?|notes?|reports?)'
+    bound=re.search(r'\b(?:my|our|this|that|the)\s+(?:[\w-]+\s+){0,3}'+nouns+r'\b|\b(?:uploaded|attached)\s+(?:[\w-]+\s+){0,2}(?:'+nouns+r'|config\w*)\b',prompt,re.I)
+    editor_bound=bool(re.search(r'\b(?:editor|buffer|selection)\b|\b(?:active|open|unsaved|selected)\s+(?:[\w-]+\s+){0,2}(?:file|code|configuration|section)\b',prompt,re.I))
+    if bound and editor_bound and re.search(r'\b(?:active|open|unsaved|selected)\b',bound[0],re.I) and not re.search(r'\b(?:uploaded|attached)\b',prompt,re.I):bound=None
+    deictic=re.search(r'\b(?:read|summari[sz]e|explain|describe|understand)\b.{0,35}\b(?:this|that|these|content inside)\b',prompt,re.I)
+    old=(previous or {}).get('context_coverage',{})
+    follow=old.get('routing',{}).get('attachments') and re.search(r'\b(?:page\s+\d+|another page|other page|mentioned|in it|in that|the author|that (?:section|paragraph|diagram)|the (?:first|second|other) (?:file|document|one))\b',prompt,re.I)
+    owned_antecedent=bool(any(item.get('id') for item in metadata) or old.get('routing',{}).get('attachments'))
+    return bool(bound or follow or deictic and owned_antecedent and not editor_bound)
+
+
+def editor_source_reference(prompt):
+    """A bounded noun phrase may name several coordinated code sections.
+
+    File identity is independent of how many languages/protocols modify its
+    noun. Sentence boundaries prevent this from consuming another instruction.
+    """
+    return bool(re.search(r'\b(?:this|that|my|existing|original|current|active|open|unsaved|selected|supplied)\s+(?:[\w-]+\s+){0,12}(?:code|file|buffer|document|draft|configuration|playbook|template|section|function|block|selection)\b|\bthe\s+(?:[\w-]+\s+){0,12}(?:section|stanza|selection)\b|\b(?:in|from|of)\s+(?:the\s+)?(?:editor|buffer|Monaco)\b',prompt,re.I))
+
+
+def editor_context_requested(prompt,editor,previous=None):
+    """Eligibility to offer a private buffer, separate from model intent.
+
+    UI availability alone is not a user source reference. Existing-buffer edit
+    requests, actual filenames and qualified/deictic code references remain
+    eligible; fresh code examples and ordinary questions do not inherit a tab.
+    """
+    if not editor:return False
+    path=getattr(editor,'path','')
+    if path and (path.casefold() in prompt.casefold() or Path(path).name.casefold() in prompt.casefold()):return True
+    if editor_selection_requested(prompt):return True
+    if editor_source_reference(prompt):return True
+    # A direct request to modify an existing program is an editor interaction;
+    # creating an unrelated example is not. V9 still owns named network writes.
+    return bool(re.match(r'\s*(?:please\s+)?(?:(?:can|could|would)\s+you\s+)?(?:replace|refactor|rename|fix|correct|annotate)\b',prompt,re.I))
 
 
 def file_selection_hint(metadata,prompt,previous):
@@ -150,6 +200,7 @@ def file_selection_hint(metadata,prompt,previous):
     old=(previous or {}).get('context_coverage',{})
     if old.get('routing',{}).get('attachments') and any(item['origin']=='simulated' for item in old.get('files',{}).get('selected_documents',[])):
         return 'scenario'
+    if any(item.get('id') for item in metadata) and file_context_requested(prompt,metadata,previous):return 'uploaded'
     return 'auto'
 
 
@@ -169,6 +220,11 @@ def scenario_document_context(db,prompt,previous_names=()):
     cache=getattr(manager,'_document_extract_cache',{})
     contexts=[]
     for entry in files[:5]:
+        if entry['status'] not in {'AVAILABLE','STALE','CONFLICTING'}:
+            contexts.append({**entry,'source':entry['name'],'origin':'simulated','untrusted':True,
+                'text':'','page':None,'extraction':'source_unavailable','freshness':'unknown',
+                'limitation':'The selected development file source reports '+entry['status']+'; extraction was not attempted.'})
+            continue
         asset=bundle['assets'][entry['path']];key=(entry['name'],asset['sha256'])
         if key not in cache:
             segments=extract_attachment(entry['name'],base64.b64decode(asset['base64'],validate=True))
@@ -179,6 +235,21 @@ def scenario_document_context(db,prompt,previous_names=()):
                 'limitation':segment.get('limitation',''),'freshness':'stale' if entry['status']=='STALE' else 'fresh'})
     manager._document_extract_cache=cache
     return contexts
+
+
+def document_source_availability(documents):
+    selected={}
+    for document in documents:
+        if document.get('category') not in {'documents','attachments','diagrams'}:continue
+        selected[document['source']]={key:document.get(key) for key in ['category','status','captured_at','source_revision']}
+    return [{'name':name,**value} for name,value in selected.items()]
+
+
+def unavailable_document_answer(sources):
+    if not sources or any(row['status'] in {'AVAILABLE','STALE','CONFLICTING'} for row in sources):return None
+    return '\n\n'.join('**'+row['name']+'** is unavailable: its development source reports **'+str(row['status'])+'**.'+
+        (' Source captured `'+str(row['captured_at'])+'`.' if row.get('captured_at') else '')+
+        ' No document content was read from this source.' for row in sources)
 
 
 def requested_document_pages(prompt, available_pages=()):
@@ -211,8 +282,8 @@ def requested_document_pages(prompt, available_pages=()):
                     if value < previous or value-previous > 200:
                         raise HTTPException(422, 'Choose an ascending page range of at most 201 pages.')
                     selected.update(range(previous, value+1))
-    for match in re.finditer(r'\b(' + token + r')\s+page\b', text):
-        selected.add(number(match[1]))
+    for match in re.finditer(r'\b(' + token + r'(?:\s*(?:,|and|&)\s*' + token + r'){0,20})\s+pages?\b', text):
+        selected.update(number(item[0]) for item in re.finditer(token,match[1]))
     if re.search(r'\blast\s+page\b', text) and available_pages:
         selected.add(max(available_pages))
     return sorted(selected)
@@ -251,6 +322,7 @@ def requested_attachment_positions(prompt):
 
 def build_context(db, conversation, user, body, include_attachments=True):
     contexts, evidence = [], []
+    workspace_coverage=None
     total_bytes = 0
     scenario_metadata=scenario_files(db) if include_attachments else []
     named_scenario=[f for f in scenario_metadata if f['name'].casefold() in body.prompt.casefold()]
@@ -318,6 +390,10 @@ def build_context(db, conversation, user, body, include_attachments=True):
             store.resolve('ansible',body.editor.path)
         contexts.insert(0, {'source':body.editor.path,'text':body.editor.content, 'selection':body.editor.selection.model_dump() if body.editor.selection else None,
             'unsaved':body.editor.is_dirty, 'read_only':body.editor.read_only or bool(_locked_generated_artifact(body.editor.path))})
+        if Path(body.editor.path).suffix.lower() in {'.yml','.yaml'}:
+            from llm.gateway_workspace import related_context
+            related,workspace_coverage=related_context(db,body.editor,body.related_editors,store=store)
+            contexts.extend(related)
     # Prefer selection and matching chunks; never silently claim full-file coverage.
     terms = set(re.findall(r'[a-z0-9_]{3,}',body.prompt.lower()))
     terms-=set('the what does this that with from about explain uploaded attached file document please use using read its your just give tell'.split())
@@ -335,12 +411,13 @@ def build_context(db, conversation, user, body, include_attachments=True):
                 if selected and start<=selected['end_line'] and end>=selected['start_line']: score+=100
                 chunks.append((score,document,start,end,text))
     available_pages=sorted({c['page'] for c in contexts if c.get('page') is not None})
-    requested_pages,relative_page,page_question=document_page_selection(body.prompt,available_pages,previous,contexts)
+    unavailable_only=bool(contexts) and all(c.get('extraction')=='source_unavailable' for c in contexts)
+    requested_pages,relative_page,page_question=(requested_document_pages(body.prompt),None,None) if unavailable_only else document_page_selection(body.prompt,available_pages,previous,contexts)
     focus_selection=None
     if page_question:
         chunks=[]
     elif requested_pages:
-        chunks=[item for item in chunks if item[1].get('page') in requested_pages]
+        chunks=[item for item in chunks if item[1].get('page') in requested_pages or item[1].get('extraction')=='source_unavailable']
     elif re.search(r'\b(?:sequence|procedure|section|paragraph|heading)\b',body.prompt,re.I) and any(item[0]>0 for item in chunks):
         chunks=[item for item in chunks if item[0]>0]
         focus_selection={'matching_characters':sum(len(item[4]) for item in chunks),
@@ -356,22 +433,26 @@ def build_context(db, conversation, user, body, include_attachments=True):
         metadata={k:v for k,v in document.items() if k not in {'text','selection'}}
         if document.get('selection'): metadata['selected_lines']={k:v for k,v in document['selection'].items() if k!='text'}
         chosen.append({**metadata, 'evidence_id':identity,'start_line':start,'end_line':end,'text':chunk})
-        evidence.append(Evidence(id=identity,source=document['source'],origin=document.get('origin','user_supplied'),page=document.get('page'),start_line=start,end_line=end,
+        evidence.append(Evidence(id=identity,source=document['source'],origin=document.get('origin','user_supplied'),page=document.get('page'),
+            start_line=None if document.get('extraction')=='source_unavailable' else start,end_line=None if document.get('extraction')=='source_unavailable' else end,
             captured_at=document.get('captured_at'),freshness=document.get('freshness','unknown'),
             source_revision=document.get('source_revision') or text_digest(document['text']),authority='untrusted_document_context'))
         sent+=len(chunk)
     if focus_selection:focus_selection['complete']=sent==focus_selection['matching_characters'] and not any(item.get('needs_ocr') for item in chosen)
-    return chosen,evidence,{'total_characters':total_chars,'included_characters':sent,'complete':sent==total_chars and not any(c.get('needs_ocr') or c.get('extraction')=='legacy_text_only' and str(c.get('source','')).lower().endswith('.pdf') for c in contexts),
+    return chosen,evidence,{'total_characters':total_chars,'included_characters':sent,'complete':sent==total_chars and not any(c.get('extraction')=='source_unavailable' or c.get('needs_ocr') or c.get('extraction')=='legacy_text_only' and str(c.get('source','')).lower().endswith('.pdf') for c in contexts),
+        'source_availability':document_source_availability(contexts),
         'selected_documents':[{'name':name,'origin':origin} for name,origin in dict.fromkeys((c['source'],c.get('origin','user_supplied')) for c in chosen)],
         'attachment_selection':attachment_selection,
         'focus_selection':focus_selection,
         'limitations':list(dict.fromkeys(c.get('limitation') for c in contexts if c.get('limitation'))),
         'page_selection':{'requested':requested_pages,'available':available_pages,'relative_to':relative_page,'question':page_question,
             'included':sorted({c['page'] for c in chosen if c.get('page') is not None}),
-            'missing':sorted(set(requested_pages)-set(available_pages)),
+            'missing':[] if unavailable_only else sorted(set(requested_pages)-set(available_pages)),
+            'source_unavailable':unavailable_only,
             'complete':sent==sum(len(c['text']) for c in contexts if c.get('page') in requested_pages)
                 and not any(c.get('needs_ocr') for c in contexts if c.get('page') in requested_pages)
                 and not (set(requested_pages)-set(available_pages)) and not page_question} if requested_pages or page_question else None,
+        'workspace':workspace_coverage,
         'selection_included':bool(body.editor and body.editor.selection and any(body.editor.selection.text in c['text'] for c in chosen))}
 
 
@@ -535,9 +616,26 @@ def structural_validation(content, suffix):
         raise HTTPException(422, 'Proposed document failed structural validation: '+str(exc)) from exc
 
 
+def unchanged_active_requested(prompt):
+    """A narrow explicit effect boundary, independent of semantic routing."""
+    return bool(re.search(r'\b(?:keep|leave)\s+(?:(?:the|this)\s+)?(?:active\s+)?(?:playbook|file|document)\s+'
+        r'(?:and\s+(?:all|every|existing)\s+comments?\s+)?(?:unchanged|untouched)\b',prompt,re.I))
+
+
 def validate_edit_intent(body,proposed):
     """Bounded explicit patch constraints, not general code/CLI certification."""
     editor=body.editor;original=editor.content;checks=[]
+    if editor.path==getattr(body,'active_path',editor.path) and unchanged_active_requested(body.prompt):
+        if proposed!=original:
+            raise HTTPException(422,'The active document was explicitly preserved unchanged; use it as context and omit its patch.')
+        checks.append('active_document_preserved')
+    if re.search(r'\b(?:keep|preserve|leave)\b[^.!?\n]{0,140}\b(?:all|every|existing)\s+comments?\b[^.!?\n]{0,40}\b(?:unchanged|intact|untouched)\b',body.prompt,re.I):
+        # Bounded whole-line bytes/order, not a universal language parser.
+        def comments(text):
+            return [line for line in text.splitlines(keepends=True) if line.lstrip().startswith(('#','!','//','{#'))]
+        if comments(original)!=comments(proposed):
+            raise HTTPException(422,'Preserve every existing full-line comment exactly and in order; do not duplicate, remove or rewrite annotations.')
+        checks.append('full_line_comments_preserved')
     if editor_selection_requested(body.prompt):
         if question:=editor_selection_question(body.prompt,editor):raise HTTPException(422,question)
         selection=editor.selection;lines=original.splitlines(keepends=True)
@@ -629,6 +727,12 @@ async def propose_edit(db,user,body,context,history=None,previous_proposal=None,
         raise HTTPException(409, 'Saved revision changed; reconcile it before requesting an edit')
     if len(editor.content.encode('utf-8'))>65536:
         raise HTTPException(413, 'Guarded editing currently requires a document of at most 64 KiB')
+    if body.related_editors:
+        from llm.gateway_workspace import related_context,propose_related
+        related,_=related_context(db,editor,body.related_editors,store=store)
+        paths={item['source'] for item in related}
+        linked=[snapshot for snapshot in body.related_editors if snapshot.path in paths]
+        if linked:return await propose_related(db,body,related,[editor,*linked])
     suffix=Path(editor.path).suffix.lower()
     from local_providers.chat import generate
     if suffix in {'.cfg','.conf','.txt'} and editor.device_id and re.search(r'\b(rename|name)\b.*\bvlan\b|\bvlan\b.*\b(rename|name)\b',body.prompt,re.I):

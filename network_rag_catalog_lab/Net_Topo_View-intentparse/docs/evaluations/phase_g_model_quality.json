@@ -1,14 +1,42 @@
 {
-  "updated_at": "2026-10-20T12:52:02.483485+00:00",
-  "status": "NOT_RUN_FRESH_PHASE_G",
+  "updated_at": "2026-10-23T14:38:54.868936+00:00",
+  "status": "FAILED_FRESH_PHASE_G_QUALITY",
   "threshold": 0.85,
   "threshold_changed": false,
   "model": "qwen2.5:1.5b",
   "comparison_arms": {
-    "M0": "Incomplete frozen evaluation; see Phase F tracker",
-    "M1": "Incomplete frozen evaluation",
-    "M2": "No complete fresh30 independent adequacy result",
-    "M3": "Exposed safe factual fallbacks retained, not model reasoning credit"
+    "M0": {
+      "pass": 2,
+      "fail": 28,
+      "blocked_invalid_context": 0,
+      "cohort": "fresh30",
+      "review": "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh30-full-answer-review.json",
+      "threshold_changed": false
+    },
+    "M1": {
+      "pass": 2,
+      "fail": 28,
+      "blocked_invalid_context": 0,
+      "cohort": "fresh30",
+      "review": "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh30-full-answer-review.json",
+      "threshold_changed": false
+    },
+    "M2": {
+      "pass": 5,
+      "fail": 24,
+      "blocked_invalid_context": 1,
+      "cohort": "fresh30",
+      "review": "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh30-full-answer-review.json",
+      "threshold_changed": false
+    },
+    "M3": {
+      "pass": 1,
+      "fail": 29,
+      "blocked_invalid_context": 0,
+      "cohort": "fresh30",
+      "review": "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh30-full-answer-review.json",
+      "threshold_changed": false
+    }
   },
   "exposed_increment": {
     "source_health": "Original wrong-source and false status association fixed; final both fallback",
@@ -22,5 +50,100 @@
     "tmp/phase-g/iterations/20261020T124645.122148Z-G-source-starter-ac205a/",
     "tmp/phase-f/iterations/20261020T122620.316472Z-F3-frozen-routing-candidate-73832e/"
   ],
-  "full_seven_capabilities": "NOT_ESTABLISHED"
+  "full_seven_capabilities": "NOT_ESTABLISHED",
+  "exposed_causal_increment": {
+    "unique_case_surface_pairs": 20,
+    "first_pass_model_answers_adequate": 3,
+    "first_pass_model_answers_incorrect": 6,
+    "first_pass_fallback": 11,
+    "corrected_latest_model_answers_adequate": 4,
+    "corrected_latest_fallback": 16,
+    "reasoning_generalization": "NOT_ESTABLISHED",
+    "M0_M1_comparison": "NOT_RUN",
+    "source_plan_validation": "20/20 rejected by current guard; no reliable native plan score",
+    "review": "tmp/phase-g/iterations/20261023-G7-resume/G6-causal-answer-review.json"
+  },
+  "historical_full_30_comparison": {
+    "timestamp": "2026-10-23T05:33:06.952199+00:00",
+    "suite": "Historical frozen30case comparison, not fresh PhaseG",
+    "run": "tmp/phase-f/iterations/20261023T051001.154195Z-F4-frozen-quality-candidate-0684cc",
+    "full_prose_reviewer": "Implementation assistant inspected complete M2 answers and proposal/preview contents against frozen source facts; no independent human reviewer claimed.",
+    "automated_minimum_capability_pass": 19,
+    "automated_minimum_capability_fail": 11,
+    "M2_complete_task_adequacy_pass": 14,
+    "M2_complete_task_adequacy_fail": 16,
+    "M2_adequacy_rate": 0.4666666666666667,
+    "adequate_answers_using_model_text": 4,
+    "adequate_answers_without_model_text": 10,
+    "advanced_causal_model_reasoning_demonstrated": false,
+    "M0_M1_M3_full_grade": "NOT_RUN; raw comparison arms retained, must not infer improvement from counts",
+    "threshold": 0.85,
+    "meets_threshold_on_this_exposed_cohort": false,
+    "fresh_PhaseG_quality_gate": "NOT_RUN",
+    "code_freeze_limitation": "An unused optional playbook credential guard and obsolete unit-test release assertion changed after process start. This historical development run is not presented as an immutable source-tree or fresh holdout experiment; no quality case requests a playbook variant.",
+    "next_safety_correction": "One grouped bounded factual-scope/metadata correction, retain all original results; no exposed-prompt tuning loop. Then execute complete routing cohort."
+  },
+  "historical_comparative_full_review": {
+    "M0": {
+      "pass": 3,
+      "fail": 26,
+      "not_run": 1
+    },
+    "M1": {
+      "pass": 11,
+      "fail": 18,
+      "not_run": 1
+    },
+    "M2": {
+      "pass": 14,
+      "fail": 16
+    },
+    "M3": {
+      "pass": 6,
+      "fail": 23,
+      "not_run": 1
+    },
+    "review": "tmp/phase-g/iterations/20261023-G7-resume/G5-frozen-30-comparison-arm-review.json",
+    "not_fresh": true,
+    "independent_human_review": false
+  },
+  "fresh_phase_g_quality": {
+    "registry": "docs/evaluations/phase_g_fresh_quality_v3.json",
+    "sha256": "87c24c9cfcb80b3c8b91496b6aa437cfd1db4ec523446ab69c9e5e9b1d42b8a1",
+    "status": "COMPLETE_REVIEW_GATE_FAILED",
+    "cases": 30,
+    "M2_strict_pass": 5,
+    "M2_fail": 24,
+    "M2_invalid_context_blocked": 1,
+    "rate": 0.16666666666666666,
+    "threshold": 0.85,
+    "threshold_changed": false,
+    "M0_strict_pass": 2,
+    "M1_strict_pass": 2,
+    "M3_strict_pass": 1,
+    "M2_adequate_model_text": 1,
+    "M2_adequate_causal_reasoning": 0,
+    "M2_adequate_fact_review_reconstruction": 4,
+    "minimum_workflow_pass": 17,
+    "minimum_workflow_not_quality": true,
+    "evaluation_defects": [
+      "Case13 expected egress while fixture declares ingress; wrong expected subcriterion not treated as truth.",
+      "Case18 missing pair antecedent/setup; safe clarification separately blocked-invalid-context."
+    ],
+    "review": "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh30-full-answer-review.json",
+    "latency": {
+      "median_M2_ms": 18233.495,
+      "p95_M2_ms": 99649.21,
+      "includes_setup_turns": true
+    },
+    "authorship": "Implementation-assistant review against frozen rubrics and actual records; external blind human review not claimed."
+  },
+  "fresh_review_caveats": [
+    "Strict full-task adequacy includes actual workflow, context and source attribution; literal factual correctness is separately noted in per-case reasons.",
+    "Case13 has an invalid expected-direction subcriterion; it stays in the frozen record and receives no wrong-oracle credit.",
+    "Case18 has an absent antecedent; safe M2 clarification is separately BLOCKED_INVALID_CONTEXT. No denominator or threshold was rewritten.",
+    "Implementation assistant performed the source/rubric review; no external blind human review is claimed.",
+    "M1 received raw curated evidence with no verifier repair/fallback; it incurred real30second local-model timeouts.",
+    "No universal correctness of natural-language verification is claimed. Original critical released falsehoods remain failures even after a future guard replay."
+  ]
 }

@@ -1,0 +1,292 @@
+{
+  "updated_at": "2026-10-23T14:40:52.460179+00:00",
+  "stage": "G8",
+  "implementation_status": "COMPLETE_SOURCE_BOUND_REVIEW_WORKFLOW",
+  "full_gate": "PASS_SOURCE_BOUND_WORKFLOW_WITH_RECORDED_MODEL_OMISSION_LIMIT",
+  "actual_model_api": {
+    "outcome": "PASS_ORIGINAL_TWO_FILE_TASK",
+    "run": "tmp/phase-g/iterations/20261023T140652.931466Z-G8-real-workspace-122aef",
+    "model_patch_attempts": 1,
+    "repaired": false,
+    "deterministic_authoring_fallback": false,
+    "saved": false
+  },
+  "actual_browser": {
+    "outcome": "PASS_ORIGINAL_TWO_FILE_SOURCE_BOUND_WORKFLOW",
+    "new_successful_proposals": 3,
+    "unique_prompt": 1,
+    "repeats_for": "Reject, Accept/Undo and concurrent stale-buffer checks; not three unique intelligence cases",
+    "source_bases_preserved": true,
+    "group_review_controls": "PASS_REJECT_ACCEPT_UNDO_EXACT",
+    "stale_active_buffer_rejection": "PASS",
+    "artifact": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/G8-stage-acceptance-review.json",
+    "original_failures_retained": true
+  },
+  "regressions": {
+    "backend": "255passed+10subtests; overlapping earlier runs not added",
+    "monaco_transaction_unit": "4passed; not browser",
+    "typescript": "PASS"
+  },
+  "preservation": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/G8-state-preservation.json",
+  "limitations": [
+    "No arbitrary or repository-wide edits, dynamic imports, saving, device execution or permission changes.",
+    "A structurally valid proposal can still omit a requested change; all proposals require engineer review. Independent JSON case remains failed task completion.",
+    "OS clipboard is not verified; exact browser-session readback only."
+  ],
+  "latest_independent_reference_case": {
+    "spec": "docs/evaluations/phase_g_workspace_reference_only_v3.json",
+    "actual_model_patch": "PASS_SINGLE_ATTEMPT_NO_PATCH_FALLBACK",
+    "source_context": "Active unsaved main plus referenced restored unsaved variable file",
+    "review": "PASS_REJECT_ACCEPT_UNDO_EXACT",
+    "saved": false,
+    "evidence": [
+      "tmp/phase-g/iterations/20261023-G7-resume/G8-reference-original-failure.json",
+      "tmp/phase-g/iterations/20261023-G7-resume/G8-restored-valid-proposal.json",
+      "tmp/phase-g/iterations/20261023-G7-resume/G8-reference-reject-proof.json",
+      "tmp/phase-g/iterations/20261023-G7-resume/G8-reference-accept-proof.json",
+      "tmp/phase-g/iterations/20261023-G7-resume/G8-reference-undo-proof.json"
+    ]
+  },
+  "restoration_defect": {
+    "root_cause": "After browser reload, restored inactive tabs had content but no Monaco model; related snapshots omitted them, falling back to single-file editing.",
+    "fix": "Materialize only already-open unsaved tabs with the same Monaco URI; never replace existing models or load saved files. Bound to8 snapshots.",
+    "regressions": "5 transaction/open-model tests PASS; TypeScriptPASS;139backend tests+7subtestsPASS(overlap with preceding97)."
+  },
+  "original_two_file_rerun": {
+    "outcome": "FAIL_MODEL_FILE_ASSIGNMENT",
+    "evidence": "tmp/phase-g/iterations/20261023-G7-resume/G8-two-file-restored-context-failure.json",
+    "safe_rejection": true,
+    "further_microcorrection": "NOT_PERFORMED",
+    "status_note": "Historical failure, resolved by latest architectural source-binding acceptance; retained original result."
+  },
+  "historical_acceptance": [
+    {
+      "updated_at": "2026-10-23T05:07:56.806287+00:00",
+      "implementation_status": "INTEGRATED_PARTIAL",
+      "full_gate": "FAILED_TWO_CHANGED_FILE_BROWSER_CASE",
+      "actual_model_api": {
+        "outcome": "PASS",
+        "run": "tmp/phase-g/iterations/20261022T093103.114515Z-G8-real-workspace-6ff55f",
+        "model_patch_attempts": 1,
+        "repaired": false,
+        "deterministic_authoring_fallback": false,
+        "saved": false
+      },
+      "actual_browser": {
+        "unique_prompt": 1,
+        "separate_sessions": 2,
+        "outcomes": [
+          "FAIL",
+          "FAIL"
+        ],
+        "source_bases_preserved": true,
+        "group_review_controls": "PASS_REFERENCE_ONLY_ACCEPT_AND_COORDINATED_UNDO; earlier RejectAll proof reused",
+        "failure_artifacts": [
+          "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/G8-browser-failed-attempt-1.json",
+          "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/G8-browser-failed-attempt-2.json"
+        ],
+        "correction_loop": "STOPPED_BOUND_GUARD_PRESERVED"
+      },
+      "limitations": [
+        "General dynamic imports and repository-wide editing unsupported",
+        "Group review UI requires valid proposal; browser control acceptance not established",
+        "One API patch success is not independent reasoning-quality acceptance"
+      ]
+    }
+  ],
+  "latest_acceptance": {
+    "timestamp": "2026-10-23T14:25:40.562216+00:00",
+    "stage": "G8",
+    "status": "PASS",
+    "scope": "Source-aware coordinated workspace workflow and review integrity; not universal compound-instruction understanding or new model reasoning benchmark.",
+    "criteria": [
+      {
+        "criterion": "real_graph_two_file_exact_proposal",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-exact-proposal-proof.json",
+            "sha256": "12d00820292d83533ea1663cf1fc79b4e75a6ab3aa9aeb56a8dda1d4a538b53c"
+          },
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-second-exact-proposal.json",
+            "sha256": "71b8fb486f46a64baa0ae62c01056793712a904408f115fbf1050f31c8d0d828"
+          }
+        ]
+      },
+      {
+        "criterion": "browser_reject_preserves_both",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-reject-all-proof.json",
+            "sha256": "405ede880f0ccbf897b8944d7d0f651455435a1e791eeb0115cca17e9e75d8b7"
+          }
+        ]
+      },
+      {
+        "criterion": "browser_accept_changes_only_requested_unsaved_lines",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-accept-all-proof.json",
+            "sha256": "1d653ed1fcc1f1541ef2000e6b4e5ef6fa19864c3c93c5f4f480ffac1c48cdf9"
+          },
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-accepted.png",
+            "sha256": "56ccb793b5dda8951861f55016de213da1149f895b46169a18937415d8c5a674"
+          }
+        ]
+      },
+      {
+        "criterion": "browser_coordinated_undo_and_protected_buffer",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-coordinated-undo-proof.json",
+            "sha256": "b7877b62baf88f4a91a1693c51cb86f8cba3300bf6028b329e95b8ccacb90465"
+          }
+        ]
+      },
+      {
+        "criterion": "browser_stale_active_buffer_rejected_and_manual_edit_preserved",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-stale-rejection-proof.json",
+            "sha256": "406a4dc11569524393dba2921ca5e76b845cb7e63324f806eaf7ac81942d0369"
+          },
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-stale-rejection-dom.txt",
+            "sha256": "227018d5dfb3412e175f9a8be8a7ab237003228e2ae171cc8d255fa06f4697dd"
+          },
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/browser-stale-rejection.png",
+            "sha256": "0a09003a5673e40fc031e9297c05640f8d603ac3759250b57a9aa661d0f279a6"
+          }
+        ]
+      },
+      {
+        "criterion": "ordinary_saved_records_release_index_preserved",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/preservation-after.json",
+            "sha256": "4f77d001dddc1b498c9b2270359416a22f0fb2d84eef1b1e5619ed4ad429686d"
+          }
+        ]
+      },
+      {
+        "criterion": "source_binding_wrong_ref_ambiguous_anchor_authorization_revision_cancel_budgets",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/G8-content-addressed-capacity.xml",
+            "sha256": "407f96aa79e6e61ec83adc00b3eff4b8d051edd5a28a0ac182f82ef375187b9c"
+          }
+        ]
+      },
+      {
+        "criterion": "adjacent_studio_network_context_permissions",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/G8-content-addressed-adjacent.xml",
+            "sha256": "c0c36292d56581ccc46ed030039f9a1ecccd48a59df568aca9a4a6a1dc399b0c"
+          }
+        ]
+      },
+      {
+        "criterion": "cross_file_stale_and_partial_application_rollback",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/G8-content-addressed-transaction.log",
+            "sha256": "43cfabd86ecd518061cce1a0dbb9a62add61849b558cb8ce1c3f72091fec7763"
+          }
+        ]
+      },
+      {
+        "criterion": "owner_revision_unsent_handoff",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/G8-content-addressed-handoff.xml",
+            "sha256": "f885fdf7b89c98a1a92a013b1fac6049be54974ba8910ee4f0b0d023eba2a9e3"
+          }
+        ]
+      },
+      {
+        "criterion": "actual_qwen_original_api_two_file_exact",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/20261023T140652.931466Z-G8-real-workspace-122aef/actual.json",
+            "sha256": "416a659280b5ff900bd1e4b15a892f35095c56befca3e8a2359ca293524b9bd0"
+          }
+        ]
+      },
+      {
+        "criterion": "preserved_context_anchor_ambiguity_rejected",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/G8-content-addressed-final.xml",
+            "sha256": "62761cd676637980438bd88fb088311aea66ccc6b4e6d8576e8f24bb044ef3fa"
+          }
+        ]
+      },
+      {
+        "criterion": "final_backend_cold_restart_and_exact_buffers",
+        "status": "PASS",
+        "evidence": [
+          {
+            "path": "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/G12-final-preservation.json",
+            "sha256": "e084b9d849ab5d4b2e79f8c90a1da71d2c1dddebf85e3a035f5798a031689e0e"
+          }
+        ]
+      }
+    ],
+    "architecture": {
+      "previous_failure": "Model-assigned filenames swapped otherwise valid exact anchors.",
+      "rejected_first_attempt": "Source-local inference still mixed instructions; actual failed result retained.",
+      "implemented": "Content-addressed replacements resolved against authorized immutable snapshots. Explicit mismatched refs are rejected, not relocated. One atomic proposal after all validation. Existing API, diff, revision, Accept/Reject/Undo, explicit Save unchanged.",
+      "model_patch_calls_original_api": 1,
+      "browser_successful_proposal_calls_each": 1,
+      "fallback_or_text_repair": false
+    },
+    "additional_independent_file_format_case": {
+      "outcome": "FAIL_COMPOUND_INSTRUCTION_OMISSION",
+      "actual": "tmp/phase-g/iterations/20261023T142051.262402Z-G8-real-workspace-c3d4d5/actual.json",
+      "specification": "docs/evaluations/phase_g_workspace_json_v4.json",
+      "model_received_both_actual_sources": true,
+      "omitted": "peer_address change in JSON; only requested main comment was proposed.",
+      "wrong_source_assignment": false,
+      "credited_as_completed_task": false,
+      "retained_under": "G4 compound task completeness and G5 adequacy; not hidden or converted into a pass."
+    },
+    "tests": {
+      "focused_contract_tests": 29,
+      "adjacent_backend_tests": 140,
+      "frontend_transaction_tests": 5,
+      "handoff_tests": 2,
+      "overlaps_not_added": true,
+      "frontend_source_changed": false,
+      "final_contract_artifact": "tmp/phase-g/iterations/G8-content-addressed-final.xml"
+    },
+    "limits": [
+      "No arbitrary or repository-wide edits, dynamic imports, saving, device execution or permission changes.",
+      "A structurally valid proposal can still omit a requested change; all proposals require engineer review. Independent JSON case remains failed task completion.",
+      "OS clipboard is not verified; exact browser-session readback only."
+    ],
+    "runtime_browser": {
+      "browser": "Fresh built-in IAB works; earlier kernel-asset failure no longer reproduced.",
+      "environment": "Standard servers restored because no listeners; no browser permission changes.",
+      "ports": [
+        5173,
+        8000
+      ]
+    },
+    "phase_complete": false
+  }
+}

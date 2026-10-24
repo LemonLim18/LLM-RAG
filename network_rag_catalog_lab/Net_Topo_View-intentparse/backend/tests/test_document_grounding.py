@@ -263,6 +263,23 @@ class DocumentAnswerTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(document_answer_errors('Maintenance is October 22, 2026.', dated))
         self.assertTrue(document_answer_errors('Maintenance is October 22, 2023.', dated))
 
+    async def test_requested_single_document_identifier_is_not_replaced_by_filename(self):
+        from llm.orchestration.verification import document_answer_errors
+        documents=[{'source':'Review capture.txt','text':'Lab change request: G-GUI-COPPER-94.\nPlanned validation is 7 minutes.','extraction':'direct_text'}]
+        question='Include the maintenance label and planned validation duration.'
+        for answer in ['Maintenance label: "Review". Planned validation: 7 minutes.',
+                       'The file records maintenance labels and a planned validation of 7 minutes.']:
+            with self.subTest(answer=answer):
+                self.assertTrue(document_answer_errors(answer,documents,question))
+        self.assertFalse(document_answer_errors('The change-request label is G-GUI-COPPER-94; planned validation is 7 minutes.',documents,question))
+        self.assertFalse(document_answer_errors('Planned validation is 7 minutes.',documents,'How long is the planned validation?'))
+
+    async def test_document_identifier_guard_does_not_guess_among_multiple_or_ocr_labels(self):
+        from llm.orchestration.verification import document_answer_errors
+        text='Ticket reference: ALPHA-12.\nJob label: BETA-34.'
+        self.assertFalse(document_answer_errors('Which label is relevant?', [{'source':'notes.txt','text':text}], 'What is the label?'))
+        self.assertFalse(document_answer_errors('The label is unclear.', [{'source':'scan.png','text':'Ticket reference: ALPHA-12.','extraction':'ocr'}], 'What is the label?'))
+
     async def test_explicit_protocol_as_binding_is_not_reassigned_during_explanation(self):
         from llm.orchestration.verification import document_answer_errors
         documents=[{'source':'routing.png','text':'OSPF hello 10 dead 40. BGP local AS 65020 remote AS 65030.','extraction':'ocr'}]

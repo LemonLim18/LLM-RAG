@@ -1,0 +1,542 @@
+{
+  "version": 1,
+  "scope": "Independent ECMP, ACL ordering, protocol and metric conformance. Expected values are evaluator-only.",
+  "cases": [
+    {
+      "id": "G6-CONFORMANCE-017",
+      "capability": "Two healthy ECMP forwarding branches",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/inventory/data/interfaces/-",
+          "value": {
+            "id": 8,
+            "device_id": 1100,
+            "name": "GigabitEthernet0/2",
+            "prefix": "10.88.0.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default"
+          }
+        },
+        {
+          "path": "/sources/inventory/data/interfaces/-",
+          "value": {
+            "id": 9,
+            "device_id": 1300,
+            "name": "GigabitEthernet0/0/2",
+            "prefix": "10.88.0.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default"
+          }
+        },
+        {
+          "path": "/sources/topology_planned/data/links/-",
+          "value": {
+            "id": 3,
+            "src_device_id": 1100,
+            "src_interface_id": 8,
+            "dst_device_id": 1300,
+            "dst_interface_id": 9
+          }
+        },
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/0/next_hops/-",
+          "value": {
+            "interface_id": 8,
+            "address": "10.88.0.2",
+            "resolved": true
+          }
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "forwarding_assessment",
+      "selector": {},
+      "expected": {
+        "assessment/forward/status": "delivered",
+        "assessment/return/status": "delivered",
+        "assessment/forward/branches/$length": 2
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-018",
+      "capability": "One failed ECMP branch must not imply universal delivery",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/inventory/data/interfaces/-",
+          "value": {
+            "id": 8,
+            "device_id": 1100,
+            "name": "GigabitEthernet0/2",
+            "prefix": "10.88.0.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default"
+          }
+        },
+        {
+          "path": "/sources/inventory/data/interfaces/-",
+          "value": {
+            "id": 9,
+            "device_id": 1300,
+            "name": "GigabitEthernet0/0/2",
+            "prefix": "10.88.0.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default"
+          }
+        },
+        {
+          "path": "/sources/topology_planned/data/links/-",
+          "value": {
+            "id": 3,
+            "src_device_id": 1100,
+            "src_interface_id": 8,
+            "dst_device_id": 1300,
+            "dst_interface_id": 9
+          }
+        },
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/0/next_hops/-",
+          "value": {
+            "interface_id": 8,
+            "address": "10.88.0.2",
+            "resolved": true
+          }
+        },
+        {
+          "path": "/sources/inventory/data/interfaces/7/oper_status",
+          "value": "down"
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "forwarding_assessment",
+      "selector": {},
+      "expected": {
+        "assessment/forward/status": "partial",
+        "assessment/forward/branches/$length": 2,
+        "assessment/return/status": "delivered"
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-019",
+      "capability": "First matching ACL rule controls outcome",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/policies",
+          "value": [
+            {
+              "id": "ordered-policy",
+              "interface_id": 3,
+              "direction": "egress",
+              "default_action": "deny",
+              "rules": [
+                {
+                  "id": "first-rule",
+                  "action": "permit"
+                },
+                {
+                  "id": "second-rule",
+                  "action": "deny"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "forwarding_assessment",
+      "selector": {},
+      "expected": {
+        "assessment/forward/status": "delivered",
+        "assessment/return/status": "delivered"
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-020",
+      "capability": "First matching ACL rule controls outcome",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/policies",
+          "value": [
+            {
+              "id": "ordered-policy",
+              "interface_id": 3,
+              "direction": "egress",
+              "default_action": "deny",
+              "rules": [
+                {
+                  "id": "first-rule",
+                  "action": "deny"
+                },
+                {
+                  "id": "second-rule",
+                  "action": "permit"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "forwarding_assessment",
+      "selector": {},
+      "expected": {
+        "assessment/forward/status": "failed",
+        "assessment/return/status": "delivered"
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-021",
+      "capability": "OSPF hello mismatch with observed Init",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/ospf/0/right/hello_seconds",
+          "value": 20
+        },
+        {
+          "path": "/sources/simulation/data/network/ospf/0/observed_state",
+          "value": "Init"
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "protocol_assessment",
+      "selector": {
+        "protocol": "OSPF"
+      },
+      "expected": {
+        "assessment": "strongly_supported",
+        "conflict": false,
+        "configuration_differences": [
+          "hello_seconds mismatch"
+        ]
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-022",
+      "capability": "OSPF observed Full conflicts with incompatible timers",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/ospf/0/right/hello_seconds",
+          "value": 20
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "protocol_assessment",
+      "selector": {
+        "protocol": "OSPF"
+      },
+      "expected": {
+        "assessment": "conflicting_evidence",
+        "conflict": true,
+        "observed_state": "Full"
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-023",
+      "capability": "Different local OSPF process IDs do not invalidate adjacency",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/ospf/0/left/process",
+          "value": "10"
+        },
+        {
+          "path": "/sources/simulation/data/network/ospf/0/right/process",
+          "value": "200"
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "protocol_assessment",
+      "selector": {
+        "protocol": "OSPF"
+      },
+      "expected": {
+        "assessment": "healthy_within_tested_scope",
+        "configuration_differences": [],
+        "unknown_prerequisites": [
+          "authentication",
+          "area_type"
+        ]
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-024",
+      "capability": "BGP reciprocal AS mismatch with observed Active",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/bgp/0/left/remote_as",
+          "value": 65031
+        },
+        {
+          "path": "/sources/simulation/data/network/bgp/0/observed_state",
+          "value": "Active"
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "protocol_assessment",
+      "selector": {
+        "protocol": "BGP"
+      },
+      "expected": {
+        "assessment": "strongly_supported",
+        "conflict": false,
+        "configuration_differences": [
+          "neighbor remote AS differs from peer local AS"
+        ]
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-025",
+      "capability": "BGP Established cannot silently erase incompatible AS records",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/bgp/0/left/remote_as",
+          "value": 65031
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "protocol_assessment",
+      "selector": {
+        "protocol": "BGP"
+      },
+      "expected": {
+        "assessment": "conflicting_evidence",
+        "conflict": true
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-026",
+      "capability": "Unknown BGP observation does not confirm an outage",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/bgp/0/observed_state",
+          "value": "unknown"
+        },
+        {
+          "path": "/sources/simulation/data/network/bgp/0/transport_reachable",
+          "value": null
+        }
+      ],
+      "tool": "network.state",
+      "record_kind": "protocol_assessment",
+      "selector": {
+        "protocol": "BGP"
+      },
+      "expected": {
+        "assessment": "insufficient_evidence",
+        "configuration_differences": [],
+        "observed_state": "unknown"
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-027",
+      "capability": "Correlated high traffic and discards permit only a congestion hypothesis",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/inventory/data/interfaces/0/speed_bps",
+          "value": 100000000
+        },
+        {
+          "path": "/sources/simulation/data/network/metrics",
+          "value": [
+            {
+              "id": "traffic-window",
+              "device_id": 1100,
+              "interface_id": 1,
+              "metric": "out_bps",
+              "unit": "bps",
+              "sampling_seconds": 30,
+              "samples": [
+                {
+                  "timestamp": "2026-10-18T00:59:00Z",
+                  "value": 90000000.0
+                },
+                {
+                  "timestamp": "2026-10-18T00:59:30Z",
+                  "value": 95000000.0
+                },
+                {
+                  "timestamp": "2026-10-18T01:00:00Z",
+                  "value": 98000000.0
+                }
+              ]
+            },
+            {
+              "id": "discard-window",
+              "device_id": 1100,
+              "interface_id": 1,
+              "metric": "discards",
+              "unit": "count",
+              "sampling_seconds": 30,
+              "samples": [
+                {
+                  "timestamp": "2026-10-18T00:59:00Z",
+                  "value": 10.0
+                },
+                {
+                  "timestamp": "2026-10-18T00:59:30Z",
+                  "value": 12.0
+                },
+                {
+                  "timestamp": "2026-10-18T01:00:00Z",
+                  "value": 14.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": "network.telemetry",
+      "record_kind": "metric_series",
+      "selector": {
+        "metric": "out_bps"
+      },
+      "expected": {
+        "peak_utilization_pct": 98.0,
+        "congestion_hypothesis": "plausible",
+        "correlated_source_ids": [
+          "discard-window"
+        ]
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    },
+    {
+      "id": "G6-CONFORMANCE-028",
+      "capability": "Counter reset cannot establish a negative or current derived rate",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/metrics",
+          "value": [
+            {
+              "id": "reset-window",
+              "device_id": 1100,
+              "interface_id": 1,
+              "metric": "discards",
+              "unit": "count",
+              "sampling_seconds": 30,
+              "samples": [
+                {
+                  "timestamp": "2026-10-18T00:59:00Z",
+                  "value": 100.0
+                },
+                {
+                  "timestamp": "2026-10-18T00:59:30Z",
+                  "value": 5.0
+                },
+                {
+                  "timestamp": "2026-10-18T01:00:00Z",
+                  "value": 8.0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": "network.telemetry",
+      "record_kind": "metric_series",
+      "selector": {
+        "metric": "discards"
+      },
+      "expected": {
+        "counter_reset_or_wrap": true,
+        "average_per_second/$absent": true,
+        "delta/$absent": true
+      },
+      "verification": "Independent expected values fixed before execution; existing authorized reader on both surfaces. No LLM reasoning credit.",
+      "prohibited": [
+        "physical collection claim",
+        "private oracle exposure",
+        "hypothesis presented as confirmed cause"
+      ]
+    }
+  ]
+}

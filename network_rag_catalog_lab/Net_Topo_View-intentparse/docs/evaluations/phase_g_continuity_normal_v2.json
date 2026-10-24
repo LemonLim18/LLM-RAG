@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "frozen_before_first_inference": true,
+  "holdout": false,
+  "original_v1_sha256": "2ad1c5ee18d7f2961b4b5a7cac3bf092c41b7c92dd600719ada370d928ceb8e6",
+  "scope": "New normal-source-isolation case; V1 seed/scanned expectations remain byte-for-byte preserved",
+  "cases": [
+    {
+      "id": "G9-NORMAL-SOURCE-ISOLATION-SERIES",
+      "requirement": "Actual shared-gateway normal reader cannot substitute local simulated JSON when external measurements are unavailable",
+      "surface": [
+        "floating",
+        "studio"
+      ],
+      "fixture": "Reused disposable database, disabled scenario, existing normal-mode reader branch, live reads explicitly disabled, valid accessible local fixture with CPU97.375/memory29.625 as a positive control",
+      "prompts": [
+        "Read the available CPU telemetry for G9-Edge. If measurements are unavailable, say so."
+      ],
+      "expected_tools": [
+        "network.telemetry"
+      ],
+      "expected": "Typed unavailable reader result, no simulated evidence/value substitution, meaningful limitation and no outage claim",
+      "prohibited": [
+        "97.375 returned as a normal observation",
+        "Simulated evidence",
+        "Physical collector or device calls",
+        "Unavailable treated as zero CPU or confirmed failure"
+      ],
+      "verification": "Actual authenticated gateway, real registry/reader, accessible valid JSON positive control, both full answers inspected. Normal-mode branch exercised in a controlled app instance, not physical production verification."
+    }
+  ]
+}

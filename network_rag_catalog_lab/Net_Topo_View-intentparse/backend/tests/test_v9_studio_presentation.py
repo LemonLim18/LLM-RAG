@@ -14,6 +14,14 @@ from local_providers.v9_studio import presentation
 
 
 class StudioPresentationTests(unittest.TestCase):
+    def test_unresolved_target_retains_the_known_inventory_source_revision(self):
+        task=dict(category='ospf',operation_id='set_ospf_router_id',parameters={},parameter_provenance={},
+            target_devices=[],issues=[dict(type='MISSING_TARGET',message='Select the recorded device')])
+        output=dict(plan=dict(tasks=[task],issues=[]),schema=dict(properties={}),release_id='frozen')
+        result=presentation(output,'session',[dict(hostname='LAB-R1',interfaces=[],scenario_revision='source-r1')])
+        self.assertEqual(result['inventory_revision'],'source-r1')
+        self.assertEqual(result['target_hosts'],[])
+
     def test_ambiguity_offers_only_v9_inventory_candidates(self):
         task = dict(category='test', operation_id='test', parameters={}, parameter_provenance={}, target_devices=[],
                     issues=[dict(type='AMBIGUOUS_TARGET', message='Which device?', candidates=[dict(hostname='A'), dict(hostname='B')])])

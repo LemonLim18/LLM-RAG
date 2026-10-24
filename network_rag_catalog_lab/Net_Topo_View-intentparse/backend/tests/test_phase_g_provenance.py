@@ -11,6 +11,30 @@ import asyncio
 from unittest.mock import AsyncMock
 
 
+def test_exclusive_registry_source_precedes_generic_path_domain_hint():
+    from llm.orchestration.planning import propose
+    inventory={'devices':[{'id':7,'hostname':'Oak-Router','aliases':[]}],
+        'scenario':{'id':'test'},'logical_source_categories':['simulation','topology_planned']}
+    generate=AsyncMock(return_value=(json.dumps({'intent':'answer','information_needs':[
+        {'domain':'state','question':'declared forward and return flow'}]}),'test'))
+    route=asyncio.run(propose('Assess the recorded forward and return path for Oak-Router. Use only the simulation source.',
+        'test','floating',None,[],[],inventory,generate,read_only_request=True))
+    assert route.network_domains==['state']
+    assert route.source_requests['state']['source_categories']==['simulation']
+    assert route.planning['mode']=='validated_model_plan' and generate.await_count==1
+
+
+def test_exclusive_registry_source_rejects_extra_model_readers():
+    from llm.orchestration.planning import propose
+    inventory={'devices':[{'id':7,'hostname':'Oak-Router','aliases':[]}],
+        'scenario':{'id':'test'},'logical_source_categories':['simulation','topology_planned']}
+    generate=AsyncMock(return_value=(json.dumps({'intent':'answer','information_needs':[
+        {'domain':'state','question':'declared flow'},{'domain':'topology','question':'extra graph'}]}),'test'))
+    with pytest.raises(ValueError,match='exclusive'):
+        asyncio.run(propose('Assess the recorded forward and return path for Oak-Router. Use only the simulation source.',
+            'test','floating',None,[],[],inventory,generate,read_only_request=True))
+
+
 def test_explicit_published_method_fields_are_authoritative_reads():
     from llm.gateway_references import published_knowledge_read
     for prompt in ['Explain the fields required by the published configure_ospf method.',
@@ -128,7 +152,9 @@ def test_source_refinement_cannot_expand_a_configuration_lookup_into_unrequested
         ['running_configs','controller_state','topology_planned']))
     assert selected==plan and trace['status']=='invalid_fallback'
     offered=json.loads(generate.call_args.args[0][1]['content'])['catalog']
-    assert {row['source'] for row in offered}=={'running_configs'}
+    # Registry descriptions may correct a reader guess, but one need cannot
+    # fan out into several readers. Catalog visibility is not tool authority.
+    assert {row['source'] for row in offered}=={'running_configs','controller_state','topology_planned'}
 
 
 def test_known_network_subject_reaches_semantic_planner_despite_general_similarity():

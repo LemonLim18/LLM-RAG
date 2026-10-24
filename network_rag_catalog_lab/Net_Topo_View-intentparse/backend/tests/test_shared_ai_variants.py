@@ -31,8 +31,11 @@ class VariantTests(unittest.TestCase):
         before=(root/'active.json').read_bytes()
         report=release_assessment(root)
         self.assertEqual(report['status'],'success')
-        self.assertEqual(report['operation_count'],44);self.assertEqual(report['binding_count'],78)
-        self.assertEqual(len(report['coverage']),132)
+        # Phase E published47 operations/141native bindings. The former44/78
+        # baseline is historical; it must not imply playbook support or mutate
+        # the current immutable release to satisfy an obsolete fixture.
+        self.assertEqual(report['operation_count'],47);self.assertEqual(report['binding_count'],141)
+        self.assertEqual(len(report['coverage']),141)
         self.assertTrue(any(row['native_status']=='supported' for row in report['coverage']))
         self.assertTrue(all(row['playbook_status']=='unsupported' for row in report['coverage']))
         self.assertEqual((root/'active.json').read_bytes(),before)

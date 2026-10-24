@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-10-20T12:52:02.483485+00:00",
-  "status": "IN_PROGRESS",
-  "full_G6_gate": "NOT_RUN",
+  "updated_at": "2026-10-23T13:16:40.782159+00:00",
+  "status": "FAILED",
+  "full_G6_gate": "FAILED_EXPLANATION_GATE",
   "implemented_increment": {
     "ingress_egress_policy_location": "PASS_FOCUSED; location retains actual receiver/interface/rule, completed-hop count unchanged",
     "asymmetric_policy_drop": "PASS_FOCUSED; model-scoped failed direction can be conclusive while reverse succeeds",
@@ -12,12 +12,164 @@
     "tmp/phase-g/iterations/20261020-metrics-browser/policy-location-first-red.xml",
     "tmp/phase-g/iterations/20261020-metrics-browser/policy-location-asymmetry-fixed.xml",
     "tmp/phase-g/iterations/20261020-metrics-browser/starter-conflict-precision-fixed.xml",
-    "tmp/phase-g/iterations/20261020T124645.122148Z-G-source-starter-ac205a/quality-review.json"
+    "tmp/phase-g/iterations/20261020T124645.122148Z-G-source-starter-ac205a/quality-review.json",
+    "tmp/phase-g/iterations/20261023-G7-resume/G6-extended-full-answer-review.json"
   ],
   "limitations": [
-    "Not full independent10-case matrix",
-    "No actual browser acceptance for new selector",
-    "No physical collection or protocol emulator certification",
-    "Model faults retained separately; safe fallback is not model reasoning"
-  ]
+    "Full variant matrix and actual model causal answers remain open",
+    "No physical protocol/packet emulator certification",
+    "Model synthesis success is not implied by deterministic conformance"
+  ],
+  "latest_increment": {
+    "hand_defined_cases": 28,
+    "unique_authorized_reader_executions": 56,
+    "model_calls": 0,
+    "scope": "Forwarding/protocol/metrics through existing authorized readers on both surfaces; fullG6 remains open",
+    "new_case_registry": "backend/development/test_oracles/phase_g_extended_conformance_v1.json",
+    "first_failures": "tmp/phase-g/iterations/20261023-G7-resume/G6-extended-first.xml",
+    "corrected": "tmp/phase-g/iterations/20261023-G7-resume/G6-extended-corrected.xml",
+    "prior_v1_v2_failures_preserved": true
+  },
+  "actual_model_increment": {
+    "timestamp": "2026-10-23T03:45:38.826397+00:00",
+    "reviewer": "Implementation assistant full-answer assessment; not an independent human reviewer",
+    "fresh_holdout": false,
+    "unique_case_surface_pairs": 20,
+    "original_execution_count": 20,
+    "corrected_executions": 10,
+    "not_30_unique_cases": true,
+    "source_accuracy": {
+      "original": {
+        "pass": 20,
+        "total": 20,
+        "tools": [
+          "network.state"
+        ]
+      },
+      "does_not_prove_model_source_planning": true
+    },
+    "limitations": [
+      "Exposed controlled observations, not an untouched30case M0/M1/M2/M3 comparison.",
+      "A literal verification pass alone did not prove factual correctness.",
+      "Planner validation rejected20plans for a topology requirement despite the explicit simulation-only scope; raw plan correctness is unscored.",
+      "Two bounded corrections exhausted for unknown-routing synthesis; both-unknown directional outcomes now use verified facts and next-read guidance with zero synthesis calls.",
+      "G6 full variant and independent causal-quality gate remains open; G5\u226585% not demonstrated."
+    ],
+    "original_model_adequate": 3,
+    "original_unverified_model_errors_released": 6,
+    "original_fallback": 11,
+    "latest_adequate_model": 4,
+    "latest_fallback": 16,
+    "evidence": "tmp/phase-g/iterations/20261023-G7-resume/G6-causal-answer-review.json"
+  },
+  "extended_actual_model_increment": {
+    "timestamp": "2026-10-23T10:44:22.088763+00:00",
+    "stage": "G6",
+    "status": "FAILED_FULL_AGENT_SOURCE_AND_EXPLANATION_GATE",
+    "deterministic_conformance": {
+      "cases": 28,
+      "authorized_reads": 56,
+      "status": "PASS_REUSED"
+    },
+    "new_unique_variant_surface_pairs": 24,
+    "new_unique_variants": 12,
+    "actual_executions_including_reruns": 48,
+    "latest_source_pass": 20,
+    "latest_source_total": 24,
+    "full_answer_review": "Implementation assistant against evaluator-only independent record expectations and complete returned observations; not external blind human rating.",
+    "fresh_quality_credit": false,
+    "remaining": [
+      "Metric-source planner selects raw sample categories instead of broad telemetry model series. Exact broad authorized reader conformance passes; agent source-selection does not.",
+      "Record-heavy protocol fallbacks and model timeouts/malformedJSON fail explanatory adequacy.",
+      "One accepted repaired26draft falsely assigns protocol/flow roles; final guard rejects saved facts, original failure retained.",
+      "Partial ECMP deterministic fallback corrected; no actual18model rerun counted.",
+      "Not a physical packet/protocol emulator, NOS or general LLM correctness certification."
+    ]
+  },
+  "metric_source_correction": {
+    "timestamp": "2026-10-23T13:16:40.782159+00:00",
+    "status": "FAILED_EXPLANATION_GATE_SOURCE_AND_PROJECTION_CORRECTED",
+    "cases": [
+      {
+        "case": "G6-CONFORMANCE-027-floating",
+        "trace": "tmp/phase-g/iterations/20261023T130251.577489Z-G6-causal-model-conformance-950eb5/G6-CONFORMANCE-027-floating.json",
+        "sha256": "c00ae29be73b2b5f155b22c1f2597087d37ec4e7caa1105cc353ae7e6a96d2bf",
+        "authorized_retrieval": "PASS",
+        "calculation_projection_into_actual_model_input": "PASS",
+        "final_answer_adequacy": "FAIL",
+        "model_reasoning_credit": false,
+        "released_answer_type": "rejected_fallback",
+        "model_stage_calls": {
+          "routing": 2,
+          "synthesis": 1,
+          "repair": 1
+        },
+        "rounds": 1,
+        "tool_calls": 1,
+        "reason": "Complete actual inputs now include modeled calculations. Qwen still misbinds interfaces/dimensions, confuses reset/rate roles, exceeds JSON/output budget or times out; rejected drafts are preserved. Released fallback is factual but too verbose to satisfy the explanatory task."
+      },
+      {
+        "case": "G6-CONFORMANCE-027-studio",
+        "trace": "tmp/phase-g/iterations/20261023T130251.577489Z-G6-causal-model-conformance-950eb5/G6-CONFORMANCE-027-studio.json",
+        "sha256": "531db7808d5a238b846fe2bd77386380f9289f78f88f17685c648dcb97a7504d",
+        "authorized_retrieval": "PASS",
+        "calculation_projection_into_actual_model_input": "PASS",
+        "final_answer_adequacy": "FAIL",
+        "model_reasoning_credit": false,
+        "released_answer_type": "unavailable_fallback",
+        "model_stage_calls": {
+          "routing": 2,
+          "synthesis": 1,
+          "repair": 1
+        },
+        "rounds": 1,
+        "tool_calls": 1,
+        "reason": "Complete actual inputs now include modeled calculations. Qwen still misbinds interfaces/dimensions, confuses reset/rate roles, exceeds JSON/output budget or times out; rejected drafts are preserved. Released fallback is factual but too verbose to satisfy the explanatory task."
+      },
+      {
+        "case": "G6-CONFORMANCE-028-floating",
+        "trace": "tmp/phase-g/iterations/20261023T130251.577489Z-G6-causal-model-conformance-950eb5/G6-CONFORMANCE-028-floating.json",
+        "sha256": "c3abe58a8e1faee149d48d6b5e7ffb378d615ee3e2e0bd49e93c348d0ddfa24b",
+        "authorized_retrieval": "PASS",
+        "calculation_projection_into_actual_model_input": "PASS",
+        "final_answer_adequacy": "FAIL",
+        "model_reasoning_credit": false,
+        "released_answer_type": "rejected_fallback",
+        "model_stage_calls": {
+          "routing": 2,
+          "synthesis": 1,
+          "repair": 1
+        },
+        "rounds": 1,
+        "tool_calls": 1,
+        "reason": "Complete actual inputs now include modeled calculations. Qwen still misbinds interfaces/dimensions, confuses reset/rate roles, exceeds JSON/output budget or times out; rejected drafts are preserved. Released fallback is factual but too verbose to satisfy the explanatory task."
+      },
+      {
+        "case": "G6-CONFORMANCE-028-studio",
+        "trace": "tmp/phase-g/iterations/20261023T130251.577489Z-G6-causal-model-conformance-950eb5/G6-CONFORMANCE-028-studio.json",
+        "sha256": "ec1792e8a941e1ca389701d6dfe0b36b94be1d7b9d820f1aa17b88efcb134f41",
+        "authorized_retrieval": "PASS",
+        "calculation_projection_into_actual_model_input": "PASS",
+        "final_answer_adequacy": "FAIL",
+        "model_reasoning_credit": false,
+        "released_answer_type": "rejected_fallback",
+        "model_stage_calls": {
+          "routing": 2,
+          "synthesis": 1,
+          "repair": 1
+        },
+        "rounds": 1,
+        "tool_calls": 1,
+        "reason": "Complete actual inputs now include modeled calculations. Qwen still misbinds interfaces/dimensions, confuses reset/rate roles, exceeds JSON/output budget or times out; rejected drafts are preserved. Released fallback is factual but too verbose to satisfy the explanatory task."
+      }
+    ],
+    "original_contract_failures": "G6-metric-contract-red-collected.xml",
+    "first_actual_rerun": "tmp/phase-g/iterations/20261023T125533.784690Z-G6-causal-model-conformance-c34c31",
+    "typed_discovery_rerun": "tmp/phase-g/iterations/20261023T125746.263409Z-G6-causal-model-conformance-8bd303",
+    "latest_actual_projection_run": "tmp/phase-g/iterations/20261023T130251.577489Z-G6-causal-model-conformance-950eb5",
+    "not_a_fresh_benchmark": true,
+    "unique_corrected_case_surface_pairs": 4,
+    "no_more_exposed_prompt_tuning": true,
+    "final_renderer_note": "The actual run loaded the projection fix before the later readable-fallback formatting change. The later renderer is covered by final373tests; no new actual-model credit is claimed for that formatting."
+  }
 }

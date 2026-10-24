@@ -1,0 +1,81 @@
+{
+  "updated_at": "2026-10-23T14:38:54.868936+00:00",
+  "status": "FAILED_FRESH_ROUTING_GATE_COMPLETE_REVIEW",
+  "phase_gate_passed": false,
+  "historical_candidate": {
+    "registry": "docs/evaluations/phase_f_case_registry.json",
+    "cases": 120,
+    "pass": 101,
+    "fail": 19,
+    "rate": 0.8416666666666667,
+    "meaning": "Declared source/workflow only; full answers not graded.",
+    "group_results": {
+      "concept": "20/20",
+      "inventory_topology": "20/20",
+      "protocol_history": "19/20",
+      "documents": "15/15",
+      "studio": "15/15",
+      "compound": "12/30"
+    },
+    "evidence": "tmp/phase-g/iterations/20261023-G7-resume/G4-complete-frozen120-candidate-review.json",
+    "median_ms": 7834.0,
+    "p95_ms": 54204.44,
+    "provider_requests": 234
+  },
+  "matched_legacy": {
+    "status": "COMPLETE",
+    "log": "tmp/phase-g/iterations/20261023-G7-resume/G4-frozen-120-legacy.log",
+    "same_original_registry": true,
+    "runtime_note": "Only evaluator/tests/specification authoring changed while legacy process ran; application runtime remains the original loaded code. Later projection correction is separately evaluated.",
+    "passed": 94,
+    "failed": 26,
+    "cases": 120,
+    "evidence": "tmp/phase-g/iterations/20261023-G7-resume/G4-frozen120-matched-review.json"
+  },
+  "fresh_specs": [
+    {
+      "registry": "docs/evaluations/phase_g_fresh_routing_v2.json",
+      "sha256": "91c820af570052694ec645307390a12d202018f7bb79a580c4841a18d9b33d90",
+      "cases": 120,
+      "status": "COMPLETE_FAILED_GATE_86_OF_120"
+    },
+    {
+      "registry": "docs/evaluations/phase_g_fresh_quality_v2.json",
+      "sha256": "76b82f02a16df5ef64b2138fe614b8ed81f1aa0c601f2feaebe606c9901e15d4",
+      "cases": 30,
+      "status": "FROZEN_NOT_RUN",
+      "older_unexecuted_v1_preserved": true
+    }
+  ],
+  "independence": "Implementation assistant authored new prompts and expected source contracts before inference; no external human authorship or novel-protocol generalization claimed. Historical failed results are preserved.",
+  "open_defect": "Contract-projection and per-read evidence identity faults corrected;3focusedtests and223affectedtestsPASS. Fresh actual paths are evaluating the correction.",
+  "paired_historical_difference": {
+    "candidate_pass": 101,
+    "legacy_pass": 94,
+    "percentage_points": 5.833333333333333,
+    "threshold_met": false,
+    "fresh_generalization": false,
+    "latency_improvement": "NOT_CLAIMED: focused regression tests overlapped part of baseline"
+  },
+  "fresh_phase_g": {
+    "status": "FAILED_GATE",
+    "candidate_pass": 86,
+    "candidate_fail": 34,
+    "legacy_pass": 71,
+    "legacy_fail": 49,
+    "unique_cases": 120,
+    "workflow_uplift_cases": 15,
+    "threshold": 0.9,
+    "candidate_rate": 0.7166666666666667,
+    "scope": "Routing/workflow only; no full-answer adequacy inference",
+    "evidence": "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-matched-review.json",
+    "corrections": "Separate exposed replays; never added to original120 successes"
+  },
+  "metadata_history": [
+    {
+      "previous_root_status": "HISTORICAL_MATCHED_COMPLETE_FRESH_RUNNING",
+      "changed_at": "2026-10-23T14:38:54.868936+00:00",
+      "reason": "Root said fresh run was running although nested completed review already recorded failed gate."
+    }
+  ]
+}

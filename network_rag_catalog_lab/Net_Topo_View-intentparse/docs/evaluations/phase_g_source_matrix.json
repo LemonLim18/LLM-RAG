@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-10-21T15:19:30.955828+00:00",
+  "updated_at": "2026-10-22T06:49:26.981879+00:00",
   "mapped": 24,
-  "fully_accepted": 12,
+  "fully_accepted": 24,
   "sources": [
     {
       "key": "inventory",
@@ -28,7 +28,7 @@
       ],
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "key": "topology_planned",
@@ -53,7 +53,7 @@
       ],
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "key": "topology_observed",
@@ -81,7 +81,7 @@
       ],
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "latest_failed_acceptance": "Original freshness/update/scope failures retained; final verified source-limitation outputs pass bounded source gate. No general model-quality acceptance."
     },
     {
@@ -107,7 +107,7 @@
       ],
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "key": "device_state",
@@ -132,7 +132,7 @@
       ],
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "key": "running_configs",
@@ -153,7 +153,7 @@
       ],
       "implementation_status": "IMPLEMENTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\current-source-acceptance-review.json"
     },
     {
@@ -175,7 +175,7 @@
       ],
       "implementation_status": "IMPLEMENTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "acceptance_evidence": "tmp\\phase-g\\iterations\\20261021T072218.626454Z-G0-source-closure-resume-9e4418\\saved-source-acceptance-review.json"
     },
     {
@@ -197,7 +197,7 @@
       ],
       "implementation_status": "IMPLEMENTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "evidence": [
         "tmp/phase-g/iterations/20261021T100756.972144Z-G-source-changes-6681f6",
         "tmp/phase-g/iterations/20261021T104246.195217Z-G-source-changes-ff9d33",
@@ -224,7 +224,7 @@
       ],
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "evidence": [
         "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/routing_state-source-acceptance-review.json"
       ]
@@ -239,21 +239,22 @@
       "json_schema": "backend/development/schemas/v1/protocol_state.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/protocol_state.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "PARTIAL_PASS: external JSON edited IDs and real qwen both surfaces; Init correction a9aedb passes after explicit source constraint",
-      "actual_gui_gateway": "IN_PROGRESS: saved/validated/activated203.0.113.81/.82 Init in GUI; first Floating answer correct verified fallback, original model omitted neighbor name; corrective rerun pending",
-      "consumption_gate": "PARTIAL",
-      "notes": "Typed GUI activation and initial both-assistant values verified. Follow-up source context repaired and restart memory restored; later model Init interpretation/OSPF label errors retained, final guards not yet loaded/reverified in browser.",
+      "actual_json_gateway": "PASS_10_FINAL_SOURCE_CASES_REUSING_PASSING_EVIDENCE",
+      "actual_gui_gateway": "PASS_EDITED_VALUES_AND_SHARED_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Authored OSPF identities/state distinct from declared simulation; event01:03/capture01:04; prerequisites never certified; STALE/ERROR and JSON MISSING. Source acceptance only; fallback is not reasoning credit.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/protocol_state.json"
       ],
       "evidence": [
         "tmp/phase-g/iterations/20261020T023616.486593Z-G-source-protocol-989ee1",
         "tmp/phase-g/iterations/20261020T024224.287394Z-G-source-protocol-a9aedb",
-        "tmp/phase-g/iterations/20261020-protocol-browser/floating-first-fallback.json"
+        "tmp/phase-g/iterations/20261020-protocol-browser/floating-first-fallback.json",
+        "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/protocol_state-source-acceptance-review.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE"
     },
     {
       "key": "controller_state",
@@ -274,7 +275,7 @@
       ],
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "evidence": [
         "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/controller_state-source-acceptance-review.json"
       ]
@@ -289,21 +290,22 @@
       "json_schema": "backend/development/schemas/v1/telemetry.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/telemetry.json",
       "gui": "Scenario Workbench: structured sample/metric fields; draft-only chart and UTC window preview; explicit Save/Validate/Activate",
-      "actual_json_gateway": "PASS_EXPOSED_T1_16_NULL_18_BOTH_SURFACES",
-      "actual_gui_gateway": "PASS_BOUNDED_T2_BOTH_MAIN_BROWSER_SURFACES",
-      "consumption_gate": "PARTIAL_BOUNDED_SOURCE_ACCEPTANCE",
-      "notes": "JSON16/null/18 and GUI27/null/18 read by actual authorized gateway on both surfaces. Final seven browser turns preserve old/new windows and switch source;2model syntheses,5labelled fallbacks. Null/time/compound errors retained and corrected; full24-source/negative/model-quality gates remain open.",
+      "actual_json_gateway": "PASS_REUSED_EDITED_SAMPLES_NULL_WINDOWS_PLUS_STALE_ERROR_MISSING_BOTH",
+      "actual_gui_gateway": "PASS_REUSED_EDITED_SAMPLES_WINDOWS_PLUS_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Edited samples, units, null-not-zero, old/new time windows, source switch, event/capture separation, stale/error/missing, both surfaces actual gateway. No reasoning quality credit.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/telemetry.json"
       ],
       "evidence": [
         "tmp/phase-g/iterations/20261020T070924.369161Z-G-source-telemetry-7c9551/",
         "tmp/phase-g/iterations/20261020T073935.806137Z-G-source-telemetry-cd199f/quality-review.json",
-        "tmp/phase-g/iterations/20261020-metrics-browser/"
+        "tmp/phase-g/iterations/20261020-metrics-browser/",
+        "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/telemetry-source-acceptance-review.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE"
     },
     {
       "key": "interface_metrics",
@@ -325,7 +327,7 @@
       "read_followup_acceptance": "PASS_BOUNDED_BOTH_BROWSER_SURFACES",
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS",
+      "stage_status": "COMPLETE",
       "evidence": [
         "tmp/phase-g/iterations/20261021T072218.626454Z-G0-source-closure-resume-9e4418/interface_metrics-source-acceptance-review.json"
       ]
@@ -340,17 +342,20 @@
       "json_schema": "backend/development/schemas/v1/syslog.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/syslog.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "NOT_RUN",
-      "actual_gui_gateway": "PASS_EXPOSED_BOTH_SURFACES_20261020",
-      "consumption_gate": "NOT_VERIFIED",
-      "notes": "Created from an empty source through GUI fields and read by both actual assistants. External-JSON edit proof and broader stale/error conformance still incomplete.",
+      "actual_json_gateway": "PASS_10_FINAL_SOURCE_CASES_REUSING_PASSING_EVIDENCE",
+      "actual_gui_gateway": "PASS_EDITED_VALUES_AND_SHARED_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Edited message/severity/event time, distinct capture time, no inferred physical repair or current health; STALE/ERROR/MISSING. Source acceptance only; fallback is not reasoning credit.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/syslog.json"
       ],
       "gui_artifact": "tmp/phase-g/iterations/20261020-browser-v2/browser-results.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": [
+        "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/syslog-source-acceptance-review.json"
+      ]
     },
     {
       "key": "incidents",
@@ -362,16 +367,19 @@
       "json_schema": "backend/development/schemas/v1/incidents.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/incidents.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "NOT_RUN",
-      "actual_gui_gateway": "NOT_RUN",
-      "consumption_gate": "NOT_VERIFIED",
-      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "actual_json_gateway": "PASS_10_FINAL_SOURCE_CASES_REUSING_PASSING_EVIDENCE",
+      "actual_gui_gateway": "PASS_EDITED_VALUES_AND_SHARED_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Edited summary/severity/status and historical event time, capture time, STALE/ERROR/MISSING; no invented closure/count/current state. Source acceptance only; fallback is not reasoning credit.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/incidents.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": [
+        "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/incidents-source-acceptance-review.json"
+      ]
     },
     {
       "key": "config_drift",
@@ -383,16 +391,19 @@
       "json_schema": "backend/development/schemas/v1/config_drift.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/config_drift.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "NOT_RUN",
-      "actual_gui_gateway": "NOT_RUN",
-      "consumption_gate": "NOT_VERIFIED",
-      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "actual_json_gateway": "PASS_10_FINAL_SOURCE_CASES_REUSING_PASSING_EVIDENCE",
+      "actual_gui_gateway": "PASS_EDITED_VALUES_AND_SHARED_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "ExternalJSON and GUI changed coherent saved/current comparison, exact diff/capture references/event/capture times; STALE/ERROR/MISSING; no intervening event or semantic/device-validation claim. Source acceptance only; fallback is not reasoning credit.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/config_drift.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": [
+        "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/config_drift-source-acceptance-review.json"
+      ]
     },
     {
       "key": "source_health",
@@ -404,17 +415,20 @@
       "json_schema": "backend/development/schemas/v1/source_health.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/source_health.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "PASS_BOUNDED_BOTH_SURFACES; health-json123a33 and health-overrideff1652; full prose reviewed, verified fallbacks",
-      "actual_gui_gateway": "PASS_BOUNDED_FLOATING_AND_STUDIO; GUI draft edit/validate/activate then actual network.state; exact statuses/time via labelled fallback",
-      "consumption_gate": "PARTIAL_JSON_AND_GUI_VERIFIED; full source-specific temporal/negative and all24 gate remain incomplete",
-      "notes": "Fresh browser available; source-name and document-topic precedence failures reproduced/corrected. Source health authoredAVAILABLE/effectiveERROR preserved. Restore-ordinary action blocked by approval-service usage limit, not browser availability.",
+      "actual_json_gateway": "PASS_REUSED_AUTHORED_OVERRIDE_PLUS_STALE_ERROR_MISSING_BOTH",
+      "actual_gui_gateway": "PASS_EDITED_COLLECTOR_CLAIMS_AND_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Edited collector and authored claims; status override; both assistant retrieval; recorded/capture time distinction; STALE/ERROR/MISSING; no physical collection invented. No model reasoning credit.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/source_health.json"
       ],
       "latest_evidence": "tmp\\phase-g\\iterations\\20261020T130151.701511Z-G9-document-grounding-resume-7f63c9\\health-browser-review.json",
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": [
+        "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/source-health-source-acceptance-review.json"
+      ]
     },
     {
       "key": "jobs_audit",
@@ -426,16 +440,18 @@
       "json_schema": "backend/development/schemas/v1/jobs_audit.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/jobs_audit.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "NOT_RUN",
-      "actual_gui_gateway": "NOT_RUN",
-      "consumption_gate": "NOT_VERIFIED",
-      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "actual_json_gateway": "PASS_T1_T2_STALE_FINAL_PLUS_REUSED_ERROR_MISSING_BOTH",
+      "actual_gui_gateway": "PASS_NEW_JOB_MARKER_DISTINCT_TIMES_BOTH_PLUS_REUSED_STALE_ERROR",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "JSON T1/T2 validation-only outcomes, required record time, no device execution; GUI new job marker and distinct observation/capture times. Prior GUI STALE/ERROR shared turns and JSON ERROR/MISSING reused unchanged. No model-reasoning credit.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/jobs_audit.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "latest_evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/jobs-source-partial-review.json",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/jobs_audit-source-acceptance-review.json"
     },
     {
       "key": "knowledge",
@@ -460,7 +476,7 @@
       ],
       "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
       "individual_acceptance": "COMPLETE",
-      "stage_status": "IN_PROGRESS"
+      "stage_status": "COMPLETE"
     },
     {
       "key": "documents",
@@ -472,16 +488,17 @@
       "json_schema": "backend/development/schemas/v1/documents.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/documents.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "PASS_API_BUNDLE_EDIT_EXTERNAL_FILE_REPEAT_PENDING",
-      "actual_gui_gateway": "PASS_FLOATING_AND_STUDIO",
-      "consumption_gate": "PARTIAL_MODALITY_AND_HISTORY_CASES_PENDING",
-      "notes": "Actual qwen summarizes edited document in both assistants; original T1/T2 and GUI19:35 outputs retained. No fresh adequacy benchmark inferred.",
+      "actual_json_gateway": "PASS_EXTERNAL_JSON_REAL_ASSET_T1_T2_STALE_ERROR_MISSING_BOTH",
+      "actual_gui_gateway": "PASS_EDIT_ASSET_SAVE_VALIDATE_ACTIVATE_POSITIVE_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten actual JSON cases plus6 GUI source checks; four shared status turns across two categories, not eight unique requests. Original omitted/wrong label answers and incomplete summaries retained as model failures. No universal document interpretation or vision claim.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/documents.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "IN_PROGRESS",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/documents-source-acceptance-review.json"
     },
     {
       "key": "attachments",
@@ -493,16 +510,17 @@
       "json_schema": "backend/development/schemas/v1/attachments.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/attachments.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "NOT_RUN",
-      "actual_gui_gateway": "NOT_RUN",
-      "consumption_gate": "NOT_VERIFIED",
-      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "actual_json_gateway": "PASS_EXTERNAL_JSON_REAL_ASSET_T1_T2_STALE_ERROR_MISSING_BOTH",
+      "actual_gui_gateway": "PASS_EDIT_ASSET_SAVE_VALIDATE_ACTIVATE_POSITIVE_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Ten actual JSON cases plus6 GUI source checks; four shared status turns across two categories, not eight unique requests. Original omitted/wrong label answers and incomplete summaries retained as model failures. No universal document interpretation or vision claim.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/attachments.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/attachments-source-acceptance-review.json"
     },
     {
       "key": "diagrams",
@@ -514,16 +532,17 @@
       "json_schema": "backend/development/schemas/v1/diagrams.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/diagrams.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "NOT_RUN",
-      "actual_gui_gateway": "NOT_RUN",
-      "consumption_gate": "NOT_VERIFIED",
-      "notes": "v2 contains a real PNG. Actual original-image/extraction preview and both-surface OCR reads; unsupported visual prose rejected. Full vision NOT VERIFIED.",
+      "actual_json_gateway": "PASS_REAL_PNG_EDIT_OCR_TRANSCRIPTION_T1_T2_STALE_ERROR_MISSING_BOTH",
+      "actual_gui_gateway": "PASS_UPLOAD_REPLACE_EXTRACT_ACTIVATE_TRANSCRIBE_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Actual PNG upload/replacement, saved GUI extraction preview, readable OCR transcription through both assistants; captured/status/revision metadata and no extraction when unavailable. OCR readings are uncertain; visual diagram relationships remain unsupported. Zero model-reasoning credit. General label explanation failures remain underG5.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/diagrams.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/diagrams-source-acceptance-review.json"
     },
     {
       "key": "conversation",
@@ -535,16 +554,17 @@
       "json_schema": "backend/development/schemas/v1/conversation.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/conversation.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "NOT_RUN",
-      "actual_gui_gateway": "NOT_RUN",
-      "consumption_gate": "NOT_VERIFIED",
-      "notes": "Registry mapping and an authored value do not prove answer-level acceptance.",
+      "actual_json_gateway": "PASS_EXTERNAL_JSON_ACTUAL_SEED_USER_REQUESTS_T1_T2_AND_UNAVAILABLE_BOTH",
+      "actual_gui_gateway": "PASS_GUI_EDIT_ACTIVATE_ACTUAL_SEED_FOLLOWUP_STALE_ERROR_BOTH",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "JSON and GUI-authored user requests replayed through actual owner-bound gateway conversations, not injected assistant messages. Positive references select independently authored LAB-R2/R3 (JSON) and LAB-R1 (GUI). STALE/ERROR/MISSING setup does not replay into a fresh conversation; unknown references clarify without reads. No advanced model-reasoning credit.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/conversation.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/conversation-source-acceptance-review.json"
     },
     {
       "key": "simulation",
@@ -556,18 +576,19 @@
       "json_schema": "backend/development/schemas/v1/simulation.schema.json",
       "bundled_source": "backend/development/scenarios/healthy_all_sources_v2/simulation.json",
       "gui": "Scenario Workbench: backend-schema fields, optional/dynamic field creation, Advanced JSON, explicit Save/Validate/Activate",
-      "actual_json_gateway": "NOT_RUN",
-      "actual_gui_gateway": "NOT_RUN",
-      "consumption_gate": "NOT_VERIFIED",
-      "notes": "Selected-source filter/status defect fixed; bounded derived results carry simulation source label. Broader independent conformance pending.",
+      "actual_json_gateway": "PASS_EXTERNAL_JSON_ROUTE_EDIT_REAL_AUTHORIZED_READ_T1_T2_STALE_ERROR_MISSING_BOTH",
+      "actual_gui_gateway": "PASS_GUI_ROUTE_EDIT_ACTIVATE_BOTH_STALE_ERROR",
+      "consumption_gate": "COMPLETE_JSON_GUI_BOTH_ASSISTANTS",
+      "notes": "Declared bounded IPv4 flow results; independent route edit in JSON and GUI propagates to actual authorized state reader. Forward failure and return delivery are separate; missing/STALE/ERROR and capture/observation roles retained. Not physical measurements or a full G6 simulator conformance pass. Zero model-reasoning credit; original model failures retained.",
       "previous_bundled_sources": [
         "backend/development/scenarios/healthy_all_sources_v1/simulation.json"
       ],
-      "implementation_status": "PATHS_PRESENT_NOT_FULLY_VERIFIED",
-      "individual_acceptance": "NOT_RUN",
-      "stage_status": "IN_PROGRESS"
+      "implementation_status": "IMPLEMENTED_AND_INDIVIDUALLY_ACCEPTED",
+      "individual_acceptance": "COMPLETE",
+      "stage_status": "COMPLETE",
+      "evidence": "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/simulation-source-acceptance-review.json"
     }
   ],
   "note": "24 mapped/populated declarations are not24 fully accepted categories; every JSON+GUI+both-surface gate remains independently tracked.",
-  "latest_increment": "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json"
+  "latest_increment": "G3 COMPLETE:24 individually verified source contracts/JSON/GUI/both assistants. Independent model reasoning remains open."
 }

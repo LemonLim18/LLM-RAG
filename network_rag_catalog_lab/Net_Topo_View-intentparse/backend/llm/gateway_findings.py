@@ -107,6 +107,11 @@ def network_answer(context, evidence, attrs=(), interface_refs=(), *, question='
     sections=[]
     for item in context:
         data=item.get('data') or {};tool=item['tool']
+        if tool=='knowledge.search':
+            # Published reads return typed document lists, not network envelopes.
+            from llm.orchestration.investigation import knowledge_text
+            if text:=knowledge_text([item],evidence):sections.append(text)
+            continue
         citations=' '.join('['+labels[ref]+']' for ref in item.get('evidence_ids',[]) if ref in labels)
         if data.get('excerpt'):
             sections.append('The '+tool.removeprefix('network.').replace('inventory.read','inventory')+' reader returned more content than this response can safely display. The returned context is partial; narrow the device or time scope. '+citations)
@@ -201,9 +206,21 @@ def network_answer(context, evidence, attrs=(), interface_refs=(), *, question='
                 if len(records)>3:parts.append('Showing the three most recent returned captures.')
             elif tool=='network.state':
                 import json
-                special={'controller_state','source_health','simulated_job'}
+                special={'controller_state','source_health','simulated_job','forwarding_assessment'}
                 for row in records:
-                    if row.get('kind')=='controller_state':
+                    if row.get('kind')=='forwarding_assessment':
+                        assessment=row.get('assessment') or {};flow=row.get('flow') or {}
+                        parts.append('**Modeled forwarding — '+cell(assessment.get('status','unrecorded'))+'** · `'+cell(flow.get('source_address'))+'` → `'+cell(flow.get('destination_address'))+'`, VRF `'+cell(flow.get('vrf','unrecorded'))+'`.')
+                        if row.get('timestamp'):parts.append('Observation recorded `'+cell(row['timestamp'])+'`; calculated scope, not a physical packet test.')
+                        for direction in ['forward','return']:
+                            result=assessment.get(direction) or {}
+                            parts.append('**'+direction.capitalize()+': '+cell(result.get('status','not recorded'))+'**.')
+                            for branch in result.get('branches',[])[:3]:
+                                steps=' → '.join(cell(hop.get('hostname'))+(' via `'+cell(hop['interface'])+'`' if hop.get('interface') else '') for hop in branch.get('hops',[]))
+                                parts.append('- '+cell(branch.get('status'))+': '+cell(branch.get('reason'))+('. Egress steps: '+steps if steps else '')+'.')
+                                location=branch.get('failure_location') or {}
+                                if location:parts.append('  Recorded failure: '+cell(location.get('direction'))+' on `'+cell(location.get('hostname'))+'` / `'+cell(location.get('interface'))+'`; policy `'+cell(location.get('policy_rule'))+'`, action '+cell(location.get('action'))+'.')
+                    elif row.get('kind')=='controller_state':
                         parts.append('**Controller `'+cell(row.get('controller'))+'`** — connection: **'+cell(row.get('operational'))+'**; configured: '+cell(row.get('configured'))+'. Associated device: `'+cell(row.get('node') or row.get('hostname'))+'`.')
                         if row.get('capabilities'):parts.append('Recorded capabilities: '+', '.join(cell(v) for v in row['capabilities'])+'. Controller connection state does not establish device operational health.')
                     elif row.get('kind')=='source_health':
@@ -211,7 +228,9 @@ def network_answer(context, evidence, attrs=(), interface_refs=(), *, question='
                         parts.append('**Source availability** — '+str(len(statuses))+' recorded source statuses'+(': '+', '.join(cell(k)+'='+cell(v) for k,v in issues.items()) if issues else '; all are marked AVAILABLE' if statuses else '; status list is empty')+'.')
                         if row.get('physical_collection_performed') is False:parts.append('No physical device collection was performed. These source statuses describe the development provider.')
                     elif row.get('kind')=='simulated_job':
-                        parts.append('**Simulated job `'+cell(row.get('job_id'))+'`** — '+cell(row.get('status'))+'; effect: '+cell(row.get('effect'))+'. '+cell(row.get('message')))
+                        device=row.get('hostname') or devices.get(str(row.get('device_id')))
+                        parts.append('**Simulated job `'+cell(row.get('job_id'))+'`**'+(' · `'+cell(device)+'`' if device else '')+' — '+cell(row.get('status'))+'; effect: '+cell(row.get('effect'))+'. '+cell(row.get('message')))
+                        if row.get('timestamp'):parts.append('Job observation recorded `'+cell(row['timestamp'])+'`; this is separate from the source capture time.')
                 # A protocol label alone cannot answer an adjacency question.
                 # These are typed reader facts, not a generic CLI interpretation.
                 for row in records:

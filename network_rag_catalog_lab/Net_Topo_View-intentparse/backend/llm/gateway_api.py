@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import Field
 
 from auth.auth import get_current_user, normalize_role
-from llm.gateway_models import StrictModel, TurnRequest, TurnResponse
+from llm.gateway_models import StrictModel, TurnRequest, TurnResponse,EditorSnapshot
 from llm.gateway import AIGateway
 
 router = APIRouter(prefix='/api/v1/ai', tags=['Shared local AI'])
@@ -67,6 +67,19 @@ class SaveDocument(StrictModel):
     content: str = Field(max_length=1000000)
     expected_revision: int = Field(ge=0)
     create: bool = False
+
+
+class CheckWorkspaceRevisions(StrictModel):
+    documents: list[EditorSnapshot] = Field(min_length=1,max_length=8)
+
+
+@router.post('/documents/check-revisions')
+def check_workspace_revisions(body: CheckWorkspaceRevisions,service=Depends(gateway),user=Depends(require_ai_user)):
+    from llm.gateway import authorize_studio
+    from llm.gateway_workspace import check_saved_revisions
+    authorize_studio(user)
+    check_saved_revisions(service.db,body.documents)
+    return {'status':'unchanged','saved':False,'execution_available':False}
 
 
 @router.put('/documents')
@@ -183,7 +196,17 @@ def conversations(assistant_kind: str, service=Depends(gateway), user=Depends(re
 
 @router.get('/conversations/{identity}')
 def conversation(identity: str, service=Depends(gateway), user=Depends(require_ai_user)):
-    return service.store.get(identity, user['username'])
+    return service.store.present(identity, user['username'])
+
+
+@router.get('/conversations/{identity}/turns/{request_id}/review')
+def restore_generation_review(identity: str, request_id: str, service=Depends(gateway), user=Depends(require_ai_user)):
+    from llm.gateway import authorize_studio
+    from llm.gateway_v9 import restore_review
+    authorize_studio(user)
+    service.store.get(identity, user['username'], 'studio')
+    preview, prompt = restore_review(service.db, user, service.store.result_for(identity, user['username'], request_id))
+    return {'preview': preview, 'prompt': prompt, 'conversation': identity}
 
 
 @router.delete('/conversations/{identity}')

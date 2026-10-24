@@ -101,12 +101,16 @@ def release_answer(candidate,context,evidence,authoritative,attributes=(),interf
 
 def verify_documents(validation,context,authoritative):
     """Published contracts must match the adapter output, not model paraphrases."""
-    originals={name:result.data for name,result in authoritative if name=='knowledge.search'}
     for item in context:
-        if item['tool']=='knowledge.search' and item.get('data')!=originals.get('knowledge.search'):
+        candidates=[result for name,result in authoritative if name==item['tool']
+            and {e.id for e in result.evidence}==set(item.get('evidence_ids',[]))]
+        if not candidates:
+            return {**validation,'status':'failed','reason':'Source does not match this authorized read'}
+        if item['tool']=='knowledge.search':
+            candidates=[result for result in candidates if item.get('data')==result.data]
+        if not candidates:
             return {**validation,'status':'failed','reason':'Documentation content changed after the authorized read'}
-        original=next((r for name,r in authoritative if name==item['tool']),None)
-        if original and (item['status']!=original.status or item.get('message','')!=original.message):
+        if not any(item['status']==result.status and item.get('message','')==result.message for result in candidates):
             return {**validation,'status':'failed','reason':'Source availability changed after the authorized read'}
     return validation
 
@@ -215,11 +219,28 @@ def document_answer_errors(answer,documents,question='',vision_available=False):
     source_dates=_document_dates('\n'.join(d.get('text','') for d in documents))
     errors=ocr_visual_errors(answer,documents,vision_available)
     source_text='\n'.join(d.get('text','') for d in documents)
+    if (not any('unsaved' in document for document in documents)
+            and re.search(r'\b(?:active|unsaved|open)\b.{0,80}\b(?:buffer|configuration|code|file)\b.{0,50}\b(?:includes?|contains?|shows?|has)\b',answer,re.I)):
+        errors.append('No editor snapshot was included in this document read; do not invent or repeat claims about the open buffer from unrelated earlier questions')
+    # A requested, explicit identifier is an exact fact, not a filename or a
+    # paraphrase. Limit this check to one unambiguous direct-text value; OCR
+    # labels and documents with several identifiers still require clarification.
+    if re.search(r'\b(?:labels?|identifiers?|reference|ticket|request\s+(?:id|code))\b',question,re.I):
+        identifiers=set()
+        for document in documents:
+            if 'ocr' in str(document.get('extraction','')).lower():continue
+            for field in re.finditer(r'(?im)^\s*[\w -]{0,60}\b(?:label|identifier|reference|request|ticket|marker|job)\b[\w -]{0,30}\s*:\s*([A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+)\b',document.get('text','')):
+                value=field[1]
+                if any(c.isdigit() for c in value):identifiers.add(value)
+        if len(identifiers)==1 and next(iter(identifiers)) not in answer:
+            errors.append('The requested document identifier is explicitly recorded; retain its exact value rather than omitting it or substituting the filename')
     planned_only=bool(re.search(r'\b(?:planned|intended|proposed)\b',source_text,re.I) and
         not re.search(r'\b(?:observed|measured|running.config capture)\b',source_text,re.I))
     if planned_only:
         for sentence in re.split(r'(?<=[.!?])\s+|\n',answer):
             if re.search(r'\b(?:does not|doesn.t|cannot|can.t)\s+(?:prove|establish|verify|show|mean)\b',sentence,re.I):continue
+            if re.search(r'\b(?:device|router|switch)\b.{0,60}\b(?:is|are|was|were|has been)\s+(?:not\s+)?(?:(?:currently|actually)\s+)*(?:configured|applied|deployed|running|active)\b',sentence,re.I):
+                errors.append('A proposed-only document establishes neither current use nor non-use on a device; say its actual running state is not established by this document')
             if re.search(r'\b(?:is|are|has been)\s+(?:currently\s+|actually\s+)?(?:configured|applied|deployed|running|active)\b',sentence,re.I) and not re.search(
                     r'\b(?:planned|intended|proposed|would|should|if)\b|\bin\s+(?:the|this)\s+(?:document|file|text|design|template)\b',sentence,re.I):
                 errors.append('A planned/intended document setting does not establish an applied configuration or current network state; attribute it to the design')
@@ -270,9 +291,39 @@ async def verify_ocr_answer(question,answer,model,documents,generate,vision_avai
     """One local repair; retain rejected prose and use honest text if it fails."""
     import asyncio,json,re
     from fastapi import HTTPException
+    from pathlib import Path
+    from llm.orchestration.studio import router_sections, verify_editor_router_ids
+    native_sources={document['source'] for document in documents if
+        Path(document.get('source','')).suffix.lower() in {'.cfg','.conf','.config'}
+        and router_sections(documents,document.get('source'))}
+    # Reuse the existing literal guard for one unambiguous uploaded native
+    # configuration. Do not treat its values as a general multi-file, vendor or
+    # runtime-state certification. Neither assistant receives editing authority.
+    if len(native_sources)==1:
+        path=next(iter(native_sources))
+        reconstructed,changed=verify_editor_router_ids(answer,documents,path,question=question,source_kind='uploaded')
+        if changed:
+            return reconstructed,model,{'status':'literal_uploaded_configuration_reconstruction',
+                'model_synthesis':False,'original_answer':answer,'source':path,
+                'scope':'Existing literal IOS-style router-ID/AS/interface/route attribution checks; uploaded text does not establish live state or device actions; arbitrary vendor semantics remain unverified'}
+    source_text='\n'.join(document.get('text','') for document in documents)
+    proposed_only=(re.search(r'\b(?:planned|intended|proposed)\b',source_text,re.I)
+        and not re.search(r'\b(?:observed|measured|running.config capture)\b',source_text,re.I))
+    current_device_question=re.search(r'\b(?:device|router|switch)\b.{0,60}\b(?:running|configured|using|active)\b',question,re.I)
+    if proposed_only and current_device_question:
+        # The source cannot answer this state question in either direction.
+        # Two model/repair attempts produced affirmative and negative false
+        # certainty in different wording. Enforce source sufficiency instead
+        # of certifying another draft through a list of prose patterns.
+        return ('The document describes **proposed settings**. It does not establish whether the device is currently using those values; neither current use nor non-use is verified. '
+            'A current configuration or operational observation would be needed to answer that device-state question.'),None,{
+                'status':'planned_state_limitation_fallback','model_synthesis':False,'original_answer':answer,
+                'scope':'Proposed document content is insufficient for current device-state claims; no affirmative or negative runtime conclusion is authorized',
+                'errors':document_answer_errors(answer,documents,question,vision_available),
+                'repair_skipped':'Bounded correction class exhausted; source insufficiency is independent of candidate wording'}
     errors=document_answer_errors(answer,documents,question,vision_available)
     if not errors:return answer,model,None
-    report={'status':'pending','scope':'Selected document dates, explicit protocol/AS associations, named comparison attribution and OCR-only visual assertions; other paraphrases are not universally certified',
+    report={'status':'pending','scope':'Selected document dates, requested unambiguous direct-text identifiers, explicit protocol/AS associations, named comparison attribution and OCR-only visual assertions; other paraphrases are not universally certified',
         'original_answer':answer,'errors':errors}
     content='\n\n'.join(d['source']+(' page '+str(d['page']) if d.get('page') else '')+'\n'+d.get('text','') for d in documents)[:10000]
     reading_notes=document_reading_notes(documents)

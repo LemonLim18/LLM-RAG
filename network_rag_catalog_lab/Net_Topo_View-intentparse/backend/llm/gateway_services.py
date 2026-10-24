@@ -63,11 +63,13 @@ def registry_for(db):
         from llm.gateway_store import ConversationStore
         from llm.gateway_documents import build_context
         ConversationStore(db).get(authorization.conversation_id,authorization.principal,authorization.assistant_kind)
-        if authorization.assistant_kind=='floating' and params.turn.editor is not None:
+        if authorization.assistant_kind=='floating' and (params.turn.editor is not None or params.turn.related_editors):
             raise HTTPException(403,'Floating Chat cannot read automatic editor context')
         context,evidence,coverage=await asyncio.to_thread(build_context,db,authorization.conversation_id,
             {'username':authorization.principal,'role':authorization.role},params.turn,params.include_attachments)
-        return ToolResult(status='success' if context else 'unavailable',
+        unavailable_only=bool(context) and all(item.get('extraction')=='source_unavailable' for item in context)
+        status=('error' if any(item.get('status')=='ERROR' for item in context) else 'unavailable') if unavailable_only else 'success' if context else 'unavailable'
+        return ToolResult(status=status,
             data={'context':context,'coverage':{**coverage,'tool':'document.read'}},evidence=evidence)
     registry.register_capability('document.read',document_read,Capability(DocumentReadRequest,ToolResult,'read',
         frozenset({'floating','studio'}),frozenset({'admin','engineer','auditor'}),timeout=180,

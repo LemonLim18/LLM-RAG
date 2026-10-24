@@ -1,0 +1,557 @@
+{
+  "version": 3,
+  "scope": "Independent simulator/source conformance, not LLM causal explanation or full G6 acceptance",
+  "runtime_access": "DENIED; evaluator-only oracle directory",
+  "cases": [
+    {
+      "id": "G6-CONFORMANCE-001",
+      "capability": "Healthy multihop",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "delivered",
+        "return": "delivered"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-002",
+      "capability": "Administrative state",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/inventory/data/interfaces/0/admin_status",
+          "value": "down"
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "failed",
+        "forward_reason_contains": "egress interface down"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-003",
+      "capability": "Operational state",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/inventory/data/interfaces/2/oper_status",
+          "value": "down"
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "failed",
+        "forward_reason_contains": "egress interface down"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-004",
+      "capability": "Missing complete route",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes",
+          "value": []
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "delivered",
+        "forward_reason_contains": "no route"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-005",
+      "capability": "Incomplete route knowledge",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/0/complete",
+          "value": false
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "unknown",
+        "return": "delivered",
+        "forward_reason_contains": "incomplete"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-006",
+      "capability": "Explicit discard route",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/0/action",
+          "value": "discard"
+        },
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/0/next_hops",
+          "value": []
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "delivered",
+        "forward_reason_contains": "discard route"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-007",
+      "capability": "Unavailable neighbor observation",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/0/next_hops/0/resolved",
+          "value": null
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "unknown",
+        "return": "delivered",
+        "forward_reason_contains": "resolution unavailable"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-008",
+      "capability": "Negative neighbor observation",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/0/next_hops/0/resolved",
+          "value": false
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "delivered",
+        "forward_reason_contains": "resolution failed"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-009",
+      "capability": "Longest-prefix precedence",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/-",
+          "value": {
+            "id": "broad-discard",
+            "prefix": "0.0.0.0/0",
+            "origin": "static",
+            "preference": 0,
+            "action": "discard",
+            "next_hops": []
+          }
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "delivered",
+        "return": "delivered"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-010",
+      "capability": "Same-prefix preference",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/-",
+          "value": {
+            "id": "less-preferred-discard",
+            "prefix": "198.19.71.3/32",
+            "origin": "static",
+            "preference": 200,
+            "action": "discard",
+            "next_hops": []
+          }
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "delivered",
+        "return": "delivered"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-011",
+      "capability": "Forwarding loop",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/1/routes/0/next_hops",
+          "value": [
+            {
+              "interface_id": 2,
+              "address": "10.72.0.1",
+              "resolved": true
+            }
+          ]
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "delivered",
+        "forward_reason_contains": "forwarding loop"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-012",
+      "capability": "Ingress policy direction",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/policies",
+          "value": [
+            {
+              "id": "reviewed-ingress",
+              "interface_id": 2,
+              "direction": "ingress",
+              "rules": [
+                {
+                  "id": "deny-forward",
+                  "source": "198.19.71.1/32",
+                  "destination": "198.19.71.3/32",
+                  "protocol": "ip",
+                  "action": "deny"
+                }
+              ],
+              "default_action": "permit"
+            }
+          ]
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "delivered",
+        "forward_reason_contains": "ingress policy"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-013",
+      "capability": "Egress policy direction",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/policies",
+          "value": [
+            {
+              "id": "reviewed-egress",
+              "interface_id": 3,
+              "direction": "egress",
+              "rules": [
+                {
+                  "id": "deny-forward",
+                  "source": "198.19.71.1/32",
+                  "destination": "198.19.71.3/32",
+                  "protocol": "ip",
+                  "action": "deny"
+                }
+              ],
+              "default_action": "permit"
+            }
+          ]
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "delivered",
+        "forward_reason_contains": "egress policy"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-014",
+      "capability": "Recursive next-hop lookup",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/0/next_hops",
+          "value": [
+            {
+              "address": "10.72.0.2",
+              "resolved": true
+            }
+          ]
+        },
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/-",
+          "value": {
+            "id": "resolve-adjacent",
+            "prefix": "10.72.0.0/30",
+            "origin": "connected",
+            "preference": 0,
+            "next_hops": [
+              {
+                "interface_id": 1,
+                "address": "10.72.0.2",
+                "resolved": true
+              }
+            ]
+          }
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "delivered",
+        "return": "delivered"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-015",
+      "capability": "Mutual subnet compatibility",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/inventory/data/interfaces/1/prefix",
+          "value": "10.74.0.2/30"
+        },
+        {
+          "path": "/sources/simulation/data/network/tables/0/routes/0/next_hops/0/address",
+          "value": "10.74.0.2"
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "failed",
+        "return": "failed",
+        "forward_reason_contains": "not mutually on-link"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    },
+    {
+      "id": "G6-CONFORMANCE-016",
+      "capability": "VRF endpoint isolation",
+      "scenario_id": "S-CONTROLLED-NETWORK",
+      "scenario_revision": 1,
+      "mutations": [
+        {
+          "path": "/sources/simulation/data/network/flows/0/vrf",
+          "value": "RED"
+        },
+        {
+          "path": "/sources/simulation/data/network/flows/0/destination_vrf",
+          "value": "RED"
+        },
+        {
+          "path": "/sources/inventory/data/interfaces/4/vrf",
+          "value": "RED"
+        },
+        {
+          "path": "/sources/inventory/data/interfaces/6/vrf",
+          "value": "RED"
+        }
+      ],
+      "prompt": "Assess the modeled forward and return paths between the recorded endpoints. Explain supported findings and missing evidence.",
+      "expected": {
+        "forward": "unknown",
+        "return": "unknown",
+        "forward_reason_contains": "routing table unavailable"
+      },
+      "authorized_tool": "network.state",
+      "source_categories": [
+        "simulation"
+      ],
+      "prohibited": [
+        "Physical packet-test claim",
+        "Unknown treated as confirmed failure",
+        "Expected-answer leakage",
+        "Simulator pass treated as LLM reasoning"
+      ],
+      "verification": "Hand-defined outcome before execution, sealed scenario, actual authorized existing reader on both surfaces. Model answer quality remains separate."
+    }
+  ],
+  "supersedes": "phase_g_forwarding_conformance_v2.json",
+  "correction": "Keep the v2 recorded RED endpoints and UNKNOWN/UNKNOWN verdict. The v1 reason referred to an unrecorded endpoint, while this valid v2 input lacks RED routing tables. Independently expected cause is routing table unavailable. Original failed v1/v2 artifacts retained; no runtime validator or outcome changed."
+}
