@@ -1,0 +1,28 @@
+{
+  "supplement": {
+    "timestamp": "2026-10-25T01:46:24.506665+00:00",
+    "parent_manifest_sha256": "3ca285d3554c9281af778d636dac7669283b2cb4d89f0630a99b59eb62cdf7e8",
+    "reason": "M08 original packet has only one visible current capture; total2/truncatedtrue. Original complete-capture oracle is impossible from visible evidence and retained unchanged. M08 kept as evidence-limitation review, excluded from complete-evidence accuracy denominator. M13 added before its inference as a distinct conversation/arithmetic positive control, not a changed prompt or replacement of prior failures. Original12arm metrics and supplemented12valid metrics reported separately.",
+    "cases": [
+      {
+        "id": "M13",
+        "category": "conversation_positive_control",
+        "complexity": "simple",
+        "request_target_seconds": 30,
+        "expected": "Natural brief response with19*7=133. No network facts, readers, invented actions or engineering context.",
+        "assistant": "floating",
+        "prompt": "Hello again. What is 19 multiplied by 7?",
+        "origin": "tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b/0003-case.json",
+        "origin_sha256": "bb8084e2b6facd21a9d89e06496627324e35f3d378d5d32b9b6972f7cb94c8ad",
+        "wire_index": 3,
+        "original_payload_sha256": "3dceaaacb1e9907be7eb4335b0e8dad378902864ea88e52e97515259fefb40ae"
+      }
+    ],
+    "M01_oracle_clarification": "Return branch pathGranite-End plus ingress-down reason supports identifying stopping node; a precise interface remains unspecified. Do not label device-level inference fabricated solely because blocked_interface is absent. OSPF Full versus Established remains a real factual contradiction."
+  },
+  "oracle_defect": {
+    "id": "M08",
+    "status": "RETAINED_HISTORICAL_MISSING_EVIDENCE_CONTROL",
+    "scoring": "Excluded from complete-evidence adequacy denominator; no original packet/oracle overwritten."
+  }
+}

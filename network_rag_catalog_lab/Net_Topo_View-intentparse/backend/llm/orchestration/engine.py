@@ -15,6 +15,7 @@ from llm.orchestration.state import AgentState,ToolStep
 from llm.orchestration.adapters import AuthorizedTools
 from llm.orchestration.model import RoutingModel
 from llm.orchestration.verification import verify_records,release_answer
+from development.source_registry import SOURCES
 
 
 DOMAIN_TO_TOOL={'inventory':'inventory.read','knowledge':'knowledge.search',**{d:'network.'+d for d in ['topology','configuration','syslog','telemetry','incidents','state']}}
@@ -25,6 +26,8 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
     if (auth.principal!=user['username'] or auth.assistant_kind!=kind or auth.conversation_id!=identity):
         raise HTTPException(403,'Agent authorization is not bound to this owner and conversation')
     model=RoutingModel()
+    if getattr(model,'hybrid',None):
+        timeout=min(timeout,model.hybrid.remaining())
     tools=AuthorizedTools(service.registry,service.store,auth)
     engineering_tools=AuthorizedTools(service.registry,service.store,auth,max_calls=1,
         names=frozenset({'v9.preview','document.propose'}),effects=frozenset({'propose'})) if b3 and kind=='studio' else None
@@ -66,6 +69,27 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
                 route.planning['explicit_effect_constraint']={'proposed_intent':route.intent,'allowed_intent':constrained.intent,
                     'authority':'latest user instruction; no engineering effect executed'}
             route.intent=constrained.intent;route.question=constrained.question
+        from llm.orchestration.request_contract import outcome_pilot_enabled,requested_contract,requested_clauses
+        if outcome_pilot_enabled() and route.intent in {'answer','explain'}:
+            if route.requested_outcomes is None:
+                route.requested_outcomes=requested_contract(body.prompt,needs=[{'domain':d} for d in route.network_domains],source_requests=route.source_requests,inventory=inventory)
+            else:
+                original={c['id']:c['text'] for c in requested_clauses(body.prompt)}
+                contract=route.requested_outcomes
+                if set(original)=={o.id for o in contract.outcomes}:
+                    contract.original_request=body.prompt
+                    for outcome in contract.outcomes:outcome.instruction=original[outcome.id]
+                else:
+                    route.requested_outcomes=requested_contract(body.prompt,needs=[{'domain':d} for d in route.network_domains],source_requests=route.source_requests,inventory=inventory)
+            contract=route.requested_outcomes
+            executable=contract.execution_queries({d:route.source_requests.get(d,{'source_scope':'auto'}) for d in route.network_domains})
+            route.source_requests=executable;route.network_domains=list(executable)
+            from llm.gateway_references import resolve_read,read_intent_text
+            owned=resolve_read(read_intent_text(body.prompt),previous,inventory)
+            if owned and owned.get('use_history') and not owned.get('question'):
+                # Reference identity does not depend on the model remembering
+                # its history flag. Do not restore old observations as facts.
+                route.use_history=True;route.device_refs=owned['device_refs'];route.interface_refs=owned['interface_refs']
         if b2 and inventory.get('scenario') and route.planning.get('mode')!='validated_model_plan' and not any(query.get('source_categories') for query in route.source_requests.values()):
             from llm.orchestration.investigation import is_investigation
             if route.network_domains and (is_investigation(body.prompt) or route.use_history and is_investigation(saved_memory.goal) or re.search(r'\b(reachability|routing table|route table|adjacenc\w*|interface state)\b',body.prompt,re.I)):
@@ -92,11 +116,23 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
             if b3 and kind=='studio' and (route.use_editor or route.intent.startswith('generate_')):
                 from llm.orchestration.studio import editor_reference
                 memory['editor_ref']=editor_reference(body.editor) if route.use_editor else {}
-            elif not route.network_domains and not route.use_attachments:memory={'status':'running'}
+            elif not route.network_domains and not route.use_attachments and not (route.requested_outcomes and route.use_history):memory={'status':'running'}
         return update(state,'understand_request',route=route,context_references={
             'previous_request':previous.get('request_id') if previous and route.use_history else None,
             'user_history':[m['content'][:2000] for m in history[-6:] if m['role']=='user'] if route.use_history else [],
-            'attachment_names':[item['name'] for item in attachments] if route.use_attachments else []},memory=memory)
+            'attachment_names':[item['name'] for item in attachments] if route.use_attachments else [],
+            **({'advisory':{'prior_user_goal':saved_memory.goal if route.use_history else '',
+                'prior_readers':saved_memory.domains if route.use_history else [],
+                'open_questions':saved_memory.open_questions if route.use_history else [],
+                'source_revisions':saved_memory.evidence_revisions if route.use_history else {},
+                'devices':[d['hostname'] for d in inventory['devices'] if str(d['id']) in route.device_refs],
+                'authorized_readers':sorted(tools.tools),
+                'source_catalog':[{'source':s.key,'meaning':s.description or s.title,
+                    'readers':{name:list(s.record_kinds(name)) for name in s.readers if name in tools.tools}}
+                    for s in SOURCES
+                    if any(name in tools.tools for name in s.readers)],
+                'authority':'Owned references and previous read gaps only; no current observations or diagnosis'}}
+                if b2 and route.requested_outcomes and not route.network_domains else {})},memory=memory)
 
     async def resolve(state):
         route=state.route.model_copy(deep=True)
@@ -181,6 +217,20 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
         return update(state,'verify_facts',validation=validation)
 
     async def compose(state):
+        contract=state.route.requested_outcomes
+        if contract and not state.route.network_domains and not state.route.use_editor and not state.route.use_attachments:
+            from llm.orchestration.synthesis import synthesize
+            if contract.advice_only and getattr(model,'hybrid',None):
+                model.hybrid.prepare_advisory(state.context_references.get('advisory',{}))
+            answer,synthesis=await synthesize(model,body.model,body.prompt,[],[],{},
+                'I could not fulfil the requested outcome within this turn. No evidence was collected and no action was performed.',
+                requested_outcomes=contract,advisory_context=state.context_references.get('advisory',{}))
+            from llm.orchestration.request_contract import outcome_results
+            return update(state,'compose_response',answer=answer,validation={'status':'advisory_only' if contract.advice_only else 'response_proposed','synthesis':synthesis},
+                outcome_results=outcome_results(contract,[],[],synthesis),memory={**state.memory,
+                    **({'domains':saved_memory.domains,'source_requests':saved_memory.source_requests,
+                        'open_questions':saved_memory.open_questions,'evidence_revisions':saved_memory.evidence_revisions}
+                        if b2 and state.route.use_history else {}),'status':'awaiting_response'})
         factual=[item for item in state.results if item['tool']!='knowledge.search']
         answer,validation=release_answer('',factual,state.evidence,tools.results,state.route.attributes,state.interface_refs)
         if b2:
@@ -196,7 +246,7 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
                         else (knowledge+'\n\n' if knowledge else '')+summary)
             else:answer='The returned evidence failed verification. No network conclusion was released.'
         if not factual:validation['scope']='Documentation provenance only; model paraphrases are not certified'
-        from llm.gateway_references import relational_read
+        from llm.gateway_references import relational_read,record_only_request
         exact_inventory=(state.route.network_domains==['inventory'] and bool(state.route.attributes or state.interface_refs)
             and not relational_read(body.prompt,state.route.planning.get('proposed',{}).get('desired_response','direct')))
         from llm.gateway_references import configuration_text_request
@@ -211,25 +261,32 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
             answer=network_answer(factual,state.evidence,state.route.attributes,state.interface_refs,question=body.prompt)
             validation={**validation,'answer_mode':'verified_configuration_text'}
         published_explanation=(state.route.network_domains==['knowledge'] and any(e.authority=='published_operation_documentation' for e in state.evidence))
-        if b2 and (factual or published_explanation) and not exact_inventory and not exact_configuration and validation.get('status')=='verified' and os.getenv('COGNISHIELD_AI_SYNTHESIS','0')=='1' and not re.search(r'\b(show|quote|display)\b.*\b(?:configuration|config|logs|records)\b',body.prompt,re.I):
+        if b2 and (factual or published_explanation) and not exact_inventory and not exact_configuration and validation.get('status')=='verified' and os.getenv('COGNISHIELD_AI_SYNTHESIS','0')=='1' and not record_only_request(body.prompt,state.route.planning.get('proposed',{}).get('desired_response','direct')):
             from llm.orchestration.synthesis import synthesize
             from llm.orchestration.verification import assessment_context
             # The composer builds its own bounded case file. Feed its projector
             # actual scoped reads, so display trimming cannot remove the decisive
             # trace before relevance selection or source-grounded verification.
             synthesis_context=assessment_context(state.results,tools.results)
+            if getattr(model,'hybrid',None):
+                model.hybrid.prepare_synthesis(state.results,state.evidence,state.route.planning,state.assessment)
             from llm.gateway_network import route_network
             from development.source_registry import explicit_read_sources,BY_KEY,reader_domains
             explicit_domains=set(route_network(body.prompt,inventory,expand_investigation=False)[0])-{'inventory'}
             named_sources=explicit_read_sources(body.prompt,BY_KEY)
             explicit_domains.update(reader_domains(named_sources,state.route.network_domains))
             required_readers={('inventory.read' if domain=='inventory' else 'knowledge.search' if domain=='knowledge' else 'network.'+domain) for domain in explicit_domains}
+            from llm.orchestration.request_contract import response_obligations
             answer,synthesis=await synthesize(model,body.model,body.prompt,synthesis_context,state.evidence,state.assessment,answer,
                 investigation=is_investigation(state.request) or state.route.use_history and is_investigation(state.memory.get('goal','')),
                 objectives=state.route.planning.get('proposed',{}).get('information_needs',[]),
-                reference_requests=state.context_references.get('user_history',[]),required_readers=required_readers)
+                reference_requests=state.context_references.get('user_history',[]),required_readers=required_readers,
+                user_obligations=response_obligations(body.prompt),requested_outcomes=contract)
             validation={**validation,'synthesis':synthesis}
         values={'answer':answer,'validation':validation}
+        if contract:
+            from llm.orchestration.request_contract import outcome_results
+            values['outcome_results']=outcome_results(contract,state.results,state.evidence,validation.get('synthesis',{}))
         if b2:
             old=saved_memory.evidence_revisions
             revisions={e.source+'|'+','.join(e.device_refs):e.source_revision or '' for e in state.evidence}
@@ -297,6 +354,7 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
         return update(state,'validate_engineering_result',memory=memory,validation={'status':'review_required','scope':'Existing proposal/V9 contracts; no buffer change or saving'})
 
     def after_resolve(state):
+        if state.route.requested_outcomes and not state.route.network_domains and not state.route.use_editor and not state.route.use_attachments and state.route.intent in {'answer','explain'}:return 'compose_response'
         if b3 and kind=='studio' and (state.route.intent=='edit' or state.route.intent.startswith('generate_')):return 'authorize_engineering'
         if state.route.network_domains and (b2 or not state.route.use_attachments) and (b3 or not state.route.use_editor):return 'select_authorized_tools'
         if b3 and kind=='studio' and state.route.intent!='clarify' and (state.route.use_editor or state.route.use_attachments):return 'read_studio_context'
@@ -332,10 +390,17 @@ async def run(service,identity,user,kind,body,auth,history,attachments,previous,
         'tool_calls':tools.calls,'routing_model_calls':model.purposes.get('routing',0),'model_calls':model.calls,'model_call_breakdown':model.purposes,'elapsed_ms':round((time.monotonic()-started)*1000,2),
         'tool_call_mode':'validated_plan','planning':final.route.planning,'inference_diagnostics':getattr(model,'inference_trace',[]),
         'checkpointing':restore_status,'verification':final.validation,'limitations':final.limitations,
+        **({'requested_outcomes':final.route.requested_outcomes.model_dump(),'outcome_results':final.outcome_results}
+            if final.route.requested_outcomes else {}),
         **({'assessment':final.assessment,'recovery':'fresh authorized reads; no pending-tool replay','restored_status':saver.restored_status,
         'document_refs':final.memory.get('documents',[]),
-        'budgets':{'rounds':3,'tools':8,'model_calls':model.max_calls,'model_stages':model.stage_limits,'input_characters':model.max_input_characters,'maximum_output_tokens_per_call':512,'wall_seconds':timeout,'concurrency':1}} if b2 else {})}}
+        'budgets':{'rounds':3,'tools':8,'model_calls':model.max_calls,'model_stages':model.stage_limits,'input_characters':model.max_input_characters,
+        'maximum_output_tokens_per_call':2048 if getattr(model,'hybrid',None) else 512,
+        **({'local_output_tokens':512,'gemini_output_tokens':2048,'shared_request_deadline':True} if getattr(model,'hybrid',None) else {}),
+        'wall_seconds':timeout,'concurrency':1}} if b2 else {})}}
     from llm.orchestration.investigation import is_investigation
+    if final.route.requested_outcomes and final.answer and not final.results:
+        coverage['agent']['_outcome_answer']=final.answer
     if final.validation.get('status')=='verified' and (final.assessment.get('development') or is_investigation(final.request) or is_investigation(final.memory.get('goal',''))):
         from llm.gateway_findings import network_answer
         coverage['agent']['record_details']=network_answer(final.results,final.evidence,final.route.attributes,final.interface_refs)

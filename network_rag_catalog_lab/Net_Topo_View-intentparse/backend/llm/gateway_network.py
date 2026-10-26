@@ -385,7 +385,7 @@ def route_network(prompt, inventory, *, expand_investigation=True):
         ('topology',r'\b(topology|cabling|paths?|hops?|neighbou?r|links?|connections?|connected|connectivity)\b'),
         ('telemetry',r'\b(telemetry|metrics?|measurements?|counters?|discards?|cpu|memory|traffic|bandwidth|utilization|latency|packet loss|statistics)\b|\b(?:interface|port)\s+(?:(?:input|output)\s+)?errors?\b'),
         ('syslog',r'\b(syslogs?|logs?|logging)\b'),('incidents',r'\b(incidents?|anomal\w*|alerts?|drift|outage|failures?)\b'),
-        ('state',r'\b(controllers?|collectors?|source health|collection status)\b|\bprotocol\s+(?:state|observations?|sessions?|adjacenc\w*)\b|'+INTERFACE_OBSERVATION),
+        ('state',r'\b(controllers?|collectors?|source health|collection status|forwarding|reachability)\b|\b(?:routing|route)\s+tables?\b|\bprotocol\s+(?:state|observations?|sessions?|adjacenc\w*)\b|'+INTERFACE_OBSERVATION),
         ('configuration',r'\b(configs?|configurations?|running[ .-]?config|snapshots?|backups?)\b')]:
         if re.search(pattern,text): domains.append(domain)
     investigation=bool(re.search(r'\b(investigat\w*|diagnos\w*|root cause|correlat\w*|troubleshoot\w*)\b',text))
@@ -397,6 +397,16 @@ def route_network(prompt, inventory, *, expand_investigation=True):
     # Conceptual questions do not need all network records.
     general=bool(re.match(r'\s*(what (is|are|does)|explain|compare|difference|how (does|do|to))\b',text)) and not re.search(r'\b(my|our|this network|current|planned|stored|live|history)\b',text)
     refs=[d['hostname'] for d in inventory['devices'] if any(re.search(r'(?<![\w-])'+re.escape(str(ref))+r'(?![\w-])',prompt,re.I) for ref in [d['hostname'], d.get('management_ip') or '', *d.get('aliases',[])] if ref)]
+    # A path expression can join complete inventory names with a hyphen. Keep
+    # strict standalone boundaries (R1 must not match R1-backup), then resolve
+    # only whole chains whose every member is an actual recorded identity.
+    names={str(ref).casefold():d['hostname'] for d in inventory['devices']
+        for ref in [d['hostname'],*d.get('aliases',[])] if ref}
+    if names:
+        member='(?:'+'|'.join(re.escape(n) for n in sorted(names,key=len,reverse=True))+')'
+        chain=re.compile(r'(?<![\w-])'+member+r'(?:\s*(?:-|→|->|—)\s*'+member+r'){1,7}(?![\w-])',re.I)
+        for match in chain.finditer(prompt):
+            refs.extend(names[m[0].casefold()] for m in re.finditer(member,match[0],re.I))
     recognized_spans=[match.span() for d in inventory['devices'] for ref in [d['hostname'],*d.get('aliases',[])] if ref
         for match in re.finditer(r'(?<![\w-])'+re.escape(ref)+r'(?![\w-])',prompt,re.I)]
     unknown=[match[0] for match in re.finditer(r'\b(?:R|SW|RTR|EDGE|CORE)[-_]?\d+\b',prompt,re.I)
@@ -438,7 +448,12 @@ def route_network(prompt, inventory, *, expand_investigation=True):
     live=bool(re.search(r'\b(live|real[- ]?time|right now)\b',observation_request))
     dates=re.findall(r'\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2}))?',prompt)
     query={'device_refs':refs,'query':prompt[:4000],'live':live}
-    if re.search(r'\b(latest|most recent)\b',text):query['limit']=1
+    if re.search(r'\b(latest|most recent)\b',text) and not (
+            'configuration' in domains and explicit_configuration_scope(prompt)=='both'
+            or 'topology' in domains and explicit_topology_scope(prompt)=='both'):
+        # A newest-record modifier cannot erase the other temporal operand of
+        # a comparison. Keep the ordinary bounded reader result in that case.
+        query['limit']=1
     relative=re.search(r'(?:last|past)\s+(\d+)\s*(minutes?|mins?|hours?|hrs?|days?)',text)
     if relative:
         scale=1440 if relative[2].startswith('day') else 60 if relative[2].startswith(('hour','hr')) else 1
@@ -502,6 +517,11 @@ async def network_context(db, registry, authorization, prompt, domains_override=
             if any(key in query for key in ('start','end','window_minutes')):
                 override={k:v for k,v in override.items() if k not in {'start','end','window_minutes'}}
             effective_query={**query,**override}
+            if domain in {'configuration','topology'} and effective_query.get('source_scope')=='both' and effective_query.get('limit')==1:
+                # The semantic reader may have been selected after the legacy
+                # query was built. Apply comparison cardinality to the final
+                # typed query too, not just its earlier keyword domain guess.
+                effective_query.pop('limit')
             if domain=='telemetry' and interface_refs_override:
                 effective_query['interface_refs']=interface_refs_override
             if domain=='state':

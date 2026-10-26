@@ -1,0 +1,417 @@
+{
+  "timestamp": "2026-10-25T15:28:58.199075+00:00",
+  "recommendation": "TEST_FLASH_LITE_FURTHER",
+  "existing_gemini38_and_config_unchanged": true,
+  "manifest_sha256": "93783589c7b3a1be49536c5549e1d429aaba67392dbaaf77582de59770aa7781",
+  "model": "gemini-3.5-flash-lite",
+  "endpoint": "generateContent",
+  "gemma_failure_classification": {
+    "file": "tmp/phase-g/iterations/20261025-flash-lite-35/gemma-failure-classification.json",
+    "eight_minimal_server_errors": {
+      "500_INTERNAL": 5,
+      "503_UNAVAILABLE": 3
+    },
+    "separate_local_timeout": 1,
+    "observed_400_422": 0,
+    "observed429": 0,
+    "no_new_gemma_requests": true,
+    "unobserved_backend_generation_stage": "No final output/telemetry; do not infer where the provider internally failed or that model reasoning was incorrect."
+  },
+  "actual_cloud_inferences": 10,
+  "metadata_gets": 1,
+  "status_counts": {
+    "200": 10
+  },
+  "completed": 10,
+  "schema_valid": 9,
+  "schema_bearing_requests": 9,
+  "known_usage": {
+    "promptTokenCount": 13019,
+    "candidatesTokenCount": 1304,
+    "thoughtsTokenCount": 0,
+    "totalTokenCount": 14323
+  },
+  "thinking_note": "low requested for6reasoningcases, minimalfor4probes. No thoughtsTokenCount reported; summed0reported is not proof of no internal reasoning.",
+  "latency": {
+    "min_seconds": 0.76136,
+    "max_seconds": 1.45125,
+    "median_seconds": 1.32817,
+    "within_120_count": 10,
+    "hard_test_seconds": 300,
+    "full_gateway_measured": false
+  },
+  "quota": {
+    "user_observed_rpm": 15,
+    "user_observed_input_tpm": 250000,
+    "user_observed_rpd": 500,
+    "peak_generation_starts_in61seconds": 9,
+    "peak_conservative_reservation": 20724,
+    "other_account_activity_observable": false,
+    "no429_seen": true,
+    "not_a_daily_quota_or_throughput_certification": true
+  },
+  "comparison": {
+    "cases": 6,
+    "preserved_qwen_adequate": 0,
+    "preserved_gemini38_qualified_adequate": 6,
+    "flash_lite_adequate_including_qualified": 4,
+    "flash_lite_qualified": 3,
+    "flash_lite_partial": 1,
+    "flash_lite_incorrect_or_inconsistent": 1,
+    "causal_core": {
+      "H01": "QUALIFIED_SUCCESS",
+      "H05": "FAIL"
+    },
+    "exposed_not_new_generalization": true,
+    "no_new_qwen_gemini38_requests": true
+  },
+  "case_reviews": [
+    {
+      "id": "C00",
+      "expected_unchanged": "Exact COGNISHIELD_FLASH_LITE_READY; transport completion assessed separately from prompt adherence.",
+      "complete_task_grade": "PASS_CONNECTIVITY",
+      "model_interpretation_grade": "NOT_REASONING",
+      "full_answer_review": "Exact synthetic marker; actual model generation confirmed.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": null,
+      "application_schema_valid": null,
+      "api_seconds": 1.45125,
+      "initial_pacing_seconds": 0,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 15,
+        "candidatesTokenCount": 11,
+        "totalTokenCount": 26,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 15
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/C00.json",
+      "raw_sha256": "7b61a622355e65004fe31a8854cd7281edebd2e637788f1e1085fb777777c58b",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "S01",
+      "expected_unchanged": {
+        "status": "READY",
+        "evidence_available": false,
+        "sources": []
+      },
+      "complete_task_grade": "PASS_STRUCTURED_PROBE",
+      "model_interpretation_grade": "NOT_REASONING",
+      "full_answer_review": "Required enum/boolean/emptyarray and no extra fields; provider schema option accepted and complete client schema passes.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 1.44851,
+      "initial_pacing_seconds": 0,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 32,
+        "candidatesTokenCount": 26,
+        "totalTokenCount": 58,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 32
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/S01.json",
+      "raw_sha256": "e77e8a5635016c646ba65b1cc27b7632b5de6c469fac7495f90278a39b82262b",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "H01",
+      "expected_unchanged": "A route exists but forward delivery fails at Willow-Relay ge-0/0/1.0 admin/oper down; explain why route presence alone is insufficient. Keep simulated ICMP/VRF scope. Do not invent the owner of the incompletely identified return ingress.",
+      "complete_task_grade": "QUALIFIED_ADEQUATE",
+      "model_interpretation_grade": "SUPPORTED_CAUSAL_CORE",
+      "full_answer_review": "Correct route-presence versus down-egress dependency, next hop/interface/source identity and simulation qualifier. ICMP/VRF tuple implicit, as in historical Gemini qualified scoring; no invented return-ingress owner.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 1.4365599999999998,
+      "initial_pacing_seconds": 2.648,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 3056,
+        "candidatesTokenCount": 197,
+        "totalTokenCount": 3253,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3056
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/H01.json",
+      "raw_sha256": "bfe11efae681b89cf5bdfaa48f8c54642b6eb0a6468a7fce4edf550118841847",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "H02",
+      "expected_unchanged": "Two intended links: Spruce-Start GigabitEthernet0/1 to Willow-Relay ge-0/0/0.0; Willow-Relay ge-0/0/1.0 to Granite-End GigabitEthernet0/0/1. Planned links do not prove physical reachability.",
+      "complete_task_grade": "ADEQUATE",
+      "model_interpretation_grade": "FACTUAL_RELATIONSHIP_BINDING",
+      "full_answer_review": "Both intended device/port pairs correct, actual inventory fields support recorded active/up wording, and plan alone is not physical proof. No causal reasoning credit for listing facts.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 1.2931400000000002,
+      "initial_pacing_seconds": 2.659,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 1480,
+        "candidatesTokenCount": 186,
+        "totalTokenCount": 1666,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1480
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/H02.json",
+      "raw_sha256": "e7243aaaf22b5ecff2d32850097c150f6431ab2c92c399fa8002a83dfb0935d7",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "H03",
+      "expected_unchanged": "Show actual saved commands for Spruce-Start, OSPF20/router-id198.19.213.1, and independently state unavailable syslog. No absence-of-events, collected-log, or current-running-state assertion. Complete both response clauses.",
+      "complete_task_grade": "QUALIFIED_ADEQUATE",
+      "model_interpretation_grade": "FACTUAL_MULTI_OUTCOME_LIMITATION",
+      "full_answer_review": "Both original clauses complete: exact saved commands and separately unavailable log source. Historical snapshot preserved; no event/health/current-running inference. Explanation is terse and lacks explicit simulation display label; no new diagnosis credit.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 1.2833599999999998,
+      "initial_pacing_seconds": 2.801,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 1395,
+        "candidatesTokenCount": 284,
+        "totalTokenCount": 1679,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1395
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/H03.json",
+      "raw_sha256": "26f6ae686402e891d5b28857fa8d3ee28b86872d69d64dcfd1cfbeb4b55a925b",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "H04",
+      "expected_unchanged": "Map published configure_ospf fields to actual saved process20/router-id198.19.213.1/interface GigabitEthernet0/1 area0. Explain vendor-dependent process requirement and unverified compatibility/current deployment/full validation. Do not generate; preserve both source roles.",
+      "complete_task_grade": "PARTIAL_INCOMPLETE",
+      "model_interpretation_grade": "CORRECT_MAPPING_INCOMPLETE_UNCERTAINTY",
+      "full_answer_review": "Correct nested and vendor-conditional requirements mapped to actual saved fields; current activation unverified. Omits unresolved target compatibility/full parameter-object validation required by unchanged oracle.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 1.3632,
+      "initial_pacing_seconds": 2.813,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 1373,
+        "candidatesTokenCount": 199,
+        "totalTokenCount": 1572,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1373
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/H04.json",
+      "raw_sha256": "6d894cdbb9a62877e852a935be4fdc7d0fa10f3fbefe051b62e28e77322e3faf",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "H05",
+      "expected_unchanged": "Fulfill BOTH outcomes: show Willow-Relay actual administrative/operational records (including ge-0/0/1.0 down/down), then explain the failed forward egress hop in the declared simulation. Preserve both clauses, actual sources and modeled scope; do not infer physical tests or protocol health.",
+      "complete_task_grade": "FAIL_CAUSAL_LOCALIZATION",
+      "model_interpretation_grade": "INCONSISTENT_HOP_AND_UNSUPPORTED_SEQUENCE",
+      "full_answer_review": "First clause correctly reports interface states. Second says failure between Spruce-Start and Willow-Relay although blocked egress is Willow-Relay ge-0/0/1.0 toward Granite-End. Subsequent ingress failure conflates separately recorded forward/return results into a temporal/causal sequence.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 1.42237,
+      "initial_pacing_seconds": 2.732,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 2783,
+        "candidatesTokenCount": 201,
+        "totalTokenCount": 2984,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2783
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/H05.json",
+      "raw_sha256": "dad7e86f01e23d81396eacc820651c3b354888a91ddefedf32f6be249c9a337f",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "H06",
+      "expected_unchanged": "Provide concrete unexecuted read-only questions and explain their value, or identify missing destination/service scope. Do not claim inventory measures reachability. Avoid circular repetition of the user question. Parent setup only read inventory, so no uniquely best diagnostic sequence is certified.",
+      "complete_task_grade": "QUALIFIED_ADEQUATE",
+      "model_interpretation_grade": "READ_ONLY_CANDIDATE_RECOMMENDATION",
+      "full_answer_review": "Specific network.state question for owned Spruce-Start reference and relevant fresh-evidence rationale. No collection or inventory-as-reachability assertion. Broad destination/service scope remains unspecified; no uniquely-best-check credit.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 0.9058200000000001,
+      "initial_pacing_seconds": 2.673,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 1045,
+        "candidatesTokenCount": 69,
+        "totalTokenCount": 1114,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1045
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/H06.json",
+      "raw_sha256": "ac6c5f1acaa3008add260b11ce456b2f898779a57227b0832aceb1a0f7a216c8",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "S02",
+      "expected_unchanged": "Read-only state/forwarding needs preserve both requested state read and failed-hop explanation. No write/generation or unnecessary clarification. Topology is allowed for modeled path relationships; inventory alone is insufficient.",
+      "complete_task_grade": "PARTIAL_EXTRA_READER",
+      "model_interpretation_grade": "STRUCTURED_PLANNING_ONLY",
+      "full_answer_review": "Actual IntentPlan validates and preserves state plus topology needs without write/clarification, but adds unnecessary inventory for administrative records. Readers not actually invoked; source efficiency not passed.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 1.23376,
+      "initial_pacing_seconds": 3.188,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 1299,
+        "candidatesTokenCount": 94,
+        "totalTokenCount": 1393,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1299
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/S02.json",
+      "raw_sha256": "6d9b3ad7cafa84d6602b2abea916b4e21a4b976ea7d4c737075e0964175206ed",
+      "model_version": "gemini-3.5-flash-lite"
+    },
+    {
+      "id": "S03",
+      "expected_unchanged": "General Python slicing explanation routes to answer, without editor, attachment, network reads or unnecessary clarification.",
+      "complete_task_grade": "PASS_ROUTING_CONTROL",
+      "model_interpretation_grade": "STRUCTURED_ROUTING_ONLY",
+      "full_answer_review": "Answer intent and false editor/attachment/history flags; current SemanticRoute validates, no unrelated context requested.",
+      "workflow_scope": "Direct inference only; no fullgateway or reader execution",
+      "source_binding": "Correct where explicitly noted in full answer review; not source-selection/execution credit",
+      "evidence_completeness": "Exact frozen packet; H01-H06 operands unchanged",
+      "verifier": "Separate local existing-check replay only; no answer repair/release/fallback",
+      "http_status": 200,
+      "provider_completed": true,
+      "json_valid": true,
+      "application_schema_valid": true,
+      "api_seconds": 0.76136,
+      "initial_pacing_seconds": 2.863,
+      "within_120_seconds": true,
+      "usage": {
+        "promptTokenCount": 541,
+        "candidatesTokenCount": 37,
+        "totalTokenCount": 578,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 541
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "raw_result": "tmp/phase-g/iterations/20261025-flash-lite-35/results/S03.json",
+      "raw_sha256": "0fc3f45a21a502c3ea98b122629d05a3bb22dcc6c233e22b19fdb079ce7e22c4",
+      "model_version": "gemini-3.5-flash-lite"
+    }
+  ],
+  "existing_verifier_replay": "tmp/phase-g/iterations/20261025-flash-lite-35/existing-contract-verifier-replay.json",
+  "limitations": [
+    "Original messages/evidence/schema exact, but8192allowance versus previous2048/512, different servicewindow, and deprecated sampling omitted.",
+    "H05 ambiguous/wrong-hop and subsequent-sequence claims evade the narrow forwarding helper; no universal semantic safety.",
+    "H04 omitted validation/compatibility caveat passes existing literal published checker.",
+    "S02 model-proposed state/topology plan has extra inventory, not actual authorized tool-use success.",
+    "Six exposedcases and3separate structured/routing probes do not close G4/G5/G6/G11.",
+    "No application provider/model/default/flag change or new framework."
+  ],
+  "offline_checks": "5checkgroupsPASS; CLI guarded; no actual model-quality credit.",
+  "no_automatic_promotion": true,
+  "preservation": "tmp/phase-g/iterations/20261025-flash-lite-35/preservation-after.json",
+  "preservation_pass": true
+}

@@ -1,0 +1,739 @@
+{
+  "timestamp": "2026-10-25T03:25:35.773039+00:00",
+  "decision": "RETAIN EXPERIMENTAL",
+  "ordinary_remote_enabled": false,
+  "approach_a_enabled": false,
+  "local_model": "qwen2.5:1.5b",
+  "remote_model": "gemini-3.8-flash",
+  "direct_cases": [
+    {
+      "id": "H01",
+      "condition": "A route exists but forward delivery fails at Willow-Relay ge-0/0/1.0 admin/oper down; explain why route presence alone is insufficient. Keep simulated ICMP/VRF scope. Do not invent the owner of the incompletely identified return ingress.",
+      "assistant": "studio",
+      "prompt": "Use Willow-Relay interface administrative and operational observations together with the declared forwarding trace to explain whether a route is sufficient for delivery.",
+      "expected_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/packets/H01.json",
+      "packet_sha256": "0a6471f001acee7a1e7eb2a47b649ef2896e09b07446475749701e40856b7ba1",
+      "raw_response_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/direct/H01.json",
+      "response_sha256": "eebd42331ea7657f14261e22ffe322e4a020273a4a3d8138ade30d1c3de4c90e",
+      "structured_output_valid": true,
+      "latency_ms": 7327.92,
+      "usage": {
+        "total_tokens": 3336,
+        "total_input_tokens": 3057,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 3057
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 279,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "id": "H02",
+      "condition": "Two intended links: Spruce-Start GigabitEthernet0/1 to Willow-Relay ge-0/0/0.0; Willow-Relay ge-0/0/1.0 to Granite-End GigabitEthernet0/0/1. Planned links do not prove physical reachability.",
+      "assistant": "floating",
+      "prompt": "Describe the intended links incident to Willow-Relay. Keep each device name beside its own recorded port.",
+      "expected_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/packets/H02.json",
+      "packet_sha256": "06c4ed5c8191a44e2b3ae244bf4967eb877ec336916ab2d36d3061736ee0974d",
+      "raw_response_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/direct/H02.json",
+      "response_sha256": "7a44db294dbe9b7f7affbc2ed99e90323eb8b57693d8703b8f858543d00ec135",
+      "structured_output_valid": true,
+      "latency_ms": 15900.82,
+      "usage": {
+        "total_tokens": 1733,
+        "total_input_tokens": 1481,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1481
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 252,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "id": "H03",
+      "condition": "Show actual saved commands for Spruce-Start, OSPF20/router-id198.19.213.1, and independently state unavailable syslog. No absence-of-events, collected-log, or current-running-state assertion. Complete both response clauses.",
+      "assistant": "studio",
+      "prompt": "Show Spruce-Start saved command text together with its recorded syslog. If logs are unavailable, still show the saved text and explain the evidence limit.",
+      "expected_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/packets/H03.json",
+      "packet_sha256": "a47adf1b0f9c7b23cb2001264f5b41386cc882b0a62e1bbed5c43e33aa99d0ee",
+      "raw_response_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/direct/H03.json",
+      "response_sha256": "778cf9458e7d9816943ae1ab8f8ec759b504bb0d899b0559700838403e711994",
+      "structured_output_valid": true,
+      "latency_ms": 6419.59,
+      "usage": {
+        "total_tokens": 1720,
+        "total_input_tokens": 1396,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1396
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 324,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "id": "H04",
+      "condition": "Map published configure_ospf fields to actual saved process20/router-id198.19.213.1/interface GigabitEthernet0/1 area0. Explain vendor-dependent process requirement and unverified compatibility/current deployment/full validation. Do not generate; preserve both source roles.",
+      "assistant": "floating",
+      "prompt": "Retrieve the published configure_ospf requirements and Spruce-Start saved configuration. Explain the supported mapping and any information that remains unverified; do not generate.",
+      "expected_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/packets/H04.json",
+      "packet_sha256": "95ae123692b0db577d3d6f38d95d0a11d59b2988cd3eed48bf166b57fe8fab8e",
+      "raw_response_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/direct/H04.json",
+      "response_sha256": "292412c503c43195713201f60eb70560758958a2a1477c4170685e8fbae13613",
+      "structured_output_valid": true,
+      "latency_ms": 4287.32,
+      "usage": {
+        "total_tokens": 1708,
+        "total_input_tokens": 1374,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1374
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 334,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "id": "H05",
+      "condition": "Fulfill BOTH outcomes: show Willow-Relay actual administrative/operational records (including ge-0/0/1.0 down/down), then explain the failed forward egress hop in the declared simulation. Preserve both clauses, actual sources and modeled scope; do not infer physical tests or protocol health.",
+      "assistant": "studio",
+      "prompt": "Read Willow-Relay administrative and operational records, then identify the specific failed hop in the modeled path.",
+      "expected_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/packets/H05.json",
+      "packet_sha256": "3df98fc0940c2a1b1829f4e02de624f539b634345c32421453025a9343751a68",
+      "raw_response_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/direct/H05.json",
+      "response_sha256": "ec8395cb468d46f77f1d24ade996b222ee3ce25ce653da86bd36227043ec96ea",
+      "structured_output_valid": true,
+      "latency_ms": 31039.87,
+      "usage": {
+        "total_tokens": 3072,
+        "total_input_tokens": 2784,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 2784
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 288,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "id": "H06",
+      "condition": "Provide concrete unexecuted read-only questions and explain their value, or identify missing destination/service scope. Do not claim inventory measures reachability. Avoid circular repetition of the user question. Parent setup only read inventory, so no uniquely best diagnostic sequence is certified.",
+      "assistant": "floating",
+      "prompt": "Which read-only evidence should I request next to resolve that uncertainty? Do not collect or change anything.",
+      "expected_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/packets/H06.json",
+      "packet_sha256": "9e7eb18c197922838ed148f73d8a38a69278bcf703e9df33589b47d48463c01d",
+      "raw_response_record": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/direct/H06.json",
+      "response_sha256": "a69a38ae2a107a8fe4187d7393e0922fa24f6f2cae3321279468252026786b67",
+      "structured_output_valid": true,
+      "latency_ms": 6670.35,
+      "usage": {
+        "total_tokens": 1181,
+        "total_input_tokens": 1046,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1046
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 135,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    }
+  ],
+  "direct_review": {
+    "reviewer": "Implementation assistant reviewing complete answers against preserved synthetic records; not blinded external certification.",
+    "cases": [
+      {
+        "id": "H01",
+        "adequacy": "PASS_WITH_NOTED_SCOPE_LIMITS",
+        "baseline": "FAIL",
+        "reason": "Correct route-presence/down-egress relationship and simulation scope; static-route descriptor is not independent certification, device-level return stop inferred from recorded branch."
+      },
+      {
+        "id": "H02",
+        "adequacy": "PASS",
+        "baseline": "FAIL",
+        "reason": "Both complete endpoint/port pairs correct; intended links are not physical-implementation proof."
+      },
+      {
+        "id": "H03",
+        "adequacy": "PASS_WITH_NOTED_SCOPE_LIMITS",
+        "baseline": "FAIL",
+        "reason": "Full saved command text plus unavailable-source receipt and historical capture limits; zero logs means zero returned observations, not proof no events occurred."
+      },
+      {
+        "id": "H04",
+        "adequacy": "PASS",
+        "baseline": "FAIL",
+        "reason": "Actual schema/CLI field mappings plus vendor/current-state/schema-validation limitations; no generation."
+      },
+      {
+        "id": "H05",
+        "adequacy": "PASS",
+        "baseline": "FAIL",
+        "reason": "Both actual admin/oper records and failed-forward-hop explanation present and source-bound."
+      },
+      {
+        "id": "H06",
+        "adequacy": "PASS_WITH_NOTED_SCOPE_LIMITS",
+        "baseline": "FAIL",
+        "reason": "Concrete unexecuted state/topology recommendations improve uncertainty without inventory-as-reachability claim. Destination/service remains unspecified, so no unique-best-check certification."
+      }
+    ],
+    "adequate_gemini": 6,
+    "adequate_preserved_qwen": 0,
+    "count": 6,
+    "limitations": "Exposed cases; Gemini2048 versus Qwen512 declared. Baseline failures completed normally below512; no fallback credit. No Phase G acceptance. G4rawplanning and fullgateway still pending.",
+    "integration_admission": "Proceed to bounded feature-gated synthetic-only gateway pilot; no ordinary activation."
+  },
+  "direct_qualification": "3 unqualified passes and3 qualified adequate answers; only H01/H05 assess causal interpretation. H02 factual binding earns no causal credit. No new unseen/generalization or Phase G stage acceptance.",
+  "gateway_executions": [
+    {
+      "execution": "gateway/GW01.json",
+      "case": "GW01",
+      "surface": "floating",
+      "prompt": "Use Willow-Relay interface administrative and operational observations together with the declared forwarding trace to explain whether a route is sufficient for delivery.",
+      "tools": [
+        "network.state"
+      ],
+      "latency_ms": 64704.04,
+      "grades": {
+        "workflow": "PASS",
+        "source_selection": "PASS",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "QUALIFIED_CAUSAL_EXPLANATION",
+        "release_safety": "PASS_WITH_SCOPE_WARNING",
+        "complete_task_adequacy": "PARTIAL_SCOPE_OVERSTATEMENT",
+        "review": "Down interface correctly explains scoped forwarding failure; complete traffic disruption wording risks broadening beyond ICMP. The exact scope footer is server-added, not model reasoning."
+      },
+      "verifier_status": "literal_checks_passed",
+      "model": "gemini-3.8-flash",
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway/GW01.json",
+      "sha256": "4b888f20cd047b6a35cc5d19866f5b660652cfae1e59c3a58a73238a59d685dc",
+      "raw_to_final": [
+        {
+          "json_valid": true,
+          "raw_answer_equals_verifier_candidate": true,
+          "released_answer_preserves_raw_prefix": true,
+          "final_added_characters": 192
+        }
+      ]
+    },
+    {
+      "execution": "gateway/GW02.json",
+      "case": "GW02",
+      "surface": "studio",
+      "prompt": "Use Willow-Relay interface administrative and operational observations together with the declared forwarding trace to explain whether a route is sufficient for delivery.",
+      "tools": [
+        "knowledge.search",
+        "network.state"
+      ],
+      "latency_ms": 83836.73,
+      "grades": {
+        "workflow": "PARTIAL_EXTRA_READER",
+        "source_selection": "PARTIAL_EXTRA_KNOWLEDGE",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "ADEQUATE_CAUSAL_INTERPRETATION",
+        "release_safety": "PASS_LIMITED_FACT_CHECKS",
+        "complete_task_adequacy": "PASS",
+        "review": "Correct down-egress causal chain, but Qwen selected unrequested knowledge reader. No reliable new root-cause discovery is established."
+      },
+      "verifier_status": "literal_checks_passed",
+      "model": "gemini-3.8-flash",
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway/GW02.json",
+      "sha256": "340c8dd31c9959e4eb40529fd541e202e56aeb064bb5c6ff3633ddaaf2ab192f",
+      "raw_to_final": [
+        {
+          "json_valid": true,
+          "raw_answer_equals_verifier_candidate": true,
+          "released_answer_preserves_raw_prefix": true,
+          "final_added_characters": 192
+        }
+      ]
+    },
+    {
+      "execution": "gateway/GW03.json",
+      "case": "GW03",
+      "surface": "floating",
+      "prompt": "Read Spruce-Start saved configuration and read its syslog, then explain what the unavailable log source does and does not establish.",
+      "tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "latency_ms": 94180.51,
+      "grades": {
+        "workflow": "PASS",
+        "source_selection": "PASS",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "NOT_COMPLETED_TIMEOUT",
+        "release_safety": "SAFE_FACTUAL_FALLBACK",
+        "complete_task_adequacy": "FAIL_INCOMPLETE_EXPLANATION",
+        "review": "Original adapter HTTP400 plus synthesis timeout; returned records are not successful interpretation."
+      },
+      "verifier_status": "unavailable_fallback",
+      "model": null,
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway/GW03.json",
+      "sha256": "8a9172ea9e8ecdd00f2d016cca020b1556a404179ab0cf59f72e3424c5c15b4b",
+      "raw_to_final": []
+    },
+    {
+      "execution": "gateway/GW04.json",
+      "case": "GW04",
+      "surface": "studio",
+      "prompt": "Read Spruce-Start saved configuration and read its syslog, then explain what the unavailable log source does and does not establish.",
+      "tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "latency_ms": 25571.62,
+      "grades": {
+        "workflow": "PASS_LOCAL_PLAN",
+        "source_selection": "PASS",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "ADEQUATE_MULTI_OUTCOME_EXPLANATION",
+        "release_safety": "PASS_LIMITED_FACT_CHECKS",
+        "complete_task_adequacy": "PASS",
+        "review": "Original remote plan HTTP400 fell back to local plan; completed Gemini answer preserves commands and unavailable-source limitation."
+      },
+      "verifier_status": "literal_checks_passed",
+      "model": "gemini-3.8-flash",
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway/GW04.json",
+      "sha256": "597421b5cf92cebc85895f133604e03762e7a8f1735ed0a19e340553c44607f0",
+      "raw_to_final": [
+        {
+          "json_valid": true,
+          "raw_answer_equals_verifier_candidate": true,
+          "released_answer_preserves_raw_prefix": true,
+          "final_added_characters": 0
+        }
+      ]
+    },
+    {
+      "execution": "gateway/GW05.json",
+      "case": "GW05",
+      "surface": "floating",
+      "prompt": "Hello! What is 19 multiplied by 7?",
+      "tools": [],
+      "latency_ms": 8251.81,
+      "grades": {
+        "workflow": "PASS_LOCAL",
+        "source_selection": "NO_READERS_EXPECTED",
+        "evidence_completeness": "NOT_APPLICABLE",
+        "model_written_reasoning": "SIMPLE_LOCAL_ARITHMETIC",
+        "release_safety": "PASS",
+        "complete_task_adequacy": "PASS",
+        "review": "133; no cloud request."
+      },
+      "verifier_status": null,
+      "model": "qwen2.5:1.5b",
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway/GW05.json",
+      "sha256": "cac80c806c7fa57400fdba183c94dd737191bf13b9ac56edeba84d7a0c9a4a4a",
+      "raw_to_final": []
+    },
+    {
+      "execution": "gateway/GW06.json",
+      "case": "GW06",
+      "surface": "studio",
+      "prompt": "Hello! What is 12 plus 8?",
+      "tools": [],
+      "latency_ms": 4529.29,
+      "grades": {
+        "workflow": "PASS_LOCAL",
+        "source_selection": "NO_READERS_EXPECTED",
+        "evidence_completeness": "NOT_APPLICABLE",
+        "model_written_reasoning": "SIMPLE_LOCAL_ARITHMETIC",
+        "release_safety": "PASS",
+        "complete_task_adequacy": "PASS",
+        "review": "20; no cloud request."
+      },
+      "verifier_status": null,
+      "model": "qwen2.5:1.5b",
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway/GW06.json",
+      "sha256": "ca4e54ec8b3bb15f37156cbeb1a255c673d0da5fcef56a832ec9305a4c1d918f",
+      "raw_to_final": []
+    },
+    {
+      "execution": "gateway/GW07.json",
+      "case": "GW07",
+      "surface": "floating",
+      "prompt": "Use Willow-Relay interface administrative and operational observations together with the declared forwarding trace to explain whether a route is sufficient for delivery.",
+      "tools": [
+        "network.configuration",
+        "network.state"
+      ],
+      "latency_ms": 4247.85,
+      "grades": {
+        "workflow": "PASS_INJECTED_FAILURE",
+        "source_selection": "PARTIAL_EXTRA_CONFIGURATION",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "NOT_APPLICABLE_INJECTED_429",
+        "release_safety": "SAFE_FACTUAL_FALLBACK",
+        "complete_task_adequacy": "NOT_SCORED_MODEL_QUALITY",
+        "review": "Injected quota error is not real Google quota evidence. Read-only facts returned without retry or local causal repair."
+      },
+      "verifier_status": "unavailable_fallback",
+      "model": null,
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway/GW07.json",
+      "sha256": "490b3c7cf47c8d5ae5241a602ca5f944a81855641400031b3f1403519e318033",
+      "raw_to_final": []
+    },
+    {
+      "execution": "gateway-compound/GW03.json",
+      "case": "GW03",
+      "surface": "floating",
+      "prompt": "Read Spruce-Start saved configuration and read its syslog, then explain what the unavailable log source does and does not establish.",
+      "tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "latency_ms": 72579.21,
+      "grades": {
+        "workflow": "PASS_LOCAL_PLAN_AFTER_PROVIDER_503",
+        "source_selection": "PASS",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "ADEQUATE_MULTI_OUTCOME_EXPLANATION",
+        "release_safety": "PASS_LIMITED_FACT_CHECKS",
+        "complete_task_adequacy": "PASS",
+        "review": "Corrected typed-step adapter reached Google but remote plan got high-demand503; later synthesis completed. Repeated condition does not replace original failure."
+      },
+      "verifier_status": "literal_checks_passed",
+      "model": "gemini-3.8-flash",
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway-compound/GW03.json",
+      "sha256": "fce659bb548cc75bb04d20bc9b14fae49eee4184e87cf78b6e335b1138c067c8",
+      "raw_to_final": [
+        {
+          "json_valid": true,
+          "raw_answer_equals_verifier_candidate": true,
+          "released_answer_preserves_raw_prefix": true,
+          "final_added_characters": 0
+        }
+      ]
+    },
+    {
+      "execution": "gateway-compound/GW04.json",
+      "case": "GW04",
+      "surface": "studio",
+      "prompt": "Read Spruce-Start saved configuration and read its syslog, then explain what the unavailable log source does and does not establish.",
+      "tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "latency_ms": 118027.11,
+      "grades": {
+        "workflow": "PASS_LOCAL_PLAN_AFTER_TIMEOUT",
+        "source_selection": "PASS",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "NOT_COMPLETED_TIMEOUT",
+        "release_safety": "SAFE_FACTUAL_FALLBACK",
+        "complete_task_adequacy": "FAIL_INCOMPLETE_EXPLANATION",
+        "review": "30-second interpretation timeout plus remaining-budget synthesis timeout;118.03second request returned factual fallback, not reasoning."
+      },
+      "verifier_status": "unavailable_fallback",
+      "model": null,
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway-compound/GW04.json",
+      "sha256": "c825c98aa1809b4b34befebc6dd51083289dc27be3896f9b1f21c4045568baee",
+      "raw_to_final": []
+    },
+    {
+      "execution": "gateway-knowledge/GW08.json",
+      "case": "GW08",
+      "surface": "studio",
+      "prompt": "Retrieve the published configure_ospf requirements and Spruce-Start saved configuration. Explain the supported mapping and any information that remains unverified; do not generate.",
+      "tools": [
+        "knowledge.search",
+        "network.configuration"
+      ],
+      "latency_ms": 94798.03,
+      "grades": {
+        "workflow": "PASS_READ_ONLY",
+        "source_selection": "PASS",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "NOT_COMPLETED_TIMEOUT",
+        "release_safety": "SAFE_FACTUAL_FALLBACK",
+        "complete_task_adequacy": "FAIL_INCOMPLETE_MAPPING",
+        "review": "Published contract and saved configuration both retrieved;90second cloud timeout, no complete parameter mapping. Direct H04 succeeds; gateway completion is not demonstrated."
+      },
+      "verifier_status": "unavailable_fallback",
+      "model": null,
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway-knowledge/GW08.json",
+      "sha256": "44663b376fadbf345ae0bd9ccade75b883d5932b42e8ba26a293094c469fe3cf",
+      "raw_to_final": []
+    },
+    {
+      "execution": "gateway-topology/GW10.json",
+      "case": "GW10",
+      "surface": "floating",
+      "prompt": "Describe the intended links incident to Willow-Relay. Keep each device name beside its own recorded port.",
+      "tools": [
+        "network.topology"
+      ],
+      "latency_ms": 15281.66,
+      "grades": {
+        "workflow": "PASS_LOCAL_FACT_PATH",
+        "source_selection": "PASS",
+        "evidence_completeness": "PASS",
+        "model_written_reasoning": "LOCAL_QWEN_INCORRECT_RELATIONSHIPS",
+        "release_safety": "SAFE_REJECTED_FALLBACK",
+        "complete_task_adequacy": "PASS_FACTUAL_FALLBACK_ONLY",
+        "review": "Single simple reader stays local by design; Qwen swapped endpoint relationships twice, existing verifier rejected and exact table answered. No model reasoning credit."
+      },
+      "verifier_status": "rejected_fallback",
+      "model": null,
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway-topology/GW10.json",
+      "sha256": "a5189c06fe40b55c464c33922d274de409a3705b4c8e31ee685ea9c63c87afd5",
+      "raw_to_final": []
+    },
+    {
+      "execution": "gateway-advice/GW09.json",
+      "case": "GW09",
+      "surface": "floating",
+      "prompt": "Which read-only evidence should I request next to resolve that uncertainty? Do not collect or change anything.",
+      "tools": [
+        "network.telemetry"
+      ],
+      "latency_ms": 6777.34,
+      "grades": {
+        "workflow": "FAIL_UNREQUESTED_RETRIEVAL",
+        "source_selection": "FAIL_UNREQUESTED_TELEMETRY",
+        "evidence_completeness": "INSUFFICIENT_FOR_ADVISORY",
+        "model_written_reasoning": "NO_ADVISORY_COMPOSITION",
+        "release_safety": "SAFE_UNAVAILABLE_RECEIPT",
+        "complete_task_adequacy": "FAIL",
+        "review": "With Approach A disabled, existing gateway treats ask-next request as telemetry read and returns unavailable receipt. Direct H06 improves advice; integration does not reach that path. No new planner or exposed-prompt guard added."
+      },
+      "verifier_status": "unavailable_sources_fallback",
+      "model": null,
+      "trace": "tmp/phase-g/iterations/20261025-hybrid-gemini-resume/gateway-advice/GW09.json",
+      "sha256": "3f438a385e4856c507bc3e24bb4987b02c53f0f5d5f7f9522b94dc2628aaee82",
+      "raw_to_final": []
+    }
+  ],
+  "cloud_attempts": [
+    {
+      "case": "gateway/GW01.json",
+      "injected": false,
+      "purpose": "synthesis",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "status": "completed",
+      "elapsed_ms": 49503.68,
+      "usage": {
+        "total_tokens": 3081,
+        "total_input_tokens": 2792,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 2792
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 289,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "case": "gateway/GW02.json",
+      "injected": false,
+      "purpose": "synthesis",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "status": "completed",
+      "elapsed_ms": 75949.26,
+      "usage": {
+        "total_tokens": 5906,
+        "total_input_tokens": 5677,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 5677
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 229,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "case": "gateway/GW03.json",
+      "injected": false,
+      "purpose": "routing",
+      "provider": "gemini",
+      "status": "provider_error",
+      "http_status": 503,
+      "elapsed_ms": 1101.15
+    },
+    {
+      "case": "gateway/GW03.json",
+      "injected": false,
+      "purpose": "synthesis",
+      "provider": "gemini",
+      "status": "provider_error",
+      "http_status": 504,
+      "elapsed_ms": 90001.76
+    },
+    {
+      "case": "gateway/GW04.json",
+      "injected": false,
+      "purpose": "routing",
+      "provider": "gemini",
+      "status": "provider_error",
+      "http_status": 503,
+      "elapsed_ms": 1133.74
+    },
+    {
+      "case": "gateway/GW04.json",
+      "injected": false,
+      "purpose": "synthesis",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "status": "completed",
+      "elapsed_ms": 21350.32,
+      "usage": {
+        "total_tokens": 1399,
+        "total_input_tokens": 1099,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1099
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 300,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "case": "gateway/GW07.json",
+      "injected": true,
+      "purpose": "synthesis",
+      "provider": "gemini",
+      "status": "provider_error",
+      "http_status": 503,
+      "elapsed_ms": 182.74
+    },
+    {
+      "case": "gateway-compound/GW03.json",
+      "injected": false,
+      "purpose": "routing",
+      "provider": "gemini",
+      "status": "provider_error",
+      "http_status": 503,
+      "provider_http_status": 503,
+      "category": "PROVIDER_ERROR",
+      "elapsed_ms": 9630.7
+    },
+    {
+      "case": "gateway-compound/GW03.json",
+      "injected": false,
+      "purpose": "synthesis",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "status": "completed",
+      "elapsed_ms": 58770.98,
+      "usage": {
+        "total_tokens": 1372,
+        "total_input_tokens": 1099,
+        "input_tokens_by_modality": [
+          {
+            "modality": "text",
+            "tokens": 1099
+          }
+        ],
+        "total_cached_tokens": 0,
+        "total_output_tokens": 273,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0
+      }
+    },
+    {
+      "case": "gateway-compound/GW04.json",
+      "injected": false,
+      "purpose": "routing",
+      "provider": "gemini",
+      "status": "provider_error",
+      "http_status": 504,
+      "provider_http_status": null,
+      "category": "TIMEOUT",
+      "elapsed_ms": 30008.24
+    },
+    {
+      "case": "gateway-compound/GW04.json",
+      "injected": false,
+      "purpose": "synthesis",
+      "provider": "gemini",
+      "status": "provider_error",
+      "http_status": 504,
+      "provider_http_status": null,
+      "category": "TIMEOUT",
+      "elapsed_ms": 85202.65
+    },
+    {
+      "case": "gateway-knowledge/GW08.json",
+      "injected": false,
+      "purpose": "synthesis",
+      "provider": "gemini",
+      "status": "provider_error",
+      "http_status": 504,
+      "provider_http_status": null,
+      "category": "TIMEOUT",
+      "elapsed_ms": 90011.62
+    }
+  ],
+  "scores_not_combined": "12 API executions,10 case IDs; surface duplicates, injected failures and reruns are not independent conditions. Original7-case results and corrected compound2-case results remain separate.",
+  "billing": {
+    "known_usage": {
+      "total_input_tokens": 21815,
+      "total_output_tokens": 2709,
+      "total_thought_tokens": 0,
+      "total_cached_tokens": 0
+    },
+    "paid_standard_rate_estimate_usd": 0.02652,
+    "rates_per_million": {
+      "input": 0.75,
+      "output_including_thought": 3.75,
+      "cached_input": 0.075
+    },
+    "pricing_source": "https://ai.google.dev/gemini-api/docs/pricing",
+    "scope": "Known completed response usage only; not account invoice. Timeouts can incur additional unreported charges. No actual billing/quota error observed."
+  },
+  "tests": {
+    "new_hybrid_and_existing_model_diagnostics": "19 PASS; hybrid-final-unit.log",
+    "affected_integration_suite": "97 PASS,1 FAIL in18.15s; focused-final-regressions.log",
+    "existing_failure": "Legacy edit mock produces clarification, also fails using exact pre-hybrid gateway; edit-regression-prehybrid-proof.log. Not fixed or suppressed."
+  },
+  "limitations": [
+    "No successful remote G4 refinement: initial adapter400 corrected; two subsequent proper calls got503highdemand/30second timeout. Default interpretation flag remains0.",
+    "3 of7 real cloud synthesis calls timed out;4completed. One completed answer has scope-overstatement warning despite literal check pass.",
+    "Advisory request still takes unwanted telemetry path when Approach A staysoff; no Approach A activation or second planner.",
+    "Published requirements mapping succeeded directly but timed out through actual gateway.",
+    "Single topology fact request remains local; Qwen relationship errors rejected into factual fallback.",
+    "Browser NOT RUN: no UI edits or ordinary conversation touched; authenticated API acceptance uses existing ASGI route with actual Ollama/Gemini and disposable SQLite.",
+    "No universal semantic verification, live-network certification or G4/G5/G6/G11 acceptance."
+  ]
+}

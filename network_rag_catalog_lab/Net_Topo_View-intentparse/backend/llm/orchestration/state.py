@@ -25,6 +25,7 @@ class AgentState(StrictModel):
     observations: list[dict] = Field(default_factory=list)
     coverage: dict = Field(default_factory=dict)
     validation: dict = Field(default_factory=dict)
+    outcome_results: list[dict] = Field(default_factory=list,max_length=8)
     answer: str = ''
     limitations: list[str] = Field(default_factory=list)
     rounds: int = Field(default=0,ge=0,le=3)

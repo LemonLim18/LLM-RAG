@@ -29,6 +29,25 @@ class CreateConversation(StrictModel):
     id: str | None = Field(default=None, min_length=1, max_length=200)
 
 
+class ApproveSyntheticCloud(StrictModel):
+    turn: TurnRequest
+    expected_source_revision: str = Field(min_length=1,max_length=200)
+
+
+@router.get('/hybrid-context')
+def get_hybrid_context(service=Depends(gateway),user=Depends(require_ai_user)):
+    from llm.gemini_provider import hybrid_context
+    context=hybrid_context(service.db)
+    context['eligible']=context['eligible'] and normalize_role(user.get('role')) in {'admin','engineer'}
+    return context
+
+
+@router.post('/conversations/{identity}/approve-synthetic-cloud')
+def approve_synthetic_cloud(identity:str,body:ApproveSyntheticCloud,service=Depends(gateway),user=Depends(require_ai_user)):
+    from llm.gemini_provider import approve_hybrid_request
+    return approve_hybrid_request(service.db,service.store,user,identity,body.turn,body.expected_source_revision)
+
+
 class ReviewSelection(StrictModel):
     task_id: str | None = Field(default=None,max_length=200)
     # Empty only retains an existing unresolved server task; the worker rejects

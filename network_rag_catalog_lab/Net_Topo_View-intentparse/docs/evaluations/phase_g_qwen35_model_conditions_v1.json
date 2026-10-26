@@ -1,0 +1,207 @@
+{
+  "timestamp": "2026-10-25T01:32:21.220591+00:00",
+  "cases": [
+    {
+      "id": "M01",
+      "category": "causal",
+      "complexity": "complex",
+      "request_target_seconds": 120,
+      "expected": "A route exists but forward delivery fails at Willow-Relay ge-0/0/1.0 admin/oper down; explain why route presence alone is insufficient. Keep simulated ICMP/VRF scope. Do not invent the owner of the incompletely identified return ingress.",
+      "assistant": "studio",
+      "prompt": "Use Willow-Relay interface administrative and operational observations together with the declared forwarding trace to explain whether a route is sufficient for delivery.",
+      "origin": "tmp/phase-g/iterations/20261024T161958.804761Z-G11-fresh-quality-candidate-bf1a92/0008-case.json",
+      "origin_sha256": "8ebce8582ca98ac2fefb9e2d1c5d06cf481b0da34b5ec048737875498df0b024",
+      "wire_index": 1,
+      "original_payload_sha256": "0d23e72163a7551836935d8a2b7d14a2afe624d7325d715121e94a88d44ed8cb",
+      "inherited_input_limitations": "Preserved historical packet; not a new unseen test. Advisory scope is incomplete; exact causal return-interface ownership is not fully declared."
+    },
+    {
+      "id": "M02",
+      "category": "causal",
+      "complexity": "complex",
+      "request_target_seconds": 120,
+      "expected": "Both declared directions deliver through Willow-Relay. Explain forward and reverse modeled scope; reverse success does not prove continuous physical availability or all protocol prerequisites.",
+      "assistant": "floating",
+      "prompt": "Assess modeled delivery from Spruce-Start through Willow-Relay to Granite-End, and state what the reverse direction actually proves.",
+      "origin": "tmp/phase-g/iterations/20261024T161958.804761Z-G11-fresh-quality-candidate-bf1a92/0004-case.json",
+      "origin_sha256": "fd836680ee40f6768b4117f0bc20bdf30a68bb587b7e4fd9e5d002be7ee4bc40",
+      "wire_index": 1,
+      "original_payload_sha256": "ee5fd4eb08341182a301be390e54b4b4d31a3f48d4eb2019f214dce8bf25620e",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M03",
+      "category": "relationships",
+      "complexity": "moderate",
+      "request_target_seconds": 60,
+      "expected": "Return direction originates at Granite-End toward Spruce-Start and fails there for no route. It does not traverse the forward relay path. Respect the original system demand to mention both directions without reversing endpoints.",
+      "assistant": "studio",
+      "prompt": "Trace only the return direction from Granite-End toward Spruce-Start: where does the declared forwarding attempt stop and why?",
+      "origin": "tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b/0008-case.json",
+      "origin_sha256": "8c4f837a6bb68c9ffa9c9aee9594249de365329d72ac988a156ed6e736fdf233",
+      "wire_index": 1,
+      "original_payload_sha256": "298a616770d1a23867bf11abdfa0050ed318fd5b0d0e052978f315f81df424b9",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M04",
+      "category": "ownership",
+      "complexity": "moderate",
+      "request_target_seconds": 60,
+      "expected": "Two intended links: Spruce-Start GigabitEthernet0/1 to Willow-Relay ge-0/0/0.0; Willow-Relay ge-0/0/1.0 to Granite-End GigabitEthernet0/0/1. Planned links do not prove physical reachability.",
+      "assistant": "floating",
+      "prompt": "Describe the intended links incident to Willow-Relay. Keep each device name beside its own recorded port.",
+      "origin": "tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b/0019-case.json",
+      "origin_sha256": "02835e7c057e97af6ce4ff0adb9746456c0bc222f8b7946c8b27f25bb7d89608",
+      "wire_index": 1,
+      "original_payload_sha256": "ab26f79559e311a0626303d395311fcff21a21342936369d21105055e46fd88b",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M05",
+      "category": "compound",
+      "complexity": "complex",
+      "request_target_seconds": 120,
+      "expected": "Show actual saved commands for Spruce-Start, OSPF20/router-id198.19.213.1, and independently state unavailable syslog. No absence-of-events, collected-log, or current-running-state assertion. Complete both response clauses.",
+      "assistant": "studio",
+      "prompt": "Show Spruce-Start saved command text together with its recorded syslog. If logs are unavailable, still show the saved text and explain the evidence limit.",
+      "origin": "tmp/phase-g/iterations/20261024T163531.689698Z-G11-fresh-quality-candidate-b233c5/0004-case.json",
+      "origin_sha256": "19217ef1cdf9e3e8b2c433e730233dc0067102082d24681cb60a42e1d485f0d6",
+      "wire_index": 1,
+      "original_payload_sha256": "ac0be12adbf7679294e7706df66740a2fe9eaff207c122d04aa30cfad3f5539e",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M06",
+      "category": "published_mapping",
+      "complexity": "complex",
+      "request_target_seconds": 120,
+      "expected": "Map published configure_ospf fields to actual saved process20/router-id198.19.213.1/interface GigabitEthernet0/1 area0. Explain vendor-dependent process requirement and unverified compatibility/current deployment/full validation. Do not generate; preserve both source roles.",
+      "assistant": "floating",
+      "prompt": "Retrieve the published configure_ospf requirements and Spruce-Start saved configuration. Explain the supported mapping and any information that remains unverified; do not generate.",
+      "origin": "tmp/phase-g/iterations/20261024T152118.166815Z-G11-fresh-quality-candidate-631dcf/0009-case.json",
+      "origin_sha256": "aa201f3ccaadca8de6c65a15fa26ed565733dc84874245f5b18c047e6993514a",
+      "wire_index": 0,
+      "original_payload_sha256": "7f84e90a07f0c094cc89a4d4b48cc19734495e6a41ba0da69536fc9ace3b65b1",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M07",
+      "category": "advisory",
+      "complexity": "moderate",
+      "request_target_seconds": 60,
+      "expected": "Provide concrete unexecuted read-only questions and explain their value, or identify missing destination/service scope. Do not claim inventory measures reachability. Avoid circular repetition of the user question. Parent setup only read inventory, so no uniquely best diagnostic sequence is certified.",
+      "assistant": "floating",
+      "prompt": "Which read-only evidence should I request next to resolve that uncertainty? Do not collect or change anything.",
+      "origin": "tmp/phase-g/iterations/20261024T163531.689698Z-G11-fresh-quality-candidate-b233c5/0001-case.json",
+      "origin_sha256": "e08169c6ac82fbc67e5db71d46245182da2becd7dfcb960ae4b84cb5c8cb5c87",
+      "wire_index": 3,
+      "original_payload_sha256": "c4c4794f4a3ab3c5191a596e632ea9190514afbb6193ec16144b1d71ca5dea0d",
+      "inherited_input_limitations": "Preserved historical packet; not a new unseen test. Advisory scope is incomplete; exact causal return-interface ownership is not fully declared."
+    },
+    {
+      "id": "M08",
+      "category": "temporal_control",
+      "complexity": "moderate",
+      "request_target_seconds": 60,
+      "expected": "Saved02:29:50Z/current02:30:00Z command text is identical. State equality and capture times; do not infer no intervening changes, interval continuity, or physical state.",
+      "assistant": "floating",
+      "prompt": "Compare Willow-Relay latest saved text with its current simulated text. State what equality does and does not establish about the interval between captures.",
+      "origin": "tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b/0015-case.json",
+      "origin_sha256": "02951bd1e340b93ef102b29b969ff028bf44124d6199df14cad638fdc14e5c3d",
+      "wire_index": 1,
+      "original_payload_sha256": "28670374c1b52157f88ce5170cdefdc801db30ffb571899509f3c620970a1f41",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M09",
+      "category": "document_control",
+      "complexity": "simple",
+      "request_target_seconds": 30,
+      "expected": "Page2 proposes hello22/dead88 seconds. It establishes neither present use nor non-use. Cite the actual document/page; no action.",
+      "assistant": "studio",
+      "prompt": "Now read the next page. Which timers are proposed, and can that document establish either present use or non-use?",
+      "origin": "tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b/0022-case.json",
+      "origin_sha256": "95ba16f10a8a1bd64b1137f11cd93bb8468dbe2c21c0d7e5f0ea38789a60b360",
+      "wire_index": 1,
+      "original_payload_sha256": "1f1907ef989cf64f6ada57a714a740af4c8138ec8b1de2a0151c90c94bce9162",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M10",
+      "category": "editor_control",
+      "complexity": "moderate",
+      "request_target_seconds": 60,
+      "expected": "Unsaved OSPF process81/router-id203.0.113.81; BGP localAS64681/neighbor203.0.113.82/remoteAS64682; markers KEEP_BASELINES and UNSAVED_QUALIFICATION. No explicit BGP router-ID or edit/save claim. Explain actual content.",
+      "assistant": "studio",
+      "prompt": "Explain the unsaved file, including its explicit router ID, neighbor, local/remote AS and both marker comments. Keep it unchanged.",
+      "origin": "tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b/0025-case.json",
+      "origin_sha256": "8b254295ea87d28d18d7dcd2830138f4e89cbf7974a5bb383ae413c2443f4ba3",
+      "wire_index": 0,
+      "original_payload_sha256": "e918a22b100b499d426839f613ab43481ae414d5747e244b3addacbecb2131dd",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M11",
+      "category": "planning",
+      "complexity": "simple",
+      "request_target_seconds": 30,
+      "expected": "Read-only state/forwarding needs preserve both requested state read and failed-hop explanation. No write/generation or unnecessary clarification. Topology is allowed for modeled path relationships; inventory alone is insufficient.",
+      "assistant": "floating",
+      "prompt": "Read Willow-Relay administrative and operational records, then identify the specific failed hop in the modeled path.",
+      "origin": "tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b/0007-case.json",
+      "origin_sha256": "a6b33cd7193fb3df933aaac476c9ff479d444ce1adde0fce9fadf605915e835e",
+      "wire_index": 0,
+      "original_payload_sha256": "8c80c1874fd3d6b209708811d891450ddde2c91b714b7dd70ff9d429a55b15d0",
+      "inherited_input_limitations": ""
+    },
+    {
+      "id": "M12",
+      "category": "routing_control",
+      "complexity": "simple",
+      "request_target_seconds": 30,
+      "expected": "General Python slicing explanation routes to answer, without editor, attachment, network reads or unnecessary clarification.",
+      "assistant": "floating",
+      "prompt": "With that note available, explain how Python list slicing [1:4] selects elements and why the stop is excluded.",
+      "origin": "tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b/0027-case.json",
+      "origin_sha256": "b0788d03f0a9204f2ba833971917fd1570be7e3fc0c8cb0ae2e0aaf6805f733e",
+      "wire_index": 2,
+      "original_payload_sha256": "66ffed48626dc61828e22565ff416b7bfea59a3b3df3978bc3d41b25392673d8",
+      "inherited_input_limitations": ""
+    }
+  ],
+  "shared_options": {
+    "temperature": 0,
+    "num_ctx": 8192,
+    "num_predict": 512,
+    "seed": 0,
+    "top_p": 0.9,
+    "top_k": 40,
+    "repeat_penalty": 1.1,
+    "presence_penalty": 0,
+    "frequency_penalty": 0
+  },
+  "matched_arms": [
+    "baseline512",
+    "qwen35_off512"
+  ],
+  "thinking_subset": [
+    "M01",
+    "M05",
+    "M06"
+  ],
+  "optional_token_experiments": {
+    "qwen35_off1024": [
+      "M01",
+      "M05",
+      "M06"
+    ],
+    "qwen35_on1536": [
+      "M01",
+      "M06"
+    ]
+  },
+  "design": "Direct preserved-message comparison. Streaming transport normalized for partial-output capture. Both models receive explicit identical sampling options, overriding model-specific defaults. Documents originally allowed768 tokens; matched arm deliberately normalizes to512. No direct replay counts as gateway end-to-end success.",
+  "review": "Independently checked raw source fields; manual full-answer scoring required. Implementation assistant is grader, not independent external certification.",
+  "budgets": "One replay is one isolated request with30/60/120 second hard wall including metadata/schema validation. No retry. Gateway admission requires separate actual multi-call measurements under120 seconds."
+}

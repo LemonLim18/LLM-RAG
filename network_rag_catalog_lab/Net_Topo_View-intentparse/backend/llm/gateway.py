@@ -3,6 +3,7 @@ import asyncio
 import json
 import re
 import os
+import time
 from uuid import uuid4
 
 from fastapi import HTTPException
@@ -76,6 +77,7 @@ class AIGateway:
         self.registry = registry_for(db)
 
     async def turn(self, identity, user, body):
+        request_started = time.monotonic()
         owner = user['username']
         conversation = self.store.get(identity, owner)
         kind = conversation['assistant_kind']
@@ -111,8 +113,14 @@ class AIGateway:
             from local_providers.development import active_for
             from contextlib import nullcontext
             scenario=active_for(self.db)
+            hybrid = None
+            if os.getenv('COGNISHIELD_AI_HYBRID', '0') == '1':
+                from llm.gemini_provider import HybridRequest
+                hybrid = HybridRequest.create(self.db, self.store, user, kind, identity, body, request_started)
             with scenario.pin() if scenario else nullcontext() as environment:
-                result = await asyncio.wait_for(self._answer(identity, user, kind, body), timeout=240)
+                with hybrid.activate() if hybrid else nullcontext():
+                    result = await asyncio.wait_for(self._answer(identity, user, kind, body),
+                                                    timeout=hybrid.remaining() if hybrid else 240)
                 result.context_coverage['environment']=environment or {'mode':'ordinary'}
         except asyncio.CancelledError:
             self.store.cancel(identity, owner, request_id)
@@ -126,6 +134,8 @@ class AIGateway:
         except Exception:
             self.store.cancel(identity, owner, request_id)
             raise
+        if 'hybrid' in locals() and hybrid is not None:
+            result.context_coverage['hybrid'] = hybrid.public_stats()
         self.store.finish(identity, owner, request_id, result.model_dump())
         return result
 
@@ -162,6 +172,7 @@ class AIGateway:
                     engineering_result=agent_info.pop('_engineering_result',None)
                     studio_context=agent_info.pop('_studio_context',None)
                     studio_answer=agent_info.pop('_studio_answer','')
+                    studio_answer=studio_answer or agent_info.pop('_outcome_answer','')
                     coverage['agent']=agent_info
             else:
                 route=await select_context(body.prompt,body.model,kind,body.editor,attachments,history,previous=previous,inventory=inventory)
@@ -352,11 +363,12 @@ class AIGateway:
         unavailable_document=unavailable_document_answer(coverage.get('files',{}).get('source_availability',[])) if use_files and not use_editor else None
         factual_network=bool(route.network_domains and ('knowledge' not in route.network_domains or agent_info and agent_info.get('engine') in {'langgraph_b2','langgraph_b3'}) and not use_files and not use_editor)
         if studio_answer:
-            answer,model=studio_answer,None
+            synthesis=(agent_info or {}).get('verification',{}).get('synthesis',{})
+            answer,model=studio_answer,synthesis.get('model') if synthesis.get('model_synthesis') else None
         elif factual_network:
             answer,model=(verified_answer if network_bundle else network_answer(context,evidence,route.attributes,route.interface_refs,question=body.prompt)),None
             synthesis=(agent_info or {}).get('verification',{}).get('synthesis',{})
-            if synthesis.get('status') in {'literal_checks_passed','repaired_literal_checks_passed'}:model=synthesis.get('model')
+            if synthesis.get('status') in {'literal_checks_passed','repaired_literal_checks_passed','outcome_reconstructed'}:model=synthesis.get('model')
         elif unavailable_document:
             answer,model=unavailable_document,None
             coverage['document_verification']={'status':'source_unavailable','model_synthesis':False,

@@ -1,0 +1,515 @@
+{
+  "timestamp": "2026-10-26T01:33:00.391518+00:00",
+  "status": "HYBRID PARTIAL",
+  "approach_a": "KEEP DISABLED",
+  "registry_sha256": "1504b4f5c5f20a1b79d52b58d2c247b06a71f9dbee29a9b48d61b59ebe025210",
+  "scope": "Bounded exposed-condition-family integration experiment; frozen before inference, not blinded G4/G5/G6/G11 acceptance.",
+  "historical_h01_h06_scores_unchanged": true,
+  "arms": {
+    "off": {
+      "turns": 11,
+      "workflow_pass": 10,
+      "evidence_coverage_pass": 10,
+      "complete_task_pass": 7,
+      "unique_condition_complete_task_pass_excluding_c7": 6,
+      "unique_turn_conditions_excluding_c7": 10,
+      "cloud_calls": 7,
+      "cloud_completed": 7,
+      "cloud_input_tokens": 12899,
+      "cloud_output_tokens": 1594,
+      "reported_thought_tokens": 0,
+      "cloud_median_seconds": 1.851,
+      "request_min_median_max_seconds": [
+        0.252,
+        9.768,
+        61.332
+      ],
+      "all_requests_within_120_seconds": true,
+      "cases": [
+        {
+          "id": "FL-C1-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE factual/source-limit explanation",
+          "complete_task_adequate": true,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Saved commands and unavailable syslog preserved; model prose retained.",
+          "latency_ms": 18134.54,
+          "tools": [
+            "network.configuration",
+            "network.syslog"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C1-1.json",
+          "trace_sha256": "57feb7160d5b39df0bc00d2c0a9464f1284c9d2d65c1e368257831d0f411ca66"
+        },
+        {
+          "id": "FL-C1-2",
+          "workflow_correct": false,
+          "required_evidence_at_model_or_reader": false,
+          "model_written_interpretation_review": "PARTIAL advisory, wrong source framing",
+          "complete_task_adequate": false,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Explicit no-read instruction violated by inventory/state reads; recommendations do not preserve the prior syslog limitation well.",
+          "latency_ms": 9388.06,
+          "tools": [
+            "inventory.read",
+            "network.state"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C1-2.json",
+          "trace_sha256": "7ed50abe76e7a20a27cd16cae3ddcfb8630bebf97eb89caae41e190db43a8c50"
+        },
+        {
+          "id": "FL-C2-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE scoped causal explanation",
+          "complete_task_adequate": true,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Correct reached transit node, owned down egress, declared forward failure and modeled scope.",
+          "latency_ms": 10112.81,
+          "tools": [
+            "network.state"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C2-1.json",
+          "trace_sha256": "9131d21e827b9256234c7ed5500d4bcbfe8768f33c027ddab6eddd895add4109"
+        },
+        {
+          "id": "FL-C2-2",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "UNAVAILABLE local synthesis",
+          "complete_task_adequate": false,
+          "final_model": null,
+          "verifier_status": "unavailable_fallback",
+          "verifier_errors": [
+            "503: Local routing model is unavailable or timed out; no tool action was inferred"
+          ],
+          "note": "Two local synthesis failures/timeouts; safe record fallback does not explain the requested directional evidence. No cloud synthesis selected.",
+          "latency_ms": 61331.6,
+          "tools": [
+            "network.state"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C2-2.json",
+          "trace_sha256": "79948e6e95196407bd1bea10b1a82eebbf2b57b0fa57e87bf07a8307b41f6e13"
+        },
+        {
+          "id": "FL-C3-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "INCORRECT published requirement",
+          "complete_task_adequate": false,
+          "final_model": null,
+          "verifier_status": "rejected_fallback",
+          "verifier_errors": [
+            "The router_id field is not unconditionally required by this published schema"
+          ],
+          "note": "Raw cloud answer incorrectly vendor-requires router_id. Existing schema check rejects it; safe fallback omits the requested explicit mapping.",
+          "latency_ms": 5963.25,
+          "tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C3-1.json",
+          "trace_sha256": "91f9b1748c41f4fc625ed68327f9fb2ef159698ebe9125cbbd7891b08169e42e"
+        },
+        {
+          "id": "FL-C3-2",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "INCORRECT local negative fact",
+          "complete_task_adequate": false,
+          "final_model": "qwen2.5:1.5b",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Qwen denies the recorded OSPF process 20 and fails to quote the requested commands. Existing literal checks falsely pass the absence claim.",
+          "latency_ms": 14589.39,
+          "tools": [
+            "network.configuration"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C3-2.json",
+          "trace_sha256": "f55dd7b4d5b32d7dd2f372aa95839a2932cd172ed29f859d9db295ae5ae3300f"
+        },
+        {
+          "id": "FL-C4-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE arithmetic, not network reasoning",
+          "complete_task_adequate": true,
+          "final_model": "qwen2.5:1.5b",
+          "verifier_status": "not_applicable",
+          "verifier_errors": [],
+          "note": "Local Qwen returns102 with no source/cloud reads.",
+          "latency_ms": 10416.26,
+          "tools": [],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C4-1.json",
+          "trace_sha256": "eefa16d3acc3e9d8568339e6566c40a09707ed461276e87b14eff9ed319c8574"
+        },
+        {
+          "id": "FL-C4-2",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "FACTUAL PROJECTION, no model reasoning",
+          "complete_task_adequate": true,
+          "final_model": null,
+          "verifier_status": "not_applicable",
+          "verifier_errors": [],
+          "note": "Exact three interface names and prefixes from authoritative inventory; local only.",
+          "latency_ms": 252.42,
+          "tools": [
+            "inventory.read"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C4-2.json",
+          "trace_sha256": "1020caea668cc120d7b326ff0e48a556045c4b4ffd0be1b910fde153a5aaceb2"
+        },
+        {
+          "id": "FL-C5-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE uncertainty explanation",
+          "complete_task_adequate": true,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Unavailable observations plus planned topology do not establish successful forwarding or failure.",
+          "latency_ms": 9767.82,
+          "tools": [
+            "network.state",
+            "network.topology"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C5-1.json",
+          "trace_sha256": "6f0a20965504148702245bb1fe2d3ac74b5005fd1e373c0f44542b112c41d3dc"
+        },
+        {
+          "id": "FL-C6-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE relationship explanation",
+          "complete_task_adequate": true,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Both intended endpoint/port pairs and transit prefixes correct. Recorded up states and default VRF also exist in supplied inventory.",
+          "latency_ms": 4430.39,
+          "tools": [
+            "inventory.read",
+            "network.topology"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C6-1.json",
+          "trace_sha256": "3397c37bdfc5b1b2f7171bc71a9b3b380eaa21731c59dab8eabb6d18ec001791"
+        },
+        {
+          "id": "FL-C7-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE causal explanation; duplicate surface condition",
+          "complete_task_adequate": true,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Floating reproduces the correct Studio blocked-egress result; not independent generalization.",
+          "latency_ms": 5515.35,
+          "tools": [
+            "network.state"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_off/FL-C7-1.json",
+          "trace_sha256": "cd097094bc8ee26ebf6395710fdb59c65fda93f3b4099da1c1621edae2c613db"
+        }
+      ]
+    },
+    "on": {
+      "turns": 11,
+      "workflow_pass": 9,
+      "evidence_coverage_pass": 10,
+      "complete_task_pass": 4,
+      "unique_condition_complete_task_pass_excluding_c7": 4,
+      "unique_turn_conditions_excluding_c7": 10,
+      "cloud_calls": 7,
+      "cloud_completed": 7,
+      "cloud_input_tokens": 11443,
+      "cloud_output_tokens": 1635,
+      "reported_thought_tokens": 0,
+      "cloud_median_seconds": 1.841,
+      "request_min_median_max_seconds": [
+        0.173,
+        13.736,
+        55.111
+      ],
+      "all_requests_within_120_seconds": true,
+      "cases": [
+        {
+          "id": "FL-C1-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE raw cloud answer; mixed projection",
+          "complete_task_adequate": true,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "outcome_reconstructed",
+          "verifier_errors": [],
+          "note": "Qualified task pass: commands and syslog limitation delivered, but record sections duplicated by outcome projection. Not a clean model-only final answer.",
+          "latency_ms": 16670.8,
+          "tools": [
+            "network.configuration",
+            "network.syslog"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C1-1.json",
+          "trace_sha256": "94d37ee19c086809097944a0c9a1405f0115ac3793d27c67f396c92a9dea024e"
+        },
+        {
+          "id": "FL-C1-2",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": false,
+          "model_written_interpretation_review": "UNAVAILABLE advisory deliverable",
+          "complete_task_adequate": false,
+          "final_model": null,
+          "verifier_status": "advisory_rejected",
+          "verifier_errors": [],
+          "note": "No readers run, but advisory composition is rejected and returns unfulfilled; no cloud call.",
+          "latency_ms": 27933.98,
+          "tools": [],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C1-2.json",
+          "trace_sha256": "a0655d9876a17c438c51d92d42e7fb8ca351687449e9aa500fb846bd64fa93eb"
+        },
+        {
+          "id": "FL-C2-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "INCORRECT conflict interpretation",
+          "complete_task_adequate": false,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Correct down egress but independent forward/return failures are falsely treated as conflicting observations; literal verifier passes.",
+          "latency_ms": 14360.68,
+          "tools": [
+            "network.state"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C2-1.json",
+          "trace_sha256": "6e33052152c4dec140d38210cd2144246ceb42fb0845453ba657a4ea5a8f0f92"
+        },
+        {
+          "id": "FL-C2-2",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "INCORRECT local repair ownership",
+          "complete_task_adequate": false,
+          "final_model": "qwen2.5:1.5b",
+          "verifier_status": "repaired_literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Qwen repair assigns down state and interface IDs to the wrong owners. Released after repaired literal checks. Critical failure isolated to experimental ON arm.",
+          "latency_ms": 55110.51,
+          "tools": [
+            "network.state"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C2-2.json",
+          "trace_sha256": "37e7bb34c5deb0f316ec8ce1d6d0cb627d1ba5f27a77837ce4fa470f9de999c3"
+        },
+        {
+          "id": "FL-C3-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE raw mapping, final projection incomplete",
+          "complete_task_adequate": false,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "outcome_reconstructed",
+          "verifier_errors": [],
+          "note": "Raw cloud mapping is correct; outcome projection replaces it with saved records and loses the requested field-to-contract explanation. Validation caveat remains.",
+          "latency_ms": 3595.38,
+          "tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C3-1.json",
+          "trace_sha256": "4ddfec258cadd1a5f80346fee31d9720bd5feefed663aae116e5e8b2742898e7"
+        },
+        {
+          "id": "FL-C3-2",
+          "workflow_correct": false,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE raw/final quotation",
+          "complete_task_adequate": false,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Correct process/router ID but unnecessary knowledge read and cloud synthesis on an exact simple saved-config question. Fails the frozen workflow expectation.",
+          "latency_ms": 13707.69,
+          "tools": [
+            "knowledge.search",
+            "network.configuration"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C3-2.json",
+          "trace_sha256": "0978d0fcc258b36abb629152ade5d600c4c1f7f8202bcf68360943a0379953f7"
+        },
+        {
+          "id": "FL-C4-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE arithmetic, not network reasoning",
+          "complete_task_adequate": true,
+          "final_model": "qwen2.5:1.5b",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Local Qwen102; no reads/cloud.",
+          "latency_ms": 14648.0,
+          "tools": [],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C4-1.json",
+          "trace_sha256": "1951bac2d44b0bcecfc1b793073ceef0afbf1a06f8f79406d2f60216734e115a"
+        },
+        {
+          "id": "FL-C4-2",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "FACTUAL PROJECTION, no model reasoning",
+          "complete_task_adequate": true,
+          "final_model": null,
+          "verifier_status": "not_applicable",
+          "verifier_errors": [],
+          "note": "Exact inventory names/prefixes. ON outcome metadata nevertheless says unfulfilled; no semantic completion credit from that metadata.",
+          "latency_ms": 173.29,
+          "tools": [
+            "inventory.read"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C4-2.json",
+          "trace_sha256": "b84fd6c425dfbca6d4d2d04a91e186346194c44e545d76b34d3eeda0f48e15af"
+        },
+        {
+          "id": "FL-C5-1",
+          "workflow_correct": false,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE uncertainty content with source-scope regression",
+          "complete_task_adequate": false,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "An inventory read violates the original only-state-and-topology constraint; final content remains safely limited.",
+          "latency_ms": 13463.71,
+          "tools": [
+            "inventory.read",
+            "network.state",
+            "network.topology"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C5-1.json",
+          "trace_sha256": "e53bcd398863a8c2b5755b8d038a99f90c54c783f3312598e9a4fb737f1bf874"
+        },
+        {
+          "id": "FL-C6-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "ADEQUATE relationship explanation",
+          "complete_task_adequate": true,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Correct intended endpoints/ports/prefixes and recorded local states.",
+          "latency_ms": 11596.52,
+          "tools": [
+            "inventory.read",
+            "network.topology"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C6-1.json",
+          "trace_sha256": "4cdbfadd48b35f1b1262c8bf55a486bb7d46a47dd731da22cc2dd9ce13b65387"
+        },
+        {
+          "id": "FL-C7-1",
+          "workflow_correct": true,
+          "required_evidence_at_model_or_reader": true,
+          "model_written_interpretation_review": "INCORRECT conflict interpretation; duplicate surface",
+          "complete_task_adequate": false,
+          "final_model": "gemini-3.5-flash-lite",
+          "verifier_status": "literal_checks_passed",
+          "verifier_errors": [],
+          "note": "Again calls independent directional failures conflicting; correct isolated egress fact does not certify the explanation.",
+          "latency_ms": 13735.89,
+          "tools": [
+            "network.state"
+          ],
+          "trace": "tmp/phase-g/iterations/20261026-flash-lite-hybrid/arm_on/FL-C7-1.json",
+          "trace_sha256": "0407b6c2a87c48644e394987681b7b1a40d6ebda33265f33166cfd0899a6a078"
+        }
+      ]
+    }
+  },
+  "browser": "BLOCKED_TOOL_INITIALIZATION",
+  "api_fault_tests": "HTTP429 and contradictory cloud output injected at transport; both authenticated surfaces use safe fallback; no real Google inference in fault tests.",
+  "remote_planning": "DISABLED; this task does not establish end-to-end G4 refinement quality.",
+  "regressions": {
+    "affected_tests_passed": 241,
+    "typescript": "PASS",
+    "counts_not_additive": "48 earlier provider tests and230 earlier affected tests overlap; initial failures are retained.",
+    "final_provider_quota_check": "PASS; overlapping focused provider suite after UTF-8 reservation refinement"
+  },
+  "preservation": {
+    "timestamp": "2026-10-26T01:22:36.564340+00:00",
+    "head_unchanged": true,
+    "index_unchanged": true,
+    "ordinary_database_tables_unchanged": true,
+    "ordinary_table_count": 42,
+    "database_integrity": "ok",
+    "foreign_key_errors": 0,
+    "active_pointer_unchanged": true,
+    "all_341_artifacts_unchanged": true,
+    "prior_evidence_unchanged": true,
+    "prior_evidence_count": 144,
+    "protected_source_changes": [
+      "backend/llm/gateway_api.py",
+      "backend/llm/gemini_provider.py",
+      "backend/llm/orchestration/engine.py",
+      "backend/llm/orchestration/synthesis.py",
+      "frontend/src/services/ai.ts",
+      "frontend/components/SharedInventoryChat.tsx",
+      "frontend/components/ansible/AnsibleChatPanel.tsx",
+      ".env",
+      ".env.example"
+    ],
+    "backend_secret_file_unchanged": true,
+    "credential_entries": 1,
+    "credential_loaded": true,
+    "credential_file_git_ignored": true,
+    "effective_configuration": {
+      "COGNISHIELD_LOCAL_OLLAMA_MODEL": "qwen2.5:1.5b",
+      "GEMINI_MODEL": "gemini-3.5-flash-lite",
+      "COGNISHIELD_AI_HYBRID": "1",
+      "COGNISHIELD_AI_HYBRID_INTERPRET": "0",
+      "COGNISHIELD_AI_OUTCOMES": "0"
+    },
+    "browser": {
+      "status": "BLOCKED_TOOL_INITIALIZATION",
+      "operation": "await cua.getState();",
+      "error": "failed to write kernel assets: The system cannot find the path specified. (os error 3)",
+      "fresh_attempts": 3,
+      "website_permission_or_connectivity_not_established": true,
+      "no_browser_storage_or_buffers_accessed": true
+    },
+    "final_checked_at": "2026-10-26T01:40:24.178122+00:00",
+    "listeners": {
+      "5173": false,
+      "8000": false,
+      "8001": false
+    },
+    "final_source_hashes": {
+      "backend/llm/gateway_api.py": "95512bddb5f597b8cd76a03bb7b8ed28612787e25caf3a821d0d7fe940d9b09c",
+      "backend/llm/gemini_provider.py": "d010c46866070fb774c7a7374a99a3ba85d4248609c3b78f57b91127e8b6a4a9",
+      "backend/llm/orchestration/engine.py": "0866a064130819f4bd2cc49bb88ba284bc78f00758058ccbc5ed1a42c48b26a7",
+      "backend/llm/orchestration/synthesis.py": "af3aa0884f21853cce7fcb2fb94b3a561d4c45ac50a30c638a816135d4d0f544",
+      "frontend/src/services/ai.ts": "a4a7dc7a54f98d3d85964f9570bfd06af3b8c98c23be8e2d0005555bb46db581",
+      "frontend/components/SharedInventoryChat.tsx": "f6702888a003ee9fdc303e461eb287d3b55dee2a6b9f9677ad4b4067153f966d",
+      "frontend/components/ansible/AnsibleChatPanel.tsx": "d3bddcd1863e2db9f966b1476fa106f1418472d60917ce119e1f55e6d12442ae",
+      ".env.example": "0c3bae18e5ded8da459731c3e6da2181c20145fd006045a2d977adca14894e83"
+    },
+    "local_config_has_no_key_copy": true,
+    "unapproved_complex_both_surfaces_pass": true
+  },
+  "unapproved_complex_requests": {
+    "both_surfaces_pass_no_cloud": true,
+    "latency_seconds": [
+      76.889,
+      48.192
+    ],
+    "no_model_quality_credit": true
+  }
+}

@@ -12,7 +12,7 @@
       "preservation_gate": "PASS",
       "implementation_status": "PRESERVATION_VERIFIED_BASELINE_PARTIAL",
       "latest_increment": "Current preservation PASS: existing HEAD6e8597c, empty index, archived52-file patch,341 immutable artifacts and ordinary non-AI records verified. Original pre-change historical evaluation freeze is missing and cannot be backdated. G0 original baseline gate remains BLOCKED.",
-      "current_preservation_context": "LatestG12release-safeproof rechecks unchangedHEAD6e8597c/emptyindex/archived52filepatch/341artifacts/ordinarytables; historical pre-change freeze still absent, no backdating."
+      "current_preservation_context": "20261024 current HEAD93f5f45/index/ordinaryDBalltables/active141binding341artifacts unchanged; original historical freeze still absent."
     },
     "G1": {
       "status": "PASS",
@@ -118,11 +118,13 @@
         "docs/evaluations/phase_g_routing_results.json",
         "docs/evaluations/phase_g_routing_results.json",
         "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-matched-review.json",
-        "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-source-context-metrics.json"
+        "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-source-context-metrics.json",
+        "docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md",
+        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md"
       ],
       "notes": "Typed logical source filters now reach existing readers; bounded qwen source selection is evaluated separately. Plural list/provenance failure repaired. Full fresh routing and implicit/compound GoalSpec gates remain open.",
       "acceptance_gate": "FAILED_FRESH_ROUTING_86_OF_120_BELOW_90_PERCENT",
-      "latest_increment": "Frozen120 complete: candidate86PASS/34FAIL; matchedlegacy71PASS/49FAIL. Required-source recall105/126; no-reader12/23;11multi-turn workflows10PASS. These are workflow measures, not full-answer success. Original errors and six exposed correction replays preserved; no new holdout claims.",
+      "latest_increment": "Sharedsourceidentity/refinement/querycardinality/referencecontracts corrected,279affected/184temporal/97constraintPASS(overlap). Raw26/30workflowisnotfullrouting; earlier120routinggateunaccepted. Advisoryintent/sourceplanningremainsfailed.",
       "implementation_status": "IMPLEMENTED_WITH_INCOMPLETE_ACCEPTANCE",
       "remaining_failures": [
         {
@@ -171,12 +173,26 @@
         "tmp/phase-g/iterations/20261023-G7-resume/G5-frozen-30-comparison-arm-review.json",
         "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh30-full-answer-review.json",
         "tmp/phase-g/iterations/20261023-G7-resume/G5-final-saved-critical-verifier.json",
-        "tmp/phase-g/iterations/20261023-G7-resume/G5-G9-final-critical-regression.xml"
+        "tmp/phase-g/iterations/20261023-G7-resume/G5-G9-final-critical-regression.xml",
+        "docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md",
+        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md"
       ],
       "notes": "Manual review039\u00e2\u20ac\u201c050 exposed task-scope, temporal-inference, OSPF role/state/prerequisite, router-ID and unavailable-source errors despite tool-only scores. Original drafts retained; bounded corrections verified separately from fallback and general quality gates.",
-      "acceptance_gate": "FAILED_FRESH_M2_ADEQUACY_5_OF_30_BELOW_85_PERCENT",
-      "latest_increment": "Frozen30V3 complete and fully reviewed. M0:2PASS/28FAIL; rawunrepairedM1:2/28;M2:5PASS/24FAIL/1invalid-contextBLOCKED;M3:1/29. Four adequate M2 answers used factual/review/reconstruction paths and one simple model negative lookup; zero adequate substantive causal reasoning. Seven original critical cases preserved. Grouped safety/context correction passes293tests+7subtests, followed by295+7 for routing/path changes; overlapping runs not summed. Exposed file/page replays now read actual content; no fresh quality credit.",
-      "implementation_status": "IMPLEMENTED_WITH_INCOMPLETE_ACCEPTANCE"
+      "acceptance_gate": "FAILED_ALIGNMENT_FROZEN_V3_13_OF_30_BELOW_85_PERCENT",
+      "latest_increment": "Newfrozen30complete13adequate:3unrepairedmodel/1repairedmodel/8fallback/1exactproposal. Notmatchedimprovement;3criticaloriginalclaims. Finalexposedguardsdo notreplace originalscore.",
+      "implementation_status": "IMPLEMENTED_WITH_INCOMPLETE_ACCEPTANCE",
+      "acceptance_history": [
+        {
+          "timestamp": "2026-10-24T07:48:38.958076+00:00",
+          "previous_gate": "FAILED_FRESH_M2_ADEQUACY_5_OF_30_BELOW_85_PERCENT",
+          "preserved": true
+        },
+        {
+          "timestamp": "2026-10-24T09:39:04.140448+00:00",
+          "previous_gate": "FAILED_FROZEN_V2_16_OF_30_BELOW_85_PERCENT",
+          "preserved": true
+        }
+      ]
     },
     "G6": {
       "status": "FAILED",
@@ -193,10 +209,12 @@
         "tmp/phase-g/iterations/20261023-G7-resume/G6-routing-and-path-boundaries.xml",
         "tmp/phase-g/iterations/20261023-G7-resume/G6-source-domain-final.xml",
         "tmp/phase-g/iterations/20261023-G7-resume/G6-extended-full-answer-review.json",
-        "tmp/phase-g/iterations/20261023-G7-resume/G6-metric-contract-full-answer-review.json"
+        "tmp/phase-g/iterations/20261023-G7-resume/G6-metric-contract-full-answer-review.json",
+        "docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md",
+        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md"
       ],
       "acceptance_gate": "FAILED_CAUSAL_EXPLANATION_GATE",
-      "latest_increment": "The single-reader logical source assumption and dropped metric calculations are corrected. Both assistants retrieve all4previouslymissingmetriccases and actual synthesis inputs retain utilization/reset/correlation fields. Latest24extendedcase/surfacepairs now have expected records, combining corrected reads with preserved prior passes; this is exposed correction evidence, not new generalization. All4latestmetricanswers use factual fallback after invalid model drafts/timeouts; complete explanation gate remains FAILED.",
+      "latest_increment": "Exactfactsandcaseconformancepreserved; correctevidencecanstillproducewrong/incompletemodelexplanation. One limitedrepairedcomputedpathanswerdoesnotestablishindependentcausalreasoning.",
       "implementation_status": "IMPLEMENTED_SOURCE_CONFORMANCE_VERIFIED_EXPLANATION_FAILED"
     },
     "G7": {
@@ -302,10 +320,12 @@
         "tmp/phase-g/iterations/20261020T130151.701511Z-G9-document-grounding-resume-7f63c9/manual-document-review-final.json",
         "tmp/phase-g/iterations/20261020T151055.394247Z-G3-independent-observed-links-9ec323/increment-review.json",
         "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh30-full-answer-review.json",
-        "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-matched-review.json"
+        "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-matched-review.json",
+        "docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md",
+        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md"
       ],
       "acceptance_gate": "FAILED_ROUTING_QUALITY_ENGINEERING_AND_CAUSAL_NONREGRESSION",
-      "latest_increment": "Fresh120andunique30full-proseassessment complete; unchanged frozen original scores retained. Application corrections and new4metriccase/surface replays are separately exposed. Correct tool/source results and fallback do not satisfy C1\u2013C7 quality acceptance; independent external human review is not claimed.",
+      "latest_increment": "Newfrozen30runtime/registryunchanged, independentlychecked literal/arithmeticexpectations, implementation-assistantgrade.13/30FAIL; advice-onlytooloracleambiguitydisclosed. No externalblindreview/finalpostpatchfull120/30pass.",
       "implementation_status": "EVALUATIONS_IMPLEMENTED_ACCEPTANCE_FAILED"
     },
     "G12": {
@@ -319,22 +339,23 @@
         "tmp/phase-g/iterations/20261023T140002.093180Z-G8-source-bound-architecture-6a21a0/G12-current-continuation-acceptance.json"
       ],
       "acceptance_gate": "PASS_RELEASE_SAFETY_AND_HONEST_PARTIAL_HANDOVER",
-      "latest_increment": "Current G8 source-bound workflow accepted,4more Huawei native journeys(all113rechecked), final actual browser ordinary inventory/topic switch/Studio arithmetic, owner404,29focused/140adjacent/5transaction/2handoff checks, unchanged105frontendfiles and protected17tabs/ordinarydata/341artifacts/index verified. G4/G5/G6/G11 remain FAILED; G7remaining28policy conflicts; no overall PhaseG completion.",
+      "latest_increment": "20261024 preservation and honest failed-gate handover updated; release-safe partial-phase report remains passing, not final Phase G acceptance.",
       "implementation_status": "COMPLETE_RELEASE_SAFE_HANDOVER"
     }
   },
   "model": "qwen2.5:1.5b",
-  "quality_gate": "FAILED_FRESH_PHASE_G_5_OF_30_ADEQUATE",
+  "quality_gate": "FAILED_ALIGNMENT_FROZEN_V3_13_OF_30_43_33_PERCENT",
   "phase_f_remaining": "Retained in existing Phase F tracker; no completion inferred.",
-  "updated_at": "2026-10-23T14:38:54.868936+00:00",
+  "updated_at": "2026-10-24T09:39:04.140448+00:00",
   "acceptance_gate_scope": "Full specified stage gate, not partial implementation or exposed regression outcomes; inspect evidence and notes for actual passes/failures.",
   "continuation_limits": {
     "browser": "Tool initialization now fails: kernel assets path missing(oserror3), before website access. Earlier G9/G10actualbrowserproofsreused; no settings-disabled claim. App5173/8000restoredlauncher79621/backend28856;Ollama20988untouched.",
     "active_scenario": "None; ordinary sources restored after G7 browser slice. All scenario drafts and unsaved tabs retained.",
     "full_model_quality": "NOT_COMPLETE; model acceptance/repair/fallback remain distinct.",
-    "full_24_source_gate": "COMPLETE_24_OF_24; closedG3 evidence retained"
+    "full_24_source_gate": "COMPLETE_24_OF_24; closedG3 evidence retained",
+    "current_iteration": "Alllaunchedsessionscompleted; final279/184/97overlappingsuitesPASS. Exposedpostfreezecheckslabelledseparately. No browser/model/dependency/user-data/releasechange; sourceunstaged."
   },
-  "latest_progress_audit": "docs/evaluations/PHASE_G_PROGRESS_AUDIT_2026-10-23.md",
+  "latest_progress_audit": "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md",
   "mandatory_stages": [
     "G0",
     "G1",
@@ -365,7 +386,7 @@
     "G11",
     "G12"
   ],
-  "next_incomplete_milestone": "G7 requires a reviewed upstream contract resolution for28Huawei version mismatches; active immutable release and read-only sibling must remain protected. G4 compound completeness, G5/G6 explanatory adequacy and G11 quality thresholds remain failed. Do not rerun exposed benchmarks as fresh or declare them technically impossible universally. Any further orchestration change needs new untouched evaluation after foundations are ready.",
+  "next_incomplete_milestone": "Advisory-versus-retrievalintent and source-backed semanticobligationcompletion; preserve allfrozenfailures. Finalfull120/30qualification remainsunaccepted.",
   "subsequent_priority": "G7 all141 nativeStudio journeys/genuine separately supported Ansible; G8 related files and coordinated exact-base proposals; then every remaining incompleteG0-G12 gate",
   "holdout_policy": "Reserve full unseen intelligence benchmark until source/Studio/integration foundations are ready; exposed corrections are not generalization",
   "model_correction_policy": {
@@ -424,7 +445,7 @@
       "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/jobs_audit-source-acceptance-review.json"
     ]
   },
-  "current_stage": "G4",
+  "current_stage": "G4/G5/G6/G11",
   "capability_acceptance": {
     "C1": {
       "status": "PARTIAL_FAILED",
@@ -448,13 +469,13 @@
     },
     "C6": {
       "status": "FAILED",
-      "evidence": "FreshM2quality5/30adequate;0adequatecausalmodelreasoning; model/repair/fallbackseparated"
+      "evidence": "Latestnewfrozen13/30adequate;3unrepairedmodel+1repairedmodel+8fallback+1exactproposal. Generalcausalreasoningnotaccepted."
     },
     "C7": {
       "status": "PARTIAL_BLOCKED",
-      "evidence": "141nativebindingsactive;109/141actualnativejourneys;32Huawei conflicts;0activevalidatedAnsiblevariants;originaltwo-filemodelfails"
+      "evidence": "113/141actualnativejourneys;28upstreamHuaweiconflicts;0activeverifiedAnsiblevariants. G8source-boundworkspaceworkflowacceptedhistorically; notuniversalcompoundediting."
     }
   },
-  "current_work": "G8 verified complete; G7 advanced to113/141; remaining intelligence gates failed and28upstream native contracts blocked.",
+  "current_work": "Bounded source/context/temporal architectural corrections verified; new frozen30failed13/30. No new fullstageclosed.",
   "deprioritized_stage": "G0 historical baseline"
 }

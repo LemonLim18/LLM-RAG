@@ -25,7 +25,10 @@ export interface AIConversation {
   id: string; assistant_kind: 'floating' | 'studio'; title: string; updatedAt: string;
   messages: { id: string; role: string; content: string; timestamp: number; evidence?: AIEvidence[]; evidence_details?: string; gatewayReviewRequestId?:string }[];
 }
+export interface AITurnRequest { request_id:string;prompt:string;model?:string;editor?:EditorSnapshot|null;related_editors?:EditorSnapshot[];attachment_ids?:string[] }
 export const aiApi = {
+  hybridContext: () => request<{enabled:boolean;eligible:boolean;model:string;source_revision?:string;scenario_id?:string;scenario_digest?:string}>('/ai/hybrid-context'),
+  approveSyntheticCloud: (id:string,turn:AITurnRequest,expected_source_revision:string) => request<{approved:boolean;model:string}>(`/ai/conversations/${encodeURIComponent(id)}/approve-synthetic-cloud`,{method:'POST',body:JSON.stringify({turn,expected_source_revision})}),
   handoffEligibility: (id:string,turn:string) => request<any>(`/ai/conversations/${encodeURIComponent(id)}/turns/${encodeURIComponent(turn)}/handoff-eligibility`),
   prepareHandoff: (id:string,source_turn:string,requested_action:string) => request<any>(`/ai/conversations/${encodeURIComponent(id)}/handoffs`, {method:'POST',body:JSON.stringify({source_turn,requested_action})}),
   acceptHandoff: (id:string) => request<{conversation_id:string;draft:string;warning?:string}>(`/ai/handoffs/${id}/accept`, {method:'POST'}),
@@ -38,7 +41,7 @@ export const aiApi = {
   saveInventoryMetadata: (id: number, body: { site: string; location: string; aliases: string[] }) => request(`/ai/inventory/${id}/metadata`, { method: 'PUT', body: JSON.stringify(body) }),
   saveEngineeringFacts: (id: number, facts: Record<string, unknown>, expected_revision: string) => request<{revision:string}>(`/ai/inventory/${id}/engineering-facts`, {method:'PUT',body:JSON.stringify({facts,expected_revision})}),
   diagnostics: () => request<any>('/ai/diagnostics'),
-  turn: (id: string, body: { request_id: string; prompt: string; model?: string; editor?: EditorSnapshot | null; related_editors?:EditorSnapshot[]; attachment_ids?: string[] }, signal?: AbortSignal) =>
+  turn: (id: string, body: AITurnRequest, signal?: AbortSignal) =>
     request<AIResponse>(`/ai/conversations/${encodeURIComponent(id)}/turns`, { method: 'POST', body: JSON.stringify(body), signal }),
   cancel: (id: string, requestId: string) => request(`/ai/conversations/${encodeURIComponent(id)}/turns/${requestId}/cancel`, { method: 'POST' }),
   upload: (id: string, file: File) => request<{ id: string; name: string; byte_size: number }>(`/ai/conversations/${encodeURIComponent(id)}/attachments`, { method: 'POST', body: file, headers: { 'Content-Type': 'application/octet-stream', 'X-File-Name': encodeURIComponent(file.name) } }),

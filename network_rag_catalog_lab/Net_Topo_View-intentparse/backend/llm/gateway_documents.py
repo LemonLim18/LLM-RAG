@@ -149,21 +149,29 @@ def file_context_requested(prompt,metadata=(),previous=None):
     This selects eligible existing sources; it grants no read permission and
     never treats text inside a document as an instruction.
     """
+    # Incidental availability is not a request to read the available file. Keep
+    # the actual speech act; a filename or reference in it still binds normally.
+    from llm.gateway_references import main_request_text
+    prompt=main_request_text(prompt)
     if any(item['name'].casefold() in prompt.casefold() for item in metadata):return True
+    owned_pdfs=[item for item in metadata if item.get('id') and Path(item['name']).suffix.casefold()=='.pdf']
+    if len(owned_pdfs)==1 and re.search(r'\bpages?\s+\d+\b',prompt,re.I):return True
     # Possessive/deictic source identities may include ordinary descriptions
     # (a four-page attachment, uploaded note, attached report). Do not treat an
     # explicit editor-buffer reference as a request for ambient library files.
     # A configuration is also a network record/topic. It identifies a file only
     # through an actual filename, upload qualifier or owned prior file context.
-    nouns=r'(?:pdfs?|documents?|files?|attachments?|scans?|screenshots?|images?|diagrams?|pictures?|photos?|notes?|reports?)'
-    bound=re.search(r'\b(?:my|our|this|that|the)\s+(?:[\w-]+\s+){0,3}'+nouns+r'\b|\b(?:uploaded|attached)\s+(?:[\w-]+\s+){0,2}(?:'+nouns+r'|config\w*)\b',prompt,re.I)
+    nouns=r'(?:pdfs?|documents?|files?|attachments?|scans?|screenshots?|images?|diagrams?|pictures?|photos?|notes?|reports?|drafts?)'
+    bound=re.search(r'\b(?:my|our|this|that|the|both|each|all|these|those)\s+(?:[\w-]+\s+){0,3}'+nouns+r'\b|\b(?:uploaded|attached)\s+(?:[\w-]+\s+){0,2}(?:'+nouns+r'|config\w*)\b',prompt,re.I)
     editor_bound=bool(re.search(r'\b(?:editor|buffer|selection)\b|\b(?:active|open|unsaved|selected)\s+(?:[\w-]+\s+){0,2}(?:file|code|configuration|section)\b',prompt,re.I))
     if bound and editor_bound and re.search(r'\b(?:active|open|unsaved|selected)\b',bound[0],re.I) and not re.search(r'\b(?:uploaded|attached)\b',prompt,re.I):bound=None
-    deictic=re.search(r'\b(?:read|summari[sz]e|explain|describe|understand)\b.{0,35}\b(?:this|that|these|content inside)\b',prompt,re.I)
+    deictic=re.search(r'\b(?:read|summari[sz]e|explain|describe|understand)\b.{0,35}\b(?:this|that|these|it|content inside)\b',prompt,re.I)
     old=(previous or {}).get('context_coverage',{})
     follow=old.get('routing',{}).get('attachments') and re.search(r'\b(?:page\s+\d+|another page|other page|mentioned|in it|in that|the author|that (?:section|paragraph|diagram)|the (?:first|second|other) (?:file|document|one))\b',prompt,re.I)
     owned_antecedent=bool(any(item.get('id') for item in metadata) or old.get('routing',{}).get('attachments'))
-    return bool(bound or follow or deictic and owned_antecedent and not editor_bound)
+    qualified_read=bool(not editor_bound and re.search(r'\b(?:attached|uploaded)\b',prompt,re.I)
+        and re.search(r'\b(?:read|compare|contrast|review|explain|summari[sz]e|describe)\b',prompt,re.I))
+    return bool(bound or follow or qualified_read or deictic and owned_antecedent and not editor_bound)
 
 
 def editor_source_reference(prompt):
@@ -172,7 +180,7 @@ def editor_source_reference(prompt):
     File identity is independent of how many languages/protocols modify its
     noun. Sentence boundaries prevent this from consuming another instruction.
     """
-    return bool(re.search(r'\b(?:this|that|my|existing|original|current|active|open|unsaved|selected|supplied)\s+(?:[\w-]+\s+){0,12}(?:code|file|buffer|document|draft|configuration|playbook|template|section|function|block|selection)\b|\bthe\s+(?:[\w-]+\s+){0,12}(?:section|stanza|selection)\b|\b(?:in|from|of)\s+(?:the\s+)?(?:editor|buffer|Monaco)\b',prompt,re.I))
+    return bool(re.search(r'\b(?:the|this|my|actual)\s+(?:active\s+)?unsaved\b|\b(?:this|that|my|existing|original|current|active|open|unsaved|selected|supplied)\s+(?:[\w-]+\s+){0,12}(?:code|file|buffer|document|draft|configuration|playbook|template|section|function|block|selection)\b|\bthe\s+(?:[\w-]+\s+){0,12}(?:section|stanza|selection)\b|\b(?:in|from|of)\s+(?:the\s+)?(?:editor|buffer|Monaco)\b',prompt,re.I))
 
 
 def editor_context_requested(prompt,editor,previous=None):
@@ -183,6 +191,8 @@ def editor_context_requested(prompt,editor,previous=None):
     eligible; fresh code examples and ordinary questions do not inherit a tab.
     """
     if not editor:return False
+    from llm.gateway_references import main_request_text
+    prompt=main_request_text(prompt)
     path=getattr(editor,'path','')
     if path and (path.casefold() in prompt.casefold() or Path(path).name.casefold() in prompt.casefold()):return True
     if editor_selection_requested(prompt):return True

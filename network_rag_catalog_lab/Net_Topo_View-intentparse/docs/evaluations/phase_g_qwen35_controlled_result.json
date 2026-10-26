@@ -1,0 +1,122 @@
+{
+  "timestamp": "2026-10-25T02:02:17.586756+00:00",
+  "decision": "RETAIN_BASELINE",
+  "application_integration": "NOT_ADMITTED_NO_APPLICATION_CODE_CHANGES",
+  "phase_acceptance": "NONE",
+  "head": "93f5f453ef4c33708dce4e687598766d0a6a6b1b",
+  "matched_original_freeze_sha256": "3ca285d3554c9281af778d636dac7669283b2cb4d89f0630a99b59eb62cdf7e8",
+  "supplement_sha256": "babe412b41385099c5ec4f3f2b7d08b084c3aeeb5f44717c1c90e843f0f3e38e",
+  "conditions": {
+    "original": 12,
+    "supplement": 1,
+    "missing_evidence_oracle_defect": 1,
+    "validated_complete_evidence_or_valid_routing_conditions": 12
+  },
+  "scores": {
+    "baseline": {
+      "valid_condition_adequacy": "3/12",
+      "valid_answer_adequacy": "2/10",
+      "strict_causal_adequacy": "0/3",
+      "routing_planning_within_original_allowance": "1/2"
+    },
+    "qwen35_thinking_off": {
+      "valid_condition_adequacy": "3/12",
+      "valid_answer_adequacy": "2/10",
+      "strict_causal_adequacy": "0/3",
+      "routing_planning_within_original_allowance": "1/2"
+    }
+  },
+  "arms": {
+    "baseline512": {
+      "calls": 13,
+      "median_inference_seconds": 11.44,
+      "median_valid_condition_seconds": 11.39,
+      "provider_timeouts": [],
+      "token_limit_endings": [
+        "M02"
+      ],
+      "schema_valid": 9,
+      "schema_calls": 10,
+      "thinking_output_characters": 0,
+      "final_answer_count": 13
+    },
+    "qwen35_off512": {
+      "calls": 13,
+      "median_inference_seconds": 35.28,
+      "median_valid_condition_seconds": 39.56,
+      "provider_timeouts": [
+        "M02",
+        "M11"
+      ],
+      "token_limit_endings": [],
+      "schema_valid": 8,
+      "schema_calls": 10,
+      "thinking_output_characters": 0,
+      "final_answer_count": 11
+    },
+    "qwen35_on512": {
+      "calls": 3,
+      "median_inference_seconds": 49.29,
+      "median_valid_condition_seconds": 49.29,
+      "provider_timeouts": [],
+      "token_limit_endings": [
+        "M01",
+        "M05",
+        "M06"
+      ],
+      "schema_valid": 0,
+      "schema_calls": 3,
+      "thinking_output_characters": 7540,
+      "final_answer_count": 0
+    },
+    "qwen35_on1536": {
+      "calls": 1,
+      "median_inference_seconds": 119.51,
+      "median_valid_condition_seconds": 119.51,
+      "provider_timeouts": [
+        "M06"
+      ],
+      "token_limit_endings": [],
+      "schema_valid": 0,
+      "schema_calls": 1,
+      "thinking_output_characters": 5657,
+      "final_answer_count": 0
+    },
+    "qwen35_off512_isolated": {
+      "calls": 1,
+      "median_inference_seconds": 34.38,
+      "median_valid_condition_seconds": 34.38,
+      "provider_timeouts": [],
+      "token_limit_endings": [],
+      "schema_valid": 1,
+      "schema_calls": 1,
+      "thinking_output_characters": 0,
+      "final_answer_count": 1
+    },
+    "qwen35_off512_plan60": {
+      "calls": 1,
+      "median_inference_seconds": 7.16,
+      "median_valid_condition_seconds": 7.16,
+      "provider_timeouts": [],
+      "token_limit_endings": [],
+      "schema_valid": 1,
+      "schema_calls": 1,
+      "thinking_output_characters": 0,
+      "final_answer_count": 1
+    }
+  },
+  "total_generative_calls": 32,
+  "regressions": {
+    "suite": "backend/tests/test_phase_g_model_diagnostics.py",
+    "passed": 3,
+    "seconds": 1.06,
+    "intelligence_credit": false
+  },
+  "gateway_end_to_end": "NOT_RUN_CONDITIONAL_ADMISSION_FAILED; isolated inference timings are not user-request timings",
+  "browser": "NOT_RUN_NO_INTEGRATED_PROFILE",
+  "readers": "Preserved authorized historical packets; no new ordinary or controlled gateway retrieval claimed",
+  "source_defaults": "Unchangedauto currently resolvesqwen3.5following user installation; no applicationmodelsettingchanged. Explicitbaseline selection recommended.",
+  "thinking_counts": "Separate output fields retained; missing per-fieldtoken counters not fabricated",
+  "rollback": "No runtime/data/release rollback needed. Do not reset existing dirty tree; evaluator is opt-in and original records remain.",
+  "stop": "Bounded experiment finished; wait for user authorization before any further implementation."
+}

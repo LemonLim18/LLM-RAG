@@ -557,11 +557,18 @@ class ScenarioManager:
             # The same central snapshot supplies every input. Derived assessments
             # retain model-source identities, not extra independent observations.
             for flow in model.flows:
-                if flow.source_device_id not in ids or flow.destination_device_id not in ids:continue
                 result=assess_flow(s,flow)
+                # Flow ownership is not its relationship scope. Retain either
+                # endpoint and devices actually reached by the bounded model,
+                # including a transit where lookup/ingress fails before a hop
+                # can be recorded. Planned adjacency alone is not traversal.
+                scope={flow.source_device_id,flow.destination_device_id}
+                for direction in ['forward','return']:
+                    scope.update((result.get(direction) or {}).get('encountered_device_ids',[]))
+                if not scope.intersection(ids):continue
                 source_rows.append({'id':'model-flow-'+flow.id,'device_id':flow.source_device_id,'interface_id':None,
                     'timestamp':model.observed_at,'kind':'forwarding_assessment','source':'declared_ipv4_observation_model',
-                    'current':True,'depends_on':[],'values':{'flow':flow.model_dump(),'assessment':result,'derived':True,
+                    'current':True,'depends_on':[],'values':{'flow':flow.model_dump(),'assessment':result,'derived':True,'scope_device_refs':sorted(scope),
                     'model_source_ids':[r.id for t in model.tables for r in t.routes],'source_category':'simulation'}})
             for finding in protocol_findings(model):
                 if not set(finding['devices']).intersection(ids):continue

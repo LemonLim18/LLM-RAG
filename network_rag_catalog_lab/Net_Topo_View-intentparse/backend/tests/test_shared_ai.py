@@ -197,10 +197,12 @@ class SharedAITests(unittest.IsolatedAsyncioTestCase):
         session=self.gateway.store.create('alice','studio')['id']
         path='playbooks/registry_edit.py'
         AuthoringStore(self.db).mutate('ansible',path,'x = 1\n','alice','create',expected_revision=0)
-        body=TurnRequest(request_id=uuid4(),prompt='Edit x to 2',editor=dict(document_id=path,path=path,content='x = 1\n# unsaved\n',
+        body=TurnRequest(request_id=uuid4(),prompt='Edit x to 2 in the active unsaved file',editor=dict(document_id=path,path=path,content='x = 1\n# unsaved\n',
             language='python',model_id='m',model_version=2,buffer_epoch=1,saved_revision=1,is_dirty=True,read_only=False))
-        with patch('local_providers.chat.generate',AsyncMock(side_effect=[('{"intent":"edit"}','test'),
-            ('{"replacements":[{"old_text":"x = 1","new_text":"x = 2"}]}','test')])):
+        # This explicit edit is routed deterministically; the first inference
+        # is the exact-base patch, not a second intent-classification response.
+        with patch('local_providers.chat.generate',AsyncMock(return_value=
+            ('{"replacements":[{"old_text":"x = 1","new_text":"x = 2"}]}','test'))):
             response=await self.gateway.turn(session,self.user,body)
         self.assertEqual(response.kind,'edit_proposal');self.assertIn('# unsaved',response.proposal['suggested'])
         self.assertEqual(AuthoringStore(self.db).read('ansible',path),'x = 1\n')

@@ -24,7 +24,8 @@ def interface_subnet(interface):
 
 def inventory_answer(data, attrs=(), interface_refs=()):
     devices=data.get('devices',[])
-    if 'interfaces' in attrs or 'prefixes' in attrs or interface_refs:
+    all_addresses='addresses' in attrs and 'management_address' not in attrs
+    if 'interfaces' in attrs or 'prefixes' in attrs or interface_refs or all_addresses:
         ports=[(d,i) for d in devices for i in d['interfaces'] if not interface_refs or str(i['id']) in interface_refs]
         answer=('**'+cell(devices[0]['hostname'])+'** has '+str(len(ports))+' matching recorded interface(s):\n\n' if len(devices)==1 else 'Recorded interfaces:\n\n')
         if len(ports)<=8:
@@ -40,7 +41,7 @@ def inventory_answer(data, attrs=(), interface_refs=()):
             answer+=table(['Device','Interface','Subnet' if 'prefixes' in attrs else 'IP address','Type'],rows[:100])
         rows=ports
         if len(rows)>100:answer+='\n\nOnly the first 100 interfaces are shown.'
-        if 'management_address' in attrs:
+        if 'management_address' in attrs or all_addresses and not interface_refs:
             answer+='\n\n'+ '\n'.join('**'+cell(d['hostname'])+' management IP:** `'+cell(d.get('management_ip'))+'`.' for d in devices)
             answer+=' These are the device management records, distinct from the interface address records above.'
     else:

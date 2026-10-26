@@ -263,6 +263,21 @@ def curated_references(row,inventory,prompts,expand):
     return [d['hostname'] for d in inventory['devices'] if any(d['hostname'].casefold() in p.casefold() for p in prompts)]
 
 
+def provider_request_trace(body):
+    """Keep exact controlled inference settings for reproducible comparisons.
+
+    Headers/credentials are never captured. The evaluator already archives its
+    own sanitized fixture messages; schema-versus-JSON mode must not collapse
+    to a boolean, nor may a later replay silently use different options.
+    """
+    from copy import deepcopy
+    return {'model':body.get('model'),'options':deepcopy(body.get('options')),
+        'structured':bool(body.get('format')),'format':deepcopy(body.get('format')),
+        'inference_parameters':deepcopy({k:v for k,v in body.items() if k!='messages'}),
+        'input_characters':sum(len(m.get('content','')) for m in body.get('messages',[])),
+        'messages':deepcopy(body.get('messages',[]))}
+
+
 async def curated_model_answer(model,prompt,documents,context,evidence,assessment,history):
     """M1 is raw model plus curated evidence: no verifier repair or fallback."""
     from llm.gateway_routing import readable_document
@@ -413,10 +428,7 @@ async def evaluate(args):
                     async def counted_send(http,request,*a,**kw):
                         entry=None;call_started=time.monotonic()
                         if request.url.path in {'/api/chat','/api/embed','/api/generate','/api/embeddings'}:
-                            body=json.loads(request.content);entry={'endpoint':request.url.path,'model':body.get('model'),
-                                'options':body.get('options'),'structured':bool(body.get('format')),
-                                'input_characters':sum(len(m.get('content','')) for m in body.get('messages',[])),
-                                'messages':body.get('messages',[])};calls.append(entry)
+                            body=json.loads(request.content);entry={'endpoint':request.url.path,**provider_request_trace(body)};calls.append(entry)
                         try:
                             response=await original_send(http,request,*a,**kw)
                             if entry is not None:

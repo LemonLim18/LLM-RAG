@@ -13,9 +13,9 @@ def requested_program_artifact(prompt):
     their schemas. Existing-buffer requests retain the reviewed editing lane.
     """
     request=re.match(r'\s*(?:please\s+)?(?:(?:can|could|would)\s+you\s+)?(?:write|create|generate|produce|build|draft)\b(.+)',prompt,re.I|re.S)
-    if not request:return False
-    subject=request[1].split(';',1)[0][:240]
+    subject=(request[1] if request else prompt).split(';',1)[0][:240]
     if re.search(r'\b(?:active|current|open|unsaved|selected|existing|this|that)\s+(?:[\w-]+\s+){0,2}(?:file|buffer|code|script|program|function|document|template)\b|\b(?:editor|Monaco)\b',subject,re.I):return False
+    if re.search(r'\b(?:in|from|of)\s+[`\"\']?[\w./\\-]+\.[a-z]{2,8}\b',subject,re.I):return False
     language=re.search(r'\b(?:Python|JavaScript|TypeScript|Java|Rust|Ruby|PowerShell|Bash|SQL|JSON)\b|(?<!\w)C\+\+(?!\w)',subject,re.I)
     artifact=re.search(r'\b(?:function|script|program|class|module|snippet|code|example|query|object)\b',subject,re.I)
     return bool(language and artifact)
@@ -34,6 +34,20 @@ def requested_authoring_artifact(prompt):
     return 'native' if native else 'playbook' if playbook else None
 
 
+def main_request_text(prompt):
+    """An incidental availability clause supplies context, not a read action."""
+    text=re.sub(r'^\s*with\b[^,;\n]{0,200}\b(?:attached|uploaded|available|open)\s*[,;]\s*','',prompt,flags=re.I)
+    # Remove an independent passive prohibition, not the positive clause beside
+    # it. Keep separators while examining clauses so addresses and filenames
+    # round-trip unchanged; only a sentence-ending period is a boundary.
+    parts=re.split(r'([;,\n!?]|\.(?=\s|$)|\b(?:but|and|then|instead)\b)',text,flags=re.I)
+    for index in range(0,len(parts),2):
+        if re.search(r'\b(?:need|should|must)\s+not\s+be\s+(?:read|consulted)\b',parts[index],re.I):
+            parts[index]=''
+    text=''.join(parts).lstrip(' \t\r\n.,;!?')
+    return re.sub(r'^(?:(?:but|and|then|instead)\s+)+','',text,flags=re.I).strip()
+
+
 def read_intent_text(prompt):
     """Exclude explicit effect/source prohibitions from source selection only.
 
@@ -41,8 +55,8 @@ def read_intent_text(prompt):
     answers. A prohibited configuration write is not a request to read configs.
     Positive clauses after punctuation/contrast remain available to the router.
     """
-    return re.sub(r'\b(?:do not|don.t|never)\s+(?:generat\w*|creat\w*|modif\w*|edit\w*|chang\w*|sav\w*|overwrit\w*|deploy\w*|execut\w*|publish\w*|substitut\w*|infer|assume|use|read|consult|include|retrieve)\b'
-        r'(?:(?!\b(?:but|instead|rather|then)\b)[^.!?;,\n]){0,300}', '',prompt,flags=re.I)
+    return re.sub(r'\b(?:do not|don.t|never)\s+(?:generat\w*|creat\w*|modif\w*|edit\w*|chang\w*|sav\w*|overwrit\w*|deploy\w*|execut\w*|collect\w*|publish\w*|substitut\w*|infer|assume|use|read|consult|include|retrieve|explain|interpret|compare|summari[sz]e)\b'
+        r'(?:(?!\b(?:but|instead|rather|then)\b)[^.!?;,\n]){0,300}', '',main_request_text(prompt),flags=re.I)
 
 
 def read_only_request(prompt):
@@ -61,6 +75,12 @@ def relational_read(prompt,response_kind='direct'):
     """Direct attribute projections cannot fulfill comparisons/explanations."""
     return response_kind in {'explanation','comparison','investigation'} or bool(re.search(
         r'\b(?:compar\w*|contrast\w*|distinguish\w*|explain\w*|interpret\w*|difference|significance|why)\b',prompt,re.I))
+
+
+def record_only_request(prompt,response_kind='direct'):
+    """A quotation clause must not erase a compound interpretation obligation."""
+    return (not relational_read(read_intent_text(prompt),response_kind)
+            and bool(re.search(r'\b(show|quote|display)\b.*\b(?:configuration|config|logs|records)\b',prompt,re.I)))
 
 
 def previous_context_reference(previous):
@@ -120,13 +140,13 @@ def configuration_record_request(prompt):
     Merely asking for current protocol peers or interface state does not.
     This is a minimum source constraint, not operation recognition.
     """
-    return bool(re.search(r'\b(?:stored|saved|running|current|backed.up)\b[^.;?!\n]{0,65}\b(?:settings|commands|configurations?|configs?|stanzas?|sections?)\b',read_intent_text(prompt),re.I))
+    return bool(re.search(r'\b(?:stored|saved|running|current|backed.up)\b[^.;?!\n]{0,65}\b(?:settings|commands?|configurations?|configs?|stanzas?|sections?)\b',read_intent_text(prompt),re.I))
 
 
 def attributes(prompt):
     result=[]
-    for name,pattern in [('interfaces',r'\b(interfaces?|ports?)\b'),
-        ('management_address',r'\b(?:management|mgmt)\s+(?:IPs?|addresses?)\b'),
+    for name,pattern in [('interfaces',r'\b(interfaces?|ports?)\b|\b(?:routed|all|every)\s+(?:IP(?:s|\s+addresses?)?|addresses?)\b'),
+        ('management_address',r'\b(?:management|mgmt)\s+(?:IPs?|addresses?|endpoints?)\b'),
         ('prefixes',r'\b(subnets?|prefixes|prefix|masks?)\b'),
         ('addresses',r'\b(ip|ips|addresses?|addressing)\b'),('vendor',r'\bvendors?\b'),
         ('model',r'\bmodels?\b'),('os_version',r'\b(versions?|os|firmware)\b|\b(?:software|operating system)\s+release\b'),
@@ -191,8 +211,9 @@ def resolve_read(prompt, previous, inventory):
     attrs=attributes(prompt)
     material=bool(re.search(r'\b(pdf|document|attachments?|uploaded|attached|screenshot|page\s+\d+|open file|active|editor|buffer|template)\b',prompt,re.I))
     write=bool(requested_authoring_artifact(prompt) or re.search(r'\b(generate|create|configure|change|modify|edit|replace|refactor|add|remove|delete|set|enable|disable)\b',prompt,re.I))
-    read=bool(re.search(r'\b(what|where|which|show|quote|list|read|retrieve|tell|inspect|give|display|check|fetch|get|find|identify|determine|assess|evaluate|why|explain|describe|details|information|records|are|is|do|does|can|how many|investigate|diagnose|troubleshoot)\b',prompt,re.I))
-    dependent=bool(re.search(r'\b(its|their|that|those|these|they|them|first|second|third|last|other|same|previous|sure|certain|verify|again|instead|it)\b|\bwhich are\b',prompt,re.I))
+    read=bool(re.search(r'\b(what|where|which|show|quote|list|read|retrieve|tell|inspect|give|display|check|fetch|get|find|identify|determine|assess|evaluate|why|explain|describe|compare|contrast|reconcile|details|information|records|are|is|do|does|can|how many|investigate|diagnose|troubleshoot)\b',prompt,re.I))
+    dependent=bool(re.search(r'\b(its|their|this|that|those|these|they|them|first|second|third|last|other|same|previous|sure|certain|verify|again|instead|it)\b|\bwhich are\b',prompt,re.I)
+        or re.search(r'\b(?:just|previously|already)\s+(?:read|retrieved|discussed|reviewed)\b',prompt,re.I))
     old=(previous or {}).get('context_coverage',{}).get('retrieval',{})
     old_route=(previous or {}).get('context_coverage',{}).get('routing',{})
     from development.source_registry import explicit_read_sources,BY_KEY,reader_domains
@@ -240,6 +261,7 @@ def resolve_read(prompt, previous, inventory):
         return {'question':'That interface is not recorded for the selected device. Which stored interface do you mean?'}
     if dependent and not refs and old.get('domains'):
         entities=old.get('entities',[])
+        aggregate_reference=bool(re.search(r'\b(?:that|this|previous|same)\s+(?:[\w-]+\s+){0,2}(?:trace|result|assessment|comparison|investigation|evidence|conclusion)\b',prompt,re.I))
         ordinal=re.search(r'\b(first|second|third|last)\b',prompt,re.I)
         selected=None
         if ordinal:
@@ -261,6 +283,11 @@ def resolve_read(prompt, previous, inventory):
             # Plural references retain the owned list. Asking about "those
             # ports" is not an ambiguous request to select a single interface.
             selected=entities
+        elif aggregate_reference:
+            # The referent is the previous aggregate result, not a request to
+            # select one of its devices. Preserve the owned entity set and let
+            # fresh readers answer the requested attribute across that scope.
+            selected=entities
         elif attrs or re.search(r'\b(it|its)\b',prompt,re.I):
             if len(entities)>1:return {'question':'Which device or interface in the previous result do you mean?'}
             selected=entities
@@ -273,8 +300,18 @@ def resolve_read(prompt, previous, inventory):
         provenance=bool(re.search(r'\b(taken from|come from|came from|guessed|assumed|invented|source of|derived from|based on)\b',prompt,re.I))
         same_source=bool(re.search(r'\bsame\s+(?:(?:authored|recorded|selected|previous)\s+)?(?:sources?|observations?|data)\b',prompt,re.I))
         comparison=bool(re.search(r'\b(?:compar\w*|contrast\w*|reconcil\w*)\b',prompt,re.I))
+        from llm.gateway_network import explicit_configuration_scope,explicit_topology_scope
+        explicit_switch=bool(explicit_sources or attrs or explicit_configuration_scope(prompt)!='auto'
+            or explicit_topology_scope(prompt)!='auto'
+            or re.search(r'\b(?:only|instead|switch|rather than|forget|ignore)\b',prompt,re.I))
+        # A dependent result refers to its evidence dependencies, not just its
+        # device. A new planner hint cannot silently discard the old operands.
+        # Explicit source/time/attribute switches still control the new read.
+        preserve_dependencies=bool(old.get('domains') and (not explicit_switch or aggregate_reference and relational_read(prompt)))
         chosen=old['domains'] if provenance or same_source else domains if domains and domains!=['inventory'] else ['inventory'] if attrs else old['domains']
-        if comparison:
+        if explicit_switch and not attrs and len(chosen)>1 and not re.search(r'\binventory\b',prompt,re.I):
+            chosen=[domain for domain in chosen if domain!='inventory']
+        if comparison or preserve_dependencies:
             # A comparison has two operands. Old source references supply its
             # first operand, not cached observations or assistant-written facts.
             chosen=list(dict.fromkeys(old['domains']+chosen))
@@ -282,7 +319,7 @@ def resolve_read(prompt, previous, inventory):
         if provenance:selected_attrs=list(dict.fromkeys(selected_attrs+['provenance']))
         return {'domains':chosen,'device_refs':refs,'interface_refs':ifaces,
                 'attributes':selected_attrs,'use_history':True,
-                **({'comparison_domains':old['domains']} if comparison else {}),
+                **({'comparison_domains':old['domains']} if comparison or preserve_dependencies else {}),
                 'source_requests':{domain:query for domain,query in source_scope_references(old.get('source_requests')).items() if domain in chosen}}
     # Unresolved document follow-ups reuse only document context, never network
     # subjects from older turns. The router decides their semantic explanation.
@@ -290,7 +327,11 @@ def resolve_read(prompt, previous, inventory):
         return {'documents':True}
     if dependent and not refs and not old:
         entity_reference=re.search(r'\b(?:its|their|(?:that|this|those|these|previous|same|other)\s+(?:devices?|routers?|switches?|interfaces?|ports?))\b',prompt,re.I)
-        if entity_reference or not domains and re.search(r'\b(first|second|third)\b',prompt,re.I):
+        # A possessive inside a general question ("division and its result")
+        # is not an unresolved inventory entity. Require an actual network
+        # attribute/domain or an explicitly qualified device/interface phrase.
+        qualified=re.search(r'\b(?:that|this|those|these|previous|same|other)\s+(?:devices?|routers?|switches?|interfaces?|ports?)\b',prompt,re.I)
+        if entity_reference and (attrs or domains or qualified) or not domains and re.search(r'\b(first|second|third)\b',prompt,re.I):
             return {'question':'Which device, interface or document do you mean?'}
     if refs and old.get('domains') and re.search(r'\bwhat about\b',prompt,re.I) and not attrs and domains==['inventory']:
         return {'domains':old['domains'],'device_refs':refs,'interface_refs':[], 'attributes':old.get('attributes',[]),'use_history':True}

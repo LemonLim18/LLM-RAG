@@ -107,3 +107,38 @@ def test_missing_explicit_editor_source_cannot_receive_a_context_free_factual_an
         surface,None,[],[],inventory=INVENTORY,generate_fn=model))
     assert route.intent=='clarify' and route.planning['mode']=='missing_editor_source'
     assert not model.called and not route.network_domains
+
+
+@pytest.mark.parametrize('question', ['Would this result be explained by the route records?',
+    'Explain this observation using the previous evidence.', 'Does this establish a cause?'])
+def test_demonstrative_followups_rebind_owned_subject_even_if_model_omits_history(question):
+    previous={'context_coverage':{'retrieval':REFERENCE['read']}}
+    model=AsyncMock(return_value=(json.dumps({'intent':'explain','use_history':False,
+        'information_needs':[{'domain':'state','question':'Explain the operational evidence'}]}),'mock'))
+    with patch.dict(os.environ,COGNISHIELD_AI_PLANNING='1'):
+        route=asyncio.run(select_context(question,None,'floating',None,[],[],
+            previous=previous,inventory=INVENTORY,generate_fn=model))
+    assert route.device_refs==['71'] and route.use_history
+    assert route.source_requests['state']['record_kinds']==['interface_state']
+
+
+def test_demonstrative_in_a_new_general_question_does_not_force_a_network_read():
+    previous={'context_coverage':{'retrieval':REFERENCE['read']}}
+    model=AsyncMock(return_value=('{"intent":"answer","information_needs":[],"use_history":false}','mock'))
+    with patch.dict(os.environ,COGNISHIELD_AI_PLANNING='1'):
+        route=asyncio.run(select_context('How does this general sorting algorithm work?',None,
+            'floating',None,[],[],previous=previous,inventory=INVENTORY,generate_fn=model))
+    assert not route.network_domains and not route.use_history
+
+
+@pytest.mark.parametrize('prompt', ['Show the saved configuration and explain its relationship to the peer log.',
+    'Display the records, then compare the values.', 'Quote the logs and interpret their significance.'])
+def test_literal_source_clause_does_not_suppress_compound_synthesis(prompt):
+    from llm.gateway_references import record_only_request
+    assert not record_only_request(prompt)
+
+
+def test_literal_only_reads_and_explicit_model_response_obligations_remain_distinct():
+    from llm.gateway_references import record_only_request
+    assert record_only_request('Show the saved configuration. Do not explain it.')
+    assert not record_only_request('Show the saved configuration.',response_kind='comparison')

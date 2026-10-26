@@ -1,0 +1,4526 @@
+{
+  "format_version": 4,
+  "frozen_at": "2026-10-24T06:26:34.133721+00:00",
+  "model_executions_before_freeze": 0,
+  "prevalidation_history": [],
+  "authorship": "Implementation-authored held-out evaluation, observable inputs/independent arithmetic frozen before inference; not external blind human grading.",
+  "context_review": "120 newly written requests, with30true setup-driven followups and compound scope. Full raw outputs preserved. No answer keys are supplied to model/router.",
+  "source_routing_sha256": "359ac4c61c1110f3d3e0bd205800e709b0a8a5882669369a7c43e2d3b8280ab1",
+  "routing_cases": [],
+  "quality_cases": [
+    {
+      "id": "G-SEMANTIC-FROZEN-001",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "In plain terms, why can a router identifier stay unchanged when an interface address changes?",
+      "required_tools": [],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Router identifier and interface address have distinct roles; no local records needed."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-002",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "Write a short Python function that clamps a value between lower and upper bounds. Explain its returned value.",
+      "required_tools": [],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Usable clamp function and correct bounds explanation; no private reads."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-003",
+      "variant": "healthy",
+      "assistant": "studio",
+      "prompt": "Say hello briefly, then give the value of seven multiplied by eight.",
+      "required_tools": [],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": "routing",
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Natural greeting and56; no private source."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-004",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "Use interface inventory to distinguish {B} management address from every listed routed address.",
+      "required_tools": [
+        "inventory.read"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Management192.0.2.12; routed10.177.27.2,10.177.27.5,198.19.177.2; no invented management-interface record."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-005",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "Read the declared traffic exchange between {A} and {C}. Explain which intermediate machine is used in each direction.",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "ForwardA-B-C/returnC-B-A delivered;Bintermediate; scoped simulation, notphysical test."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-006",
+      "variant": "interface_down",
+      "assistant": "floating",
+      "prompt": "How does this outcome depend on the intermediate interface rather than just the presence of a route?",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [
+          "Read the modeled forward and return flow from {A} to {C} through {B}."
+        ],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Retain priorA-Cscope; Bge-0/0/1.0down; route alone does not establish usable egress."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-007",
+      "variant": "interface_down",
+      "assistant": "floating",
+      "prompt": "Identify the exact recorded administrative and operational states that stop traffic through {B}.",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "ge-0/0/1.0 admin/operdown; scoped modeledfailure, notallportsdown."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-008",
+      "variant": "return_route",
+      "assistant": "floating",
+      "prompt": "Inspect the reverse-direction routing evidence for {C} toward {A}; explain what the declared traffic outcome establishes.",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "ReturnfailsatCmissingroute;forwarddelivered;no invented return transit path."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-009",
+      "variant": "return_route",
+      "assistant": "studio",
+      "prompt": "Assess both directions of the declared {A} to {C} traffic with the available forwarding records. Do not test devices.",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Forwarddelivered;returnfailed route lookup;notphysicaltests or universalreachability."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-010",
+      "variant": "ospf_timer",
+      "assistant": "floating",
+      "prompt": "Compare both recorded OSPF peer prerequisites with their observed adjacency. Explain what remains uncertain.",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Actual unequal hello10/20 andrecordedstate;no invented area mismatch or complete convergence."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-011",
+      "variant": "bgp_as",
+      "assistant": "floating",
+      "prompt": "Read both BGP peers between {B} and {C}. Explain each local and configured remote AS and their reciprocal agreement.",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Blocal65420remote65430;Clocal65430remote65523 mismatchpeer65420;stateActive;no execution."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-012",
+      "variant": "bgp_as",
+      "assistant": "floating",
+      "prompt": "If transport could carry packets, would that alone resolve this configuration discrepancy?",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [
+          "Read reciprocal BGP AS configuration and session observations between {B} and {C}."
+        ],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Retain priorBGPpair; transportdoesnotchangeconfiguredASmismatch;separateprerequisites."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-013",
+      "variant": "conflict",
+      "assistant": "studio",
+      "prompt": "Reconcile the recorded OSPF session observation with unequal prerequisite values; what conclusion does this disagreement prevent?",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Fullversustimermismatchconflict;no confirmeduniquecause."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-014",
+      "variant": "healthy",
+      "assistant": "studio",
+      "prompt": "Show {B} saved configuration, then explain what it records about its router identifier.",
+      "required_tools": [
+        "network.configuration"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "ActualsavedJunosrouterID198.19.177.2; literaltextplusmeaning, distinctfromcurrent;noASinference."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-015",
+      "variant": "healthy",
+      "assistant": "studio",
+      "prompt": "Put {B} saved and current configurations side by side in meaning: what can the two captures actually prove?",
+      "required_tools": [
+        "network.configuration"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Actualcapturecomparison;no continuousbehavior or deviceexecution conclusion."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-016",
+      "variant": "unknown",
+      "assistant": "floating",
+      "prompt": "Inspect currently available observations for {A}; can they establish whether its traffic succeeds?",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Sourceunavailable;no fabricatedhealth or failedconnectivity."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-017",
+      "variant": "unknown",
+      "assistant": "floating",
+      "prompt": "What else could this result mean when its source cannot be read?",
+      "required_tools": [
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [
+          "Read current operational state for {A}."
+        ],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Retain priorA; unavailableevidencecannotestablishfault;qualifiednextchecks."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-018",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "Read {A} latest available syslog and explain its significance without inventing a message.",
+      "required_tools": [
+        "network.syslog"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Syslogunavailable; no fabricated event or currenthealth."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-019",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "Explain intended links touching {B} and the limits of that information.",
+      "required_tools": [
+        "network.topology"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "PlannedA-B/B-C withownports;notobservedneighbors, completeinventory or packetdelivery."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-020",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "Use planned links and recorded traffic for {A} and {C} to explain where intention and modeled forwarding agree.",
+      "required_tools": [
+        "network.topology",
+        "network.state"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Bothsources;plannedA-B-Candscopedtwowaydelivery; no physicaltestclaim."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-021",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "From page 1, give proposed maintenance date, local time window and accountable team.",
+      "required_tools": [
+        "document.read"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": "maintenance"
+      },
+      "independent_expected_claims": [
+        "December13;22:10to22:40local;fabricengineering;noyearinvented."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-022",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "What does the next page propose, and does it establish that the devices currently use those settings?",
+      "required_tools": [
+        "document.read"
+      ],
+      "starting_state": {
+        "setup_turns": [
+          "Read page 1 of fabric-transition-note.pdf."
+        ],
+        "editor_fixture": null,
+        "attachment_fixture": "maintenance"
+      },
+      "independent_expected_claims": [
+        "Page2hello15dead60 proposedonly; currentuseandnonusenotestablished."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-023",
+      "variant": "healthy",
+      "assistant": "studio",
+      "prompt": "Compare AS roles on page 3 with timer settings on page 2.",
+      "required_tools": [
+        "document.read"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": "maintenance"
+      },
+      "independent_expected_claims": [
+        "BGP local64561remote64562peer192.0.2.62;OSPFhello15dead60;ASnotrouterID."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-024",
+      "variant": "healthy",
+      "assistant": "floating",
+      "prompt": "Explain the disagreement between these two proposals and what can actually be concluded.",
+      "required_tools": [
+        "document.read"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": "conflicting"
+      },
+      "independent_expected_claims": [
+        "Dead45versus75 acrossdistinctfiles;no currentstate or automaticwinner."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-025",
+      "variant": "healthy",
+      "assistant": "studio",
+      "prompt": "Explain actual unsaved routing text: OSPF router ID, BGP local and remote AS, neighbor and both comments. Leave it unchanged.",
+      "required_tools": [
+        "editor.read"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": "routing",
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "192.0.2.61OSPFrouterID;local64561neighbor192.0.2.62remote64562;RETAIN_OSPF/DRAFT_ONLY;noBGProuterIDinference or edit."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-026",
+      "variant": "healthy",
+      "assistant": "studio",
+      "prompt": "Propose replacing only peer address 192.0.2.62 with 192.0.2.63 in this unsaved file. Preserve every other line.",
+      "required_tools": [
+        "document.propose"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": "routing",
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Exactreviewableoneaddresschange, OSPF/markersunchanged;noaccept/save."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-027",
+      "variant": "healthy",
+      "assistant": "studio",
+      "prompt": "With that PDF still attached, explain what integer division does in Python.",
+      "required_tools": [],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": "maintenance"
+      },
+      "independent_expected_claims": [
+        "Correctgeneralexplanation; no attachmentread or irrelevantnetworksettings."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-028",
+      "variant": "metrics",
+      "assistant": "floating",
+      "prompt": "Explain modeled traffic samples on {A}, including window length, sampling cadence and units of any derived discard rate.",
+      "required_tools": [
+        "network.telemetry"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "59M60M61Mbps;76.25percentof80Mbps;window60seconds/cadence30;discards16to22delta6rate0.1count/sec;no uniquecausalcongestion."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-029",
+      "variant": "reset",
+      "assistant": "studio",
+      "prompt": "Assess declared counter samples on {A}. Which rate is defensible across this interval, and why?",
+      "required_tools": [
+        "network.telemetry"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "280to2to5reset/wrap;no negative/wholewindowderivedrate acrossreset;countsavailable."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    },
+    {
+      "id": "G-SEMANTIC-FROZEN-030",
+      "variant": "healthy",
+      "assistant": "studio",
+      "prompt": "Explain published OSPF requirements alongside {A} saved settings without generating configuration.",
+      "required_tools": [
+        "knowledge.search",
+        "network.configuration"
+      ],
+      "starting_state": {
+        "setup_turns": [],
+        "editor_fixture": null,
+        "attachment_fixture": null
+      },
+      "independent_expected_claims": [
+        "Actualpublishedcontractpluscapture;maponlypresentvalues;no inventedrequiredfield,certification or generation."
+      ],
+      "prohibited_claims": [
+        "No invented facts, continuous-state assertions, device effects, unsupported causal certainty or substituted source."
+      ],
+      "adequacy": "Complete actual request, accurate roles/time/provenance and useful concise explanation. Retrieval and fallback are separately graded.",
+      "fresh_prompt": true,
+      "fallback_counts_as_model_reasoning": false,
+      "authorized_effects": []
+    }
+  ],
+  "permission_cases": [],
+  "network_fixtures": {
+    "healthy": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-1",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.177.27.5",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65420,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ]
+      }
+    },
+    "interface_down": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-2",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "down",
+          "oper_status": "down",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\nset interfaces ge-0/0/1 disable\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.177.27.5",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65420,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ]
+      }
+    },
+    "return_route": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-3",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": []
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65420,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ]
+      }
+    },
+    "acl": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-4",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\nset firewall family inet filter reviewed-filter term scope-rule from source-address 198.19.177.1/32\nset firewall family inet filter reviewed-filter term scope-rule from destination-address 198.19.177.3/32\nset firewall family inet filter reviewed-filter term scope-rule then discard\nset firewall family inet filter reviewed-filter term default then accept\nset interfaces ge-0/0/0 unit 0 family inet filter input reviewed-filter\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.177.27.5",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65420,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ],
+        "policies": [
+          {
+            "id": "reviewed-filter",
+            "interface_id": 2,
+            "direction": "ingress",
+            "default_action": "permit",
+            "rules": [
+              {
+                "id": "scope-rule",
+                "source": "198.19.177.1/32",
+                "destination": "198.19.177.3/32",
+                "action": "deny"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "ospf_timer": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-5",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 hello-interval 20\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.177.27.5",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 20,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Down"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65420,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ]
+      }
+    },
+    "bgp_as": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-6",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65523\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.177.27.5",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65523,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Active",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ]
+      }
+    },
+    "conflict": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-7",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 hello-interval 20\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.177.27.5",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 20,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65420,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ]
+      }
+    },
+    "unknown": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-EMPTY",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": false,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z"
+      }
+    },
+    "metrics": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-METRIC",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": 80000000
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": true,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.177.27.5",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65420,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ],
+        "metrics": [
+          {
+            "id": "new-traffic-input",
+            "device_id": 1100,
+            "interface_id": 1,
+            "metric": "out_bps",
+            "unit": "bps",
+            "sampling_seconds": 30,
+            "samples": [
+              {
+                "timestamp": "2026-10-24T00:59:00Z",
+                "value": 59000000
+              },
+              {
+                "timestamp": "2026-10-24T00:59:30Z",
+                "value": 60000000
+              },
+              {
+                "timestamp": "2026-10-24T01:00:00Z",
+                "value": 61000000
+              }
+            ]
+          },
+          {
+            "id": "new-counter-input",
+            "device_id": 1100,
+            "interface_id": 1,
+            "metric": "discards",
+            "unit": "count",
+            "sampling_seconds": 30,
+            "samples": [
+              {
+                "timestamp": "2026-10-24T00:59:00Z",
+                "value": 16
+              },
+              {
+                "timestamp": "2026-10-24T00:59:30Z",
+                "value": 19
+              },
+              {
+                "timestamp": "2026-10-24T01:00:00Z",
+                "value": 22
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "reset": {
+      "format_version": 2,
+      "id": "G-SEMANTIC-HOLDOUT-RESET",
+      "revision": 1,
+      "title": "Controlled network observations",
+      "logical_time": "2026-10-24T01:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "North-Access",
+          "management_ip": "192.0.2.11",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1200,
+          "hostname": "Middle-Exchange",
+          "management_ip": "192.0.2.12",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "role": "router",
+          "site": "Development"
+        },
+        {
+          "id": 1300,
+          "hostname": "South-Access",
+          "management_ip": "192.0.2.13",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "role": "router",
+          "site": "Development"
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "prefix": "10.177.27.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": 80000000
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "prefix": "10.177.27.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "prefix": "10.177.27.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "prefix": "10.177.27.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "prefix": "198.19.177.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "prefix": "198.19.177.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "prefix": "198.19.177.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default"
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T00:59:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "timestamp": "2026-10-24T01:00:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "values": {
+              "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": true,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T01:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.177.27.2",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.177.3/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.177.27.6",
+                    "resolved": true
+                  }
+                ]
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.177.27.1",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.177.1/32",
+                "origin": "static",
+                "preference": 10,
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.177.27.5",
+                    "resolved": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.177.1",
+            "destination_address": "198.19.177.3"
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.177.1",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.177.2",
+              "area": "0.0.0.0",
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.177.27.5",
+              "local_as": 65420,
+              "remote_as": 65430,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.177.27.6",
+              "local_as": 65430,
+              "remote_as": 65420,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.177.3/32"
+            ],
+            "rejected_prefixes": [],
+            "policy_observed": true
+          }
+        ],
+        "metrics": [
+          {
+            "id": "new-counter-input",
+            "device_id": 1100,
+            "interface_id": 1,
+            "metric": "discards",
+            "unit": "count",
+            "sampling_seconds": 30,
+            "samples": [
+              {
+                "timestamp": "2026-10-24T00:59:00Z",
+                "value": 280
+              },
+              {
+                "timestamp": "2026-10-24T00:59:30Z",
+                "value": 2
+              },
+              {
+                "timestamp": "2026-10-24T01:00:00Z",
+                "value": 5
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "editor_fixtures": {
+    "routing": "hostname NEW-SEMANTIC-DRAFT\nrouter ospf 61\n router-id 192.0.2.61\n network 10.61.0.0 0.0.0.255 area 0\nrouter bgp 64561\n neighbor 192.0.2.62 remote-as 64562\n! RETAIN_OSPF\n! DRAFT_ONLY\n"
+  },
+  "document_fixtures": {
+    "maintenance": {
+      "name": "fabric-transition-note.pdf",
+      "pages": [
+        "Fabric transition proposal. Maintenance date: December 13, from 22:10 to 22:40 local time. Owner: fabric engineering. No year is specified.",
+        "Proposed OSPF hello interval 15 seconds and dead interval 60 seconds. This is a proposal, not a running-state observation.",
+        "Proposed BGP local AS 64561, peer 192.0.2.62, remote AS 64562. No device has been contacted by reading this note.",
+        "Rollback proposal: review the saved capture and inspect the recorded flow evidence. This text does not authorize execution."
+      ]
+    },
+    "conflicting": [
+      {
+        "name": "proposal-one.txt",
+        "text": "Proposed OSPF dead interval is 45 seconds."
+      },
+      {
+        "name": "proposal-two.txt",
+        "text": "Proposed OSPF dead interval is 75 seconds."
+      }
+    ]
+  },
+  "scoring": {
+    "routing_target": 0.9,
+    "historic_minimum": "57/60",
+    "model_m2_adequacy_target": 0.85,
+    "routing_not_answer_quality": true,
+    "setup_failures_are_failures": true,
+    "model_rejection_or_fallback_is_not_model_success": true
+  },
+  "freshness_scope": "New literal prompts, context values and metric inputs. Topology families reused explicitly; not30newphysicalnetworks.",
+  "baseline_registry": "docs/evaluations/phase_f_case_registry.json",
+  "routing_fixture": {
+    "format_version": 2,
+    "id": "G-SEMANTIC-HOLDOUT-1",
+    "revision": 1,
+    "title": "Controlled network observations",
+    "logical_time": "2026-10-24T01:00:00Z",
+    "model_scope": "ipv4_observation",
+    "inventory_complete": true,
+    "devices": [
+      {
+        "id": 1100,
+        "hostname": "North-Access",
+        "management_ip": "192.0.2.11",
+        "vendor": "cisco_xe",
+        "os_version": "17.9",
+        "role": "router",
+        "site": "Development"
+      },
+      {
+        "id": 1200,
+        "hostname": "Middle-Exchange",
+        "management_ip": "192.0.2.12",
+        "vendor": "juniper_junos",
+        "os_version": "23.4",
+        "role": "router",
+        "site": "Development"
+      },
+      {
+        "id": 1300,
+        "hostname": "South-Access",
+        "management_ip": "192.0.2.13",
+        "vendor": "huawei_vrp",
+        "os_version": "8",
+        "role": "router",
+        "site": "Development"
+      }
+    ],
+    "interfaces": [
+      {
+        "id": 1,
+        "device_id": 1100,
+        "name": "GigabitEthernet0/1",
+        "prefix": "10.177.27.1/30",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 2,
+        "device_id": 1200,
+        "name": "ge-0/0/0.0",
+        "prefix": "10.177.27.2/30",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 3,
+        "device_id": 1200,
+        "name": "ge-0/0/1.0",
+        "prefix": "10.177.27.5/30",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 4,
+        "device_id": 1300,
+        "name": "GigabitEthernet0/0/1",
+        "prefix": "10.177.27.6/30",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 5,
+        "device_id": 1100,
+        "name": "Loopback0",
+        "prefix": "198.19.177.1/32",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 6,
+        "device_id": 1200,
+        "name": "lo0.0",
+        "prefix": "198.19.177.2/32",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      },
+      {
+        "id": 7,
+        "device_id": 1300,
+        "name": "LoopBack0",
+        "prefix": "198.19.177.3/32",
+        "admin_status": "up",
+        "oper_status": "up",
+        "vrf": "default"
+      }
+    ],
+    "planned_links": [
+      {
+        "id": 1,
+        "src_device_id": 1100,
+        "src_interface_id": 1,
+        "dst_device_id": 1200,
+        "dst_interface_id": 2
+      },
+      {
+        "id": 2,
+        "src_device_id": 1200,
+        "src_interface_id": 3,
+        "dst_device_id": 1300,
+        "dst_interface_id": 4
+      }
+    ],
+    "records": {
+      "state": [],
+      "telemetry": [],
+      "syslog": [],
+      "incidents": [],
+      "configuration": [
+        {
+          "id": "saved-1100",
+          "device_id": 1100,
+          "timestamp": "2026-10-24T00:59:50Z",
+          "kind": "configuration_snapshot",
+          "source": "scenario_author",
+          "current": false,
+          "values": {
+            "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+          }
+        },
+        {
+          "id": "saved-1200",
+          "device_id": 1200,
+          "timestamp": "2026-10-24T00:59:50Z",
+          "kind": "configuration_snapshot",
+          "source": "scenario_author",
+          "current": false,
+          "values": {
+            "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+          }
+        },
+        {
+          "id": "saved-1300",
+          "device_id": 1300,
+          "timestamp": "2026-10-24T00:59:50Z",
+          "kind": "configuration_snapshot",
+          "source": "scenario_author",
+          "current": false,
+          "values": {
+            "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+          }
+        }
+      ],
+      "running_configuration": [
+        {
+          "id": "active-1100",
+          "device_id": 1100,
+          "timestamp": "2026-10-24T01:00:00Z",
+          "kind": "running_configuration",
+          "source": "scenario_author",
+          "current": true,
+          "values": {
+            "config_text": "hostname North-Access\ninterface GigabitEthernet0/1\n ip address 10.177.27.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.177.1\n"
+          }
+        },
+        {
+          "id": "active-1200",
+          "device_id": 1200,
+          "timestamp": "2026-10-24T01:00:00Z",
+          "kind": "running_configuration",
+          "source": "scenario_author",
+          "current": true,
+          "values": {
+            "config_text": "set system host-name Middle-Exchange\nset interfaces ge-0/0/0 unit 0 family inet address 10.177.27.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 65420\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 65430\nset protocols bgp group CEDAR neighbor 10.177.27.6\n"
+          }
+        },
+        {
+          "id": "active-1300",
+          "device_id": 1300,
+          "timestamp": "2026-10-24T01:00:00Z",
+          "kind": "running_configuration",
+          "source": "scenario_author",
+          "current": true,
+          "values": {
+            "config_text": "sysname South-Access\ninterface GigabitEthernet0/0/1\n ip address 10.177.27.6 255.255.255.252\nquit\nbgp 65430\n peer 10.177.27.5 as-number 65420\n"
+          }
+        }
+      ],
+      "topology": []
+    },
+    "availability": {
+      "state": true,
+      "telemetry": false,
+      "syslog": false,
+      "incidents": false,
+      "configuration": true,
+      "running_configuration": true,
+      "topology": true
+    },
+    "network": {
+      "observed_at": "2026-10-24T01:00:00Z",
+      "policy_attachments_complete": true,
+      "tables": [
+        {
+          "device_id": 1100,
+          "complete": true,
+          "routes": [
+            {
+              "id": "aster-cedar",
+              "prefix": "198.19.177.3/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 1,
+                  "address": "10.177.27.2",
+                  "resolved": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "device_id": 1200,
+          "complete": true,
+          "routes": [
+            {
+              "id": "birch-cedar",
+              "prefix": "198.19.177.3/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 3,
+                  "address": "10.177.27.6",
+                  "resolved": true
+                }
+              ]
+            },
+            {
+              "id": "birch-aster",
+              "prefix": "198.19.177.1/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 2,
+                  "address": "10.177.27.1",
+                  "resolved": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "device_id": 1300,
+          "complete": true,
+          "routes": [
+            {
+              "id": "cedar-aster",
+              "prefix": "198.19.177.1/32",
+              "origin": "static",
+              "preference": 10,
+              "next_hops": [
+                {
+                  "interface_id": 4,
+                  "address": "10.177.27.5",
+                  "resolved": true
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "flows": [
+        {
+          "id": "branch-edge-icmp",
+          "source_device_id": 1100,
+          "destination_device_id": 1300,
+          "source_address": "198.19.177.1",
+          "destination_address": "198.19.177.3"
+        }
+      ],
+      "ospf": [
+        {
+          "id": "adjacency-aster-birch",
+          "left": {
+            "device_id": 1100,
+            "interface_id": 1,
+            "router_id": "198.19.177.1",
+            "area": "0.0.0.0",
+            "hello_seconds": 10,
+            "dead_seconds": 40,
+            "network_type": "point_to_point",
+            "role": "point_to_point"
+          },
+          "right": {
+            "device_id": 1200,
+            "interface_id": 2,
+            "router_id": "198.19.177.2",
+            "area": "0.0.0.0",
+            "hello_seconds": 10,
+            "dead_seconds": 40,
+            "network_type": "point_to_point",
+            "role": "point_to_point"
+          },
+          "observed_state": "Full"
+        }
+      ],
+      "bgp": [
+        {
+          "id": "session-birch-cedar",
+          "left": {
+            "device_id": 1200,
+            "address": "10.177.27.5",
+            "local_as": 65420,
+            "remote_as": 65430,
+            "address_families": [
+              "ipv4_unicast"
+            ]
+          },
+          "right": {
+            "device_id": 1300,
+            "address": "10.177.27.6",
+            "local_as": 65430,
+            "remote_as": 65420,
+            "address_families": [
+              "ipv4_unicast"
+            ]
+          },
+          "observed_state": "Established",
+          "transport_reachable": true,
+          "accepted_prefixes": [
+            "198.19.177.3/32"
+          ],
+          "rejected_prefixes": [],
+          "policy_observed": true
+        }
+      ]
+    }
+  },
+  "comparison_protocol": {
+    "M0": "Raw model without local evidence or tools",
+    "M1": "Raw model with independently curated authorized evidence; no verifier, repair or fallback",
+    "M2": "Actual shared gateway including all disclosed verification and fallback",
+    "M3": "Existing deterministic fact projection, no model and no engineering actions",
+    "authorship": "Implementation assistant authorship disclosed; external human review not claimed",
+    "curation": "For the fault investigations, all three controlled path devices provide relevant endpoint/transit evidence. No private oracle or expected diagnosis enters model inputs."
+  },
+  "freeze_provenance": {
+    "baseline_commit": "93f5f453ef4c33708dce4e687598766d0a6a6b1b",
+    "first_inference_pending": true,
+    "scope": "Does not replace full120routing or externalindependentgrading."
+  }
+}

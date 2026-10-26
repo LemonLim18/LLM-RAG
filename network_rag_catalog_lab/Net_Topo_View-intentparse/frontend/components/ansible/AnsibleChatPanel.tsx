@@ -777,6 +777,8 @@ const AnsibleChatPanel: React.FC<AnsibleChatPanelProps> = ({
   const [sessionsHydrated, setSessionsHydrated] = useState(false);
   const [messages, setMessages] = useState<AnsibleMessage[]>(initialStoredMessages);
   const [input, setInput]               = useState('');
+  const [cloudContext,setCloudContext]=useState<Awaited<ReturnType<typeof aiApi.hybridContext>>|null>(null);
+  useEffect(()=>{if(localChat)void aiApi.hybridContext().then(setCloudContext).catch(()=>setCloudContext(null));},[localChat,currentSessionId]);
   useEffect(() => {
     if (!localChat) return;
     const applyHandoff = () => {
@@ -2468,7 +2470,7 @@ setGeneratingPlaybook(false);
     }
   }, []);
 
-  const handleSend = useCallback(async () => {
+  const handleSend = useCallback(async (cloud=false) => {
     const baseText = input.trim();
     if (!baseText && attachedFiles.length === 0) return;
     if (isGenerating) return;
@@ -2482,9 +2484,15 @@ setGeneratingPlaybook(false);
       try {
         const conversation = await ensureConversation();
         const requestId = uuidv4(); gatewayRequestRef.current = { conversation, request: requestId };
-        const captured = getEditorSnapshot?.();
-        const result = await aiApi.turn(conversation, { request_id: requestId, prompt: question, model: ansibleModel.model || undefined,
-          editor: captured, related_editors:getRelatedEditorSnapshots?.()||[], attachment_ids: attachedFiles.flatMap(f => f.id ? [f.id] : []) }, ac.signal);
+        const captured = cloud ? undefined : getEditorSnapshot?.();
+        const body={request_id:requestId,prompt:question,model:cloud?'qwen2.5:1.5b':ansibleModel.model||undefined,
+          editor:captured,related_editors:cloud?[]:getRelatedEditorSnapshots?.()||[],attachment_ids:attachedFiles.flatMap(f=>f.id?[f.id]:[])};
+        if(cloud){
+          const context=await aiApi.hybridContext();
+          if(!context.enabled||!context.eligible||!context.source_revision)throw new Error('Select an operator-approved synthetic scenario before cloud approval.');
+          await aiApi.approveSyntheticCloud(conversation,body,context.source_revision);
+        }
+        const result = await aiApi.turn(conversation,body,ac.signal);
         if (ac.signal.aborted || activeSessionRef.current !== conversation) return;
         setAttachedFiles([]); setQuotedSelection(null);
         let answer = result.answer;
@@ -4894,6 +4902,7 @@ setGeneratingPlaybook(false);
 
             {/* Right Group: Action Buttons */}
             <div className="flex items-center gap-2">
+              {localChat && cloudContext?.enabled && cloudContext.eligible && !attachedFiles.length && !quotedSelection && !isGenerating && <button type="button" className="btn btn-ghost btn-xs" disabled={!input.trim()} title="Approve Google for this message and synthetic conversation history. Editor buffers and uploads are excluded." onClick={()=>void handleSend(true)}>Cloud · synthetic</button>}
               {isGenerating ? (
                 <button
                   type="button"
@@ -4906,7 +4915,7 @@ setGeneratingPlaybook(false);
               ) : (
                 <button
                   type="button"
-                  onClick={handleSend}
+                  onClick={() => void handleSend()}
                   disabled={quotedSelection ? !input.trim() : (!input.trim() && attachedFiles.length === 0)}
                   title={quotedSelection ? 'Ask about the quoted snippet' : 'Send (Enter)'}
                   className={`btn btn-xs rounded-lg transition-all ${

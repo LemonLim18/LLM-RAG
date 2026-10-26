@@ -33,7 +33,7 @@ class Source:
 
 SOURCES=(
     Source('inventory','Planned inventory','inventory.read',None,'inventory','inventory'),
-    Source('topology_planned','Planned links','network.topology',None,'planned_links','links',aliases=('planned topology','intended topology')),
+    Source('topology_planned','Planned links','network.topology',None,'planned_links','links',aliases=('planned topology','intended topology','intended links')),
     Source('topology_observed','Observed links','network.topology','topology','observed_link',aliases=('observed topology','discovered topology')),
     Source('topology_history','Topology history','network.topology','topology','observed_link',aliases=('historical topology',)),
     Source('device_state','Device and interface state','network.state','state','interface_state'),
@@ -94,7 +94,7 @@ def explicit_read_sources(prompt,available):
     from llm.gateway_references import read_intent_text
     prompt=read_intent_text(prompt)
     if re.search(r'\b(?:attached|uploaded|editor|buffer|open file|this (?:pdf|document|file))\b',prompt,re.I):return []
-    clauses=re.findall(r'\b(?:use|consult|from|read|show|fetch|obtain|compare|inspect|check|list)\s+([^.;\n]+)',prompt,re.I)
+    clauses=re.findall(r'\b(?:use|consult|from|read|show|fetch|obtain|retrieve|report|describe|explain|compare|contrast|inspect|check|list)\s+([^.;\n]+)',prompt,re.I)
     output=[]
     for clause in clauses:
         # Registry names are source identities, not spelling-sensitive commands.
@@ -104,6 +104,7 @@ def explicit_read_sources(prompt,available):
         clause=re.split(r',?\s+\b(?:not|rather than|instead of|excluding)\b',clause,flags=re.I)[0]
         health_attributes=bool(re.search(r'\bsource health\b',clause,re.I))
         health_subject=re.search(r'\bsource health(?:\s+(?:records?|status|availability|claims?))*\s+(?:for|of|about)\b',clause,re.I)
+        clause_hits=[]
         for key,source in BY_KEY.items():
             if key not in available or not (source.tool.startswith('network.') or key=='knowledge'):continue
             names={source.title,*source.aliases} if key=='knowledge' else {key.replace('_',' '),source.title,*source.aliases}
@@ -121,5 +122,17 @@ def explicit_read_sources(prompt,available):
                 if health_subject:
                     matches=[match for match in matches if match.start()<health_subject.end() or
                         re.match(r'\s+(?:samples?|measurements?|events?|counters?|messages?)\b',clause[match.end():],re.I)]
-            if matches:output.append(key)
+            clause_hits.extend((key,match,source.kind.replace('_',' ').casefold()) for match in matches)
+        for key,match,kind in clause_hits:
+            # Generic record-kind nouns can also be modifiers of a source
+            # already named (e.g. links "incident to" a device). A later bare
+            # kind without coordination is not another explicit source-use
+            # clause. Titles, keys, aliases and coordinated source lists keep
+            # their existing behavior; semantic planning still handles prose.
+            generic=match[0].casefold() in {kind,kind+'s'}
+            earlier=[other for other_key,other,_ in clause_hits if other_key!=key and other.end()<=match.start()]
+            if generic and earlier:
+                previous=max(earlier,key=lambda item:item.end())
+                if not re.search(r'[,/]|\b(?:and|or|plus|with|versus|vs|then|using)\b',clause[previous.end():match.start()],re.I):continue
+            output.append(key)
     return list(dict.fromkeys(output))

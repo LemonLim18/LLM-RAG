@@ -4,6 +4,7 @@ import re
 from pydantic import Field
 from llm.gateway_models import StrictModel
 from llm.gateway_references import requested_authoring_artifact
+from llm.orchestration.request_contract import RequestedContract
 
 
 class SemanticRoute(StrictModel):
@@ -19,9 +20,12 @@ class SemanticRoute(StrictModel):
     attributes: list[str] = Field(default_factory=list,max_length=10)
     source_requests: dict = Field(default_factory=dict)
     planning: dict = Field(default_factory=dict)
+    requested_outcomes: RequestedContract | None = None
 
 
 async def select_context(prompt, model, kind, editor, attachments, history, previous=None, inventory=None, generate_fn=None):
+    from llm.gateway_references import main_request_text
+    prompt=main_request_text(prompt)
     import json
     import os
     from local_providers.chat import generate
@@ -98,7 +102,10 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
     resolved=resolve_read(document_prompt,previous,inventory) if inventory is not None else None
     model_planning=os.getenv('COGNISHIELD_AI_PLANNING','0')=='1'
     from llm.gateway_references import relational_read
-    exact_lookup=resolved and (resolved.get('documents') or resolved.get('attributes') and resolved.get('domains')==['inventory'] and len(resolved.get('device_refs',[]))<=1 and not relational_read(prompt) or resolved.get('domains')==['topology'] and re.search(r'\btopology\b',prompt,re.I))
+    # An explanatory response style does not change who owns an exact stored
+    # attribute. Bind its existing reader first; synthesis can still explain
+    # relationships without inventing a second knowledge/source dependency.
+    exact_lookup=resolved and (resolved.get('documents') or resolved.get('attributes') and resolved.get('domains')==['inventory'] and len(resolved.get('device_refs',[]))<=1 or resolved.get('domains')==['topology'] and re.search(r'\btopology\b',prompt,re.I))
     if resolved and resolved.get('use_history') and resolved.get('domains')==['topology']:
         from llm.gateway_network import explicit_topology_scope
         # Stable server-owned references plus an explicit source switch are an
@@ -112,7 +119,7 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
         for domain in resolved['domains']:
             keys=[key for key in explicit_sources if BY_KEY[key].supports('network.'+domain)]
             if keys:scopes[domain]={**scopes.get(domain,{}),'source_categories':keys}
-        return SemanticRoute(intent='answer',network_domains=resolved['domains'],network_request=prompt,
+        return SemanticRoute(intent='explain' if relational_read(prompt) else 'answer',network_domains=resolved['domains'],network_request=prompt,
             device_refs=resolved['device_refs'],interface_refs=resolved['interface_refs'],
             attributes=resolved['attributes'],use_history=resolved['use_history'],source_requests=scopes)
     # Explicit UI references bind explanations to the actual snapshot even when
@@ -122,9 +129,9 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
     # negative instruction about the editor does not request its buffer. Both
     # surfaces still use the same authorized attachment reader and extraction.
     explicit_document=bool(file_bound)
-    document_read=bool(explicit_document and re.search(r'\b(?:read\w*|report\w*|transcrib\w*|extract\w*|quot\w*|explain\w*|summari[sz]\w*|describ\w*|compar\w*|contradict\w*|what|which|does|discuss\w*)\b',document_prompt,re.I) and not re.search(r'\b(?:modify|edit|change|replace|fix|refactor|add|remove|generate|create|deploy|save)\b',document_prompt,re.I))
+    document_read=bool(explicit_document and re.search(r'\b(?:read\w*|report\w*|transcrib\w*|extract\w*|quot\w*|explain\w*|summari[sz]\w*|describ\w*|compar\w*|contradict\w*|what|which|does|discuss\w*|give|tell|identify|state)\b|\bpages?\s+\d+\b',document_prompt,re.I) and not re.search(r'\b(?:modify|edit|change|replace|fix|refactor|add|remove|generate|create|deploy|save)\b',document_prompt,re.I))
     bound_document=bool(re.search(r'\b(?:my|this|that|our)\s+(?:uploaded\s+|attached\s+)?(?:pdf|document|file|attachment)\b|\b(?:attached|uploaded)\s+(?:pdf|document|file|attachment|screenshot|image|config\w*)\b',document_prompt,re.I))
-    if document_read and bound_document and not attachments:
+    if document_read and (bound_document or re.search(r'\b(?:uploaded|attached)\b',document_prompt,re.I)) and not attachments:
         return SemanticRoute(intent='clarify',question='Please attach the document you want me to read. No uploaded or scenario document is available in this conversation.',
             planning={'mode':'missing_document_source','model_decision':False})
     from llm.gateway_network import route_network
@@ -174,13 +181,13 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
                     route.planning['interface_scope_adjustment']={'model_device_refs':route.device_refs,
                         'model_interface_refs':route.interface_refs,'resolved_interface_refs':resolved['interface_refs']}
                     route.device_refs=resolved['device_refs'];route.interface_refs=resolved['interface_refs']
-                if resolved and resolved.get('use_history') and route.intent in {'answer','explain'} and route.network_domains:
+                if resolved and resolved.get('use_history') and route.intent in {'answer','explain'} and (route.network_domains or route.requested_outcomes and route.requested_outcomes.advice_only):
                     # Server-resolved conversational references are more precise
                     # than a model's optional history flag. Preserve the subject
                     # and prior source restriction, never its cached facts.
                     before={'model_device_refs':route.device_refs,'model_use_history':route.use_history}
                     route.device_refs=resolved['device_refs'];route.interface_refs=resolved['interface_refs'];route.use_history=True
-                    if resolved.get('comparison_domains'):
+                    if resolved.get('comparison_domains') and not (route.requested_outcomes and route.requested_outcomes.advice_only):
                         added=[domain for domain in resolved['comparison_domains'] if domain not in route.network_domains]
                         route.network_domains=list(dict.fromkeys(resolved['comparison_domains']+route.network_domains))
                         route.planning['comparison_source_binding']={'model_decision':False,'added_prior_sources':added,
@@ -266,7 +273,7 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
         context_request=re.search(r'\b(file|document|pdf|attachment|uploaded|editor|buffer|selected|this|that|its|their|recorded|stored|our|my|inventory|live|logs?|syslogs?|telemetry|measurements?|down|unreachable)\b',prompt,re.I)
         action_request=re.search(r'\b(generate|create|configure|change|modify|edit|replace|refactor|add|remove|delete|set|enable|disable|apply|save|publish|deploy)\b',prompt,re.I)
         conceptual_question=re.search(r'^(?:does\s+(?:a|an|the)\b|why\s+(?:can|do|does|are)\b|how\s+(?:do|does)\b|what is the difference\b|give\b.*\b(?:tips|advice)\b|explain\b|describe\b)',prompt,re.I)
-        if conceptual_question and not refs and not context_request and not action_request:
+        if (conceptual_question or intent=='clarify') and not refs and not context_request and not action_request:
             # A classifier's uncertainty cannot authorize a write, nor require
             # unrelated private context for a complete conceptual/advice ask.
             # The conversation model still supplies the answer in natural text.

@@ -32,3 +32,17 @@ def test_missing_provider_finish_metadata_is_explicitly_unknown():
     with patch('llm.orchestration.model.chat_model',AsyncMock(return_value=(client,'existing-chat-model'))):
         asyncio.run(model.generate([{'role':'user','content':'question'}]))
     assert model.inference_trace[-1]['done_reason'] is None
+
+
+def test_evaluation_replay_retains_exact_schema_options_and_independent_messages():
+    from scripts.evaluate_phase_f_registry import provider_request_trace
+    body={'model':'installed-model','messages':[{'role':'user','content':'controlled fixture'}],
+          'format':{'type':'object','properties':{'answer':{'type':'string'}}},
+          'options':{'temperature':0,'num_ctx':8192,'num_predict':512},'stream':True}
+    trace=provider_request_trace(body)
+    assert trace['inference_parameters']=={k:v for k,v in body.items() if k!='messages'}
+    assert trace['format']==body['format'] and trace['messages']==body['messages']
+    body['options']['temperature']=1;body['format']['type']='array';body['messages'][0]['content']='changed'
+    assert trace['options']['temperature']==0 and trace['format']['type']=='object'
+    assert trace['messages'][0]['content']=='controlled fixture'
+    assert provider_request_trace({'format':'json'})['format']=='json'

@@ -351,3 +351,176 @@ Focused reproduction: `.\backend\.venv-m0\Scripts\python.exe -B -m pytest backen
 
 ---
 
+
+
+# G4–G6 reconciliation and frozen evaluation in progress — 2026-10-24T06:34:48.308602+00:00
+
+Baseline HEAD93f5f453ef4c33708dce4e687598766d0a6a6b1b, clean tracked tree/index before this continuation. Existing data/release/editor state preserved; no server restart, browser mutation, stage/commit, model download, publication or device action. The newer HEAD replaces the historical6e8597c baseline; no reset.
+
+Reconciled old failures against current source/tests and3real authenticated gateway cases: editor eligibility/prior model metadata/auxiliary citation rules already corrected. Actual follow-up still loses subject when the model ignores history for a demonstrative reference, and answers frequently timeout or omit requested inventory values. Reconciliation is exposed, not fresh quality credit. Archive:`tmp\phase-g\iterations\20261024T060633Z-semantic-contract-reconciliation/reconciliation-review.json`.
+
+Current changes: preserve metric record_ref/source_category/kind through synthesis; disclose overlapping inconsistent sources without selecting a winner; scope calculated quantities to device/interface and distinguish cadence/window; include demonstrative subject rebinding through the existing resolver; quotation clauses no longer suppress compound interpretation; retain full wire JSON schema/options for evaluator replay. New gauge counterexample prevented an overbroad percentage rejection.75focused contractsPASS;200affected integration/source testsPASS in separate overlapping suite;65baseline focusedPASS after sandbox temporary-directory errors. No totals summed. Source files remain unstaged.
+
+Actual metric corrective run:`tmp/phase-g/iterations/20261024T061841.670510Z-G6-causal-model-conformance-53faf8`:4/4retrievalsPASS across both assistants, but0/4adequate complete explanations.3fallbacks and1incorrect accepted model answer. The accepted answer still misstates sampling window and monotonic trend; preserved for one grouped safety correction after the frozen run. NO model reasoning improvement claimed.
+
+New30-case registry:`docs/evaluations/phase_g_semantic_holdout_v1.json`, SHA40d18b954d355199a3fc088d9560d4e9457c08eb93c8c24933842d459e4b5531. Independently specified observable inputs/arithmetic, new prompts/context values, reused topology families. Authored/graded by implementation assistant, NOT external blind evaluation and NOT substitute for full120routing gate. Frozen current M2run:`tmp\phase-g\iterations\20261024T062715.373706Z-G11-fresh-quality-candidate-8fa373`, executor86033, log`tmp\phase-g\iterations\20261024T060633Z-semantic-contract-reconciliation/frozen30-agent.log`; continue all30 without repairs or replacing original failures. Runtime llm/local_providers/development hashes verified unchanged since freeze. Complete prose grading pending; HTTP/tool passes do not prove task adequacy. Known fresh failures include ambiguous conceptual route, wrong telemetry-for-flow, omitted inventory values, raw fallback instead of explanation, and a returned return-flow result incorrectly called unrecorded.
+
+After all30finish: grade actual complete answers first; retain original results; address grouped safety regressions at a new code boundary, rerun only affected checks and bounded exposed model cases. Do not tune frozen cases or claim new generalization for corrections. G1–G3/G8–G10 remain complete. G4/G5/G6/G11 remain failed/unaccepted; G7 remains113/141 with28Huawei compatibility blockers and zero active verified Ansible variants; G0 historical freeze deprioritized. No new full stage closure.
+
+---
+
+
+
+# G4–G6 reconciliation checkpoint — 2026-10-24T07:48:38.958076+00:00
+
+Baseline93f5f45 reconciled; no new full-stage closure. Verified G1–G3/G8–G10 remain complete. G0 historical baseline blocked/deprioritized. G4/G5/G6/G11 remainFAILED; G7 remains113/141 with28Huawei upstream conflicts and0activeverifiedAnsiblevariants. G12release-safe partial handover passes; final PhaseG remainsincomplete.
+
+Shared correction complete/tested: preserve original coordinated user obligations independently of model retrieval hints; retain relevant reference/source dependencies across follow-ups; preserve metric record/calculation identity and conflicting-source provenance; verify endpoint-role/source relationships; keep unavailable versus absent data distinct. Transit reader now includes declared flows reaching a requested transit/endpoint without treating mere planned adjacency as traversal. Correct AS/router-ID rejection can pass without a prescribed phrase; unsupported positive identity claims still reject.
+
+Final117focused/conformance testsPASS and263affectedgateway/source/conversation/workspace testsPASS (overlap; do not sum). Frozenv1valid30:11adequate. Frozenv2valid30:16adequate(53.33%,threshold85%FAIL),5modelanswers/10fallbacks/1exactproposal;2criticalacceptedclaims inoriginalcohort. Differentcohorts, notmatchedimprovement. Finalexposedguards contain demonstratedtemporal/enumclaims; publishedrequirementscomparison stillfails. Bothrealtransitreads nowcontaincorrectflow but modelclausesremainincomplete andfallbackverbose. NewASidentityreplayrejects2falsemodelcandidates; savedcorrectmodelpositiveacceptanceisverifiedseparately. Latestsmallfixes haveNOTbeenrequalifiedbyfull120/30freshcohort.
+
+Evidence/rootcauses/fullstatus:`docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md`. Audit:`tmp/phase-g/iterations/20261024T060633Z-semantic-contract-reconciliation`; originalfailuretracesandregistriesretained. Allcurrenttest/evaluatorsessionsfinished. OrdinaryDBalltablefingerprints/index/HEAD/active47operation141binding341artifactreleaseunchanged. NoUItoolsused/noeditorwrites/noSave/noStage/noCommit/noPublication/noDeviceAction/noModelChange. Existingbrowserproofreused, nofreshbrowserclaim.
+
+Nextsafechange: reproduce source-plan/semantic-obligation binding (explicit comparison routed as conversation, wrong publishedoperation, ownedmulti-document clarification) and correct shared mapping. Do not begin another prompt-tuning loop or replace original benchmark scores. Preserve finalcurrentcode and freeze finalqualificationepoch before new independent scoring.
+
+---
+
+
+
+# Final safe boundary — 2026-10-24T07:53:26.664709+00:00
+
+All continuation tests/evaluators are finished. Final shared-contract/conformance117PASS, affectedgateway263PASS, then adjacent-action preservation116PASS (overlap, never sum). The last source-exclusion parser correction preserves positive neighboring clauses. Both actual Qwen probes answer correctly without editor/network readers; exposed corrective evidence only. Complete report:`docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md`; source/tests/registries remainunstaged; HEAD93f5f45 and ordinary data/release unchanged. Frozenv2 remains16/30FAIL, notrescored aftercorrections. G4/G5/G6/G11 stillnotaccepted; no newstageclosure. Continue from unresolved shared source-plan/semantic-obligation binding, not individual prompt tuning; finalpostpatch120/30qualification notrun.
+
+---
+
+
+
+# Verified continuation boundary — 2026-10-24T09:39:04.140448+00:00
+
+No new fullGstage closure. G1–G3/G8–G10 retain priorPASS; G4/G5/G6/G11remainFAILED; G7still113/141with28upstreamconflicts; G0historicalbaseline deprioritized; G12onlyrelease-safe partialhandover. Currentcoherent source/context/temporalcontract corrections are tested. Final279affectedPASS,184temporal/synthesisPASS,97negative-effect/referencePASS(overlap, never sum).
+
+New frozen30:`docs/evaluations/phase_g_alignment_holdout_v3.json`SHA7c56c3f7ce808fa3be20df3da39065e8c3b7c1142cc5f365c67147188a4ffdd4. Run`tmp/phase-g/iterations/20261024T090242.496220Z-G11-fresh-quality-candidate-c3a60b`completedunchanged. Complete-task13/30(43.33%)FAIL85%gate;3adequateunrepairedmodel+1repairedmodel+8fallback+1exactproposal. Raw26/30executionNOTquality/routing; advicecase017mandatorytooloracleover-specific, actualtaskstillfails. Original16/30and11/30scores retained. Newcohort has3criticalacceptednetwork/documentclaims; finalcounter/intervalguardscontain demonstratedclasses, arbitrarydocumentsemanticsstillunverified. No strongcausalmodelacceptance.
+
+Finalexposedchecks: actualcomparisonreaderreturnsbothcaptures; namedsourceusesonlytopology; qualifiedproposalsreadbothfiles; aggregate/negativeeffectreferencespreserveownedtarget. Finalintervalreplyusescapture_interval_scope_fallback,zero synthesiscalls,exactsaved/currenttimesandequalitylimits. Next-checkadvice taskstillfails despitecorrectsubject; semanticclausecompletion remainsopen. No finalpost-patchfull120/30qualificationpass.
+
+Fullsourcechanges/results/firstlosses/limits:`docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md`. Audit:`tmp/phase-g/iterations/20261024T082416Z-intent-evidence-obligations`; allsessionsfinished. NoStage/Commit/Publish/Deploy/Download/ordinaryDB/editor/serverchanges. Preservationfinalproofread-only. Continue fromadvisory-versus-retrievalintent andsemanticobligationcoverage, not anotherwordingrepairloop; protectallpriorcorrectfixesandfrozenfailures.
+
+---
+
+
+
+# Approach A bounded pilot — 2026-10-24T15:34:17.638098+00:00
+
+**STOP: pilot complete; REVISE, DO NOT PROMOTE.** Baseline4/12adequate→candidate2/12;11distinctconditions(onepairrepeat),4/11→2/11. Zero adequateQwenreasoning in eitherarm. Primary interface evidence0→3rows and advice no-read0/4→4/4 improve narrowly; alladviceanswers stillgeneric, typedadvisorypath notselectedbyQwen. Newsource/interpretation regressions and verifier misses preserved. NoGstageclosed; acceptedstages unchanged.
+
+Report:`docs/PHASE_G_APPROACH_A_PILOT.md`; exactsix-dimensionreviews/rawanswers:`tmp/phase-g/iterations/20261024T150603Z-approach-a-pilot/paired-decision-report.json`.151affectedPASS and75overlappingfocusedPASS, initialtest/collectionfailures retained. No120/30benchmark, browseracceptance, modelchange orprotecteddata/editor mutation. PreservationHEAD/index/ordinaryDB/release/341artifacts match. DefaultCOGNISHIELD_AI_OUTCOMES=0; ordinaryruntime notactivated. No commit/stage/publish/deploy. Allsessionsfinished.
+
+Next action: await explicit authorization. Do not continue PhaseGautomatically: current user scoped this turn to the12conversationApproachApilot and decision report. Recommended revision: consistent contract wire/examples, context-preserving handling of unsupported/emptyreadplans acrossallanswerpaths, outcome-scoped source binding/completion. Do not count newmetadata, factualfallback or exposedcorrections asreasoningsuccess.
+
+---
+
+
+
+# Approach A reconciliation checkpoint — 2026-10-24T16:53:12.667715+00:00
+
+**STOP: bounded reconciliation finished; REVISE, DEFAULT OFF.** Read `docs/PHASE_G_APPROACH_A_RECONCILIATION.md`. Advisory/owned-reference paths and mandatory-source preservation corrected; no-reader outcomes stay in graph composition. Reader projections own directread/availability facts. Model interpretation remains proposed, not semantic completion.
+
+Paired8:workflow3/8→6/8,minimumreaderinstances5/8→7/8,complete-task2/8→3/8,adequateQwenreasoning0. Final4exposedreruns afteronegrouped correction:workflow4/4,requiredreaders4/4in2mixedcases,0readerson2advicecases;adequacy1/4(readerprojection/qualitywarning),Qwenreasoning0. Not finalfull8or120/30qualification. Original12pilot unchanged. Falseflowverdict and finalsysloginterpretationcontradiction retained; no newcausalvalidators.
+
+156affectedPASS;21B2PASS(overlappingpriorrunsnot summed). Allsessionsfinished. HEAD/index/ordinaryDB/release341artifacts unchanged; exact7filepre-changebytes/patch and allmodeltraces under `tmp/phase-g/iterations/20261024T155432Z-approach-a-reconciliation`. No editor/server/data/release/model changes, commit/stage/publish/deploy/download. Existingacceptedstages unchanged; noGstageclosed.
+
+Next action: wait for explicit authorization. Do not restartbroadPhaseGorApproachB. Semanticquality/release safety remainunaccepted; do not relabel fallback asreasoning or enable ordinaryruntime from source-success results.
+
+---
+
+
+
+# Controlled Qwen3.5 evaluation checkpoint — 2026-10-25T02:03:19.828914+00:00
+
+**Decision: RETAIN BASELINE; bounded experiment finished. No application integration, activation or Phase G acceptance.** Report: `docs/PHASE_G_QWEN35_CONTROLLED_EVALUATION.md`; machine summary: `docs/evaluations/phase_g_qwen35_controlled_result.json`.
+
+32 generative calls: 13 paired packets per model (12 scoreable conditions plus one historical evidence/oracle-defect control), three thinking-on512 cases, one thinking-on1536 case, and two separate warm resource/budget checks. Both models achieve 3/12 adequate scoreable conditions and 0/3 strictly adequate causal explanations. Qwen3.5 improves some field/causal-core relationships but retains unsupported protocol/process-ID/marker claims and incomplete requested outputs. No fallback is credited as model reasoning. Original frozen scores and all failed outputs remain.
+
+Thinking-on512: 0/3 final answers, all token-limited. Thinking-on1536: one120-second-limit failure without a final answer. Original Qwen3.5 off arm has two timeouts; warm/cache-resident repeats finish34.38s and7.16s. Those repeats do not replace original scores or prove gateway-wide timing. Actual shared-gateway/browser acceptance is NOT RUN because conditional integration failed admission. Existing request deadlines/retry behavior remain unchanged.
+
+Focused model diagnostics:3 PASS; matching messages/schema/options checks:13 paired passes. Ordinary SQLite tables, HEAD/index, active release7a14a351e52b49aeb87f65d1192f0937,341 artifacts and inspected runtime/.env bytes unchanged. No UI operation, saved buffer, source-registry change, V9 publication, commit, download or deployment. Approach A stays default0. Initial empty Ollama residency restored with request-local unloads; installed models/global configuration preserved.
+
+Important: unchanged ordinary setting is `auto`; following the user's installation, current discovery resolves it to `qwen3.5:4b`. No ordinary selection was changed by this experiment. Use the existing explicit baseline model selector when baseline behavior is wanted. No silent model pinning was performed.
+
+Audit: `tmp/phase-g/iterations/20261025-controlled-qwen35/`; preservation proof: `tmp/phase-g/iterations/20261025-controlled-qwen35-preservation/preservation-result.json`. Rollback: no application/data/release rollback required; do not reset existing dirty work. The new evaluator is opt-in and refuses to overwrite results.
+
+**Stop here and wait for authorization.** Do not begin another Phase G cycle, Approach B, prompt tuning or model installation. Prior accepted stages and unresolved gates retain their statuses.
+
+---
+
+
+
+# Controlled hybrid Gemini checkpoint — 2026-10-25T03:27:59.246796+00:00
+
+**Bounded task finished. Decision: RETAIN EXPERIMENTAL, ordinary remote inference OFF.** Full report: `docs/PHASE_G_HYBRID_GEMINI_EVALUATION.md`; machine results: `docs/evaluations/phase_g_hybrid_gemini_result.json`.
+
+Ignored backend credential authenticates; official Interactions `gemini-3.8-flash` works. Root local model pinned to qwen2.5:1.5b; qwen3.5 remains installed. Fresh runtime verified; ordinary backend not restarted. Approach A stays0. Exact server-approved synthetic request/history plus source provenance is mandatory; flag alone cannot enable ordinary users.
+
+Six exposed direct evidence packets: Gemini6/6 qualified adequate versus preserved Qwen0/6, including3 scope-qualified results. Only2 assess causal interpretation; factual lookup receives no causal credit. Messages/evidence/schema matched, but Gemini allowance2048 versus Qwen512 is declared. No unseen/generalization or G4/G5/G6/G11 stage credit.
+
+Twelve authenticated ASGI gateway executions,10IDs including duplicates/faults/reruns. Four of7 real cloud synthesis calls completed and preserved raw model answers;3timed out. G4 refinement0completed: original2adapter400failures fixed at typed-step transport boundary; corrected calls got real503highdemand and30second timeout. Simple arithmetic remained local in4.53/8.25s. Causal answers64.70/83.84s, one scope warning and one extra-reader limitation; saved+missing-log explanation25.57s, corrected repeat72.58s. Published comparison timed out94.80s. Advisory still wrongly retrieves telemetry with Approach Aoff. Local topology errors safely fell back; no model credit. All requests under120s, including118.03s incomplete fallback. No browser test/ordinary data sent.
+
+Known completed API usage21,815input/2,709output/0thought tokens; paid list-price estimate$0.02652 excludes unreported timeout charges and unknown account tier. No actual quota/billing failure;429was injected. 19latest focused policy/diagnostic testsPASS; affected97PASS/1preexistingeditingfailure, reproduced with exact pre-hybrid gateway. Do not sum overlapping runs.
+
+PreservationPASS: ordinary tables, index/HEAD, active341artifact release unchanged; no UI operation, commit, stage, publication, deployment or download. No secret in source/diff/audit. Audit: `tmp/phase-g/iterations/20261025-hybrid-gemini-resume`. Rollback flag0 (alreadyoff); hybrid-only.patch relative to preserved dirty source, not a repository reset. No pending benchmark or automatic continuation authorized beyond this bounded experiment. Phase G's existing open gates remain open.
+
+---
+
+
+
+# Gemma4 31B evaluation-only checkpoint — 2026-10-25T14:40:48.339432+00:00
+
+**Finished; recommendation A KEEP GEMINI3.8 unchanged and disabled. No integration or Phase G stage acceptance.** Report: `docs/PHASE_G_GEMMA4_31B_EVALUATION.md`; curated results: `docs/evaluations/phase_g_gemma4_31b_result.json`.
+
+Real existing-key model GET200 and synthetic generation200. Used official generateContent for gemma-4-31b-it, not the current Gemini Interactions adapter. Strict schema probe500 leaves enforcementunverified; JSONMIMEprobe200. Cohort used one declared unchanged-schema serialization appendix plus complete local validation. No contracts relaxed.
+
+Six historical minimal cases:5unavailable,1partialOSPFmapping;0/6deliveredadequate, not six completed reasoning errors. Four independently source-checked frozen holdouts:allunavailable (two503,one500,one120secondtimeout). Two separate high checks:H01still500;H04completes with881thought/214finaltokens but same missing deployment/full-validation limits. No reasoning credit for generated thinking. Existing published field checker accepts both partialH04drafts, illustrating that literal checks do not prove task completion.
+
+15real generation attempts plus1metadataGET;4HTTP200includingtwo small probes,7HTTP500,3high-demand503,1timeout. No real429/auth/billing restriction. Knownusage3178input/471final/881thought tokens; failedusageunknown. Rolling conservative reservationpeak14962<16000 and3starts/61s<30RPM. User-reported14400RPDnot loadtested; global other-clientusageunobservable. Maxcasewall120.01s (timeout cleanup); successfulH04API75.01/50.95s, queue-inclusive111.57/110.75s. No fullgateway/browser latency or acceptance claimed. Gemini3.8/Qwen historicaloutputs reused, no newcalls to those models.
+
+Only standalone evaluator/report artifacts added.5offlineharnesscheckgroups plusexplicitCLIguardPASS; no unrelatedappregressionreruns. PreservationPASS:171protected source/configfiles,64priorauditfiles,ordinarySQLite,index/HEAD,active341artifactrelease unchanged. Bothenvfiles byteidentical; Qwen2.5explicit,hybrid0,ApproachA0. No UIoperation,service restart,modeldownload,commit,stage,publication,deployment,purchaseorcredentialcopy. Audit:`tmp/phase-g/iterations/20261025-gemma4-31b`. No rollback needed for runtime; no provider/configchange was made. Stop; await authorization before replacing or integrating Gemma.
+
+---
+
+
+
+# Flash-Lite controlled evaluation checkpoint — 2026-10-25T15:33:20.811255+00:00
+
+**Bounded experiment finished; recommendation TEST FLASH-LITE FURTHER. No model switch/integration/PhaseGacceptance.** Report:`docs/PHASE_G_FLASH_LITE35_EVALUATION.md`; curatedresults:`docs/evaluations/phase_g_flash_lite35_result.json`.
+
+Read-only Gemma diagnosis:the8minimalservererrors are5HTTP500INTERNAL and3HTTP503UNAVAILABLE; separate120slocaltimeout hasno completeHTTPstatus. No400/422/429observed; no newGemmacalls; hidden providerstage/reasoning quality not inferred. Two other500s inpriorhigh/probe tests remain separate.
+
+Flash-Lite modelGET200 and exact connectivity pass. Official generateContent uses unchanged source/messages/schemas, deprecated sampling omitted, finaluserturn retained. Ten totalcloudinferences (connectivity, separateS01schema,6Hcases, actualplan/controlS02S03), no retries/newGemini3.8orQwencalls.10/10completedHTTP200;9/9schema-bearingvalid. API0.76–1.45s,median1.33s;allwithin120target. Test-only300sceiling authorized, unused; applicationclockunchanged.
+
+Fullanswerreview:4/6adequateincluding3qualified versus preservedGemini6/6qualified,Qwen0/6. H04mappingcorrect butcompatibility/full-validationcaveat incomplete; H05statescorrect thenmislocalizesfailedhop andsuggestsunsupportedsubsequentingresssequence. Existing narrowforwardinghelper missesthat wording andpublishedfieldchecker missesH04taskomission. No newguard/promptrepair. S02state/topologyrequirements preserved butextra inventory; S03generalanswerflagsallfalse. Model-proposedplan is notactualtool-executioncredit.
+
+Knownusage13019input/1304output;thinkingcountnotreported. Peak9starts/61s and20724conservativereservation below user15RPM/250KTPM;500RPD/otherclientusage notcertified.5offlineharnesscheckgroupsPASS, no unrelatedtests rerun. Audit:`tmp/phase-g/iterations/20261025-flash-lite-35`.
+
+No applicationprovider/model/flag/authorization/source/editor/V9/data change, no restart/UIoperation, commit/stage/publication/deployment/download/billingactivation. Preserve explicitQwen2.5, Gemini3.8, hybrid0, ApproachA0. Await authorization; do not resume broadPhaseG or switch automatically.
+
+---
+
+
+
+# Flash-Lite replacement checkpoint — 2026-10-26T01:33:00.391518+00:00
+
+**Bounded task finished: HYBRID PARTIAL; Approach A KEEP DISABLED. No Phase G stage closure.**
+Report: docs/PHASE_G_FLASH_LITE_HYBRID_IMPLEMENTATION.md.
+Curated review: docs/evaluations/phase_g_flash_lite_hybrid_result.json.
+Audit: tmp/phase-g/iterations/20261026-flash-lite-hybrid.
+
+Root local configuration now pins Qwen2.5 and enables hybrid only for exact owner-approved synthetic messages/revisions; Flash-Lite generateContent low/8192,120s entire request,1cloudcall,15RPM/250KinputTPM/500RPD. Backend secret env unchanged, one ignored credential, no copied key. Nine scenario digests approved; no ordinary scenario activation/restart. Gemini3.8 explicit inactive Interactions rollback. Remote planning0; ApproachA0.
+
+Real paired11turns/arm: full-task OFF7/11 versus ON4/11; excluding duplicate surface6/10 versus4/10.14real cloud calls all schema-valid,7/arm; OFF5/7raw cloud interpretations adequate but NOT broad reasoning acceptance. ON projection loses correct mapping, no-read advisory unfulfilled, false conflict and wrong owner claims retained. Original H01-H06/ApproachA/PhaseG scores unchanged. Cloud1.465-2.271s; complete requests max61.332s/55.111s. Total15realcloudinferences includingconnectivity:24358input/3242finaltokens. No real3.8requests.
+
+Both-surface realHTTP authorization and injected429/contradictory-answer fallback checks pass.241affected tests and TypeScriptPASS; overlapping reruns not summed. Three fresh cua.getState calls fail before website access with missing kernel assets/oserror3; this is a tool initialization failure, NOT evidence browser access is disabled. No browser acceptance claimed. Temporary8001listeners stopped; ordinary5173/8000pair absent and not restarted.
+
+PreservationPASS:42ordinarytables,HEAD/index,341artifacts/activepointer,144prior evidence files,secretfile. No commit/stage/publication/device action/download. See report for local enable/disable and explicit3.8rollback. Do not activate Approach A/remote planning or resume broad PhaseG without new authorization. Remaining integration/model limitations are recorded rather than hidden by fallback success.
+
+---
+

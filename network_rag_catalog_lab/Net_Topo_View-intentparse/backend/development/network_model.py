@@ -345,10 +345,12 @@ def forwarding(scenario, flow, *, max_hops=32, max_branches=16):
         endpoints = [i for i in ifs.values() if i['device_id'] == device and i.get('vrf', 'default') == vrf and i.get('prefix') and str(ipaddress.IPv4Interface(i['prefix']).ip) == address]
         if len(endpoints) != 1 or endpoints[0]['admin_status'] != 'up' or endpoints[0]['oper_status'] != 'up':
             state = 'failed' if len(endpoints) == 1 and 'down' in {endpoints[0]['admin_status'], endpoints[0]['oper_status']} else 'unknown'
-            return {'flow_id': flow.id, 'status': state, 'branches': [{'status': state, 'reason': 'Flow endpoint interface is down or not uniquely known up', 'hops': []}], 'modeled_only': True, 'scope': flow.model_dump()}
+            return {'flow_id': flow.id, 'status': state, 'branches': [{'status': state, 'reason': 'Flow endpoint interface is down or not uniquely known up', 'hops': []}], 'modeled_only': True, 'scope': flow.model_dump(), 'encountered_device_ids': []}
     queue = deque([(flow.source_device_id, flow.vrf, None, [], set())]); outcomes = []; branches = 1
+    encountered = set()
     while queue:
         device, vrf, ingress, steps, seen = queue.popleft()
+        encountered.add(device)
         def finish(status, reason, trail=steps,location=None):
             outcomes.append({'status': status, 'reason': reason, 'hops': trail,
                 **({'failure_location':location} if location else {})})
@@ -402,6 +404,7 @@ def forwarding(scenario, flow, *, max_hops=32, max_branches=16):
     statuses = {o['status'] for o in outcomes}
     status = 'unknown' if 'unknown' in statuses else 'partial' if len(statuses) > 1 else 'delivered' if statuses == {'delivered'} else 'failed'
     return {'flow_id': flow.id, 'status': status, 'branches': outcomes, 'modeled_only': True,
+            'encountered_device_ids': sorted(encountered),
             'scope': flow.model_dump(), 'budgets': {'hops': max_hops, 'branches': max_branches}}
 
 
