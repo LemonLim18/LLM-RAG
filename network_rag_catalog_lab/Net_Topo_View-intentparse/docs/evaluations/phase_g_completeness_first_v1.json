@@ -1,0 +1,5773 @@
+{
+  "version": 1,
+  "methodology": "Eight independently authored paired task conditions covering15requested categories; hand-checkable source expectations verified before inference. Implementation-assistant graded, not blinded/external. Three exact original references are separately labelled and not unique new cases.",
+  "rubric": [
+    "source_coverage",
+    "requested_outcomes",
+    "identity",
+    "temporal_scope",
+    "technical_reasoning",
+    "raw_vs_final",
+    "typed_compatibility",
+    "automatic_refinement",
+    "provider_failure",
+    "latency"
+  ],
+  "grading": "Extra authorized relevant reads are efficiency only, not automatic task failures. Adequate requires every requested outcome correct/appropriately limited; fallback and schema passes do not establish model reasoning.",
+  "budget": {
+    "max_actual_cloud_including_browser": 72,
+    "enhanced_request_seconds": 360,
+    "enhanced_role_calls": 5,
+    "baseline_seconds": 120,
+    "baseline_role_calls": 3
+  },
+  "cases": [
+    {
+      "id": "CF-01",
+      "scenario": "CF-01",
+      "surface": "floating",
+      "prompt": "Investigate why Harbor cannot communicate with Meadow. Check all relevant available sources, explain the affected hop and the no-shutdown setting, compare available configuration artifacts, and establish any recorded inspection purpose referenced by the configuration. Distinguish observations, modeled failure, and unproven physical cause.",
+      "expected_claims": [
+        "TransitEthernet1/2adminup/operdown blocksforward egress andreturningress indeclaredmodel",
+        "Currentno-shutdown means administrativeenablement not operationalguarantee",
+        "Saved/currentartifacts do not alone prove activationhistory",
+        "optical-order-212actualevent states opticalreceiveinspection intent not completedrepair",
+        "Broadfamilycoverage plus visible limits; relevant unread reference should triggeractualsupplementaryread ifinitialquerymissesit"
+      ],
+      "required_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "independent_oracle": {
+        "forward": "failed",
+        "return": "failed"
+      },
+      "setup": null,
+      "prohibited_claims": [
+        "Physical collection or execution occurred",
+        "Unread or unavailable logs establish no event",
+        "Source citations certify all causal prose",
+        "Wrong device/interface ownership",
+        "Capture times alone establish active change timing"
+      ]
+    },
+    {
+      "id": "CF-02",
+      "scenario": "CF-02",
+      "surface": "studio",
+      "prompt": "Show Transit Ethernet1/2 administrative state, operational state and prefix. Explain why administrative enablement does not establish delivery. Use recorded state only; do not read configuration or logs.",
+      "expected_claims": [
+        "TransitEthernet1/2:adminup/operdown,10.71.2.1/30",
+        "No invented physicalcause or deliveryguarantee",
+        "Onlystateexecuted"
+      ],
+      "required_tools": [
+        "network.state"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "independent_oracle": null,
+      "setup": null,
+      "prohibited_claims": [
+        "Physical collection or execution occurred",
+        "Unread or unavailable logs establish no event",
+        "Source citations certify all causal prose",
+        "Wrong device/interface ownership",
+        "Capture times alone establish active change timing"
+      ]
+    },
+    {
+      "id": "CF-03",
+      "scenario": "CF-03",
+      "surface": "floating",
+      "prompt": "Using state only, explain why the installed routes do not deliver Harbor to Meadow TCP/9443. Locate the failing device, interface and direction, compare the return result, and tell me whether these records establish BGP session health. Do not read configuration.",
+      "expected_claims": [
+        "Forwardegressdeny TransitEthernet1/2 traffic-egress-213/deny-app",
+        "Returndelivered; forwardroutepresence notdeliveryproof",
+        "NoBGPsessionrecord; noEstablishedclaim"
+      ],
+      "required_tools": [
+        "network.state"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "independent_oracle": {
+        "forward": "failed",
+        "return": "delivered"
+      },
+      "setup": null,
+      "prohibited_claims": [
+        "Physical collection or execution occurred",
+        "Unread or unavailable logs establish no event",
+        "Source citations certify all causal prose",
+        "Wrong device/interface ownership",
+        "Capture times alone establish active change timing"
+      ]
+    },
+    {
+      "id": "CF-04",
+      "scenario": "CF-04",
+      "surface": "studio",
+      "prompt": "Use inventory and planned topology only. Compare Harbor Ethernet1/2 and Transit Ethernet1/2: give each owner, prefix and recorded VRF. Identify the documented peer of Harbor Ethernet1/2 and explain what the plan cannot establish operationally.",
+      "expected_claims": [
+        "HarborEthernet1/2 10.71.1.1/30guest; TransitEthernet1/2 10.71.2.1/30red",
+        "HarborportpeersTransitEthernet1/1 notsame-namedEthernet1/2",
+        "Plannedinventorydoesnotproveoperationaldelivery"
+      ],
+      "required_tools": [
+        "inventory.read",
+        "network.topology"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "independent_oracle": null,
+      "setup": null,
+      "prohibited_claims": [
+        "Physical collection or execution occurred",
+        "Unread or unavailable logs establish no event",
+        "Source citations certify all causal prose",
+        "Wrong device/interface ownership",
+        "Capture times alone establish active change timing"
+      ]
+    },
+    {
+      "id": "CF-05",
+      "scenario": "CF-05",
+      "surface": "floating",
+      "prompt": "Investigate Transit Ethernet1/2 shutdown history and its modeled forwarding effect. Compare the actual running captures and the staged saved file; identify the important command difference with interface context. Distinguish the running-observation interval from the verified applied event time and do not treat the staged file as earlier running state.",
+      "expected_claims": [
+        "12:00runningno-shutdown to14:00runningshutdown",
+        "Verified appliedevent13:00 onTransitsameport",
+        "11:00savedfileisnotactive-stateproof",
+        "Textdiffretainsinterfacecontext; no cross-devicepair",
+        "Declaredforwardegress/returningressblocked, nophysicalcollection"
+      ],
+      "required_tools": [
+        "network.configuration",
+        "network.state",
+        "network.syslog"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "independent_oracle": {
+        "forward": "failed",
+        "return": "failed"
+      },
+      "setup": null,
+      "prohibited_claims": [
+        "Physical collection or execution occurred",
+        "Unread or unavailable logs establish no event",
+        "Source citations certify all causal prose",
+        "Wrong device/interface ownership",
+        "Capture times alone establish active change timing"
+      ]
+    },
+    {
+      "id": "CF-06",
+      "scenario": "CF-06",
+      "surface": "studio",
+      "prompt": "Compare the documented Harbor Ethernet0/1 adjacency with its recorded link report and interface state. Then calculate loss from the returned packet counters and explain why the modeled TCP delivery verdict does not negate that observation. Read only topology, state and telemetry.",
+      "expected_claims": [
+        "PlanHarborEthernet0/1 toTransitEthernet1/1",
+        "Observedlinkreportdown versusinterfaceup discrepancy disclosed",
+        "Counter3/120=2.5percentwithinrecordedwindow",
+        "Modeleddeliverydifferentassumptions/scope thanpacketmeasurements; no globalhealthclaim"
+      ],
+      "required_tools": [
+        "network.topology",
+        "network.state",
+        "network.telemetry"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "independent_oracle": {
+        "forward": "delivered",
+        "return": "delivered"
+      },
+      "setup": null,
+      "prohibited_claims": [
+        "Physical collection or execution occurred",
+        "Unread or unavailable logs establish no event",
+        "Source citations certify all causal prose",
+        "Wrong device/interface ownership",
+        "Capture times alone establish active change timing"
+      ]
+    },
+    {
+      "id": "CF-07",
+      "scenario": "CF-07",
+      "surface": "floating",
+      "prompt": "Read Transit current configuration, routing/state records and available syslog only. Explain the interface settings and whether route presence or no-shutdown establishes OSPF adjacency. Explain what the unavailable event source leaves unresolved without inventing events or claiming none occurred.",
+      "expected_claims": [
+        "Currentno-shutdown andprefixes scopedtoTransit",
+        "NoOSPFneighborobservation, routesnotadjacencyproof",
+        "Unavailablelogsnotproofnoevents; no physicalrootcauseinvented"
+      ],
+      "required_tools": [
+        "network.configuration",
+        "network.state",
+        "network.syslog"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "independent_oracle": null,
+      "setup": null,
+      "prohibited_claims": [
+        "Physical collection or execution occurred",
+        "Unread or unavailable logs establish no event",
+        "Source citations certify all causal prose",
+        "Wrong device/interface ownership",
+        "Capture times alone establish active change timing"
+      ]
+    },
+    {
+      "id": "CF-08",
+      "scenario": "CF-08",
+      "surface": "studio",
+      "prompt": "Without retrieving anything new, recommend two read-only checks that would distinguish an interface problem from a routing problem for Transit. Use the prior owned configuration appropriately, explain what each check can actually establish, and state any remaining uncertainty. Do not execute or change anything.",
+      "expected_claims": [
+        "0newreaders;2usefulnoncircularcheckswithaccuratesourcecapabilities",
+        "Priorconfigdoesnotproveoperationalstate; tabledoesnotproveprotocolsessionhealth",
+        "No inventedcurrentobservation/action"
+      ],
+      "required_tools": [],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "independent_oracle": null,
+      "setup": "Show Transit current configuration.",
+      "prohibited_claims": [
+        "Physical collection or execution occurred",
+        "Unread or unavailable logs establish no event",
+        "Source citations certify all causal prose",
+        "Wrong device/interface ownership",
+        "Capture times alone establish active change timing"
+      ]
+    },
+    {
+      "id": "MN-01",
+      "surface": "floating",
+      "prompt": "Investigate why R1 cannot communicate with R2 using recorded interface state and current configuration. Explain what the available evidence supports.",
+      "required_tools": [
+        "network.state",
+        "network.configuration"
+      ],
+      "expected": [
+        "R1 GigabitEthernet0/1 administratively down",
+        "Current shutdown versus saved no shutdown",
+        "Development context; no physical collection"
+      ],
+      "prohibited": [
+        "R2 owns GigabitEthernet0/1",
+        "All interfaces up",
+        "Physical live measurements"
+      ],
+      "reference": true,
+      "scenario": "MN-INTEGRATION-001",
+      "expected_claims": [
+        "R1 GigabitEthernet0/1 administratively down",
+        "Current shutdown versus saved no shutdown",
+        "Development context; no physical collection"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents",
+        "knowledge.search"
+      ],
+      "reference_note": "Exact original MN integration prompt/fixture, not new generalization evidence."
+    },
+    {
+      "id": "MN-02",
+      "surface": "studio",
+      "prompt": "Investigate why R1 cannot communicate with R2 using recorded interface state and current configuration. Explain what the available evidence supports.",
+      "required_tools": [
+        "network.state",
+        "network.configuration"
+      ],
+      "expected": [
+        "Same actual source identities/ownership as Floating",
+        "No engineering proposal or write"
+      ],
+      "prohibited": [
+        "Automatic remediation",
+        "Saved output"
+      ],
+      "reference": true,
+      "scenario": "MN-INTEGRATION-001",
+      "expected_claims": [
+        "Same actual source identities/ownership as Floating",
+        "No engineering proposal or write"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents",
+        "knowledge.search"
+      ],
+      "reference_note": "Exact original MN integration prompt/fixture, not new generalization evidence."
+    },
+    {
+      "id": "MN-03",
+      "surface": "studio",
+      "prompt": "Compare R1 current configuration with its saved capture, explain the significant difference, and inspect available syslog. Explain separately what remains unknown.",
+      "required_tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "expected": [
+        "Current shutdown versus saved no shutdown on R1 GigabitEthernet0/1",
+        "Syslog unavailable, not proof no event occurred",
+        "All independent requested outcomes addressed"
+      ],
+      "prohibited": [
+        "Retrieved syslog event",
+        "Current config is the historical snapshot"
+      ],
+      "reference": true,
+      "scenario": "MN-INTEGRATION-001",
+      "expected_claims": [
+        "Current shutdown versus saved no shutdown on R1 GigabitEthernet0/1",
+        "Syslog unavailable, not proof no event occurred",
+        "All independent requested outcomes addressed"
+      ],
+      "allowed_tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents",
+        "knowledge.search"
+      ],
+      "reference_note": "Exact original MN integration prompt/fixture, not new generalization evidence."
+    }
+  ],
+  "fixtures": {
+    "CF-01": {
+      "format_version": 2,
+      "id": "CF-01",
+      "revision": 1,
+      "title": "Completeness-first independent condition 1",
+      "logical_time": "2026-10-26T14:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 701,
+          "hostname": "Harbor",
+          "management_ip": "192.0.2.71",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 702,
+          "hostname": "Transit",
+          "management_ip": "192.0.2.72",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 703,
+          "hostname": "Meadow",
+          "management_ip": "192.0.2.73",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 7011,
+          "device_id": 701,
+          "name": "Ethernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7021,
+          "device_id": 702,
+          "name": "Ethernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7022,
+          "device_id": 702,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.2.1/30",
+          "admin_status": "up",
+          "oper_status": "down",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7031,
+          "device_id": 703,
+          "name": "Ethernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.71.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7023,
+          "device_id": 702,
+          "name": "Ethernet1/3",
+          "interface_type": "routed",
+          "prefix": "10.71.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7032,
+          "device_id": 703,
+          "name": "Ethernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.71.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7010,
+          "device_id": 701,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7030,
+          "device_id": 703,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 710,
+          "src_device_id": 701,
+          "src_interface_id": 7011,
+          "dst_device_id": 702,
+          "dst_interface_id": 7021
+        },
+        {
+          "id": 711,
+          "src_device_id": 702,
+          "src_interface_id": 7022,
+          "dst_device_id": 703,
+          "dst_interface_id": 7031
+        },
+        {
+          "id": 712,
+          "src_device_id": 702,
+          "src_interface_id": 7023,
+          "dst_device_id": 703,
+          "dst_interface_id": 7032
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-7011",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7021",
+            "device_id": 702,
+            "interface_id": 7021,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7022",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.1/30",
+              "admin_status": "up",
+              "oper_status": "down"
+            }
+          },
+          {
+            "id": "port-7031",
+            "device_id": 703,
+            "interface_id": 7031,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7023",
+            "device_id": 702,
+            "interface_id": 7023,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7032",
+            "device_id": 703,
+            "interface_id": 7032,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7010",
+            "device_id": 701,
+            "interface_id": 7010,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7030",
+            "device_id": 703,
+            "interface_id": 7030,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.3/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n",
+              "change_event_ref": "optical-order-212"
+            }
+          },
+          {
+            "id": "current-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [
+          {
+            "id": "routine-0",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 0"
+            }
+          },
+          {
+            "id": "routine-1",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 1"
+            }
+          },
+          {
+            "id": "routine-2",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 2"
+            }
+          },
+          {
+            "id": "routine-3",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 3"
+            }
+          },
+          {
+            "id": "routine-4",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 4"
+            }
+          },
+          {
+            "id": "routine-5",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 5"
+            }
+          },
+          {
+            "id": "routine-6",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 6"
+            }
+          },
+          {
+            "id": "routine-7",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 7"
+            }
+          },
+          {
+            "id": "routine-8",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 8"
+            }
+          },
+          {
+            "id": "routine-9",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 9"
+            }
+          },
+          {
+            "id": "routine-10",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 10"
+            }
+          },
+          {
+            "id": "routine-11",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 11"
+            }
+          },
+          {
+            "id": "routine-12",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 12"
+            }
+          },
+          {
+            "id": "routine-13",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 13"
+            }
+          },
+          {
+            "id": "routine-14",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 14"
+            }
+          },
+          {
+            "id": "routine-15",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 15"
+            }
+          },
+          {
+            "id": "routine-16",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 16"
+            }
+          },
+          {
+            "id": "routine-17",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 17"
+            }
+          },
+          {
+            "id": "routine-18",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 18"
+            }
+          },
+          {
+            "id": "routine-19",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 19"
+            }
+          },
+          {
+            "id": "routine-20",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 20"
+            }
+          },
+          {
+            "id": "routine-21",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 21"
+            }
+          },
+          {
+            "id": "routine-22",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 22"
+            }
+          },
+          {
+            "id": "routine-23",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 23"
+            }
+          },
+          {
+            "id": "routine-24",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 24"
+            }
+          },
+          {
+            "id": "routine-25",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 25"
+            }
+          },
+          {
+            "id": "routine-26",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 26"
+            }
+          },
+          {
+            "id": "routine-27",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 27"
+            }
+          },
+          {
+            "id": "routine-28",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 28"
+            }
+          },
+          {
+            "id": "routine-29",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 29"
+            }
+          },
+          {
+            "id": "routine-30",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 30"
+            }
+          },
+          {
+            "id": "routine-31",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 31"
+            }
+          },
+          {
+            "id": "routine-32",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 32"
+            }
+          },
+          {
+            "id": "routine-33",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 33"
+            }
+          },
+          {
+            "id": "routine-34",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 34"
+            }
+          },
+          {
+            "id": "routine-35",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 35"
+            }
+          },
+          {
+            "id": "routine-36",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 36"
+            }
+          },
+          {
+            "id": "routine-37",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 37"
+            }
+          },
+          {
+            "id": "routine-38",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 38"
+            }
+          },
+          {
+            "id": "routine-39",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 39"
+            }
+          },
+          {
+            "id": "routine-40",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 40"
+            }
+          },
+          {
+            "id": "routine-41",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 41"
+            }
+          },
+          {
+            "id": "routine-42",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 42"
+            }
+          },
+          {
+            "id": "routine-43",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 43"
+            }
+          },
+          {
+            "id": "routine-44",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "routine_notification",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Routine recorder heartbeat 44"
+            }
+          },
+          {
+            "id": "optical-order-212",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "syslog_event",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorded purpose: inspect the receive optical path on Transit Ethernet1/2 after intermittent alarms. This is inspection intent, not a completed repair or confirmed physical cause."
+            }
+          }
+        ],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T14:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 701,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "harbor-to-meadow",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7011,
+                    "address": "10.71.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 702,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "transit-a",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7022,
+                    "address": "10.71.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-b",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 25,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7023,
+                    "address": "10.71.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7021,
+                    "address": "10.71.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 703,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "meadow-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7031,
+                    "address": "10.71.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "service-71",
+            "source_device_id": 701,
+            "destination_device_id": 703,
+            "source_address": "198.18.71.1",
+            "destination_address": "198.18.71.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 45171,
+            "destination_port": 9443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "CF-02": {
+      "format_version": 2,
+      "id": "CF-02",
+      "revision": 1,
+      "title": "Completeness-first independent condition 2",
+      "logical_time": "2026-10-26T14:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 701,
+          "hostname": "Harbor",
+          "management_ip": "192.0.2.71",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 702,
+          "hostname": "Transit",
+          "management_ip": "192.0.2.72",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 703,
+          "hostname": "Meadow",
+          "management_ip": "192.0.2.73",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 7011,
+          "device_id": 701,
+          "name": "Ethernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7021,
+          "device_id": 702,
+          "name": "Ethernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7022,
+          "device_id": 702,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.2.1/30",
+          "admin_status": "up",
+          "oper_status": "down",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7031,
+          "device_id": 703,
+          "name": "Ethernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.71.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7023,
+          "device_id": 702,
+          "name": "Ethernet1/3",
+          "interface_type": "routed",
+          "prefix": "10.71.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7032,
+          "device_id": 703,
+          "name": "Ethernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.71.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7010,
+          "device_id": 701,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7030,
+          "device_id": 703,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 710,
+          "src_device_id": 701,
+          "src_interface_id": 7011,
+          "dst_device_id": 702,
+          "dst_interface_id": 7021
+        },
+        {
+          "id": 711,
+          "src_device_id": 702,
+          "src_interface_id": 7022,
+          "dst_device_id": 703,
+          "dst_interface_id": 7031
+        },
+        {
+          "id": 712,
+          "src_device_id": 702,
+          "src_interface_id": 7023,
+          "dst_device_id": 703,
+          "dst_interface_id": 7032
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-7011",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7021",
+            "device_id": 702,
+            "interface_id": 7021,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7022",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.1/30",
+              "admin_status": "up",
+              "oper_status": "down"
+            }
+          },
+          {
+            "id": "port-7031",
+            "device_id": 703,
+            "interface_id": 7031,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7023",
+            "device_id": 702,
+            "interface_id": 7023,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7032",
+            "device_id": 703,
+            "interface_id": 7032,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7010",
+            "device_id": 701,
+            "interface_id": 7010,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7030",
+            "device_id": 703,
+            "interface_id": 7030,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.3/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T14:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 701,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "harbor-to-meadow",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7011,
+                    "address": "10.71.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 702,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "transit-a",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7022,
+                    "address": "10.71.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-b",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 25,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7023,
+                    "address": "10.71.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7021,
+                    "address": "10.71.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 703,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "meadow-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7031,
+                    "address": "10.71.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "service-71",
+            "source_device_id": 701,
+            "destination_device_id": 703,
+            "source_address": "198.18.71.1",
+            "destination_address": "198.18.71.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 45171,
+            "destination_port": 9443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "CF-03": {
+      "format_version": 2,
+      "id": "CF-03",
+      "revision": 1,
+      "title": "Completeness-first independent condition 3",
+      "logical_time": "2026-10-26T14:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 701,
+          "hostname": "Harbor",
+          "management_ip": "192.0.2.71",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 702,
+          "hostname": "Transit",
+          "management_ip": "192.0.2.72",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 703,
+          "hostname": "Meadow",
+          "management_ip": "192.0.2.73",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 7011,
+          "device_id": 701,
+          "name": "Ethernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7021,
+          "device_id": 702,
+          "name": "Ethernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7022,
+          "device_id": 702,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.2.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7031,
+          "device_id": 703,
+          "name": "Ethernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.71.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7023,
+          "device_id": 702,
+          "name": "Ethernet1/3",
+          "interface_type": "routed",
+          "prefix": "10.71.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7032,
+          "device_id": 703,
+          "name": "Ethernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.71.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7010,
+          "device_id": 701,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7030,
+          "device_id": 703,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 710,
+          "src_device_id": 701,
+          "src_interface_id": 7011,
+          "dst_device_id": 702,
+          "dst_interface_id": 7021
+        },
+        {
+          "id": 711,
+          "src_device_id": 702,
+          "src_interface_id": 7022,
+          "dst_device_id": 703,
+          "dst_interface_id": 7031
+        },
+        {
+          "id": 712,
+          "src_device_id": 702,
+          "src_interface_id": 7023,
+          "dst_device_id": 703,
+          "dst_interface_id": 7032
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-7011",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7021",
+            "device_id": 702,
+            "interface_id": 7021,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7022",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7031",
+            "device_id": 703,
+            "interface_id": 7031,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7023",
+            "device_id": 702,
+            "interface_id": 7023,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7032",
+            "device_id": 703,
+            "interface_id": 7032,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7010",
+            "device_id": 701,
+            "interface_id": 7010,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7030",
+            "device_id": 703,
+            "interface_id": 7030,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.3/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T14:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 701,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "harbor-to-meadow",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7011,
+                    "address": "10.71.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 702,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "transit-a",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7022,
+                    "address": "10.71.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-b",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 25,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7023,
+                    "address": "10.71.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7021,
+                    "address": "10.71.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 703,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "meadow-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7031,
+                    "address": "10.71.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [
+          {
+            "id": "traffic-egress-213",
+            "interface_id": 7022,
+            "direction": "egress",
+            "vrf": "default",
+            "rules": [
+              {
+                "id": "deny-app",
+                "source": "0.0.0.0/0",
+                "destination": "0.0.0.0/0",
+                "protocol": "tcp",
+                "source_port": null,
+                "destination_port": 9443,
+                "action": "deny"
+              }
+            ],
+            "default_action": "permit"
+          }
+        ],
+        "flows": [
+          {
+            "id": "service-71",
+            "source_device_id": 701,
+            "destination_device_id": 703,
+            "source_address": "198.18.71.1",
+            "destination_address": "198.18.71.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 45171,
+            "destination_port": 9443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "CF-04": {
+      "format_version": 2,
+      "id": "CF-04",
+      "revision": 1,
+      "title": "Completeness-first independent condition 4",
+      "logical_time": "2026-10-26T14:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 701,
+          "hostname": "Harbor",
+          "management_ip": "192.0.2.71",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 702,
+          "hostname": "Transit",
+          "management_ip": "192.0.2.72",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 703,
+          "hostname": "Meadow",
+          "management_ip": "192.0.2.73",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 7011,
+          "device_id": 701,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "guest",
+          "speed_bps": null
+        },
+        {
+          "id": 7021,
+          "device_id": 702,
+          "name": "Ethernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7022,
+          "device_id": 702,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.2.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "red",
+          "speed_bps": null
+        },
+        {
+          "id": 7031,
+          "device_id": 703,
+          "name": "Ethernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.71.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7023,
+          "device_id": 702,
+          "name": "Ethernet1/3",
+          "interface_type": "routed",
+          "prefix": "10.71.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7032,
+          "device_id": 703,
+          "name": "Ethernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.71.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7010,
+          "device_id": 701,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7030,
+          "device_id": 703,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 710,
+          "src_device_id": 701,
+          "src_interface_id": 7011,
+          "dst_device_id": 702,
+          "dst_interface_id": 7021
+        },
+        {
+          "id": 711,
+          "src_device_id": 702,
+          "src_interface_id": 7022,
+          "dst_device_id": 703,
+          "dst_interface_id": 7031
+        },
+        {
+          "id": 712,
+          "src_device_id": 702,
+          "src_interface_id": 7023,
+          "dst_device_id": 703,
+          "dst_interface_id": 7032
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-7011",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7021",
+            "device_id": 702,
+            "interface_id": 7021,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7022",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7031",
+            "device_id": 703,
+            "interface_id": 7031,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7023",
+            "device_id": 702,
+            "interface_id": 7023,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7032",
+            "device_id": 703,
+            "interface_id": 7032,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7010",
+            "device_id": 701,
+            "interface_id": 7010,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7030",
+            "device_id": 703,
+            "interface_id": 7030,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.3/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet1/2\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet1/2\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T14:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 701,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "harbor-to-meadow",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7011,
+                    "address": "10.71.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 702,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "transit-a",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7022,
+                    "address": "10.71.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-b",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 25,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7023,
+                    "address": "10.71.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7021,
+                    "address": "10.71.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 703,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "meadow-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7031,
+                    "address": "10.71.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "service-71",
+            "source_device_id": 701,
+            "destination_device_id": 703,
+            "source_address": "198.18.71.1",
+            "destination_address": "198.18.71.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 45171,
+            "destination_port": 9443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "CF-05": {
+      "format_version": 2,
+      "id": "CF-05",
+      "revision": 1,
+      "title": "Completeness-first independent condition 5",
+      "logical_time": "2026-10-26T14:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 701,
+          "hostname": "Harbor",
+          "management_ip": "192.0.2.71",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 702,
+          "hostname": "Transit",
+          "management_ip": "192.0.2.72",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 703,
+          "hostname": "Meadow",
+          "management_ip": "192.0.2.73",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 7011,
+          "device_id": 701,
+          "name": "Ethernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7021,
+          "device_id": 702,
+          "name": "Ethernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7022,
+          "device_id": 702,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.2.1/30",
+          "admin_status": "down",
+          "oper_status": "down",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7031,
+          "device_id": 703,
+          "name": "Ethernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.71.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7023,
+          "device_id": 702,
+          "name": "Ethernet1/3",
+          "interface_type": "routed",
+          "prefix": "10.71.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7032,
+          "device_id": 703,
+          "name": "Ethernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.71.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7010,
+          "device_id": 701,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7030,
+          "device_id": 703,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 710,
+          "src_device_id": 701,
+          "src_interface_id": 7011,
+          "dst_device_id": 702,
+          "dst_interface_id": 7021
+        },
+        {
+          "id": 711,
+          "src_device_id": 702,
+          "src_interface_id": 7022,
+          "dst_device_id": 703,
+          "dst_interface_id": 7031
+        },
+        {
+          "id": 712,
+          "src_device_id": 702,
+          "src_interface_id": 7023,
+          "dst_device_id": 703,
+          "dst_interface_id": 7032
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-7011",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7021",
+            "device_id": 702,
+            "interface_id": 7021,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7022",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.1/30",
+              "admin_status": "down",
+              "oper_status": "down"
+            }
+          },
+          {
+            "id": "port-7031",
+            "device_id": 703,
+            "interface_id": 7031,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7023",
+            "device_id": 702,
+            "interface_id": 7023,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7032",
+            "device_id": 703,
+            "interface_id": 7032,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7010",
+            "device_id": 701,
+            "interface_id": 7010,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7030",
+            "device_id": 703,
+            "interface_id": 7030,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.3/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "run-before-215",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/2\n description old\n no shutdown\n"
+            }
+          },
+          {
+            "id": "unapplied-file-215",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T11:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/2\n description staged-only\n shutdown\n"
+            }
+          },
+          {
+            "id": "run-prechange-215",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/2\n description uplink\n no shutdown\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/2\n description uplink\n shutdown\n",
+              "change_event_ref": "applied-change-215"
+            }
+          },
+          {
+            "id": "current-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [
+          {
+            "id": "applied-change-215",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T13:00:00Z",
+            "kind": "configuration_change",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [
+              "run-prechange-215",
+              "current-702"
+            ],
+            "values": {
+              "message": "Recorded applied interface shutdown on Transit Ethernet1/2",
+              "applied": true,
+              "verification_status": "verified"
+            }
+          }
+        ],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T14:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 701,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "harbor-to-meadow",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7011,
+                    "address": "10.71.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 702,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "transit-a",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7022,
+                    "address": "10.71.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-b",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 25,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7023,
+                    "address": "10.71.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7021,
+                    "address": "10.71.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 703,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "meadow-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7031,
+                    "address": "10.71.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "service-71",
+            "source_device_id": 701,
+            "destination_device_id": 703,
+            "source_address": "198.18.71.1",
+            "destination_address": "198.18.71.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 45171,
+            "destination_port": 9443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "CF-06": {
+      "format_version": 2,
+      "id": "CF-06",
+      "revision": 1,
+      "title": "Completeness-first independent condition 6",
+      "logical_time": "2026-10-26T14:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 701,
+          "hostname": "Harbor",
+          "management_ip": "192.0.2.71",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 702,
+          "hostname": "Transit",
+          "management_ip": "192.0.2.72",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 703,
+          "hostname": "Meadow",
+          "management_ip": "192.0.2.73",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 7011,
+          "device_id": 701,
+          "name": "Ethernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7021,
+          "device_id": 702,
+          "name": "Ethernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7022,
+          "device_id": 702,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.2.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7031,
+          "device_id": 703,
+          "name": "Ethernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.71.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7023,
+          "device_id": 702,
+          "name": "Ethernet1/3",
+          "interface_type": "routed",
+          "prefix": "10.71.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7032,
+          "device_id": 703,
+          "name": "Ethernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.71.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7010,
+          "device_id": 701,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7030,
+          "device_id": 703,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 710,
+          "src_device_id": 701,
+          "src_interface_id": 7011,
+          "dst_device_id": 702,
+          "dst_interface_id": 7021
+        },
+        {
+          "id": 711,
+          "src_device_id": 702,
+          "src_interface_id": 7022,
+          "dst_device_id": 703,
+          "dst_interface_id": 7031
+        },
+        {
+          "id": 712,
+          "src_device_id": 702,
+          "src_interface_id": 7023,
+          "dst_device_id": 703,
+          "dst_interface_id": 7032
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-7011",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7021",
+            "device_id": 702,
+            "interface_id": 7021,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7022",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7031",
+            "device_id": 703,
+            "interface_id": 7031,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7023",
+            "device_id": 702,
+            "interface_id": 7023,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7032",
+            "device_id": 703,
+            "interface_id": 7032,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7010",
+            "device_id": 701,
+            "interface_id": 7010,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7030",
+            "device_id": 703,
+            "interface_id": 7030,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.3/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [
+          {
+            "id": "neighbor-report-216",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "observed_link",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "peer_device_id": 702,
+              "peer_interface_id": 7021,
+              "link_id": 710,
+              "status": "down"
+            }
+          }
+        ],
+        "telemetry": [
+          {
+            "id": "loss-sample-216",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_counters",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "lost_packets": 3,
+              "sent_packets": 120,
+              "unit": "packets",
+              "window_start": "2026-10-26T13:55:00Z",
+              "window_end": "2026-10-26T14:00:00Z"
+            }
+          }
+        ],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T14:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 701,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "harbor-to-meadow",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7011,
+                    "address": "10.71.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 702,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "transit-a",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7022,
+                    "address": "10.71.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-b",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 25,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7023,
+                    "address": "10.71.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7021,
+                    "address": "10.71.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 703,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "meadow-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7031,
+                    "address": "10.71.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "service-71",
+            "source_device_id": 701,
+            "destination_device_id": 703,
+            "source_address": "198.18.71.1",
+            "destination_address": "198.18.71.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 45171,
+            "destination_port": 9443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "CF-07": {
+      "format_version": 2,
+      "id": "CF-07",
+      "revision": 1,
+      "title": "Completeness-first independent condition 7",
+      "logical_time": "2026-10-26T14:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 701,
+          "hostname": "Harbor",
+          "management_ip": "192.0.2.71",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 702,
+          "hostname": "Transit",
+          "management_ip": "192.0.2.72",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 703,
+          "hostname": "Meadow",
+          "management_ip": "192.0.2.73",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 7011,
+          "device_id": 701,
+          "name": "Ethernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7021,
+          "device_id": 702,
+          "name": "Ethernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7022,
+          "device_id": 702,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.2.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7031,
+          "device_id": 703,
+          "name": "Ethernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.71.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7023,
+          "device_id": 702,
+          "name": "Ethernet1/3",
+          "interface_type": "routed",
+          "prefix": "10.71.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7032,
+          "device_id": 703,
+          "name": "Ethernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.71.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7010,
+          "device_id": 701,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7030,
+          "device_id": 703,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 710,
+          "src_device_id": 701,
+          "src_interface_id": 7011,
+          "dst_device_id": 702,
+          "dst_interface_id": 7021
+        },
+        {
+          "id": 711,
+          "src_device_id": 702,
+          "src_interface_id": 7022,
+          "dst_device_id": 703,
+          "dst_interface_id": 7031
+        },
+        {
+          "id": 712,
+          "src_device_id": 702,
+          "src_interface_id": 7023,
+          "dst_device_id": 703,
+          "dst_interface_id": 7032
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-7011",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7021",
+            "device_id": 702,
+            "interface_id": 7021,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7022",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7031",
+            "device_id": 703,
+            "interface_id": 7031,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7023",
+            "device_id": 702,
+            "interface_id": 7023,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7032",
+            "device_id": 703,
+            "interface_id": 7032,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7010",
+            "device_id": 701,
+            "interface_id": 7010,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7030",
+            "device_id": 703,
+            "interface_id": 7030,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.3/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": false,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T14:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 701,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "harbor-to-meadow",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7011,
+                    "address": "10.71.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 702,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "transit-a",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7022,
+                    "address": "10.71.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-b",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 25,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7023,
+                    "address": "10.71.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7021,
+                    "address": "10.71.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 703,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "meadow-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7031,
+                    "address": "10.71.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "service-71",
+            "source_device_id": 701,
+            "destination_device_id": 703,
+            "source_address": "198.18.71.1",
+            "destination_address": "198.18.71.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 45171,
+            "destination_port": 9443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "CF-08": {
+      "format_version": 2,
+      "id": "CF-08",
+      "revision": 1,
+      "title": "Completeness-first independent condition 8",
+      "logical_time": "2026-10-26T14:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 701,
+          "hostname": "Harbor",
+          "management_ip": "192.0.2.71",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 702,
+          "hostname": "Transit",
+          "management_ip": "192.0.2.72",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 703,
+          "hostname": "Meadow",
+          "management_ip": "192.0.2.73",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-Holdout",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 7011,
+          "device_id": 701,
+          "name": "Ethernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7021,
+          "device_id": 702,
+          "name": "Ethernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.71.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7022,
+          "device_id": 702,
+          "name": "Ethernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.71.2.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7031,
+          "device_id": 703,
+          "name": "Ethernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.71.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7023,
+          "device_id": 702,
+          "name": "Ethernet1/3",
+          "interface_type": "routed",
+          "prefix": "10.71.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7032,
+          "device_id": 703,
+          "name": "Ethernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.71.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7010,
+          "device_id": 701,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7030,
+          "device_id": 703,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.18.71.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 710,
+          "src_device_id": 701,
+          "src_interface_id": 7011,
+          "dst_device_id": 702,
+          "dst_interface_id": 7021
+        },
+        {
+          "id": 711,
+          "src_device_id": 702,
+          "src_interface_id": 7022,
+          "dst_device_id": 703,
+          "dst_interface_id": 7031
+        },
+        {
+          "id": 712,
+          "src_device_id": 702,
+          "src_interface_id": 7023,
+          "dst_device_id": 703,
+          "dst_interface_id": 7032
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-7011",
+            "device_id": 701,
+            "interface_id": 7011,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7021",
+            "device_id": 702,
+            "interface_id": 7021,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7022",
+            "device_id": 702,
+            "interface_id": 7022,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7031",
+            "device_id": 703,
+            "interface_id": 7031,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7023",
+            "device_id": 702,
+            "interface_id": 7023,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7032",
+            "device_id": 703,
+            "interface_id": 7032,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.71.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7010",
+            "device_id": 701,
+            "interface_id": 7010,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-7030",
+            "device_id": 703,
+            "interface_id": 7030,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.71.3/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "saved-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T12:00:00Z",
+            "kind": "configuration",
+            "source": "authored-synthetic-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-701",
+            "device_id": 701,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Harbor\ninterface Ethernet0/1\n ip address 10.71.1.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.1/32\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-702",
+            "device_id": 702,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Transit\ninterface Ethernet1/1\n ip address 10.71.1.2/30\n no shutdown\n!\ninterface Ethernet1/2\n ip address 10.71.2.1/30\n no shutdown\n!\ninterface Ethernet1/3\n ip address 10.71.3.1/30\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "current-703",
+            "device_id": 703,
+            "interface_id": null,
+            "timestamp": "2026-10-26T14:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-synthetic-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Meadow\ninterface Ethernet2/1\n ip address 10.71.2.2/30\n no shutdown\n!\ninterface Ethernet2/2\n ip address 10.71.3.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.18.71.3/32\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T14:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 701,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "harbor-to-meadow",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7011,
+                    "address": "10.71.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 702,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "transit-a",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7022,
+                    "address": "10.71.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-b",
+                "prefix": "198.18.71.3/32",
+                "origin": "static",
+                "preference": 25,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7023,
+                    "address": "10.71.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "transit-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7021,
+                    "address": "10.71.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 703,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "meadow-return",
+                "prefix": "198.18.71.1/32",
+                "origin": "static",
+                "preference": 15,
+                "metric": 2,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7031,
+                    "address": "10.71.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "service-71",
+            "source_device_id": 701,
+            "destination_device_id": 703,
+            "source_address": "198.18.71.1",
+            "destination_address": "198.18.71.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 45171,
+            "destination_port": 9443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "MN-INTEGRATION-001": {
+      "format_version": 1,
+      "id": "MN-INTEGRATION-001",
+      "revision": 1,
+      "title": "Model role functional acceptance",
+      "logical_time": "2026-10-17T09:00:00Z",
+      "model_scope": "direct_link",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 9101,
+          "hostname": "R1",
+          "management_ip": "192.0.2.10",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {
+            "origin": "planned",
+            "model_family": "catalyst9300",
+            "source_refs": {
+              "scenario": "FAULT-IFDOWN-001@2; modeled development facts only",
+              "policy": "V9 app/devices/operation_policies.py PROFILES / physical_interface_v1"
+            },
+            "capabilities": {
+              "validated_policies": [
+                "physical_interface_v1"
+              ]
+            },
+            "interfaces": [
+              {
+                "name": "GigabitEthernet0/0",
+                "type": "ethernet"
+              },
+              {
+                "name": "GigabitEthernet0/1",
+                "type": "ethernet"
+              }
+            ]
+          }
+        },
+        {
+          "id": 9102,
+          "hostname": "R2",
+          "management_ip": "192.0.2.20",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {
+            "origin": "planned",
+            "model_family": "catalyst9300",
+            "source_refs": {
+              "scenario": "FAULT-IFDOWN-001@2; modeled development facts only",
+              "policy": "V9 app/devices/operation_policies.py PROFILES / physical_interface_v1"
+            },
+            "capabilities": {
+              "validated_policies": [
+                "physical_interface_v1"
+              ]
+            },
+            "interfaces": [
+              {
+                "name": "GigabitEthernet0/0",
+                "type": "ethernet"
+              },
+              {
+                "name": "GigabitEthernet1/0/1",
+                "type": "ethernet"
+              },
+              {
+                "name": "Loopback0",
+                "type": "loopback"
+              }
+            ]
+          }
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 9111,
+          "device_id": 9101,
+          "name": "GigabitEthernet0/0",
+          "interface_type": "routed",
+          "prefix": "192.0.2.10/24",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9112,
+          "device_id": 9101,
+          "name": "GigabitEthernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.23.12.1/30",
+          "admin_status": "down",
+          "oper_status": "down",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9121,
+          "device_id": 9102,
+          "name": "GigabitEthernet0/0",
+          "interface_type": "routed",
+          "prefix": "192.0.2.20/24",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9122,
+          "device_id": 9102,
+          "name": "GigabitEthernet1/0/1",
+          "interface_type": "routed",
+          "prefix": "10.23.12.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9123,
+          "device_id": 9102,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.51.100.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 9150,
+          "src_device_id": 9101,
+          "src_interface_id": 9112,
+          "dst_device_id": 9102,
+          "dst_interface_id": 9122
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "if-9111",
+            "device_id": 9101,
+            "interface_id": 9111,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_state",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "admin_status": "up",
+              "oper_status": "up",
+              "prefix": "192.0.2.10/24"
+            }
+          },
+          {
+            "id": "if-9112",
+            "device_id": 9101,
+            "interface_id": 9112,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_state",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "admin_status": "down",
+              "oper_status": "down",
+              "prefix": "10.23.12.1/30"
+            }
+          },
+          {
+            "id": "if-9121",
+            "device_id": 9102,
+            "interface_id": 9121,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_state",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "admin_status": "up",
+              "oper_status": "up",
+              "prefix": "192.0.2.20/24"
+            }
+          },
+          {
+            "id": "if-9122",
+            "device_id": 9102,
+            "interface_id": 9122,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_state",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "admin_status": "up",
+              "oper_status": "up",
+              "prefix": "10.23.12.2/30"
+            }
+          },
+          {
+            "id": "if-9123",
+            "device_id": 9102,
+            "interface_id": 9123,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_state",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "admin_status": "up",
+              "oper_status": "up",
+              "prefix": "198.51.100.2/32"
+            }
+          },
+          {
+            "id": "routes-9101",
+            "device_id": 9101,
+            "interface_id": null,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "routing_table",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "complete": true,
+              "routes": [
+                {
+                  "prefix": "198.51.100.2/32",
+                  "next_hop": "10.23.12.2"
+                }
+              ]
+            }
+          },
+          {
+            "id": "routes-9102",
+            "device_id": 9102,
+            "interface_id": null,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "routing_table",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "complete": true,
+              "routes": [
+                {
+                  "prefix": "192.0.2.10/32",
+                  "next_hop": "10.23.12.1"
+                }
+              ]
+            }
+          },
+          {
+            "id": "probe-r1-r2",
+            "device_id": 9101,
+            "interface_id": null,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "reachability",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "to_device_id": 9102,
+              "destination_ip": "10.23.12.2",
+              "protocol": "icmp",
+              "interface_ids": [
+                9112,
+                9122
+              ],
+              "link_ids": [
+                9150
+              ],
+              "routing_required": false,
+              "success": false
+            }
+          }
+        ],
+        "topology": [
+          {
+            "id": "link-observer",
+            "device_id": 9101,
+            "interface_id": null,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "observed_link",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [
+              "if-9112",
+              "if-9122"
+            ],
+            "values": {
+              "link_id": 9150,
+              "oper_status": "down"
+            }
+          }
+        ],
+        "telemetry": [
+          {
+            "id": "cpu-r1",
+            "device_id": 9101,
+            "interface_id": null,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "device_metrics",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "cpu": 23.4,
+              "memory": 41.2
+            }
+          },
+          {
+            "id": "cpu-r2",
+            "device_id": 9102,
+            "interface_id": null,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "device_metrics",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "cpu": 31.7,
+              "memory": 52.6
+            }
+          },
+          {
+            "id": "counters-9111",
+            "device_id": 9101,
+            "interface_id": 9111,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_counters",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "in_bps": 10000,
+              "out_bps": 8300,
+              "errors": 0,
+              "discards": 0,
+              "utilization_pct": 0.3
+            }
+          },
+          {
+            "id": "counters-9112",
+            "device_id": 9101,
+            "interface_id": 9112,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_counters",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "in_bps": 0,
+              "out_bps": 0,
+              "errors": 1,
+              "discards": 0,
+              "utilization_pct": 0.44
+            }
+          },
+          {
+            "id": "counters-9121",
+            "device_id": 9102,
+            "interface_id": 9121,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_counters",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "in_bps": 24600,
+              "out_bps": 20500,
+              "errors": 2,
+              "discards": 0,
+              "utilization_pct": 0.58
+            }
+          },
+          {
+            "id": "counters-9122",
+            "device_id": 9102,
+            "interface_id": 9122,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_counters",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "in_bps": 31900,
+              "out_bps": 26600,
+              "errors": 3,
+              "discards": 1,
+              "utilization_pct": 0.72
+            }
+          },
+          {
+            "id": "counters-9123",
+            "device_id": 9102,
+            "interface_id": 9123,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "interface_counters",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "in_bps": 39200,
+              "out_bps": 32700,
+              "errors": 4,
+              "discards": 1,
+              "utilization_pct": 0.86
+            }
+          }
+        ],
+        "syslog": [
+          {
+            "id": "event-config",
+            "device_id": 9101,
+            "interface_id": 9112,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "configuration_event",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [
+              "if-9112"
+            ],
+            "values": {
+              "severity": "warning",
+              "message": "Administrator set GigabitEthernet0/1 shutdown"
+            }
+          }
+        ],
+        "incidents": [
+          {
+            "id": "derived-alert",
+            "device_id": 9101,
+            "interface_id": 9112,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "derived_alert",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [
+              "if-9112",
+              "event-config"
+            ],
+            "values": {
+              "severity": "warning",
+              "message": "Interface state change alert"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-9101",
+            "device_id": 9101,
+            "interface_id": null,
+            "timestamp": "2026-10-17T08:55:00Z",
+            "kind": "configuration_snapshot",
+            "source": "development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname R1\ninterface GigabitEthernet0/0\n ip address 192.0.2.10 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet0/1\n ip address 10.23.12.1 255.255.255.252\n no shutdown\n!\n",
+              "source_type": "simulated",
+              "captured_at": "2026-10-17T08:55:00Z"
+            }
+          },
+          {
+            "id": "saved-9102",
+            "device_id": 9102,
+            "interface_id": null,
+            "timestamp": "2026-10-17T08:55:00Z",
+            "kind": "configuration_snapshot",
+            "source": "development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname R2\ninterface GigabitEthernet0/0\n ip address 192.0.2.20 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet1/0/1\n ip address 10.23.12.2 255.255.255.252\n no shutdown\n!\ninterface Loopback0\n ip address 198.51.100.2 255.255.255.255\n no shutdown\n!\n",
+              "source_type": "simulated",
+              "captured_at": "2026-10-17T08:55:00Z"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "running-9101",
+            "device_id": 9101,
+            "interface_id": null,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "running_configuration",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname R1\ninterface GigabitEthernet0/0\n ip address 192.0.2.10 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet0/1\n ip address 10.23.12.1 255.255.255.252\n shutdown\n!\n",
+              "source_type": "development_current",
+              "captured_at": "2026-10-17T09:00:00Z"
+            }
+          },
+          {
+            "id": "running-9102",
+            "device_id": 9102,
+            "interface_id": null,
+            "timestamp": "2026-10-17T09:00:00Z",
+            "kind": "running_configuration",
+            "source": "development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname R2\ninterface GigabitEthernet0/0\n ip address 192.0.2.20 255.255.255.0\n no shutdown\n!\ninterface GigabitEthernet1/0/1\n ip address 10.23.12.2 255.255.255.252\n no shutdown\n!\ninterface Loopback0\n ip address 198.51.100.2 255.255.255.255\n no shutdown\n!\n",
+              "source_type": "development_current",
+              "captured_at": "2026-10-17T09:00:00Z"
+            }
+          }
+        ]
+      },
+      "availability": {
+        "state": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": false,
+        "incidents": true,
+        "configuration": true,
+        "running_configuration": true
+      },
+      "network": null,
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    }
+  }
+}

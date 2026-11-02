@@ -136,3 +136,20 @@ def explicit_read_sources(prompt,available):
                 if not re.search(r'[,/]|\b(?:and|or|plus|with|versus|vs|then|using)\b',clause[previous.end():match.start()],re.I):continue
             output.append(key)
     return list(dict.fromkeys(output))
+
+
+def recorded_category(record,reader):
+    """Compatibility for typed legacy observations without explicit category.
+
+    Explicit category wins. Infer only from registered record-kind/time
+    contracts, never IDs, messages or configuration prose. Unknowns stay unknown.
+    """
+    explicit=record.get('values',{}).get('source_category')
+    if explicit is not None:return explicit
+    kind=record.get('kind')
+    matches=[source.key for source in SOURCES if source.key!='simulation' and kind in source.record_kinds(reader)]
+    if len(matches)==1:return matches[0]
+    if set(matches)=={'topology_observed','topology_history'}:
+        return 'topology_observed' if record.get('current') is True else 'topology_history' if record.get('current') is False else None
+    if reader=='network.configuration' and kind=='configuration' and record.get('current') is False:return 'config_snapshots'
+    return None

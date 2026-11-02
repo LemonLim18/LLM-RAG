@@ -1,0 +1,125 @@
+{
+  "at": "2026-10-29T12:14:26.645341+00:00",
+  "decision": "RETAIN_SCOPE_AND_EXPLICIT_SOURCE_POLICY_REPAIRS_KEEP_COMPLETENESS_OFF",
+  "formal_phase_stage_closed": false,
+  "report": "docs/PHASE_G_STATE_SCOPE_AND_QUALITY_REPAIR.md",
+  "audit": "tmp/phase-g/iterations/20261029-state-scope-repair",
+  "stages": {
+    "0": "PASS_PRESERVATION_AND_RECONCILIATION",
+    "1": "PASS_STATE_SCOPE_BOTH_AUTHENTICATED_GATEWAYS_AND_BROWSER_SURFACES",
+    "2": "DIAGNOSIS_COMPLETE_QUALIFIED_TEMPORAL_EXAMPLES_ADVISORY_MODEL_LIMITATION_REMAINS",
+    "3": "STRICT_CORE_TESTS_PASS_NATIVE_SCHEMA_HTTP400_BLOCKER_NO_UNSAFE_RECOVERY",
+    "4": "FROZEN_MATCHED_RUN_COMPLETE_NO_QUALITY_ADVANCEMENT",
+    "5": "BROWSER_CHECKS_DONE_WITH_RECORDED_ADVISORY_PARTIAL_AND_PROVIDER_FAILURE; PROTECTED_STATE_PASS",
+    "6": "DOCUMENTED_SAFE_STOP"
+  },
+  "source_changes": [
+    "backend/llm/gateway_network.py",
+    "backend/local_providers/development.py",
+    "backend/llm/gateway_findings.py",
+    "backend/llm/orchestration/engine.py",
+    "backend/llm/gateway_routing.py"
+  ],
+  "evaluation_changes": [
+    "backend/scripts/evaluate_multi_model_qualification.py --state-scope-reference diagnostic ablation; real tools remain authoritative",
+    "backend/tests/test_state_interface_scope.py",
+    "backend/tests/test_core_json_transport.py",
+    "backend/tests/test_scope_quality_sources.py",
+    "backend/tests/test_request_continuity.py"
+  ],
+  "matched": {
+    "reference": {
+      "adequate": 1,
+      "total": 4
+    },
+    "repaired": {
+      "adequate": 0,
+      "total": 4
+    }
+  },
+  "matched_limit": "Four paired gateway conditions and one offline provider control; source-derived assistant grading, not blinded or a formal quality benchmark. Frozen originals unchanged after correction.",
+  "post_cohort_scope": "Same correct model plan now reaches state. Reference parameter ablation7records; repaired3records comprising2scoped observations and1whole related routing artifact. Both answers describe the two observations; no quality/generalization gain claimed.",
+  "regressions": {
+    "consolidated_before_last_local_boundary_change": 115,
+    "latest_local_policy_graph_and_scope": 49,
+    "prior_scope_affected": 127,
+    "core_transport_parameterized_checks": 15,
+    "overlap_not_summed": true
+  },
+  "browser": {
+    "initial_scope_both_surfaces": "PASS",
+    "temporal_both_surfaces": "QUALIFIED_ADEQUATE_MODEL_EXPLANATIONS",
+    "studio_advisory": "ZERO_READS_PARTIAL_CAUSAL_QUALIFICATION",
+    "floating_advisory": "ZERO_READS_PROVIDER503_UNAVAILABLE_NO_RETRY",
+    "full_answer_records": "browser-acceptance.json"
+  },
+  "provider": {
+    "RI07": "Historical HTTP200 STOP whole malformed JSON; strict rejection correct",
+    "native_schema_probe": "HTTP400 INVALID_ARGUMENT with unchanged complete schema, no specific provider diagnostic; not activated",
+    "unsafe_recovery": false
+  },
+  "model_or_evaluation_limits": [
+    "Historical RI04 wording still ambiguous; applied event does not establish exact operational transition. New temporal examples are accurate but another sampled answer invents the running value at an unobserved staged timestamp.",
+    "Complete owned context can still produce overconfident physical/queue/forwarding advice; no new phrase guard or model reviewer.",
+    "Broad answers still conflate modeled operational-down with physical cause and may over-retrieve.",
+    "Schema validity and per-clause self-assessment do not certify semantic completeness. Native schema compatibility unresolved; invalid whole core remains incomplete.",
+    "Provider503and two90second planning timeouts remain distinct from completed incorrect reasoning."
+  ],
+  "original_scores_unchanged": [
+    "reliable investigation4/8before4/8after",
+    "all original PhaseG quality cohorts"
+  ],
+  "ordinary_defaults": "Completeness0; ApproachA0; previousharness0; legacyremoteinterpret0; Qwen2.5local/Gemini3.1planner/Gemini3.5reasoner retained",
+  "experimental_budget": "Existing completeness360second/5role-call/3round/24read profile retained; not changed or presented as ordinary120second acceptance. Matched completed tasks all under91seconds; cloud failures separately classified.",
+  "quota": {
+    "provider_attempts": 32,
+    "http_status_or_no_response": {
+      "503": 2,
+      "200": 27,
+      "NO_RESPONSE_TIMEOUT": 2,
+      "400": 1
+    },
+    "reported_usage": {
+      "promptTokenCount": 292216,
+      "candidatesTokenCount": 23995,
+      "thoughtsTokenCount": 3313,
+      "totalTokenCount": 319524
+    },
+    "peak_shared_requests_61s": 8,
+    "peak_shared_accounted_input_61s": 120966,
+    "rolling_day_reservations": 96,
+    "limits": {
+      "requests_per_minute": 15,
+      "input_tokens_per_minute": 150000,
+      "requests_per_day": 500
+    },
+    "accounting_note": "Conservative reservations may include pre-response connectivity attempts and failed calls. Token totals above are only actual returned usage; not billed-cost estimates.",
+    "task_ceiling": 48,
+    "separate_authorized_diagnostic": "One after the initial advisory503, original failure retained. No timeout-loop, automatic retries or model substitution."
+  },
+  "preservation": {
+    "at": "2026-10-29T12:10:57.495493+00:00",
+    "head_unchanged": true,
+    "index_unchanged": true,
+    "ordinary_tables_unchanged": true,
+    "table_count": 41,
+    "knowledge_unchanged": true,
+    "knowledge_file_count": 1923,
+    "historical_json_unchanged": true,
+    "historical_json_count": 429,
+    "credential_file_unchanged": true,
+    "root_env_unchanged": true,
+    "credential_ignored": true,
+    "active_release": "7a14a351e52b49aeb87f65d1192f0937",
+    "changed_existing_source_files": [
+      "backend/llm/gateway_findings.py",
+      "backend/llm/gateway_network.py",
+      "backend/llm/gateway_routing.py",
+      "backend/llm/orchestration/engine.py",
+      "backend/local_providers/development.py",
+      "backend/tests/test_request_continuity.py"
+    ]
+  },
+  "services": "Disposable5174/8001 stopped; ordinary5173/8000 untouched",
+  "next": "STOP. Future authorized work should investigate model-quality/release limitations and provider structured-schema compatibility, not repeat prompt-specific repairs or rerun broad benchmarks."
+}

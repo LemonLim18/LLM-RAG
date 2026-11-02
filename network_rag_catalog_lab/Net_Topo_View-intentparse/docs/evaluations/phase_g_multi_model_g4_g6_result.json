@@ -1,0 +1,466 @@
+{
+  "timestamp": "2026-10-26T13:27:05.458791+00:00",
+  "decision": "IMPROVED_BUT_INCOMPLETE_FUNCTIONAL_EXECUTION; QUALITY_NOT_QUALIFIED",
+  "registry": "docs/evaluations/phase_g_multi_model_g4_g6_v1.json",
+  "registry_sha256": "ddda2d32eef56ee1ad2c89a7a8aa47f37dd363a3ef8fe1ca83c74aa1976b71ff",
+  "cases": 30,
+  "original_scores": {
+    "cases": 30,
+    "G5_full": 5,
+    "G5_required": 26,
+    "raw_model_adequate": 13,
+    "causal_cases": 18,
+    "causal_adequate": 8,
+    "G4_raw_fully_correct": 5,
+    "G4_source_set_exact": 9,
+    "required_reader_presence": 27,
+    "unnecessary_reader_conditions": 19,
+    "unnecessary_reader_calls": 31,
+    "complete_evidence_conditions": 24,
+    "critical_false_prose": [
+      "MMQ-20",
+      "MMQ-24",
+      "MMQ-29"
+    ],
+    "new_role_paths": 28,
+    "old_or_local_paths": [
+      "MMQ-20",
+      "MMQ-22"
+    ],
+    "cloud_attempts": 54,
+    "http_results": {
+      "200": 48,
+      "503": 5,
+      "TIMEOUT_NO_RESPONSE": 1
+    },
+    "need_more_evidence": 0,
+    "completed_new_role_decisions": 21,
+    "composition": {
+      "EXACT_PROSE": 22,
+      "NO_COMPLETED_REASONER_OUTPUT": 7,
+      "DIFFERENT_RELEASE": 1
+    },
+    "latency_seconds": {
+      "median": 16.629266449948773,
+      "p95": 42.72345669998322,
+      "max": 55.11086219991557
+    },
+    "g5_categories": {
+      "PARTIAL": 14,
+      "PROVIDER_FAILURE": 5,
+      "INCORRECT": 1,
+      "FULLY_ADEQUATE": 5,
+      "UNSAFE_UNSUPPORTED": 3,
+      "INCOMPLETE_GENERATION": 1,
+      "TIMEOUT": 1
+    },
+    "G4_formal": "NOT_QUALIFIED; original120/60routinggatesnotreplaced",
+    "G5_formal": "FAILED",
+    "G6_formal": "FAILED_CAUSAL_EXPLANATION;18sourceconformancepairsPASS",
+    "MN4": "LIVE_NOT_VERIFIED",
+    "grading": "Source-derived independently checkable, implementation-assistant full-answer review, not blinded/external"
+  },
+  "MN4": "LIVE_NOT_VERIFIED; original0need_more; postfix1request_only_no_executed_round",
+  "postfix": "Source-restriction and effective-query identity corrections tested; corrected saved-CLI real replay passes source binding; no original score replacement.",
+  "tests": {
+    "affected_backend": 134,
+    "source_conformance_cases": 18,
+    "both_surfaces_per_conformance_case": true,
+    "overlapping_reruns_not_summed": true
+  },
+  "browser": "Fresh capabilityPASS;2ordinaryQwencontrolsPASS;2approvedcloudUIrequestsBLOCKEDprovider503/timeout; no full cloud browser pass claimed",
+  "preservation": "PASS_HEAD_INDEX_41TABLES_343KNOWLEDGEFILES_CREDENTIAL_30NEW_60HISTORICAL_TRACES",
+  "quota": {
+    "new_reservations": 63,
+    "actual_dispatch_attempts": 63,
+    "frozen_cohort_dispatches": 54,
+    "postfix_and_browser_dispatches": 9,
+    "shared_rolling24h_reservations": 184,
+    "shared_peaks_this_task": {
+      "requests_per61seconds": 9,
+      "input_tokens_or_remaining_conservative_reservations_per61seconds": 122115
+    },
+    "by_model_peaks_this_task": {
+      "gemini-3.5-flash-lite": {
+        "requests_per61seconds": 5,
+        "input_tokens_or_remaining_conservative_reservations_per61seconds": 84024
+      },
+      "gemini-3.1-flash-lite": {
+        "requests_per61seconds": 5,
+        "input_tokens_or_remaining_conservative_reservations_per61seconds": 62058
+      }
+    },
+    "usage_this_task": {
+      "gemini-3.1-flash-lite": {
+        "attempts": 34,
+        "http": {
+          "200": 29,
+          "TIMEOUT_NO_RESPONSE": 2,
+          "503": 3
+        },
+        "input_tokens": 276127,
+        "output_tokens": 5325,
+        "thinking_tokens": 5661,
+        "usage_reports": 29
+      },
+      "gemini-3.5-flash-lite": {
+        "attempts": 29,
+        "http": {
+          "200": 25,
+          "503": 4
+        },
+        "input_tokens": 204337,
+        "output_tokens": 8062,
+        "thinking_tokens": 149,
+        "usage_reports": 25
+      }
+    },
+    "usage_original_frozen": {
+      "gemini-3.1-flash-lite": {
+        "attempts": 28,
+        "http": {
+          "200": 26,
+          "TIMEOUT_NO_RESPONSE": 1,
+          "503": 1
+        },
+        "input_tokens": 247576,
+        "output_tokens": 4957,
+        "thinking_tokens": 5329,
+        "usage_reports": 26
+      },
+      "gemini-3.5-flash-lite": {
+        "attempts": 26,
+        "http": {
+          "200": 22,
+          "503": 4
+        },
+        "input_tokens": 186779,
+        "output_tokens": 7271,
+        "thinking_tokens": 0,
+        "usage_reports": 22
+      }
+    },
+    "ceilings": {
+      "project_and_per_model_RPM": 15,
+      "input_TPM": 150000,
+      "shared_RPD": 500
+    },
+    "limits": "Final ledger values use reported inputs for completed responses, conservative byte reservations for errors. Admission used existing persistent locked ledger. No proof of account-wide usage outside this app, no billing/cost claim.",
+    "frozen_latency": {
+      "whole_request": {
+        "count": 30,
+        "median": 16.629,
+        "p95": 42.723,
+        "max": 55.111
+      },
+      "planning": {
+        "count": 30,
+        "median": 4.095,
+        "p95": 32.519,
+        "max": 35.038
+      },
+      "synthesis": {
+        "count": 27,
+        "median": 11.59,
+        "p95": 22.345,
+        "max": 32.024
+      },
+      "reader_execution": {
+        "count": 63,
+        "median": 0.001,
+        "p95": 0.003,
+        "max": 2.22
+      },
+      "remaining_authorization_projection_composition_overhead": {
+        "count": 30,
+        "median": 0.223,
+        "p95": 0.293,
+        "max": 0.7
+      }
+    }
+  },
+  "case_grades": {
+    "MMQ-01": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "ADEQUATE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct declared forward/return mechanism and scope; executed topology/configuration despite recorded-state-only instruction."
+    },
+    "MMQ-02": {
+      "raw_reasoning": "PROVIDER_FAILURE",
+      "final_content": "PROVIDER_FAILURE",
+      "G4": "PASS",
+      "G5": "PROVIDER_FAILURE",
+      "G6": "PROVIDER_FAILURE",
+      "first_failure": "CLOUD_SERVICE_UNAVAILABLE",
+      "reason": "Correct required readers; Gemini3.5HTTP503UNAVAILABLE, no completed explanation. No inference about reasoning ability."
+    },
+    "MMQ-03": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXTRA_READER",
+      "G5": "PARTIAL",
+      "G6": "ADEQUATE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct Sable ingress/egress operdown/adminup distinction, but extra configuration read violates only-state."
+    },
+    "MMQ-04": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXTRA_READER",
+      "G5": "PARTIAL",
+      "G6": "ADEQUATE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct complete-table no-route forward gap and working reverse; extra topology violates only-state."
+    },
+    "MMQ-05": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "ADEQUATE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct reverse-origin no-route; extra topology/configuration despite only-state."
+    },
+    "MMQ-06": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "ADEQUATE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct ingress rule, port and reverse delivery. Extra sources violate restriction."
+    },
+    "MMQ-07": {
+      "raw_reasoning": "PROVIDER_FAILURE",
+      "final_content": "PROVIDER_FAILURE",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PROVIDER_FAILURE",
+      "G6": "PROVIDER_FAILURE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "other_failure": "CLOUD_SERVICE_UNAVAILABLE",
+      "reason": "Extra topology/configuration; reasonerHTTP503, no answer."
+    },
+    "MMQ-08": {
+      "raw_reasoning": "PARTIAL",
+      "final_content": "PARTIAL",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "PARTIAL",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "other_failure": "MODEL_INTERPRETATION",
+      "reason": "Explains failed/delivered branches, but calls equal-preference ECMP alternatives primary/alternate without establishing equal-cost selection. Correct branch ownership; no complete outage claim."
+    },
+    "MMQ-09": {
+      "raw_reasoning": "PARTIAL",
+      "final_content": "PARTIAL",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "PARTIAL",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "other_failure": "MODEL_INTERPRETATION",
+      "reason": "Correct two failed egress branches, but calls reverse stop ingress/egress rather than exact ingress; equal-cost alternatives presented as preference hierarchy."
+    },
+    "MMQ-10": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "ADEQUATE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct loop mechanism and independent delivered reverse, matches calculation stopLinden; unnecessary source violations."
+    },
+    "MMQ-11": {
+      "raw_reasoning": "PARTIAL",
+      "final_content": "PARTIAL",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "PARTIAL",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "other_failure": "MODEL_COMPLETENESS",
+      "reason": "Forwardmissingroute/reversedelivered correct withinamber, but omits relevant defaultVRFroute versus absentamber distinction; extra sources."
+    },
+    "MMQ-12": {
+      "raw_reasoning": "PROVIDER_FAILURE",
+      "final_content": "PROVIDER_FAILURE",
+      "G4": "FAIL_EXTRA_READER",
+      "G5": "PROVIDER_FAILURE",
+      "G6": "PROVIDER_FAILURE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "other_failure": "CLOUD_SERVICE_UNAVAILABLE",
+      "reason": "Extra topology; reasoner503no completed uncertainty explanation."
+    },
+    "MMQ-13": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "ADEQUATE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct unavailable neighbor observation→UNKNOWN, not failure; reverse independent. Extra readers violate only-state."
+    },
+    "MMQ-14": {
+      "raw_reasoning": "PROVIDER_FAILURE",
+      "final_content": "PROVIDER_FAILURE",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PROVIDER_FAILURE",
+      "G6": "PROVIDER_FAILURE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "other_failure": "CLOUD_SERVICE_UNAVAILABLE",
+      "reason": "Extra readers and reasoner503; not model reasoning failure."
+    },
+    "MMQ-15": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "ADEQUATE",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct discard-route mechanism versus actual returndelivery; extra readers."
+    },
+    "MMQ-16": {
+      "raw_reasoning": "PARTIAL",
+      "final_content": "PARTIAL",
+      "G4": "FAIL_EXTRA_READERS",
+      "G5": "PARTIAL",
+      "G6": "PARTIAL",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct subnet mechanism and stop owners but invents numerical Linden label120; no model adequacy credit for exact identity request."
+    },
+    "MMQ-17": {
+      "raw_reasoning": "INCORRECT",
+      "final_content": "INCORRECT",
+      "G4": "FAIL_EXTRA_READER",
+      "G5": "INCORRECT",
+      "G6": "INCORRECT",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Raw explanation treats different local OSPF process IDs as part of a configuration mismatch. Correct area conflict and Full caveat do not cure that false protocol interpretation."
+    },
+    "MMQ-18": {
+      "raw_reasoning": "PARTIAL",
+      "final_content": "PARTIAL",
+      "G4": "FAIL_EXTRA_READER",
+      "G5": "PARTIAL",
+      "G6": "PARTIAL",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "Correct AS values and Active-vs-Established distinction, but mismatch sentence does not compare Sable remote65399 against Kite local65310 and muddles which operand conflicts."
+    },
+    "MMQ-19": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "PASS",
+      "G5": "FULLY_ADEQUATE",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "NONE",
+      "reason": "Correct saved no shutdown/current shutdown, explicitly unavailable syslog and cause/event uncertainty. Real model prose retained."
+    },
+    "MMQ-20": {
+      "raw_reasoning": "UNSAFE_UNSUPPORTED",
+      "final_content": "UNSAFE_UNSUPPORTED",
+      "G4": "FAIL_LOCAL_ESCALATION_AND_WRONG_SOURCE",
+      "G5": "UNSAFE_UNSUPPORTED",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "G4_ELIGIBILITY_SOURCE_SELECTION",
+      "reason": "Approved compound savedCLI explanation remains local; Qwen reads state instead of configuration then invents65000/65001 rather than actual65310/65320 and calls tables operational. Critical source/factual failure; not Flash-Lite reasoning."
+    },
+    "MMQ-21": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "CORRECTED_TEMPORAL_SCOPE",
+      "G5": "FULLY_ADEQUATE",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "G4_RAW_TEMPORAL_PROPOSAL",
+      "reason": "Published profiles/schema fields match actual immutable contract and saved text has no OSPF section; relevant prerequisites/approval limits supplied, no generation. Raw planner asks current instead of saved; existing temporal binding corrects it before read."
+    },
+    "MMQ-22": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "FAIL_EXPECTED_ROLE_ESCALATION",
+      "G5": "FULLY_ADEQUATE",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "G4_COMPLEX_ELIGIBILITY",
+      "reason": "Both points/times and no-continuity limitation are correct; excludedlogsnotread. Actual path is localQwenplanning+oldhybrid3.5synthesis, not new3.1rolepath. Count task adequacy separately from target-architecture coverage."
+    },
+    "MMQ-23": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "CORRECTED_TEMPORAL_SCOPE",
+      "G5": "FULLY_ADEQUATE",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "G4_RAW_TEMPORAL_PROPOSAL",
+      "reason": "CPU31/60/87% and causation/packetloss limits correct; saved no shutdown treated as configured adminenable, no measured live claim. Existing source scope corrects plannercurrent to saved."
+    },
+    "MMQ-24": {
+      "raw_reasoning": "UNSAFE_UNSUPPORTED",
+      "final_content": "UNSAFE_UNSUPPORTED",
+      "G4": "PASS",
+      "G5": "UNSAFE_UNSUPPORTED",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "MODEL_REASONING",
+      "reason": "With planned links plus explicitly unavailable state supplied, final says usable connectivity confirmed purely by planned design. Unsupported operational conclusion despite a caveat; preserved under unverified label, not certified."
+    },
+    "MMQ-25": {
+      "raw_reasoning": "INVALID_STRUCTURED_OUTPUT",
+      "final_content": "INVALID_STRUCTURED_OUTPUT",
+      "G4": "FAIL_SCHEMA",
+      "G5": "INCOMPLETE_GENERATION",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "PLANNER_OUTPUT_SCHEMA",
+      "reason": "Providercompleted JSON fails unchanged planning schema before tools; no reasoning call. Advisory no readers preserved. Setup currentCLI empty due recorded evaluatorfixture defect, not model context loss."
+    },
+    "MMQ-26": {
+      "raw_reasoning": "PROVIDER_TIMEOUT",
+      "final_content": "PROVIDER_TIMEOUT",
+      "G4": "PROVIDER_TIMEOUT",
+      "G5": "TIMEOUT",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "CLOUD_PLANNER_TIMEOUT",
+      "reason": "Planner exceeded35sreservedstagebudget; no tools executed, no semantic verdict. No prohibited-source read, but task not completed."
+    },
+    "MMQ-27": {
+      "raw_reasoning": "PARTIAL",
+      "final_content": "PARTIAL",
+      "G4": "PASS_INITIAL_PLAN",
+      "G5": "PARTIAL",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "EVIDENCE_SUFFICIENCY",
+      "reason": "Initial requested savedconfig/topology read correct and newLinden relationship visible. Reasoner returns description without asking for authorized available state or explaining uncertainty/supported cause, although user permits gap reads. No need_more decision."
+    },
+    "MMQ-28": {
+      "raw_reasoning": "ADEQUATE",
+      "final_content": "ADEQUATE",
+      "G4": "PASS",
+      "G5": "FULLY_ADEQUATE",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "NONE",
+      "reason": "Planner includes historical/current needs; merged both-scope authorized query returns both. Saved alone limitation and exact shutdown comparison complete. No need for redundant supplementary read."
+    },
+    "MMQ-29": {
+      "raw_reasoning": "UNSAFE_UNSUPPORTED",
+      "final_content": "UNSAFE_UNSUPPORTED",
+      "G4": "FAIL_EXTRA_READER",
+      "G5": "UNSAFE_UNSUPPORTED",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "G4_SOURCE_RESTRICTION",
+      "reason": "In addition to extra configuration read, Flash-Lite says simulated2Wayprovesbidirectionalphysicalanddatalinkreachability. That exceeds recorded scope; also speculative DR election diagnosis. Some normalDROtherdiscussioncorrectbutnotadequate."
+    },
+    "MMQ-30": {
+      "raw_reasoning": "PROVIDER_FAILURE",
+      "final_content": "PROVIDER_FAILURE",
+      "G4": "PROVIDER_FAILURE",
+      "G5": "PROVIDER_FAILURE",
+      "G6": "NOT_CAUSAL",
+      "first_failure": "CLOUD_PLANNER_UNAVAILABLE",
+      "reason": "PlannerHTTP503UNAVAILABLE; no readers or completed reasoning answer. No inferred intelligence failure."
+    }
+  },
+  "audit": "tmp/phase-g/iterations/20261026-multi-model-qualification",
+  "formal_stage_status_changes": {},
+  "G4": "FAILED_EXISTING_FORMAL_GATE; cohort not a120/60replacement",
+  "G5": "FAILED_5_OF30_VS26_REQUIRED_PLUS_CRITICAL_FALSE_CLAIMS",
+  "G6": "FAILED_8_OF18_CAUSAL; sourceconformancepasses",
+  "G11": "UNCHANGED_FAILED_NOT_CERTIFIED"
+}

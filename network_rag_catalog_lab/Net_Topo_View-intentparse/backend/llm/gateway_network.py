@@ -57,7 +57,8 @@ class NetworkQuery(StrictModel):
     source_scope: Literal['auto','current','historical','planned','observed','both'] = 'auto'
     record_kinds: list[str] = Field(default_factory=list,max_length=8)
     source_categories: list[str] = Field(default_factory=list,max_length=24)
-    interface_refs: list[str] = Field(default_factory=list,max_length=64)
+    interface_refs: list[str] = Field(default_factory=list,max_length=64,
+        description='Canonical recorded interface IDs belonging to the selected devices. State and telemetry support this scope; unsupported readers or unknown IDs must not widen it.')
     window_minutes: int = Field(default=60,ge=1,le=10080)
 
     @field_validator('start','end')
@@ -113,14 +114,20 @@ def redact(text):
     return re.sub(r'(?im)^([^\n]*(?:password|secret|community|private-key|authentication-key)[^\n]*).*$', '[credential line redacted]', str(text))
 
 
-def explicit_configuration_scope(text):
-    """Explicit temporal qualifiers constrain a reader, not CLI semantics."""
+def configuration_scope_text(text):
+    """Positive source qualifiers shared by temporal and artifact constraints."""
     # Capture metadata describes the requested source; it does not request a
     # different historical source. Keep explicit saved snapshots distinguishable.
     text=re.sub(r'\b(?:capture(?:d)?|retrieval|collection)\s+(?:time|timestamp|date)\b','',text,flags=re.I)
-    text=re.sub(r'\b(?:not|without|excluding|ignore|instead of|rather than)\s+(?:(?:the|its|their)\s+)?(?:current|active|running|stored|saved|historical|previous|planned|intended)\b','',text,flags=re.I)
+    text=re.sub(r'\b(?:not|without|excluding|ignore|instead of|rather than)\s+(?:(?:the|its|their)\s+)?(?:current|active|running|stored|saved|historical|previous|planned|intended|staged|unapplied)\b','',text,flags=re.I)
+    return text
+
+
+def explicit_configuration_scope(text):
+    """Explicit temporal qualifiers constrain a reader, not CLI semantics."""
+    text=configuration_scope_text(text)
     current=bool(re.search(r'\b(current|active|running)\b',text,re.I))
-    historical=bool(re.search(r'\b(stored|saved|historical|previous|backups?|snapshots?|captures?)\b',text,re.I))
+    historical=bool(re.search(r'\b(stored|saved|historical|history|previous|staged|unapplied|backups?|snapshots?|captures?)\b',text,re.I))
     if current and historical:return 'both'
     if current:return 'current'
     if historical:return 'historical'
@@ -141,6 +148,38 @@ def planned_graph_path(devices,links,names):
                 if other not in seen:
                     seen.add(other);queue.append((other,trail+[other]))
     return None
+
+
+def scoped_interface_records(records,interface_refs=(),*,relationships=False):
+    """Filter source records by typed identity, preserving complete relationships.
+
+    Caller validates IDs/ownership against the pinned inventory. Distinct IDs,
+    sources, times or values remain distinct, even when displayed values agree.
+    No identity is inferred from prose or an interface name.
+    """
+    requested=set(map(str,interface_refs));seen=set();result=[]
+    def identities(value):
+        if isinstance(value,dict):
+            for key,item in value.items():
+                if key in {'interface_id','src_interface_id','dst_interface_id'} and item is not None:
+                    yield str(item)
+                elif isinstance(item,(dict,list)):yield from identities(item)
+        elif isinstance(value,list):
+            for item in value:yield from identities(item)
+    for row in records:
+        refs={str(row[key]) for key in ['interface_id','src_interface_id','dst_interface_id'] if row.get(key) is not None}
+        if relationships:
+            # Existing structured relationship contracts only. Arbitrary notes
+            # and matching text never supply interface identity.
+            for key in ['assessment','peer_parameters','routes']:
+                refs.update(identities(row.get(key)))
+        if requested and not requested.intersection(refs):continue
+        if row.get('id') is not None:
+            fingerprint=json.dumps(row,sort_keys=True,default=str)
+            if fingerprint in seen:continue
+            seen.add(fingerprint)
+        result.append(row)
+    return result
 
 
 class NetworkReader:
@@ -172,7 +211,7 @@ class NetworkReader:
         except ValueError as exc: return ToolResult(status='unavailable',message=str(exc))
         if query.interface_refs:
             recorded={str(i['id']) for d in devices for i in d['interfaces']}
-            if domain!='telemetry' or not set(query.interface_refs)<=recorded:
+            if domain not in {'telemetry','state'} or not set(query.interface_refs)<=recorded:
                 return ToolResult(status='unavailable',message='The requested interface scope is not recorded for these devices or this reader.')
             if query.live:
                 return ToolResult(status='unavailable',message='This live reader does not support an exact interface scope; no broader measurements were substituted.')
@@ -213,6 +252,12 @@ class NetworkReader:
                 published={item.id for item in evidence if item.authority=='published_operation_documentation'}
                 documents=[row for row in documents if row.get('evidence_id') in published and row.get('source','').startswith('published:')]
                 evidence=[item for item in evidence if item.id in {row.get('evidence_id') for row in documents}]
+            total=len(documents)
+            if total>query.limit:
+                documents=documents[:query.limit]
+                ids={row.get('evidence_id') for row in documents}
+                evidence=[item for item in evidence if item.id in ids]
+                documents=[{**row,'retrieval_coverage':{'total_documents':total,'returned_documents':len(documents),'truncated':True,'limit':query.limit}} if i==0 else row for i,row in enumerate(documents)]
             if reference and documents:documents=[{**row,'scenario_reference':reference} if i==0 else row for i,row in enumerate(documents)]
             return ToolResult(status='success' if documents else 'unavailable',data=documents,evidence=evidence+reference_evidence,
                 message='' if documents else 'No matching local documentation was retrieved. General engineering knowledge may be used, labelled separately.')
@@ -396,20 +441,52 @@ def route_network(prompt, inventory, *, expand_investigation=True):
         domains=scoped or ['inventory','topology','telemetry','syslog','incidents','configuration']
     # Conceptual questions do not need all network records.
     general=bool(re.match(r'\s*(what (is|are|does)|explain|compare|difference|how (does|do|to))\b',text)) and not re.search(r'\b(my|our|this network|current|planned|stored|live|history)\b',text)
-    refs=[d['hostname'] for d in inventory['devices'] if any(re.search(r'(?<![\w-])'+re.escape(str(ref))+r'(?![\w-])',prompt,re.I) for ref in [d['hostname'], d.get('management_ip') or '', *d.get('aliases',[])] if ref)]
+    owners={};spellings={}
+    for d in inventory['devices']:
+        for ref in [d['hostname'],d.get('management_ip'),*d.get('aliases',[])]:
+            if ref:
+                key=str(ref).casefold();owners.setdefault(key,set()).add(d['hostname']);spellings.setdefault(key,str(ref))
+    # Retain an ambiguous recorded token for the existing canonical resolver.
+    # Expanding a shared alias to two hostnames would silently turn ambiguity
+    # into an instruction to investigate both devices.
+    canonical={key:next(iter(values)) if len(values)==1 else spellings[key] for key,values in owners.items()}
+    # A declarative context clause is not another investigation target when
+    # an explicit speech act names its own subjects. Keep the untouched request
+    # for source policy and inference. Pronoun-only actions retain antecedents.
+    parts=re.split(r'[;!?\n]|\.(?=\s|$)|\bbut\b',prompt,flags=re.I)
+    actions=[part.strip() for part in parts if re.match(
+        r'\s*(?:please\s+)?(?:(?:can|could|would)\s+you\s+)?(?:investigate|inspect|trace|diagnose|troubleshoot|read|retrieve|show|compare|contrast|explain|assess|check|verify|identify|list|what|which|why|how)\b',part,re.I)]
+    subjects='; '.join(actions)
+    named_subject=any(re.search(r'(?<![\w-])'+re.escape(key)+r'(?![\w-])',subjects,re.I) for key in owners)
+    if named_subject or re.search(r'\b(?:R|SW|RTR|EDGE|CORE)[-_]?\d+\b',subjects,re.I):
+        reference_prompt=subjects
+    else:reference_prompt=prompt
+    refs=[canonical[key] for key in owners if re.search(r'(?<![\w-])'+re.escape(key)+r'(?![\w-])',reference_prompt,re.I)]
     # A path expression can join complete inventory names with a hyphen. Keep
     # strict standalone boundaries (R1 must not match R1-backup), then resolve
     # only whole chains whose every member is an actual recorded identity.
-    names={str(ref).casefold():d['hostname'] for d in inventory['devices']
+    names={str(ref).casefold():canonical[str(ref).casefold()] for d in inventory['devices']
         for ref in [d['hostname'],*d.get('aliases',[])] if ref}
     if names:
         member='(?:'+'|'.join(re.escape(n) for n in sorted(names,key=len,reverse=True))+')'
-        chain=re.compile(r'(?<![\w-])'+member+r'(?:\s*(?:-|→|->|—)\s*'+member+r'){1,7}(?![\w-])',re.I)
-        for match in chain.finditer(prompt):
-            refs.extend(names[m[0].casefold()] for m in re.finditer(member,match[0],re.I))
+        separator=r'\s*(?:-to-|->|→|—|-)\s*'
+        chain=re.compile(r'(?<![\w-])'+member+r'(?:'+separator+member+r'){1,7}(?![\w-])',re.I)
+        if reference_prompt==prompt and chain.search(subjects):
+            # Joined names must use this same whole-name grammar when deciding
+            # whether the speech act already supplies its own target subjects.
+            reference_prompt=subjects
+            refs=[canonical[key] for key in owners if re.search(r'(?<![\w-])'+re.escape(key)+r'(?![\w-])',reference_prompt,re.I)]
+        # Consume the connector with each member. Scanning names alone would
+        # turn a recorded alias "to" inside "-to-" into an extra endpoint.
+        token=re.compile(r'(?P<name>'+member+r')(?:'+separator+r'|$)',re.I)
+        for match in chain.finditer(reference_prompt):
+            members=list(token.finditer(match[0]))
+            if members and members[0].start()==0 and members[-1].end()==len(match[0]) and all(
+                    left.end()==right.start() for left,right in zip(members,members[1:])):
+                refs.extend(names[m['name'].casefold()] for m in members)
     recognized_spans=[match.span() for d in inventory['devices'] for ref in [d['hostname'],*d.get('aliases',[])] if ref
-        for match in re.finditer(r'(?<![\w-])'+re.escape(ref)+r'(?![\w-])',prompt,re.I)]
-    unknown=[match[0] for match in re.finditer(r'\b(?:R|SW|RTR|EDGE|CORE)[-_]?\d+\b',prompt,re.I)
+        for match in re.finditer(r'(?<![\w-])'+re.escape(ref)+r'(?![\w-])',reference_prompt,re.I)]
+    unknown=[match[0] for match in re.finditer(r'\b(?:R|SW|RTR|EDGE|CORE)[-_]?\d+\b',reference_prompt,re.I)
         if not any(left<=match.start() and match.end()<=right for left,right in recognized_spans)]
     refs.extend(unknown)
     from llm.gateway_references import configuration_text_request
@@ -465,7 +542,7 @@ def route_network(prompt, inventory, *, expand_investigation=True):
     return domains,query
 
 
-async def network_context(db, registry, authorization, prompt, domains_override=None,device_refs_override=None,source_requests=None,interface_refs_override=None):
+async def network_context(db, registry, authorization, prompt, domains_override=None,device_refs_override=None,source_requests=None,interface_refs_override=None,*,validated_parameters=None):
     from llm.gateway_services import inventory_snapshot
     inventory=inventory_snapshot(db)
     domains,query=route_network(prompt,inventory)
@@ -487,7 +564,9 @@ async def network_context(db, registry, authorization, prompt, domains_override=
         effective_query=query
         tool='inventory.read' if domain=='inventory' else 'knowledge.search' if domain=='knowledge' else 'network.'+domain
         if domain=='inventory':
-            result=await registry.invoke(tool,{},authorization)
+            parameters=(validated_parameters or {}).get(domain,{})
+            result=await registry.invoke(tool,parameters,authorization)
+            if parameters.get('device_id'):query={**query,'device_refs':[parameters['device_id']]};effective_query=query
             data=result.data or {'devices':[]}
             references=query.get('device_refs',[])
             if references:
@@ -522,7 +601,7 @@ async def network_context(db, registry, authorization, prompt, domains_override=
                 # query was built. Apply comparison cardinality to the final
                 # typed query too, not just its earlier keyword domain guess.
                 effective_query.pop('limit')
-            if domain=='telemetry' and interface_refs_override:
+            if domain in {'telemetry','state'} and interface_refs_override:
                 effective_query['interface_refs']=interface_refs_override
             if domain=='state':
                 from development.source_registry import BY_KEY
@@ -530,8 +609,15 @@ async def network_context(db, registry, authorization, prompt, domains_override=
                 interface_sources=not categories or all(BY_KEY.get(key) and BY_KEY[key].kind in {'interface_state','simulation'} for key in categories)
                 if interface_state_request(prompt) and interface_sources:effective_query['record_kinds']=['interface_state']
                 elif re.search(OTHER_STATE_TOPIC,prompt,re.I):effective_query.pop('record_kinds',None)
+            if validated_parameters and domain in validated_parameters:
+                # Server-validated supplementary query. Capability schema and
+                # owner authorization are enforced again by invoke below.
+                supplied=validated_parameters[domain]
+                effective_query={**effective_query,**supplied}
+                effective_query['device_refs']=supplied.get('device_refs') or query.get('device_refs',[])
+                effective_query['query']=supplied.get('query') or prompt
             result=await registry.invoke(tool,effective_query,authorization); data=result.data
-        requested=query.get('device_refs',[])
+        requested=effective_query.get('device_refs',[])
         scoped=[str(d['id']) for d in inventory['devices'] if not requested or any(str(ref).casefold() in {str(d['id']),d['hostname'].casefold(),str(d['management_ip'] or '').casefold(),*[a.casefold() for a in d.get('aliases',[])]} for ref in requested)]
         from llm.gateway_references import source_scope_references
         retained_scope=source_scope_references({domain:{k:v for k,v in effective_query.items()
@@ -540,6 +626,11 @@ async def network_context(db, registry, authorization, prompt, domains_override=
             'scope_devices':[{'id':d['id'],'hostname':d['hostname']} for d in inventory['devices'] if str(d['id']) in scoped][:8],
             'device_refs':list(dict.fromkeys(ref for e in result.evidence for ref in e.device_refs)) or scoped,
             'evidence_ids':[e.id for e in result.evidence]})
+        if result._invocation_receipt is not None:
+            # Bind this exact result before projection. Same-reader queries,
+            # retries and revisions are distinct invocations, never guessed.
+            from copy import deepcopy
+            contexts[-1]['reader_receipt']=deepcopy(result._invocation_receipt)
         for item in result.evidence:
             if effective_query.get('start') or effective_query.get('end'):item.requested_time_range={key:effective_query[key] for key in ['start','end'] if effective_query.get(key)}
         evidence.extend(result.evidence)
@@ -559,6 +650,8 @@ async def network_context(db, registry, authorization, prompt, domains_override=
     total=sum(len(json.dumps(c,default=str)) for c in contexts)
     # Keep each source independently represented when context is bounded.
     per_source=max(1000,24000//max(1,len(contexts)))
+    from llm.orchestration.investigation_support import enabled as completeness_enabled
+    retain_operands=completeness_enabled()
     for context in contexts:
         # The knowledge adapter already bounds document count/text and returns
         # typed immutable contracts. A sliced JSON string destroys that shape
@@ -567,7 +660,10 @@ async def network_context(db, registry, authorization, prompt, domains_override=
         if context['tool']=='knowledge.search':continue
         encoded=json.dumps(context['data'],default=str)
         budget=max(per_source,10000) if context['tool']=='network.state' else per_source
-        if len(encoded)>budget: context['data']=bounded_record_context(context['data'],budget)
+        # The experimental reasoner owns a separate finite input admission/view
+        # boundary. A display excerpt must not delete a later source dependency
+        # from graph evidence before that boundary can select the material facts.
+        if len(encoded)>budget and not retain_operands:context['data']=bounded_record_context(context['data'],budget)
     included=sum(len(json.dumps(c,default=str)) for c in contexts)
     return contexts,evidence,{'complete':included>=total and not path_scope_limitation,'total_characters':total,'included_characters':included,'domains':domains,
         **({'path_device_refs':path_device_refs} if path_device_refs else {}),**({'path_scope_limitation':path_scope_limitation} if path_scope_limitation else {})}

@@ -24,7 +24,7 @@ import {
   DEFAULT_OLLAMA_MODEL,
 } from '../../src/config';
 import { ANSIBLE_REMEDIATION_INTENT_KEY } from '../../utils/remediationPrompt';
-import { aiApi, type DraftDocument, type EditorSnapshot, type EditProposal } from '../../src/services/ai';
+import { cloudConsentDescription, aiApi, type DraftDocument, type EditorSnapshot, type EditProposal } from '../../src/services/ai';
 import NativeGenerationReview from './NativeGenerationReview';
 
 const ANSIBLE_MODEL_STORAGE_KEY = 'ansibleStudio.selectedModel';
@@ -4902,7 +4902,7 @@ setGeneratingPlaybook(false);
 
             {/* Right Group: Action Buttons */}
             <div className="flex items-center gap-2">
-              {localChat && cloudContext?.enabled && cloudContext.eligible && !attachedFiles.length && !quotedSelection && !isGenerating && <button type="button" className="btn btn-ghost btn-xs" disabled={!input.trim()} title="Approve Google for this message and synthetic conversation history. Editor buffers and uploads are excluded." onClick={()=>void handleSend(true)}>Cloud · synthetic</button>}
+              {localChat && cloudContext?.enabled && cloudContext.eligible && !attachedFiles.length && !quotedSelection && !isGenerating && <button type="button" className="btn btn-ghost btn-xs" disabled={!input.trim()} title={cloudConsentDescription(cloudContext)} onClick={()=>void handleSend(true)}>Cloud · synthetic</button>}
               {isGenerating ? (
                 <button
                   type="button"

@@ -524,3 +524,153 @@ PreservationPASS:42ordinarytables,HEAD/index,341artifacts/activepointer,144prior
 
 ---
 
+
+
+# Hybrid G4/advisory checkpoint — 2026-10-26T03:00:31.470394+00:00
+
+**Bounded continuation finished: HYBRID PARTIAL. Remote G4 OFF; Approach A OFF. No full Phase G stage closure.** Report:`docs/PHASE_G_HYBRID_G4_ADVISORY.md`; curated results:`docs/evaluations/phase_g_hybrid_g4_advisory_result.json`; audit:`tmp/phase-g/iterations/20261026-hybrid-g4-advisory`.
+
+Shared advisory boundary now runs independently of general outcomes: prospective evidence does not invoke readers; owned identities/goals/gaps and prior reader success/unavailable receipts reach the existing typed composer. Successful model read explanations no longer get replaced with raw records. Exact replay preserves both original ON raw answers, removes duplicate records and retains mapping. Existing verifier fixes handle disabled/down, field-specific optionality, explicit uncertainty and same-field cross-paragraph vendor qualification. Explicit wrong-vendor/state claims remain negative tests. No universal semantic verification is claimed.
+
+Six identical-packet local/cloud planning conditions: minimal complete local5/6 vs cloud4/6; cloud recovers one source omission but adds one unnecessary source; both direct planners miss a history flag. Three paired actual gateway requests originally release3/3 vs2/3; exact raw verifier replay gives3/3both but is not new inference or planning improvement. Keep remoteplanning0; the existing hook remains evaluation-only. Historical ApproachA OFF7/11 vsON4/11 scores unchanged; no reactivation.
+
+Browser recovered. Both actual Floating/Studio synthetic consent paths PASS. Useful final advice invokes zero readers; current buffer hash/two-tab list unchanged and editor text excluded from cloud. Earlier circular API advice and initial ask-for source violation are retained as failures; prior-status receipts address that context loss. No new browser settings or ordinary CORS change; exact5174origin is allowed only in disposable harness. Temporary5174/8001pair stopped; ordinary5173/8000not restarted.
+
+Final282affected regressionsPASS; earlier runs overlap. No new frontend changes, previousTypeScriptPASSreused.34realcloudcalls,46223input/5897finaltokens; peaknew8RPM/11678inputper61s, maximumsingleinput3687. Hardceilings15RPM/150KinputTPM/500rolling24h. Historicalreservationscarriedforward:63knownconservative24hentries, peak9RPM/50838chargedinput; otheraccountclientactivitynotobservable. No cloudHTTPerrors or3.8calls.
+
+PreservationPASS:HEAD8a7f86c/index,42ordinarytables,active341artifacts/pointer,earlierexperiments and secretfile unchanged. RootQwen2.5,FlashLite,hybrid1scope,remoteplanning0,outcomes0; TPMnow150000. No commit/stage/publish/deploy/deviceaction/download. Keep this stopped bounded scope; do not resume broadPhaseG or enable remoteplanning/ApproachA without further authorization.
+
+---
+
+
+
+# Bounded G5/G6 qualification and repairs finished — 2026-10-26T05:02:58.625041+00:00
+
+**G5/G6 IMPROVING BUT INCOMPLETE; no stage closure.** Original60authenticatedturns preserved: local1/30adequate, hybrid7/30; causal0/16versus5/16; unsafe2local/1hybrid(localQwen). Threshold26/30and safety unmet. Report:`docs/PHASE_G_HYBRID_G5_G6_QUALITY_QUALIFICATION.md`; frozenregistry`phase_g_hybrid_quality_qualification_v1.json`; audit`tmp/phase-g/iterations/20261026-hybrid-g5g6-qualification`.
+
+Repairs preserve typed failure ownership/state, separate auxiliary citations, use data-drivenUNKNOWNfallback, reuse literalCLI ASfacts, limit point-observation continuity, and restore no-read advice/source-only followups.369affectedtestsPASS;8original-outputoffline replaysPASS,5correct raw explanations recovered with no new inference credit. Actual localgatewayGQ25nowonlyconfiguration but omitsBGP;GQ26/27zero readers but weak/circular advice. These remain task failures. Original interrupted tests/replays/runtime consumerKeyError retained beside corrected results. No broad rerun or model/prompt change.
+
+21cohortcloudcalls(20scored+1setup),64929input/4027finaltokens;0post-repaircloudcalls,4diagnosticallowanceunused. Maxnew2RPM/7048inputper61s; sharedledger84rolling24h. Qwenexplicit,FlashLite,hybrid1,remoteG4=0,outcomes=0; keyfileunchanged/ignored. HEAD/index/ordinary41noninternal tables, active341artifacts and historicalevidence unchanged. No browser/editor operation, commit/stage/publication/deviceaction. G1–G3/G10accepted status untouched;G7=113/141unchanged. Stop; next evaluation requires separate authorization.
+
+---
+
+
+
+## Model-neutral experimental implementation — 2026-10-26T08:16:41.827972+00:00
+
+New report: `docs/PHASE_G_MODEL_NEUTRAL_MULTI_MODEL_ARCHITECTURE.md`; checklist and exact next step: `docs/PHASE_G_MODEL_NEUTRAL_CONTINUATION.md`. Direct approved synthetic Gemini3.1planning, Gemini3.5reasoning, provider-neutral socket and mocked OpenAIResponses adapter are implemented; ordinary Qwen stays explicit. Gemini3.8retired. Google complex-schema400s are retained; explicit validated-JSON transport retains unchanged application validation. Semantic preview is off only in the approved synthetic role path, with visible unverified/no-authority release.
+
+Final browser5turns: both assistants use the roles, ordinary Send0cloud, valid source/record citations and raw prose preserved. Advisory0readers but quality PARTIAL. Supplementary round is implemented/mocked-graph PASS and LIVE NOTEXERCISED.30newfocusedtestsPASS, separate125affected/117preservedpathsPASS (overlap not summed); appTypeScriptPASS.37newquotareservations/36HTTPcalls incl5schema400failures, shared24h121; peak8RPM/97199input-or-reservationTPM. Protected state/hash preservationPASS;5174/8001STOPPED. No original Phase G acceptance status promoted; ApproachA OFF. Do not restart broad qualification automatically.
+
+
+
+## Latest bounded qualification — 2026-10-26T13:34:36.352840+00:00
+
+Task finished; no new full stage accepted. G4/G5/G6 remain FAILED, MN4 LIVE NOT VERIFIED. Original new cohort30: G5 **5/30** (requires26/no criticalfalseclaims); G6 **8/18** adequate causal; rawmodelexplanations13/30; extra-readerconditions19/30; sourceconformance18cases/bothsurfacesPASS. Original54cloudattempts include5HTTP503and1timeout. No originalneed_moredecisions; diagnosticpending-readwithoutactualexecution is not a livepass.
+
+Shared source-only enforcement, effectivequeryidentity/same-reader lists, roleeligibility and savedCLIversusprotocolstate binding are corrected.134affectedtestsPASS;18sourceconformancePASS,separateassertionsnotcombined. Bounded3conditionpostfixregistry and9additionalcloudcalls retained; correctedconfigurationreplayreadsactualsavedvalues. Browseravailable; bothcloudUIrequestsBLOCKEDprovider503/timeout; twoordinaryQwencontrolsPASS0cloud. No currentliveadvisory/fullcloudbrowserpassclaimed. Disposable5174/8001stopped.
+
+Report:`docs/PHASE_G_MULTI_MODEL_G4_G6_QUALIFICATION.md`; result:`docs/evaluations/phase_g_multi_model_g4_g6_result.json`; audit:`tmp/phase-g/iterations/20261026-multi-model-qualification`. PreservationPASS:HEAD/index/41tables/343releasefiles/credential/60old+30newtraces. Total63cloudattempts;shared184rolling24h;peak9RPM/122115input-or-reservationTPM within15/150K/500ceilings. SemanticverifierOFF,ApproachA0,ordinaryQwen2.5 and exactsyntheticconsent retained.
+
+Safe stopping state: no process to resume. Do not rerun/rescore the frozen cohort after sourcechanges. Keep originalfailedresults. LiveMN4 requires a genuinely requested authorized secondread plusfinalmodelinterpretation; mockedtests and an unexecutedpendingmessagecannotcloseit. Await nextuserauthorization before newcloudtests or broaderdevelopment. Nextrecommendedreview: planner/sufficiency limits and provideravailability, not per-promptguards. G7remains113/141with28upstreamcompatibilityblockers; allotheroriginalstagestatusesunchanged.
+
+---
+
+
+
+## Bounded intelligence-improvement closeout — 2026-10-26
+
+**Task finished; no new full Phase G stage closes.** Report: `docs/PHASE_G_MULTI_MODEL_INTELLIGENCE_IMPROVEMENT.md`. Result: `docs/evaluations/phase_g_intelligence_improvement_result.json`. Audit: `tmp/phase-g/iterations/20261026-intelligence-improvement/`.
+
+Within the existing roles, implemented required/optional needs, original-clause self-assessment with source identity checks, a record identity index, actual query/budget context and the shared logs/syslog restriction alias. No new planner, semantic verifier or inference stage. Semantic modeOFF, Approach A0and model settings remain unchanged. The affected suite passed165tests; twelve new source checks verified both surfaces. These are not intelligence scores.
+
+New frozen holdout: **2/12fully adequate**,2partial,1unsupported ECMP loss claim,6planner503s and1planner timeout; **2/7causal adequate**. All five completed model explanations survive composition, but their self-assessments do not certify correctness. Zero unnecessary readers executed in the five tasks reaching readers; raw planning is still imperfect. No `need_more_evidence` decision or live supplementary round occurred. Original30-case5/30and8/18scores remain unchanged.
+
+Browser works: both actual approved role flows display partial answers; the advisory gets503with zero reads; two ordinary Qwen controls pass with zero cloud calls. Disposable5174/8001are stopped. Total22cloud attempts are within the44-call allowance; observed shared peaks5RPM/118798input-or-reservationTPM are below configured ceilings. Final ledger196rolling24-hour reservations includes expiry of older entries.
+
+Preservation passes for HEAD/index,41ordinary tables,343release files,145historical JSONs, root.env, credential and new frozen outputs. Two visible unsaved tabs remain; no editor input or save occurred. No commit, publication, deployment or model change.
+
+No active process remains. Await next authorization. Recommended next work: provider reliability for a matched contract/sufficiency comparison, not a broad cycle or per-case guards. Formal statuses remain G4/G5/G6/G11FAILED; G0historical BLOCKED; G7113/141BLOCKED; G1–G3/G8/G9/G10/G12PASS within prior scopes.
+
+---
+
+
+
+## Completeness-first bounded task closeout — 2026-10-27T04:01:44.233174+00:00
+
+**Finished: REVISE / KEEP DEFAULT OFF. No new full Phase G stage closes.**
+
+Report: `docs/PHASE_G_COMPLETENESS_FIRST_EVIDENCE_INVESTIGATION.md`. Curated results: `docs/evaluations/phase_g_completeness_first_result.json`. Audit: `tmp/phase-g/iterations/20261027-completeness-first`.
+
+Implemented within the existing roles and graph: broad authorized source coverage, original restrictions, network ownership/context, compatible artifact diffs, deterministic post-draft follow-up for typed references, limited source-operand compatibility and a separately consented profile (version 2: 360 seconds, 24 reads, 3 rounds, 5 role calls). The 64K packet and 72K single-inference caps remain. No new planner, RAG system or dependency.
+
+The live CF-01 sequence was draft(answer) → server-triggered syslog read → revised real Gemini explanation. Final compatibility/JSON failed; this was a mechanism pass and a complete-task failure. Frozen diagnostic scores: control 4/8 adequate, enhanced 0/8. Exact MN references: MN-01 schema failure; MN-02 pass; MN-03 provider 503. Historical scores remain unchanged.
+
+Post-cohort shared binding corrections pass 143 affected tests. Both actual narrow cloud browser reruns pass; ordinary Send arithmetic stays on Qwen with zero cloud calls on both surfaces. This does not establish improved broad causal reasoning. Total: 69 cloud calls (19 + 46 + 4); 62 HTTP 200, six HTTP 503, one timeout. Retained-ledger peak: 11 requests and 144880 accounted input units per 61 seconds; rolling-day count 231 at close. No provider retry, substitution or billing activation.
+
+Preservation passes for HEAD/staged entries, 41 ordinary tables, 1923 knowledge files including 341 active artifacts, 239 historical JSON traces, credential and root environment. No credential copies. Two unsaved test tabs and visible content retained; no editor actions or full ordinary-buffer hash claim. Acceptance servers 5174/8001 are stopped; the ordinary pair was untouched.
+
+Effective defaults: completeness OFF, Approach A OFF, previous harness OFF, legacy remote interpretation OFF. Existing approved model-neutral roles remain. No commit, staging, publication, deployment or device action.
+
+No active cohort/process remains. Future authorized work should reconcile declared claims with release handling without suppressing correct prose or certifying unsupported causes, then use a genuinely new small holdout. Do not rerun the completed cohort, raise the packet cap, automatically activate completeness or start broad G11 qualification.
+
+---
+
+
+
+## Claim verification and release repair — 2026-10-29
+
+**Bounded task finished: RETAIN targeted repairs; KEEP completeness default OFF. No new full Phase G stage closes.**
+
+Report: `docs/PHASE_G_CLAIM_VERIFICATION_RELEASE_REPAIR.md`; result: `docs/evaluations/phase_g_claim_release_repair_result.json`; audit: `tmp/phase-g/iterations/20261029-claim-release-repair`.
+
+The existing pipeline now separates strict core validity from auxiliary declarations and six source-check verdicts. Missing bindings, uncheckable assertions and validator errors no longer trigger false factual correction. Genuine source contradictions remain corrected/withheld, including a failed revision and an unchanged false assertion whose declaration disappears. Draft fingerprints and source facts keep correction/release auditable. Model prose remains unverified; no universal semantic certification or completion claim.
+
+Evidence: 159 affected tests PASS (overlapping reruns not summed); unchanged historical-output replay retains valid cores in seven cases while malformed whole JSON remains invalid. Historical 4/8 control versus 0/8 enhanced scores are preserved. New frozen matched conditions: unrepaired 1/2 adequate, repaired 1/2 adequate. No demonstrated complete-task improvement, despite fewer unnecessary revisions in one broad run. Both assistants completed actual browser requests after tooling/server recovery: Floating broad answer adequate, Studio qualified/partial. Server-triggered supplementary syslog acquisition remains functional on both. Qwen local controls pass in fresh contexts; Studio arithmetic following a network investigation incorrectly reads telemetry and remains an archived routing failure, not repaired in this bounded task.
+
+18/32 cloud attempts, all HTTP200/STOP. Persistent combined peak: 7 requests and 104,246 accounted input units per conservative61-second window; rolling-day count18/500. Exact packets, source identities, raw/final prose, auxiliary diagnostics and release receipts are retained. No additional inference is pending or authorized by this checkpoint.
+
+Preservation PASS: HEAD8a7f86ce4e4d7c12d2e0565bfa53ab64f4ca756d/staged entries; all41ordinary tables;1,923knowledge files including341active artifacts;322historical JSON traces; ignored credential and root environment unchanged. No editor/accept/save/device action. Two unsaved tabs were observed unchanged through AI-only actions; no full ordinary-buffer hash claim. Disposable5174/8001 services stopped; ordinary5173/8000 untouched.
+
+Effective defaults: completenessOFF, Approach AOFF, prior harnessOFF, legacy remote interpretationOFF. Existing Qwen2.5 local / approved Gemini3.1 planner / Gemini3.5 reasoner roles retained. Immediate rollback remains completenessOFF; do not reset the mixed working tree or change immutable knowledge.
+
+Remaining acceptance: G4/G5/G6/G11 remain unaccepted; G7 remains113/141 with separate compatibility blockers; G0historical baseline remains blocked/deprioritized. Previously accepted stage statuses are preserved. Future continuation requires a new authorized bounded task; do not rerun or rescore these cases, enable completeness, or start broad qualification automatically.
+
+---
+
+
+
+## Reliable investigation bounded closeout — 2026-10-29
+
+**RETAIN targeted repairs / KEEP completeness OFF. No new original Phase G stage closes.** Report: `docs/PHASE_G_COMPLETENESS_FIRST_IMPLEMENTATION_PLAN_RESULTS.md`; result: `docs/evaluations/phase_g_reliable_investigation_result.json`; audit: `tmp/phase-g/iterations/20261029-reliable-investigation`.
+
+Current-request authority now passes both authenticated gateways and actual browser topic switches: after approved investigations, ordinary arithmetic returns42 locally with zero readers/cloud. New inventory scope, genuine interface follow-ups and safe absent/ambiguous reference clarification are verified. Singular/plural address recognition is corrected. Running-history comparisons now survive interleaved staged files and preserve textual/source/time limitations.
+
+113 continuity and133 retained-mechanism tests PASS; overlap is not summed. The new frozen matched cohort remains4/8 adequate before and4/8 after; no quality advancement. Corrected failures include a real planner503, malformed whole JSON with unescaped answer quotes, ambiguous temporal wording and overconfident advisory causation. Original scores and raw outputs remain unchanged. A broad model proposal still over-selects sources on the adjacency/loss comparison.
+
+The narrow Studio browser check exposed the next exact application defect: metadata retains interface7031 but state-tool arguments contain no interface scope. The context adapter and registered reader support that filter only for telemetry. Correct target values appear alongside other ports/duplicate authored and modeled observations. This is not accepted as a scoped complete answer. The user has now explicitly authorized the focused State-Reader Scope Repair and Remaining Quality Investigation; continue that brief in its own audit, preserving this frozen cohort.
+
+45 cloud attempts:44HTTP200,1HTTP503. Combined persistent peak8requests/104246accounted input per conservative61s; rolling-day63/500. Existing360s/5rolecalls/3rounds/24reads unchanged. Exclusive composition time uninstrumented. Completeness/ApproachA/previousharness/legacyinterpretation remainOFF. Disposable5174/8001 stopped; ordinary5173/8000 untouched.
+
+Preservation PASS: HEAD8a7f86ce/staged entries,41ordinary tables,1923knowledge files including341active artifacts,363historical JSON records, ignored credential and root environment. No editor/accept/save/commit/stage/publish/deploy/device/model-install action. Task-only source patch has verified preimages; do not reset mixed work.
+
+---
+
+
+
+## State-reader scope repair closeout — 2026-10-29T12:14:26.645341+00:00
+
+**RETAIN scope/source-policy repairs; KEEP completeness OFF. No formal Phase G stage closes.** Report: `docs/PHASE_G_STATE_SCOPE_AND_QUALITY_REPAIR.md`; result: `docs/evaluations/phase_g_state_scope_repair_result.json`; audit: `tmp/phase-g/iterations/20261029-state-scope-repair`.
+
+State canonical interface IDs now propagate through both existing context paths, registered reader validation, scenario filtering and projection. Unknown/wrong-owner scopes fail without widening. Authored/model observations remain distinct; exact identified repeats deduplicate. Both actual browser surfaces and authenticated gateways pass the scope gate. The later frozen run exposed a separate false rejection: attribute resolution inferred inventory despite explicit state-only intent. The existing source contract now controls fast paths/planner checks/fallback; positive and prohibited-reader regressions pass. Latest affected115test run and49post-boundary checks overlap, not additive.
+
+Frozen4condition pairs plus1offlinecontrol:1/4reference versus0/4initialrepair adequate; historical4/8versus4/8unchanged. Post-cohort narrow diagnostics verify the actual reader change7records/unscoped →3scoped records(twointerface observations+whole relatedroutingartifact), not a reasoning-quality gain. Both browsers produce qualified accurate temporal explanations; Studioadvisory0reads/PARTIAL, Floatingadvisory0reads/503UNAVAILABLE. Exact raw/final outputs retained. No more prompt or provider retries are queued.
+
+RI07whole malformed JSON remains strictly rejected. Exact native-schema probe400INVALID_ARGUMENT gives no detailed reason; native transport not activated, no regex salvage or schema weakening. New temporal fixture distinguishes running changes, unappliedstagedfile,04:20appliedevent and03:50–04:50operationalobservations. Complete context still does not reliably produce correct causal advice.32cloudattempts, sharedpeak8requests/120966input per61s,96rolling-day reservations; allceilings preserved. Existing360sexperimentprofile unchanged; not ordinary120sacceptance.
+
+HEAD/index,41ordinarytables,1923knowledgefiles/341activeartifacts,429historicalJSONs, credential/rootenv preserved. Qwen2.5/Gemini3.1/Gemini3.5 unchanged; completeness/A/oldharness/legacyinterpretOFF. Disposable5174/8001stopped. Twoexistingunsavedtesttabs retained; noedit/save/accept/deploy actions or newfullbufferhashclaim.
+
+Stop here. Future authorized bounded work: model-quality/release safety and native-schema compatibility, not another wholePhaseG implementation or broad rerun. G1–G3,G8–G10,G12retain priorPASS;G4/G5/G6/G11remainFAILED;G7BLOCKED113/141;G0historicalbaselineBLOCKED. No new fullstage is claimed.
+
+---
+

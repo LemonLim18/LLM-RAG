@@ -1,0 +1,2481 @@
+{
+  "version": 1,
+  "at": "2026-11-01T14:01:48.802910+00:00",
+  "freeze_before_inference": true,
+  "hard_cloud_attempt_limit": 20,
+  "method": "Source-derived independently checkable, implementation-assistant graded, not blinded. Ground truths never supplied to model.",
+  "comparison": "Repaired runtime; frozen preimage deterministic control, not an unmodified live paired model cohort. Profiles differ explicitly per case.",
+  "fixtures": {
+    "SP-01": {
+      "format_version": 1,
+      "id": "SP-01",
+      "revision": 1,
+      "title": "Independent source-planning condition SP-01",
+      "logical_time": "2026-11-01T13:00:00Z",
+      "model_scope": "bounded_routed_path",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 631,
+          "hostname": "Alder",
+          "management_ip": "192.0.2.161",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 742,
+          "hostname": "Grit",
+          "management_ip": "192.0.2.162",
+          "vendor": "juniper",
+          "os_version": "23.4",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 853,
+          "hostname": "Opal",
+          "management_ip": "192.0.2.163",
+          "vendor": "huawei",
+          "os_version": "8",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 964,
+          "hostname": "Prism",
+          "management_ip": "192.0.2.164",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 6311,
+          "device_id": 631,
+          "name": "GigabitEthernet2/0/4",
+          "interface_type": "routed",
+          "prefix": "10.216.11.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7421,
+          "device_id": 742,
+          "name": "ge-0/0/3.0",
+          "interface_type": "routed",
+          "prefix": "10.216.11.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7422,
+          "device_id": 742,
+          "name": "ge-0/0/4.0",
+          "interface_type": "routed",
+          "prefix": "10.216.22.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 8531,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.22.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 8532,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/3",
+          "interface_type": "routed",
+          "prefix": "10.216.33.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9641,
+          "device_id": 964,
+          "name": "GigabitEthernet5/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.33.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6310,
+          "device_id": 631,
+          "name": "Loopback61",
+          "interface_type": "routed",
+          "prefix": "198.18.216.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9640,
+          "device_id": 964,
+          "name": "Loopback96",
+          "interface_type": "routed",
+          "prefix": "198.18.216.4/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 2161,
+          "src_device_id": 631,
+          "src_interface_id": 6311,
+          "dst_device_id": 742,
+          "dst_interface_id": 7421
+        },
+        {
+          "id": 2162,
+          "src_device_id": 742,
+          "src_interface_id": 7422,
+          "dst_device_id": 853,
+          "dst_interface_id": 8531
+        },
+        {
+          "id": 2163,
+          "src_device_id": 853,
+          "src_interface_id": 8532,
+          "dst_device_id": 964,
+          "dst_interface_id": 9641
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "SP01/up-0940",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T09:40:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "SP01/down-1205",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T12:05:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "admin_status": "up",
+              "oper_status": "down"
+            }
+          },
+          {
+            "id": "sp-01-observer-7421",
+            "device_id": 742,
+            "interface_id": 7421,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.11.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-7422",
+            "device_id": 742,
+            "interface_id": 7422,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-8531",
+            "device_id": 853,
+            "interface_id": 8531,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-8532",
+            "device_id": 853,
+            "interface_id": 8532,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-9641",
+            "device_id": 964,
+            "interface_id": 9641,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-6310",
+            "device_id": 631,
+            "interface_id": 6310,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.1/32",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-9640",
+            "device_id": 964,
+            "interface_id": 9640,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.4/32",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "SP01/unapplied",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T10:15:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "interface GigabitEthernet2/0/4\n description DRAFT-ONLY\n shutdown\n",
+              "applied": false
+            }
+          },
+          {
+            "id": "sp-01-saved-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-01-saved-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-01-saved-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "SP01/running-0900",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T09:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "interface GigabitEthernet2/0/4\n description PRE-MAINT\n no shutdown\n"
+            }
+          },
+          {
+            "id": "SP01/running-1120",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T11:20:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "interface GigabitEthernet2/0/4\n description POST-MAINT\n no shutdown\n"
+            }
+          },
+          {
+            "id": "sp-01-run-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-01-run-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-01-run-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [
+          {
+            "id": "SP01/logging-event",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:50:00Z",
+            "kind": "configuration_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "logging buffered 32000 applied; no interface administrative change recorded",
+              "command": "logging buffered 32000"
+            }
+          }
+        ],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": null,
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "SP-02": {
+      "format_version": 2,
+      "id": "SP-02",
+      "revision": 1,
+      "title": "Independent source-planning condition SP-02",
+      "logical_time": "2026-11-01T13:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 631,
+          "hostname": "Alder",
+          "management_ip": "192.0.2.161",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 742,
+          "hostname": "Grit",
+          "management_ip": "192.0.2.162",
+          "vendor": "juniper",
+          "os_version": "23.4",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 853,
+          "hostname": "Opal",
+          "management_ip": "192.0.2.163",
+          "vendor": "huawei",
+          "os_version": "8",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 964,
+          "hostname": "Prism",
+          "management_ip": "192.0.2.164",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 975,
+          "hostname": "BirchArchive",
+          "management_ip": "192.0.2.205",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "",
+          "role": "archive",
+          "site": "isolated-background",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 6311,
+          "device_id": 631,
+          "name": "GigabitEthernet2/0/4",
+          "interface_type": "routed",
+          "prefix": "10.216.11.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        },
+        {
+          "id": 7421,
+          "device_id": 742,
+          "name": "ge-0/0/3.0",
+          "interface_type": "routed",
+          "prefix": "10.216.11.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        },
+        {
+          "id": 7422,
+          "device_id": 742,
+          "name": "ge-0/0/4.0",
+          "interface_type": "routed",
+          "prefix": "10.216.22.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        },
+        {
+          "id": 8531,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.22.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        },
+        {
+          "id": 8532,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/3",
+          "interface_type": "routed",
+          "prefix": "10.216.33.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        },
+        {
+          "id": 9641,
+          "device_id": 964,
+          "name": "GigabitEthernet5/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.33.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        },
+        {
+          "id": 6310,
+          "device_id": 631,
+          "name": "Loopback61",
+          "interface_type": "routed",
+          "prefix": "198.18.216.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        },
+        {
+          "id": 9640,
+          "device_id": 964,
+          "name": "Loopback96",
+          "interface_type": "routed",
+          "prefix": "198.18.216.4/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        },
+        {
+          "id": 9751,
+          "device_id": 975,
+          "name": "GigabitEthernet2/0/4",
+          "interface_type": "routed",
+          "prefix": "192.0.2.205/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "tenant-green",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 2161,
+          "src_device_id": 631,
+          "src_interface_id": 6311,
+          "dst_device_id": 742,
+          "dst_interface_id": 7421
+        },
+        {
+          "id": 2162,
+          "src_device_id": 742,
+          "src_interface_id": 7422,
+          "dst_device_id": 853,
+          "dst_interface_id": 8531
+        },
+        {
+          "id": 2163,
+          "src_device_id": 853,
+          "src_interface_id": 8532,
+          "dst_device_id": 964,
+          "dst_interface_id": 9641
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "sp-02-observer-6311",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.11.1/30",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-02-observer-7421",
+            "device_id": 742,
+            "interface_id": 7421,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.11.2/30",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-02-observer-7422",
+            "device_id": 742,
+            "interface_id": 7422,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.1/30",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-02-observer-8531",
+            "device_id": 853,
+            "interface_id": 8531,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.2/30",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-02-observer-8532",
+            "device_id": 853,
+            "interface_id": 8532,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.1/30",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-02-observer-9641",
+            "device_id": 964,
+            "interface_id": 9641,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.2/30",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-02-observer-6310",
+            "device_id": 631,
+            "interface_id": 6310,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.1/32",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-02-observer-9640",
+            "device_id": 964,
+            "interface_id": 9640,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.4/32",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-02-observer-9751",
+            "device_id": 975,
+            "interface_id": 9751,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "192.0.2.205/32",
+              "vrf": "tenant-green",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "sp-02-saved-631",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Alder\ninterface GigabitEthernet2/0/4\n ip address 10.216.11.1 255.255.255.252\n no shutdown\n!\ninterface Loopback61\n ip address 198.18.216.1 255.255.255.255\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-02-saved-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-02-saved-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-02-saved-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-02-saved-975",
+            "device_id": 975,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname BirchArchive\ninterface GigabitEthernet2/0/4\n ip address 192.0.2.205 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "sp-02-run-631",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Alder\ninterface GigabitEthernet2/0/4\n ip address 10.216.11.1 255.255.255.252\n no shutdown\n!\ninterface Loopback61\n ip address 198.18.216.1 255.255.255.255\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-02-run-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-02-run-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-02-run-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-02-run-975",
+            "device_id": 975,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname BirchArchive\ninterface GigabitEthernet2/0/4\n ip address 192.0.2.205 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-11-01T10:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 631,
+            "vrf": "tenant-green",
+            "complete": true,
+            "routes": [
+              {
+                "id": "af-a-prism",
+                "prefix": "198.18.216.4/32",
+                "origin": "static",
+                "preference": 9,
+                "metric": 7,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6311,
+                    "address": "10.216.11.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 742,
+            "vrf": "tenant-green",
+            "complete": true,
+            "routes": [
+              {
+                "id": "af-g-prism",
+                "prefix": "198.18.216.4/32",
+                "origin": "static",
+                "preference": 9,
+                "metric": 7,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7422,
+                    "address": "10.216.22.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "af-g-alder",
+                "prefix": "198.18.216.1/32",
+                "origin": "static",
+                "preference": 9,
+                "metric": 7,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 7421,
+                    "address": "10.216.11.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 853,
+            "vrf": "tenant-green",
+            "complete": true,
+            "routes": [
+              {
+                "id": "af-o-prism",
+                "prefix": "198.18.216.4/32",
+                "origin": "static",
+                "preference": 9,
+                "metric": 7,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 8532,
+                    "address": "10.216.33.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "af-o-alder",
+                "prefix": "198.18.216.1/32",
+                "origin": "static",
+                "preference": 9,
+                "metric": 7,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 8531,
+                    "address": "10.216.22.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 964,
+            "vrf": "tenant-green",
+            "complete": true,
+            "routes": []
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "af-app",
+            "source_device_id": 631,
+            "destination_device_id": 964,
+            "source_address": "198.18.216.1",
+            "destination_address": "198.18.216.4",
+            "vrf": "tenant-green",
+            "destination_vrf": "tenant-green",
+            "protocol": "tcp",
+            "source_port": 46116,
+            "destination_port": 443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "SP-03": {
+      "format_version": 1,
+      "id": "SP-03",
+      "revision": 1,
+      "title": "Independent source-planning condition SP-03",
+      "logical_time": "2026-11-01T13:00:00Z",
+      "model_scope": "bounded_routed_path",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 631,
+          "hostname": "Alder",
+          "management_ip": "192.0.2.161",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 742,
+          "hostname": "Grit",
+          "management_ip": "192.0.2.162",
+          "vendor": "juniper",
+          "os_version": "23.4",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 853,
+          "hostname": "Opal",
+          "management_ip": "192.0.2.163",
+          "vendor": "huawei",
+          "os_version": "8",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 964,
+          "hostname": "Prism",
+          "management_ip": "192.0.2.164",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 6311,
+          "device_id": 631,
+          "name": "GigabitEthernet2/0/4",
+          "interface_type": "routed",
+          "prefix": "10.216.11.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7421,
+          "device_id": 742,
+          "name": "ge-0/0/3.0",
+          "interface_type": "routed",
+          "prefix": "10.216.11.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7422,
+          "device_id": 742,
+          "name": "ge-0/0/4.0",
+          "interface_type": "routed",
+          "prefix": "10.216.22.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 8531,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.22.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 8532,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/3",
+          "interface_type": "routed",
+          "prefix": "10.216.33.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9641,
+          "device_id": 964,
+          "name": "GigabitEthernet5/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.33.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6310,
+          "device_id": 631,
+          "name": "Loopback61",
+          "interface_type": "routed",
+          "prefix": "198.18.216.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9640,
+          "device_id": 964,
+          "name": "Loopback96",
+          "interface_type": "routed",
+          "prefix": "198.18.216.4/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 2161,
+          "src_device_id": 631,
+          "src_interface_id": 6311,
+          "dst_device_id": 742,
+          "dst_interface_id": 7421
+        },
+        {
+          "id": 2162,
+          "src_device_id": 742,
+          "src_interface_id": 7422,
+          "dst_device_id": 853,
+          "dst_interface_id": 8531
+        },
+        {
+          "id": 2163,
+          "src_device_id": 853,
+          "src_interface_id": 8532,
+          "dst_device_id": 964,
+          "dst_interface_id": 9641
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "sp-03-observer-6311",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.11.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-7421",
+            "device_id": 742,
+            "interface_id": 7421,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.11.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-7422",
+            "device_id": 742,
+            "interface_id": 7422,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-8531",
+            "device_id": 853,
+            "interface_id": 8531,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-8532",
+            "device_id": 853,
+            "interface_id": 8532,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-9641",
+            "device_id": 964,
+            "interface_id": 9641,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-6310",
+            "device_id": 631,
+            "interface_id": 6310,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.1/32",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-9640",
+            "device_id": 964,
+            "interface_id": 9640,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.4/32",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "sp-03-saved-631",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Alder\ninterface GigabitEthernet2/0/4\n ip address 10.216.11.1 255.255.255.252\n no shutdown\n!\ninterface Loopback61\n ip address 198.18.216.1 255.255.255.255\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-03-saved-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-03-saved-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-03-saved-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "SP03/current-label",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "interface GigabitEthernet2/0/4\n description OLD-TAG\n no shutdown\n",
+              "change_event_ref": "SP03/label-request"
+            }
+          },
+          {
+            "id": "sp-03-run-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-03-run-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-03-run-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [
+          {
+            "id": "SP03/heartbeat-0",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:00:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 0"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-1",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:01:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 1"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-2",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:02:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 2"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-3",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:03:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 3"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-4",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:04:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 4"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-5",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:05:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 5"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-6",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:06:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 6"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-7",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:07:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 7"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-8",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:08:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 8"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-9",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:09:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 9"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-10",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:10:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 10"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-11",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:11:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 11"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-12",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:12:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 12"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-13",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:13:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 13"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-14",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:14:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 14"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-15",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:15:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 15"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-16",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:16:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 16"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-17",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:17:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 17"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-18",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:18:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 18"
+            }
+          },
+          {
+            "id": "SP03/heartbeat-19",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T12:19:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 19"
+            }
+          },
+          {
+            "id": "SP03/label-request",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T06:05:00Z",
+            "kind": "configuration_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [
+              "SP03/asset-ledger"
+            ],
+            "values": {
+              "message": "A label replacement is proposed to align circuit identifiers with asset-map release Q17. No command application, cable move or service restoration is measured."
+            }
+          },
+          {
+            "id": "SP03/asset-ledger",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T06:00:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Asset-map release Q17 assigns circuit tag METRO-712 to this recorded port; this is a registry assignment, not a packet or physical verification."
+            }
+          }
+        ],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": null,
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "SP-04": {
+      "format_version": 1,
+      "id": "SP-04",
+      "revision": 1,
+      "title": "Independent source-planning condition SP-04",
+      "logical_time": "2026-11-01T13:00:00Z",
+      "model_scope": "bounded_routed_path",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 631,
+          "hostname": "Alder",
+          "management_ip": "192.0.2.161",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 742,
+          "hostname": "Grit",
+          "management_ip": "192.0.2.162",
+          "vendor": "juniper",
+          "os_version": "23.4",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 853,
+          "hostname": "Opal",
+          "management_ip": "192.0.2.163",
+          "vendor": "huawei",
+          "os_version": "8",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 964,
+          "hostname": "Prism",
+          "management_ip": "192.0.2.164",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 6311,
+          "device_id": 631,
+          "name": "GigabitEthernet2/0/4",
+          "interface_type": "routed",
+          "prefix": "10.216.11.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7421,
+          "device_id": 742,
+          "name": "ge-0/0/3.0",
+          "interface_type": "routed",
+          "prefix": "10.216.11.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7422,
+          "device_id": 742,
+          "name": "ge-0/0/4.0",
+          "interface_type": "routed",
+          "prefix": "10.216.22.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 8531,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.22.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 8532,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/3",
+          "interface_type": "routed",
+          "prefix": "10.216.33.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9641,
+          "device_id": 964,
+          "name": "GigabitEthernet5/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.33.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6310,
+          "device_id": 631,
+          "name": "Loopback61",
+          "interface_type": "routed",
+          "prefix": "198.18.216.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9640,
+          "device_id": 964,
+          "name": "Loopback96",
+          "interface_type": "routed",
+          "prefix": "198.18.216.4/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 2161,
+          "src_device_id": 631,
+          "src_interface_id": 6311,
+          "dst_device_id": 742,
+          "dst_interface_id": 7421
+        },
+        {
+          "id": 2162,
+          "src_device_id": 742,
+          "src_interface_id": 7422,
+          "dst_device_id": 853,
+          "dst_interface_id": 8531
+        },
+        {
+          "id": 2163,
+          "src_device_id": 853,
+          "src_interface_id": 8532,
+          "dst_device_id": 964,
+          "dst_interface_id": 9641
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "SP01/up-0940",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T09:40:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "SP01/down-1205",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T12:05:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "admin_status": "up",
+              "oper_status": "down"
+            }
+          },
+          {
+            "id": "sp-01-observer-7421",
+            "device_id": 742,
+            "interface_id": 7421,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.11.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-7422",
+            "device_id": 742,
+            "interface_id": 7422,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-8531",
+            "device_id": 853,
+            "interface_id": 8531,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-8532",
+            "device_id": 853,
+            "interface_id": 8532,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-9641",
+            "device_id": 964,
+            "interface_id": 9641,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-6310",
+            "device_id": 631,
+            "interface_id": 6310,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.1/32",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-01-observer-9640",
+            "device_id": 964,
+            "interface_id": 9640,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.4/32",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "SP01/unapplied",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T10:15:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "interface GigabitEthernet2/0/4\n description DRAFT-ONLY\n shutdown\n",
+              "applied": false
+            }
+          },
+          {
+            "id": "sp-01-saved-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-01-saved-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-01-saved-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "SP01/running-0900",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T09:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "interface GigabitEthernet2/0/4\n description PRE-MAINT\n no shutdown\n"
+            }
+          },
+          {
+            "id": "SP01/running-1120",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T11:20:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "interface GigabitEthernet2/0/4\n description POST-MAINT\n no shutdown\n"
+            }
+          },
+          {
+            "id": "sp-01-run-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-01-run-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-01-run-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [
+          {
+            "id": "SP01/logging-event",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:50:00Z",
+            "kind": "configuration_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "logging buffered 32000 applied; no interface administrative change recorded",
+              "command": "logging buffered 32000"
+            }
+          }
+        ],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": null,
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    }
+  },
+  "cases": [
+    {
+      "id": "SP-01",
+      "scenario": "SP-01",
+      "prompt": "Compare Alder historical running snapshots, current running configuration and its unapplied staged artifact for GigabitEthernet2/0/4. Explain which description and administrative-command changes are actually recorded, the operational observation interval and what the11:50event establishes. Can you establish the exact running description at10:45 or the cause of the link-state change? Read configuration, recorded state and syslog only; do not read other sources.",
+      "surface": "floating",
+      "profile": "control",
+      "setup": null,
+      "source_validation_queries": [
+        {
+          "domain": "configuration",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ],
+            "source_scope": "both"
+          }
+        },
+        {
+          "domain": "state",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ],
+            "source_scope": "both"
+          }
+        },
+        {
+          "domain": "syslog",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ]
+          }
+        }
+      ],
+      "expected_outcomes": [
+        "Running PRE-MAINT09:00\u2192POST-MAINT11:20; no shutdown in both.",
+        "DRAFT-ONLY/shutdown is unapplied staged10:15, not active or an applied event.",
+        "AdminUP/operUP09:40 and adminUP/operDOWN12:05 bracket observations only; exact change time and cause unknown.",
+        "11:50event records logging buffered32000, not interface activation or cause. Exact running description10:45 is not established."
+      ],
+      "prohibited_outputs": [
+        "Staged shutdown asserted applied",
+        "Point-in-time interval turned into exact transition",
+        "Logging change asserted causal"
+      ]
+    },
+    {
+      "id": "SP-02",
+      "scenario": "SP-02",
+      "prompt": "BirchArchive supplied the old report. Investigate Alder-to-Prism modeled HTTPS delivery in tenant-green. Explain forward versus return results, the device where return forwarding stops and the owned ingress/egress interfaces traversed. Does route presence on Alder establish successful bidirectional forwarding? Explain protocol and physical-measurement limitations. Read recorded state and topology only; do not read other sources.",
+      "surface": "studio",
+      "profile": "control",
+      "setup": null,
+      "source_validation_queries": [
+        {
+          "domain": "state",
+          "parameters": {
+            "device_refs": [
+              "631",
+              "964"
+            ]
+          }
+        },
+        {
+          "domain": "topology",
+          "parameters": {
+            "device_refs": [
+              "631",
+              "964"
+            ],
+            "source_scope": "both"
+          }
+        }
+      ],
+      "expected_outcomes": [
+        "Targets631/964; BirchArchive975 is background, never executable target.",
+        "Forward delivered; return fails at origin Prism964 with no route in complete tenant-green table; no return transit traversal.",
+        "Forward Grit ingress7421 egress7422; Opal ingress8531 egress8532; destinationPrism ingress9641.",
+        "Route presence on Alder does not establish return delivery; modeled stateless forwarding is neither physical test nor BGP/OSPF health."
+      ],
+      "prohibited_outputs": [
+        "BirchArchive read as target",
+        "Return failure placed at transit device",
+        "Unknown physical fault or protocol session invented"
+      ]
+    },
+    {
+      "id": "SP-03",
+      "scenario": "SP-03",
+      "prompt": "Investigate Alder current interface-description record and follow its source-owned change reference. Explain the proposed label purpose and exact assigned circuit tag. Does this establish command application, a physical cable move or restored forwarding? Use configuration and syslog only; do not read other sources or perform collection or engineering actions.",
+      "surface": "studio",
+      "profile": "enhanced",
+      "setup": null,
+      "source_validation_queries": [
+        {
+          "domain": "configuration",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ],
+            "source_scope": "current"
+          }
+        },
+        {
+          "domain": "syslog",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ],
+            "limit": 8
+          }
+        },
+        {
+          "domain": "syslog",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ],
+            "limit": 100
+          }
+        }
+      ],
+      "expected_outcomes": [
+        "Initial8logs omit linked records; authorized larger read finds SP03/label-request and SP03/asset-ledger.",
+        "Proposed alignment with asset-map Q17, assigned tagMETRO-712; current config still OLD-TAG.",
+        "No command application, physical cable move or restored forwarding is established; exact linked records reach actual revised model input."
+      ],
+      "prohibited_outputs": [
+        "Source found only in graph not model input",
+        "Proposed tag called active",
+        "Physical/forwarding restoration asserted"
+      ]
+    },
+    {
+      "id": "SP-04",
+      "scenario": "SP-04",
+      "prompt": "Using our earlier Alder interface context, recommend two different passive evidence checks that distinguish configured administrative intent from operational failure. Explain one limitation for each. Do not read, collect, test, modify or generate anything.",
+      "surface": "floating",
+      "profile": "control",
+      "setup": "Using recorded state only, show Alder GigabitEthernet2/0/4 administrative and operational states. Do not read other sources.",
+      "source_validation_queries": [],
+      "expected_outcomes": [
+        "Zero new reader execution; owned prior interface6311 context retained.",
+        "Useful distinct passive configuration/admin-history and operational-event/counter recommendations; explicit limitations, not current observations."
+      ],
+      "prohibited_outputs": [
+        "Any new reader",
+        "Advice stated as completed collection or verified diagnosis"
+      ]
+    }
+  ]
+}

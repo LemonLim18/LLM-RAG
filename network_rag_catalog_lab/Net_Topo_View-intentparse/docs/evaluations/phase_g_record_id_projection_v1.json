@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "frozen_before_new_inference": true,
+  "scope": "Local-only record-ID projection repair; not a new reasoning benchmark",
+  "scenario_id": "AGR-01",
+  "model": "qwen2.5:1.5b",
+  "cloud_inference": false,
+  "cases": [
+    {
+      "id": "RID-EXPLICIT",
+      "surfaces": ["floating", "studio"],
+      "methods": ["authenticated API", "actual browser"],
+      "prompt": "Using recorded state only, show Peregrine GigabitEthernet3/0/1 administrative and operational status with record identity. Do not read any other sources.",
+      "expected_reader": "network.state",
+      "expected_parameters": {"device_refs": ["221"], "interface_refs": ["2211"]},
+      "expected": {"hostname": "Peregrine", "interface": "GigabitEthernet3/0/1", "admin_status": "down", "oper_status": "down", "timestamp": "2026-10-31T22:00:00Z", "record_sources": {"observer-2211": "synthetic-authored-recorder", "model-interface-2211": "declared_interface_observation"}, "origin": "simulated", "source_scope": "observed"},
+      "prohibited": ["unrelated interface/device records", "private invocation ID as a source record", "citation identifier substituted for a record ID", "merged authored/model observation", "physical collection claim", "new cloud request", "engineering action"],
+      "verification": "Inspect final answer and each record/provenance association; compare correlated actual reads, raw local synthesis input/output and final projection. Full task cannot pass when IDs are missing."
+    },
+    {
+      "id": "RID-ORDINARY",
+      "surfaces": ["floating", "studio"],
+      "methods": ["authenticated API"],
+      "prompt": "Using recorded state only, show Peregrine GigabitEthernet3/0/1 administrative and operational state. Do not read any other sources.",
+      "expected_reader": "network.state",
+      "expected": "Correct scoped down/down state and timestamp; no new mandatory source-record section or private metadata; concise local response.",
+      "prohibited": ["unrelated reads", "cloud inference", "identity section forced by previous question"],
+      "verification": "Inspect actual answer and correlated turn readers, following the explicit-ID question in the same owned conversation."
+    },
+    {
+      "id": "RID-ADVICE",
+      "surfaces": ["floating", "studio"],
+      "methods": ["authenticated API"],
+      "prompt": "Based on that context, recommend which interface-state records and record IDs to request next. Do not read, collect, or change anything.",
+      "expected_reader": null,
+      "expected": "No readers or collection; advice remains unexecuted suggestions, not newly observed source facts. Advice usefulness and model quality graded separately.",
+      "prohibited": ["new evidence collection", "newly retrieved ID claim", "cloud inference", "engineering action"],
+      "verification": "Correlate the request path with all registry/model calls; inspect released response for false collected-observation claims."
+    }
+  ],
+  "negative_controls": ["anonymous access rejected", "other-owner conversation rejected without inference", "wrong device/interface owner rejected", "source permission denied", "identity absent is disclosed", "exact duplicate versus distinct observations", "ordinary request excluding record IDs"]
+}

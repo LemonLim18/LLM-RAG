@@ -246,9 +246,10 @@ def network_answer(context, evidence, attrs=(), interface_refs=(), *, question='
                         if values:parts.append('- '+cell(devices.get(str(peer.get('device_id')),'Recorded peer '+str(index)))+': '+ '; '.join(values))
                 fields=['admin_status','oper_status','prefix','success','protocol','observed_state','destination_ip','complete','routes']
                 remaining=[row for row in records if row.get('kind') not in special]
-                if remaining:parts.append(table(['Device / interface','Time','Observation','Recorded values'],[
+                if remaining:parts.append(table(['Device / interface','Time','Observation','Record / source','Recorded values'],[
                     [str(row.get('hostname') or devices.get(str(row.get('device_id')),'Selected device'))+(' · '+str(row['interface']) if row.get('interface') else ''),
-                     row.get('timestamp'),row.get('kind'),'; '.join(key+'='+json.dumps(row[key],ensure_ascii=False) for key in fields if key in row)] for row in remaining[:20]]))
+                     row.get('timestamp'),row.get('kind'),str(row.get('id','Not recorded'))+' · '+str(row.get('source','Not recorded')),
+                     '; '.join(key+'='+json.dumps(row[key],ensure_ascii=False) for key in fields if key in row)] for row in remaining[:20]]))
             elif tool=='network.telemetry':
                 rows=[];seen=set();omitted=False
                 for row in records:
@@ -269,9 +270,11 @@ def network_answer(context, evidence, attrs=(), interface_refs=(), *, question='
                 for row in records[:12]:
                     name=row.get('hostname') or devices.get(str(row.get('device_id'))) or str(row.get('device_id',row.get('affected_devices','')))
                     stamp=row.get('timestamp') or row.get('created_at') or row.get('detected_at') or row.get('time')
+                    event_stamp=row.get('event_time') or stamp
                     message=row.get('message') or row.get('description') or row.get('root_cause_summary') or row.get('summary')
                     details=[label+': **'+cell(row[key])+'**' for key,label in [('severity','Severity'),('state','Recorded status'),('status','Recorded status')] if row.get(key) is not None]
-                    parts.append('**'+cell(name)+'** · event recorded `'+cell(stamp)+'`. '+(' · '.join(details)+'.' if details else '')+'\n\n'+cell(message))
+                    parts.append('**'+cell(name)+'** · event recorded `'+cell(event_stamp)+'`.'+
+                        (' Record timestamp `'+cell(stamp)+'`.' if event_stamp!=stamp else '')+' '+(' · '.join(details)+'.' if details else '')+'\n\n'+cell(message))
                 for category,status in payload.get('source_statuses',{}).items():
                     parts.append('Source `'+cell(category)+'`: **'+cell(status)+'** · captured `'+cell(payload.get('source_captures',{}).get(category))+'`.')
             else:

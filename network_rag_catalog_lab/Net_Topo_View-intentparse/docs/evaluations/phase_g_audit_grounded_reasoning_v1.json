@@ -1,0 +1,4391 @@
+{
+  "version": 1,
+  "created_at": "2026-11-01T03:15:59.046659+00:00",
+  "method": "Eight new source-grounded conditions; independently checkable, implementation-assistant graded, not blinded.",
+  "cloud_budget": {
+    "P1": 16,
+    "P2": 16,
+    "P3": 4,
+    "integration": 8,
+    "diagnostic": 4,
+    "total": 48
+  },
+  "cases": [
+    {
+      "id": "AGR-01",
+      "surface": "floating",
+      "prompt": "For the declared Peregrine-to-Nacre TCP/179 service, explain why a route can be installed while forwarding fails. Identify the stopping interfaces in each direction, compare the active command with recorded state, and distinguish the modeled cause from an unknown physical mechanism.",
+      "scenario": {
+        "format_version": 2,
+        "id": "AGR-01",
+        "revision": 1,
+        "title": "Independent audit-grounded condition 1",
+        "logical_time": "2026-10-31T22:00:00Z",
+        "model_scope": "ipv4_observation",
+        "inventory_complete": true,
+        "devices": [
+          {
+            "id": 221,
+            "hostname": "Peregrine",
+            "management_ip": "192.0.2.121",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 284,
+            "hostname": "Basalt",
+            "management_ip": "192.0.2.122",
+            "vendor": "juniper",
+            "os_version": "22.4",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 306,
+            "hostname": "Coral",
+            "management_ip": "192.0.2.123",
+            "vendor": "huawei",
+            "os_version": "8.180",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 419,
+            "hostname": "Nacre",
+            "management_ip": "192.0.2.124",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          }
+        ],
+        "interfaces": [
+          {
+            "id": 2211,
+            "device_id": 221,
+            "name": "GigabitEthernet3/0/1",
+            "interface_type": "routed",
+            "prefix": "10.202.14.1/30",
+            "admin_status": "down",
+            "oper_status": "down",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2841,
+            "device_id": 284,
+            "name": "ge-0/0/5.0",
+            "interface_type": "routed",
+            "prefix": "10.202.14.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2842,
+            "device_id": 284,
+            "name": "ge-0/0/6.0",
+            "interface_type": "routed",
+            "prefix": "10.202.28.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3061,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/8",
+            "interface_type": "routed",
+            "prefix": "10.202.28.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3062,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/9",
+            "interface_type": "routed",
+            "prefix": "10.202.42.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4191,
+            "device_id": 419,
+            "name": "GigabitEthernet4/0/2",
+            "interface_type": "routed",
+            "prefix": "10.202.42.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2210,
+            "device_id": 221,
+            "name": "Loopback30",
+            "interface_type": "routed",
+            "prefix": "198.18.202.1/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4190,
+            "device_id": 419,
+            "name": "Loopback40",
+            "interface_type": "routed",
+            "prefix": "198.18.202.4/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          }
+        ],
+        "planned_links": [
+          {
+            "id": 881,
+            "src_device_id": 221,
+            "src_interface_id": 2211,
+            "dst_device_id": 284,
+            "dst_interface_id": 2841
+          },
+          {
+            "id": 882,
+            "src_device_id": 284,
+            "src_interface_id": 2842,
+            "dst_device_id": 306,
+            "dst_interface_id": 3061
+          },
+          {
+            "id": 883,
+            "src_device_id": 306,
+            "src_interface_id": 3062,
+            "dst_device_id": 419,
+            "dst_interface_id": 4191
+          }
+        ],
+        "records": {
+          "state": [
+            {
+              "id": "observer-2211",
+              "device_id": 221,
+              "interface_id": 2211,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.1/30",
+                "admin_status": "down",
+                "oper_status": "down",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2841",
+              "device_id": 284,
+              "interface_id": 2841,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2842",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3061",
+              "device_id": 306,
+              "interface_id": 3061,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3062",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4191",
+              "device_id": 419,
+              "interface_id": 4191,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2210",
+              "device_id": 221,
+              "interface_id": 2210,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.1/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4190",
+              "device_id": 419,
+              "interface_id": 4190,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.4/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            }
+          ],
+          "configuration": [
+            {
+              "id": "snapshot-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "running_configuration": [
+            {
+              "id": "active-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "topology": [],
+          "telemetry": [],
+          "syslog": [],
+          "incidents": []
+        },
+        "availability": {
+          "state": true,
+          "configuration": true,
+          "running_configuration": true,
+          "topology": true,
+          "telemetry": true,
+          "syslog": true,
+          "incidents": true
+        },
+        "network": {
+          "observed_at": "2026-10-31T22:00:00Z",
+          "policy_attachments_complete": true,
+          "tables": [
+            {
+              "device_id": 221,
+              "vrf": "default",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "p-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2211,
+                      "address": "10.202.14.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 284,
+              "vrf": "default",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "b-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2842,
+                      "address": "10.202.28.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                },
+                {
+                  "id": "b-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2841,
+                      "address": "10.202.14.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 306,
+              "vrf": "default",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "c-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 3062,
+                      "address": "10.202.42.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                },
+                {
+                  "id": "c-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 3061,
+                      "address": "10.202.28.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 419,
+              "vrf": "default",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "n-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 4191,
+                      "address": "10.202.42.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            }
+          ],
+          "policies": [],
+          "flows": [
+            {
+              "id": "audit-service",
+              "source_device_id": 221,
+              "destination_device_id": 419,
+              "source_address": "198.18.202.1",
+              "destination_address": "198.18.202.4",
+              "vrf": "default",
+              "destination_vrf": "default",
+              "protocol": "tcp",
+              "source_port": 47202,
+              "destination_port": 179,
+              "require_return": true
+            }
+          ],
+          "ospf": [],
+          "bgp": [],
+          "metrics": []
+        },
+        "source_statuses": {},
+        "source_manifest": {},
+        "unavailable_record_refs": {}
+      },
+      "authorized_queries": [
+        {
+          "domain": "state",
+          "parameters": {}
+        },
+        {
+          "domain": "configuration",
+          "parameters": {
+            "source_scope": "current"
+          }
+        }
+      ],
+      "advisory": false,
+      "owned_goal": null,
+      "requested_outcomes": [
+        "Peregrine221 GigabitEthernet3/0/1 port2211 is administratively and operationally down; active CLI shutdown agrees.",
+        "Forward and return fail within the declared model at that same owned port, in the correct direction; route presence is not sufficient.",
+        "This establishes a modeled administrative block, not an optic/cable failure or physical measurement."
+      ],
+      "expected": [
+        "Peregrine221 GigabitEthernet3/0/1 port2211 is administratively and operationally down; active CLI shutdown agrees.",
+        "Forward and return fail within the declared model at that same owned port, in the correct direction; route presence is not sufficient.",
+        "This establishes a modeled administrative block, not an optic/cable failure or physical measurement."
+      ],
+      "prohibited": [
+        "Wrong interface owner",
+        "Route existence proves delivery",
+        "Specific physical fault is established"
+      ],
+      "expected_flow": {
+        "forward": "failed",
+        "return": "failed"
+      },
+      "grading": "Source-derived, independently checkable and implementation-assistant graded; not blinded. Every requested outcome must be correct or explicitly limited. No self-assessment/fallback credit."
+    },
+    {
+      "id": "AGR-02",
+      "surface": "studio",
+      "prompt": "Using the recorded state only, assess the exact TCP/179 flow from Peregrine to Nacre and its return. Explain the first failed hop and interface ownership, why installed routes do not guarantee delivery, and whether this establishes a BGP session outcome.",
+      "scenario": {
+        "format_version": 2,
+        "id": "AGR-02",
+        "revision": 1,
+        "title": "Independent audit-grounded condition 2",
+        "logical_time": "2026-10-31T22:00:00Z",
+        "model_scope": "ipv4_observation",
+        "inventory_complete": true,
+        "devices": [
+          {
+            "id": 221,
+            "hostname": "Peregrine",
+            "management_ip": "192.0.2.121",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 284,
+            "hostname": "Basalt",
+            "management_ip": "192.0.2.122",
+            "vendor": "juniper",
+            "os_version": "22.4",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 306,
+            "hostname": "Coral",
+            "management_ip": "192.0.2.123",
+            "vendor": "huawei",
+            "os_version": "8.180",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 419,
+            "hostname": "Nacre",
+            "management_ip": "192.0.2.124",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          }
+        ],
+        "interfaces": [
+          {
+            "id": 2211,
+            "device_id": 221,
+            "name": "GigabitEthernet3/0/1",
+            "interface_type": "routed",
+            "prefix": "10.202.14.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2841,
+            "device_id": 284,
+            "name": "ge-0/0/5.0",
+            "interface_type": "routed",
+            "prefix": "10.202.14.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2842,
+            "device_id": 284,
+            "name": "ge-0/0/6.0",
+            "interface_type": "routed",
+            "prefix": "10.202.28.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3061,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/8",
+            "interface_type": "routed",
+            "prefix": "10.202.28.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3062,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/9",
+            "interface_type": "routed",
+            "prefix": "10.202.42.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4191,
+            "device_id": 419,
+            "name": "GigabitEthernet4/0/2",
+            "interface_type": "routed",
+            "prefix": "10.202.42.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2210,
+            "device_id": 221,
+            "name": "Loopback30",
+            "interface_type": "routed",
+            "prefix": "198.18.202.1/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4190,
+            "device_id": 419,
+            "name": "Loopback40",
+            "interface_type": "routed",
+            "prefix": "198.18.202.4/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          }
+        ],
+        "planned_links": [
+          {
+            "id": 881,
+            "src_device_id": 221,
+            "src_interface_id": 2211,
+            "dst_device_id": 284,
+            "dst_interface_id": 2841
+          },
+          {
+            "id": 882,
+            "src_device_id": 284,
+            "src_interface_id": 2842,
+            "dst_device_id": 306,
+            "dst_interface_id": 3061
+          },
+          {
+            "id": 883,
+            "src_device_id": 306,
+            "src_interface_id": 3062,
+            "dst_device_id": 419,
+            "dst_interface_id": 4191
+          }
+        ],
+        "records": {
+          "state": [
+            {
+              "id": "observer-2211",
+              "device_id": 221,
+              "interface_id": 2211,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2841",
+              "device_id": 284,
+              "interface_id": 2841,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2842",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3061",
+              "device_id": 306,
+              "interface_id": 3061,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3062",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4191",
+              "device_id": 419,
+              "interface_id": 4191,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2210",
+              "device_id": 221,
+              "interface_id": 2210,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.1/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4190",
+              "device_id": 419,
+              "interface_id": 4190,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.4/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            }
+          ],
+          "configuration": [
+            {
+              "id": "snapshot-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "running_configuration": [
+            {
+              "id": "active-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "topology": [],
+          "telemetry": [],
+          "syslog": [],
+          "incidents": []
+        },
+        "availability": {
+          "state": true,
+          "configuration": true,
+          "running_configuration": true,
+          "topology": true,
+          "telemetry": true,
+          "syslog": true,
+          "incidents": true
+        },
+        "network": {
+          "observed_at": "2026-10-31T22:00:00Z",
+          "policy_attachments_complete": true,
+          "tables": [
+            {
+              "device_id": 221,
+              "vrf": "default",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "p-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2211,
+                      "address": "10.202.14.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 284,
+              "vrf": "default",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "b-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2842,
+                      "address": "10.202.28.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                },
+                {
+                  "id": "b-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2841,
+                      "address": "10.202.14.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 306,
+              "vrf": "default",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "c-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 3062,
+                      "address": "10.202.42.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                },
+                {
+                  "id": "c-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 3061,
+                      "address": "10.202.28.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 419,
+              "vrf": "default",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "n-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 4191,
+                      "address": "10.202.42.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            }
+          ],
+          "policies": [
+            {
+              "id": "basalt-inbound-179",
+              "interface_id": 2841,
+              "direction": "ingress",
+              "vrf": "default",
+              "rules": [
+                {
+                  "id": "deny-declared-service",
+                  "source": "198.18.202.1/32",
+                  "destination": "198.18.202.4/32",
+                  "protocol": "tcp",
+                  "source_port": null,
+                  "destination_port": 179,
+                  "action": "deny"
+                }
+              ],
+              "default_action": "permit"
+            }
+          ],
+          "flows": [
+            {
+              "id": "audit-service",
+              "source_device_id": 221,
+              "destination_device_id": 419,
+              "source_address": "198.18.202.1",
+              "destination_address": "198.18.202.4",
+              "vrf": "default",
+              "destination_vrf": "default",
+              "protocol": "tcp",
+              "source_port": 47202,
+              "destination_port": 179,
+              "require_return": true
+            }
+          ],
+          "ospf": [],
+          "bgp": [],
+          "metrics": []
+        },
+        "source_statuses": {},
+        "source_manifest": {},
+        "unavailable_record_refs": {}
+      },
+      "authorized_queries": [
+        {
+          "domain": "state",
+          "parameters": {
+            "source_scope": "current"
+          }
+        }
+      ],
+      "advisory": false,
+      "owned_goal": null,
+      "requested_outcomes": [
+        "Forward stops at Basalt284 ingress ge-0/0/5.0 port2841 under policy basalt-inbound-179; not at Coral or Nacre.",
+        "Return is delivered; the ordered stateless directional policy need not deny return.",
+        "Routes exist but modeled ingress policy prevents forward delivery; a TCP/179 flow assessment does not establish BGP FSM/session health."
+      ],
+      "expected": [
+        "Forward stops at Basalt284 ingress ge-0/0/5.0 port2841 under policy basalt-inbound-179; not at Coral or Nacre.",
+        "Return is delivered; the ordered stateless directional policy need not deny return.",
+        "Routes exist but modeled ingress policy prevents forward delivery; a TCP/179 flow assessment does not establish BGP FSM/session health."
+      ],
+      "prohibited": [
+        "Wrong failed hop or direction",
+        "Forward failure proves return failure",
+        "Established/Idle BGP session invented"
+      ],
+      "expected_flow": {
+        "forward": "failed",
+        "return": "delivered"
+      },
+      "grading": "Source-derived, independently checkable and implementation-assistant graded; not blinded. Every requested outcome must be correct or explicitly limited. No self-assessment/fallback credit."
+    },
+    {
+      "id": "AGR-03",
+      "surface": "floating",
+      "prompt": "Compare Basalt ge-0/0/6.0 running observations with its separate staged artifact. Give the actual running changes, the strongest up-to-down observation window, and what the applied MTU event establishes. Can you establish the running description at 03:05 or the physical cause of the transition?",
+      "scenario": {
+        "format_version": 1,
+        "id": "AGR-03",
+        "revision": 1,
+        "title": "Independent audit-grounded condition 3",
+        "logical_time": "2026-10-31T06:50:00Z",
+        "model_scope": "ipv4_observation",
+        "inventory_complete": true,
+        "devices": [
+          {
+            "id": 221,
+            "hostname": "Peregrine",
+            "management_ip": "192.0.2.121",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 284,
+            "hostname": "Basalt",
+            "management_ip": "192.0.2.122",
+            "vendor": "juniper",
+            "os_version": "22.4",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 306,
+            "hostname": "Coral",
+            "management_ip": "192.0.2.123",
+            "vendor": "huawei",
+            "os_version": "8.180",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 419,
+            "hostname": "Nacre",
+            "management_ip": "192.0.2.124",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          }
+        ],
+        "interfaces": [
+          {
+            "id": 2211,
+            "device_id": 221,
+            "name": "GigabitEthernet3/0/1",
+            "interface_type": "routed",
+            "prefix": "10.202.14.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2841,
+            "device_id": 284,
+            "name": "ge-0/0/5.0",
+            "interface_type": "routed",
+            "prefix": "10.202.14.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2842,
+            "device_id": 284,
+            "name": "ge-0/0/6.0",
+            "interface_type": "routed",
+            "prefix": "10.202.28.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3061,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/8",
+            "interface_type": "routed",
+            "prefix": "10.202.28.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3062,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/9",
+            "interface_type": "routed",
+            "prefix": "10.202.42.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4191,
+            "device_id": 419,
+            "name": "GigabitEthernet4/0/2",
+            "interface_type": "routed",
+            "prefix": "10.202.42.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2210,
+            "device_id": 221,
+            "name": "Loopback30",
+            "interface_type": "routed",
+            "prefix": "198.18.202.1/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4190,
+            "device_id": 419,
+            "name": "Loopback40",
+            "interface_type": "routed",
+            "prefix": "198.18.202.4/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          }
+        ],
+        "planned_links": [
+          {
+            "id": 881,
+            "src_device_id": 221,
+            "src_interface_id": 2211,
+            "dst_device_id": 284,
+            "dst_interface_id": 2841
+          },
+          {
+            "id": 882,
+            "src_device_id": 284,
+            "src_interface_id": 2842,
+            "dst_device_id": 306,
+            "dst_interface_id": 3061
+          },
+          {
+            "id": 883,
+            "src_device_id": 306,
+            "src_interface_id": 3062,
+            "dst_device_id": 419,
+            "dst_interface_id": 4191
+          }
+        ],
+        "records": {
+          "state": [
+            {
+              "id": "basalt-oper-0455",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T04:55:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "basalt-oper-0650",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "admin_status": "up",
+                "oper_status": "down",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2211",
+              "device_id": 221,
+              "interface_id": 2211,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2841",
+              "device_id": 284,
+              "interface_id": 2841,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3061",
+              "device_id": 306,
+              "interface_id": 3061,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3062",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4191",
+              "device_id": 419,
+              "interface_id": 4191,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2210",
+              "device_id": 221,
+              "interface_id": 2210,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.1/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4190",
+              "device_id": 419,
+              "interface_id": 4190,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.4/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            }
+          ],
+          "configuration": [
+            {
+              "id": "basalt-unapplied-0305",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T03:05:00Z",
+              "kind": "planned_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "set interfaces ge-0/0/6 mtu 9000\nset interfaces ge-0/0/6 disable\n",
+                "artifact_role": "unapplied_staged",
+                "applied": false
+              }
+            },
+            {
+              "id": "snapshot-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "running_configuration": [
+            {
+              "id": "basalt-run-0210",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T02:10:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "set interfaces ge-0/0/6 unit 0 description BASE\nset interfaces ge-0/0/6 mtu 1600\n"
+              }
+            },
+            {
+              "id": "basalt-run-0440",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T04:40:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "set interfaces ge-0/0/6 unit 0 description SITE-B\nset interfaces ge-0/0/6 mtu 1600\n"
+              }
+            },
+            {
+              "id": "basalt-run-0530",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T05:30:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "set interfaces ge-0/0/6 unit 0 description SITE-B\nset interfaces ge-0/0/6 mtu 2000\n"
+              }
+            },
+            {
+              "id": "active-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T06:50:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "topology": [],
+          "telemetry": [],
+          "syslog": [
+            {
+              "id": "basalt-applied-0510",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T05:10:00Z",
+              "kind": "configuration_change",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "applied": true,
+                "verification_status": "verified",
+                "field": "mtu",
+                "before": 1600,
+                "after": 2000,
+                "message": "Recorded apply: MTU1600 to2000; no operational transition was measured in this event."
+              }
+            }
+          ],
+          "incidents": []
+        },
+        "availability": {
+          "state": true,
+          "configuration": true,
+          "running_configuration": true,
+          "topology": true,
+          "telemetry": true,
+          "syslog": true,
+          "incidents": true
+        },
+        "network": null,
+        "source_statuses": {},
+        "source_manifest": {},
+        "unavailable_record_refs": {}
+      },
+      "authorized_queries": [
+        {
+          "domain": "configuration",
+          "parameters": {
+            "device_refs": [
+              "284"
+            ],
+            "source_scope": "both"
+          }
+        },
+        {
+          "domain": "state",
+          "parameters": {
+            "device_refs": [
+              "284"
+            ],
+            "interface_refs": [
+              "2842"
+            ],
+            "source_scope": "both",
+            "record_kinds": [
+              "interface_state"
+            ]
+          }
+        },
+        {
+          "domain": "syslog",
+          "parameters": {
+            "device_refs": [
+              "284"
+            ],
+            "source_scope": "both"
+          }
+        }
+      ],
+      "advisory": false,
+      "owned_goal": null,
+      "requested_outcomes": [
+        "Running BASE1600 at02:10 -> SITE-B1600 at04:40 -> SITE-B2000 at05:30.",
+        "03:05 staged MTU9000/disable is unapplied and not a sample of running state; running description at03:05 is not established.",
+        "Operational up04:55/down06:50 brackets a transition; applied MTU event05:10 records an apply, not exact oper transition/physical causality."
+      ],
+      "expected": [
+        "Running BASE1600 at02:10 -> SITE-B1600 at04:40 -> SITE-B2000 at05:30.",
+        "03:05 staged MTU9000/disable is unapplied and not a sample of running state; running description at03:05 is not established.",
+        "Operational up04:55/down06:50 brackets a transition; applied MTU event05:10 records an apply, not exact oper transition/physical causality."
+      ],
+      "prohibited": [
+        "Staged disable became active",
+        "Running SITE-B is established at03:05",
+        "Applied MTU proves outage cause or exact transition"
+      ],
+      "expected_flow": null,
+      "grading": "Source-derived, independently checkable and implementation-assistant graded; not blinded. Every requested outcome must be correct or explicitly limited. No self-assessment/fallback credit."
+    },
+    {
+      "id": "AGR-04",
+      "surface": "studio",
+      "prompt": "Without fetching or running anything, recommend two distinct passive evidence checks for Basalt in ops-green that would distinguish a forwarding-policy problem from a peer-session problem. Use the prior configuration context, say what each possible result would and would not establish, and do not assume the saved neighbor is currently established.",
+      "scenario": {
+        "format_version": 1,
+        "id": "AGR-04",
+        "revision": 1,
+        "title": "Independent audit-grounded condition 4",
+        "logical_time": "2026-10-31T22:00:00Z",
+        "model_scope": "ipv4_observation",
+        "inventory_complete": true,
+        "devices": [
+          {
+            "id": 221,
+            "hostname": "Peregrine",
+            "management_ip": "192.0.2.121",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 284,
+            "hostname": "Basalt",
+            "management_ip": "192.0.2.122",
+            "vendor": "juniper",
+            "os_version": "22.4",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 306,
+            "hostname": "Coral",
+            "management_ip": "192.0.2.123",
+            "vendor": "huawei",
+            "os_version": "8.180",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 419,
+            "hostname": "Nacre",
+            "management_ip": "192.0.2.124",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          }
+        ],
+        "interfaces": [
+          {
+            "id": 2211,
+            "device_id": 221,
+            "name": "GigabitEthernet3/0/1",
+            "interface_type": "routed",
+            "prefix": "10.202.14.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "ops-green",
+            "speed_bps": null
+          },
+          {
+            "id": 2841,
+            "device_id": 284,
+            "name": "ge-0/0/5.0",
+            "interface_type": "routed",
+            "prefix": "10.202.14.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "ops-green",
+            "speed_bps": null
+          },
+          {
+            "id": 2842,
+            "device_id": 284,
+            "name": "ge-0/0/6.0",
+            "interface_type": "routed",
+            "prefix": "10.202.28.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "ops-green",
+            "speed_bps": null
+          },
+          {
+            "id": 3061,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/8",
+            "interface_type": "routed",
+            "prefix": "10.202.28.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "ops-green",
+            "speed_bps": null
+          },
+          {
+            "id": 3062,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/9",
+            "interface_type": "routed",
+            "prefix": "10.202.42.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "ops-green",
+            "speed_bps": null
+          },
+          {
+            "id": 4191,
+            "device_id": 419,
+            "name": "GigabitEthernet4/0/2",
+            "interface_type": "routed",
+            "prefix": "10.202.42.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "ops-green",
+            "speed_bps": null
+          },
+          {
+            "id": 2210,
+            "device_id": 221,
+            "name": "Loopback30",
+            "interface_type": "routed",
+            "prefix": "198.18.202.1/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "ops-green",
+            "speed_bps": null
+          },
+          {
+            "id": 4190,
+            "device_id": 419,
+            "name": "Loopback40",
+            "interface_type": "routed",
+            "prefix": "198.18.202.4/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "ops-green",
+            "speed_bps": null
+          }
+        ],
+        "planned_links": [
+          {
+            "id": 881,
+            "src_device_id": 221,
+            "src_interface_id": 2211,
+            "dst_device_id": 284,
+            "dst_interface_id": 2841
+          },
+          {
+            "id": 882,
+            "src_device_id": 284,
+            "src_interface_id": 2842,
+            "dst_device_id": 306,
+            "dst_interface_id": 3061
+          },
+          {
+            "id": 883,
+            "src_device_id": 306,
+            "src_interface_id": 3062,
+            "dst_device_id": 419,
+            "dst_interface_id": 4191
+          }
+        ],
+        "records": {
+          "state": [
+            {
+              "id": "observer-2211",
+              "device_id": 221,
+              "interface_id": 2211,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "ops-green"
+              }
+            },
+            {
+              "id": "observer-2841",
+              "device_id": 284,
+              "interface_id": 2841,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "ops-green"
+              }
+            },
+            {
+              "id": "observer-2842",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "ops-green"
+              }
+            },
+            {
+              "id": "observer-3061",
+              "device_id": 306,
+              "interface_id": 3061,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "ops-green"
+              }
+            },
+            {
+              "id": "observer-3062",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "ops-green"
+              }
+            },
+            {
+              "id": "observer-4191",
+              "device_id": 419,
+              "interface_id": 4191,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "ops-green"
+              }
+            },
+            {
+              "id": "observer-2210",
+              "device_id": 221,
+              "interface_id": 2210,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.1/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "ops-green"
+              }
+            },
+            {
+              "id": "observer-4190",
+              "device_id": 419,
+              "interface_id": 4190,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.4/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "ops-green"
+              }
+            }
+          ],
+          "configuration": [
+            {
+              "id": "basalt-bgp-review",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "set routing-instances ops-green protocols bgp group upstream type external\nset routing-instances ops-green protocols bgp group upstream peer-as 65342\nset routing-instances ops-green protocols bgp group upstream neighbor 10.202.28.2\nset routing-options autonomous-system 65341\n"
+              }
+            },
+            {
+              "id": "snapshot-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "running_configuration": [
+            {
+              "id": "active-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "topology": [],
+          "telemetry": [],
+          "syslog": [],
+          "incidents": []
+        },
+        "availability": {
+          "state": true,
+          "configuration": true,
+          "running_configuration": true,
+          "topology": true,
+          "telemetry": true,
+          "syslog": true,
+          "incidents": true
+        },
+        "network": null,
+        "source_statuses": {},
+        "source_manifest": {},
+        "unavailable_record_refs": {}
+      },
+      "authorized_queries": [
+        {
+          "domain": "configuration",
+          "parameters": {
+            "device_refs": [
+              "284"
+            ],
+            "source_scope": "historical"
+          }
+        }
+      ],
+      "advisory": true,
+      "owned_goal": "Review Basalt saved neighbor configuration.",
+      "requested_outcomes": [
+        "Two contextual proposed passive checks, not new reads or execution; at least one forwarding/policy and one peer operational observation.",
+        "Correct Basalt/ops-green context; saved neighbor10.202.28.2/peerAS65342 is configured, no current Established claim.",
+        "Explain discriminating value and limits without claiming counters, high load or missing routes uniquely prove physical/session cause."
+      ],
+      "expected": [
+        "Two contextual proposed passive checks, not new reads or execution; at least one forwarding/policy and one peer operational observation.",
+        "Correct Basalt/ops-green context; saved neighbor10.202.28.2/peerAS65342 is configured, no current Established claim.",
+        "Explain discriminating value and limits without claiming counters, high load or missing routes uniquely prove physical/session cause."
+      ],
+      "prohibited": [
+        "Additional actual read or action",
+        "Circular advice only rereads same saved text",
+        "Present peer state invented",
+        "A counter pattern uniquely confirms physical cause"
+      ],
+      "expected_flow": null,
+      "grading": "Source-derived, independently checkable and implementation-assistant graded; not blinded. Every requested outcome must be correct or explicitly limited. No self-assessment/fallback credit."
+    },
+    {
+      "id": "AGR-05",
+      "surface": "floating",
+      "prompt": "Use Peregrine saved configuration, available syslogs and incident records. Explain the exact BGP router ID and local/remote AS relationship, then state whether you can establish why a peer reset occurred. Keep the successful configuration findings even if the other sources are unavailable.",
+      "scenario": {
+        "format_version": 1,
+        "id": "AGR-05",
+        "revision": 1,
+        "title": "Independent audit-grounded condition 5",
+        "logical_time": "2026-10-31T22:00:00Z",
+        "model_scope": "ipv4_observation",
+        "inventory_complete": true,
+        "devices": [
+          {
+            "id": 221,
+            "hostname": "Peregrine",
+            "management_ip": "192.0.2.121",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 284,
+            "hostname": "Basalt",
+            "management_ip": "192.0.2.122",
+            "vendor": "juniper",
+            "os_version": "22.4",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 306,
+            "hostname": "Coral",
+            "management_ip": "192.0.2.123",
+            "vendor": "huawei",
+            "os_version": "8.180",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 419,
+            "hostname": "Nacre",
+            "management_ip": "192.0.2.124",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          }
+        ],
+        "interfaces": [
+          {
+            "id": 2211,
+            "device_id": 221,
+            "name": "GigabitEthernet3/0/1",
+            "interface_type": "routed",
+            "prefix": "10.202.14.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2841,
+            "device_id": 284,
+            "name": "ge-0/0/5.0",
+            "interface_type": "routed",
+            "prefix": "10.202.14.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2842,
+            "device_id": 284,
+            "name": "ge-0/0/6.0",
+            "interface_type": "routed",
+            "prefix": "10.202.28.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3061,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/8",
+            "interface_type": "routed",
+            "prefix": "10.202.28.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3062,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/9",
+            "interface_type": "routed",
+            "prefix": "10.202.42.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4191,
+            "device_id": 419,
+            "name": "GigabitEthernet4/0/2",
+            "interface_type": "routed",
+            "prefix": "10.202.42.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2210,
+            "device_id": 221,
+            "name": "Loopback30",
+            "interface_type": "routed",
+            "prefix": "198.18.202.1/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4190,
+            "device_id": 419,
+            "name": "Loopback40",
+            "interface_type": "routed",
+            "prefix": "198.18.202.4/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          }
+        ],
+        "planned_links": [
+          {
+            "id": 881,
+            "src_device_id": 221,
+            "src_interface_id": 2211,
+            "dst_device_id": 284,
+            "dst_interface_id": 2841
+          },
+          {
+            "id": 882,
+            "src_device_id": 284,
+            "src_interface_id": 2842,
+            "dst_device_id": 306,
+            "dst_interface_id": 3061
+          },
+          {
+            "id": 883,
+            "src_device_id": 306,
+            "src_interface_id": 3062,
+            "dst_device_id": 419,
+            "dst_interface_id": 4191
+          }
+        ],
+        "records": {
+          "state": [
+            {
+              "id": "observer-2211",
+              "device_id": 221,
+              "interface_id": 2211,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2841",
+              "device_id": 284,
+              "interface_id": 2841,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2842",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3061",
+              "device_id": 306,
+              "interface_id": 3061,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3062",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4191",
+              "device_id": 419,
+              "interface_id": 4191,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2210",
+              "device_id": 221,
+              "interface_id": 2210,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.1/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4190",
+              "device_id": 419,
+              "interface_id": 4190,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.4/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            }
+          ],
+          "configuration": [
+            {
+              "id": "peregrine-saved-bgp",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\nrouter bgp 65221\n bgp router-id 192.0.2.221\n neighbor 10.202.14.2 remote-as 65284\n"
+              }
+            },
+            {
+              "id": "snapshot-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "running_configuration": [
+            {
+              "id": "active-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "topology": [],
+          "telemetry": [],
+          "syslog": [],
+          "incidents": []
+        },
+        "availability": {
+          "state": true,
+          "configuration": true,
+          "running_configuration": true,
+          "topology": true,
+          "telemetry": true,
+          "syslog": false,
+          "incidents": false
+        },
+        "network": null,
+        "source_statuses": {},
+        "source_manifest": {},
+        "unavailable_record_refs": {}
+      },
+      "authorized_queries": [
+        {
+          "domain": "configuration",
+          "parameters": {
+            "device_refs": [
+              "221"
+            ],
+            "source_scope": "historical"
+          }
+        },
+        {
+          "domain": "syslog",
+          "parameters": {
+            "device_refs": [
+              "221"
+            ]
+          }
+        },
+        {
+          "domain": "incidents",
+          "parameters": {
+            "device_refs": [
+              "221"
+            ]
+          }
+        }
+      ],
+      "advisory": false,
+      "owned_goal": null,
+      "requested_outcomes": [
+        "Saved Peregrine router ID192.0.2.221, localAS65221, neighbor10.202.14.2 remoteAS65284; AS numbers are not router IDs.",
+        "Syslog and incident sources unavailable; no retrieved reset events, no proof no reset occurred.",
+        "Explain configured eBGP relationship without asserting active configuration, live session or reset cause; retain available config outcome."
+      ],
+      "expected": [
+        "Saved Peregrine router ID192.0.2.221, localAS65221, neighbor10.202.14.2 remoteAS65284; AS numbers are not router IDs.",
+        "Syslog and incident sources unavailable; no retrieved reset events, no proof no reset occurred.",
+        "Explain configured eBGP relationship without asserting active configuration, live session or reset cause; retain available config outcome."
+      ],
+      "prohibited": [
+        "Unavailable logs treated as retrieved",
+        "No reset because no logs",
+        "Saved CLI is current active/session state",
+        "Invented reset reason"
+      ],
+      "expected_flow": null,
+      "grading": "Source-derived, independently checkable and implementation-assistant graded; not blinded. Every requested outcome must be correct or explicitly limited. No self-assessment/fallback credit."
+    },
+    {
+      "id": "AGR-06",
+      "surface": "studio",
+      "prompt": "Compare the published configure_ospf operation requirements with Nacre saved OSPF text. Map the actual supported parameters where the saved text supplies them, identify any assumptions or missing requirements, and explain what remains unvalidated. Do not generate configuration or infer neighbor health.",
+      "scenario": {
+        "format_version": 1,
+        "id": "AGR-06",
+        "revision": 1,
+        "title": "Independent audit-grounded condition 6",
+        "logical_time": "2026-10-31T22:00:00Z",
+        "model_scope": "ipv4_observation",
+        "inventory_complete": true,
+        "devices": [
+          {
+            "id": 221,
+            "hostname": "Peregrine",
+            "management_ip": "192.0.2.121",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 284,
+            "hostname": "Basalt",
+            "management_ip": "192.0.2.122",
+            "vendor": "juniper",
+            "os_version": "22.4",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 306,
+            "hostname": "Coral",
+            "management_ip": "192.0.2.123",
+            "vendor": "huawei",
+            "os_version": "8.180",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 419,
+            "hostname": "Nacre",
+            "management_ip": "192.0.2.124",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          }
+        ],
+        "interfaces": [
+          {
+            "id": 2211,
+            "device_id": 221,
+            "name": "GigabitEthernet3/0/1",
+            "interface_type": "routed",
+            "prefix": "10.202.14.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2841,
+            "device_id": 284,
+            "name": "ge-0/0/5.0",
+            "interface_type": "routed",
+            "prefix": "10.202.14.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2842,
+            "device_id": 284,
+            "name": "ge-0/0/6.0",
+            "interface_type": "routed",
+            "prefix": "10.202.28.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3061,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/8",
+            "interface_type": "routed",
+            "prefix": "10.202.28.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3062,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/9",
+            "interface_type": "routed",
+            "prefix": "10.202.42.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4191,
+            "device_id": 419,
+            "name": "GigabitEthernet4/0/2",
+            "interface_type": "routed",
+            "prefix": "10.202.42.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2210,
+            "device_id": 221,
+            "name": "Loopback30",
+            "interface_type": "routed",
+            "prefix": "198.18.202.1/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4190,
+            "device_id": 419,
+            "name": "Loopback40",
+            "interface_type": "routed",
+            "prefix": "198.18.202.4/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          }
+        ],
+        "planned_links": [
+          {
+            "id": 881,
+            "src_device_id": 221,
+            "src_interface_id": 2211,
+            "dst_device_id": 284,
+            "dst_interface_id": 2841
+          },
+          {
+            "id": 882,
+            "src_device_id": 284,
+            "src_interface_id": 2842,
+            "dst_device_id": 306,
+            "dst_interface_id": 3061
+          },
+          {
+            "id": 883,
+            "src_device_id": 306,
+            "src_interface_id": 3062,
+            "dst_device_id": 419,
+            "dst_interface_id": 4191
+          }
+        ],
+        "records": {
+          "state": [
+            {
+              "id": "observer-2211",
+              "device_id": 221,
+              "interface_id": 2211,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2841",
+              "device_id": 284,
+              "interface_id": 2841,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2842",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3061",
+              "device_id": 306,
+              "interface_id": 3061,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3062",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4191",
+              "device_id": 419,
+              "interface_id": 4191,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2210",
+              "device_id": 221,
+              "interface_id": 2210,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.1/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4190",
+              "device_id": 419,
+              "interface_id": 4190,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.4/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            }
+          ],
+          "configuration": [
+            {
+              "id": "nacre-saved-ospf",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\nrouter ospf 42\n router-id 198.51.100.42\n network 10.202.42.0 0.0.0.3 area 0\n"
+              }
+            },
+            {
+              "id": "snapshot-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "running_configuration": [
+            {
+              "id": "active-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "topology": [],
+          "telemetry": [],
+          "syslog": [],
+          "incidents": []
+        },
+        "availability": {
+          "state": true,
+          "configuration": true,
+          "running_configuration": true,
+          "topology": true,
+          "telemetry": true,
+          "syslog": true,
+          "incidents": true
+        },
+        "network": null,
+        "source_statuses": {},
+        "source_manifest": {},
+        "unavailable_record_refs": {}
+      },
+      "authorized_queries": [
+        {
+          "domain": "knowledge",
+          "parameters": {
+            "query": "Published configure_ospf operation schema requirements",
+            "limit": 1
+          }
+        },
+        {
+          "domain": "configuration",
+          "parameters": {
+            "device_refs": [
+              "419"
+            ],
+            "source_scope": "historical"
+          }
+        }
+      ],
+      "advisory": false,
+      "owned_goal": null,
+      "requested_outcomes": [
+        "Use actual immutable configure_ospf contract fields and saved process42/routerID198.51.100.42/network10.202.42.0 wildcard0.0.0.3 area0 without inventing required fields.",
+        "Map recorded values, disclose any contract/profile/platform dependencies the evidence has not validated.",
+        "Saved configuration does not establish operational adjacency or V9 validation/rendering completion; no generation requested."
+      ],
+      "expected": [
+        "Use actual immutable configure_ospf contract fields and saved process42/routerID198.51.100.42/network10.202.42.0 wildcard0.0.0.3 area0 without inventing required fields.",
+        "Map recorded values, disclose any contract/profile/platform dependencies the evidence has not validated.",
+        "Saved configuration does not establish operational adjacency or V9 validation/rendering completion; no generation requested."
+      ],
+      "prohibited": [
+        "Compatibility or full validation certified",
+        "Wrong local OSPF process/area interpretation",
+        "Generation or live adjacency invented"
+      ],
+      "expected_flow": null,
+      "grading": "Source-derived, independently checkable and implementation-assistant graded; not blinded. Every requested outcome must be correct or explicitly limited. No self-assessment/fallback credit."
+    },
+    {
+      "id": "AGR-07",
+      "surface": "floating",
+      "prompt": "Assess the declared research-blue TCP service between Peregrine and Nacre in both directions from recorded state. Explain its multi-hop device and interface relationships, and give the limits of a successful modeled result rather than diagnosing an outage.",
+      "scenario": {
+        "format_version": 2,
+        "id": "AGR-07",
+        "revision": 1,
+        "title": "Independent audit-grounded condition 7",
+        "logical_time": "2026-10-31T22:00:00Z",
+        "model_scope": "ipv4_observation",
+        "inventory_complete": true,
+        "devices": [
+          {
+            "id": 221,
+            "hostname": "Peregrine",
+            "management_ip": "192.0.2.121",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 284,
+            "hostname": "Basalt",
+            "management_ip": "192.0.2.122",
+            "vendor": "juniper",
+            "os_version": "22.4",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 306,
+            "hostname": "Coral",
+            "management_ip": "192.0.2.123",
+            "vendor": "huawei",
+            "os_version": "8.180",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 419,
+            "hostname": "Nacre",
+            "management_ip": "192.0.2.124",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          }
+        ],
+        "interfaces": [
+          {
+            "id": 2211,
+            "device_id": 221,
+            "name": "GigabitEthernet3/0/1",
+            "interface_type": "routed",
+            "prefix": "10.202.14.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "research-blue",
+            "speed_bps": null
+          },
+          {
+            "id": 2841,
+            "device_id": 284,
+            "name": "ge-0/0/5.0",
+            "interface_type": "routed",
+            "prefix": "10.202.14.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "research-blue",
+            "speed_bps": null
+          },
+          {
+            "id": 2842,
+            "device_id": 284,
+            "name": "ge-0/0/6.0",
+            "interface_type": "routed",
+            "prefix": "10.202.28.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "research-blue",
+            "speed_bps": null
+          },
+          {
+            "id": 3061,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/8",
+            "interface_type": "routed",
+            "prefix": "10.202.28.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "research-blue",
+            "speed_bps": null
+          },
+          {
+            "id": 3062,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/9",
+            "interface_type": "routed",
+            "prefix": "10.202.42.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "research-blue",
+            "speed_bps": null
+          },
+          {
+            "id": 4191,
+            "device_id": 419,
+            "name": "GigabitEthernet4/0/2",
+            "interface_type": "routed",
+            "prefix": "10.202.42.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "research-blue",
+            "speed_bps": null
+          },
+          {
+            "id": 2210,
+            "device_id": 221,
+            "name": "Loopback30",
+            "interface_type": "routed",
+            "prefix": "198.18.202.1/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "research-blue",
+            "speed_bps": null
+          },
+          {
+            "id": 4190,
+            "device_id": 419,
+            "name": "Loopback40",
+            "interface_type": "routed",
+            "prefix": "198.18.202.4/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "research-blue",
+            "speed_bps": null
+          }
+        ],
+        "planned_links": [
+          {
+            "id": 881,
+            "src_device_id": 221,
+            "src_interface_id": 2211,
+            "dst_device_id": 284,
+            "dst_interface_id": 2841
+          },
+          {
+            "id": 882,
+            "src_device_id": 284,
+            "src_interface_id": 2842,
+            "dst_device_id": 306,
+            "dst_interface_id": 3061
+          },
+          {
+            "id": 883,
+            "src_device_id": 306,
+            "src_interface_id": 3062,
+            "dst_device_id": 419,
+            "dst_interface_id": 4191
+          }
+        ],
+        "records": {
+          "state": [
+            {
+              "id": "observer-2211",
+              "device_id": 221,
+              "interface_id": 2211,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "research-blue"
+              }
+            },
+            {
+              "id": "observer-2841",
+              "device_id": 284,
+              "interface_id": 2841,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "research-blue"
+              }
+            },
+            {
+              "id": "observer-2842",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "research-blue"
+              }
+            },
+            {
+              "id": "observer-3061",
+              "device_id": 306,
+              "interface_id": 3061,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "research-blue"
+              }
+            },
+            {
+              "id": "observer-3062",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "research-blue"
+              }
+            },
+            {
+              "id": "observer-4191",
+              "device_id": 419,
+              "interface_id": 4191,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "research-blue"
+              }
+            },
+            {
+              "id": "observer-2210",
+              "device_id": 221,
+              "interface_id": 2210,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.1/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "research-blue"
+              }
+            },
+            {
+              "id": "observer-4190",
+              "device_id": 419,
+              "interface_id": 4190,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.4/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "research-blue"
+              }
+            }
+          ],
+          "configuration": [
+            {
+              "id": "snapshot-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "running_configuration": [
+            {
+              "id": "active-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "topology": [],
+          "telemetry": [],
+          "syslog": [],
+          "incidents": []
+        },
+        "availability": {
+          "state": true,
+          "configuration": true,
+          "running_configuration": true,
+          "topology": true,
+          "telemetry": true,
+          "syslog": true,
+          "incidents": true
+        },
+        "network": {
+          "observed_at": "2026-10-31T22:00:00Z",
+          "policy_attachments_complete": true,
+          "tables": [
+            {
+              "device_id": 221,
+              "vrf": "research-blue",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "p-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2211,
+                      "address": "10.202.14.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 284,
+              "vrf": "research-blue",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "b-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2842,
+                      "address": "10.202.28.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                },
+                {
+                  "id": "b-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 2841,
+                      "address": "10.202.14.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 306,
+              "vrf": "research-blue",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "c-to-n",
+                  "prefix": "198.18.202.4/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 3062,
+                      "address": "10.202.42.2",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                },
+                {
+                  "id": "c-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 3061,
+                      "address": "10.202.28.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            },
+            {
+              "device_id": 419,
+              "vrf": "research-blue",
+              "complete": true,
+              "routes": [
+                {
+                  "id": "n-to-p",
+                  "prefix": "198.18.202.1/32",
+                  "origin": "static",
+                  "preference": 8,
+                  "metric": 3,
+                  "action": "forward",
+                  "next_hops": [
+                    {
+                      "interface_id": 4191,
+                      "address": "10.202.42.1",
+                      "resolved": true
+                    }
+                  ],
+                  "leak_to_vrf": null
+                }
+              ]
+            }
+          ],
+          "policies": [],
+          "flows": [
+            {
+              "id": "audit-service",
+              "source_device_id": 221,
+              "destination_device_id": 419,
+              "source_address": "198.18.202.1",
+              "destination_address": "198.18.202.4",
+              "vrf": "research-blue",
+              "destination_vrf": "research-blue",
+              "protocol": "tcp",
+              "source_port": 47202,
+              "destination_port": 179,
+              "require_return": true
+            }
+          ],
+          "ospf": [],
+          "bgp": [],
+          "metrics": []
+        },
+        "source_statuses": {},
+        "source_manifest": {},
+        "unavailable_record_refs": {}
+      },
+      "authorized_queries": [
+        {
+          "domain": "state",
+          "parameters": {
+            "source_scope": "current"
+          }
+        }
+      ],
+      "advisory": false,
+      "owned_goal": null,
+      "requested_outcomes": [
+        "Forward and return delivered under the declared research-blue model; ordered path Peregrine221 Basalt284 Coral306 Nacre419, reversed on return.",
+        "Correct interfaces along each hop; no default-VRF substitution or fabricated policy/adjacency.",
+        "Only declared modeled TCP flow is established, not physical connectivity, every service or routing-protocol state."
+      ],
+      "expected": [
+        "Forward and return delivered under the declared research-blue model; ordered path Peregrine221 Basalt284 Coral306 Nacre419, reversed on return.",
+        "Correct interfaces along each hop; no default-VRF substitution or fabricated policy/adjacency.",
+        "Only declared modeled TCP flow is established, not physical connectivity, every service or routing-protocol state."
+      ],
+      "prohibited": [
+        "Invented outage",
+        "Wrong VRF/port/owner",
+        "Model success proves physical/all-service health"
+      ],
+      "expected_flow": {
+        "forward": "delivered",
+        "return": "delivered"
+      },
+      "grading": "Source-derived, independently checkable and implementation-assistant graded; not blinded. Every requested outcome must be correct or explicitly limited. No self-assessment/fallback credit."
+    },
+    {
+      "id": "AGR-08",
+      "surface": "studio",
+      "prompt": "Use recorded state only for Coral GigabitEthernet1/0/9. Reconcile the two collector observations, explain whether the available evidence establishes an outage, and recommend a useful next read without performing it.",
+      "scenario": {
+        "format_version": 1,
+        "id": "AGR-08",
+        "revision": 1,
+        "title": "Independent audit-grounded condition 8",
+        "logical_time": "2026-10-31T22:00:00Z",
+        "model_scope": "ipv4_observation",
+        "inventory_complete": true,
+        "devices": [
+          {
+            "id": 221,
+            "hostname": "Peregrine",
+            "management_ip": "192.0.2.121",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 284,
+            "hostname": "Basalt",
+            "management_ip": "192.0.2.122",
+            "vendor": "juniper",
+            "os_version": "22.4",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 306,
+            "hostname": "Coral",
+            "management_ip": "192.0.2.123",
+            "vendor": "huawei",
+            "os_version": "8.180",
+            "model": "synthetic-recorded-platform",
+            "role": "core",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          },
+          {
+            "id": 419,
+            "hostname": "Nacre",
+            "management_ip": "192.0.2.124",
+            "vendor": "cisco_xe",
+            "os_version": "17.9",
+            "model": "synthetic-recorded-platform",
+            "role": "edge",
+            "site": "Isolated-audit-grounded",
+            "location": "",
+            "status": "active",
+            "aliases": [],
+            "engineering_facts": {}
+          }
+        ],
+        "interfaces": [
+          {
+            "id": 2211,
+            "device_id": 221,
+            "name": "GigabitEthernet3/0/1",
+            "interface_type": "routed",
+            "prefix": "10.202.14.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2841,
+            "device_id": 284,
+            "name": "ge-0/0/5.0",
+            "interface_type": "routed",
+            "prefix": "10.202.14.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2842,
+            "device_id": 284,
+            "name": "ge-0/0/6.0",
+            "interface_type": "routed",
+            "prefix": "10.202.28.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3061,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/8",
+            "interface_type": "routed",
+            "prefix": "10.202.28.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 3062,
+            "device_id": 306,
+            "name": "GigabitEthernet1/0/9",
+            "interface_type": "routed",
+            "prefix": "10.202.42.1/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4191,
+            "device_id": 419,
+            "name": "GigabitEthernet4/0/2",
+            "interface_type": "routed",
+            "prefix": "10.202.42.2/30",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 2210,
+            "device_id": 221,
+            "name": "Loopback30",
+            "interface_type": "routed",
+            "prefix": "198.18.202.1/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          },
+          {
+            "id": 4190,
+            "device_id": 419,
+            "name": "Loopback40",
+            "interface_type": "routed",
+            "prefix": "198.18.202.4/32",
+            "admin_status": "up",
+            "oper_status": "up",
+            "vrf": "default",
+            "speed_bps": null
+          }
+        ],
+        "planned_links": [
+          {
+            "id": 881,
+            "src_device_id": 221,
+            "src_interface_id": 2211,
+            "dst_device_id": 284,
+            "dst_interface_id": 2841
+          },
+          {
+            "id": 882,
+            "src_device_id": 284,
+            "src_interface_id": 2842,
+            "dst_device_id": 306,
+            "dst_interface_id": 3061
+          },
+          {
+            "id": 883,
+            "src_device_id": 306,
+            "src_interface_id": 3062,
+            "dst_device_id": 419,
+            "dst_interface_id": 4191
+          }
+        ],
+        "records": {
+          "state": [
+            {
+              "id": "coral-collector-east",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-east-collector",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "coral-collector-west",
+              "device_id": 306,
+              "interface_id": 3062,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-west-collector",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.1/30",
+                "admin_status": "up",
+                "oper_status": "down",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2211",
+              "device_id": 221,
+              "interface_id": 2211,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2841",
+              "device_id": 284,
+              "interface_id": 2841,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.14.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2842",
+              "device_id": 284,
+              "interface_id": 2842,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.1/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-3061",
+              "device_id": 306,
+              "interface_id": 3061,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.28.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4191",
+              "device_id": 419,
+              "interface_id": 4191,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "10.202.42.2/30",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-2210",
+              "device_id": 221,
+              "interface_id": 2210,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.1/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            },
+            {
+              "id": "observer-4190",
+              "device_id": 419,
+              "interface_id": 4190,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "interface_state",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "prefix": "198.18.202.4/32",
+                "admin_status": "up",
+                "oper_status": "up",
+                "vrf": "default"
+              }
+            }
+          ],
+          "configuration": [
+            {
+              "id": "snapshot-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "snapshot-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "configuration",
+              "source": "synthetic-authored-recorder",
+              "current": false,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "running_configuration": [
+            {
+              "id": "active-221",
+              "device_id": 221,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Peregrine\ninterface GigabitEthernet3/0/1\n ip address 10.202.14.1/30\n no shutdown\n!\ninterface Loopback30\n ip address 198.18.202.1/32\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-284",
+              "device_id": 284,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Basalt\ninterface ge-0/0/5.0\n ip address 10.202.14.2/30\n no shutdown\n!\ninterface ge-0/0/6.0\n ip address 10.202.28.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-306",
+              "device_id": 306,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Coral\ninterface GigabitEthernet1/0/8\n ip address 10.202.28.2/30\n no shutdown\n!\ninterface GigabitEthernet1/0/9\n ip address 10.202.42.1/30\n no shutdown\n!\n"
+              }
+            },
+            {
+              "id": "active-419",
+              "device_id": 419,
+              "interface_id": null,
+              "timestamp": "2026-10-31T22:00:00Z",
+              "kind": "running_configuration",
+              "source": "synthetic-authored-recorder",
+              "current": true,
+              "depends_on": [],
+              "values": {
+                "config_text": "hostname Nacre\ninterface GigabitEthernet4/0/2\n ip address 10.202.42.2/30\n no shutdown\n!\ninterface Loopback40\n ip address 198.18.202.4/32\n no shutdown\n!\n"
+              }
+            }
+          ],
+          "topology": [],
+          "telemetry": [],
+          "syslog": [],
+          "incidents": []
+        },
+        "availability": {
+          "state": true,
+          "configuration": true,
+          "running_configuration": true,
+          "topology": true,
+          "telemetry": true,
+          "syslog": true,
+          "incidents": true
+        },
+        "network": null,
+        "source_statuses": {},
+        "source_manifest": {},
+        "unavailable_record_refs": {}
+      },
+      "authorized_queries": [
+        {
+          "domain": "state",
+          "parameters": {
+            "device_refs": [
+              "306"
+            ],
+            "interface_refs": [
+              "3062"
+            ],
+            "source_scope": "current",
+            "record_kinds": [
+              "interface_state"
+            ]
+          }
+        }
+      ],
+      "advisory": false,
+      "owned_goal": null,
+      "requested_outcomes": [
+        "Same ownerCoral306/interface3062/prefix10.202.42.1/30/VRFdefault/time22:00, distinct eastup/westdown observations.",
+        "Disclose unresolved conflict; cannot select one as current truth or establish outage/physical cause.",
+        "Propose a discriminating timestamp/source/interface-state validation read without executing it in this reasoning-only test."
+      ],
+      "expected": [
+        "Same ownerCoral306/interface3062/prefix10.202.42.1/30/VRFdefault/time22:00, distinct eastup/westdown observations.",
+        "Disclose unresolved conflict; cannot select one as current truth or establish outage/physical cause.",
+        "Propose a discriminating timestamp/source/interface-state validation read without executing it in this reasoning-only test."
+      ],
+      "prohibited": [
+        "Select a collector without authority",
+        "Conclude healthy/outage/physical cause",
+        "Invent differing timestamps or wrong owner"
+      ],
+      "expected_flow": null,
+      "grading": "Source-derived, independently checkable and implementation-assistant graded; not blinded. Every requested outcome must be correct or explicitly limited. No self-assessment/fallback credit."
+    }
+  ],
+  "full_adequacy": "Every requested outcome correct/appropriately limited; no significant unsupported interpretation; fallback, self-assessment and valid JSON are not reasoning credit."
+}

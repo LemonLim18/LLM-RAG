@@ -1,0 +1,627 @@
+{
+  "timestamp": "2026-10-26T03:01:52.346512+00:00",
+  "decision": "HYBRID PARTIAL; targeted advisory execution boundary repaired",
+  "remote_g4": "KEEP DISABLED; no demonstrated improvement in minimal complete planning or paired final-task adequacy",
+  "approach_a": "KEEP DISABLED; exact raw replay proves composition preservation only, not promotion",
+  "freeze": {
+    "registry": "docs/evaluations/phase_g_hybrid_g4_advisory_v1.json",
+    "sha256": "20e3aae5104694bf0283a8a6fb3aa55f78bdd83d776733cec911079bd4289e52",
+    "planning_conditions": 6,
+    "identical_packets_all_six": true,
+    "independence": "Source-derived expectations frozen before inference; familiar families and preserved controls, not blinded G11."
+  },
+  "planning": {
+    "local_minimal_complete": 5,
+    "cloud_minimal_complete": 4,
+    "denominator": 6,
+    "required_sources_local": 5,
+    "required_sources_cloud": 6,
+    "subject_history_loss_both": "G4-06",
+    "extra_reader_cloud": "G4-03",
+    "cases": [
+      {
+        "id": "G4-01",
+        "matched_messages_schema": true,
+        "local_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "cloud_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "local_domains": [
+          "configuration",
+          "syslog"
+        ],
+        "cloud_domains": [
+          "configuration",
+          "syslog"
+        ],
+        "review": "Required sources and scopes preserved; original user request, not this plan, still owns response obligations."
+      },
+      {
+        "id": "G4-02",
+        "matched_messages_schema": true,
+        "local_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "cloud_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "local_domains": [
+          "configuration"
+        ],
+        "cloud_domains": [
+          "configuration"
+        ],
+        "review": "Required sources and scopes preserved; original user request, not this plan, still owns response obligations."
+      },
+      {
+        "id": "G4-03",
+        "matched_messages_schema": true,
+        "local_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "cloud_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "local_domains": [
+          "state",
+          "configuration"
+        ],
+        "cloud_domains": [
+          "state",
+          "configuration",
+          "topology"
+        ],
+        "review": "Cloud adds unnecessary observed topology; gateway retrieves unavailable additional source."
+      },
+      {
+        "id": "G4-04",
+        "matched_messages_schema": true,
+        "local_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "cloud_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "local_domains": [
+          "inventory",
+          "topology"
+        ],
+        "cloud_domains": [
+          "inventory",
+          "topology"
+        ],
+        "review": "Required sources and scopes preserved; original user request, not this plan, still owns response obligations."
+      },
+      {
+        "id": "G4-05",
+        "matched_messages_schema": true,
+        "local_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "cloud_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": true
+        },
+        "local_domains": [
+          "configuration",
+          "knowledge"
+        ],
+        "cloud_domains": [
+          "configuration",
+          "knowledge"
+        ],
+        "review": "Required sources and scopes preserved; original user request, not this plan, still owns response obligations."
+      },
+      {
+        "id": "G4-06",
+        "matched_messages_schema": true,
+        "local_checks": {
+          "validated_route": true,
+          "required_domains": false,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": false
+        },
+        "cloud_checks": {
+          "validated_route": true,
+          "required_domains": true,
+          "no_prohibited_domains": true,
+          "scopes": true,
+          "read_only": true,
+          "history": false
+        },
+        "local_domains": [
+          "configuration"
+        ],
+        "cloud_domains": [
+          "configuration",
+          "syslog"
+        ],
+        "review": "Both models lose history/subject in their direct follow-up proposal; downstream owner resolution is separately authoritative."
+      }
+    ]
+  },
+  "gateway": {
+    "paired_three": {
+      "local_plan_released_adequate_original": 3,
+      "remote_plan_released_adequate_original": 2,
+      "denominator": 3,
+      "after_exact_raw_verifier_replay": {
+        "local": 3,
+        "remote": 3,
+        "credit": "Replayed frozen model text, not new inference or additional unique successes"
+      }
+    },
+    "initial_four_local_plan": {
+      "released_adequate": 3,
+      "denominator": 4,
+      "G4-05": "Correct raw mapping was falsely rejected; preserved replay now passes. A fresh answer had a separate explicit Cisco qualification in another paragraph; that false rejection is corrected and replayed separately, not credited as a new inference pass."
+    },
+    "advisory_before_receipt_completion": "All4 corrected API requests execute zero readers, but repeat an already available configuration request; no complete-task adequacy credit.",
+    "browser_after_receipt_completion": {
+      "requests": 4,
+      "source_explanations_adequate": 2,
+      "advisory_adequate": 2,
+      "advisory_tools": 0,
+      "synthesis_model": "gemini-3.5-flash-lite",
+      "no_editor_content_in_cloud": true
+    },
+    "local_positive_controls": "PASS arithmetic102/no readers or cloud; exact three interface prefixes via inventory only/no cloud",
+    "traces": [
+      {
+        "group": "gateway-off-v1",
+        "case": "AD-01-floating-setup",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 9.368549999999999,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/AD-01-floating-setup.json",
+        "sha256": "ea98b5b7bc55a3d1f50284f49f6e30a2a85beac3572bccf6af2ed8481d6aa7ed"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "AD-01-floating",
+        "tools": [],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 2.18506,
+        "synthesis_status": "advisory_proposed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/AD-01-floating.json",
+        "sha256": "79219687548a2515b145591813090b8902b3435e10d5745e59f814afeb77a921"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "AD-01-studio-setup",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 7.92776,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/AD-01-studio-setup.json",
+        "sha256": "ff77025de4ed752511ecc6f2d991f870a5063a8ba25abbb348004ba814e4888f"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "AD-01-studio",
+        "tools": [],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 2.3914400000000002,
+        "synthesis_status": "advisory_proposed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/AD-01-studio.json",
+        "sha256": "0106f0dbd6c8b4ae6dcf06bf2b4f84a42bb402d79eafeebd216d14370533ec9a"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "AD-02-floating-setup",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 7.9656,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/AD-02-floating-setup.json",
+        "sha256": "c1f28586a87d43d052fcc9d341fc0294925dcf04c446f33307be4bb4b1bab2b5"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "AD-02-floating",
+        "tools": [
+          "knowledge.search"
+        ],
+        "model": null,
+        "seconds": 69.3779,
+        "synthesis_status": "unavailable_fallback",
+        "errors": [
+          "503: Local routing model is unavailable or timed out; no tool action was inferred"
+        ],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/AD-02-floating.json",
+        "sha256": "94691556b025f26e85921d57ca9c6c07116c2b52d79f0510a14bd24dda759116"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "G4-01",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 18.13014,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/G4-01.json",
+        "sha256": "eb1eb13ae92db056af878fb788c2a2e80da62bcb74335a9517ddb15c5255d3d5"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "G4-03",
+        "tools": [
+          "network.configuration",
+          "network.state"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 8.46918,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/G4-03.json",
+        "sha256": "38ecb4b3a00e260d77d1bd97386c797690df42d6e5140e06bcb2ed9d9d0181c8"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "G4-04",
+        "tools": [
+          "inventory.read",
+          "network.topology"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 7.79874,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/G4-04.json",
+        "sha256": "edf743e15c9d376eae4448d0c85f471d7f3dea8ee3ee91c9a68d3e6d16a4965b"
+      },
+      {
+        "group": "gateway-off-v1",
+        "case": "G4-05",
+        "tools": [
+          "knowledge.search",
+          "network.configuration"
+        ],
+        "model": null,
+        "seconds": 16.904349999999997,
+        "synthesis_status": "rejected_fallback",
+        "errors": [
+          "Configuration text does not establish completeness or operational health",
+          "The process_id field is vendor-conditionally required; do not describe it as globally optional"
+        ],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-off-v1/G4-05.json",
+        "sha256": "3907b3cbfee255530b30022ff469a4e1994f93bfa90ff0a07199815d14387347"
+      },
+      {
+        "group": "gateway-remote-v1",
+        "case": "G4-01",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 13.80701,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-remote-v1/G4-01.json",
+        "sha256": "34609c2e25bff2788acaf13e78a8f45502025b669bc327e896972a9a6e98f8ec"
+      },
+      {
+        "group": "gateway-remote-v1",
+        "case": "G4-03",
+        "tools": [
+          "network.configuration",
+          "network.state",
+          "network.topology"
+        ],
+        "model": null,
+        "seconds": 9.91648,
+        "synthesis_status": "rejected_fallback",
+        "errors": [
+          "The claimed state for Basalt-Transit ge-0/0/1.0 contradicts its current record; a listed interface cannot inherit its neighbor state"
+        ],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-remote-v1/G4-03.json",
+        "sha256": "7e908bcfbb7affb2a5f2bf05cf9d751c4993516727156c87608294dc90a37327"
+      },
+      {
+        "group": "gateway-remote-v1",
+        "case": "G4-04",
+        "tools": [
+          "inventory.read",
+          "network.topology"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 8.53274,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-remote-v1/G4-04.json",
+        "sha256": "1f409fac0813643c793c9cb9ecf004ae4c86b162b87b32e80a0e2390ed0b7f00"
+      },
+      {
+        "group": "gateway-advice-v2",
+        "case": "AD-01-floating-setup",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 10.223450000000001,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-advice-v2/AD-01-floating-setup.json",
+        "sha256": "f2e3e9aa007f1873cc61ebdeadf302fd2fe1aea821f38e9e5d29c23456911dcb"
+      },
+      {
+        "group": "gateway-advice-v2",
+        "case": "AD-01-floating",
+        "tools": [],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 2.0353499999999998,
+        "synthesis_status": "advisory_proposed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-advice-v2/AD-01-floating.json",
+        "sha256": "76ac23231c5ace39b3bda501d76f53b9ccb76b6c139702853d638027fd93280e"
+      },
+      {
+        "group": "gateway-advice-v2",
+        "case": "AD-01-studio-setup",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 6.57258,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-advice-v2/AD-01-studio-setup.json",
+        "sha256": "2286f022782424da76be3f0f0cc4f87ea5f1cd114f51600cfa42d0c9bbc68cc5"
+      },
+      {
+        "group": "gateway-advice-v2",
+        "case": "AD-01-studio",
+        "tools": [],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 2.08004,
+        "synthesis_status": "advisory_proposed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-advice-v2/AD-01-studio.json",
+        "sha256": "c3e912bfd9339b812280518656c18ffceaba22e8702e2c7fc91559eda3534a50"
+      },
+      {
+        "group": "gateway-advice-v2",
+        "case": "AD-02-floating-setup",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 6.4503900000000005,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-advice-v2/AD-02-floating-setup.json",
+        "sha256": "718431a254953f43d3e1b1d86c1697ddd036e58b07d6e7c632815e12b9018938"
+      },
+      {
+        "group": "gateway-advice-v2",
+        "case": "AD-02-floating",
+        "tools": [],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 2.0563200000000004,
+        "synthesis_status": "advisory_proposed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-advice-v2/AD-02-floating.json",
+        "sha256": "b312adb33f7b0da05c213a592b86dd2cb71af1f8d13c19afa44ad75818d8e556"
+      },
+      {
+        "group": "gateway-advice-v2",
+        "case": "AD-02-studio-setup",
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 7.11473,
+        "synthesis_status": "literal_checks_passed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-advice-v2/AD-02-studio-setup.json",
+        "sha256": "1b6ea913749fd96a61db02470001231558507e2ca92a907c9b3ea89574ba6ce4"
+      },
+      {
+        "group": "gateway-advice-v2",
+        "case": "AD-02-studio",
+        "tools": [],
+        "model": "gemini-3.5-flash-lite",
+        "seconds": 2.2691500000000002,
+        "synthesis_status": "advisory_proposed",
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-advice-v2/AD-02-studio.json",
+        "sha256": "9c23b2ae5167de3c827d82048bf1c1553ddf8a33ae8d02b5043ddcafaf3e0fd5"
+      },
+      {
+        "group": "gateway-final-v1",
+        "case": "CONTROL-floating",
+        "tools": [],
+        "model": "qwen2.5:1.5b",
+        "seconds": 22.95151,
+        "synthesis_status": null,
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-final-v1/CONTROL-floating.json",
+        "sha256": "131ee03d3ad3d3421293ea998a5cd6364a3d7ecb0fcfc536db63926db7844f52"
+      },
+      {
+        "group": "gateway-final-v1",
+        "case": "CONTROL-studio",
+        "tools": [
+          "inventory.read"
+        ],
+        "model": null,
+        "seconds": 0.61738,
+        "synthesis_status": null,
+        "errors": [],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-final-v1/CONTROL-studio.json",
+        "sha256": "ea3c3434854df2679f56c4b0edf40916b390438c7044521c40d0e056bad51dca"
+      },
+      {
+        "group": "gateway-final-v1",
+        "case": "G4-05",
+        "tools": [
+          "knowledge.search",
+          "network.configuration"
+        ],
+        "model": null,
+        "seconds": 13.05436,
+        "synthesis_status": "rejected_fallback",
+        "errors": [
+          "The process_id field is vendor-conditionally required; do not describe it as globally optional"
+        ],
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g4-advisory/gateway-final-v1/G4-05.json",
+        "sha256": "fea60c73cc7a4cc0e8e36e170c93e205aa607205cba577100b7e68ffed7b2ed1"
+      }
+    ]
+  },
+  "browser": {
+    "status": "PASS_BOTH_SYNTHETIC_CONSENT_PATHS",
+    "initialization_error_resolved": true,
+    "temporary_environment_issue": "Initial connection/startup delay and test-origin CORS; fixed in disposable harness only, no browser settings or production CORS changed.",
+    "keyboard_activation": "Locator coordinate clicks hit neighbouring controls; inspected screenshot and used focused Enter activation. No editor edits/saves/acceptances.",
+    "visible_buffer_and_tabs_unchanged": true,
+    "proof": [
+      "browser-studio.png",
+      "browser-floating.png",
+      "browser-studio-dom.txt",
+      "browser-floating-dom.txt"
+    ]
+  },
+  "quota": {
+    "limits": {
+      "rpm": 15,
+      "input_tpm": 150000,
+      "rpd_rolling24h": 500
+    },
+    "new_real_cloud_requests": 34,
+    "new_input_tokens": 46223,
+    "new_final_tokens": 5897,
+    "max_input_tokens_one_call": 3687,
+    "new_peak_requests_61s": 8,
+    "new_peak_recorded_input_tokens_61s": 11678,
+    "all_known_reservations_rolling24h": 63,
+    "all_known_peak_requests_61s": 9,
+    "all_known_peak_input_tokens_61s": 50838,
+    "scope": "Local admission and known historical reservations, not other account clients or account-wide dashboard certification.",
+    "cloud_http_errors": 0,
+    "gemini38_calls": 0
+  },
+  "regressions": {
+    "final_affected_passed": 282,
+    "overlapping_runs_not_added": true,
+    "typescript": "Reuse previous PASS; no frontend source changes this task"
+  },
+  "preservation": {
+    "timestamp": "2026-10-26T03:01:49.705256+00:00",
+    "head_unchanged": true,
+    "index_unchanged": true,
+    "ordinary_42_tables_unchanged": true,
+    "integrity": "ok",
+    "foreign_key_errors": 0,
+    "active_pointer_unchanged": true,
+    "artifacts_341_unchanged": true,
+    "prior_evidence_unchanged": true,
+    "previous_hybrid_experiment_unchanged": true,
+    "backend_env_byte_identical": true,
+    "protected_source_changes": [
+      "backend/llm/gateway_references.py",
+      "backend/llm/gateway_routing.py",
+      "backend/llm/gemini_provider.py",
+      "backend/llm/orchestration/engine.py",
+      "backend/llm/orchestration/request_contract.py",
+      "backend/llm/orchestration/synthesis.py",
+      ".env",
+      ".env.example",
+      "backend/tests/test_phase_g_outcome_reconciliation.py"
+    ],
+    "backend_env_git_ignored": true,
+    "quota_ledger_ignored": true,
+    "listeners": {
+      "5173": false,
+      "8000": false,
+      "5174": false,
+      "8001": false
+    },
+    "credential_entries": 1,
+    "credential_loaded": true,
+    "configuration": {
+      "COGNISHIELD_LOCAL_OLLAMA_MODEL": "qwen2.5:1.5b",
+      "GEMINI_MODEL": "gemini-3.5-flash-lite",
+      "COGNISHIELD_AI_HYBRID": "1",
+      "COGNISHIELD_AI_HYBRID_INTERPRET": "0",
+      "COGNISHIELD_AI_OUTCOMES": "0",
+      "COGNISHIELD_AI_HYBRID_INPUT_TPM": "150000"
+    }
+  }
+}

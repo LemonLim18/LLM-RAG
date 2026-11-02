@@ -10,6 +10,64 @@ from pydantic import Field
 from llm.gateway_models import StrictModel
 
 
+def reader_constraints(prompt):
+    """Explicit source-use restrictions, independent of a model proposal.
+
+    Reader/category names come from the existing registry. This enforces the
+    user's read boundary; it does not infer an investigation or its answer.
+    """
+    from development.source_registry import BY_KEY,explicit_read_sources,reader_domains
+    domains={'inventory','topology','configuration','state','syslog','telemetry','incidents','knowledge'}
+    def named(fragment):
+        found=set(reader_domains(explicit_read_sources('Read '+fragment,BY_KEY)))
+        from llm.gateway_network import route_network
+        # Reuse the existing reader aliases (for example logs/syslog), rather
+        # than maintaining a second vocabulary just for source restrictions.
+        found.update(set(route_network('Read '+fragment,{'devices':[]},expand_investigation=False)[0])-{'inventory'})
+        for domain in domains:
+            if re.search(r'(?<![\w-])(?:network\.)?'+domain+r'(?![\w-])',fragment,re.I):found.add(domain)
+        return found
+    allowed=None;denied=set();receipts=[];no_other=False;scopes={}
+    for match in re.finditer(r'\b(?:do\s+not|don.t|never)\s+(?:read|consult|query|retrieve|collect)(?=[\s,])\s*([^;!?\n]+?)(?=\.(?:\s|$)|$|;|!|\?)',prompt,re.I):
+        fragment=match[1]
+        # A different coordinated action owns its own object. In "read logs
+        # or modify anything", anything qualifies modifying, not reading.
+        # A verb list with no prior object ("read, collect, ... anything")
+        # instead shares the final object and still prohibits every reader.
+        if not re.match(r'\s*(?:,|(?:or|and)\s+(?:read|consult|query|retrieve|collect)\b)',fragment,re.I):
+            fragment=re.split(r'\s+(?:or|and)\s+(?:change|modify|edit|write|save|generate|deploy|publish|execute|run)\b',fragment,maxsplit=1,flags=re.I)[0]
+        selected=named(fragment)
+        if re.search(r'\bother\s+(?:sources?|readers?)\b',fragment,re.I):no_other=True
+        if re.search(r'\b(?:anything|any sources?|any readers?)\b',fragment,re.I):selected=domains.copy()
+        denied.update(selected)
+        if selected:receipts.append({'instruction':match[0],'denied_domains':sorted(selected)})
+    for match in re.finditer(r'\bwithout\s+(?:reading|retrieving|collecting|querying|fetching|consulting)\s+([^,;.!?\n]+)',prompt,re.I):
+        fragment=match[1];selected=named(fragment)
+        if re.search(r'\b(?:anything|any sources?|any readers?|new (?:records?|observations?|evidence|data))\b',fragment,re.I):selected=domains.copy()
+        denied.update(selected)
+        if selected:receipts.append({'instruction':match[0],'denied_domains':sorted(selected)})
+    for match in re.finditer(r'\b(?:use|using|read|consult|query|retrieve|inspect|check|based on)\s+([^;!?\n]+?)(?=\.(?:\s|$)|$|;|!|\?)',prompt,re.I):
+        if re.search(r'(?:do\s+not|don.t|never)\s*$',prompt[:match.start()],re.I):continue
+        fragment=match[1];only=re.match(r'only\s+(.+)',fragment,re.I) or re.match(r'(.+?)\s+only\b',fragment,re.I)
+        if not only:continue
+        selected=named(only[1])
+        if selected:
+            allowed=selected if allowed is None else allowed & selected
+            receipts.append({'instruction':match[0],'allowed_domains':sorted(selected)})
+            from llm.gateway_network import explicit_configuration_scope,explicit_topology_scope
+            for domain,resolve in [('configuration',explicit_configuration_scope),('topology',explicit_topology_scope)]:
+                if domain in selected:
+                    scope=resolve(only[1])
+                    if scope!='auto':scopes[domain]=scope
+    return {'allowed':allowed,'denied':denied,'receipts':receipts,'no_other_sources':no_other,'source_scopes':scopes}
+
+
+def constrain_readers(domains,prompt):
+    policy=reader_constraints(prompt)
+    retained=[d for d in domains if d not in policy['denied'] and (policy['allowed'] is None or d in policy['allowed'])]
+    return retained,{'original_proposed_domains':list(domains),'executed_domains':retained,'source_restrictions':policy['receipts']}
+
+
 def response_obligations(prompt,include_actions=False):
     # Split only explicit coordinated information speech acts. In particular,
     # "BGP and OSPF" and "forward and return" are not independent commands.
@@ -79,6 +137,18 @@ def requested_clauses(prompt):
     return response_obligations(prompt,include_actions=True) or [{'id':'request-1','text':prompt}]
 
 
+def advisory_contract(prompt):
+    """A request for future checks is not authority to execute those checks.
+
+    Reuse the existing speech-act contract independently of its general pilot.
+    Mixed present-read requests retain their normal routing and authorization.
+    """
+    actions=[request_action(c['text']) for c in requested_clauses(prompt)]
+    if 'recommend_checks' not in actions or any(a not in {'recommend_checks','explain'} for a in actions):return None
+    contract=requested_contract(prompt)
+    return contract if contract.advice_only else None
+
+
 def reader_for(domain):
     return {'inventory':'inventory.read','knowledge':'knowledge.search'}.get(domain,'network.'+domain)
 
@@ -94,13 +164,13 @@ def request_action(instruction):
     text=read_intent_text(instruction).strip()
     # A discourse preface supplies context, not the main speech act. Resolve
     # the imperative after it while preserving the untouched original request.
-    preface=re.match(r'^(?:given|based on|considering|regarding|with|in light of)\b[^;.!?\n]*,\s*(.+)$',text,re.I|re.S)
+    preface=re.match(r'^(?:given|based on|considering|regarding|with|using|for|in light of|without)\b[^;.!?\n]*,\s*(.+)$',text,re.I|re.S)
     if preface:text=preface[1]
     prefix=r'^\s*(?:please\s+)?(?:(?:can|could|would)\s+you\s+)?'
     if re.search(prefix+r'(?:recommend|suggest|advise)\b',text,re.I):return 'recommend_checks'
     # A modal question asks which prospective evidence to request, rather than
     # asking to execute the named reader. Do not match 'What did ... request?'.
-    if re.search(r'^\s*(?:which|what)\b[^.!?]{0,180}\b(?:should|could|would)\b[^.!?]{0,80}\b(?:request|inspect|check|read|collect|retrieve)\b',text,re.I):return 'recommend_checks'
+    if re.search(r'^\s*(?:which|what)\b[^.!?]{0,180}\b(?:should|could|would)\b[^.!?]{0,80}\b(?:request|ask\s+for|obtain|inspect|check|read|collect|retrieve)\b',text,re.I):return 'recommend_checks'
     for action,verbs in [('retrieve','read|retrieve|show|quote|list|display|fetch'),('compare','compare|contrast'),('explain','explain|describe|summarize|summarise|state')]:
         if re.search(prefix+r'(?:'+verbs+r')\b',text,re.I):return action
     return None
@@ -127,6 +197,13 @@ def original_sources(instruction,inventory):
         scope=explicit_configuration_scope(text) if domain=='configuration' else explicit_topology_scope(text) if domain=='topology' else 'auto'
         scopes[domain]={'source_scope':scope}
         categories=[key for key in keys if BY_KEY[key].supports(reader_for(domain))]
+        if domain=='configuration':
+            from llm.gateway_network import configuration_scope_text
+            if re.search(r'\b(?:staged|unapplied)\b',configuration_scope_text(text),re.I):
+                # A current-text alias is not the entire operand set of a
+                # running-versus-staged comparison. Use the registered saved
+                # artifact category; preserve its unapplied/source identity.
+                categories=list(dict.fromkeys([*categories,'config_snapshots']))
         if categories:scopes[domain]['source_categories']=categories
     return scopes
 
@@ -247,7 +324,10 @@ def project_read_outcomes(contract,parts,context,evidence):
         outcome=byid[part['id']]
         selected=[r for r in context if r['tool'] in outcome.readers]
         failed=bool(selected and all(r['status']!='success' for r in selected))
-        if selected and (outcome.action=='retrieve' or failed):
+        # A successful read receipt is evidence for interpretation, not a reason
+        # to erase the user's requested mapping/explanation. Retain its prose
+        # for the unchanged factual and source-support verification below.
+        if selected and failed:
             factual=[r for r in selected if r['tool']!='knowledge.search']
             chunks=[network_answer(factual,evidence,question=outcome.instruction)] if factual else []
             docs=knowledge_text(selected,evidence)

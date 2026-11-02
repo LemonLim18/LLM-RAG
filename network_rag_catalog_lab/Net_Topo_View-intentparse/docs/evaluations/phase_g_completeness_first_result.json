@@ -1,0 +1,480 @@
+{
+  "at": "2026-10-27T03:51:31.965263+00:00",
+  "status": "REVISE_KEEP_DEFAULT_OFF",
+  "registry": "docs/evaluations/phase_g_completeness_first_v1.json",
+  "methodology": "Source-derived independently checkable expectations frozen before inference; implementation-assistant graded, not blinded/external. Paired-v2 is diagnostic after integration repairs on exposed frozen cases; not a new unseen benchmark.",
+  "frozen_scores": {
+    "control": {
+      "adequate": 4,
+      "conditions": 8
+    },
+    "enhanced": {
+      "adequate": 0,
+      "conditions": 8
+    }
+  },
+  "historical_scores_unchanged": true,
+  "no_formal_phase_g_acceptance": true,
+  "cases": [
+    {
+      "id": "CF-01",
+      "arm": "control",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-01-control.json",
+      "sha256": "ebd3158fee0f3e94a9a42b9b41e217f70f211545e75b83877519b0635522cd2a",
+      "seconds": 9.58321579999756,
+      "cloud_calls": 2,
+      "tools": [
+        "network.configuration",
+        "network.state",
+        "network.syslog"
+      ],
+      "workflow_source_family_coverage": false,
+      "evidence_completeness": "INCOMPLETE",
+      "outcome": "PARTIAL",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Missing transit configuration/artifact comparison and referenced inspection purpose; empty endpoint-scoped logs cannot establish absence.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-01",
+      "arm": "enhanced",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-01-enhanced.json",
+      "sha256": "619847acc12f6ffd4253b2e22c53edec6d89d4acb6e6470ae185d47cb890f0e0",
+      "seconds": 19.587531700031832,
+      "cloud_calls": 4,
+      "tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents",
+        "network.syslog"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "WITHHELD",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "All seven operational families and an actual server-driven referenced-event read; correct useful revised prose suppressed by flow-owner and event-claim checks, followed by invalid JSON.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-02",
+      "arm": "control",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-02-control.json",
+      "sha256": "8a582238dfcdea00500b58e07b379b864f32b7813247d4327efa693fd9c55232",
+      "seconds": 8.066471299971454,
+      "cloud_calls": 2,
+      "tools": [
+        "network.state"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "ADEQUATE",
+      "fully_adequate": true,
+      "released_model_written_adequate": true,
+      "reason": "Correct port, prefix and separate admin/oper states; no forbidden reads; useful scoped explanation.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-02",
+      "arm": "enhanced",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-02-enhanced.json",
+      "sha256": "6868063f78181c9d38e6ce0b45720cc21ed8742c82b8029383c22c7e3149df84",
+      "seconds": 27.40704179997556,
+      "cloud_calls": 5,
+      "tools": [
+        "network.state"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "WITHHELD",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Correct source values/prose rejected because category default replaced the declared prefix field. Post-cohort regression and browser correction recorded separately.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-03",
+      "arm": "control",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-03-control.json",
+      "sha256": "a75e5e23a851fc492bc72eb3cb8eb58e23ff8a817345f053b2370da1bd9c0f2c",
+      "seconds": 5.132367899990641,
+      "cloud_calls": 2,
+      "tools": [
+        "network.state"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "ADEQUATE",
+      "fully_adequate": true,
+      "released_model_written_adequate": true,
+      "reason": "Correct egress policy, failed device/interface/direction, delivered return and absent BGP-state evidence.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-03",
+      "arm": "enhanced",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-03-enhanced.json",
+      "sha256": "9d5833e4840a1b4e2a32b8feb4c226829f8f8d687052a61c9e5e4d41fedf1309",
+      "seconds": 7.510817099944688,
+      "cloud_calls": 2,
+      "tools": [
+        "network.state"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "INVALID_STRUCTURED_OUTPUT",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Useful raw prose but numeric identifiers violate the declared string contract; schema failure is not a causal-reasoning error.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-04",
+      "arm": "control",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-04-control.json",
+      "sha256": "bf54550dc34a775f8d026cec4ed06fe98526ae53cbd212fbdf0dcd28fc867721",
+      "seconds": 10.068534400081262,
+      "cloud_calls": 2,
+      "tools": [
+        "inventory.read",
+        "network.topology"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "ADEQUATE",
+      "fully_adequate": true,
+      "released_model_written_adequate": true,
+      "reason": "Both owners/prefixes/VRFs, correct differently named peer, and planned-versus-operational limitation.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-04",
+      "arm": "enhanced",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-04-enhanced.json",
+      "sha256": "e176a2af1ce69f6774e22cd6f8c5d75ec2736e632c1432f69b272132116bad61",
+      "seconds": 10.92523729999084,
+      "cloud_calls": 3,
+      "tools": [
+        "inventory.read",
+        "network.topology"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "WITHHELD",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Useful raw ownership explanation; inventory receipt/structured ports were not resolved by the checker, then revision schema failure. No prose adequacy credit for a withheld release.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-05",
+      "arm": "control",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-05-control.json",
+      "sha256": "f71dbcd453802c9b182578fb62ad48e41112a13ca3c91bd347c3e027ec906ac3",
+      "seconds": 8.820958499913104,
+      "cloud_calls": 2,
+      "tools": [
+        "network.syslog",
+        "network.configuration",
+        "network.state"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "PARTIAL",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Correct applied event and saved/running distinction, but does not identify the tight latest-running 12:00-to-14:00 observation interval (reports 10:00-to-14:00); complete-task temporal requirement remains partial.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-05",
+      "arm": "enhanced",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-05-enhanced.json",
+      "sha256": "dbf1503dbf503e905a7dfa1f8a721ff6457584c03fe632ac7d4b6f588240f39a",
+      "seconds": 52.40184190007858,
+      "cloud_calls": 5,
+      "tools": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "WITHHELD",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Actual artifact comparison and applied-event evidence reach the model; nested failed-hop mistaken for origin identity and all revisions withheld. Raw temporal explanation also less precise than required.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-06",
+      "arm": "control",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-06-control.json",
+      "sha256": "e9974d8a9820993f30ec187bfb528a5ee47f9168f4425fbb9fefe782e7b0e63d",
+      "seconds": 6.86074070003815,
+      "cloud_calls": 2,
+      "tools": [
+        "network.topology",
+        "network.state",
+        "network.telemetry"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "ADEQUATE",
+      "fully_adequate": true,
+      "released_model_written_adequate": true,
+      "reason": "Discloses observed-link/interface disagreement, computes3/120=2.5%, and separates modeled TCP delivery from recorded counters.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-06",
+      "arm": "enhanced",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-06-enhanced.json",
+      "sha256": "e2c4c902ae681abea2e7fdcf29d7d1a12b5af86882728b30c9f89e66402621a4",
+      "seconds": 6.111930000013672,
+      "cloud_calls": 2,
+      "tools": [
+        "network.topology",
+        "network.state",
+        "network.telemetry"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "INCOMPLETE",
+      "outcome": "PARTIAL",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Permission to use the telemetry family was incorrectly converted into telemetry-only subtype filtering, excluding the counter record; no loss calculation. Corrected after cohort, scores unchanged.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-07",
+      "arm": "control",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-07-control.json",
+      "sha256": "67e0a8200b2307e15b0ab06f28617fc5c9db70beb36f2c88b92f0a700b069450",
+      "seconds": 6.588560400065035,
+      "cloud_calls": 2,
+      "tools": [
+        "network.configuration",
+        "network.state",
+        "network.syslog"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "INCORRECT",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Says no shutdown brings an interface administratively AND operationally up; this is the high-impact misconception the question asks to distinguish. Other availability statements are correct.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-07",
+      "arm": "enhanced",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-07-enhanced.json",
+      "sha256": "7ff523d0135fe629e3e1106aff905586aad95a0f5ca89cd69ccfec17f11522d6",
+      "seconds": 7.513218000065535,
+      "cloud_calls": 2,
+      "tools": [
+        "network.configuration",
+        "network.state",
+        "network.syslog"
+      ],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "INVALID_STRUCTURED_OUTPUT",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Raw response contains malformed JSON (unquoted vrf property); final release is an honest limitation, not a complete explanation.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-08",
+      "arm": "control",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-08-control.json",
+      "sha256": "e93938914d38a9e2aa54fe0af6173542f6528c0b08627ca1ff94802213d5ce07",
+      "seconds": 6.640672800014727,
+      "cloud_calls": 2,
+      "tools": [],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "PARTIAL",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Zero new reads and prior config retained, but state reader is credited with counters and diagnostic discrimination overstates what it establishes.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    },
+    {
+      "id": "CF-08",
+      "arm": "enhanced",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/CF-08-enhanced.json",
+      "sha256": "0c2f4ae28ead7ac9ec205ab0a596dca0c33f496b3240d42e34015222f3dd913c",
+      "seconds": 8.173406999907456,
+      "cloud_calls": 2,
+      "tools": [],
+      "workflow_source_family_coverage": true,
+      "evidence_completeness": "RELEVANT_OPERANDS_PRESENT_OR_NO_READ",
+      "outcome": "PARTIAL",
+      "fully_adequate": false,
+      "released_model_written_adequate": false,
+      "reason": "Zero new reads and owned context preserved, but interface up/down states are described as establishing physical/framing health; advice is not fully source-scoped.",
+      "fallback_reasoning_credit": false,
+      "not_a_semantic_certificate": true
+    }
+  ],
+  "reference_cases": [
+    {
+      "id": "MN-01",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/MN-01-reference.json",
+      "sha256": "6517487af69b9338d6a61301dda10facbe158684f956aa1743d6227bbcd35695",
+      "outcome": "INVALID_STRUCTURED_OUTPUT",
+      "note": "Reference replay only, not independent generalization or historical-score replacement."
+    },
+    {
+      "id": "MN-02",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/MN-02-reference.json",
+      "sha256": "b4bdee635b7ef6d5ff91f759aab0afe4f3be7848e39f83886a9ed5592cabf5ef",
+      "outcome": "ADEQUATE",
+      "note": "Reference replay only, not independent generalization or historical-score replacement."
+    },
+    {
+      "id": "MN-03",
+      "trace": "tmp/phase-g/iterations/20261027-completeness-first/paired-v2/MN-03-reference.json",
+      "sha256": "2c51564da4f6427942dc986b7609ff60009dd5479f4c663e56eb01f819671bff",
+      "outcome": "PROVIDER_UNAVAILABLE",
+      "note": "Reference replay only, not independent generalization or historical-score replacement."
+    }
+  ],
+  "post_cohort_corrections": [
+    "Declared scalar field preserved rather than overwritten by category default",
+    "Failure-location ownership uses directional branches rather than originating device",
+    "Actual authorized inventory receipt can bind its structured port",
+    "Original source permission lists no longer filter multiplexed readers to identically named subtype"
+  ],
+  "unresolved": [
+    "Claim declaration reliability and strict JSON failures",
+    "Some useful prose remains suppressed by unsupported/misdeclared operand claims",
+    "Event intent paraphrases are not certified as occurrence",
+    "Prose/self-assessments remain unverified and can overclaim physical health",
+    "No complete broad causal success established"
+  ],
+  "decision": "Retain tested retrieval/context/budget mechanisms behind default-OFF completeness flag; revise claim contract/release handling only in a future authorized bounded task. No automatic activation or further prompt repair.",
+  "metrics": {
+    "runs": {
+      "paired-v1": {
+        "calls": 19,
+        "status_counts": {
+          "NO_HTTP_RESPONSE": 1,
+          "200": 13,
+          "503": 5
+        },
+        "usage": {
+          "promptTokenCount": 139464,
+          "candidatesTokenCount": 5832,
+          "totalTokenCount": 147141,
+          "thoughtsTokenCount": 1845,
+          "cachedContentTokenCount": 4061
+        },
+        "receipt_calls": 19
+      },
+      "paired-v2": {
+        "calls": 46,
+        "status_counts": {
+          "200": 45,
+          "503": 1
+        },
+        "usage": {
+          "promptTokenCount": 505227,
+          "candidatesTokenCount": 31177,
+          "totalTokenCount": 541767,
+          "thoughtsTokenCount": 5363,
+          "cachedContentTokenCount": 50782
+        },
+        "receipt_calls": 46
+      },
+      "corrected-browser": {
+        "calls": 4,
+        "status_counts": {
+          "200": 4
+        },
+        "usage": {
+          "promptTokenCount": 31452,
+          "candidatesTokenCount": 1804,
+          "totalTokenCount": 33461,
+          "thoughtsTokenCount": 205,
+          "cachedContentTokenCount": 6077
+        },
+        "receipt_calls": 4
+      }
+    },
+    "actual_cloud_calls_total": 69,
+    "task_ceiling": 72,
+    "unused_allowance": 3,
+    "deduplication": "Each run global browser-traces includes API cohort; never add per-case wires again.",
+    "rolling_day_google": 231,
+    "ledger_peak_61s_requests": 11,
+    "ledger_peak_61s_accounted_input": 144880,
+    "limits": {
+      "rpm": 15,
+      "input_tpm": 150000,
+      "rpd": 500
+    },
+    "ledger_accounting": "Actual input tokens after success, conservative input reservations after failures. This peak covers retained project rows, not just this task.",
+    "latency": {
+      "control": {
+        "n": 8,
+        "min": 5.132367899990641,
+        "median": 7.463606000004802,
+        "max": 10.068534400081262
+      },
+      "enhanced": {
+        "n": 8,
+        "min": 6.111930000013672,
+        "median": 9.549322149949148,
+        "max": 52.40184190007858
+      }
+    }
+  },
+  "preservation": {
+    "all_pass": true,
+    "checks": {
+      "head": true,
+      "index": true,
+      "db_integrity": true,
+      "ordinary_tables": true,
+      "knowledge": true,
+      "historical": true,
+      "credential": true,
+      "root_env": true,
+      "credential_single_ignored": true,
+      "no_credential_copies": true
+    },
+    "table_count": 41,
+    "knowledge_files": 1923,
+    "historical_json_files": 239,
+    "head": "8a7f86ce4e4d7c12d2e0565bfa53ab64f4ca756d"
+  },
+  "report": "docs/PHASE_G_COMPLETENESS_FIRST_EVIDENCE_INVESTIGATION.md"
+}

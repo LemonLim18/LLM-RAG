@@ -1,0 +1,395 @@
+{
+  "timestamp": "2026-11-01T04:37:21.745676+00:00",
+  "scope": "Bounded audit-grounded repair; not formal G4/G5/G6/G11 acceptance",
+  "registry": "docs/evaluations/phase_g_audit_grounded_reasoning_v1.json",
+  "registry_sha256": "655af7df13cde25a47985e777300605db8ab67c61559cea930712889fd9f5d2b",
+  "audit_directory": "tmp/phase-g/iterations/20261101-audit-grounded-repair",
+  "decisions": {
+    "P4": "RETAIN_VERIFIED_INVOCATION_IDENTITY_REPAIR",
+    "P1": "RETAIN_LOW_INCONCLUSIVE_SMALL_MEDIUM_GAIN",
+    "P2": "STOPPED_FAILED_POSITIVE_CONTROL_KEEP_CURRENT",
+    "P3": "RETAIN_VALIDATED_JSON_FULL_NO_NATIVE_PROMOTION",
+    "P5": "RETAIN_NARROW_CHECKS_NO_UNIVERSAL_CERTIFICATION",
+    "P6": "DEFER_PLANNER_REDESIGN"
+  },
+  "P1": {
+    "low": {
+      "attempts": 8,
+      "provider_completed": 8,
+      "valid_application_outputs": 8,
+      "fully_adequate": 5,
+      "partial": 3,
+      "fallback": 0,
+      "mean_seconds": 3.939497862535063,
+      "max_seconds": 4.776199499843642,
+      "input_tokens": 63791,
+      "output_tokens": 9707,
+      "thinking_tokens_reported": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "invalid_auxiliary_outputs": 2
+    },
+    "medium": {
+      "attempts": 8,
+      "provider_completed": 8,
+      "valid_application_outputs": 8,
+      "fully_adequate": 6,
+      "partial": 2,
+      "fallback": 0,
+      "mean_seconds": 6.464384162536589,
+      "max_seconds": 10.901625399943441,
+      "input_tokens": 63791,
+      "output_tokens": 9595,
+      "thinking_tokens_reported": [
+        1031,
+        2520,
+        981,
+        null,
+        538,
+        1009,
+        1068,
+        1038
+      ],
+      "invalid_auxiliary_outputs": 1
+    }
+  },
+  "P2": {
+    "at": "2026-11-01T04:01:57.890759+00:00",
+    "status": "STOPPED_FAILED_ACCEPTANCE",
+    "evaluated_conditions": 3,
+    "not_run": 5,
+    "baseline_control": "Exact preserved P1-low outputs, not new independent samples",
+    "baseline_full_adequacy": 2,
+    "candidate_full_adequacy": 2,
+    "critical_positive_control_regression": "AGR-02 exact interface identity and unsupported causal implication",
+    "comparison_warning": "Same2/3 aggregate masks a positive-control regression and another condition improvement; no acceptance/quality uplift.",
+    "default_layout": "current",
+    "promotion": "DO_NOT_PROMOTE"
+  },
+  "P3": {
+    "attempts": 3,
+    "provider_completions": 2,
+    "whole_core_valid": 2,
+    "exact_quoted_CLI_preserved": 0,
+    "embedded_json_preserved": 2,
+    "full_native_status": 400,
+    "full_native_error": "INVALID_ARGUMENT",
+    "specific_rejection_cause": "UNKNOWN"
+  },
+  "gateway": {
+    "source_scope_controls": "PASS_RETRIEVAL_PARTIAL_COMPLETE_TASK",
+    "requested_record_IDs": "LOST_BEFORE_LOCAL_SYNTHESIS",
+    "ordinary_local_controls": "PASS",
+    "complex_condition": "PLANNER503_BEFORE_READERS_REASONING_NOT_ASSESSED",
+    "negative_auth_controls": "PASS",
+    "full_acceptance": "NOT_MET",
+    "browser_local_source_scope": "VERIFIED_PER_TURN_BOTH_SURFACES_COMPLETE_TASK_PARTIAL"
+  },
+  "browser": {
+    "runtime": "AVAILABLE",
+    "ordinary5173": "ERR_CONNECTION_REFUSED",
+    "acceptance_workspace": "8001/5174 existing disposable DB/frontend; both stopped",
+    "actual_browser_conditions": 2,
+    "source_scope": "PASS_PER_TURN",
+    "full_task_adequacy": "PARTIAL_BOTH_RECORD_IDS_OMITTED",
+    "cloud_calls": 0,
+    "evidence": "tmp/phase-g/iterations/20261101-audit-grounded-repair/browser-local/browser-acceptance-review.json",
+    "historical_tool_failure_retained": true,
+    "whole_UI_zero_other_reads_claimed": false
+  },
+  "preservation": {
+    "at": "2026-11-01T04:44:24.383166+00:00",
+    "head": "8a7f86ce4e4d7c12d2e0565bfa53ab64f4ca756d",
+    "index_unchanged": true,
+    "ordinary_tables_unchanged": 41,
+    "protected_files_checked": 649,
+    "authorized_existing_source_whitelist": [
+      "backend/llm/gateway_models.py",
+      "backend/llm/gateway_network.py",
+      "backend/llm/gemini_provider.py",
+      "backend/llm/model_roles.py",
+      "backend/llm/orchestration/adapters.py",
+      "backend/llm/orchestration/evidence_harness.py",
+      "backend/llm/orchestration/investigation_support.py",
+      "backend/llm/orchestration/role_reasoning.py",
+      "backend/tests/test_completeness_investigation.py",
+      "backend/tests/test_core_json_transport.py",
+      "backend/tests/test_model_roles.py",
+      "backend/tests/test_phase_g_hybrid.py"
+    ],
+    "changed_protected_files": [
+      "backend/llm/gateway_models.py",
+      "backend/llm/gateway_network.py",
+      "backend/llm/gemini_provider.py",
+      "backend/llm/model_roles.py",
+      "backend/llm/orchestration/adapters.py",
+      "backend/llm/orchestration/evidence_harness.py",
+      "backend/llm/orchestration/investigation_support.py",
+      "backend/llm/orchestration/role_reasoning.py",
+      "backend/tests/test_completeness_investigation.py",
+      "backend/tests/test_core_json_transport.py",
+      "backend/tests/test_model_roles.py",
+      "backend/tests/test_phase_g_hybrid.py",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_google_and_shared_project0/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_google_explicit_json_mode0/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_google_generate_content_c0/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_google_generate_content_c1/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_errors_keep_reserv0/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_errors_keep_reserv1/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_errors_keep_reserv2/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_errors_keep_reserv3/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_incomplete_and_ref0/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_incomplete_and_ref1/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_responses_protocol0/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_rejected_native_schema_is0/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_shared_google_rpm_across_0/quota.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_0/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_1/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_10/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_11/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_12/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_13/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_2/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_3/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_4/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_5/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_6/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_7/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_8/usage.json",
+      "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_9/usage.json"
+    ],
+    "unexpected_protected_changes": [],
+    "missing_legacy_runtime_fixtures": [
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_google_and_shared_project0/quota.json",
+        "before_sha256": "dc0b0e613b277d9c4df8357fda964088f525aaf2711cfb38dae7776706285f19",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_google_explicit_json_mode0/quota.json",
+        "before_sha256": "c728bed80812e62e065b3c1378ebf119199b34f5f97d9514b203c174abab03af",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_google_generate_content_c0/quota.json",
+        "before_sha256": "7c06f0cce8539031dc7fa82ccc4d027c6444283eef4f7c7ccbb60b1ce2a3070c",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_google_generate_content_c1/quota.json",
+        "before_sha256": "e5f7dcd08451678c2dd62cd1099f1344bdcd4751ddb45b71eb5da7c918edc551",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_errors_keep_reserv0/quota.json",
+        "before_sha256": "58e76e75cfedac18d60b8459df3cb14a833fd373f11a0e6c692304183c7b877a",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_errors_keep_reserv1/quota.json",
+        "before_sha256": "26575fda1d3aaf5224b076dbd866b36dda07a00b493121ca2d4bea3e1aedf7db",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_errors_keep_reserv2/quota.json",
+        "before_sha256": "13d3d4441daaeea73546c26ac9cd3e08a2abc7a57268c8b76455faf9521af219",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_errors_keep_reserv3/quota.json",
+        "before_sha256": "e926d2ea8a9a8d922f60dcb9d798505d2480eaba74a0782f26c2610fa8174baf",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_incomplete_and_ref0/quota.json",
+        "before_sha256": "30ce472d43464ac2c48fcbf0ec3a77cb289bb7222e50e154e30770dc54235a77",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_incomplete_and_ref1/quota.json",
+        "before_sha256": "03d0d5070057f2c25a015793a6781ac950c5b49c3ca494a0a456384c97c2c6a8",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_openai_responses_protocol0/quota.json",
+        "before_sha256": "a408c38be26176814c6341754f1332acbd628cb45e0612a4aff8a699457bef36",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_rejected_native_schema_is0/usage.json",
+        "before_sha256": "40b7259959c390e264958d0dbd89766274a3e82451f6b4e831d879913bb788e2",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_shared_google_rpm_across_0/quota.json",
+        "before_sha256": "e3ea934bf2219238bdaa1f3c77ae8ec49d0f4a03b707013ee3108528eda89961",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_0/usage.json",
+        "before_sha256": "44387b7abd15a9b081a27eb10e1eee7a49698df979fb5a00be05b569bb999fe2",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_1/usage.json",
+        "before_sha256": "53b3811e631b8c07618dd9af8b228825c955e49c38f29499d09cd3bf465bc701",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_10/usage.json",
+        "before_sha256": "5bb6a3d5ae555bd0cd9e49638fe176cc3d4224077c090dd0e11c1a79854b0dd4",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_11/usage.json",
+        "before_sha256": "381e1a5d658cb1cf41558b658a0582fc8285cdc61aab88e1374a180d00a57f5c",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_12/usage.json",
+        "before_sha256": "76384729fe87a3db9c23d5e821b4c177c0c6bd8949ab38fa8030c0bc9646ad46",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_13/usage.json",
+        "before_sha256": "4fc72a12932a7d9a2213c710f7ebacf2258223aab192e837ce27a08aeb9ca9bb",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_2/usage.json",
+        "before_sha256": "2139e06fca423111c0e1f94b623b9db1291df807ad51f46a16d573eb54476344",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_3/usage.json",
+        "before_sha256": "ed297a3714995328e1cd048449eedc52b54aa9df81001d9d436c9bd9f9fd246f",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_4/usage.json",
+        "before_sha256": "96404815235c5e5ed0618c4a13b2c782e0e23ef1c989eb7b5a612e8df066c232",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_5/usage.json",
+        "before_sha256": "a0d0e1810723d563c67dc8e23184f4cb68f6957e5e125e8523953c745b970777",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_6/usage.json",
+        "before_sha256": "f57aabfb5662cbdcad300a6c0f2113382b53f1a084f9f4d826a976150a7d110b",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_7/usage.json",
+        "before_sha256": "dbad57e64a7ecf968ce2ff322ffeda8485586fde3ef6eea09c3ad1908cb0622d",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_8/usage.json",
+        "before_sha256": "ec50f26c992b2cbd053abdd7a3f62244b900c7c23093b7baa5d5a3c6bf02cc0f",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      },
+      {
+        "path": "tmp/phase-g/iterations/20261029-state-scope-repair/test-temp-final/test_whole_core_validation_in_9/usage.json",
+        "before_sha256": "4543dcd8e70a6e7688f9335e3604c84d3c293dee88deb0a4dada9ee3333c9103",
+        "status": "MISSING_NOT_RECONSTRUCTED"
+      }
+    ],
+    "preservation_status": "BUSINESS_RELEASE_ENV_INDEX_PASS_WITH_HISTORICAL_TEMP_FIXTURE_EXCEPTION",
+    "legacy_fixture_loss_explanation": "27 old temporary quota/usage files were absent at final comparison. Exact disappearance time/cause is not established. Before hashes retained; no fabricated reconstruction or blanket all-evidence-preserved claim.",
+    "knowledge_files_unchanged": 1923,
+    "active_release": "7a14a351e52b49aeb87f65d1192f0937",
+    "active_release_artifacts_unchanged": 341,
+    "both_environment_files_unchanged": true,
+    "credential_value_in_new_artifacts": false,
+    "cloud_attempts": 23,
+    "cloud_attempts_by_stage": {
+      "P1": 16,
+      "P2": 3,
+      "P3": 3,
+      "integration": 1
+    },
+    "quota_ledger_changed_intentionally": true,
+    "persistent_ledger_peak": {
+      "rolling_60s_requests": 6,
+      "rolling_60s_input_reservations": 42518,
+      "rolling_24h_requests": 23
+    },
+    "editor_preservation": "No editor operations or frontend changes in this cycle. Fresh browser/buffer readback unavailable; not claimed.",
+    "server_shutdown_evidence": [
+      "integration/server-stopped.json",
+      "integration-local-controls-v2/server-stopped.json"
+    ],
+    "formal_phase_stage_promoted": false
+  },
+  "configuration": {
+    "roles": {
+      "local_default": {
+        "role": "local_default",
+        "provider": "ollama",
+        "model": "qwen2.5:1.5b",
+        "output_tokens": 512,
+        "thinking": null,
+        "structured": true,
+        "schema_mode": "json_schema"
+      },
+      "complex_planner": {
+        "role": "complex_planner",
+        "provider": "google",
+        "model": "gemini-3.1-flash-lite",
+        "output_tokens": 2048,
+        "thinking": "low",
+        "structured": true,
+        "schema_mode": "validated_json"
+      },
+      "evidence_reasoner": {
+        "role": "evidence_reasoner",
+        "provider": "google",
+        "model": "gemini-3.5-flash-lite",
+        "output_tokens": 8192,
+        "thinking": "low",
+        "structured": true,
+        "schema_mode": "validated_json"
+      }
+    },
+    "evidence_layout": "current",
+    "provider_wire_schema": "full",
+    "credential_loaded": true,
+    "flags": {
+      "COGNISHIELD_AI_OUTCOMES": "0",
+      "COGNISHIELD_AI_COMPLETENESS": "0",
+      "COGNISHIELD_AI_EVIDENCE_HARNESS": "0",
+      "COGNISHIELD_AI_HYBRID_INTERPRET": "0",
+      "COGNISHIELD_AI_MULTI_MODEL_EXPERIMENT": "1"
+    },
+    "database_path": "C:\\Users\\limmi\\OneDrive\\Desktop\\LLM_RAG_Practice\\network_rag_catalog_lab\\Net_Topo_View-intentparse\\backend\\db\\m0_2_m0_3_browser_smoke.db",
+    "no_inference": true
+  },
+  "further_cloud_requests": "NONE_AUTHORIZED_BY_THIS_CHECKPOINT_WITHOUT_NEW_BOUNDED_TASK",
+  "no_formal_stage_closure": true,
+  "evidence": [
+    "P1-full-answer-review.json",
+    "P2-full-answer-review.json",
+    "P3/probe-freeze.json",
+    "integration-full-answer-review-with-browser-retry.json",
+    "final-affected.xml",
+    "P4-final.xml",
+    "preservation-final.json",
+    "browser-local/browser-acceptance-review.json",
+    "preservation-final-after-browser.json"
+  ],
+  "regressions": {
+    "final_completed_affected_suite_passed": 111,
+    "P4_focused_passed": 18,
+    "overlap_not_summed": true,
+    "extra_final_attempt": "TEE_ERROR_THEN_INTERRUPTED_STALLED_RUN_NO_PASS_CREDIT"
+  }
+}

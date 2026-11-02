@@ -1,0 +1,433 @@
+{
+  "at": "2026-11-01T14:48:23.402128+00:00",
+  "registry_sha256": "bda0bec73b279bf916888d3623134d690f4999080cce59c82800f9eb68e01b08",
+  "method": "Source-derived, independently checkable, implementation-assistant graded; not blinded.",
+  "prior_draft_review_preserved_sha256": "45e99e46f9e1cea7f864472c17de6e99d722c263f956a10768d4bf03b3b1aa31",
+  "grading_correction": "Earlier draft2/4 overcredited SP02. Final strict full-answer review1/4 plus1qualified-partial; no expectation/model output changed and no original ED score changed.",
+  "cases": [
+    {
+      "case": "SP-01",
+      "surface": "floating",
+      "trace_sha256": "a52cf0495fec58b1bbcaf951ec0bcbacb8e4f7b51b946a745d088f1acf5d3847",
+      "workflow": "FAIL_REQUIRED_ARTIFACT_LOST",
+      "actual_conversation_tools": [
+        "network.configuration",
+        "network.syslog",
+        "network.state"
+      ],
+      "background_reads_separate": [],
+      "grade": "FAIL",
+      "first_failure": "SOURCE_SELECTION",
+      "review": "Correct BOTH proposal and scalar scope, but server original_sources imposed running_configs-only filter and omitted SP01/unapplied. Raw answer then overclaimed no staged artifact. Correction is a separate diagnostic.",
+      "seconds": 19.854420100105926,
+      "cloud_calls": 2,
+      "adequate_model_written": false,
+      "fallback_adequacy_credit": false
+    },
+    {
+      "case": "SP-02",
+      "surface": "studio",
+      "trace_sha256": "289bc5dec7f0a6993e986228e7872ba83bc2bd9825c7fa2dcde90a917a23d7a4",
+      "workflow": "PASS",
+      "actual_conversation_tools": [
+        "network.topology",
+        "network.state"
+      ],
+      "background_reads_separate": [],
+      "grade": "QUALIFIED_PARTIAL_NOT_STRICT_FULL_TASK_ADEQUATE",
+      "first_failure": "MODEL_CAUSAL_SCOPE_OVERSTATEMENT",
+      "review": "Ownership, directional failed-origin localization and model limits are useful/correct. The sentence that route presence validates forward path state overstates sufficiency; route presence alone does not establish transmission. Strict full-task adequacy withheld.",
+      "seconds": 16.670692200073972,
+      "cloud_calls": 2,
+      "adequate_model_written": false,
+      "fallback_adequacy_credit": false
+    },
+    {
+      "case": "SP-03",
+      "surface": "studio",
+      "trace_sha256": "388e4078936e600e6bcc2fd71d74484c21391ba738b29d090a39a86783bf283a",
+      "workflow": "PASS",
+      "actual_conversation_tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "background_reads_separate": [],
+      "grade": "FAIL",
+      "first_failure": "MODEL_STRUCTURED_OUTPUT_AND_EVALUATION_SETUP",
+      "review": "Raw response malformed JSON (-sources). No released interpretation. Default30 read includes all22events, so source-owned second-read condition was not exercised; original source oracle used8. Preserve this case and grade separately from dense diagnostic.",
+      "seconds": 6.2378752999939024,
+      "cloud_calls": 2,
+      "adequate_model_written": false,
+      "fallback_adequacy_credit": false
+    },
+    {
+      "case": "SP-04",
+      "surface": "floating",
+      "trace_sha256": "deca9dc4550f37e225725c5c3212ced318135f96da6f0b64536330bde50ea91f",
+      "workflow": "PASS",
+      "actual_conversation_tools": [],
+      "background_reads_separate": [
+        {
+          "path": "/api/v1/ai/inventory",
+          "method": "GET"
+        },
+        {
+          "path": "/api/v1/ai/inventory",
+          "method": "GET"
+        }
+      ],
+      "grade": "ADEQUATE",
+      "first_failure": "NONE",
+      "review": "Owned prior interface context, two useful distinct passive checks and limitations, zero new conversation readers; two concurrent GET inventory UI reads are not the advisory graph.",
+      "seconds": 5.809617999941111,
+      "cloud_calls": 2,
+      "adequate_model_written": true,
+      "fallback_adequacy_credit": false
+    }
+  ],
+  "strict_full_task_adequate": 1,
+  "qualified_partial": 1,
+  "conditions": 4,
+  "adequate_causal_reasoning_certification": 0,
+  "adequate_model_written_advice": 1,
+  "factual_fallback_adequacy_credit": 0,
+  "family_selection": {
+    "correct": 4,
+    "total": 4,
+    "qualification": "Family selection is not evidence completeness or complete task success"
+  },
+  "source_completeness": "SP01 missing staged operand in frozen run; corrected browser replay has operand but wrong temporal prose. SP03 contains needed facts but does not exercise supplementary retrieval and has malformed model JSON.",
+  "post_correction_diagnostic": {
+    "scope": "POST_COHORT_EXPOSED_DIAGNOSTIC_ACTUAL_AUTHENTICATED_GATEWAY_NOT_NEW_FROZEN_SCORE",
+    "initial_packet_characters": 30109,
+    "revised_packet_characters": 40244,
+    "initial_misses_linked_records": true,
+    "actual_queries": [
+      {
+        "invocation_id": "05d5e6dca07e4dc2b775684202210d0e",
+        "tool": "network.configuration",
+        "parameters": {
+          "device_refs": [
+            "631"
+          ],
+          "query": "Investigate Alder current interface-description record and follow its source-owned change reference. Explain the proposed label purpose and exact assigned circuit tag. Does this establish command application, a physical cable move or restored forwarding? Use configuration and syslog only; .",
+          "limit": 30,
+          "start": null,
+          "end": null,
+          "live": false,
+          "source_scope": "current",
+          "record_kinds": [],
+          "source_categories": [],
+          "interface_refs": [],
+          "window_minutes": 60
+        },
+        "status": "success",
+        "invocation_status": "completed",
+        "error_kind": null,
+        "truncated": false,
+        "source_revisions": [
+          "2:ecbeb122399d17b34943b44c4f48246a0057623c32f81ac05cd7c0de696eb31a"
+        ],
+        "evidence_ids": [
+          "df68313eec3044fc8f767f74893cc924"
+        ],
+        "record_refs": [
+          "SP03/current-label"
+        ]
+      },
+      {
+        "invocation_id": "93a2f4b6285b438394f156ca803d4a98",
+        "tool": "network.syslog",
+        "parameters": {
+          "device_refs": [
+            "631"
+          ],
+          "query": "Investigate Alder current interface-description record and follow its source-owned change reference. Explain the proposed label purpose and exact assigned circuit tag. Does this establish command application, a physical cable move or restored forwarding? Use configuration and syslog only; .",
+          "limit": 30,
+          "start": null,
+          "end": null,
+          "live": false,
+          "source_scope": "historical",
+          "record_kinds": [],
+          "source_categories": [],
+          "interface_refs": [],
+          "window_minutes": 60
+        },
+        "status": "success",
+        "invocation_status": "completed",
+        "error_kind": null,
+        "truncated": true,
+        "source_revisions": [
+          "2:ecbeb122399d17b34943b44c4f48246a0057623c32f81ac05cd7c0de696eb31a"
+        ],
+        "evidence_ids": [
+          "dce6392e42b6497188f955de1b0e3e93"
+        ],
+        "record_refs": [
+          "SPD1/heartbeat-74",
+          "SPD1/heartbeat-73",
+          "SPD1/heartbeat-72",
+          "SPD1/heartbeat-71",
+          "SPD1/heartbeat-70",
+          "SPD1/heartbeat-69",
+          "SPD1/heartbeat-68",
+          "SPD1/heartbeat-67",
+          "SPD1/heartbeat-66",
+          "SPD1/heartbeat-65",
+          "SPD1/heartbeat-64",
+          "SPD1/heartbeat-63",
+          "SPD1/heartbeat-62",
+          "SPD1/heartbeat-61",
+          "SPD1/heartbeat-60",
+          "SPD1/heartbeat-59",
+          "SPD1/heartbeat-58",
+          "SPD1/heartbeat-57",
+          "SPD1/heartbeat-56",
+          "SPD1/heartbeat-55",
+          "SPD1/heartbeat-54",
+          "SPD1/heartbeat-53",
+          "SPD1/heartbeat-52",
+          "SPD1/heartbeat-51",
+          "SPD1/heartbeat-50",
+          "SPD1/heartbeat-49",
+          "SPD1/heartbeat-48",
+          "SPD1/heartbeat-47",
+          "SPD1/heartbeat-46",
+          "SPD1/heartbeat-45"
+        ]
+      },
+      {
+        "invocation_id": "16db4af0726d419b914cdedea5b10973",
+        "tool": "network.syslog",
+        "parameters": {
+          "device_refs": [
+            "631"
+          ],
+          "query": "Investigate Alder current interface-description record and follow its source-owned change reference. Explain the proposed label purpose and exact assigned circuit tag. Does this establish command application, a physical cable move or restored forwarding? Use configuration and syslog only; .",
+          "limit": 100,
+          "start": null,
+          "end": null,
+          "live": false,
+          "source_scope": "historical",
+          "record_kinds": [],
+          "source_categories": [],
+          "interface_refs": [],
+          "window_minutes": 60
+        },
+        "status": "success",
+        "invocation_status": "completed",
+        "error_kind": null,
+        "truncated": false,
+        "source_revisions": [
+          "2:ecbeb122399d17b34943b44c4f48246a0057623c32f81ac05cd7c0de696eb31a"
+        ],
+        "evidence_ids": [
+          "ecd953919c43464893d6a9017740606f"
+        ],
+        "record_refs": [
+          "SPD1/heartbeat-74",
+          "SPD1/heartbeat-73",
+          "SPD1/heartbeat-72",
+          "SPD1/heartbeat-71",
+          "SPD1/heartbeat-70",
+          "SPD1/heartbeat-69",
+          "SPD1/heartbeat-68",
+          "SPD1/heartbeat-67",
+          "SPD1/heartbeat-66",
+          "SPD1/heartbeat-65",
+          "SPD1/heartbeat-64",
+          "SPD1/heartbeat-63",
+          "SPD1/heartbeat-62",
+          "SPD1/heartbeat-61",
+          "SPD1/heartbeat-60",
+          "SPD1/heartbeat-59",
+          "SPD1/heartbeat-58",
+          "SPD1/heartbeat-57",
+          "SPD1/heartbeat-56",
+          "SPD1/heartbeat-55",
+          "SPD1/heartbeat-54",
+          "SPD1/heartbeat-53",
+          "SPD1/heartbeat-52",
+          "SPD1/heartbeat-51",
+          "SPD1/heartbeat-50",
+          "SPD1/heartbeat-49",
+          "SPD1/heartbeat-48",
+          "SPD1/heartbeat-47",
+          "SPD1/heartbeat-46",
+          "SPD1/heartbeat-45",
+          "SPD1/heartbeat-44",
+          "SPD1/heartbeat-43",
+          "SPD1/heartbeat-42",
+          "SPD1/heartbeat-41",
+          "SPD1/heartbeat-40",
+          "SPD1/heartbeat-39",
+          "SPD1/heartbeat-38",
+          "SPD1/heartbeat-37",
+          "SPD1/heartbeat-36",
+          "SPD1/heartbeat-35",
+          "SPD1/heartbeat-34",
+          "SPD1/heartbeat-33",
+          "SPD1/heartbeat-32",
+          "SPD1/heartbeat-31",
+          "SPD1/heartbeat-30",
+          "SPD1/heartbeat-29",
+          "SPD1/heartbeat-28",
+          "SPD1/heartbeat-27",
+          "SPD1/heartbeat-26",
+          "SPD1/heartbeat-25",
+          "SPD1/heartbeat-24",
+          "SPD1/heartbeat-23",
+          "SPD1/heartbeat-22",
+          "SPD1/heartbeat-21",
+          "SPD1/heartbeat-20",
+          "SPD1/heartbeat-19",
+          "SPD1/heartbeat-18",
+          "SPD1/heartbeat-17",
+          "SPD1/heartbeat-16",
+          "SPD1/heartbeat-15",
+          "SPD1/heartbeat-14",
+          "SPD1/heartbeat-13",
+          "SPD1/heartbeat-12",
+          "SPD1/heartbeat-11",
+          "SPD1/heartbeat-10",
+          "SPD1/heartbeat-9",
+          "SPD1/heartbeat-8",
+          "SPD1/heartbeat-7",
+          "SPD1/heartbeat-6",
+          "SPD1/heartbeat-5",
+          "SPD1/heartbeat-4",
+          "SPD1/heartbeat-3",
+          "SPD1/heartbeat-2",
+          "SPD1/heartbeat-1",
+          "SPD1/heartbeat-0",
+          "SP03/label-request",
+          "SP03/asset-ledger"
+        ]
+      },
+      {
+        "invocation_id": "434d0ee885a14156909546ba416c16f1",
+        "tool": "network.configuration",
+        "parameters": {
+          "device_refs": [
+            "631"
+          ],
+          "query": "Investigate Alder current interface-description record and follow its source-owned change reference. Explain the proposed label purpose and exact assigned circuit tag. Does this establish command application, a physical cable move or restored forwarding? Use configuration and syslog only; do not read other sources or perform collection or engineering actions.",
+          "limit": 30,
+          "start": null,
+          "end": null,
+          "live": false,
+          "source_scope": "auto",
+          "record_kinds": [],
+          "source_categories": [
+            "config_changes"
+          ],
+          "interface_refs": [],
+          "window_minutes": 60
+        },
+        "status": "success",
+        "invocation_status": "completed",
+        "error_kind": null,
+        "truncated": false,
+        "source_revisions": [
+          "2:ecbeb122399d17b34943b44c4f48246a0057623c32f81ac05cd7c0de696eb31a"
+        ],
+        "evidence_ids": [
+          "1bdacca4cd824aa796bf01a3a14cfa91"
+        ],
+        "record_refs": []
+      }
+    ],
+    "broader_read_preserves_original_parameters_except_limit": true,
+    "expanded_records": 77,
+    "exact_referenced_bodies_in_model_input": [
+      {
+        "message": "A label replacement is proposed to align circuit identifiers with asset-map release Q17. No command application, cable move or service restoration is measured.",
+        "hostname": "Alder",
+        "interface": "GigabitEthernet2/0/4",
+        "id": "SP03/label-request",
+        "device_id": 631,
+        "interface_id": 6311,
+        "timestamp": "2026-11-01T06:05:00Z",
+        "kind": "configuration_event",
+        "source": "af-authored-recorder",
+        "current": true,
+        "depends_on": [
+          "SP03/asset-ledger"
+        ],
+        "freshness": "stale"
+      },
+      {
+        "message": "Asset-map release Q17 assigns circuit tag METRO-712 to this recorded port; this is a registry assignment, not a packet or physical verification.",
+        "hostname": "Alder",
+        "interface": "GigabitEthernet2/0/4",
+        "id": "SP03/asset-ledger",
+        "device_id": 631,
+        "interface_id": 6311,
+        "timestamp": "2026-11-01T06:00:00Z",
+        "kind": "log_event",
+        "source": "af-authored-recorder",
+        "current": true,
+        "depends_on": [],
+        "freshness": "stale"
+      }
+    ],
+    "raw_revised_answer": "Investigation of device Alder (ID 631) running configuration reveals interface GigabitEthernet2/0/4 has the description `OLD-TAG` and a source-owned change reference `SP03/label-request`. Following this reference to the syslog configuration events shows that a label replacement is proposed to align circuit identifiers with asset-map release Q17, with the exact assigned circuit tag `METRO-712` originating from `SP03/asset-ledger`. The syslog explicitly confirms that no command application, physical cable move, or service restoration is measured. Therefore, these records establish a registry-based label alignment rather than command application, a physical cable move, or restored forwarding.",
+    "raw_answer_survives_release": true,
+    "source_question_complete_manual_grade": "ADEQUATE_MODEL_WRITTEN_SOURCE_DEPENDENT_EXPLANATION_NOT_PHYSICAL_ROOT_CAUSE",
+    "no_fallback_adequacy_credit": true,
+    "original_v3_delivery_builder_unchanged": true,
+    "remaining_efficiency_limit": "A second candidate configuration-change read still executes in the same batch before dependency coverage is reevaluated.",
+    "no_global_all_event_or_causal_certification": true
+  },
+  "provider": {
+    "dispatches": 20,
+    "hard_ceiling": 20,
+    "models": {
+      "gemini-3.1-flash-lite": 9,
+      "gemini-3.5-flash-lite": 11
+    },
+    "google_http": {
+      "200": 20
+    },
+    "finish": {
+      "STOP": 20
+    },
+    "usage_reported": {
+      "promptTokenCount": 244379,
+      "candidatesTokenCount": 10110,
+      "totalTokenCount": 255622,
+      "thoughtsTokenCount": 1133,
+      "cachedContentTokenCount": 6081
+    },
+    "usage_note": "Only provider-reported counters; missing thinking fields not asserted zero. Monetary cost not measured; billing unchanged.",
+    "peak_61s_requests": 12,
+    "peak_61s_accounted_input": 122153,
+    "quota_rows_before": 72,
+    "quota_rows_after": 92,
+    "provider_latency_seconds": {
+      "min": 1.756994899827987,
+      "median": 2.836972999968566,
+      "max": 16.033417799975723
+    },
+    "distinct_failures": {
+      "invalid_structured_reasoner_output": 1,
+      "audit_packet_file_collision_local500": 1,
+      "provider_HTTP_error": 0
+    },
+    "no_model_switch_prompt_tuning_or_billing_change": true,
+    "cloud_inference_stopped": true
+  },
+  "formal_G_stage_closed": false,
+  "promote_completeness": false,
+  "browser_summary": {
+    "source_planning_and_ownership_mechanisms": "Both actual browser-origin complex paths exercised; source/owner arguments inspectable in runtime traces.",
+    "complete_answer_quality": {
+      "SP-01": "FAIL_COMPLETED_MODEL_TEMPORAL_AND_EVENT_ABSENCE_OVERCLAIMS_AFTER_STAGED_OPERAND_RESTORED",
+      "SP-02": "QUALIFIED_PARTIAL_ROUTE_PRESENCE_GUARANTEE_UNSUPPORTED_DESPITE_CORRECT_TYPED_OWNERSHIP",
+      "SP-D1": "FAIL_SOURCE_FILTER_NARROWING_BEFORE_FINAL_RECEIPT_REPAIR; original audit-collision attempt also preserved"
+    },
+    "final_corrected_event_replay": "API success; subsequent history rendering verified, NOT a new browser-origin cloud investigation",
+    "browser_recovery": "Fresh binding initially browser.user unavailable; automation session reset recovered same tab; no profile/permission changes",
+    "editor": "Two unsaved tabs retained; no editor, proposal, Accept or Save actions; no universal inactive-byte proof"
+  }
+}

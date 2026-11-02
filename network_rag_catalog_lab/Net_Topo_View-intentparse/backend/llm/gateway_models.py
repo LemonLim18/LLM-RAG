@@ -3,7 +3,7 @@ from hashlib import sha256
 from typing import Any, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator, model_serializer
+from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator, model_serializer
 
 
 class StrictModel(BaseModel):
@@ -78,6 +78,9 @@ class Evidence(StrictModel):
 
 
 class ToolResult(StrictModel):
+    # Server-only invocation provenance; absent from public JSON/schema and
+    # forbidden as client/model input. Retained by model_copy for verification.
+    _invocation_receipt: dict | None = PrivateAttr(default=None)
     status: Literal['success', 'unavailable', 'denied', 'error']
     data: Any = None
     message: str = ''

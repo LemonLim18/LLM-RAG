@@ -1,0 +1,2044 @@
+{
+  "version": 1,
+  "frozen_at": "2026-10-26T02:22:18.638557+00:00",
+  "author": "Implementation assistant, independently checked against authoritative scenario fields; not external/blind certification",
+  "settings": {
+    "local": "qwen2.5:1.5b",
+    "cloud": "gemini-3.5-flash-lite",
+    "thinking": "low",
+    "cloud_output": 8192,
+    "local_output": 512,
+    "request_seconds": 120,
+    "rpm": 15,
+    "input_tpm": 150000,
+    "rpd": 500,
+    "approach_a": false
+  },
+  "planning_cases": [
+    {
+      "id": "G4-01",
+      "surface": "floating",
+      "variant": "unknown",
+      "prompt": "Read Cypress-Edge saved configuration and its syslog. Show the actual saved commands, then explain the limitation of the log source.",
+      "required_domains": [
+        "configuration",
+        "syslog"
+      ],
+      "scope": {
+        "configuration": "historical"
+      },
+      "prohibited_domains": [
+        "inventory",
+        "state",
+        "telemetry",
+        "topology",
+        "incidents"
+      ],
+      "expected": "Saved Cypress commands remain available despite unavailable logs. Both outcomes preserved; no no-event inference.",
+      "origin": "preserved exact failure-family control"
+    },
+    {
+      "id": "G4-02",
+      "surface": "studio",
+      "variant": "healthy",
+      "prompt": "Read Basalt-Transit saved and current simulated configurations, then compare their recorded commands. Do not consult logs, topology or monitoring and do not generate a configuration.",
+      "required_domains": [
+        "configuration"
+      ],
+      "scope": {
+        "configuration": "both"
+      },
+      "prohibited_domains": [
+        "syslog",
+        "topology",
+        "telemetry",
+        "state"
+      ],
+      "expected": "Both temporal operands use the same configuration reader; equality of captures does not establish continuous state.",
+      "origin": "new frozen compound"
+    },
+    {
+      "id": "G4-03",
+      "surface": "studio",
+      "variant": "interface_down",
+      "prompt": "Use Basalt-Transit interface observations and its current configuration to explain the modeled delivery problem toward Orchid-End, then identify the blocked egress. Do not read syslogs or telemetry, and do not change anything.",
+      "required_domains": [
+        "configuration",
+        "state"
+      ],
+      "scope": {
+        "configuration": "current"
+      },
+      "prohibited_domains": [
+        "syslog",
+        "telemetry"
+      ],
+      "expected": "Current config and modeled/interface state both required; Basalt ge-0/0/1.0 down, forward reaches transit but stops at its outgoing port. No execution or temporal sequence claim.",
+      "origin": "new frozen multi-source"
+    },
+    {
+      "id": "G4-04",
+      "surface": "floating",
+      "variant": "healthy",
+      "prompt": "Read only the recorded interface inventory and the intended topology around Basalt-Transit. Compare both endpoint and port ownership pairs with the local addresses, then explain whether these records alone establish packet delivery. Do not retrieve operational measurements.",
+      "required_domains": [
+        "inventory",
+        "topology"
+      ],
+      "prohibited_domains": [
+        "state",
+        "syslog",
+        "telemetry",
+        "configuration"
+      ],
+      "expected": "Correct intended peers/ports and .2/30,.5/30; planned topology plus inventory not proof of scoped forwarding.",
+      "origin": "new frozen source-prohibition control"
+    },
+    {
+      "id": "G4-05",
+      "surface": "studio",
+      "variant": "healthy",
+      "prompt": "Read Cypress-Edge saved configuration and the published configure_ospf contract. Map interface, area and process fields to the actual commands, then explain the compatibility and validation work still unperformed. Do not generate or edit.",
+      "required_domains": [
+        "configuration",
+        "knowledge"
+      ],
+      "scope": {
+        "configuration": "historical"
+      },
+      "prohibited_domains": [
+        "state",
+        "telemetry",
+        "syslog"
+      ],
+      "expected": "Gi0/1 area0/process20/routerID198.19.241.1; Cisco conditional process_id not router_id required. Mapping does not perform V9 validation or prove activation.",
+      "origin": "new frozen published mapping"
+    },
+    {
+      "id": "G4-06",
+      "surface": "floating",
+      "variant": "unknown",
+      "prompt": "For that same device, read its saved and current configuration, then explain which syslog observations are unavailable. Use only those sources; do not collect new measurements.",
+      "required_domains": [
+        "configuration",
+        "syslog"
+      ],
+      "scope": {
+        "configuration": "both"
+      },
+      "prohibited_domains": [
+        "inventory",
+        "state",
+        "topology",
+        "telemetry"
+      ],
+      "expected": "Owned Cypress reference retained, both captures plus unavailable log limitation, no new collection.",
+      "origin": "new frozen owned follow-up",
+      "previous": {
+        "request_id": "4fae22ff-385a-4865-9935-e2c1b244d25f",
+        "status": "success",
+        "kind": "answer",
+        "answer": "**Development simulation**\n\nThe saved configuration for Cypress-Edge obtained from the historical source [S1] contains the following commands:\n\n```text\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n```\n\nThe syslog source [S2] for Cypress-Edge is explicitly unavailable, meaning no log records could be retrieved to inspect historical system events or runtime messages.",
+        "model": "gemini-3.5-flash-lite",
+        "evidence": [
+          {
+            "id": "bc10739a364f4372943adff8a944960d",
+            "source": "development.configuration",
+            "origin": "simulated",
+            "time_scope": "historical",
+            "captured_at": "2026-10-24T02:29:50Z",
+            "retrieved_at": "2026-10-26T01:06:44.789056+00:00",
+            "requested_time_range": null,
+            "freshness": "stale",
+            "source_revision": "5:e829f6770c0cb3d9a22cebc883f13180bad0117ed14a0b79c3159d3b73662f66",
+            "device_refs": [
+              "1100"
+            ],
+            "page": null,
+            "start_line": null,
+            "end_line": null,
+            "authority": "development_scenario"
+          },
+          {
+            "id": "95f2cf329cf34c828b50f1a7595eacff",
+            "source": "development.syslog",
+            "origin": "simulated",
+            "time_scope": "unspecified",
+            "captured_at": null,
+            "retrieved_at": "2026-10-26T01:06:44.793154+00:00",
+            "requested_time_range": null,
+            "freshness": "unknown",
+            "source_revision": "5:e829f6770c0cb3d9a22cebc883f13180bad0117ed14a0b79c3159d3b73662f66",
+            "device_refs": [
+              "1100"
+            ],
+            "page": null,
+            "start_line": null,
+            "end_line": null,
+            "authority": "development_scenario"
+          }
+        ],
+        "context_coverage": {
+          "agent": {
+            "engine": "langgraph_b3",
+            "nodes": [
+              "understand_request",
+              "resolve_references",
+              "select_authorized_tools",
+              "execute_tools",
+              "evaluate_evidence",
+              "verify_facts",
+              "compose_response"
+            ],
+            "rounds": 1,
+            "tool_calls": 2,
+            "routing_model_calls": 1,
+            "model_calls": 2,
+            "model_call_breakdown": {
+              "routing": 1,
+              "synthesis": 1
+            },
+            "elapsed_ms": 16729.86,
+            "tool_call_mode": "validated_plan",
+            "planning": {
+              "mode": "validated_model_plan",
+              "proposed": {
+                "intent": "answer",
+                "information_needs": [
+                  {
+                    "domain": "configuration",
+                    "question": "saved configuration",
+                    "source_scope": "historical",
+                    "source_categories": []
+                  },
+                  {
+                    "domain": "syslog",
+                    "question": "saved syslog",
+                    "source_scope": "historical",
+                    "source_categories": []
+                  }
+                ],
+                "use_editor": false,
+                "use_attachments": false,
+                "use_history": false,
+                "clarification": "",
+                "goal": "",
+                "temporal_scope": "unspecified",
+                "desired_response": "direct",
+                "information_gaps": [],
+                "requested_outcomes": []
+              },
+              "resolved_device_refs": [
+                "1100"
+              ],
+              "candidate": "{\"intent\": \"answer\", \"information_needs\": [{\"domain\": \"configuration\", \"question\": \"saved configuration\", \"source_scope\": \"historical\"}, {\"domain\": \"syslog\", \"question\": \"saved syslog\", \"source_scope\": \"historical\"}]}"
+            },
+            "inference_diagnostics": [
+              {
+                "purpose": "routing",
+                "model": "qwen2.5:1.5b",
+                "status": "completed",
+                "done_reason": "stop",
+                "input_tokens": 1389,
+                "output_tokens": 56,
+                "elapsed_ms": 13970.6
+              },
+              {
+                "purpose": "synthesis",
+                "model": "gemini-3.5-flash-lite",
+                "provider": "gemini",
+                "status": "completed",
+                "elapsed_ms": 1967.69
+              }
+            ],
+            "checkpointing": "empty",
+            "verification": {
+              "status": "verified",
+              "checked_values": 12,
+              "scope": "Exact returned record values; no operational safety or root-cause certification",
+              "synthesis": {
+                "status": "literal_checks_passed",
+                "candidate": {
+                  "answer": "The saved configuration for Cypress-Edge obtained from the historical source [S1] contains the following commands:\n\n```text\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n```\n\nThe syslog source [S2] for Cypress-Edge is explicitly unavailable, meaning no log records could be retrieved to inspect historical system events or runtime messages.",
+                  "sources": [
+                    "S1",
+                    "S2"
+                  ],
+                  "hypotheses": []
+                },
+                "errors": [],
+                "model_synthesis": true,
+                "model": "gemini-3.5-flash-lite",
+                "attempts": [
+                  {
+                    "candidate": {
+                      "answer": "The saved configuration for Cypress-Edge obtained from the historical source [S1] contains the following commands:\n\n```text\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n```\n\nThe syslog source [S2] for Cypress-Edge is explicitly unavailable, meaning no log records could be retrieved to inspect historical system events or runtime messages.",
+                      "sources": [
+                        "S1",
+                        "S2"
+                      ],
+                      "hypotheses": []
+                    },
+                    "errors": [],
+                    "model": "gemini-3.5-flash-lite",
+                    "response_contract": {
+                      "obligations": [
+                        {
+                          "id": "request-1",
+                          "text": "Read Cypress-Edge saved configuration and its syslog. Show the actual saved commands"
+                        },
+                        {
+                          "id": "request-2",
+                          "text": "explain the limitation of the log source."
+                        }
+                      ],
+                      "responses": [
+                        {
+                          "id": "request-1",
+                          "answer": "The saved configuration for Cypress-Edge obtained from the historical source [S1] contains the following commands:\n\n```text\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n```",
+                          "sources": [
+                            "S1"
+                          ]
+                        },
+                        {
+                          "id": "request-2",
+                          "answer": "The syslog source [S2] for Cypress-Edge is explicitly unavailable, meaning no log records could be retrieved to inspect historical system events or runtime messages.",
+                          "sources": [
+                            "S2"
+                          ]
+                        }
+                      ],
+                      "coverage": "Structural user-clause coverage only; correctness and semantic completeness require separate verification"
+                    }
+                  }
+                ],
+                "display_provenance_added": true,
+                "display_test_scope_added": false,
+                "display_validation_limits_added": [],
+                "display_source_metadata_added": false,
+                "scope": "Selected literals and narrow attribution/causal guards only; arbitrary technical prose is not universally certified"
+              }
+            },
+            "limitations": [
+              "network.syslog is explicitly unavailable in the scenario",
+              "A fresh scoped reachability observation is missing"
+            ],
+            "assessment": {
+              "development": {
+                "id": "FL26-UNKNOWN",
+                "revision": 1,
+                "epoch": 5,
+                "source_revision": "5:e829f6770c0cb3d9a22cebc883f13180bad0117ed14a0b79c3159d3b73662f66",
+                "logical_time": "2026-10-24T02:30:00Z",
+                "model_scope": "ipv4_observation",
+                "authoritative_development": true,
+                "mode": "development_scenario",
+                "origin": "simulated",
+                "virtual_now": "2026-10-24T02:30:00Z"
+              },
+              "conclusion_status": "insufficient_evidence",
+              "hypotheses": [
+                {
+                  "candidate": "Administrative shutdown interrupts the declared path",
+                  "scope": "Selected network",
+                  "supporting": [],
+                  "contradicting": [],
+                  "missing": [
+                    "Current administrative/operational interface state",
+                    "Scoped reachability result"
+                  ],
+                  "status": "insufficient_evidence",
+                  "evidence_strength": "Decisive observations missing",
+                  "independent_observations": 0,
+                  "next_check": "Inspect recorded current interface state and a scoped reachability observation"
+                },
+                {
+                  "candidate": "Subnet mismatch prevents the modeled direct link",
+                  "scope": "Selected network",
+                  "supporting": [],
+                  "contradicting": [],
+                  "missing": [
+                    "Current endpoint prefixes",
+                    "Observed path scope"
+                  ],
+                  "status": "insufficient_evidence",
+                  "evidence_strength": "Decisive observations missing",
+                  "independent_observations": 0,
+                  "next_check": "Compare the recorded endpoint prefixes and path scope"
+                },
+                {
+                  "candidate": "Missing source route explains the scoped failure",
+                  "scope": "Selected network",
+                  "supporting": [],
+                  "contradicting": [],
+                  "missing": [
+                    "Complete route table",
+                    "Destination and return-path scope"
+                  ],
+                  "status": "insufficient_evidence",
+                  "evidence_strength": "Decisive observations missing",
+                  "independent_observations": 0,
+                  "next_check": "Inspect the existing routing and destination records"
+                }
+              ],
+              "findings": [],
+              "gaps": [
+                "network.syslog is explicitly unavailable in the scenario",
+                "A fresh scoped reachability observation is missing"
+              ],
+              "warnings": [],
+              "conflicts": [],
+              "origins": [
+                "simulated"
+              ],
+              "timeline": [],
+              "dependency_roots": 1,
+              "verification_scope": "Current authorized structured observations; two-ended declared paths only; no physical device certification"
+            },
+            "recovery": "fresh authorized reads; no pending-tool replay",
+            "restored_status": null,
+            "document_refs": [],
+            "budgets": {
+              "rounds": 3,
+              "tools": 8,
+              "model_calls": 5,
+              "model_stages": {
+                "routing": 2,
+                "retrieval": 1,
+                "synthesis": 1,
+                "repair": 1,
+                "model_only": 1
+              },
+              "input_characters": 90000,
+              "maximum_output_tokens_per_call": 2048,
+              "local_output_tokens": 512,
+              "gemini_output_tokens": 2048,
+              "shared_request_deadline": true,
+              "wall_seconds": 118.62793250009418,
+              "concurrency": 1
+            },
+            "record_details": "**Recorded configurations** [S1]\n\n1 returned record(s) \u00c2\u00b7 simulated.\n\nDevice Cypress-Edge \u00c2\u00b7 2026-10-24T02:29:50Z \u00c2\u00b7 historical simulated capture.\n\n```cli\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n\n```\n\n**Syslogs** [S2]\n\nFor Cypress-Edge: Requested information is unavailable (simulated).\n\n*Development simulation.*"
+          },
+          "network": {
+            "complete": true,
+            "included_characters": 1958,
+            "domains": [
+              "network.configuration",
+              "network.syslog"
+            ],
+            "agent": {
+              "engine": "langgraph_b3",
+              "nodes": [
+                "understand_request",
+                "resolve_references",
+                "select_authorized_tools",
+                "execute_tools",
+                "evaluate_evidence",
+                "verify_facts",
+                "compose_response"
+              ],
+              "rounds": 1,
+              "tool_calls": 2,
+              "routing_model_calls": 1,
+              "model_calls": 2,
+              "model_call_breakdown": {
+                "routing": 1,
+                "synthesis": 1
+              },
+              "elapsed_ms": 16729.86,
+              "tool_call_mode": "validated_plan",
+              "planning": {
+                "mode": "validated_model_plan",
+                "proposed": {
+                  "intent": "answer",
+                  "information_needs": [
+                    {
+                      "domain": "configuration",
+                      "question": "saved configuration",
+                      "source_scope": "historical",
+                      "source_categories": []
+                    },
+                    {
+                      "domain": "syslog",
+                      "question": "saved syslog",
+                      "source_scope": "historical",
+                      "source_categories": []
+                    }
+                  ],
+                  "use_editor": false,
+                  "use_attachments": false,
+                  "use_history": false,
+                  "clarification": "",
+                  "goal": "",
+                  "temporal_scope": "unspecified",
+                  "desired_response": "direct",
+                  "information_gaps": [],
+                  "requested_outcomes": []
+                },
+                "resolved_device_refs": [
+                  "1100"
+                ],
+                "candidate": "{\"intent\": \"answer\", \"information_needs\": [{\"domain\": \"configuration\", \"question\": \"saved configuration\", \"source_scope\": \"historical\"}, {\"domain\": \"syslog\", \"question\": \"saved syslog\", \"source_scope\": \"historical\"}]}"
+              },
+              "inference_diagnostics": [
+                {
+                  "purpose": "routing",
+                  "model": "qwen2.5:1.5b",
+                  "status": "completed",
+                  "done_reason": "stop",
+                  "input_tokens": 1389,
+                  "output_tokens": 56,
+                  "elapsed_ms": 13970.6
+                },
+                {
+                  "purpose": "synthesis",
+                  "model": "gemini-3.5-flash-lite",
+                  "provider": "gemini",
+                  "status": "completed",
+                  "elapsed_ms": 1967.69
+                }
+              ],
+              "checkpointing": "empty",
+              "verification": {
+                "status": "verified",
+                "checked_values": 12,
+                "scope": "Exact returned record values; no operational safety or root-cause certification",
+                "synthesis": {
+                  "status": "literal_checks_passed",
+                  "candidate": {
+                    "answer": "The saved configuration for Cypress-Edge obtained from the historical source [S1] contains the following commands:\n\n```text\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n```\n\nThe syslog source [S2] for Cypress-Edge is explicitly unavailable, meaning no log records could be retrieved to inspect historical system events or runtime messages.",
+                    "sources": [
+                      "S1",
+                      "S2"
+                    ],
+                    "hypotheses": []
+                  },
+                  "errors": [],
+                  "model_synthesis": true,
+                  "model": "gemini-3.5-flash-lite",
+                  "attempts": [
+                    {
+                      "candidate": {
+                        "answer": "The saved configuration for Cypress-Edge obtained from the historical source [S1] contains the following commands:\n\n```text\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n```\n\nThe syslog source [S2] for Cypress-Edge is explicitly unavailable, meaning no log records could be retrieved to inspect historical system events or runtime messages.",
+                        "sources": [
+                          "S1",
+                          "S2"
+                        ],
+                        "hypotheses": []
+                      },
+                      "errors": [],
+                      "model": "gemini-3.5-flash-lite",
+                      "response_contract": {
+                        "obligations": [
+                          {
+                            "id": "request-1",
+                            "text": "Read Cypress-Edge saved configuration and its syslog. Show the actual saved commands"
+                          },
+                          {
+                            "id": "request-2",
+                            "text": "explain the limitation of the log source."
+                          }
+                        ],
+                        "responses": [
+                          {
+                            "id": "request-1",
+                            "answer": "The saved configuration for Cypress-Edge obtained from the historical source [S1] contains the following commands:\n\n```text\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n```",
+                            "sources": [
+                              "S1"
+                            ]
+                          },
+                          {
+                            "id": "request-2",
+                            "answer": "The syslog source [S2] for Cypress-Edge is explicitly unavailable, meaning no log records could be retrieved to inspect historical system events or runtime messages.",
+                            "sources": [
+                              "S2"
+                            ]
+                          }
+                        ],
+                        "coverage": "Structural user-clause coverage only; correctness and semantic completeness require separate verification"
+                      }
+                    }
+                  ],
+                  "display_provenance_added": true,
+                  "display_test_scope_added": false,
+                  "display_validation_limits_added": [],
+                  "display_source_metadata_added": false,
+                  "scope": "Selected literals and narrow attribution/causal guards only; arbitrary technical prose is not universally certified"
+                }
+              },
+              "limitations": [
+                "network.syslog is explicitly unavailable in the scenario",
+                "A fresh scoped reachability observation is missing"
+              ],
+              "assessment": {
+                "development": {
+                  "id": "FL26-UNKNOWN",
+                  "revision": 1,
+                  "epoch": 5,
+                  "source_revision": "5:e829f6770c0cb3d9a22cebc883f13180bad0117ed14a0b79c3159d3b73662f66",
+                  "logical_time": "2026-10-24T02:30:00Z",
+                  "model_scope": "ipv4_observation",
+                  "authoritative_development": true,
+                  "mode": "development_scenario",
+                  "origin": "simulated",
+                  "virtual_now": "2026-10-24T02:30:00Z"
+                },
+                "conclusion_status": "insufficient_evidence",
+                "hypotheses": [
+                  {
+                    "candidate": "Administrative shutdown interrupts the declared path",
+                    "scope": "Selected network",
+                    "supporting": [],
+                    "contradicting": [],
+                    "missing": [
+                      "Current administrative/operational interface state",
+                      "Scoped reachability result"
+                    ],
+                    "status": "insufficient_evidence",
+                    "evidence_strength": "Decisive observations missing",
+                    "independent_observations": 0,
+                    "next_check": "Inspect recorded current interface state and a scoped reachability observation"
+                  },
+                  {
+                    "candidate": "Subnet mismatch prevents the modeled direct link",
+                    "scope": "Selected network",
+                    "supporting": [],
+                    "contradicting": [],
+                    "missing": [
+                      "Current endpoint prefixes",
+                      "Observed path scope"
+                    ],
+                    "status": "insufficient_evidence",
+                    "evidence_strength": "Decisive observations missing",
+                    "independent_observations": 0,
+                    "next_check": "Compare the recorded endpoint prefixes and path scope"
+                  },
+                  {
+                    "candidate": "Missing source route explains the scoped failure",
+                    "scope": "Selected network",
+                    "supporting": [],
+                    "contradicting": [],
+                    "missing": [
+                      "Complete route table",
+                      "Destination and return-path scope"
+                    ],
+                    "status": "insufficient_evidence",
+                    "evidence_strength": "Decisive observations missing",
+                    "independent_observations": 0,
+                    "next_check": "Inspect the existing routing and destination records"
+                  }
+                ],
+                "findings": [],
+                "gaps": [
+                  "network.syslog is explicitly unavailable in the scenario",
+                  "A fresh scoped reachability observation is missing"
+                ],
+                "warnings": [],
+                "conflicts": [],
+                "origins": [
+                  "simulated"
+                ],
+                "timeline": [],
+                "dependency_roots": 1,
+                "verification_scope": "Current authorized structured observations; two-ended declared paths only; no physical device certification"
+              },
+              "recovery": "fresh authorized reads; no pending-tool replay",
+              "restored_status": null,
+              "document_refs": [],
+              "budgets": {
+                "rounds": 3,
+                "tools": 8,
+                "model_calls": 5,
+                "model_stages": {
+                  "routing": 2,
+                  "retrieval": 1,
+                  "synthesis": 1,
+                  "repair": 1,
+                  "model_only": 1
+                },
+                "input_characters": 90000,
+                "maximum_output_tokens_per_call": 2048,
+                "local_output_tokens": 512,
+                "gemini_output_tokens": 2048,
+                "shared_request_deadline": true,
+                "wall_seconds": 118.62793250009418,
+                "concurrency": 1
+              },
+              "record_details": "**Recorded configurations** [S1]\n\n1 returned record(s) \u00c2\u00b7 simulated.\n\nDevice Cypress-Edge \u00c2\u00b7 2026-10-24T02:29:50Z \u00c2\u00b7 historical simulated capture.\n\n```cli\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n\n```\n\n**Syslogs** [S2]\n\nFor Cypress-Edge: Requested information is unavailable (simulated).\n\n*Development simulation.*"
+            }
+          },
+          "retrieval": {
+            "domains": [
+              "configuration",
+              "syslog"
+            ],
+            "device_refs": [
+              "1100"
+            ],
+            "interface_refs": [],
+            "attributes": [],
+            "entities": [],
+            "source_requests": {
+              "configuration": {
+                "source_scope": "historical",
+                "source_categories": []
+              },
+              "syslog": {
+                "source_scope": "historical",
+                "source_categories": []
+              }
+            }
+          },
+          "authorization_role": "engineer",
+          "routing": {
+            "intent": "answer",
+            "editor": false,
+            "attachments": false,
+            "history": false,
+            "network_domains": [
+              "configuration",
+              "syslog"
+            ]
+          },
+          "environment": {
+            "id": "FL26-UNKNOWN",
+            "revision": 1,
+            "epoch": 5,
+            "source_revision": "5:e829f6770c0cb3d9a22cebc883f13180bad0117ed14a0b79c3159d3b73662f66",
+            "logical_time": "2026-10-24T02:30:00Z",
+            "model_scope": "ipv4_observation",
+            "authoritative_development": true,
+            "mode": "development_scenario",
+            "origin": "simulated",
+            "virtual_now": "2026-10-24T02:30:00Z"
+          },
+          "hybrid": {
+            "mode": "experimental_hybrid",
+            "model": "gemini-3.5-flash-lite",
+            "authorization": "exact owner-approved request/history and operator-approved synthetic revision",
+            "remote_calls": 1,
+            "maximum_remote_calls": 1,
+            "provider_disabled_for_request": false,
+            "remaining_seconds": 101.886,
+            "trace": [
+              {
+                "purpose": "synthesis",
+                "provider": "gemini",
+                "model": "gemini-3.5-flash-lite",
+                "status": "completed",
+                "elapsed_ms": 1967.67,
+                "usage": {
+                  "total_input_tokens": 1099,
+                  "total_output_tokens": 252,
+                  "total_thought_tokens": 0,
+                  "total_tokens": 1351,
+                  "model_version": "gemini-3.5-flash-lite",
+                  "finish_reason": "STOP",
+                  "transport": "generateContent"
+                }
+              }
+            ],
+            "scope": "Provider interpretation is not root-cause certification; no remote tools or cloud conversation state."
+          }
+        },
+        "observations": [
+          {
+            "tool": "network.configuration",
+            "status": "success",
+            "message": "",
+            "data": {
+              "records": [
+                {
+                  "config_text": "hostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n",
+                  "hostname": "Cypress-Edge",
+                  "interface": null,
+                  "id": "saved-1100",
+                  "device_id": 1100,
+                  "interface_id": null,
+                  "timestamp": "2026-10-24T02:29:50Z",
+                  "kind": "configuration_snapshot",
+                  "source": "scenario_author",
+                  "current": false,
+                  "depends_on": [],
+                  "freshness": "stale"
+                }
+              ],
+              "scenario": {
+                "id": "FL26-UNKNOWN",
+                "revision": 1,
+                "epoch": 5,
+                "source_revision": "5:e829f6770c0cb3d9a22cebc883f13180bad0117ed14a0b79c3159d3b73662f66",
+                "logical_time": "2026-10-24T02:30:00Z",
+                "model_scope": "ipv4_observation",
+                "authoritative_development": true,
+                "mode": "development_scenario",
+                "origin": "simulated",
+                "virtual_now": "2026-10-24T02:30:00Z"
+              },
+              "total": 1,
+              "truncated": false,
+              "source_available": true
+            },
+            "source_request": {
+              "source_scope": "historical",
+              "source_categories": []
+            },
+            "scope_devices": [
+              {
+                "id": 1100,
+                "hostname": "Cypress-Edge"
+              }
+            ],
+            "device_refs": [
+              "1100"
+            ],
+            "evidence_ids": [
+              "bc10739a364f4372943adff8a944960d"
+            ]
+          },
+          {
+            "tool": "network.syslog",
+            "status": "unavailable",
+            "message": "Scenario source is explicitly unavailable",
+            "data": {
+              "records": [],
+              "scenario": {
+                "id": "FL26-UNKNOWN",
+                "revision": 1,
+                "epoch": 5,
+                "source_revision": "5:e829f6770c0cb3d9a22cebc883f13180bad0117ed14a0b79c3159d3b73662f66",
+                "logical_time": "2026-10-24T02:30:00Z",
+                "model_scope": "ipv4_observation",
+                "authoritative_development": true,
+                "mode": "development_scenario",
+                "origin": "simulated",
+                "virtual_now": "2026-10-24T02:30:00Z"
+              },
+              "total": 0,
+              "truncated": false,
+              "source_available": false
+            },
+            "source_request": {
+              "source_scope": "historical",
+              "source_categories": []
+            },
+            "scope_devices": [
+              {
+                "id": 1100,
+                "hostname": "Cypress-Edge"
+              }
+            ],
+            "device_refs": [
+              "1100"
+            ],
+            "evidence_ids": [
+              "95f2cf329cf34c828b50f1a7595eacff"
+            ]
+          }
+        ],
+        "answer_release": {
+          "version": "phase2_step8_v1",
+          "query_class": "inventory_only",
+          "decision": "allow",
+          "reason": "Grounding freshness, authority, and conflict checks allow release.",
+          "limited": false,
+          "refresh_recommended": false,
+          "refresh_attempted": false,
+          "refresh_tool_calls": [],
+          "degraded_signals": [],
+          "conflict_codes": [],
+          "stale_sources": [],
+          "authority_summary": "Recorded source metadata; response factual accuracy is not machine verified."
+        },
+        "preview": null,
+        "proposal": null,
+        "execution_available": false
+      },
+      "history": [
+        {
+          "role": "user",
+          "content": "Read Cypress-Edge saved configuration and its syslog. Show the actual saved commands, then explain the limitation of the log source."
+        },
+        {
+          "role": "assistant",
+          "content": "**Development simulation**\n\nThe saved configuration for Cypress-Edge obtained from the historical source [S1] contains the following commands:\n\n```text\nhostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n```\n\nThe syslog source [S2] for Cypress-Edge is explicitly unavailable, meaning no log records could be retrieved to inspect historical system events or runtime messages."
+        }
+      ]
+    }
+  ],
+  "advisory_cases": [
+    {
+      "id": "AD-01",
+      "variant": "unknown",
+      "setup": "Read Cypress-Edge saved configuration and its syslog. Show the actual saved commands, then explain the limitation of the log source.",
+      "prompt": "Based on that limitation, recommend two useful read-only evidence questions for Cypress-Edge. Do not read, collect, or change anything.",
+      "expected": "Two useful scoped questions with rationale addressing missing syslog/uncertainty; zero reads or effects; retained Cypress identity.",
+      "original": true
+    },
+    {
+      "id": "AD-02",
+      "variant": "unknown",
+      "setup": "Read Cypress-Edge saved configuration and its syslog. Show the actual saved commands, then explain the limitation of the log source.",
+      "prompt": "Which read-only records should I ask for next about that uncertainty, and why would they help? Do not read or collect them now.",
+      "expected": "Owned Cypress and unavailable log reference preserved; prospective relevant scoped suggestions with rationale, no observations asserted, zero reads/effects.",
+      "original": false
+    }
+  ],
+  "fixtures": {
+    "healthy": {
+      "format_version": 2,
+      "id": "FL26-HEALTHY",
+      "revision": 1,
+      "title": "Approved synthetic Flash-Lite healthy",
+      "logical_time": "2026-10-24T02:30:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "Cypress-Edge",
+          "management_ip": "192.0.2.81",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 1200,
+          "hostname": "Basalt-Transit",
+          "management_ip": "192.0.2.82",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 1300,
+          "hostname": "Orchid-End",
+          "management_ip": "192.0.2.83",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.204.61.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "interface_type": "routed",
+          "prefix": "10.204.61.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "interface_type": "routed",
+          "prefix": "10.204.61.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "interface_type": "routed",
+          "prefix": "10.204.61.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "set system host-name Basalt-Transit\nset interfaces ge-0/0/0 unit 0 family inet address 10.204.61.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 64641\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 64642\nset protocols bgp group CEDAR neighbor 10.204.61.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "sysname Orchid-End\ninterface GigabitEthernet0/0/1\n ip address 10.204.61.6 255.255.255.252\nquit\nbgp 64642\n peer 10.204.61.5 as-number 64641\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "set system host-name Basalt-Transit\nset interfaces ge-0/0/0 unit 0 family inet address 10.204.61.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 64641\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 64642\nset protocols bgp group CEDAR neighbor 10.204.61.6\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "sysname Orchid-End\ninterface GigabitEthernet0/0/1\n ip address 10.204.61.6 255.255.255.252\nquit\nbgp 64642\n peer 10.204.61.5 as-number 64641\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T02:30:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.241.3/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.204.61.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.241.3/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.204.61.6",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.241.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.204.61.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.241.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.204.61.5",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.241.1",
+            "destination_address": "198.19.241.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "icmp",
+            "source_port": null,
+            "destination_port": null,
+            "require_return": true
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.241.1",
+              "area": "0.0.0.0",
+              "process": null,
+              "area_type": null,
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "authentication": null,
+              "mtu": null,
+              "mtu_ignore": null,
+              "passive": false,
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.241.2",
+              "area": "0.0.0.0",
+              "process": null,
+              "area_type": null,
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "authentication": null,
+              "mtu": null,
+              "mtu_ignore": null,
+              "passive": false,
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.204.61.5",
+              "local_as": 64641,
+              "remote_as": 64642,
+              "vrf": "default",
+              "update_source": null,
+              "hold_seconds": null,
+              "keepalive_seconds": null,
+              "shutdown": false,
+              "authentication": null,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.204.61.6",
+              "local_as": 64642,
+              "remote_as": 64641,
+              "vrf": "default",
+              "update_source": null,
+              "hold_seconds": null,
+              "keepalive_seconds": null,
+              "shutdown": false,
+              "authentication": null,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.241.3/32"
+            ],
+            "rejected_prefixes": [],
+            "received_prefixes": null,
+            "advertised_prefixes": null,
+            "withdrawn_prefixes": null,
+            "rib_in_complete": null,
+            "rib_out_complete": null,
+            "next_hop_valid": null,
+            "policy_observed": true
+          }
+        ],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "unknown": {
+      "format_version": 2,
+      "id": "FL26-UNKNOWN",
+      "revision": 1,
+      "title": "Approved synthetic Flash-Lite unknown",
+      "logical_time": "2026-10-24T02:30:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "Cypress-Edge",
+          "management_ip": "192.0.2.81",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 1200,
+          "hostname": "Basalt-Transit",
+          "management_ip": "192.0.2.82",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 1300,
+          "hostname": "Orchid-End",
+          "management_ip": "192.0.2.83",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.204.61.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "interface_type": "routed",
+          "prefix": "10.204.61.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "interface_type": "routed",
+          "prefix": "10.204.61.5/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "interface_type": "routed",
+          "prefix": "10.204.61.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "set system host-name Basalt-Transit\nset interfaces ge-0/0/0 unit 0 family inet address 10.204.61.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 64641\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 64642\nset protocols bgp group CEDAR neighbor 10.204.61.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "sysname Orchid-End\ninterface GigabitEthernet0/0/1\n ip address 10.204.61.6 255.255.255.252\nquit\nbgp 64642\n peer 10.204.61.5 as-number 64641\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "set system host-name Basalt-Transit\nset interfaces ge-0/0/0 unit 0 family inet address 10.204.61.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 64641\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 64642\nset protocols bgp group CEDAR neighbor 10.204.61.6\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "sysname Orchid-End\ninterface GigabitEthernet0/0/1\n ip address 10.204.61.6 255.255.255.252\nquit\nbgp 64642\n peer 10.204.61.5 as-number 64641\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": false,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T02:30:00Z",
+        "policy_attachments_complete": false,
+        "tables": [],
+        "policies": [],
+        "flows": [],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "interface_down": {
+      "format_version": 2,
+      "id": "FL26-INTERFACE-DOWN",
+      "revision": 1,
+      "title": "Approved synthetic Flash-Lite interface_down",
+      "logical_time": "2026-10-24T02:30:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 1100,
+          "hostname": "Cypress-Edge",
+          "management_ip": "192.0.2.81",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 1200,
+          "hostname": "Basalt-Transit",
+          "management_ip": "192.0.2.82",
+          "vendor": "juniper_junos",
+          "os_version": "23.4",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 1300,
+          "hostname": "Orchid-End",
+          "management_ip": "192.0.2.83",
+          "vendor": "huawei_vrp",
+          "os_version": "8",
+          "model": "",
+          "role": "router",
+          "site": "Development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 1,
+          "device_id": 1100,
+          "name": "GigabitEthernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.204.61.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 2,
+          "device_id": 1200,
+          "name": "ge-0/0/0.0",
+          "interface_type": "routed",
+          "prefix": "10.204.61.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 3,
+          "device_id": 1200,
+          "name": "ge-0/0/1.0",
+          "interface_type": "routed",
+          "prefix": "10.204.61.5/30",
+          "admin_status": "down",
+          "oper_status": "down",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 4,
+          "device_id": 1300,
+          "name": "GigabitEthernet0/0/1",
+          "interface_type": "routed",
+          "prefix": "10.204.61.6/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 5,
+          "device_id": 1100,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6,
+          "device_id": 1200,
+          "name": "lo0.0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.2/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7,
+          "device_id": 1300,
+          "name": "LoopBack0",
+          "interface_type": "routed",
+          "prefix": "198.19.241.3/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 1,
+          "src_device_id": 1100,
+          "src_interface_id": 1,
+          "dst_device_id": 1200,
+          "dst_interface_id": 2
+        },
+        {
+          "id": 2,
+          "src_device_id": 1200,
+          "src_interface_id": 3,
+          "dst_device_id": 1300,
+          "dst_interface_id": 4
+        }
+      ],
+      "records": {
+        "state": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": [],
+        "configuration": [
+          {
+            "id": "saved-1100",
+            "device_id": 1100,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n"
+            }
+          },
+          {
+            "id": "saved-1200",
+            "device_id": 1200,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "set system host-name Basalt-Transit\nset interfaces ge-0/0/0 unit 0 family inet address 10.204.61.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 64641\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 64642\nset protocols bgp group CEDAR neighbor 10.204.61.6\n"
+            }
+          },
+          {
+            "id": "saved-1300",
+            "device_id": 1300,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:29:50Z",
+            "kind": "configuration_snapshot",
+            "source": "scenario_author",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "sysname Orchid-End\ninterface GigabitEthernet0/0/1\n ip address 10.204.61.6 255.255.255.252\nquit\nbgp 64642\n peer 10.204.61.5 as-number 64641\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "active-1100",
+            "device_id": 1100,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Cypress-Edge\ninterface GigabitEthernet0/1\n ip address 10.204.61.1 255.255.255.252\n ip ospf network point-to-point\n ip ospf 20 area 0\nrouter ospf 20\n router-id 198.19.241.1\n"
+            }
+          },
+          {
+            "id": "active-1200",
+            "device_id": 1200,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "set system host-name Basalt-Transit\nset interfaces ge-0/0/0 unit 0 family inet address 10.204.61.2/30\nset protocols ospf area 0.0.0.0 interface ge-0/0/0.0 interface-type p2p\nset routing-options autonomous-system 64641\nset protocols bgp group CEDAR type external\nset protocols bgp group CEDAR peer-as 64642\nset protocols bgp group CEDAR neighbor 10.204.61.6\nset interfaces ge-0/0/1 disable\n"
+            }
+          },
+          {
+            "id": "active-1300",
+            "device_id": 1300,
+            "interface_id": null,
+            "timestamp": "2026-10-24T02:30:00Z",
+            "kind": "running_configuration",
+            "source": "scenario_author",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "sysname Orchid-End\ninterface GigabitEthernet0/0/1\n ip address 10.204.61.6 255.255.255.252\nquit\nbgp 64642\n peer 10.204.61.5 as-number 64641\n"
+            }
+          }
+        ],
+        "topology": []
+      },
+      "availability": {
+        "state": true,
+        "telemetry": false,
+        "syslog": false,
+        "incidents": false,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true
+      },
+      "network": {
+        "observed_at": "2026-10-24T02:30:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 1100,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "aster-cedar",
+                "prefix": "198.19.241.3/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 1,
+                    "address": "10.204.61.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 1200,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "birch-cedar",
+                "prefix": "198.19.241.3/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 3,
+                    "address": "10.204.61.6",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "birch-aster",
+                "prefix": "198.19.241.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 2,
+                    "address": "10.204.61.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 1300,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "cedar-aster",
+                "prefix": "198.19.241.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 4,
+                    "address": "10.204.61.5",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "branch-edge-icmp",
+            "source_device_id": 1100,
+            "destination_device_id": 1300,
+            "source_address": "198.19.241.1",
+            "destination_address": "198.19.241.3",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "icmp",
+            "source_port": null,
+            "destination_port": null,
+            "require_return": true
+          }
+        ],
+        "ospf": [
+          {
+            "id": "adjacency-aster-birch",
+            "left": {
+              "device_id": 1100,
+              "interface_id": 1,
+              "router_id": "198.19.241.1",
+              "area": "0.0.0.0",
+              "process": null,
+              "area_type": null,
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "authentication": null,
+              "mtu": null,
+              "mtu_ignore": null,
+              "passive": false,
+              "role": "point_to_point"
+            },
+            "right": {
+              "device_id": 1200,
+              "interface_id": 2,
+              "router_id": "198.19.241.2",
+              "area": "0.0.0.0",
+              "process": null,
+              "area_type": null,
+              "hello_seconds": 10,
+              "dead_seconds": 40,
+              "network_type": "point_to_point",
+              "authentication": null,
+              "mtu": null,
+              "mtu_ignore": null,
+              "passive": false,
+              "role": "point_to_point"
+            },
+            "observed_state": "Full"
+          }
+        ],
+        "bgp": [
+          {
+            "id": "session-birch-cedar",
+            "left": {
+              "device_id": 1200,
+              "address": "10.204.61.5",
+              "local_as": 64641,
+              "remote_as": 64642,
+              "vrf": "default",
+              "update_source": null,
+              "hold_seconds": null,
+              "keepalive_seconds": null,
+              "shutdown": false,
+              "authentication": null,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "right": {
+              "device_id": 1300,
+              "address": "10.204.61.6",
+              "local_as": 64642,
+              "remote_as": 64641,
+              "vrf": "default",
+              "update_source": null,
+              "hold_seconds": null,
+              "keepalive_seconds": null,
+              "shutdown": false,
+              "authentication": null,
+              "address_families": [
+                "ipv4_unicast"
+              ]
+            },
+            "observed_state": "Established",
+            "transport_reachable": true,
+            "accepted_prefixes": [
+              "198.19.241.3/32"
+            ],
+            "rejected_prefixes": [],
+            "received_prefixes": null,
+            "advertised_prefixes": null,
+            "withdrawn_prefixes": null,
+            "rib_in_complete": null,
+            "rib_out_complete": null,
+            "next_hop_valid": null,
+            "policy_observed": true
+          }
+        ],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    }
+  },
+  "positive_controls": [
+    {
+      "prompt": "Hello! What is 17 multiplied by 6?",
+      "expected": "102 no readers or cloud"
+    },
+    {
+      "prompt": "List Basalt-Transit recorded interface names and IP prefixes.",
+      "expected": "Exact ge-0/0/0.0=10.204.61.2/30,ge-0/0/1.0=10.204.61.5/30,lo0.0=198.19.241.2/32; local only"
+    }
+  ]
+}

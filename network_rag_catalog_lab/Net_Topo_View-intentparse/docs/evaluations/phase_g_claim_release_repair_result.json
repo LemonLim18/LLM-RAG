@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-29",
+  "status": "BOUNDED_REPAIR_VERIFIED_KEEP_DEFAULT_OFF",
+  "report": "docs/PHASE_G_CLAIM_VERIFICATION_RELEASE_REPAIR.md",
+  "audit": "tmp/phase-g/iterations/20261029-claim-release-repair",
+  "historical_scores": {
+    "control": "4/8",
+    "enhanced": "0/8",
+    "rescored": false
+  },
+  "new_frozen_conditions": 2,
+  "matched_adequacy": {
+    "baseline": "1/2",
+    "repaired": "1/2",
+    "improvement_demonstrated": false
+  },
+  "model_written": true,
+  "fallback_credit": false,
+  "browser": "Both surfaces exercised through exact synthetic consent; Floating adequate, Studio qualified/partial; unrelated local follow-up failure preserved, fresh controls pass.",
+  "regressions": {
+    "latest_executed": 159,
+    "passed": 159,
+    "overlapping_reruns_not_summed": true
+  },
+  "zero_cloud_replay": "Valid cores retained in7/8cases; malformed entire JSON inCF07 still rejected. This is parse/release behavior, not7/8quality.",
+  "safety": "Declared definite contradictions corrected/withheld in regression graphs. No new live contradiction required correction. Unrestricted prose remains unverified; auxiliary success is not semantic certification.",
+  "quota": {
+    "actual_cloud_attempts": 18,
+    "ceiling": 32,
+    "by_run": {
+      "baseline-v1": 7,
+      "repaired-v1": 5,
+      "browser-acceptance-v2": 6,
+      "browser-recovery-v1": 0
+    },
+    "http_status": {
+      "200": 18
+    },
+    "usage": {
+      "promptTokenCount": 272796,
+      "candidatesTokenCount": 17511,
+      "thoughtsTokenCount": 3279,
+      "totalTokenCount": 293586
+    },
+    "quota_accounting": "Persistent ledger reservations; actual provider prompt counts reported separately. No duplicated case/browser aggregation.",
+    "retained_ledger_peak_61s": {
+      "requests": 7,
+      "accounted_input": 104246
+    },
+    "rolling_day_count_at_close": 18,
+    "limits": {
+      "rpm": 15,
+      "input_tpm": 150000,
+      "rpd": 500
+    },
+    "paid_billing_activated": false,
+    "substitution_or_retry": false,
+    "finishes": {
+      "STOP": 18
+    }
+  },
+  "preservation": {
+    "at": "2026-10-29T09:04:51.470086+00:00",
+    "head_unchanged": true,
+    "staged_entries_unchanged": true,
+    "ordinary_tables_unchanged": true,
+    "ordinary_table_count": 41,
+    "knowledge_files_unchanged": true,
+    "knowledge_file_count": 1923,
+    "historical_json_unchanged": true,
+    "historical_json_count": 322,
+    "credential_unchanged": true,
+    "root_env_unchanged": true,
+    "active_release": "7a14a351e52b49aeb87f65d1192f0937",
+    "application_source_changes": [
+      "backend/llm/gemini_provider.py",
+      "backend/llm/model_roles.py",
+      "backend/llm/orchestration/engine.py",
+      "backend/llm/orchestration/investigation_support.py",
+      "backend/llm/orchestration/role_reasoning.py",
+      "backend/tests/test_completeness_investigation.py"
+    ],
+    "editor": "No editor/accept/save/file actions. Two restored tabs observed on isolated5174 origin; no full ordinary-buffer hash claim. Browser test messages only.",
+    "ordinary_services": "5173/8000 were not restarted or modified."
+  },
+  "defaults": {
+    "roles": {
+      "local_default": {
+        "role": "local_default",
+        "provider": "ollama",
+        "model": "qwen2.5:1.5b",
+        "output_tokens": 512,
+        "thinking": null,
+        "structured": true,
+        "schema_mode": "json_schema"
+      },
+      "complex_planner": {
+        "role": "complex_planner",
+        "provider": "google",
+        "model": "gemini-3.1-flash-lite",
+        "output_tokens": 2048,
+        "thinking": "low",
+        "structured": true,
+        "schema_mode": "validated_json"
+      },
+      "evidence_reasoner": {
+        "role": "evidence_reasoner",
+        "provider": "google",
+        "model": "gemini-3.5-flash-lite",
+        "output_tokens": 8192,
+        "thinking": "low",
+        "structured": true,
+        "schema_mode": "validated_json"
+      }
+    },
+    "completeness": {
+      "enabled": false
+    },
+    "approach_a": "0",
+    "legacy_remote_interpret": "0",
+    "harness": "0",
+    "credential_present": true,
+    "ignored": true
+  },
+  "recommendation": "RETAIN targeted claim/release repairs; KEEP completeness default OFF. No new PhaseGstage closure or broader qualification.",
+  "remaining": [
+    "Broad artifact comparison remains partial in one repaired draw; extra optional knowledge reader selected.",
+    "Model core serialization can still fail.",
+    "Nondeclared/circular/causal statements remain outside typed operand verification.",
+    "Studio arithmetic follow-up misrouted by Qwen with telemetry information need; fresh session succeeds.",
+    "Small synthetic cohort, assistant graded, no generalization or formalG4/G5/G6/G11 acceptance."
+  ]
+}

@@ -7,6 +7,8 @@ NETWORK = ['inventory','topology','configuration','telemetry','syslog','incident
 
 def contextual_route(prompt,memory,previous,inventory):
     """Resolve investigation references from records, not an assistant narrative."""
+    from llm.gateway_references import read_intent_text
+    prompt=read_intent_text(prompt)
     follow=bool(re.search(r'\b(evidence supports|your conclusion|other relevant|other sources|could the problem|what changed|most likely cause|check next|reassess|back up|now investigate|continue (?:the |my |this )?investigation|resume (?:the |my |this )?investigation)\b',prompt,re.I))
     if follow and memory.goal and memory.domains:
         resolved=[]
@@ -41,6 +43,8 @@ def contextual_route(prompt,memory,previous,inventory):
 
 
 def is_investigation(prompt):
+    from llm.gateway_references import read_intent_text
+    prompt=read_intent_text(prompt)
     return bool(re.search(r'\b(investigat\w*|diagnos\w*|troubleshoot\w*|cannot communicate|root cause|other relevant|other sources)\b|\b(?:find|identify|determine)\b.{0,60}\b(?:cause|fault|reason)\b|\b(?:assess|evaluate|verify|check)\b.{0,100}\b(?:modeled|modelled|forwarding|connectivity|reachability|return|reverse)\b',prompt,re.I))
 
 

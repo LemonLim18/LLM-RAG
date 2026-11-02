@@ -1,0 +1,61 @@
+{
+  "updated_at": "2026-10-26T17:14:50.546396+00:00",
+  "scope": "Bounded evidence-aware harness; no formal PhaseGqualification",
+  "status": "FINISHED_NO_DEMONSTRATED_TASK_GAIN",
+  "report": "docs/PHASE_G_EVIDENCE_AWARE_HARNESS_ENGINEERING.md",
+  "registry": "docs/evaluations/phase_g_evidence_harness_v2.json",
+  "frozen_conditions": 6,
+  "paired_arms": {
+    "control": {
+      "attempts": 6,
+      "fully_adequate": 2,
+      "completed_reasoner": 6,
+      "source_correct": 5,
+      "provider_failed": 0,
+      "factual_fallback": 0
+    },
+    "enhanced": {
+      "attempts": 6,
+      "fully_adequate": 2,
+      "completed_reasoner": 5,
+      "source_correct": 4,
+      "provider_failed": 1,
+      "factual_fallback": 0
+    }
+  },
+  "conditional_adequacy": {
+    "control": "2/6",
+    "enhanced": "2/5"
+  },
+  "actual_cloud_attempts": 26,
+  "peak": {
+    "requests_in61s": 5,
+    "input_or_reservation_in61s": 55456
+  },
+  "retries": 0,
+  "live_MN4": "NOT_VERIFIED",
+  "feature_default": "OFF",
+  "component_recommendations": {
+    "ledger": "KEEP_EXPERIMENTAL_OFF",
+    "guidance": "REVISE_KEEP_OFF",
+    "provenance": "KEEP_EXPERIMENTAL_OFF",
+    "observability": "KEEP"
+  },
+  "browser": {
+    "available": true,
+    "studio_cloud": "BLOCKED_PLANNER_TIMEOUT",
+    "floating_cloud": "PASS_PATH_FAILED_ANSWER_QUALITY",
+    "local_controls": "BOTH_PASS_QWEN_ZERO_CLOUD",
+    "no_editor_actions": true
+  },
+  "tests": {
+    "affected": 187,
+    "final_envelope": 35,
+    "post_review": 66,
+    "overlapping_do_not_add": true,
+    "source_cases_both_surfaces": 18
+  },
+  "preservation": "PASS_HEAD_INDEX_ORDINARY_DATA_KNOWLEDGE_CREDENTIALS_HISTORY",
+  "servers": "STOPPED",
+  "next": "No automatic continuation; await authorization for a new controlled evaluation. No formal G4/G5/G6/G11promotion."
+}

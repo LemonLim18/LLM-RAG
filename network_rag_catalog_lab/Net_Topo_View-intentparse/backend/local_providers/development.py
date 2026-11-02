@@ -641,6 +641,9 @@ class ScenarioManager:
                 source_rows=[r for r in source_rows if r['current']]
         for r in source_rows:
             category=r['values'].get('source_category')
+            if categories and category is None:
+                from development.source_registry import recorded_category
+                category=recorded_category(r,'network.'+domain)
             if categories and category not in categories:continue
             if r['kind']=='protocol_observation':
                 from development.network_model import recorded_protocol_model,protocol_findings
@@ -685,8 +688,10 @@ class ScenarioManager:
                 row['link_endpoints'].update({side:next(i['name'] for i in s['interfaces'] if i['id']==link[field])
                     for side,field in [('source_interface','src_interface_id'),('target_interface','dst_interface_id')]})
                 row['endpoint_basis']=endpoint_basis
-            if domain=='telemetry' and query.interface_refs and str(row.get('interface_id')) not in query.interface_refs:continue
             records.append(row)
+        if domain in {'state','telemetry'}:
+            from llm.gateway_network import scoped_interface_records
+            records=scoped_interface_records(records,query.interface_refs,relationships=domain=='state')
         from llm.gateway_network import redact
         for row in records:
             if 'config_text' in row:row['config_text']=redact(row['config_text'])

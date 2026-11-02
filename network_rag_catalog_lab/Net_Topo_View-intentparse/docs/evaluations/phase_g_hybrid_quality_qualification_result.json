@@ -1,0 +1,1385 @@
+{
+  "original_frozen_scores": {
+    "local": {
+      "full_task_adequate": 1,
+      "full_task_total": 30,
+      "full_task_percent": 3.33,
+      "causal_adequate": 0,
+      "causal_total": 16,
+      "raw_network_reasoning_adequate": 0,
+      "raw_control_adequate": 1,
+      "critical_unsafe_releases": [
+        "GQ-13",
+        "GQ-22"
+      ],
+      "final_grades": {
+        "PARTIAL": 26,
+        "UNSAFE_UNSUPPORTED_CONCLUSION": 2,
+        "ADEQUATE": 1,
+        "QUALIFIED_ADEQUATE": 1
+      },
+      "raw_grades": {
+        "LOCAL_TIMEOUT": 17,
+        "UNSAFE_UNSUPPORTED_CONCLUSION": 2,
+        "NO_SYNTHESIS": 3,
+        "PARTIAL": 3,
+        "INCORRECT": 3,
+        "ADEQUATE_CONTROL": 1,
+        "DETERMINISTIC_FACTS": 1
+      },
+      "actual_synthesis_status": {
+        "unavailable_fallback": 17,
+        "literal_checks_passed": 3,
+        "protocol_constraints_fallback": 2,
+        "rejected_fallback": 5,
+        "historical_events_fallback": 1,
+        "no_synthesis": 2
+      },
+      "local_provider_errors": {
+        "TimeoutError": 35
+      },
+      "actual_call_purposes": {
+        "routing": 26,
+        "synthesis": 25,
+        "repair": 22,
+        "retrieval": 1
+      },
+      "cloud_cases": [],
+      "cloud_calls": 0,
+      "cloud_usage": {},
+      "cloud_inference_ms": {},
+      "gateway_ms": {
+        "count": 30,
+        "median": 69814.31,
+        "p95_nearest_rank": 79346.28,
+        "max": 90232.06
+      },
+      "gateway_over120seconds": 0,
+      "stage_times_ms": {
+        "local_planning_ms": {
+          "count": 30,
+          "median": 5679.99,
+          "p95_nearest_rank": 15393.78,
+          "max": 24276.53
+        },
+        "reader_ms": {
+          "count": 30,
+          "median": 7.42,
+          "p95_nearest_rank": 469.49,
+          "max": 4504.8
+        },
+        "synthesis_ms": {
+          "count": 30,
+          "median": 31647.18,
+          "p95_nearest_rank": 32205.05,
+          "max": 32243.54
+        },
+        "repair_ms": {
+          "count": 30,
+          "median": 31473.17,
+          "p95_nearest_rank": 32493.53,
+          "max": 33677.28
+        },
+        "retrieval_decision_ms": {
+          "count": 30,
+          "median": 0.0,
+          "p95_nearest_rank": 0,
+          "max": 6525.41
+        },
+        "residual_ms": {
+          "count": 30,
+          "median": 550.55,
+          "p95_nearest_rank": 1890.13,
+          "max": 14001.26
+        }
+      },
+      "stage_timing_caveat": "Residual includes verification, composition, HTTP/serialization/checkpoint overhead; not a separately instrumented pure-verifier duration.",
+      "source_coverage_grades": {
+        "PARTIAL_TRANSIT_STATE": 4,
+        "COMPLETE_FOR_TASK": 24,
+        "PARTIAL_CAPACITY": 1,
+        "MISSING_OWNED_ADVISORY_CONTEXT": 1
+      }
+    },
+    "hybrid": {
+      "full_task_adequate": 7,
+      "full_task_total": 30,
+      "full_task_percent": 23.33,
+      "causal_adequate": 5,
+      "causal_total": 16,
+      "raw_network_reasoning_adequate": 11,
+      "raw_control_adequate": 1,
+      "critical_unsafe_releases": [
+        "GQ-13"
+      ],
+      "final_grades": {
+        "PARTIAL": 19,
+        "ADEQUATE": 7,
+        "UNSAFE_UNSUPPORTED_CONCLUSION": 1,
+        "QUALIFIED_ADEQUATE": 3
+      },
+      "raw_grades": {
+        "PARTIAL": 5,
+        "INCORRECT": 4,
+        "ADEQUATE": 11,
+        "UNSAFE_UNSUPPORTED_CONCLUSION": 1,
+        "LOCAL_TIMEOUT": 1,
+        "NO_SYNTHESIS": 3,
+        "QUALIFIED_ADEQUATE": 3,
+        "ADEQUATE_CONTROL": 1,
+        "DETERMINISTIC_FACTS": 1
+      },
+      "actual_synthesis_status": {
+        "rejected_fallback": 14,
+        "literal_checks_passed": 10,
+        "unavailable_fallback": 1,
+        "protocol_constraints_fallback": 2,
+        "historical_events_fallback": 1,
+        "no_synthesis": 2
+      },
+      "local_provider_errors": {
+        "TimeoutError": 4
+      },
+      "actual_call_purposes": {
+        "routing": 26,
+        "synthesis": 25,
+        "retrieval": 1,
+        "repair": 4
+      },
+      "cloud_cases": [
+        "GQ-01",
+        "GQ-02",
+        "GQ-03",
+        "GQ-04",
+        "GQ-05",
+        "GQ-06",
+        "GQ-07",
+        "GQ-08",
+        "GQ-09",
+        "GQ-10",
+        "GQ-11",
+        "GQ-12",
+        "GQ-17",
+        "GQ-19",
+        "GQ-20",
+        "GQ-21",
+        "GQ-22",
+        "GQ-25",
+        "GQ-27",
+        "GQ-28"
+      ],
+      "cloud_calls": 20,
+      "cloud_usage": {
+        "promptTokenCount": 62791,
+        "candidatesTokenCount": 3934,
+        "thoughtsTokenCount": 0,
+        "totalTokenCount": 66725
+      },
+      "cloud_inference_ms": {
+        "count": 20,
+        "median": 2458.05,
+        "p95_nearest_rank": 3196.76,
+        "max": 4406.16
+      },
+      "gateway_ms": {
+        "count": 30,
+        "median": 9547.7,
+        "p95_nearest_rank": 52343.64,
+        "max": 72125.08
+      },
+      "gateway_over120seconds": 0,
+      "stage_times_ms": {
+        "local_planning_ms": {
+          "count": 30,
+          "median": 5093.07,
+          "p95_nearest_rank": 13549.48,
+          "max": 14088.18
+        },
+        "reader_ms": {
+          "count": 30,
+          "median": 7.53,
+          "p95_nearest_rank": 757.9,
+          "max": 3125.62
+        },
+        "synthesis_ms": {
+          "count": 30,
+          "median": 2458.05,
+          "p95_nearest_rank": 31256.95,
+          "max": 32211.23
+        },
+        "repair_ms": {
+          "count": 30,
+          "median": 0.0,
+          "p95_nearest_rank": 31901.36,
+          "max": 32543.28
+        },
+        "retrieval_decision_ms": {
+          "count": 30,
+          "median": 0.0,
+          "p95_nearest_rank": 0,
+          "max": 3527.06
+        },
+        "residual_ms": {
+          "count": 30,
+          "median": 536.8,
+          "p95_nearest_rank": 1054.35,
+          "max": 12027.06
+        }
+      },
+      "stage_timing_caveat": "Residual includes verification, composition, HTTP/serialization/checkpoint overhead; not a separately instrumented pure-verifier duration.",
+      "source_coverage_grades": {
+        "PARTIAL_TRANSIT_STATE": 4,
+        "COMPLETE_FOR_TASK": 24,
+        "PARTIAL_CAPACITY": 1,
+        "MISSING_OWNED_ADVISORY_CONTEXT": 1
+      }
+    }
+  },
+  "paired_evidence": {
+    "identical_model_visible_packets": 20,
+    "both_have_synthesis_packet": 25,
+    "same_selected_tools": 26,
+    "note": "Shared scenario/request does not imply identical planning or model-visible evidence. Exact packet comparisons preserve source labels/order; no raw timeout is counted as wrong completed reasoning."
+  },
+  "cases": [
+    {
+      "id": "GQ-01",
+      "surface": "floating",
+      "category": "G6",
+      "local_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "PARTIAL_TRANSIT_STATE",
+          "reason": "Local planning completes; synthesis and bounded repair time out. Released factual record layout has scoped values but no adequate model-written explanation. No claim of completed incorrect local reasoning."
+        },
+        "hybrid": {
+          "raw_model_quality": "PARTIAL",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MODEL_REASONING",
+          "source_coverage": "PARTIAL_TRANSIT_STATE",
+          "reason": "Flash-Lite correctly explains directional path but overstates topology as up/operational although projected observed-neighbor states are unknown. Verifier rejects; released long records preserve calculated delivery but do not provide the requested engineering interpretation."
+        }
+      }
+    },
+    {
+      "id": "GQ-02",
+      "surface": "studio",
+      "category": "G6",
+      "local_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "PARTIAL_TRANSIT_STATE",
+          "reason": "Local planning completes; synthesis and bounded repair time out. Released factual record layout has scoped values but no adequate model-written explanation. No claim of completed incorrect local reasoning."
+        },
+        "hybrid": {
+          "raw_model_quality": "INCORRECT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "PARTIAL_TRANSIT_STATE",
+          "reason": "Flash-Lite attributes egress failure to Harbor rather than Willow and return ingress to Canyon rather than Willow. Returned transit port state is absent and return failure location is not explicit. Verifier rejects for reader support, not the actual localization error. Fallback preserves scoped failure records, not a complete cause distinction."
+        }
+      }
+    },
+    {
+      "id": "GQ-03",
+      "surface": "floating",
+      "category": "G6",
+      "local_tools": [
+        "network.configuration",
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "network.configuration",
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Local planning completes; synthesis and bounded repair time out. Released factual record layout has scoped values but no adequate model-written explanation. No claim of completed incorrect local reasoning."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "ADEQUATE",
+          "failure_boundary": "NONE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Correct Willow egress administrative shutdown, exact current disable command versus absent saved command, modeled forwarding consequence; final preserves reasoning and simulated scope."
+        }
+      }
+    },
+    {
+      "id": "GQ-04",
+      "surface": "studio",
+      "category": "G6",
+      "local_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Local planning completes; synthesis and bounded repair time out. Released factual record layout has scoped values but no adequate model-written explanation. No claim of completed incorrect local reasoning."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "ADEQUATE",
+          "failure_boundary": "NONE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Correct forward delivery, return failure originating at Canyon due no route to Harbor, scope/citations, no invented ordering."
+        }
+      }
+    },
+    {
+      "id": "GQ-05",
+      "surface": "floating",
+      "category": "G6",
+      "local_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "PARTIAL_TRANSIT_STATE",
+          "reason": "Local planning completes; synthesis and bounded repair time out. Released factual record layout has scoped values but no adequate model-written explanation. No claim of completed incorrect local reasoning."
+        },
+        "hybrid": {
+          "raw_model_quality": "PARTIAL",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MODEL_REASONING",
+          "source_coverage": "PARTIAL_TRANSIT_STATE",
+          "reason": "Correct Willow no-route versus working return but overstates physical-link operational health from limited observations; verifier rejects. Safe records fallback does not explain complete requested distinction."
+        }
+      }
+    },
+    {
+      "id": "GQ-06",
+      "surface": "studio",
+      "category": "G6",
+      "local_tools": [
+        "inventory.read",
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "inventory.read",
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Planning completed; synthesis and bounded repair timed out; safe record rendering lacks requested model interpretation."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "ADEQUATE",
+          "failure_boundary": "NONE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Explains that incomplete Willow routing does not prove no usable route, identifies decisive missing complete table/state. Minor redundant development sentence does not change meaning. Extra inventory read is recorded separately as workflow inefficiency."
+        }
+      }
+    },
+    {
+      "id": "GQ-07",
+      "surface": "floating",
+      "category": "G6",
+      "local_tools": [
+        "inventory.read",
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "same_selected_tools": false,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Planning completed; synthesis and bounded repair timed out; safe record rendering lacks requested model interpretation."
+        },
+        "hybrid": {
+          "raw_model_quality": "PARTIAL",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MODEL_REASONING",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Correctly identifies Harbor discard route, but treats up observations as proof of physical/L2 connectivity, omits return delivery. Rejected to records fallback. Planner sources differ between arms, so this is not exact-evidence raw reasoning comparison."
+        }
+      }
+    },
+    {
+      "id": "GQ-08",
+      "surface": "studio",
+      "category": "G6",
+      "local_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Local planning completed; synthesis/repair timed out. Safe fallback does not earn causal-reasoning or complete-task credit."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "FALSE_VERIFIER_REJECTION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Correct scoped forward loop Harbor->Willow->Harbor and delivered return; no invented timing. Verifier incorrectly demands citation of auxiliary topology based on the word relationship/path. Correct model prose lost to fallback."
+        }
+      }
+    },
+    {
+      "id": "GQ-09",
+      "surface": "floating",
+      "category": "G6",
+      "local_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "network.state",
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "PARTIAL_TRANSIT_STATE",
+          "reason": "Local planning completed; synthesis/repair timed out. Safe fallback does not earn causal-reasoning or complete-task credit."
+        },
+        "hybrid": {
+          "raw_model_quality": "INCORRECT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "PARTIAL_TRANSIT_STATE",
+          "reason": "Correctly distinguishes failed Willow ECMP branch from delivered Mesa branch but assigns return ingress failure to Canyon, not Willow. Evidence omits explicit failure location/transit state. Verifier blocks wrong current-down attribution."
+        }
+      }
+    },
+    {
+      "id": "GQ-10",
+      "surface": "studio",
+      "category": "G6",
+      "local_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "inventory.read",
+        "knowledge.search",
+        "network.state"
+      ],
+      "same_selected_tools": false,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Local planning completed; synthesis/repair timed out. Safe fallback does not earn causal-reasoning or complete-task credit."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "ADEQUATE",
+          "failure_boundary": "NONE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Keeps blue VRF separate from default routes, notes missing Willow routing scope prevents end-to-end validation. Does not claim delivery. Unrelated knowledge lookup and differing reader sets are separate workflow failures."
+        }
+      }
+    },
+    {
+      "id": "GQ-11",
+      "surface": "floating",
+      "category": "G6",
+      "local_tools": [
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Local synthesis and bounded repair time out; record-based fallback is distinct from task-complete model reasoning."
+        },
+        "hybrid": {
+          "raw_model_quality": "PARTIAL",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MODEL_REASONING",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Correct visible route and recursive-resolution failure at Harbor, but calls differently ranked alternate routes conflicting, omits successful return and the complete-table lack of route to recursive operand. Safe fallback, no adequate causal interpretation."
+        }
+      }
+    },
+    {
+      "id": "GQ-12",
+      "surface": "studio",
+      "category": "G6",
+      "local_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "inventory.read",
+        "network.state",
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOCAL_TIMEOUT",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Local synthesis and bounded repair time out; record-based fallback is distinct from task-complete model reasoning."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "ADEQUATE",
+          "failure_boundary": "NONE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Correct Willow egress policy/rule and interface owner, scoped TCP443 forward failure versus delivered reverse; no other-protocol generalization. Existing explicit policy failure_location survives projection and supports correct reasoning."
+        }
+      }
+    },
+    {
+      "id": "GQ-13",
+      "surface": "floating",
+      "category": "G6",
+      "local_tools": [
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "UNSAFE_UNSUPPORTED_CONCLUSION",
+          "final_task_quality": "UNSAFE_UNSUPPORTED_CONCLUSION",
+          "failure_boundary": "UNSAFE_VERIFIER_ACCEPTANCE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both actual models are Qwen: hybrid remote_calls0. Evidence explicitly gives unknown forwarding/policies, but model claims successful communication and verifier releases it. Complete generation, not timeout. Earliest error is model reasoning, compounded by unsafe verifier acceptance. Existing all-unknown fallback is incorrectly limited to a specialized composition lane."
+        },
+        "hybrid": {
+          "raw_model_quality": "UNSAFE_UNSUPPORTED_CONCLUSION",
+          "final_task_quality": "UNSAFE_UNSUPPORTED_CONCLUSION",
+          "failure_boundary": "UNSAFE_VERIFIER_ACCEPTANCE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both actual models are Qwen: hybrid remote_calls0. Evidence explicitly gives unknown forwarding/policies, but model claims successful communication and verifier releases it. Complete generation, not timeout. Earliest error is model reasoning, compounded by unsafe verifier acceptance. Existing all-unknown fallback is incorrectly limited to a specialized composition lane."
+        }
+      }
+    },
+    {
+      "id": "GQ-14",
+      "surface": "studio",
+      "category": "G6",
+      "local_tools": [
+        "knowledge.search",
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "knowledge.search",
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen adds unrequested published knowledge to operational OSPF question; no authoritative operation contract returned. Both arms stay local and synthesis/repair time out. Final unsolicited schema-unavailable preface plus records does not explain benign broadcast DROther2-Way. No Flash-Lite reasoning outcome exists."
+        },
+        "hybrid": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen adds unrequested published knowledge to operational OSPF question; no authoritative operation contract returned. Both arms stay local and synthesis/repair time out. Final unsolicited schema-unavailable preface plus records does not explain benign broadcast DROther2-Way. No Flash-Lite reasoning outcome exists."
+        }
+      }
+    },
+    {
+      "id": "GQ-15",
+      "surface": "floating",
+      "category": "G6",
+      "local_tools": [
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": false,
+      "grades": {
+        "local": {
+          "raw_model_quality": "NO_SYNTHESIS",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "INCORRECT_COMPOSITION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both use safe protocol-constraint fallback, disclose Full/timer conflict and propose synchronized peer read, but append unrelated forwarding/record tables; no model-written explanation."
+        },
+        "hybrid": {
+          "raw_model_quality": "NO_SYNTHESIS",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "INCORRECT_COMPOSITION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both use safe protocol-constraint fallback, disclose Full/timer conflict and propose synchronized peer read, but append unrelated forwarding/record tables; no model-written explanation."
+        }
+      }
+    },
+    {
+      "id": "GQ-16",
+      "surface": "studio",
+      "category": "G6",
+      "local_tools": [
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": false,
+      "grades": {
+        "local": {
+          "raw_model_quality": "NO_SYNTHESIS",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "INCORRECT_COMPOSITION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both use protocol factual fallback. Exact AS ownership is available, but requested transport/session limitation and meaningful causal interpretation are not fully explained; no model call."
+        },
+        "hybrid": {
+          "raw_model_quality": "NO_SYNTHESIS",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "INCORRECT_COMPOSITION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both use protocol factual fallback. Exact AS ownership is available, but requested transport/session limitation and meaningful causal interpretation are not fully explained; no model call."
+        }
+      }
+    },
+    {
+      "id": "GQ-17",
+      "surface": "floating",
+      "category": "G5",
+      "local_tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "hybrid_tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "PARTIAL",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "FALSE_VERIFIER_REJECTION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen gives correct values but omits the log-unavailable boundary. Flash-Lite correctly explains CLI values and unavailability, falsely rejected because AS-role verifier sees only structured peers, not literal CLI. Released fallback loses explanation."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "FALSE_VERIFIER_REJECTION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen gives correct values but omits the log-unavailable boundary. Flash-Lite correctly explains CLI values and unavailability, falsely rejected because AS-role verifier sees only structured peers, not literal CLI. Released fallback loses explanation."
+        }
+      }
+    },
+    {
+      "id": "GQ-18",
+      "surface": "studio",
+      "category": "G5",
+      "local_tools": [
+        "network.configuration"
+      ],
+      "hybrid_tools": [
+        "network.configuration"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "INCORRECT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MODEL_REASONING",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both actual synthesis models Qwen; hybrid selector makes no cloud call. Both falsely say identical despite supplied added disable line, and infer application times. Verifier rejects; fallback does not fulfill added-command/time-limitation/advice request."
+        },
+        "hybrid": {
+          "raw_model_quality": "INCORRECT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MODEL_REASONING",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both actual synthesis models Qwen; hybrid selector makes no cloud call. Both falsely say identical despite supplied added disable line, and infer application times. Verifier rejects; fallback does not fulfill added-command/time-limitation/advice request."
+        }
+      }
+    },
+    {
+      "id": "GQ-19",
+      "surface": "floating",
+      "category": "G5",
+      "local_tools": [
+        "knowledge.search",
+        "network.configuration"
+      ],
+      "hybrid_tools": [
+        "knowledge.search",
+        "network.configuration"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "INCORRECT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOST_USER_OUTCOME",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen wrongly makes optional base fields mandatory. Flash-Lite maps process/RID and warns about missing interface-name parameter object and V9 validation, but omits the recoverable area0 and actual network/wildcard values requested by mapping; final contract footer does not restore those operands."
+        },
+        "hybrid": {
+          "raw_model_quality": "QUALIFIED_ADEQUATE",
+          "final_task_quality": "QUALIFIED_ADEQUATE",
+          "failure_boundary": "LOST_USER_OUTCOME",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen wrongly makes optional base fields mandatory. Flash-Lite maps process/RID and warns about missing interface-name parameter object and V9 validation, but omits the recoverable area0 and actual network/wildcard values requested by mapping; final contract footer does not restore those operands."
+        }
+      }
+    },
+    {
+      "id": "GQ-20",
+      "surface": "studio",
+      "category": "G5",
+      "local_tools": [
+        "network.configuration",
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "network.configuration",
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both execute operational state despite exclusion. Flash-Lite correctly explains saved local OSPF process/RID distinction, but unrelated returned flow makes verifier demand transit/return explanation; correct prose lost. Source-prohibition failure remains separately recorded."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both execute operational state despite exclusion. Flash-Lite correctly explains saved local OSPF process/RID distinction, but unrelated returned flow makes verifier demand transit/return explanation; correct prose lost. Source-prohibition failure remains separately recorded."
+        }
+      }
+    },
+    {
+      "id": "GQ-21",
+      "surface": "floating",
+      "category": "G5",
+      "local_tools": [
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "INCORRECT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "LOST_USER_OUTCOME",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen names other neighbors as requested endpoints. Flash-Lite correctly distinguishes planned Delta link from missing observation and physical uncertainty, but omits exact requested endpoint ports; source has them."
+        },
+        "hybrid": {
+          "raw_model_quality": "QUALIFIED_ADEQUATE",
+          "final_task_quality": "QUALIFIED_ADEQUATE",
+          "failure_boundary": "LOST_USER_OUTCOME",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen names other neighbors as requested endpoints. Flash-Lite correctly distinguishes planned Delta link from missing observation and physical uncertainty, but omits exact requested endpoint ports; source has them."
+        }
+      }
+    },
+    {
+      "id": "GQ-22",
+      "surface": "studio",
+      "category": "G5",
+      "local_tools": [
+        "network.state",
+        "network.syslog"
+      ],
+      "hybrid_tools": [
+        "network.state",
+        "network.syslog"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "UNSAFE_UNSUPPORTED_CONCLUSION",
+          "final_task_quality": "UNSAFE_UNSUPPORTED_CONCLUSION",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen invents second-interface transition, swaps event/record times and certifies continuous availability from points; unsafe release. Flash-Lite correctly explains discrete down/up events and continuity limitation but omits current08:30state timestamp; strict verifier rejects. Fallback labels record timestamps as event times despite separate event_time fields."
+        },
+        "hybrid": {
+          "raw_model_quality": "QUALIFIED_ADEQUATE",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen invents second-interface transition, swaps event/record times and certifies continuous availability from points; unsafe release. Flash-Lite correctly explains discrete down/up events and continuity limitation but omits current08:30state timestamp; strict verifier rejects. Fallback labels record timestamps as event times despite separate event_time fields."
+        }
+      }
+    },
+    {
+      "id": "GQ-23",
+      "surface": "floating",
+      "category": "G5",
+      "local_tools": [
+        "network.state",
+        "network.telemetry"
+      ],
+      "hybrid_tools": [
+        "network.telemetry"
+      ],
+      "same_selected_tools": false,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "PARTIAL_CAPACITY",
+          "reason": "Hybrid remains Qwen; initial synthesis times out, repair invents missing sample=zero and sustained congestion. Verifier rejects device omission rather than bad missing-data reasoning. Capacity operand for percentages is not delivered consistently; next-observation outcome omitted from fallback."
+        },
+        "hybrid": {
+          "raw_model_quality": "INCORRECT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "PARTIAL_CAPACITY",
+          "reason": "Hybrid remains Qwen; initial synthesis times out, repair invents missing sample=zero and sustained congestion. Verifier rejects device omission rather than bad missing-data reasoning. Capacity operand for percentages is not delivered consistently; next-observation outcome omitted from fallback."
+        }
+      }
+    },
+    {
+      "id": "GQ-24",
+      "surface": "studio",
+      "category": "G5",
+      "local_tools": [
+        "network.incidents",
+        "network.syslog"
+      ],
+      "hybrid_tools": [
+        "network.incidents",
+        "network.syslog"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": false,
+      "grades": {
+        "local": {
+          "raw_model_quality": "NO_SYNTHESIS",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "INCORRECT_COMPOSITION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Historical-events fallback gives records and a safe historical-state limitation but never explains that derived incident and log are not independent confirmations. No synthesis or model reasoning credit."
+        },
+        "hybrid": {
+          "raw_model_quality": "NO_SYNTHESIS",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "INCORRECT_COMPOSITION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Historical-events fallback gives records and a safe historical-state limitation but never explains that derived incident and log are not independent confirmations. No synthesis or model reasoning credit."
+        }
+      }
+    },
+    {
+      "id": "GQ-25",
+      "surface": "floating",
+      "category": "G5",
+      "local_tools": [
+        "inventory.read",
+        "network.configuration",
+        "network.incidents",
+        "network.state",
+        "network.syslog",
+        "network.telemetry",
+        "network.topology"
+      ],
+      "hybrid_tools": [
+        "inventory.read",
+        "network.configuration",
+        "network.incidents",
+        "network.state",
+        "network.syslog",
+        "network.telemetry",
+        "network.topology"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Follow-up resolves Harbor configuration and cloud text is accurate, but both violate saved-config-only constraint by executing7readers. Verifier then requires unrelated flow explanation and falsely rejects CLI AS-role explanation; final replaces requested config answer with healthy-flow assessment."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MULTIPLE_CAUSES",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Follow-up resolves Harbor configuration and cloud text is accurate, but both violate saved-config-only constraint by executing7readers. Verifier then requires unrelated flow explanation and falsely rejects CLI AS-role explanation; final replaces requested config answer with healthy-flow assessment."
+        }
+      }
+    },
+    {
+      "id": "GQ-26",
+      "surface": "studio",
+      "category": "G5",
+      "local_tools": [
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "network.state"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "PARTIAL",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "SOURCE_SELECTION",
+          "source_coverage": "MISSING_OWNED_ADVISORY_CONTEXT",
+          "reason": "Both execute state reader despite no-collection instruction and lose prior Willow unavailable-log context. Actual Qwen advice proposes Harbor reads and omits rationale; hybrid makes0cloudcalls."
+        },
+        "hybrid": {
+          "raw_model_quality": "PARTIAL",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "SOURCE_SELECTION",
+          "source_coverage": "MISSING_OWNED_ADVISORY_CONTEXT",
+          "reason": "Both execute state reader despite no-collection instruction and lose prior Willow unavailable-log context. Actual Qwen advice proposes Harbor reads and omits rationale; hybrid makes0cloudcalls."
+        }
+      }
+    },
+    {
+      "id": "GQ-27",
+      "surface": "floating",
+      "category": "G5",
+      "local_tools": [
+        "network.configuration",
+        "network.state"
+      ],
+      "hybrid_tools": [
+        "inventory.read",
+        "network.state"
+      ],
+      "same_selected_tools": false,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "LOCAL_TIMEOUT",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "SOURCE_SELECTION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both violate no-execution constraint by performing new reads. Cloud nevertheless gives useful scoped known/unknown and Willow table/config recommendations, and prose survives; complete gateway task fails due actual reader execution. Different reader sets mean no identical-evidence model comparison."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "SOURCE_SELECTION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both violate no-execution constraint by performing new reads. Cloud nevertheless gives useful scoped known/unknown and Willow table/config recommendations, and prose survives; complete gateway task fails due actual reader execution. Different reader sets mean no identical-evidence model comparison."
+        }
+      }
+    },
+    {
+      "id": "GQ-28",
+      "surface": "studio",
+      "category": "G5",
+      "local_tools": [
+        "network.configuration"
+      ],
+      "hybrid_tools": [
+        "network.configuration"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": true,
+      "synthesis_packet_available_both": true,
+      "grades": {
+        "local": {
+          "raw_model_quality": "PARTIAL",
+          "final_task_quality": "PARTIAL",
+          "failure_boundary": "MODEL_REASONING",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen initial answer omits actualRID and repaired answer infers interval stability from equal snapshots; rejected. Flash-Lite preserves current/savedRID198.18.88.4 and explains historical backup alone cannot establish current execution."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE",
+          "final_task_quality": "ADEQUATE",
+          "failure_boundary": "MODEL_REASONING",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Qwen initial answer omits actualRID and repaired answer infers interval stability from equal snapshots; rejected. Flash-Lite preserves current/savedRID198.18.88.4 and explains historical backup alone cannot establish current execution."
+        }
+      }
+    },
+    {
+      "id": "GQ-29",
+      "surface": "floating",
+      "category": "CONTROL",
+      "local_tools": [],
+      "hybrid_tools": [],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": false,
+      "grades": {
+        "local": {
+          "raw_model_quality": "ADEQUATE_CONTROL",
+          "final_task_quality": "ADEQUATE",
+          "failure_boundary": "NONE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both return exactly437 locally, zero tools and zero cloud. Simple Qwen-written arithmetic is a control, not network causal reasoning."
+        },
+        "hybrid": {
+          "raw_model_quality": "ADEQUATE_CONTROL",
+          "final_task_quality": "ADEQUATE",
+          "failure_boundary": "NONE",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both return exactly437 locally, zero tools and zero cloud. Simple Qwen-written arithmetic is a control, not network causal reasoning."
+        }
+      }
+    },
+    {
+      "id": "GQ-30",
+      "surface": "studio",
+      "category": "CONTROL",
+      "local_tools": [
+        "inventory.read"
+      ],
+      "hybrid_tools": [
+        "inventory.read"
+      ],
+      "same_selected_tools": true,
+      "required_reader_presence": {
+        "local": true,
+        "hybrid": true
+      },
+      "identical_model_visible_evidence": false,
+      "synthesis_packet_available_both": false,
+      "grades": {
+        "local": {
+          "raw_model_quality": "DETERMINISTIC_FACTS",
+          "final_task_quality": "QUALIFIED_ADEQUATE",
+          "failure_boundary": "INCORRECT_COMPOSITION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both return exact interface prefixes, but add unrequested managementIP despite interfaces-only constraint. Deterministic lookup, no model reasoning. Frozen source-tool identifier network.inventory is an evaluator typo; actual registered inventory.read is correct and is not penalized as a source error."
+        },
+        "hybrid": {
+          "raw_model_quality": "DETERMINISTIC_FACTS",
+          "final_task_quality": "QUALIFIED_ADEQUATE",
+          "failure_boundary": "INCORRECT_COMPOSITION",
+          "source_coverage": "COMPLETE_FOR_TASK",
+          "reason": "Both return exact interface prefixes, but add unrequested managementIP despite interfaces-only constraint. Deterministic lookup, no model reasoning. Frozen source-tool identifier network.inventory is an evaluator typo; actual registered inventory.read is correct and is not penalized as a source error."
+        }
+      }
+    }
+  ],
+  "quota": {
+    "new_reservations": 21,
+    "cohort_scored_cloud_calls": 20,
+    "setup_cloud_calls": 1,
+    "setup_usage": {
+      "promptTokenCount": 2138,
+      "candidatesTokenCount": 93,
+      "thoughtsTokenCount": 0,
+      "totalTokenCount": 2231
+    },
+    "new_charged_input": 64929,
+    "new_peak_requests_61s": 2,
+    "new_peak_charged_input_61s": 7048,
+    "all_known_peak_requests_61s": 9,
+    "all_known_peak_charged_input_61s": 50838,
+    "rolling24h_reservations": 84,
+    "diagnostic_cloud_calls": 0,
+    "diagnostic_cloud_allowance": 4
+  },
+  "g5_threshold_met": false,
+  "g6_threshold_met": false,
+  "g11_acceptance": false,
+  "decision": "G5/G6 IMPROVING BUT INCOMPLETE",
+  "grading": "Source-derived implementation-assistant complete-answer review; independently checkable, not external/blind.",
+  "postrepair": {
+    "new_cloud_calls": 0,
+    "original_scores_unchanged": true,
+    "exact_original_output_replays_passed": 8,
+    "recovered_correct_original_outputs": 5,
+    "actual_local_gateway": [
+      {
+        "id": "GQ-26",
+        "surface": "studio",
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g5g6-qualification/postrepair-local-v2/GQ-26-local.json",
+        "tools": [],
+        "workflow_correct": true,
+        "latency_ms": 14433.47,
+        "complete_task_adequate": false,
+        "reason": "Zero reader execution with owned references; actual Qwen recommendations remain circular or irrelevant. No reasoning-adequacy credit."
+      },
+      {
+        "id": "GQ-27",
+        "surface": "floating",
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g5g6-qualification/postrepair-local-v2/GQ-27-local.json",
+        "tools": [],
+        "workflow_correct": true,
+        "latency_ms": 17812.69,
+        "complete_task_adequate": false,
+        "reason": "Zero reader execution with owned references; actual Qwen recommendations remain circular or irrelevant. No reasoning-adequacy credit."
+      },
+      {
+        "id": "GQ-25",
+        "surface": "floating",
+        "trace": "tmp/phase-g/iterations/20261026-hybrid-g5g6-qualification/postrepair-local-final/GQ-25-local.json",
+        "tools": [
+          "network.configuration"
+        ],
+        "workflow_correct": true,
+        "latency_ms": 33090.47,
+        "complete_task_adequate": false,
+        "reason": "Correct source restriction; released factual reconstruction omits requested BGP outcome."
+      }
+    ],
+    "affected_regressions": {
+      "passed": 369,
+      "junit": "tmp/phase-g/iterations/20261026-hybrid-g5g6-qualification/affected-final.xml",
+      "previous_overlapping_runs_not_summed": true
+    },
+    "preservation": "tmp/phase-g/iterations/20261026-hybrid-g5g6-qualification/preservation-final.json"
+  }
+}

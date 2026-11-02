@@ -1,0 +1,347 @@
+{
+  "at": "2026-11-01T10:54:43.713122+00:00",
+  "registry": "docs/evaluations/phase_g_entity_delivery_v1.json",
+  "registry_sha256": "a9fcaef4dfc9cc564bf211d11c86d8c8fe89893c898ebf9206e856ba5aead7fa",
+  "method": "Source-derived independently checkable, implementation-assistant graded; not blinded/external. Original full cohort and exposed diagnostics are separate.",
+  "frozen_rows": [
+    {
+      "case": "ED-01",
+      "arm": "control",
+      "surface": "floating",
+      "grade": "FRAMEWORK_FAILURE",
+      "earliest_failure": "SOURCE_POLICY",
+      "all_material_operands_reached_reasoner": false,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "All readers wrongly prohibited: anything from change-anything was assigned to collect-live-data. Registered endpoints631/964 and intended Gemini3.1 route succeed; user task does not.",
+      "seconds": 5.1710656001232564,
+      "http_status": 200,
+      "readers": [],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-01-control.json",
+      "trace_sha256": "dbe8438a70ec09a4dcbd09e60ac7a6483707cde148dc43a1b2ec55a459cc7d87"
+    },
+    {
+      "case": "ED-01",
+      "arm": "enhanced",
+      "surface": "floating",
+      "grade": "FRAMEWORK_FAILURE",
+      "earliest_failure": "SOURCE_POLICY",
+      "all_material_operands_reached_reasoner": false,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Same universal-reader prohibition. Planning proposes relevant reads, server rejects all. Original model plan is not the cause of this zero-reader failure.",
+      "seconds": 5.349434999981895,
+      "http_status": 200,
+      "readers": [],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-01-enhanced.json",
+      "trace_sha256": "4eca493c3ba419404827a82a7f466b006b77adb431ed404fb9fe98a9d60d5cea"
+    },
+    {
+      "case": "ED-02",
+      "arm": "control",
+      "surface": "studio",
+      "grade": "PARTIALLY_ADEQUATE",
+      "earliest_failure": "SOURCE_SELECTION",
+      "all_material_operands_reached_reasoner": false,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Configuration and published knowledge read, no event evidence. Cannot explain exact reviewed purpose or linked window. Qualifies activation/completion safely.",
+      "seconds": 4.706505599897355,
+      "http_status": 200,
+      "readers": [
+        "network.configuration",
+        "knowledge.search"
+      ],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-02-control.json",
+      "trace_sha256": "250f1efa7721a990de033a3a8d7ceb2d2be94de2024093643433c0c193d43467"
+    },
+    {
+      "case": "ED-02",
+      "arm": "enhanced",
+      "surface": "studio",
+      "grade": "FRAMEWORK_FAILURE",
+      "earliest_failure": "PACKET_ADMISSION",
+      "all_material_operands_reached_reasoner": false,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Server follow-up obtains both dependency records. Dependency view still68457characters; local413before revised provider call. Earlier draft correctly withheld by accepted fingerprint guard.",
+      "seconds": 20.00299769989215,
+      "http_status": 200,
+      "readers": [
+        "inventory.read",
+        "network.topology",
+        "network.state",
+        "network.configuration",
+        "network.syslog",
+        "network.telemetry",
+        "network.incidents",
+        "knowledge.search",
+        "network.syslog"
+      ],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-02-enhanced.json",
+      "trace_sha256": "0cd9bb6797fe820b914d386a964ed1305d324e0a06a1e8120b10044205f4f998"
+    },
+    {
+      "case": "ED-03",
+      "arm": "control",
+      "surface": "floating",
+      "grade": "TECHNICALLY_INCORRECT",
+      "earliest_failure": "SOURCE_SELECTION",
+      "all_material_operands_reached_reasoner": false,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Planner says current configuration despite requesting running/staged/history. Only running0840reaches synthesis; model falsely says no staged file is recorded. Correct state times/event limitations do not complete required AS comparison.",
+      "seconds": 4.780874199932441,
+      "http_status": 200,
+      "readers": [
+        "network.configuration",
+        "network.syslog",
+        "network.state"
+      ],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-03-control.json",
+      "trace_sha256": "951a6499cc0f696a940c3394a2ea41eb0cc38021fe55d655d2364542545380d5"
+    },
+    {
+      "case": "ED-03",
+      "arm": "enhanced",
+      "surface": "floating",
+      "grade": "PARTIALLY_ADEQUATE",
+      "earliest_failure": "SOURCE_SELECTION",
+      "all_material_operands_reached_reasoner": false,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Same current-only configuration loss from Gemini3.1 proposal retained by server. Model appropriately says staged data is not present in this reader result, gives correct operational bracket, but missing required AS-change operands prevents full task.",
+      "seconds": 26.22329890006222,
+      "http_status": 200,
+      "readers": [
+        "network.configuration",
+        "network.syslog",
+        "network.state"
+      ],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-03-enhanced.json",
+      "trace_sha256": "1ec33d674814f8e4db9212e23b4c304d41f7ac6b0a218c3ff03048f368851a06"
+    },
+    {
+      "case": "ED-04",
+      "arm": "control",
+      "surface": "studio",
+      "grade": "TECHNICALLY_INCORRECT",
+      "earliest_failure": "MODEL_REASONING",
+      "all_material_operands_reached_reasoner": true,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Complete flow/VRF/owner operands reach Gemini. Healthy modeled directions and VRF isolation correct; intermediate interface IPs are borrowed from next-hop peers and requested ingress-port detail is omitted.",
+      "seconds": 18.42422579997219,
+      "http_status": 200,
+      "readers": [
+        "network.state",
+        "network.topology"
+      ],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-04-control.json",
+      "trace_sha256": "a76f22f268985a95757edcd7f1bc8770dc1df8b315c408fbf5466c379b314f34"
+    },
+    {
+      "case": "ED-04",
+      "arm": "enhanced",
+      "surface": "studio",
+      "grade": "PARTIALLY_ADEQUATE",
+      "earliest_failure": "MODEL_TASK_COMPLETION",
+      "all_material_operands_reached_reasoner": true,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Correct delivered forward/return and VRF/protocol limitations. Lists egress interfaces per router but omits the separately expected transit ingress ownership per direction. Useful partial reasoning, not complete frozen task.",
+      "seconds": 10.44702129997313,
+      "http_status": 200,
+      "readers": [
+        "network.topology",
+        "network.state"
+      ],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-04-enhanced.json",
+      "trace_sha256": "c1350cb5004ddc1f8c92d0e2cd658f2e417e2ebf7ea1829ad51c196d05f64ff0"
+    },
+    {
+      "case": "ED-05",
+      "arm": "control",
+      "surface": "floating",
+      "grade": "QUALIFIED_ADEQUATE_FACTUAL_PROJECTION",
+      "earliest_failure": "COMPOSITION_PRESENTATION",
+      "all_material_operands_reached_reasoner": true,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Exact requested fields and provenance delivered by deterministic reader projection. Model text leaves an unfinished source-metadata brace; field completeness passes, polished complete-answer quality does not. No causal/model reasoning credit.",
+      "seconds": 22.711789099965245,
+      "http_status": 200,
+      "readers": [
+        "network.state"
+      ],
+      "cloud_dispatches": 0,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-05-control.json",
+      "trace_sha256": "e960c813e7298a58c3f587f8bbf92b988884844b765f0faa49fcfabd9e297604"
+    },
+    {
+      "case": "ED-05",
+      "arm": "enhanced",
+      "surface": "floating",
+      "grade": "FULLY_ADEQUATE_FACTUAL",
+      "earliest_failure": "NONE",
+      "all_material_operands_reached_reasoner": true,
+      "fully_adequate": true,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Exact two IDs, up/down, owner631/interface6311, source attribution and observation time with simulated context. Model-written factual lookup; not causal reasoning.",
+      "seconds": 10.544277100125328,
+      "http_status": 200,
+      "readers": [
+        "network.state"
+      ],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-05-enhanced.json",
+      "trace_sha256": "a99133fbcb5a1c84674ae5ba603e9a998b4e26fccb227ef7945e8b9fd3ab4146"
+    },
+    {
+      "case": "ED-06",
+      "arm": "control",
+      "surface": "studio",
+      "grade": "FRAMEWORK_FAILURE",
+      "earliest_failure": "ADVISORY_BINDING",
+      "all_material_operands_reached_reasoner": false,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Using-preface not recognized as advice and comma-separated no-read instruction not enforced. Model plan rejected by initial evidence-list validation; unhandled ValueError produces localHTTP500/non-JSON, not a Google500. Zero executed readers.",
+      "seconds": 2.1092492998577654,
+      "http_status": null,
+      "readers": [],
+      "cloud_dispatches": 1,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-06-control.json",
+      "trace_sha256": "2b2706f74e658d24b0d6400a2b40c0ac5465f4293bda6b5c4bf75421bc4a79f6"
+    },
+    {
+      "case": "ED-06",
+      "arm": "enhanced",
+      "surface": "studio",
+      "grade": "FRAMEWORK_FAILURE_UNSAFE_WORKFLOW",
+      "earliest_failure": "ADVISORY_BINDING",
+      "all_material_operands_reached_reasoner": false,
+      "fully_adequate": false,
+      "adequate_complete_causal_reasoning": false,
+      "review": "Same advisory/no-read loss permits three unrequested readers. Synthesis then references unknown source identity and returns incomplete interpretation. Preserve as an execution-safety failure, not successful fallback.",
+      "seconds": 5.428332000039518,
+      "http_status": 200,
+      "readers": [
+        "knowledge.search",
+        "network.topology",
+        "network.incidents"
+      ],
+      "cloud_dispatches": 2,
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/ED-06-enhanced.json",
+      "trace_sha256": "12cf52f81955484f0863dc6ac5c7f7c29016a147d19bc493b8c084a77ea5cf58"
+    }
+  ],
+  "frozen_summary": {
+    "distinct_conditions": 6,
+    "fully_adequate_control": 0,
+    "fully_adequate_enhanced": 1,
+    "control_field_complete_qualified_factual_projection": 1,
+    "complete_causal_tasks_control": 0,
+    "complete_causal_tasks_enhanced": 0,
+    "only_full_adequate": "ED05enhanced narrow factual, not causal",
+    "unsafe_workflow": "ED06enhanced unwanted reads preserved asFAIL"
+  },
+  "post_cohort_diagnostics": [
+    {
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/postfix-ED-02-enhanced.json",
+      "sha256": "2867116c06e679e05d9f4857047ee75c4405a0a4acfb36e2ea4b827059d90ba1",
+      "scope": "EXPOSED_POST_COHORT_NOT_NEW_FROZEN_SCORE",
+      "fully_adequate": false,
+      "review": "v2safe incomplete fallback;64286characters still exceeds64K. No revised provider dispatch; no task or reasoning success.",
+      "seconds": 6.615423199953511,
+      "tool_calls": 9,
+      "role_calls": 2,
+      "answer_sha256": "59be0ba46b9b100d864202c6583327f1df40df933df9e4ee728c524ab5f4a885"
+    },
+    {
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/postfix-ED-06-enhanced.json",
+      "sha256": "1dd6d90fff4f4e0c3767a226a770e4d26b3b366d0ba27ea05a0e7ce796b9379e",
+      "scope": "EXPOSED_POST_COHORT_NOT_NEW_FROZEN_SCORE",
+      "fully_adequate": true,
+      "review": "Useful bounded passive advice with limitations, correct owned interface, zero readers. Exposed diagnostic after grammatical repair; not independent generalization/causal evidence.",
+      "seconds": 6.2475302999373525,
+      "tool_calls": 0,
+      "role_calls": 2,
+      "answer_sha256": "f8d161a380a326f758b2aeb0e0ef2b7dff7e61e227df523513772aa07205d6f4"
+    },
+    {
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/final-api-ED-02.json",
+      "sha256": "f4be039bd70a06cc31ccfcbc5db88f0d6c137d3e73a0e936c30304ecea1d2f36",
+      "scope": "EXPOSED_POST_COHORT_NOT_NEW_FROZEN_SCORE",
+      "fully_adequate": true,
+      "review": "v3real revised Gemini answer incorporates both retrieved records/purpose/window and withholds activation/completion/repair claims. Complete source-dependent explanation; not a network outage diagnosis.",
+      "seconds": 10.136644100071862,
+      "tool_calls": 9,
+      "role_calls": 3,
+      "answer_sha256": "26f706bdd51e8e07993cb32213e6f5df919c23196657a3a64104968759b473db"
+    },
+    {
+      "trace": "tmp/phase-g/iterations/20261101-entity-delivery-repair/final-api-ED-01.json",
+      "sha256": "7b0dc94dbc113429a4996a4eec0a0340084920465f58ed3a2556687aabdc80af",
+      "scope": "EXPOSED_POST_COHORT_NOT_NEW_FROZEN_SCORE",
+      "fully_adequate": false,
+      "review": "Correct scoped modeled shutdown diagnosis/forward-ingress/return-egress and configured-state comparison. Omits an explicit protocol-state uncertainty discussion requested by original question, so full task remains PARTIAL.",
+      "seconds": 8.289362099952996,
+      "tool_calls": 7,
+      "role_calls": 2,
+      "answer_sha256": "017677bc82d177edc7a3b1ea23789b9d198d4bd2686da8a6367895e79013c854"
+    }
+  ],
+  "provider": {
+    "dispatches": 31,
+    "hard_ceiling": 32,
+    "models": {
+      "gemini-3.1-flash-lite": 16,
+      "gemini-3.5-flash-lite": 15
+    },
+    "google_http": {
+      "200": 31
+    },
+    "finish_reasons": {
+      "STOP": 31
+    },
+    "usage_known": {
+      "promptTokenCount": 360763,
+      "candidatesTokenCount": 14989,
+      "thoughtsTokenCount": 2742,
+      "totalTokenCount": 378494
+    },
+    "usage_note": "Thinking counters only where reported; missing fields not asserted zero. Monetary cost not measured/billing unchanged.",
+    "new_quota_reservations": 31,
+    "ledger_rows": 72,
+    "peak_61s_requests": 12,
+    "peak_61s_accounted_input": 122153,
+    "provider_seconds": {
+      "min": 0.9393909999635071,
+      "max": 12.104989599902183,
+      "median": 2.2321191001683474
+    },
+    "no_cloud_retry": true,
+    "local_413_not_provider_error": true,
+    "API500_not_Google500": true
+  },
+  "gates": {
+    "A": "PASS_BOUNDED_API_CANONICAL_ENDPOINTS_AND_DETERMINISTIC_POSITIVE_NEGATIVE_CONTROLS",
+    "B": "PASS_ACTUAL_REVISED_MODEL_INPUT_63306_CHARACTERS",
+    "C": "PASS_REVISED_GEMINI_INCORPORATION_API_ONLY",
+    "D": "INCOMPLETE_NO_FROZEN_COMPLETE_TASK_SUPERIORITY",
+    "E": "DETERMINISTIC_REGRESSIONS_AND_API_CONTROLS_PASS_BROWSER_BLOCKED"
+  },
+  "browser": "BLOCKED_FRESH_PERMISSION_CHECK_REPEATED_AFTER_USER_ENABLE_AND_AUTOMATION_RESET; API is not browser proof",
+  "completeness_promotion": false,
+  "formal_G_stage_closure": false,
+  "historical_AF_0_of_5_vs_1_of_5_unchanged": true
+}

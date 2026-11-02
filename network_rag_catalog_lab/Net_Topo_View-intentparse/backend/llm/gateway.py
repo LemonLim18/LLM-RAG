@@ -131,6 +131,8 @@ class AIGateway:
                 answer=str(exc.detail) if isinstance(exc, HTTPException) else 'AI request timed out; no document was changed.')
             if getattr(exc,'engineering_diagnostics',None):
                 result.context_coverage['engineering_failure']=exc.engineering_diagnostics
+            if getattr(exc,'planning_diagnostics',None):
+                result.context_coverage['planning_failure']=exc.planning_diagnostics
         except Exception:
             self.store.cancel(identity, owner, request_id)
             raise
@@ -368,7 +370,7 @@ class AIGateway:
         elif factual_network:
             answer,model=(verified_answer if network_bundle else network_answer(context,evidence,route.attributes,route.interface_refs,question=body.prompt)),None
             synthesis=(agent_info or {}).get('verification',{}).get('synthesis',{})
-            if synthesis.get('status') in {'literal_checks_passed','repaired_literal_checks_passed','outcome_reconstructed'}:model=synthesis.get('model')
+            if synthesis.get('status') in {'literal_checks_passed','repaired_literal_checks_passed','outcome_reconstructed','experimental_unverified'}:model=synthesis.get('model')
         elif unavailable_document:
             answer,model=unavailable_document,None
             coverage['document_verification']={'status':'source_unavailable','model_synthesis':False,
@@ -443,7 +445,11 @@ class AIGateway:
             grounding={'freshness_class':'unknown', 'evidence_authority':{
                 'preferred_evidence_present':preferred_present,
                 'summary':'Recorded source metadata; response factual accuracy is not machine verified.'}},allowed_tools=[])
-        if requires_observations and not preferred_present and not development_verified:
+        experimental=bool(agent_info and 'experimental_interpretation' in agent_info)
+        if experimental:
+            release={**release,'interpretation_status':'unverified','engineering_authority':False,
+                'notice':'Synthetic development preview; source receipts remain separate from unchecked model prose.'}
+        if requires_observations and not preferred_present and not development_verified and not experimental:
             answer='Live operational measurements are unavailable in this assistant. Stored inventory does not establish reachability.\n\n'+answer
         status='unavailable' if agent_info and agent_info.get('verification',{}).get('status')=='failed' else 'success'
         return TurnResponse(request_id=request_id, status=status, answer=answer, model=model,

@@ -1,0 +1,2106 @@
+{
+  "version": 1,
+  "purpose": "Three bounded new frozen post-correction diagnostics, no originalscore replacement",
+  "cases": [
+    {
+      "id": "MMQ-H1",
+      "surface": "floating",
+      "scenario": "MMQ-H1",
+      "prompt": "Assess the declared forward and return service from Kite-Edge to Sable-Leaf. Use recorded state only. Explain whether both equal-cost forward branches deliver and how that differs from a complete outage.",
+      "expected_claims": [
+        "Equal-cost branches; Lindenegressdown/Quartzdelivery;returnQuartzdelivery",
+        "No topology/configreader"
+      ],
+      "required_tools": [
+        "network.state"
+      ],
+      "allowed_tools": [
+        "network.state"
+      ],
+      "causal": true,
+      "setup": null,
+      "classification": "NEW_FROZEN_POSTFIX_DIAGNOSTIC; not revised original score"
+    },
+    {
+      "id": "MMQ-H2",
+      "surface": "studio",
+      "scenario": "MMQ-H2",
+      "prompt": "Explain Kite-Edge saved OSPF and BGP capture, including its router ID, local AS, neighbor remote AS and marker. Explain which router ID the capture does not establish. Use only saved configuration; do not generate changes.",
+      "expected_claims": [
+        "OSPFprocess45/routerID198.19.60.99",
+        "BGPlocal65401neighbor198.19.60.4remote65404",
+        "INDEPENDENT_CAPTURE_72",
+        "NoexplicitBGProuterID",
+        "Onlyhistoricalconfigurationreader"
+      ],
+      "required_tools": [
+        "network.configuration"
+      ],
+      "allowed_tools": [
+        "network.configuration"
+      ],
+      "causal": false,
+      "setup": null,
+      "classification": "NEW_FROZEN_POSTFIX_DIAGNOSTIC; not revised original score"
+    },
+    {
+      "id": "MMQ-H3",
+      "surface": "floating",
+      "scenario": "MMQ-H3",
+      "prompt": "Investigate why the Linden-Core uplink is disabled, starting using its current configuration and planned topology. Follow a relevant recorded source reference if needed to explain the recorded intent. Distinguish intent from any claim about physical conditions; do not test devices or change anything.",
+      "expected_claims": [
+        "Gi1/2currentadministrativeshutdown",
+        "Referencedmaintenanceeventrecordsopticreplacementintent;notphysicalfaultproven",
+        "Readrelatedeventifnecessaryorstateevidencelimits"
+      ],
+      "required_tools": [
+        "network.configuration",
+        "network.topology"
+      ],
+      "allowed_tools": [
+        "network.configuration",
+        "network.topology",
+        "network.syslog",
+        "network.state"
+      ],
+      "causal": true,
+      "setup": null,
+      "classification": "NEW_FROZEN_POSTFIX_DIAGNOSTIC; not revised original score"
+    }
+  ],
+  "fixtures": {
+    "MMQ-H1": {
+      "format_version": 2,
+      "id": "MMQ-H1",
+      "revision": 1,
+      "title": "Post-correction diagnostic 1",
+      "logical_time": "2026-10-26T10:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 610,
+          "hostname": "Kite-Edge",
+          "management_ip": "192.0.2.61",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 620,
+          "hostname": "Linden-Core",
+          "management_ip": "192.0.2.62",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 630,
+          "hostname": "Quartz-Core",
+          "management_ip": "192.0.2.63",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 640,
+          "hostname": "Sable-Leaf",
+          "management_ip": "192.0.2.64",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 6101,
+          "device_id": 610,
+          "name": "GigabitEthernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.60.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6102,
+          "device_id": 610,
+          "name": "GigabitEthernet0/2",
+          "interface_type": "routed",
+          "prefix": "10.60.2.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6201,
+          "device_id": 620,
+          "name": "GigabitEthernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.60.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6202,
+          "device_id": 620,
+          "name": "GigabitEthernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.60.3.1/30",
+          "admin_status": "down",
+          "oper_status": "down",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6301,
+          "device_id": 630,
+          "name": "GigabitEthernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.60.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6302,
+          "device_id": 630,
+          "name": "GigabitEthernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.60.4.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6401,
+          "device_id": 640,
+          "name": "GigabitEthernet3/1",
+          "interface_type": "routed",
+          "prefix": "10.60.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6402,
+          "device_id": 640,
+          "name": "GigabitEthernet3/2",
+          "interface_type": "routed",
+          "prefix": "10.60.4.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6100,
+          "device_id": 610,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.60.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6400,
+          "device_id": 640,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.60.4/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 601,
+          "src_device_id": 610,
+          "src_interface_id": 6101,
+          "dst_device_id": 620,
+          "dst_interface_id": 6201
+        },
+        {
+          "id": 602,
+          "src_device_id": 620,
+          "src_interface_id": 6202,
+          "dst_device_id": 640,
+          "dst_interface_id": 6401
+        },
+        {
+          "id": 603,
+          "src_device_id": 610,
+          "src_interface_id": 6102,
+          "dst_device_id": 630,
+          "dst_interface_id": 6301
+        },
+        {
+          "id": 604,
+          "src_device_id": 630,
+          "src_interface_id": 6302,
+          "dst_device_id": 640,
+          "dst_interface_id": 6402
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-6101",
+            "device_id": 610,
+            "interface_id": 6101,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6102",
+            "device_id": 610,
+            "interface_id": 6102,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.2.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6201",
+            "device_id": 620,
+            "interface_id": 6201,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6202",
+            "device_id": 620,
+            "interface_id": 6202,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.3.1/30",
+              "admin_status": "down",
+              "oper_status": "down"
+            }
+          },
+          {
+            "id": "port-6301",
+            "device_id": 630,
+            "interface_id": 6301,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6302",
+            "device_id": 630,
+            "interface_id": 6302,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.4.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6401",
+            "device_id": 640,
+            "interface_id": 6401,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6402",
+            "device_id": 640,
+            "interface_id": 6402,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.4.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6100",
+            "device_id": 610,
+            "interface_id": 6100,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.19.60.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6400",
+            "device_id": 640,
+            "interface_id": 6400,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.19.60.4/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-610",
+            "device_id": 610,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Kite-Edge\ninterface GigabitEthernet0/1\n ip address 10.60.1.1/30\n no shutdown\n!\ninterface GigabitEthernet0/2\n ip address 10.60.2.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.1/32\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-620",
+            "device_id": 620,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Linden-Core\ninterface GigabitEthernet1/1\n ip address 10.60.1.2/30\n no shutdown\n!\ninterface GigabitEthernet1/2\n ip address 10.60.3.1/30\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-630",
+            "device_id": 630,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Quartz-Core\ninterface GigabitEthernet2/1\n ip address 10.60.2.2/30\n no shutdown\n!\ninterface GigabitEthernet2/2\n ip address 10.60.4.1/30\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-640",
+            "device_id": 640,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Sable-Leaf\ninterface GigabitEthernet3/1\n ip address 10.60.3.2/30\n no shutdown\n!\ninterface GigabitEthernet3/2\n ip address 10.60.4.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.4/32\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-610",
+            "device_id": 610,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Kite-Edge\ninterface GigabitEthernet0/1\n ip address 10.60.1.1/30\n no shutdown\n!\ninterface GigabitEthernet0/2\n ip address 10.60.2.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.1/32\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          },
+          {
+            "id": "current-620",
+            "device_id": 620,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Linden-Core\ninterface GigabitEthernet1/1\n ip address 10.60.1.2/30\n no shutdown\n!\ninterface GigabitEthernet1/2\n ip address 10.60.3.1/30\n shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          },
+          {
+            "id": "current-630",
+            "device_id": 630,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Quartz-Core\ninterface GigabitEthernet2/1\n ip address 10.60.2.2/30\n no shutdown\n!\ninterface GigabitEthernet2/2\n ip address 10.60.4.1/30\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          },
+          {
+            "id": "current-640",
+            "device_id": 640,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Sable-Leaf\ninterface GigabitEthernet3/1\n ip address 10.60.3.2/30\n no shutdown\n!\ninterface GigabitEthernet3/2\n ip address 10.60.4.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.4/32\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T10:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 610,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "kite-primary",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6101,
+                    "address": "10.60.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "kite-alternate",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6102,
+                    "address": "10.60.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 620,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "linden-forward",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6202,
+                    "address": "10.60.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "linden-return",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6201,
+                    "address": "10.60.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 630,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "quartz-forward",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6302,
+                    "address": "10.60.4.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "quartz-return",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6301,
+                    "address": "10.60.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 640,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "sable-primary",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 30,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6401,
+                    "address": "10.60.3.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "sable-alternate",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 20,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6402,
+                    "address": "10.60.4.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "declared-service",
+            "source_device_id": 610,
+            "destination_device_id": 640,
+            "source_address": "198.19.60.1",
+            "destination_address": "198.19.60.4",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "udp",
+            "source_port": 47000,
+            "destination_port": 9000,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "MMQ-H2": {
+      "format_version": 2,
+      "id": "MMQ-H2",
+      "revision": 1,
+      "title": "Post-correction diagnostic 2",
+      "logical_time": "2026-10-26T10:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 610,
+          "hostname": "Kite-Edge",
+          "management_ip": "192.0.2.61",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 620,
+          "hostname": "Linden-Core",
+          "management_ip": "192.0.2.62",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 630,
+          "hostname": "Quartz-Core",
+          "management_ip": "192.0.2.63",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 640,
+          "hostname": "Sable-Leaf",
+          "management_ip": "192.0.2.64",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 6101,
+          "device_id": 610,
+          "name": "GigabitEthernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.60.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6102,
+          "device_id": 610,
+          "name": "GigabitEthernet0/2",
+          "interface_type": "routed",
+          "prefix": "10.60.2.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6201,
+          "device_id": 620,
+          "name": "GigabitEthernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.60.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6202,
+          "device_id": 620,
+          "name": "GigabitEthernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.60.3.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6301,
+          "device_id": 630,
+          "name": "GigabitEthernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.60.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6302,
+          "device_id": 630,
+          "name": "GigabitEthernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.60.4.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6401,
+          "device_id": 640,
+          "name": "GigabitEthernet3/1",
+          "interface_type": "routed",
+          "prefix": "10.60.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6402,
+          "device_id": 640,
+          "name": "GigabitEthernet3/2",
+          "interface_type": "routed",
+          "prefix": "10.60.4.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6100,
+          "device_id": 610,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.60.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6400,
+          "device_id": 640,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.60.4/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 601,
+          "src_device_id": 610,
+          "src_interface_id": 6101,
+          "dst_device_id": 620,
+          "dst_interface_id": 6201
+        },
+        {
+          "id": 602,
+          "src_device_id": 620,
+          "src_interface_id": 6202,
+          "dst_device_id": 640,
+          "dst_interface_id": 6401
+        },
+        {
+          "id": 603,
+          "src_device_id": 610,
+          "src_interface_id": 6102,
+          "dst_device_id": 630,
+          "dst_interface_id": 6301
+        },
+        {
+          "id": 604,
+          "src_device_id": 630,
+          "src_interface_id": 6302,
+          "dst_device_id": 640,
+          "dst_interface_id": 6402
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-6101",
+            "device_id": 610,
+            "interface_id": 6101,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6102",
+            "device_id": 610,
+            "interface_id": 6102,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.2.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6201",
+            "device_id": 620,
+            "interface_id": 6201,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6202",
+            "device_id": 620,
+            "interface_id": 6202,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.3.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6301",
+            "device_id": 630,
+            "interface_id": 6301,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6302",
+            "device_id": 630,
+            "interface_id": 6302,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.4.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6401",
+            "device_id": 640,
+            "interface_id": 6401,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6402",
+            "device_id": 640,
+            "interface_id": 6402,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.4.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6100",
+            "device_id": 610,
+            "interface_id": 6100,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.19.60.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6400",
+            "device_id": 640,
+            "interface_id": 6400,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.19.60.4/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-610",
+            "device_id": 610,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Kite-Edge\n! INDEPENDENT_CAPTURE_72\nrouter ospf 45\n router-id 198.19.60.99\n network 10.60.1.0 0.0.0.3 area 0\nrouter bgp 65401\n neighbor 198.19.60.4 remote-as 65404\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-620",
+            "device_id": 620,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Linden-Core\ninterface GigabitEthernet1/1\n ip address 10.60.1.2/30\n no shutdown\n!\ninterface GigabitEthernet1/2\n ip address 10.60.3.1/30\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-630",
+            "device_id": 630,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Quartz-Core\ninterface GigabitEthernet2/1\n ip address 10.60.2.2/30\n no shutdown\n!\ninterface GigabitEthernet2/2\n ip address 10.60.4.1/30\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-640",
+            "device_id": 640,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Sable-Leaf\ninterface GigabitEthernet3/1\n ip address 10.60.3.2/30\n no shutdown\n!\ninterface GigabitEthernet3/2\n ip address 10.60.4.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.4/32\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-610",
+            "device_id": 610,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Kite-Edge\ninterface GigabitEthernet0/1\n ip address 10.60.1.1/30\n no shutdown\n!\ninterface GigabitEthernet0/2\n ip address 10.60.2.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.1/32\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          },
+          {
+            "id": "current-620",
+            "device_id": 620,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Linden-Core\ninterface GigabitEthernet1/1\n ip address 10.60.1.2/30\n no shutdown\n!\ninterface GigabitEthernet1/2\n ip address 10.60.3.1/30\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          },
+          {
+            "id": "current-630",
+            "device_id": 630,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Quartz-Core\ninterface GigabitEthernet2/1\n ip address 10.60.2.2/30\n no shutdown\n!\ninterface GigabitEthernet2/2\n ip address 10.60.4.1/30\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          },
+          {
+            "id": "current-640",
+            "device_id": 640,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Sable-Leaf\ninterface GigabitEthernet3/1\n ip address 10.60.3.2/30\n no shutdown\n!\ninterface GigabitEthernet3/2\n ip address 10.60.4.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.4/32\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T10:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 610,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "kite-primary",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6101,
+                    "address": "10.60.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "kite-alternate",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 20,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6102,
+                    "address": "10.60.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 620,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "linden-forward",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6202,
+                    "address": "10.60.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "linden-return",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6201,
+                    "address": "10.60.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 630,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "quartz-forward",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6302,
+                    "address": "10.60.4.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "quartz-return",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6301,
+                    "address": "10.60.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 640,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "sable-primary",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6401,
+                    "address": "10.60.3.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "sable-alternate",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 20,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6402,
+                    "address": "10.60.4.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    },
+    "MMQ-H3": {
+      "format_version": 2,
+      "id": "MMQ-H3",
+      "revision": 1,
+      "title": "Post-correction diagnostic 3",
+      "logical_time": "2026-10-26T10:00:00Z",
+      "model_scope": "ipv4_observation",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 610,
+          "hostname": "Kite-Edge",
+          "management_ip": "192.0.2.61",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 620,
+          "hostname": "Linden-Core",
+          "management_ip": "192.0.2.62",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 630,
+          "hostname": "Quartz-Core",
+          "management_ip": "192.0.2.63",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "core",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 640,
+          "hostname": "Sable-Leaf",
+          "management_ip": "192.0.2.64",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "C9300",
+          "role": "edge",
+          "site": "Synthetic-October",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 6101,
+          "device_id": 610,
+          "name": "GigabitEthernet0/1",
+          "interface_type": "routed",
+          "prefix": "10.60.1.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6102,
+          "device_id": 610,
+          "name": "GigabitEthernet0/2",
+          "interface_type": "routed",
+          "prefix": "10.60.2.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6201,
+          "device_id": 620,
+          "name": "GigabitEthernet1/1",
+          "interface_type": "routed",
+          "prefix": "10.60.1.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6202,
+          "device_id": 620,
+          "name": "GigabitEthernet1/2",
+          "interface_type": "routed",
+          "prefix": "10.60.3.1/30",
+          "admin_status": "down",
+          "oper_status": "down",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6301,
+          "device_id": 630,
+          "name": "GigabitEthernet2/1",
+          "interface_type": "routed",
+          "prefix": "10.60.2.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6302,
+          "device_id": 630,
+          "name": "GigabitEthernet2/2",
+          "interface_type": "routed",
+          "prefix": "10.60.4.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6401,
+          "device_id": 640,
+          "name": "GigabitEthernet3/1",
+          "interface_type": "routed",
+          "prefix": "10.60.3.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6402,
+          "device_id": 640,
+          "name": "GigabitEthernet3/2",
+          "interface_type": "routed",
+          "prefix": "10.60.4.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6100,
+          "device_id": 610,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.60.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6400,
+          "device_id": 640,
+          "name": "Loopback0",
+          "interface_type": "routed",
+          "prefix": "198.19.60.4/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 601,
+          "src_device_id": 610,
+          "src_interface_id": 6101,
+          "dst_device_id": 620,
+          "dst_interface_id": 6201
+        },
+        {
+          "id": 602,
+          "src_device_id": 620,
+          "src_interface_id": 6202,
+          "dst_device_id": 640,
+          "dst_interface_id": 6401
+        },
+        {
+          "id": 603,
+          "src_device_id": 610,
+          "src_interface_id": 6102,
+          "dst_device_id": 630,
+          "dst_interface_id": 6301
+        },
+        {
+          "id": 604,
+          "src_device_id": 630,
+          "src_interface_id": 6302,
+          "dst_device_id": 640,
+          "dst_interface_id": 6402
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "port-6101",
+            "device_id": 610,
+            "interface_id": 6101,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.1.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6102",
+            "device_id": 610,
+            "interface_id": 6102,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.2.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6201",
+            "device_id": 620,
+            "interface_id": 6201,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.1.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6202",
+            "device_id": 620,
+            "interface_id": 6202,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.3.1/30",
+              "admin_status": "down",
+              "oper_status": "down"
+            }
+          },
+          {
+            "id": "port-6301",
+            "device_id": 630,
+            "interface_id": 6301,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.2.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6302",
+            "device_id": 630,
+            "interface_id": 6302,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.4.1/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6401",
+            "device_id": 640,
+            "interface_id": 6401,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.3.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6402",
+            "device_id": 640,
+            "interface_id": 6402,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.60.4.2/30",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6100",
+            "device_id": 610,
+            "interface_id": 6100,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.19.60.1/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "port-6400",
+            "device_id": 640,
+            "interface_id": 6400,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "interface_state",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.19.60.4/32",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "saved-610",
+            "device_id": 610,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Kite-Edge\ninterface GigabitEthernet0/1\n ip address 10.60.1.1/30\n no shutdown\n!\ninterface GigabitEthernet0/2\n ip address 10.60.2.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.1/32\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-620",
+            "device_id": 620,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Linden-Core\ninterface GigabitEthernet1/1\n ip address 10.60.1.2/30\n no shutdown\n!\ninterface GigabitEthernet1/2\n ip address 10.60.3.1/30\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-630",
+            "device_id": 630,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Quartz-Core\ninterface GigabitEthernet2/1\n ip address 10.60.2.2/30\n no shutdown\n!\ninterface GigabitEthernet2/2\n ip address 10.60.4.1/30\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          },
+          {
+            "id": "saved-640",
+            "device_id": 640,
+            "interface_id": null,
+            "timestamp": "2026-10-26T09:40:00Z",
+            "kind": "configuration",
+            "source": "authored-development-observer",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Sable-Leaf\ninterface GigabitEthernet3/1\n ip address 10.60.3.2/30\n no shutdown\n!\ninterface GigabitEthernet3/2\n ip address 10.60.4.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.4/32\n no shutdown\n!\n",
+              "source_type": "simulated_snapshot"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "current-610",
+            "device_id": 610,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Kite-Edge\ninterface GigabitEthernet0/1\n ip address 10.60.1.1/30\n no shutdown\n!\ninterface GigabitEthernet0/2\n ip address 10.60.2.1/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.1/32\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          },
+          {
+            "id": "current-620",
+            "device_id": 620,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [
+              "maintenance-intent-72"
+            ],
+            "values": {
+              "config_text": "hostname Linden-Core\ninterface GigabitEthernet1/1\n ip address 10.60.1.2/30\n no shutdown\n!\ninterface GigabitEthernet1/2\n ip address 10.60.3.1/30\n shutdown\n!\n",
+              "source_type": "development_current",
+              "change_event_ref": "maintenance-intent-72"
+            }
+          },
+          {
+            "id": "current-630",
+            "device_id": 630,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Quartz-Core\ninterface GigabitEthernet2/1\n ip address 10.60.2.2/30\n no shutdown\n!\ninterface GigabitEthernet2/2\n ip address 10.60.4.1/30\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          },
+          {
+            "id": "current-640",
+            "device_id": 640,
+            "interface_id": null,
+            "timestamp": "2026-10-26T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "authored-development-observer",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Sable-Leaf\ninterface GigabitEthernet3/1\n ip address 10.60.3.2/30\n no shutdown\n!\ninterface GigabitEthernet3/2\n ip address 10.60.4.2/30\n no shutdown\n!\ninterface Loopback0\n ip address 198.19.60.4/32\n no shutdown\n!\n",
+              "source_type": "development_current"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [
+          {
+            "id": "maintenance-intent-72",
+            "device_id": 620,
+            "interface_id": 6202,
+            "timestamp": "2026-10-26T09:58:00Z",
+            "kind": "syslog_event",
+            "source": "recorded-maintenance-annotation",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "severity": "info",
+              "message": "Engineer approved a temporary administrative shutdown of GigabitEthernet1/2 for a planned optic replacement. This annotation does not report an observed optic failure."
+            }
+          }
+        ],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": {
+        "observed_at": "2026-10-26T10:00:00Z",
+        "policy_attachments_complete": true,
+        "tables": [
+          {
+            "device_id": 610,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "kite-primary",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6101,
+                    "address": "10.60.1.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "kite-alternate",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 20,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6102,
+                    "address": "10.60.2.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 620,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "linden-forward",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6202,
+                    "address": "10.60.3.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "linden-return",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6201,
+                    "address": "10.60.1.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 630,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "quartz-forward",
+                "prefix": "198.19.60.4/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6302,
+                    "address": "10.60.4.2",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "quartz-return",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6301,
+                    "address": "10.60.2.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          },
+          {
+            "device_id": 640,
+            "vrf": "default",
+            "complete": true,
+            "routes": [
+              {
+                "id": "sable-primary",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 10,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6401,
+                    "address": "10.60.3.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              },
+              {
+                "id": "sable-alternate",
+                "prefix": "198.19.60.1/32",
+                "origin": "static",
+                "preference": 20,
+                "metric": 0,
+                "action": "forward",
+                "next_hops": [
+                  {
+                    "interface_id": 6402,
+                    "address": "10.60.4.1",
+                    "resolved": true
+                  }
+                ],
+                "leak_to_vrf": null
+              }
+            ]
+          }
+        ],
+        "policies": [],
+        "flows": [
+          {
+            "id": "declared-service",
+            "source_device_id": 610,
+            "destination_device_id": 640,
+            "source_address": "198.19.60.1",
+            "destination_address": "198.19.60.4",
+            "vrf": "default",
+            "destination_vrf": "default",
+            "protocol": "tcp",
+            "source_port": 43000,
+            "destination_port": 443,
+            "require_return": true
+          }
+        ],
+        "ospf": [],
+        "bgp": [],
+        "metrics": []
+      },
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    }
+  },
+  "original_registry_sha256": "ddda2d32eef56ee1ad2c89a7a8aa47f37dd363a3ef8fe1ca83c74aa1976b71ff"
+}

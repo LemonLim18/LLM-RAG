@@ -19,6 +19,7 @@ Scope = Literal['auto','current','historical','planned','observed','both']
 class InformationNeed(StrictModel):
     domain: Domain
     question: str = Field(min_length=1,max_length=200)
+    necessity: Literal['required','optional'] = 'required'
     source_scope: Scope = 'auto'
     source_categories: list[str] = Field(default_factory=list,max_length=8,
         description='Optional logical source filters for the selected reader. Empty means all relevant records.',
@@ -55,6 +56,8 @@ async def select_logical_sources(prompt,plan,generate,model,available):
     This is not retrieval or a new index. Registry metadata contains no facts,
     device scope or permissions. The gateway still validates every invocation.
     """
+    if getattr(getattr(getattr(generate,'__self__',None),'hybrid',None),'multi_model',False):
+        return plan,{'status':'role_planner_source_selection','model_decision':True}
     from llm.orchestration.investigation import is_investigation
     if plan.intent not in {'answer','explain'} or not plan.information_needs:
         return plan,{}
@@ -180,6 +183,7 @@ async def select_logical_sources(prompt,plan,generate,model,available):
 
 
 class IntentPlan(StrictModel):
+    investigation_breadth: Literal['auto','targeted','comprehensive','restricted','advisory'] = 'auto'
     intent: Literal['answer','explain','analyze_files','edit','generate_native','generate_playbook','clarify']
     information_needs: list[InformationNeed] = Field(default_factory=list,max_length=8)
     use_editor: bool = False
@@ -194,6 +198,7 @@ class IntentPlan(StrictModel):
 
 
 async def propose(prompt,model,kind,editor,attachments,history,inventory,generate,read_only_request=False,previous_reference=None):
+    role_planning=bool(getattr(getattr(getattr(generate,'__self__',None),'hybrid',None),'multi_model',False))
     devices=[{'hostname':d['hostname'],'aliases':d.get('aliases',[]),'role':d.get('role','')} for d in (inventory or {}).get('devices',[])][:100]
     system=('You are the READ/WRITE WORKFLOW ROUTER. Output a JSON plan, never an answer or a description of the request. '
         'Do not output device names or IDs: the existing server reference resolver supplies them. '
@@ -218,7 +223,8 @@ async def propose(prompt,model,kind,editor,attachments,history,inventory,generat
         'incidents = recorded alerts/anomalies; knowledge = published engineering operation requirements. '
         'A network path or link relationship belongs to topology, not a device attribute inventory. '
         'Graph paths and link-hop counts use topology. Forwarding/protocol observations are separate state records. '
-        'Assessing a modeled forwarding path, especially its return direction, needs topology AND state, not links alone. '
+        'Choose evidence for the requested conclusion: state can already contain scoped forward/return paths and stop locations. '
+        'Read topology when the requested relationship is absent from those records, not automatically for every forwarding question. Links alone do not establish forwarding. '
         'Recorded software/firmware releases are inventory attributes; configuration reads return command text and captures, not the inventory software record. '
         'An explanation of a general concept uses no reader unless the user asks about actual records. '
         'Use separate information_needs when a question asks for more than one source. '
@@ -268,6 +274,9 @@ async def propose(prompt,model,kind,editor,attachments,history,inventory,generat
     # Keep the small model's first task at the workflow/reader level. A second,
     # smaller schema chooses source categories without cross-domain combinations.
     schema=IntentPlan.model_json_schema()
+    from llm.model_roles import investigation_profile
+    comprehensive=role_planning and investigation_profile()['enabled']
+    if not comprehensive:schema['properties'].pop('investigation_breadth',None)
     if outcome_pilot_enabled():
         clauses=requested_clauses(prompt)
         schema['$defs']['OutcomeProposal']['properties']['clause']['enum']=[c['id'] for c in clauses]
@@ -278,9 +287,41 @@ async def propose(prompt,model,kind,editor,attachments,history,inventory,generat
         schema.get('$defs',{}).pop('OutcomeProposal',None)
     if (inventory or {}).get('scenario'):
         schema['$defs']['InformationNeed']['properties'].pop('source_categories',None)
-    raw,_=await generate(messages+[{'role':'user','content':prompt}],structured=schema,model=model)
+    if role_planning:
+        from llm.orchestration.request_contract import response_obligations
+        if comprehensive:system=system.replace('Choose a minimal typed information plan','Choose a scoped evidence-complete typed information plan')
+        messages=[{'role':'system','content':system+' Preserve every original requested outcome, source restriction and advisory-only boundary. '+
+            ('Classify investigation_breadth from the original desired outcome: comprehensive for unexplained failure/root-cause/incident diagnosis, targeted for exact facts; restrictions and no-read advice always prevail. '
+             'Prioritize relevant registered sources for comprehensive investigations. Optional relevant readers may execute and server coverage may add omitted families. '
+             if comprehensive else 'For each information_need, necessity=required means needed for an original requested outcome; optional means merely useful and will NOT execute now. Choose the minimum sufficient required readers, not an exhaustive troubleshooting checklist. ')+
+            'Do not turn future diagnostic recommendations into present reads. Account for every original clause, including explanations and limitations, not just record lookup. '
+            'Select information needs and their existing source scopes; do not execute tools.'},
+            {'role':'user','content':json.dumps({'original_instruction':prompt,'relevant_owned_history':history,
+                'original_clauses':response_obligations(prompt,include_actions=True) or [{'id':'request-1','text':prompt}],
+                'owned_reference':previous_reference,'inventory_and_source_metadata':inventory,'reader_schemas':(inventory or {}).get('authorized_reader_schemas',[])},ensure_ascii=False)}]
+        schema=IntentPlan.model_json_schema()
+        if not comprehensive:schema['properties'].pop('investigation_breadth',None)
+        if not outcome_pilot_enabled():
+            schema['properties'].pop('requested_outcomes',None)
+            schema.get('$defs',{}).pop('OutcomeProposal',None)
+        available=(inventory or {}).get('logical_source_categories',[])
+        category=schema['$defs']['InformationNeed']['properties'].get('source_categories')
+        if not available:schema['$defs']['InformationNeed']['properties'].pop('source_categories',None)
+        elif category:category['items']['enum']=[key for key in available if key in BY_KEY]
+    if not role_planning:schema['$defs']['InformationNeed']['properties'].pop('necessity',None)
+    raw,_=await generate(messages+[{'role':'user','content':prompt}] if not role_planning else messages,structured=schema,model=model)
     plan=IntentPlan.model_validate_json(raw)
+    if role_planning and any(key not in (inventory or {}).get('logical_source_categories',[]) for need in plan.information_needs for key in need.source_categories):
+        raise ValueError('The role plan selected a logical source not exposed by the active source contract')
+    role_needs=[need.model_dump() for need in plan.information_needs] if role_planning else []
+    if role_planning and not comprehensive:
+        plan=plan.model_copy(update={'information_needs':[need for need in plan.information_needs if need.necessity=='required']})
     contract=None
+    if role_planning:
+        from llm.orchestration.request_contract import advisory_contract
+        contract=advisory_contract(prompt)
+        if contract:
+            plan=plan.model_copy(update={'information_needs':[],'intent':'explain','use_editor':False,'use_attachments':False})
     if outcome_pilot_enabled():
         contract=requested_contract(prompt,plan.requested_outcomes,[n.model_dump() for n in plan.information_needs],inventory=inventory)
         if contract.advice_only:
@@ -318,8 +359,17 @@ async def propose(prompt,model,kind,editor,attachments,history,inventory,generat
     # typed record requirements constrain a refined plan authoritatively.
     from development.source_registry import reader_domains,explicit_read_sources
     declared_sources=explicit_read_sources(prompt,BY_KEY)
+    if role_planning:
+        # Registry aliases are lexical hints: a neighbor mentioned inside saved
+        # CLI is not necessarily a request for protocol observations. Keep the
+        # role's typed need, bounded by the user's explicit source restrictions.
+        from llm.orchestration.request_contract import reader_constraints
+        policy=reader_constraints(prompt)
+        declared_sources=[key for key in declared_sources if any(
+            domain not in policy['denied'] and (policy['allowed'] is None or domain in policy['allowed'])
+            for domain in reader_domains([key]))]
     explicit_domains=set(reader_domains(declared_sources,[need.domain for need in plan.information_needs]))
-    if len(declared_sources)==1 and len(plan.information_needs)==1 and len(BY_KEY[declared_sources[0]].readers)==1 and not (contract and len(contract.source_requests)>1):
+    if not role_planning and len(declared_sources)==1 and len(plan.information_needs)==1 and len(BY_KEY[declared_sources[0]].readers)==1 and not (contract and len(contract.source_requests)>1):
         # A unique explicit source owns its reader even in ordinary/legacy
         # mode without scenario filters. Bind identity before semantic plan
         # validation; do not ask another model to rediscover a registry fact.
@@ -364,6 +414,13 @@ async def propose(prompt,model,kind,editor,attachments,history,inventory,generat
                 if scope not in {'auto',requested}:
                     scope_adjustments.append({'domain':'configuration','proposed':scope,'required':requested})
                 scope=requested
+                # The literal source operands outrank a model's subtype filter.
+                # Retain an explicitly named category, otherwise a comparison
+                # cannot be reduced to current text by running_configs alone.
+                from llm.orchestration.request_contract import original_sources
+                required=original_sources(prompt,inventory or {'devices':[]}).get('configuration',{})
+                if requested=='both' or required.get('source_categories'):
+                    need=need.model_copy(update={'source_categories':required.get('source_categories',[])})
         if need.domain=='topology':
             from llm.gateway_network import explicit_topology_scope
             requested=explicit_topology_scope(prompt)
@@ -384,17 +441,31 @@ async def propose(prompt,model,kind,editor,attachments,history,inventory,generat
     if (inventory or {}).get('logical_source_categories'):
         plan,selection=await select_logical_sources(prompt,plan,generate,model,inventory['logical_source_categories'])
         if selection:source_selection={**source_selection,**selection}
+    # Reconcile explicitly requested registered operands after model refinement.
+    # This is not authority to fetch every useful family, nor advice execution.
+    restored=[]
+    if selected and not (contract and contract.advice_only):
+        from llm.orchestration.request_contract import original_sources,reader_constraints
+        original=original_sources(prompt,inventory);policy=reader_constraints(prompt)
+        present={need.domain for need in plan.information_needs}
+        for domain,args in original.items():
+            if domain in present or domain not in explicit_domains:continue
+            if domain in policy['denied'] or policy['allowed'] is not None and domain not in policy['allowed']:continue
+            plan=plan.model_copy(update={'information_needs':[*plan.information_needs,
+                InformationNeed(domain=domain,question=prompt[:200],**args)]})
+            restored.append(domain)
+        if len(plan.information_needs)>8:raise ValueError('Original source obligations exceed the bounded information-need limit')
     # Validate after the existing registered-source resolver has bound each
     # need to its actual reader. No tool has executed or gained authority here.
     proposed_domains={need.domain for need in plan.information_needs}
     if contract:proposed_domains.update(contract.source_requests)
-    if exclusive and proposed_domains!=explicit_domains:
+    if not comprehensive and exclusive and proposed_domains!=explicit_domains:
         raise ValueError('The model plan violates the explicitly exclusive registered source request')
-    if initial_scope and not proposed_domains<=set(initial_scope)|{'inventory'}:
+    if not comprehensive and initial_scope and not proposed_domains<=set(initial_scope)|{'inventory'}:
         raise ValueError('The initial model plan adds readers outside the explicitly listed investigation evidence; additional sources require evaluated gaps')
-    if references and read_only_request and not (contract and contract.advice_only) and not re.search(r'\b(investigat\w*|diagnos\w*|troubleshoot\w*|root cause)\b',prompt,re.I) and not explicit_domains<=proposed_domains:
+    if not comprehensive and references and read_only_request and not (contract and contract.advice_only) and not re.search(r'\b(investigat\w*|diagnos\w*|troubleshoot\w*|root cause)\b',prompt,re.I) and not explicit_domains<=proposed_domains:
         raise ValueError('The proposed readers omit a source explicitly requested by this information question: '+', '.join(sorted(explicit_domains)))
-    if references and not (contract and contract.advice_only) and re.search(r'\b(ospf|bgp|is-is|isis)\b',prompt,re.I) and re.search(r'\b(adjacenc\w*|neighbou?rs?|peers?|sessions?)\b',prompt,re.I) and 'state' not in proposed_domains:
+    if not role_planning and references and not (contract and contract.advice_only) and re.search(r'\b(ospf|bgp|is-is|isis)\b',prompt,re.I) and re.search(r'\b(adjacenc\w*|neighbou?rs?|peers?|sessions?)\b',prompt,re.I) and 'state' not in proposed_domains:
         raise ValueError('A recorded protocol adjacency/session question requires protocol-state evidence; inventory or topology alone cannot answer it')
     queries=source_queries(plan.information_needs)
     if contract:
@@ -413,8 +484,10 @@ async def propose(prompt,model,kind,editor,attachments,history,inventory,generat
     return SemanticRoute(intent=plan.intent,question=plan.clarification,use_editor=plan.use_editor,requested_outcomes=contract,
         use_attachments=plan.use_attachments,use_history=plan.use_history,network_domains=list(queries),
         network_request=prompt,device_refs=list(dict.fromkeys(selected)),source_requests=queries,
-        planning={'mode':'validated_model_plan','proposed':plan.model_dump(),'resolved_device_refs':selected,'candidate':raw[:6000],
+        planning={'mode':'validated_model_plan','proposed':plan.model_dump(exclude=set() if comprehensive else {'investigation_breadth'}),'resolved_device_refs':selected,'candidate':raw[:6000],
+            **({'role_information_needs':role_needs,'optional_information_needs':[need for need in role_needs if need['necessity']=='optional']} if role_planning else {}),
             **({'source_selection':source_selection} if source_selection else {}),
+            **({'source_obligation_reconciliation':{'restored_domains':restored,'authority':'Original explicit registered-source request; not model reasoning'}} if restored else {}),
             **({'source_scope_adjustments':scope_adjustments} if scope_adjustments else {})})
 
 

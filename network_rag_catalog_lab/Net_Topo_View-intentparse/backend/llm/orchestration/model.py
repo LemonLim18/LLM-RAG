@@ -10,14 +10,14 @@ from langsmith import tracing_context
 from local_providers.chat import runtime
 
 
-async def chat_model(model=None, structured=False):
+async def chat_model(model=None, structured=False, *, output_tokens=512):
     state=await runtime()
     provider=state['providers'][0]
     selected=model or state['active_model']
     if selected not in provider['models']:
         raise HTTPException(503,'An installed conversational Ollama model is required; OCR and embedding models are excluded')
     return ChatOllama(model=selected,base_url=state['active_base_url'],temperature=0,
-        num_ctx=8192,num_predict=512,format=('json' if structured is True else structured or ''),
+        num_ctx=8192,num_predict=output_tokens,format=('json' if structured is True else structured or ''),
         client_kwargs={'trust_env':False,'timeout':30},disable_streaming=True),selected
 
 
@@ -34,6 +34,13 @@ class RoutingModel:
         self.max_calls=5 if evaluation else 3
         self.stage_limits['model_only']=1  # Isolated evaluation arm, no tools.
         self.max_input_characters=90000
+        if self.hybrid and getattr(self.hybrid,'multi_model',False):
+            self.stage_limits.update(routing=1,retrieval=0,synthesis=2,repair=0)
+            self.max_input_characters=200000
+            profile=getattr(self.hybrid,'investigation_profile',{'enabled':False})
+            if profile['enabled']:
+                self.max_calls=profile['max_role_calls'];self.stage_limits['synthesis']=self.max_calls-1
+                self.max_input_characters=72000*self.max_calls
 
     def available(self,purpose):
         if self.hybrid and purpose == 'repair' and self.hybrid.last_synthesis_remote:
@@ -43,11 +50,14 @@ class RoutingModel:
     async def generate(self,messages,structured=False,model=None,purpose='routing'):
         if not self.available(purpose):raise HTTPException(429,'Agent model-inference stage/shared budget exhausted')
         characters=sum(len(m['content']) for m in messages)
-        if characters>32000:raise HTTPException(429,'Agent single-inference context budget exhausted')
+        if characters>(72000 if getattr(self.hybrid,'multi_model',False) else 32000):raise HTTPException(429,'Agent single-inference context budget exhausted')
         if self.input_characters+characters>self.max_input_characters:raise HTTPException(429,'Agent model input budget exhausted')
         self.calls+=1
         self.input_characters+=characters
         self.purposes[purpose]=self.purposes.get(purpose,0)+1
+        if self.hybrid and getattr(self.hybrid,'multi_model',False) and purpose in {'routing','synthesis'}:
+            role='complex_planner' if purpose=='routing' else 'evidence_reasoner'
+            return await self.hybrid.generate_role(role,messages,structured)
         if self.hybrid and purpose == 'synthesis' and self.hybrid.synthesis_allowed:
             started=time.monotonic()
             try:

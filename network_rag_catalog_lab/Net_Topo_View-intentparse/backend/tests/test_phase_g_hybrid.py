@@ -21,8 +21,10 @@ from llm.orchestration.model import RoutingModel
 
 
 @pytest.fixture(autouse=True)
-def isolated_rollback_transport(monkeypatch,tmp_path):
-    monkeypatch.setenv('GEMINI_MODEL','gemini-3.8-flash')
+def isolated_google_transport(monkeypatch,tmp_path):
+    monkeypatch.setenv('GEMINI_MODEL','gemini-3.5-flash-lite')
+    monkeypatch.setenv('COGNISHIELD_AI_MULTI_MODEL_EXPERIMENT','0')
+    monkeypatch.setenv('COGNISHIELD_AI_HYBRID','1')
     monkeypatch.setenv('COGNISHIELD_AI_HYBRID_USAGE',str(tmp_path/'usage.json'))
 
 
@@ -39,7 +41,7 @@ def test_exact_request_history_owner_surface_approval_is_required(monkeypatch):
     monkeypatch.setattr('llm.gemini_provider.scenario_approval_context', lambda db: {'eligible':True,'scenario_digest':'approved','source_revision':'revision'})
     assert HybridRequest.create(db,store,user,'floating','conversation',body,time.monotonic()) is None
     stamp = external_request_identity(user['username'],'floating','conversation',body,history)
-    db._ai_external_approvals = {stamp:{'expires':time.monotonic()+120,'scenario_digest':'approved','source_revision':'revision'}}
+    db._ai_external_approvals = {stamp:{'expires':time.monotonic()+120,'scenario_digest':'approved','source_revision':'revision','role_binding':__import__('llm.gemini_provider',fromlist=['hybrid_context']).hybrid_context(db)['role_binding']}}
     assert HybridRequest.create(db,store,user,'floating','conversation',body,time.monotonic())
     assert HybridRequest.create(db,store,user,'studio','conversation',body,time.monotonic()) is None
     assert HybridRequest.create(db,store,{'username':'other'},'floating','conversation',body,time.monotonic()) is None
@@ -87,15 +89,13 @@ def test_stateless_rest_preserves_messages_schema_usage_without_tools(monkeypatc
     async def send(client,request,**kwargs):
         payload=json.loads(request.content);captured.append(payload)
         assert request.headers['x-goog-api-key']=='synthetic-test-credential'
-        return httpx.Response(200,json={'status':'completed','model':'gemini-3.8-flash',
-            'usage':{'total_input_tokens':10,'total_output_tokens':4},
-            'steps':[{'type':'model_output','content':[{'type':'text','text':'{"answer":"scoped result"}'}]}]},request=request)
+        return httpx.Response(200,json={'candidates':[{'finishReason':'STOP','content':{'parts':[{'text':'{"answer":"scoped result"}'}]}}], 'usageMetadata':{'promptTokenCount':10,'candidatesTokenCount':4}},request=request)
     with patch.object(httpx.AsyncClient,'send',send):
         answer,model,usage=asyncio.run(interpret_rest([{'role':'system','content':'original instruction'},
             {'role':'user','content':'synthetic evidence'}],schema,timeout=2))
     assert json.loads(answer)['answer']=='scoped result' and usage['total_output_tokens']==4
-    assert captured[0]['store'] is False and captured[0]['response_format']['schema']==schema
-    assert captured[0]['system_instruction']=='original instruction' and captured[0]['input']=='synthetic evidence'
+    assert captured[0]['generationConfig']['responseFormat']['text']['schema']==schema
+    assert captured[0]['systemInstruction']['parts'][0]['text']=='original instruction' and captured[0]['contents'][0]['parts'][0]['text']=='synthetic evidence'
     assert 'tools' not in captured[0] and 'previous_interaction_id' not in captured[0]
 
 
@@ -119,7 +119,7 @@ def test_provider_timeout_is_distinct_from_semantic_rejection(monkeypatch):
     assert error.value.status_code==504 and 'no semantic verdict' in error.value.detail
 
 
-def test_interactions_service_unavailable_category_is_retained_without_error_body(monkeypatch):
+def test_provider_service_unavailable_category_is_retained_without_error_body(monkeypatch):
     monkeypatch.setenv('GEMINI_API_KEY','synthetic-test-credential')
     async def send(client,request,**kwargs):
         return httpx.Response(503,json={'error':{'code':'service_unavailable',
@@ -140,18 +140,18 @@ def test_incomplete_cloud_output_is_not_released_as_a_completed_answer(monkeypat
     assert error.value.status_code==502 and 'incomplete generation' in error.value.detail
 
 
-def test_interactions_fewshot_history_uses_typed_steps_not_chat_roles(monkeypatch):
+def test_generate_content_history_preserves_typed_conversation_roles(monkeypatch):
     monkeypatch.setenv('GEMINI_API_KEY','synthetic-test-credential');captured=[]
     async def send(client,request,**kwargs):
         captured.append(json.loads(request.content))
-        return httpx.Response(200,json={'status':'completed','steps':[{'type':'model_output','content':[{'type':'text','text':'{}'}]}]},request=request)
+        return httpx.Response(200,json={'candidates':[{'finishReason':'STOP','content':{'parts':[{'text':'{}'}]}}]},request=request)
     messages=[{'role':'system','content':'same instructions'},{'role':'user','content':'first example'},
               {'role':'assistant','content':'first result'},{'role':'user','content':'actual synthetic question'}]
     with patch.object(httpx.AsyncClient,'send',send):
         asyncio.run(interpret_rest(messages,{},timeout=2))
-    assert [step['type'] for step in captured[0]['input']]==['user_input','model_output','user_input']
-    assert [step['content'][0]['text'] for step in captured[0]['input']]==[m['content'] for m in messages[1:]]
-    assert all('role' not in step for step in captured[0]['input'])
+    assert [step['role'] for step in captured[0]['contents']]==['user','model','user']
+    assert [step['parts'][0]['text'] for step in captured[0]['contents']]==[m['content'] for m in messages[1:]]
+    assert captured[0]['systemInstruction']['parts'][0]['text']=='same instructions'
 
 
 def test_simple_local_generation_has_no_remote_interpretation(monkeypatch):

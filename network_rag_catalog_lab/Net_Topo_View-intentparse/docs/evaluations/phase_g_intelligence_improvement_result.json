@@ -1,0 +1,702 @@
+{
+  "at": "2026-10-26T15:35:07.543490+00:00",
+  "status": "IMPLEMENTED_FUNCTIONAL_CONTROLS_PASS; INTELLIGENCE_IMPROVEMENT_NOT_ESTABLISHED",
+  "registry": "docs/evaluations/phase_g_intelligence_improvement_holdout_v1.json",
+  "registry_sha256": "affeedb5b4ffde1d09d99b229baed023cc9ea0dc05d6ed68903a9b4a7a0d1ffb",
+  "holdout": {
+    "at": "2026-10-26T15:24:37.908658+00:00",
+    "methodology": "Source-derived independently checkable full-answer review by implementation assistant; not blinded/external. No scoring from self-assessment alone.",
+    "summary": {
+      "task_count": 12,
+      "fully_adequate": 2,
+      "adequate_raw_reasoning": 2,
+      "completed_interpretations": 5,
+      "partial_complete_tasks": 2,
+      "unsafe_unsupported_tasks": 1,
+      "provider503_conditions": 6,
+      "provider_timeout_conditions": 1,
+      "causal_conditions": 7,
+      "adequate_causal": 2,
+      "strictly_complete_raw_plans": 2,
+      "completed_plans": 5,
+      "unnecessary_executed_reader_conditions": 0,
+      "required_reader_presence": 6,
+      "required_reader_presence_note": "Includes vacuous zero-reader advisory; not six completed workflows. Five execution-bearing requests contain all initial requiredfamilies.",
+      "complete_evidence_conditions": 4,
+      "need_more_evidence": 0,
+      "live_MN4": false,
+      "all_completed_raw_prose_preserved": true,
+      "application_changed_during_holdout": false,
+      "not_formal_qualification": true
+    },
+    "rows": [
+      {
+        "id": "MNI-01",
+        "surface": "floating",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-01.json",
+        "sha256": "c3264f252bc9e0dfea284af317ec7e351f1609b7e810a46daf4c4dd63942b9d7",
+        "seconds": 38.75457690004259,
+        "tools": [
+          "network.state"
+        ],
+        "missing_required_readers": [],
+        "unnecessary_executed": [],
+        "plan": [
+          {
+            "domain": "state",
+            "question": "What is the recorded forwarding state for TCP/9443 traffic from Harbor to Meadow, including transit paths and next-hops?",
+            "necessity": "required",
+            "source_scope": "observed",
+            "source_categories": []
+          },
+          {
+            "domain": "state",
+            "question": "What is the recorded reverse path (return) state for TCP/9443 from Meadow to Harbor?",
+            "necessity": "required",
+            "source_scope": "observed",
+            "source_categories": []
+          },
+          {
+            "domain": "state",
+            "question": "On device Transit, what are the routes installed in the routing table for the subnet containing Harbor and Meadow, and which one is active?",
+            "necessity": "required",
+            "source_scope": "observed",
+            "source_categories": []
+          },
+          {
+            "domain": "topology",
+            "question": "What are the available physical links between Transit and Meadow, and are they both utilized for traffic?",
+            "necessity": "optional",
+            "source_scope": "current",
+            "source_categories": []
+          }
+        ],
+        "model_self_assessments": [
+          {
+            "clause": "request-1",
+            "status": "supported",
+            "sources": [
+              "dc89cb081fc14ebda5f07b91dca6a67c"
+            ],
+            "assessment": "The recorded TCP/9443 forward and return service from Harbor to Meadow is fully detailed in the forwarding assessment records, establishing successful delivery across the default VRF via Harbor, Transit, and Meadow.",
+            "missing_facts": []
+          },
+          {
+            "clause": "request-2",
+            "status": "supported",
+            "sources": [
+              "dc89cb081fc14ebda5f07b91dca6a67c"
+            ],
+            "assessment": "Transit's routing table exhibits two static routes to Meadow (198.18.71.3/32): transit-a (preference 15) and transit-b (preference 25). Transit selects transit-a due to the lower preference value. The delivery scope is limited to modeled IPv4 stateless forwarding.",
+            "missing_facts": []
+          }
+        ],
+        "decision": "answer",
+        "rounds": 1,
+        "raw_prose_preserved": true,
+        "grade": {
+          "g4": "PARTIAL_OPTIONAL_PROHIBITED_TOPOLOGY_SUGGESTION_NOT_EXECUTED",
+          "workflow": "PASS_REQUIRED_STATE_ONLY",
+          "evidence": "COMPLETE",
+          "raw_reasoning": "ADEQUATE",
+          "complete_task": "FULLY_ADEQUATE",
+          "causal": "ADEQUATE",
+          "first_failure": null,
+          "reason": "Actual selected15-versus25route, both directions, ownership and declared model scope explained. Optional topology proposal outside state-only boundary is retained but not executed; no raw-plan precision perfection claimed."
+        }
+      },
+      {
+        "id": "MNI-02",
+        "surface": "studio",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-02.json",
+        "sha256": "7d74600ff858f3279de9fe8c86ea33a9739b5bdb299a65787c6d34943f2154d0",
+        "seconds": 10.667013099999167,
+        "tools": [],
+        "missing_required_readers": [
+          "network.configuration",
+          "network.state"
+        ],
+        "unnecessary_executed": [],
+        "plan": null,
+        "model_self_assessments": [],
+        "decision": null,
+        "rounds": null,
+        "raw_prose_preserved": null,
+        "grade": {
+          "g4": "PROVIDER_503",
+          "workflow": "NOT_COMPLETED",
+          "evidence": "NOT_RETRIEVED",
+          "raw_reasoning": "NOT_GENERATED",
+          "complete_task": "PROVIDER_FAILURE",
+          "causal": "NOT_GENERATED",
+          "first_failure": "PLANNER_HTTP503",
+          "reason": "Google planner503UNAVAILABLE before a plan or read. No inference about answer quality."
+        }
+      },
+      {
+        "id": "MNI-03",
+        "surface": "floating",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-03.json",
+        "sha256": "9846382ddd841b9ac4171cd004542b56ac59f8c190a1a40fa3ba43de66692bdc",
+        "seconds": 37.00833920005243,
+        "tools": [
+          "network.state"
+        ],
+        "missing_required_readers": [],
+        "unnecessary_executed": [],
+        "plan": [
+          {
+            "domain": "state",
+            "question": "Get operational status and routing/forwarding state for Harbor (701), Transit (702), and Meadow (703) related to the paths between them.",
+            "necessity": "required",
+            "source_scope": "current",
+            "source_categories": []
+          },
+          {
+            "domain": "telemetry",
+            "question": "Retrieve interface metrics (specifically discards/errors) for Transit (702) Ethernet1/2, Ethernet1/3, and Meadow (703) Ethernet2/1, Ethernet2/2 to calculate packet loss.",
+            "necessity": "required",
+            "source_scope": "current",
+            "source_categories": []
+          }
+        ],
+        "model_self_assessments": [
+          {
+            "clause": "request-1",
+            "status": "supported",
+            "sources": [
+              "2ee754a55d8e4cd0b3d5cdbaeaad32e2"
+            ],
+            "assessment": "State records compare both forward branches for Harbor to Meadow UDP/4789 (transit-a fails via deny policy on Transit Ethernet1/2, transit-b succeeds via Ethernet1/3) and the return direction (succeeds via Transit Ethernet1/1).",
+            "missing_facts": []
+          },
+          {
+            "clause": "request-2",
+            "status": "supported",
+            "sources": [
+              "2ee754a55d8e4cd0b3d5cdbaeaad32e2"
+            ],
+            "assessment": "Because one equal-cost forward branch drops traffic due to a policy denial while the other successfully delivers it, this establishes a partial/measured packet-loss percentage rather than a total outage.",
+            "missing_facts": []
+          },
+          {
+            "clause": "request-3",
+            "status": "supported",
+            "sources": [
+              "2ee754a55d8e4cd0b3d5cdbaeaad32e2"
+            ],
+            "assessment": "All gathered records are derived strictly from network state and simulation observation data without reading configuration.",
+            "missing_facts": []
+          }
+        ],
+        "decision": "answer",
+        "rounds": 1,
+        "raw_prose_preserved": true,
+        "grade": {
+          "g4": "FAIL_REQUIRED_TELEMETRY_PROHIBITED_BY_STATE_ONLY",
+          "workflow": "PASS_SERVER_STATE_ONLY_CORRECTION",
+          "evidence": "COMPLETE",
+          "raw_reasoning": "UNSAFE_UNSUPPORTED",
+          "complete_task": "UNSAFE_UNSUPPORTED",
+          "causal": "INCORRECT",
+          "first_failure": "MODEL_REASONING_AFTER_SOURCE_GUARD_CORRECTION",
+          "reason": "Planner wrongly requires telemetry; server excludes it. Reasoner correctly names failed and delivered ECMP branches but invents measured50percentpacketloss, marks it supported, despite no traffic distribution/counters. No universalsemanticguard added."
+        }
+      },
+      {
+        "id": "MNI-04",
+        "surface": "studio",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-04.json",
+        "sha256": "83a8f89f08d6168c831bb8fc841f9b025039d1595f2e19c8f4469a3edb431fe3",
+        "seconds": 21.089410300017335,
+        "tools": [
+          "network.state"
+        ],
+        "missing_required_readers": [],
+        "unnecessary_executed": [],
+        "plan": [
+          {
+            "domain": "state",
+            "question": "Show the IP routing table for the 'violet' VRF on Transit, Harbor, and Meadow.",
+            "necessity": "required",
+            "source_scope": "current",
+            "source_categories": []
+          },
+          {
+            "domain": "state",
+            "question": "Show the IP routing table for the 'default' (global) VRF on Transit.",
+            "necessity": "required",
+            "source_scope": "current",
+            "source_categories": []
+          }
+        ],
+        "model_self_assessments": [
+          {
+            "clause": "request-1",
+            "status": "supported",
+            "sources": [
+              "442fa6ac6a674931b12705d42b7e7bed"
+            ],
+            "assessment": "Explained Harbor to Meadow forwarding in the violet VRF (failing at Transit due to a missing route) versus Transit's default-VRF route, which contains static paths to 198.18.71.3/32.",
+            "missing_facts": []
+          },
+          {
+            "clause": "request-2",
+            "status": "supported",
+            "sources": [
+              "442fa6ac6a674931b12705d42b7e7bed"
+            ],
+            "assessment": "Explained the reverse direction from Meadow to Harbor separately, detailing the successful return path via Meadow and Transit violet VRF routing.",
+            "missing_facts": []
+          },
+          {
+            "clause": "request-3",
+            "status": "supported",
+            "sources": [
+              "442fa6ac6a674931b12705d42b7e7bed"
+            ],
+            "assessment": "Confirmed that state-only inspection was performed with no configuration changes made.",
+            "missing_facts": []
+          }
+        ],
+        "decision": "answer",
+        "rounds": 1,
+        "raw_prose_preserved": true,
+        "grade": {
+          "g4": "PASS",
+          "workflow": "PASS",
+          "evidence": "COMPLETE",
+          "raw_reasoning": "ADEQUATE",
+          "complete_task": "FULLY_ADEQUATE",
+          "causal": "ADEQUATE",
+          "first_failure": null,
+          "reason": "Exact violet/defaultVRF route distinction and successful opposite direction with device/interface identities. No implicit VRFleak or unsupported failure claim."
+        }
+      },
+      {
+        "id": "MNI-05",
+        "surface": "floating",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-05.json",
+        "sha256": "da0d15efa3cfa3da40ef202abc7687d5c8a831bb47e3b6b7317b6d661681258e",
+        "seconds": 27.31845749996137,
+        "tools": [
+          "network.configuration",
+          "network.syslog"
+        ],
+        "missing_required_readers": [],
+        "unnecessary_executed": [],
+        "plan": [
+          {
+            "domain": "configuration",
+            "question": "Retrieve current configuration for Transit",
+            "necessity": "required",
+            "source_scope": "current",
+            "source_categories": []
+          },
+          {
+            "domain": "configuration",
+            "question": "Retrieve saved configuration capture for Transit",
+            "necessity": "required",
+            "source_scope": "historical",
+            "source_categories": []
+          },
+          {
+            "domain": "syslog",
+            "question": "Retrieve syslog messages for Transit",
+            "necessity": "required",
+            "source_scope": "current",
+            "source_categories": []
+          }
+        ],
+        "model_self_assessments": [
+          {
+            "clause": "request-1",
+            "status": "supported",
+            "sources": [
+              "S1"
+            ],
+            "assessment": "The current configuration and saved capture for Transit (device 702) were successfully retrieved and compared, showing a change on Ethernet1/2.",
+            "missing_facts": []
+          },
+          {
+            "clause": "request-2",
+            "status": "limited",
+            "sources": [
+              "S1",
+              "S2"
+            ],
+            "assessment": "The significant command change (shutdown added to interface Ethernet1/2) is identified from the configurations, but the syslog source is explicitly unavailable.",
+            "missing_facts": []
+          },
+          {
+            "clause": "request-3",
+            "status": "supported",
+            "sources": [
+              "S1",
+              "S2"
+            ],
+            "assessment": "Confirmed that configuration and unavailable syslog cannot provide the reason for the change or a precise timestamp beyond the capture window.",
+            "missing_facts": []
+          }
+        ],
+        "decision": "answer",
+        "rounds": 1,
+        "raw_prose_preserved": true,
+        "grade": {
+          "g4": "PASS",
+          "workflow": "PASS",
+          "evidence": "COMPLETE_FOR_SUPPORTED_COMPARISON_AND_LIMITS",
+          "raw_reasoning": "PARTIAL_UNSUPPORTED_TEMPORAL_INFERENCE",
+          "complete_task": "PARTIAL",
+          "causal": "NOT_CAUSAL",
+          "first_failure": "MODEL_INTERPRETATION",
+          "reason": "Correct no-shutdown/shutdown fields, capturetimes and unavailablelogs; then says device change occurred between saved/currentcapturetimes. Saved artifact plus currenttext does not establish historicalrunningstate/eventwindow. Full-answer review withholds adequate credit despite correct literal operands and self-assessments."
+        }
+      },
+      {
+        "id": "MNI-06",
+        "surface": "studio",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-06.json",
+        "sha256": "d8c06b766d6bd68c3a25018596ea29b9783bd0fdd625cb01c5dd3d31b55693ba",
+        "seconds": 1.857907099998556,
+        "tools": [],
+        "missing_required_readers": [
+          "network.state"
+        ],
+        "unnecessary_executed": [],
+        "plan": null,
+        "model_self_assessments": [],
+        "decision": null,
+        "rounds": null,
+        "raw_prose_preserved": null,
+        "grade": {
+          "g4": "PROVIDER_503",
+          "workflow": "NOT_COMPLETED",
+          "evidence": "NOT_RETRIEVED",
+          "raw_reasoning": "NOT_GENERATED",
+          "complete_task": "PROVIDER_FAILURE",
+          "causal": "NOT_GENERATED",
+          "first_failure": "PLANNER_HTTP503",
+          "reason": "No generated plan or interpretation; source conformance independently proves both protocol operand sets, not model reasoning."
+        }
+      },
+      {
+        "id": "MNI-07",
+        "surface": "floating",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-07.json",
+        "sha256": "0cd04bd34f5dcb1b3bb56292b630b5a3999b77a64bf934d376256a92cc9b3821",
+        "seconds": 4.689498499967158,
+        "tools": [],
+        "missing_required_readers": [
+          "network.configuration"
+        ],
+        "unnecessary_executed": [],
+        "plan": null,
+        "model_self_assessments": [],
+        "decision": null,
+        "rounds": null,
+        "raw_prose_preserved": null,
+        "grade": {
+          "g4": "PROVIDER_503",
+          "workflow": "NOT_COMPLETED",
+          "evidence": "NOT_RETRIEVED",
+          "raw_reasoning": "NOT_GENERATED",
+          "complete_task": "PROVIDER_FAILURE",
+          "causal": "NOT_CAUSAL",
+          "first_failure": "PLANNER_HTTP503",
+          "reason": "SavedCLIpositivecontrol not completed because planner503; no new savedCLIreasoning pass or regression inferred."
+        }
+      },
+      {
+        "id": "MNI-08",
+        "surface": "studio",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-08.json",
+        "sha256": "ad1a6e393ab67007d13877cc32d7f1eb74bf7cdccfd7d7d2ae3428e9bab951ff",
+        "seconds": 35.17605269991327,
+        "tools": [],
+        "missing_required_readers": [
+          "network.state",
+          "network.topology"
+        ],
+        "unnecessary_executed": [],
+        "plan": null,
+        "model_self_assessments": [],
+        "decision": null,
+        "rounds": null,
+        "raw_prose_preserved": null,
+        "grade": {
+          "g4": "PLANNER_TIMEOUT",
+          "workflow": "NOT_COMPLETED",
+          "evidence": "NOT_RETRIEVED",
+          "raw_reasoning": "NOT_GENERATED",
+          "complete_task": "TIMEOUT",
+          "causal": "NOT_CAUSAL",
+          "first_failure": "PLANNER_TIMEOUT35SECONDS",
+          "reason": "Actual request-wide clock retained; planner terminated around35seconds, no topology/state result or reasoning. Not invalid semantics."
+        }
+      },
+      {
+        "id": "MNI-09",
+        "surface": "floating",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-09.json",
+        "sha256": "129fa32510156700f487de6a5cb9538ae339d637f04f3841d5615c367c26b91f",
+        "seconds": 26.533412800054066,
+        "tools": [
+          "network.configuration",
+          "network.topology",
+          "network.state"
+        ],
+        "missing_required_readers": [],
+        "unnecessary_executed": [],
+        "plan": [
+          {
+            "domain": "configuration",
+            "question": "Retrieve current configuration for Transit, specifically targeting interface Ethernet1/2.",
+            "necessity": "required",
+            "source_scope": "current",
+            "source_categories": []
+          },
+          {
+            "domain": "topology",
+            "question": "Retrieve planned topology for Transit's uplink interfaces (Ethernet1/2 and Ethernet1/3) to confirm expected connectivity to Meadow.",
+            "necessity": "required",
+            "source_scope": "planned",
+            "source_categories": []
+          },
+          {
+            "domain": "state",
+            "question": "Retrieve interface status and operational protocol state for Transit to explain the current down status of Ethernet1/2.",
+            "necessity": "required",
+            "source_scope": "current",
+            "source_categories": []
+          }
+        ],
+        "model_self_assessments": [
+          {
+            "clause": "request-1",
+            "status": "supported",
+            "sources": [
+              "edb2104dcc454d62803db9fc51455dc4",
+              "0391cf84201841faa92ecff95ccc1650"
+            ],
+            "assessment": "Saved configuration (S1) shows interface Ethernet1/2 configured with IP 10.71.2.1/30 and no shutdown. Planned topology (S2) confirms the intended link between Transit Ethernet1/2 and Meadow Ethernet2/1.",
+            "missing_facts": []
+          },
+          {
+            "clause": "request-2",
+            "status": "supported",
+            "sources": [
+              "5d9a9f4d2fde4c9e938ae94ef44ab343"
+            ],
+            "assessment": "Current state records (S3) establish that Transit Ethernet1/2 is administratively and operationally down, causing forwarding failures across that path, whereas Ethernet1/1 and Ethernet1/3 remain up.",
+            "missing_facts": []
+          }
+        ],
+        "decision": "answer",
+        "rounds": 1,
+        "raw_prose_preserved": true,
+        "grade": {
+          "g4": "PARTIAL_MISSING_INTENT_DEPENDENCY_AND_INITIAL_SCOPE_CORRECTED",
+          "workflow": "PASS_PERMITTED_INITIAL_READERS",
+          "evidence": "MATERIAL_INTENT_GAP_NOT_RETRIEVED",
+          "raw_reasoning": "PARTIAL",
+          "complete_task": "PARTIAL",
+          "causal": "NOT_CAUSAL",
+          "first_failure": "MODEL_OUTCOME_AND_SUFFICIENCY",
+          "reason": "Saved config and plannedlinks are read; currentstate establishes shutdown. Material optic-work-71 reference reaches model with available authorizedsyslogreader, but no lookup/intentexplanation/explicitintentlimitation. Self-assessment calls full clause supported. No need_more decision or extra round."
+        }
+      },
+      {
+        "id": "MNI-10",
+        "surface": "studio",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-10.json",
+        "sha256": "567a63cee8d74a2b767a2e452e3e2db84fc8e8a22f12fe8d44607f2e30b6c7fa",
+        "seconds": 9.370085200062022,
+        "tools": [],
+        "missing_required_readers": [],
+        "unnecessary_executed": [],
+        "plan": null,
+        "model_self_assessments": [],
+        "decision": null,
+        "rounds": null,
+        "raw_prose_preserved": null,
+        "grade": {
+          "g4": "PROVIDER_503",
+          "workflow": "NO_READ_BOUNDARY_PRESERVED_BUT_ADVICE_NOT_COMPLETED",
+          "evidence": "PRIOR_OWNED_CURRENTCONFIG_SETUP_AVAILABLE",
+          "raw_reasoning": "NOT_GENERATED",
+          "complete_task": "PROVIDER_FAILURE",
+          "causal": "NOT_CAUSAL",
+          "first_failure": "PLANNER_HTTP503",
+          "reason": "Setup succeeded locally and remains recorded. Approved advisoryplanner503 before reply; noreaders executed, but no useful advice pass."
+        }
+      },
+      {
+        "id": "MNI-11",
+        "surface": "floating",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-11.json",
+        "sha256": "f2ccc8240787d83c3047f0a68075635fcc169e985e895c7085b27475dbb13849",
+        "seconds": 3.7998492000624537,
+        "tools": [],
+        "missing_required_readers": [
+          "network.state"
+        ],
+        "unnecessary_executed": [],
+        "plan": null,
+        "model_self_assessments": [],
+        "decision": null,
+        "rounds": null,
+        "raw_prose_preserved": null,
+        "grade": {
+          "g4": "PROVIDER_503",
+          "workflow": "NOT_COMPLETED",
+          "evidence": "NOT_RETRIEVED",
+          "raw_reasoning": "NOT_GENERATED",
+          "complete_task": "PROVIDER_FAILURE",
+          "causal": "NOT_GENERATED",
+          "first_failure": "PLANNER_HTTP503",
+          "reason": "Correct independent incomplete-tableUNKNOWNoracle exists; providerfailed before exposing it to reasoner. Do not claim UNKNOWNqualitypass."
+        }
+      },
+      {
+        "id": "MNI-12",
+        "surface": "studio",
+        "trace": "tmp/phase-g/iterations/20261026-intelligence-improvement/holdout-v1/MNI-12.json",
+        "sha256": "3860906d833395599446eac86e46e2bf8e7a0124b8569489cd03f587426684c1",
+        "seconds": 3.244907099986449,
+        "tools": [],
+        "missing_required_readers": [
+          "network.state",
+          "network.telemetry"
+        ],
+        "unnecessary_executed": [],
+        "plan": null,
+        "model_self_assessments": [],
+        "decision": null,
+        "rounds": null,
+        "raw_prose_preserved": null,
+        "grade": {
+          "g4": "PROVIDER_503",
+          "workflow": "NOT_COMPLETED",
+          "evidence": "NOT_RETRIEVED",
+          "raw_reasoning": "NOT_GENERATED",
+          "complete_task": "PROVIDER_FAILURE",
+          "causal": "NOT_GENERATED",
+          "first_failure": "PLANNER_HTTP503",
+          "reason": "Providerfailurebeforemetrics/stateevidence. No model causal comparison or unsupportedCPUclaim generated."
+        }
+      }
+    ]
+  },
+  "regressions": {
+    "affected": 165,
+    "source_conformance": 12,
+    "both_surfaces_per_source_case": true,
+    "overlap": "Inherited/regression reruns not independent intelligence evidence; do not sum with prior134/165runs."
+  },
+  "browser": "2actualcloudflows preserveprose but incomplete tasks; advisory503;2ordinarylocalcontrolsPASS",
+  "MN4": "LIVE_NOT_VERIFIED; no actualneed_moredecision/round",
+  "quota": {
+    "at": "2026-10-26T15:35:07.543490+00:00",
+    "new_dispatches": 22,
+    "holdout_dispatches": 17,
+    "browser_dispatches": 5,
+    "new_reservations": 22,
+    "rolling24h": 196,
+    "ledger_rollover_note": "Earlier reservations can expire during this task; currentrollingcount is not necessarily184+22. Activity outside this application is unknown.",
+    "shared_peaks": {
+      "requests_in61seconds": 5,
+      "input_or_conservative_reservation_in61seconds": 118798
+    },
+    "per_model_peaks": {
+      "gemini-3.1-flash-lite": {
+        "requests_in61seconds": 4,
+        "input_or_conservative_reservation_in61seconds": 108912
+      },
+      "gemini-3.5-flash-lite": {
+        "requests_in61seconds": 2,
+        "input_or_conservative_reservation_in61seconds": 30119
+      }
+    },
+    "models": {
+      "gemini-3.1-flash-lite": {
+        "attempts": 15,
+        "http": {
+          "200": 7,
+          "503": 7,
+          "TIMEOUT": 1
+        },
+        "input": 64539,
+        "output": 1516,
+        "reported_thought": 1710,
+        "usage_receipts": 7
+      },
+      "gemini-3.5-flash-lite": {
+        "attempts": 7,
+        "http": {
+          "200": 7
+        },
+        "input": 94480,
+        "output": 5086,
+        "reported_thought": 0,
+        "usage_receipts": 7
+      }
+    },
+    "ceilings": {
+      "RPM": 15,
+      "input_TPM": 150000,
+      "shared_RPD": 500
+    },
+    "accounting": "Reported input tokens when available, otherwise original conservative byte reservations. Existing locked admission ledger; no hidden retry, billing change, cost or account-wide usage claim.",
+    "holdout_latency": {
+      "end_to_end": {
+        "n": 12,
+        "median": 15.878,
+        "p95": 38.755,
+        "max": 38.755
+      },
+      "planning": {
+        "n": 12,
+        "median": 5.894,
+        "p95": 35.023,
+        "max": 35.023
+      },
+      "reasoning": {
+        "n": 5,
+        "median": 23.187,
+        "p95": 27.822,
+        "max": 27.822
+      },
+      "reader_invocation": {
+        "n": 8,
+        "median": 0.001,
+        "p95": 0.003,
+        "max": 0.003
+      },
+      "other_authorization_projection_composition": {
+        "n": 12,
+        "median": 0.168,
+        "p95": 0.621,
+        "max": 0.621
+      }
+    }
+  },
+  "preservation": "PASS_HEAD_INDEX_41TABLES_343KNOWLEDGEFILES_145HISTORICALJSONS_ROOTENV_CREDENTIAL_NEW12TRACES",
+  "code_files": [
+    "backend/llm/model_roles.py",
+    "backend/llm/orchestration/engine.py",
+    "backend/llm/orchestration/planning.py",
+    "backend/llm/orchestration/request_contract.py",
+    "backend/llm/orchestration/role_reasoning.py"
+  ],
+  "historical_scores_unchanged": {
+    "original_model_neutral": "Fivefunctionalconditions/sixturns; narrow actualintegration, advicepartial, supplementalnotexercised",
+    "MMQ": {
+      "fulltask": "5/30",
+      "causal": "8/18",
+      "unnecessary_conditions": "19/30"
+    }
+  },
+  "formal_stage_changes": {},
+  "decision": "RETAIN_GENERAL_EXECUTION_AND_DIAGNOSTIC_CONTRACTS_EXPERIMENTALLY; NO_PROMOTION; SUFFICIENCY_AND_CAUSAL_QUALITY_UNRESOLVED"
+}

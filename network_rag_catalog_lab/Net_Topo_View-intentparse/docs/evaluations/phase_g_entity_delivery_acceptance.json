@@ -1,0 +1,45 @@
+{
+  "at": "2026-11-01T12:35:25.844714+00:00",
+  "original_review_sha256": "efe43750dcc23d53ddb7d535395b61ea2700c5f19c36b473ec1f97fcb6b9f268",
+  "original_frozen_results_unchanged": true,
+  "purpose": "Final gate interpretation and newly recovered UI evidence; not a regrade of the frozen cohort",
+  "gates": {
+    "A": {
+      "status": "PARTIALLY_VERIFIED",
+      "verified": "Joined canonical names/aliases, deterministic negative controls and actual complex API route",
+      "unfulfilled": "Free-form background-device versus target role acceptance not proven"
+    },
+    "B": {
+      "status": "PASS_BOUNDED_ACTUAL_API",
+      "revised_packet_characters": 63306,
+      "limit": 64000,
+      "proof": "actual-revised-delivery-review.json",
+      "limitation": "Typed reference-bound supplemental selection; no universal relevance guarantee"
+    },
+    "C": {
+      "status": "PASS_ACTUAL_REVISED_MODEL_AND_RELEASE_API",
+      "browser": "Saved answer history rendering only"
+    },
+    "D": {
+      "status": "INCOMPLETE",
+      "frozen_control_adequate": 0,
+      "frozen_enhanced_adequate": 1,
+      "distinct_conditions": 6,
+      "complete_causal_successes": 0
+    },
+    "E": {
+      "status": "PASS_BOUNDED_DETERMINISTIC_AND_LOCAL_API_BROWSER_CONTROLS",
+      "limits": [
+        "Local answer polish/advice remain failed",
+        "Cloud browser origin not run",
+        "No blanket inactive-editor byte assertion"
+      ]
+    }
+  },
+  "browser_review": "tmp/phase-g/iterations/20261101-entity-delivery-repair/browser-acceptance-review.json",
+  "recommendation": "RETAIN_BOUNDARY_REPAIRS_KEEP_COMPLETENESS_OFF",
+  "formal_G_stage_closure": false,
+  "cloud_calls": 31,
+  "hard_cloud_ceiling": 32,
+  "remaining_attempt_not_spent": true
+}

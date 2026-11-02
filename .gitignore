@@ -1,0 +1,2 @@
+# Local test databases, pytest output, and temporary audit files
+/tmp/*

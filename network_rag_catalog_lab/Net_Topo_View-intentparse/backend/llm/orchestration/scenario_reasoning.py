@@ -221,8 +221,11 @@ def assess_expanded_model(sources,evidence):
                         path='; '.join(h['hostname']+' via '+h.get('interface',h['vrf']) for h in branch['hops'])
                         findings.append((direction.capitalize()+' Egress sequence: '+path+'; ' if path else '')+branch['reason']+' '+citation)
                         location=branch.get('failure_location') or {}
-                        if location:
+                        if location.get('policy_rule') is not None:
                             findings.append(direction.capitalize()+' '+str(location['direction'])+' policy '+str(location['policy_rule'])+' at '+location['hostname']+' '+location['interface']+': '+location['action']+'. '+citation)
+                        elif location.get('hostname'):
+                            findings.append(direction.capitalize()+' observation at '+location['hostname']+
+                                (' / '+location['interface'] if location.get('interface') else '')+': '+str(branch.get('reason','unresolved'))+'. '+citation)
             findings.insert(0,'Modeled IPv4 forwarding — '+', '.join(details)+'. '+citation)
             qualification='healthy_within_tested_scope' if status=='delivered' else 'confirmed_within_scenario' if status=='failed' else 'strongly_supported' if status=='partial' else 'insufficient_evidence'
             candidate='A forwarding fault prevents modeled delivery' if status=='delivered' else 'A declared forwarding constraint blocks traffic' if status=='failed' else 'Some modeled traffic paths work and others do not' if status=='partial' else 'Forwarding cannot be established from incomplete modeled inputs'

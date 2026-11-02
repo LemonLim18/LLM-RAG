@@ -90,8 +90,27 @@ def published_answer_errors(draft,facts,question,non_contract_sources=(),non_con
                 if field.get('type')=='array' and field.get('item_type')=='object' and re.search(r'\barray of strings\b',sentence,re.I):
                     errors.append('The '+field['field']+' array contains objects, not strings; preserve its nested fields')
                 vendor_required=[vendor for vendor,names in fact['required_by_vendor'].items() if field['field'] in names]
-                if vendor_required and re.search(r'\boptional\b',sentence,re.I) and not re.search(r'\b(base|generic|except|vendor)\b|'+'|'.join(re.escape(v) for v in vendor_required),sentence,re.I):
-                    errors.append('The '+field['field']+' field is vendor-conditionally required; do not describe it as globally optional')
+                # Bind modality to its named field/list, not every field in a
+                # sentence. A neighbouring optional field is not an assertion
+                # that this vendor-required field is optional too.
+                field_names='|'.join(re.escape(f['field']).replace('_',r'[_ -]') for f in fact['fields'])
+                subject=name+r'(?:\s*\([^)]{0,80}\))?(?:\s*(?:,|and)\s*(?:'+field_names+r'))*'
+                optional_claim=bool(re.search(subject+r'\s*(?:is|are|:|,)?\s*(?:an?\s+)?optional\b|\boptional\s+'+name+r'(?!\w)',re.sub(r'[`*]','',sentence),re.I))
+                if vendor_required and optional_claim:
+                    base_qualified=bool(re.search(r'\b(base|generic|except|conditional)\w*\b',sentence,re.I))
+                    scoped_vendors={p['vendor'] for p in fact['vendor_platforms']
+                        if re.search(r'\b'+re.escape(p['vendor'])+r'\b',sentence,re.I)}
+                    # A later explicit condition for this same field can qualify
+                    # a base-schema statement. Unrelated fields cannot do so.
+                    condition_stated=any(re.search(r'(?<!\w)'+name+r'(?!\w)',clause,re.I)
+                        and re.search(r'\brequir\w*\b',clause,re.I)
+                        and not re.search(r'\b(?:not|never)\s+required\b',clause,re.I)
+                        and any(re.search(r'\b'+re.escape(v)+r'\b',clause,re.I) for v in vendor_required)
+                        for clause in re.split(r'(?<=[.!?])\s+|\n',draft.answer))
+                    explicitly_wrong_scope=bool(scoped_vendors.intersection(vendor_required) and not base_qualified)
+                    nonrequired_scope=bool(scoped_vendors and not scoped_vendors.intersection(vendor_required))
+                    if explicitly_wrong_scope or not (base_qualified or nonrequired_scope or condition_stated):
+                        errors.append('The '+field['field']+' field is vendor-conditionally required; do not describe it as globally optional')
                 required_claim=re.search(name+r'\s*(?:\([^)]{0,40}\brequired\b|(?:is|field is)\s+(?:always\s+)?required\b)',sentence,re.I)
                 required_claim=required_claim or re.search(r'\b(?:requires?|required (?:fields?|parameters?|inputs?))\b.{0,450}(?<!\w)'+name+r'(?!\w)',sentence,re.I)
                 if required_claim and not field.get('required'):
@@ -456,25 +475,84 @@ def metric_calculation_text(fact):
     return ' '.join(notes)
 
 
+def interface_record_ids_requested(question):
+    """Select an explicitly requested output field, not a reader or workflow."""
+    entity=r'(?:source[ -])?(?:records?|observations?)'
+    field=r'(?:IDs?|identifiers?|identit(?:y|ies)|references?|refs?)'
+    for match in re.finditer(r'\b(?:'+entity+r'[ -]'+field+r'|'+field+r'\s+(?:of|for)\s+(?:the\s+)?'+entity+r')\b',question,re.I):
+        if not re.search(r'\b(?:without|omit|exclude|skip|do not include|do not show)\s+(?:(?:the|any)\s+)?$',question[:match.start()],re.I):
+            return True
+    return False
+
+
 def interface_observations(context,question,evidence=()):
     """Actual typed interface records, not planned inventory or link endpoints."""
     from llm.gateway_network import interface_state_request
     scoped=any(item.get('source_request',{}).get('record_kinds')==['interface_state'] for item in context)
-    if not interface_state_request(question) and not scoped:return []
+    # A requested source identity is bound by the returned typed observation,
+    # not by a second lexical guess about whether the question says "state".
+    if not interface_state_request(question) and not scoped and not interface_record_ids_requested(question):return []
     labels={item.id:'S'+str(i+1) for i,item in enumerate(evidence)}
-    names=record_device_names(context);facts=[]
+    def containers(data,metadata):
+        if not isinstance(data,dict):return
+        yield data,metadata
+        for source in data.get('sources',[]):
+            if source.get('status') in {'error','denied','unavailable'}:continue
+            yield from containers(source.get('data'),{**metadata,**{k:source[k] for k in ['origin','source','evidence_ids'] if k in source}})
+    names=record_device_names(context);facts=[];seen={}
     for item in context:
         if item['tool']!='network.state' or item['status']!='success':continue
-        for row in (item.get('data') or {}).get('records',[]):
+        for data,metadata in containers(item.get('data'),{'evidence_ids':item.get('evidence_ids',[])}):
+          scenario=data.get('scenario') or {}
+          origins={e.origin for e in evidence if e.id in metadata['evidence_ids']}
+          for row in data.get('records',[]):
             if row.get('kind')!='interface_state':continue
             name=row.get('interface') or row.get('name')
             if not name:continue
-            facts.append({'device':row.get('hostname') or names.get(str(row.get('device_id'))),
+            fact={'record_id':row.get('id'),'device_id':row.get('device_id'),'interface_id':row.get('interface_id'),
+                'source':row.get('source') or metadata.get('source'),'source_category':row.get('source_category'),
+                'origin':row.get('origin') or scenario.get('origin') or metadata.get('origin') or (next(iter(origins)) if len(origins)==1 else 'unknown'),
+                'source_scope':item.get('source_request',{}).get('source_scope','auto'),
+                'scenario_id':scenario.get('id'),'source_revision':scenario.get('source_revision'),
+                'device':row.get('hostname') or names.get(str(row.get('device_id'))),
                 'interface':name,'admin_status':row.get('admin_status'),'oper_status':row.get('oper_status'),
                 **({'prefix':row['prefix']} if 'prefix' in row else {}),
+                **({'vrf':row['vrf']} if 'vrf' in row else {}),
                 'timestamp':row.get('timestamp'),'current':row.get('current'),
-                'sources':[labels[ref] for ref in item.get('evidence_ids',[]) if ref in labels]})
-    return facts[:8]
+                'sources':[labels[ref] for ref in metadata['evidence_ids'] if ref in labels]}
+            # Same identified record/payload/revision is one observation even
+            # if read twice. Never merge different IDs, sources, times or values.
+            identity=json.dumps([row,fact['source'],fact['origin'],fact['scenario_id'],fact['source_revision'],fact['source_scope']],sort_keys=True,default=str)
+            if row.get('id') is not None and identity in seen:
+                old=seen[identity];old['sources']=list(dict.fromkeys(old['sources']+fact['sources']));continue
+            facts.append(fact)
+            if row.get('id') is not None:seen[identity]=fact
+    # Explicit provenance requests must not silently lose the ninth returned
+    # identity. Authoritative readers already bound the returned record count.
+    return facts if interface_record_ids_requested(question) else facts[:8]
+
+
+def interface_record_identity_section(facts):
+    """Exact public source fields; no citation/receipt IDs stand in for records."""
+    def code(value):
+        text=str(value);fence='`'*(1+max((len(s) for s in re.findall(r'`+',text)),default=0))
+        return fence+' '+text+' '+fence if '`' in text else fence+text+fence
+    lines=[]
+    for fact in facts:
+        identity=code(fact['record_id']) if fact['record_id'] is not None else '**ID not recorded**'
+        modeled=fact.get('source_category')=='simulation'
+        label='Modeled observation' if modeled else 'Authored/recorded observation' if fact['origin']=='simulated' else 'Recorded observation'
+        owner=code(fact['device'] or fact['device_id'] or 'device not recorded')+' / '+code(fact['interface'])
+        fields=[label,owner,'source '+code(fact['source'] or 'not recorded'),'origin '+code(fact['origin']),
+            'scope '+code(fact['source_scope']),
+            'current recorded' if fact['current'] is True else 'historical recorded' if fact['current'] is False else 'current/historical scope not recorded',
+            'admin '+code(fact['admin_status'] or 'not recorded')+', oper '+code(fact['oper_status'] or 'not recorded'),
+            'observed '+code(fact['timestamp'] or 'time not recorded')]
+        if fact.get('device_id') is not None:fields.append('device ID '+code(fact['device_id']))
+        if fact.get('interface_id') is not None:fields.append('interface ID '+code(fact['interface_id']))
+        if fact.get('vrf') is not None:fields.append('VRF '+code(fact['vrf']))
+        lines.append('- '+identity+' — '+'; '.join(fields)+'. '+' '.join('['+s+']' for s in fact['sources']))
+    return '**Source record identities — returned facts**\n\n'+'\n'.join(lines)
 
 
 def source_health_observations(context):
@@ -577,7 +655,7 @@ def forwarding_results(context,labels):
                     projected={'status':branch.get('status'),'path':path,'reason':branch.get('reason')}
                     if branch.get('failure_location'):
                         projected['failure_location']={key:branch['failure_location'][key] for key in
-                            ['hostname','interface','direction','policy_rule','action'] if key in branch['failure_location']}
+                            ['hostname','interface','direction','policy_rule','action','admin_status','oper_status','vrf'] if key in branch['failure_location']}
                     hops=branch.get('hops',[])
                     if branch.get('reason')=='egress interface down' and hops:
                         last=hops[-1]
@@ -595,7 +673,7 @@ def forwarding_scope(context,question,investigation=None):
     if investigation is None:
         from llm.orchestration.investigation import is_investigation
         investigation=is_investigation(question)
-    directional=bool(re.search(r'\b(?:modeled|modelled|simulated)\s+(?:path|flow)\b|\b(?:forward(?:ing)?|return|reverse)\s+(?:path|direction|outcome|result)\b|\bflow\s+(?:outcome|result|trace)\b|\breachability\b|\bpacket\s+delivery\b',question,re.I))
+    directional=bool(re.search(r'\bflow\b|\b(?:modeled|modelled|simulated)\s+path\b|\b(?:forward(?:ing)?|return|reverse)\s+(?:path|direction|outcome|result)\b|\breachability\b|\bpacket\s+delivery\b',question,re.I))
     # Typed forwarding results are relevant to a connectivity investigation
     # even when the user does not say the exact phrase "forwarding path".
     # Do not discard requested configuration/log/metric evidence to force this
@@ -682,6 +760,19 @@ def source_metadata_footer(answer,envelopes,question,*,force=False):
 
 def source_envelope_errors(answer,context,question):
     facts=source_envelopes(context);errors=[]
+    # Discrete interface samples and events cannot prove an uninterrupted
+    # interval, even if every returned point is up. This is an interval-evidence
+    # boundary, not a guarantee of detecting arbitrary temporal paraphrases.
+    from llm.orchestration.investigation import records
+    point_state=any(row.get('kind') in {'interface_state','syslog','syslog_event'}
+        for item in context if item['tool'] in {'network.state','network.syslog'}
+        for row in records(item.get('data')))
+    if point_state:
+        for sentence in re.split(r'(?<=[.!?])\s+|\n',re.sub(r'[*`]','',answer)):
+            if not re.search(r'\b(?:continuous|uninterrupted)\s+(?:availability|connectivity|uptime)\b|\b(?:remain\w*|stay\w*)\s+up\s+throughout\b',sentence,re.I):continue
+            if re.search(r'\b(?:not|cannot|can.t|unknown|unproven|unverified|should|could|may|would|whether|recommend)\b',sentence,re.I):continue
+            if not re.search(r'\b(?:establish\w*|prov\w*|confirm\w*|guarantee\w*|show\w*|indicat\w*|ensur\w*|was|were|is|are|remain\w*|stay\w*)\b',sentence,re.I):continue
+            errors.append('Discrete events and interface observations do not establish continuous availability across an unobserved interval')
     if not facts:return errors
     # Markdown emphasis does not change the meaning of a timestamp claim.
     plain_answer=re.sub(r'[*`]','',answer)
@@ -944,7 +1035,8 @@ def interface_state_claim_errors(answer,context):
             states={str(row.get(key,'')).casefold() for key in ['admin_status','oper_status']}-{''}
             if interface and interface in sentence and (name and name.casefold() in sentence.casefold() or len(names)==1):
                 for claim in re.findall(r'\binterfaces?\b.{0,160}?\b(?:is|are|was|were)\s+(?:in\s+(?:the\s+)?)?(up|down|unknown|enabled|disabled)\b',sentence,re.I):
-                    if states and claim.casefold() not in states:
+                    normalized={'enabled':'up','disabled':'down'}.get(claim.casefold(),claim.casefold())
+                    if states and normalized not in states:
                         errors.append('The claimed state for '+str(name)+' '+interface+' contradicts its current record; a listed interface cannot inherit its neighbor state')
             if not states&{'down','disabled'}:continue
             if not name:continue
@@ -1414,6 +1506,18 @@ def check_candidate(answer,context,evidence,assessment,question=''):
         elif isinstance(value,list):
             for child in value:peers(child)
     peers(context)
+    # Reuse the existing bounded literal-command evidence extractor. Saved CLI
+    # is a valid source for configured AS roles; it is not an operational peer
+    # observation or proof of activation. Keep each device's values separate.
+    from llm.orchestration.editor_facts import literal_facts
+    for item in context:
+        if item['tool']!='network.configuration' or item['status']!='success':continue
+        for row in (item.get('data') or {}).get('records',[]):
+            name=row.get('hostname');text=row.get('config_text')
+            if not name or not isinstance(text,str):continue
+            literal=literal_facts([{'source':name,'text':text}],name)
+            peer_facts.setdefault((name,'local_as'),set()).update(literal['local_as'])
+            peer_facts.setdefault((name,'remote_as'),set()).update(value for values in literal['neighbors'].values() for value in values)
     # The temporal limit comes from the records, not the wording of the ask.
     for comparison in configuration_comparisons(context,{}):
         if comparison['identical']:
@@ -1460,7 +1564,9 @@ def check_candidate(answer,context,evidence,assessment,question=''):
             if value not in allowed:
                 errors.append(name+' '+role+' AS is '+('/'.join(sorted(allowed)) if allowed else 'not recorded')+' in the selected records; the draft states '+value)
     if re.search(r'\bAS\s+roles?\b|\b(?:local|remote)\s+AS\b',question,re.I) and peer_facts:
-        required_values={value for values in peer_facts.values() for value in values}
+        roles={role+'_as' for role in ['local','remote'] if re.search(r'\b'+role+r'\s+AS\b',question,re.I)}
+        if re.search(r'\bAS\s+roles?\b',question,re.I):roles={'local_as','remote_as'}
+        required_values={value for (name,field),values in peer_facts.items() if field in roles for value in values}
         if not required_values<=set(re.findall(r'\b\d+\b',answer)):
             errors.append('The AS-role explanation must show the actual recorded local/remote AS values before explaining whether the peers match; a bare yes/no is incomplete')
         relationships=[row for item in context if item['tool']=='network.state'
@@ -1596,9 +1702,9 @@ def check_candidate(answer,context,evidence,assessment,question=''):
                     subject=re.escape(name)+r'(?:\s*(?:,|and)\s*(?:'+recorded+r'))*\s+(?:is|are|was|were)\s+(?:(?:both|each|an?|the)\s+)?(?:intermediate|transit)\s+(?:devices?|routers?|nodes?)\b'
                     named=r'\b(?:intermediate|transit)\s+(?:devices?|routers?|nodes?)\s+(?:named\s+)?(?:(?:'+recorded+r')\s*(?:,|and)\s*)*'+re.escape(name)+r'(?![\w-])'
                     if re.search(subject+'|'+named,sentence,re.I):errors.append('The claimed intermediate device is a recorded flow endpoint; preserve endpoint versus transit roles')
-            if any(not re.search(r'(?<![\w-])'+re.escape(name)+r'(?![\w-])',prose,re.I) for name in transit):
+            if forwarding_scope(context,question) and any(not re.search(r'(?<![\w-])'+re.escape(name)+r'(?![\w-])',prose,re.I) for name in transit):
                 errors.append('Explain the actual recorded transit device in this multihop investigation instead of describing only its endpoints')
-            if flow['forward']['status']!='not_recorded' and flow['return']['status']!='not_recorded' and not re.search(r'\b(?:return|reverse|both directions|two[- ]way|bidirectional)\b',prose,re.I):
+            if forwarding_scope(context,question) and flow['forward']['status']!='not_recorded' and flow['return']['status']!='not_recorded' and not re.search(r'\b(?:return|reverse|both directions|two[- ]way|bidirectional)\b',prose,re.I):
                 errors.append('The investigation omits the recorded return direction; explain both directions and their declared scope')
     # Verify an explicit absence claim against the actual relationship records.
     # This is deliberately narrower than a generic natural-language verifier.
@@ -1649,7 +1755,10 @@ def check_candidate(answer,context,evidence,assessment,question=''):
             if re.search(r'\b(?:ingress|egress) interface (?:on|of)\s+`?'+re.escape(name)+r'`?\s+is\s+down\b',line,re.I):
                 records=[row for item in context if item['tool']=='network.state' and item['status']=='success'
                     for row in (item.get('data') or {}).get('records',[]) if row.get('kind')=='interface_state' and row.get('hostname')==name and row.get('current') is True]
-                if not any('down' in {row.get('admin_status'),row.get('oper_status')} for row in records):
+                recorded_fault=any(location.get('hostname')==name and 'down' in {location.get('admin_status'),location.get('oper_status')}
+                    for flow in flows for direction in ['forward','return'] for branch in flow[direction]['branches']
+                    for location in [branch.get('failure_location',{})])
+                if not recorded_fault and not any('down' in {row.get('admin_status'),row.get('oper_status')} for row in records):
                     errors.append('The claimed down interface on '+name+' is not supported by its returned current interface observations')
         for name,ports in interface_owners.items():
             explicit=re.findall(r'(?<![\w-])'+re.escape(name)+r"['â€™]s\s+(?:interface\s+)?`?("+interface+r')',line,re.I)
@@ -1668,7 +1777,7 @@ def check_candidate(answer,context,evidence,assessment,question=''):
                 for value in re.findall(r'\b'+role_word+r'\s+AS(?:\s+(?:is|of|number))?\s*[`:=]*\s*(\d+)\b',clause,re.I):
                     if len(role_subjects)==1 and value not in peer_facts.get((role_subjects[0],role+'_as'),set()):
                         errors.append('An AS value/role is not established for the named peer')
-                    elif not re.search(r'"'+role+r'_as"\s*:\s*'+re.escape(value)+r'(?!\d)',source):
+                    elif len(role_subjects)!=1 and not any(value in values for (name,field),values in peer_facts.items() if field==role+'_as'):
                         errors.append('An AS role/value is absent from selected records')
         for prefix in re.findall(r'\broute\s+(?:to|for)\s+[`]*('+ip_pattern+r')',line,re.I):
             candidates=[route for row in route_records if len(subjects)!=1 or row.get('hostname')==subjects[0] for route in row.get('routes',[]) if route.get('prefix')==prefix]
@@ -1729,7 +1838,7 @@ def check_candidate(answer,context,evidence,assessment,question=''):
                 if '/' in prefix and not re.search(r'"advertised_prefixes"\s*:\s*\[[^\]]*"'+re.escape(prefix)+r'"',source):errors.append('Accepted/received prefixes do not establish an advertised prefix')
         if re.search(r'\bOSPF\b',sentence,re.I) and re.search(r'router[- ]IDs?\b.{0,70}\b(?:must|need to|should)\b.{0,20}\b(?:same|identical|match)\b',sentence,re.I) and not re.search(r'\b(?:not|never|different|unique)\b',sentence,re.I):
             errors.append('OSPF router IDs must be unique; matching router IDs are not an adjacency prerequisite')
-        if re.search(r'\bconfiguration\b.{0,60}\b(?:operational|up to date|complete and)\b',sentence,re.I) and not re.search(r'\b(?:not|no|cannot|unavailable|does not)\b',sentence,re.I):
+        if re.search(r'\bconfiguration\b.{0,60}\b(?:operational|up to date|complete and)\b',sentence,re.I) and not re.search(r'\b(?:not|no|cannot|unavailable|does not|unverified|unconfirmed|unknown)\b',sentence,re.I):
             errors.append('Configuration text does not establish completeness or operational health')
         if re.search(r'\b(?:fully operational|all (?:neighbors|peer relationships|interfaces) (?:are |being )?(?:established|up))\b',sentence,re.I) and not re.search(r'\b(?:not|cannot|unconfirmed)\b',sentence,re.I):
             errors.append('Blanket operational health exceeds the bounded recorded observation scope')
@@ -1811,6 +1920,13 @@ async def synthesize(model,selected,question,context,evidence,assessment,fallbac
             answer='\n\n'.join(parts)+'\n\n*Source-bound fallback; no model task-completion claim is made.*'
             trace['outcome_fallback_rendered']=rendered
             trace['outcome_results']=outcome_results(requested_outcomes,context,evidence,trace)
+    if interface_record_ids_requested(question) and any(item['tool']=='network.state' for item in context):
+        facts=interface_observations(context,question,evidence)
+        section=interface_record_identity_section(facts) if facts else (
+            '**Source record identities:** unavailable; the authorized read returned no interface-state observations.')
+        answer+='\n\n'+section
+        trace['display_source_record_ids_added']=True
+        trace['source_record_identity_origin']='Exact reader projection; not model reasoning or prose certification'
     return answer,trace
 
 
@@ -1840,14 +1956,17 @@ async def advisory_answer(model,selected,contract,context,fallback):
         advice=Advice.model_validate_json(raw)
         if 'authorized_readers' in context and any(check.reader not in allowed for check in advice.checks):
             raise ValueError('Recommended reader is outside the server-authorized catalog')
-        # Reuse the existing factual boundary, without granting old conclusions
-        # or model-selected readers authority to execute or become observations.
-        errors=check_candidate('\n'.join(c.rationale for c in advice.checks),[],[],{},contract.original_request)
+        # These typed future questions are not observation claims. Applying a
+        # configuration/state verifier to an empty evidence packet rejected
+        # legitimate statements about what a future read could resolve. Tool
+        # allowlists/schema remain enforced; no advice receives fact or causal
+        # certification and it never becomes a reader invocation.
+        errors=[]
         attempts.append({'raw_output':raw,'errors':errors,'recommendations':advice.model_dump()})
         if errors:return fallback,{'status':'advisory_rejected','model_synthesis':False,'attempts':attempts}
         answer='**Recommended evidence — not collected**\n\n'+'\n\n'.join(
             '- **'+c.reader+'**: '+c.question+'\n  '+c.rationale for c in advice.checks)
-        answer+='\n\nNo new reader was invoked, no collection was started, and no device or document was changed.'
+        answer+='\n\nNo new reader was invoked, no collection was started, and no device or document was changed. These proposed checks and their rationale are not verified observations or a diagnosis.'
         return answer,{'status':'advisory_proposed','model_synthesis':True,'model':used,'attempts':attempts,
             'scope':'Typed unexecuted read suggestions; rationale and task adequacy are not semantically certified'}
     except (ValueError,HTTPException) as exc:
@@ -2084,9 +2203,14 @@ async def _synthesize(model,selected,question,context,evidence,assessment,fallba
                     parts.append('**'+kind+':** '+row['source']+' `'+str(row.get('source_interface') or 'port not recorded')+'` ↔ '+row['target']+' `'+str(row.get('target_interface') or 'port not recorded')+'`'+(' · recorded '+str(row['timestamp']) if row.get('timestamp') else '')+'. '+citation)
             if not fact['planned_only'] and not fact['observed_only']:parts.append('The returned planned and observed endpoint pairs match. '+citation)
         fallback=('**Development simulation**\n\n' if pack['evidence']['development_simulation'] else '')+'\n\n'.join(parts)+'\n\nThis compares intended and recorded relationships; it does not establish packet delivery, a physical fault or which source needs correction. Reconcile the plan and a fresh discovery observation.\n\n*The model explanation could not be verified; these are the compared source records.*'
-    if flows and pack['evidence']['forwarding_focus'] and all(item['tool'] in {'inventory.read','network.topology','network.state'} for item in context):
+    unresolved_flow_only=bool(flows and not pack['evidence']['protocol_results'] and
+        all(flow[direction]['status'] in {'unknown','not_recorded'} for flow in flows for direction in ['forward','return']))
+    if flows and (pack['evidence']['forwarding_focus'] or unresolved_flow_only) and all(item['tool'] in {'inventory.read','network.topology','network.state'} for item in context):
         schema['properties']['hypotheses']['maxItems']=0
-        offered_labels={label for flow in flows for label in flow['sources']}
+        # A concise flow projection does not revoke other actual authorized
+        # source identities. Candidate prose is still checked against records.
+        labels={e.id:'S'+str(i+1) for i,e in enumerate(evidence)}
+        offered_labels={labels[key] for item in context for key in item.get('evidence_ids',[]) if key in labels}
         passages=[]
         conflicts=assessment.get('conflicts',[])
         if conflicts:
@@ -2158,7 +2282,8 @@ async def _synthesize(model,selected,question,context,evidence,assessment,fallba
             # records and missing prerequisite without granting reasoning credit.
             fallback=fallback.replace('*The model explanation could not be verified. These are recorded calculated results, not a physical packet test.*',
                 '*Both directional outcomes are unknown. Unavailable evidence does not establish missing device configuration or an outage. No physical packet test was performed.*')
-            fallback+='\n\nNext check: retrieve the unavailable routing evidence for this declared VRF before concluding whether traffic is delivered.'
+            missing=list(dict.fromkeys(str(branch.get('reason','unobserved prerequisite')) for flow in flows for direction in ['forward','return'] for branch in flow[direction]['branches']))
+            fallback+='\n\nNext check: obtain the missing observations for the declared traffic and VRF before concluding whether delivery succeeds or fails. Unresolved prerequisites: '+'; '.join(missing[:6])+'.'
             fallback,metadata_added=source_metadata_footer(fallback,source_envelopes(context),question)
             return fallback,{'status':'insufficient_flow_evidence_fallback','model_synthesis':False,'attempts':[],
                 'display_source_metadata_added':metadata_added,
@@ -2422,7 +2547,12 @@ async def _synthesize(model,selected,question,context,evidence,assessment,fallba
                 '; operational state '+str(fact['oper_status'] or 'not recorded')+
                 ('; recorded interface prefix '+str(fact['prefix']) if fact.get('prefix') else '')+
                 '; recorded '+str(fact['timestamp'] or 'at an unspecified time')+'. '+source)
-            passages.append(description);parts.append('- '+description)
+            parts.append('- '+description)
+            if interface_record_ids_requested(question):
+                description+=' Source record metadata: '+json.dumps({key:fact[key] for key in [
+                    'record_id','device_id','interface_id','source','source_category','origin','source_scope',
+                    'current','scenario_id','source_revision']},ensure_ascii=False)+'.'
+            passages.append(description)
         fallback=('**Development simulation**\n\n' if pack['evidence']['development_simulation'] else '')+'Recorded interface observations:\n\n'+'\n'.join(parts)+'\n\n*The model explanation could not be verified; these are the returned interface-state records.*'
         system=('A request to obtain records means show the actual entries, not merely answer yes/no. Present these returned interface-state records in concise Markdown. Return JSON answer, sources and empty hypotheses. '
             'Name the device and interfaces and preserve administrative versus operational state. Include the observation time. '

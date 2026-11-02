@@ -1,0 +1,200 @@
+{
+  "status": "EXPERIMENT_IMPLEMENTED_ACCEPTANCE_PARTIAL",
+  "timestamp": "2026-10-26T08:05:30.159080+00:00",
+  "registry_sha256": "aca7a5568f08a786e5a7df4c52fea34c016c655008295c6b8fa262acaea88e73",
+  "functional_cases": [
+    {
+      "id": "MN-01",
+      "seconds": 8.076642700005323,
+      "cloud_calls": 2,
+      "tools": [
+        "network.state",
+        "network.configuration"
+      ],
+      "raw_prose_preserved": true,
+      "falling_back_is_not_model_reasoning": true
+    },
+    {
+      "id": "MN-02",
+      "seconds": 8.04965960001573,
+      "cloud_calls": 2,
+      "tools": [
+        "network.state",
+        "network.configuration"
+      ],
+      "raw_prose_preserved": true,
+      "falling_back_is_not_model_reasoning": true
+    },
+    {
+      "id": "MN-03",
+      "seconds": 8.534062200109474,
+      "cloud_calls": 2,
+      "tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "raw_prose_preserved": true,
+      "falling_back_is_not_model_reasoning": true
+    },
+    {
+      "id": "MN-04",
+      "seconds": 11.099494500085711,
+      "cloud_calls": 2,
+      "tools": [],
+      "raw_prose_preserved": true,
+      "falling_back_is_not_model_reasoning": true
+    },
+    {
+      "id": "MN-05",
+      "seconds": 10.79047350003384,
+      "cloud_calls": 0,
+      "tools": [],
+      "raw_prose_preserved": false,
+      "falling_back_is_not_model_reasoning": true
+    },
+    {
+      "id": "MN-06",
+      "seconds": 0.5469321999698877,
+      "cloud_calls": 0,
+      "tools": [
+        "inventory.read"
+      ],
+      "raw_prose_preserved": false,
+      "falling_back_is_not_model_reasoning": true
+    }
+  ],
+  "browser_cases": [
+    {
+      "prompt": "Compare R1 current configuration with its saved capture, explain the significant difference, and inspect available syslog. Explain separately what remains unknown.",
+      "model": "gemini-3.5-flash-lite",
+      "cloud_calls": 2,
+      "roles": [
+        [
+          "complex_planner",
+          "gemini-3.1-flash-lite"
+        ],
+        [
+          "evidence_reasoner",
+          "gemini-3.5-flash-lite"
+        ]
+      ],
+      "tools": [
+        "network.configuration",
+        "network.syslog"
+      ],
+      "graph_seconds": 4.2775,
+      "request_budget_elapsed_seconds": 4.854,
+      "raw_prose_preserved": true,
+      "task_quality": "ADEQUATE_SELECTED_FUNCTIONAL_CASE; no formal qualification credit"
+    },
+    {
+      "prompt": "Show R2 recorded interface IP addresses.",
+      "model": null,
+      "cloud_calls": 0,
+      "roles": [],
+      "tools": [
+        "inventory.read"
+      ],
+      "graph_seconds": 0.14518,
+      "request_budget_elapsed_seconds": null,
+      "raw_prose_preserved": false,
+      "task_quality": "ADEQUATE_SELECTED_FUNCTIONAL_CASE; no formal qualification credit"
+    },
+    {
+      "prompt": "Investigate why R1 cannot communicate with R2 using recorded interface state and current configuration. Explain what the available evidence supports.",
+      "model": "gemini-3.5-flash-lite",
+      "cloud_calls": 2,
+      "roles": [
+        [
+          "complex_planner",
+          "gemini-3.1-flash-lite"
+        ],
+        [
+          "evidence_reasoner",
+          "gemini-3.5-flash-lite"
+        ]
+      ],
+      "tools": [
+        "network.state",
+        "network.configuration"
+      ],
+      "graph_seconds": 6.1546199999999995,
+      "request_budget_elapsed_seconds": 6.199,
+      "raw_prose_preserved": true,
+      "task_quality": "ADEQUATE_SELECTED_FUNCTIONAL_CASE; no formal qualification credit"
+    },
+    {
+      "prompt": "Based on those limitations for R1, recommend the two most useful next diagnostic checks and explain what each would distinguish. Do not read, collect, or change anything now.",
+      "model": "gemini-3.5-flash-lite",
+      "cloud_calls": 2,
+      "roles": [
+        [
+          "complex_planner",
+          "gemini-3.1-flash-lite"
+        ],
+        [
+          "evidence_reasoner",
+          "gemini-3.5-flash-lite"
+        ]
+      ],
+      "tools": [],
+      "graph_seconds": 6.3135900000000005,
+      "request_budget_elapsed_seconds": 6.361,
+      "raw_prose_preserved": true,
+      "task_quality": "PARTIAL: redundant diagnostic recommendations, not a reasoning pass"
+    },
+    {
+      "prompt": "What is 14 plus 9?",
+      "model": "qwen2.5:1.5b",
+      "cloud_calls": 0,
+      "roles": [],
+      "tools": [],
+      "graph_seconds": 10.76243,
+      "request_budget_elapsed_seconds": null,
+      "raw_prose_preserved": false,
+      "task_quality": "ADEQUATE_SELECTED_FUNCTIONAL_CASE; no formal qualification credit"
+    }
+  ],
+  "preservation": "PASS",
+  "live_supplementary_round": "NOT_EXERCISED",
+  "mocked_graph_refinement": "PASS",
+  "full_quality_acceptance": false,
+  "quota": {
+    "new_reservations": 37,
+    "known_sandbox_connectivity_reservations_without_http": 1,
+    "new_models": {
+      "gemini-3.1-flash-lite": 22,
+      "gemini-3.5-flash-lite": 15
+    },
+    "rolling_24h_reservations": 121,
+    "peak_60s_requests": 8,
+    "peak_60s_input_actual_or_conservative_reservation": 97199,
+    "limits": {
+      "rpm": 15,
+      "input_tpm": 150000,
+      "shared_google_rpd": 500
+    },
+    "outside_application_account_usage": "Unknown; Google enforcement remains authoritative",
+    "final_browser_review": "tmp\\phase-g\\iterations\\20261026-model-neutral\\browser-final-v5\\acceptance-review.json",
+    "final_browser_calls": 6,
+    "new_HTTP_calls": 36,
+    "provider_usage_measured": {
+      "input_tokens": 195172,
+      "final_output_tokens": 5872,
+      "thought_tokens": 3511,
+      "successful_responses_with_usage": 31,
+      "error_request_token_usage": "Unknown for5HTTP400requests; conservative reservations retained"
+    }
+  },
+  "final_focused_regressions": {
+    "passed": 30,
+    "evidence": "tmp/phase-g/iterations/20261026-model-neutral/accepted-role-tests.xml"
+  },
+  "remaining_implementation_limits": [
+    "Live model-requested supplementary round not exercised",
+    "Advisory usefulness partial despite correct workflow",
+    "Initial plan keeps existing domain-level query granularity",
+    "Full graph schemas with OpenAI not live validated",
+    "Unverified semantic preview intentionally does not certify prose"
+  ]
+}

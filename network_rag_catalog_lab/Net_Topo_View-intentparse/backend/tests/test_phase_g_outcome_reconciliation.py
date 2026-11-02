@@ -153,14 +153,15 @@ def test_failed_reader_prose_is_replaced_per_outcome_not_accepted_as_success():
         'data':{'records':[{'hostname':'Birch','config_text':'hostname Birch\n'}]}},
         {'tool':'network.syslog','status':'unavailable','message':'Source unavailable','evidence_ids':['s'],'data':{}}]
     ev=[Evidence(id='c',source='saved',origin='stored'),Evidence(id='s',source='logs',origin='stored')]
-    parts=[{'id':o.id,'answer':'Successfully retrieved records.','sources':[]} for o in c.outcomes]
+    parts=[{'id':c.outcomes[0].id,'answer':'The saved hostname command is `hostname Birch` [S1].','sources':['S1']},
+        {'id':c.outcomes[1].id,'answer':'Successfully retrieved records.','sources':[]}]
     projected,reasons=project_read_outcomes(c,parts,ctx,ev)
-    assert 'hostname Birch' in projected[0]['answer']
+    assert projected[0]==parts[0]  # Successful model explanation is not erased.
     assert 'retrieval limitation' in projected[1]['answer'] and 'Successfully' not in projected[1]['answer']
     assert [p['sources'] for p in projected]==[['S1'],['S2']]
-    assert reasons[1]['reason']=='source_unavailable'
+    assert len(reasons)==1 and reasons[0]['reason']=='source_unavailable'
     # Original model output remains intact for honest grading.
-    assert all(p['answer']=='Successfully retrieved records.' for p in parts)
+    assert parts[1]['answer']=='Successfully retrieved records.'
 
 
 def test_comparison_interpretation_is_not_overwritten_by_a_successful_read_projection():

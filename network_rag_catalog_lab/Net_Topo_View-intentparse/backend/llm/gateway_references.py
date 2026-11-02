@@ -55,8 +55,9 @@ def read_intent_text(prompt):
     answers. A prohibited configuration write is not a request to read configs.
     Positive clauses after punctuation/contrast remain available to the router.
     """
+    text=re.sub(r'(^|[;,\n]|\bbut\b)\s*(?:not|excluding|exclude|without)\s+[^.!?;,\n]{1,300}',r'\1',main_request_text(prompt),flags=re.I)
     return re.sub(r'\b(?:do not|don.t|never)\s+(?:generat\w*|creat\w*|modif\w*|edit\w*|chang\w*|sav\w*|overwrit\w*|deploy\w*|execut\w*|collect\w*|publish\w*|substitut\w*|infer|assume|use|read|consult|include|retrieve|explain|interpret|compare|summari[sz]e)\b'
-        r'(?:(?!\b(?:but|instead|rather|then)\b)[^.!?;,\n]){0,300}', '',main_request_text(prompt),flags=re.I)
+        r'(?:(?!\b(?:but|instead|rather|then)\b)[^.!?;,\n]){0,300}', '',text,flags=re.I).lstrip(' ,;!?\n\t')
 
 
 def read_only_request(prompt):
@@ -146,9 +147,9 @@ def configuration_record_request(prompt):
 def attributes(prompt):
     result=[]
     for name,pattern in [('interfaces',r'\b(interfaces?|ports?)\b|\b(?:routed|all|every)\s+(?:IP(?:s|\s+addresses?)?|addresses?)\b'),
-        ('management_address',r'\b(?:management|mgmt)\s+(?:IPs?|addresses?|endpoints?)\b'),
+        ('management_address',r'\b(?:management|mgmt)\s+(?:IPs?|address(?:es)?|endpoints?)\b'),
         ('prefixes',r'\b(subnets?|prefixes|prefix|masks?)\b'),
-        ('addresses',r'\b(ip|ips|addresses?|addressing)\b'),('vendor',r'\bvendors?\b'),
+        ('addresses',r'\b(ip|ips|address(?:es)?|addressing)\b'),('vendor',r'\bvendors?\b'),
         ('model',r'\bmodels?\b'),('os_version',r'\b(versions?|os|firmware)\b|\b(?:software|operating system)\s+release\b'),
         ('role',r'\broles?\b'),('site',r'\b(sites?|locations?)\b'),('status',r'\bstatus\b')]:
         # A peer's protocol role is not the device's inventory role. Keep
@@ -204,17 +205,21 @@ def published_knowledge_read(prompt,inventory):
     return result
 
 
-def resolve_read(prompt, previous, inventory):
+def resolve_read(prompt, previous, inventory, *, reference_only=False):
     from llm.gateway_network import route_network
     domains,query=route_network(prompt,inventory)
     refs=query.get('device_refs',[])
     attrs=attributes(prompt)
     material=bool(re.search(r'\b(pdf|document|attachments?|uploaded|attached|screenshot|page\s+\d+|open file|active|editor|buffer|template)\b',prompt,re.I))
-    write=bool(requested_authoring_artifact(prompt) or re.search(r'\b(generate|create|configure|change|modify|edit|replace|refactor|add|remove|delete|set|enable|disable)\b',prompt,re.I))
-    read=bool(re.search(r'\b(what|where|which|show|quote|list|read|retrieve|tell|inspect|give|display|check|fetch|get|find|identify|determine|assess|evaluate|why|explain|describe|compare|contrast|reconcile|details|information|records|are|is|do|does|can|how many|investigate|diagnose|troubleshoot)\b',prompt,re.I))
+    write=not reference_only and bool(requested_authoring_artifact(prompt) or re.search(r'\b(generate|create|configure|change|modify|edit|replace|refactor|add|remove|delete|set|enable|disable)\b',prompt,re.I))
+    read=reference_only or bool(re.search(r'\b(what|where|which|show|quote|list|read|retrieve|tell|inspect|give|display|check|fetch|get|find|identify|determine|assess|evaluate|why|explain|describe|compare|contrast|reconcile|details|information|records|are|is|do|does|can|how many|investigate|diagnose|troubleshoot)\b',prompt,re.I))
     dependent=bool(re.search(r'\b(its|their|this|that|those|these|they|them|first|second|third|last|other|same|previous|sure|certain|verify|again|instead|it)\b|\bwhich are\b',prompt,re.I)
         or re.search(r'\b(?:just|previously|already)\s+(?:read|retrieved|discussed|reviewed)\b',prompt,re.I))
     old=(previous or {}).get('context_coverage',{}).get('retrieval',{})
+    # Prospective next-check advice can refer to the owned preceding read
+    # without repeating a pronoun or device name. Restore identities only;
+    # this reference-only path never restores readers as execution authority.
+    dependent=dependent or bool(reference_only and old.get('domains') and re.search(r'\bnext\b',prompt,re.I))
     old_route=(previous or {}).get('context_coverage',{}).get('routing',{})
     from development.source_registry import explicit_read_sources,BY_KEY,reader_domains
     explicit_sources=explicit_read_sources(prompt,inventory.get('logical_source_categories',[]))
@@ -288,6 +293,12 @@ def resolve_read(prompt, previous, inventory):
             # select one of its devices. Preserve the owned entity set and let
             # fresh readers answer the requested attribute across that scope.
             selected=entities
+        elif re.search(r'\b(?:(?:that|this|same|previous)\s+){1,3}(?:device|router|switch)\b',prompt,re.I):
+            owners=list(dict.fromkeys(str(e['device_id']) for e in entities))
+            if len(owners)!=1:return {'question':'Which device in the previous result do you mean?'}
+            # Several ports on one device are not several device references.
+            # Resolve at the explicitly requested entity granularity.
+            selected=[{'device_id':owners[0]}]
         elif attrs or re.search(r'\b(it|its)\b',prompt,re.I):
             if len(entities)>1:return {'question':'Which device or interface in the previous result do you mean?'}
             selected=entities
@@ -315,7 +326,7 @@ def resolve_read(prompt, previous, inventory):
             # A comparison has two operands. Old source references supply its
             # first operand, not cached observations or assistant-written facts.
             chosen=list(dict.fromkeys(old['domains']+chosen))
-        selected_attrs=attrs or old.get('attributes',[])
+        selected_attrs=attrs or (old.get('attributes',[]) if chosen==old.get('domains') else [])
         if provenance:selected_attrs=list(dict.fromkeys(selected_attrs+['provenance']))
         return {'domains':chosen,'device_refs':refs,'interface_refs':ifaces,
                 'attributes':selected_attrs,'use_history':True,
@@ -342,7 +353,9 @@ def resolve_read(prompt, previous, inventory):
     if (read or attrs) and not material and refs:
         if attrs:domains=list(dict.fromkeys(['inventory']+[d for d in domains if d!='inventory']))
         if not domains:domains=['inventory']
-        return {'domains':domains,'device_refs':refs,'interface_refs':[], 'attributes':attrs,'use_history':False}
+        same_owned_subject=bool(reference_only and dependent and any(str(d['id']) in old.get('device_refs',[]) and
+            (d['hostname'] in refs or str(d['id']) in refs) for d in inventory['devices']))
+        return {'domains':domains,'device_refs':refs,'interface_refs':[], 'attributes':attrs,'use_history':same_owned_subject}
     # An attribute noun alone ("why can an interface lose carrier?") does not
     # identify this user's inventory. Leave unscoped concepts to conversation.
     if read and domains and not refs and re.search(r'\b(stored|recorded|saved|our|my|inventory|planned|live)\b',prompt,re.I):

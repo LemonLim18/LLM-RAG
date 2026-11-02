@@ -4,7 +4,7 @@ import re
 from pydantic import Field
 from llm.gateway_models import StrictModel
 from llm.gateway_references import requested_authoring_artifact
-from llm.orchestration.request_contract import RequestedContract
+from llm.orchestration.request_contract import RequestedContract,reader_constraints
 
 
 class SemanticRoute(StrictModel):
@@ -21,6 +21,20 @@ class SemanticRoute(StrictModel):
     source_requests: dict = Field(default_factory=dict)
     planning: dict = Field(default_factory=dict)
     requested_outcomes: RequestedContract | None = None
+
+
+def advisory_route(prompt,previous,inventory):
+    from llm.orchestration.request_contract import advisory_contract
+    contract=advisory_contract(prompt)
+    if contract is None:return None
+    from llm.gateway_references import resolve_read,read_intent_text
+    # Resolve owned names/references without turning prospective evidence into
+    # executable readers. No prior assistant assertion becomes an observation.
+    resolved=resolve_read(read_intent_text(prompt),previous,inventory or {'devices':[]},reference_only=True) or {}
+    return SemanticRoute(intent='explain',requested_outcomes=contract,
+        device_refs=resolved.get('device_refs',[]),interface_refs=resolved.get('interface_refs',[]),
+        use_history=resolved.get('use_history',False),
+        planning={'mode':'requested_advisory','model_decision':False,'execution':'no readers or engineering effects'})
 
 
 async def select_context(prompt, model, kind, editor, attachments, history, previous=None, inventory=None, generate_fn=None):
@@ -46,6 +60,8 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
     from llm.gateway_documents import editor_context_requested
     from llm.gateway_references import previous_context_reference,read_only_request
     prior_reference=previous_context_reference(previous)
+    advice=advisory_route(prompt,previous,inventory)
+    if advice is not None:return advice
     if not editor_context_requested(prompt,editor,previous):editor=None
     from llm.gateway_documents import editor_source_reference
     explicit_editor=editor_source_reference(prompt) and re.search(r'\b(?:active|open|unsaved|selected|editor|Monaco)\b',prompt,re.I)
@@ -100,6 +116,17 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
     if editor and kind=='studio' and re.search(r'\b(open|active|current|selected|unsaved)\b.{0,30}\b(code|file|buffer|document|template|section)\b',prompt,re.I) and re.search(r'\b(add|insert|correct|adjust|replace|modify|edit|update|rename|annotate|refactor)\b',prompt,re.I) and not re.search(r'\b(do not|don.t|without|never)\s+(?:add|insert|correct|adjust|replace|modify|edit|update|rename|annotate|refactor)\b',prompt,re.I):
         return SemanticRoute(intent='edit',use_editor=True,use_history=True,planning={'mode':'explicit_editor_effect','model_decision':False})
     resolved=resolve_read(document_prompt,previous,inventory) if inventory is not None else None
+    if resolved and not (resolved.get('question') or resolved.get('documents')):
+        policy=reader_constraints(prompt)
+        if policy['allowed'] is not None:
+            permitted=policy['allowed']-policy['denied']
+            chosen=[d for d in resolved.get('domains',[]) if d in permitted]
+            # An exact subject/attribute lookup is not authority to replace an
+            # explicitly selected reader with inventory. Reuse the user's sole
+            # allowed source; multiple choices remain for the existing planner.
+            if not chosen and len(permitted)==1:chosen=list(permitted)
+            resolved={**resolved,'domains':chosen,
+                'source_requests':{d:v for d,v in resolved.get('source_requests',{}).items() if d in chosen}}
     model_planning=os.getenv('COGNISHIELD_AI_PLANNING','0')=='1'
     from llm.gateway_references import relational_read
     # An explanatory response style does not change who owns an exact stored
@@ -156,14 +183,18 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
         # Reuse the established semantic confidence gate for ordinary conversation.
         # A small planner must not turn unrelated greetings/concepts into reads
         # merely because inventory/editor metadata is available.
-        if resolved is None and not scoped_network and not prior_reference:
+        if resolved is None and not scoped_network:
             from llm.gateway_semantics import semantic_hint
             hint=await semantic_hint(prompt)
             if hint and hint['intent']=='answer':
                 return SemanticRoute(intent='answer',planning={'mode':'existing_semantic_conversation','semantic_hint':hint})
         # Rich network metadata belongs only in an established read workflow.
         # Keep the existing small semantic decision for uncertain/general turns.
-        if resolved is not None or scoped_network or prior_reference or hint and hint['intent']=='network':
+        # An owned previous reference is available context, not evidence that
+        # this turn requests another read. Unbound turns use the existing
+        # workflow classifier below; genuine follow-ups can still select the
+        # same information planner after classification/reference resolution.
+        if resolved is not None or scoped_network or hint and hint['intent']=='network':
             from llm.orchestration.planning import propose
             from fastapi import HTTPException
             try:
@@ -175,6 +206,15 @@ async def select_context(prompt, model, kind, editor, attachments, history, prev
                     raise ValueError('Model workflow omits the explicitly named registered source read')
                 if expected_domains and re.search(r'\b(?:read|use|consult|show|inspect|check)\s+only\b',prompt,re.I) and set(route.network_domains)!=expected_domains:
                     raise ValueError('Model workflow adds readers outside the explicitly exclusive source request')
+                policy=reader_constraints(prompt)
+                expected_exclusive=(policy['allowed']-policy['denied'] if policy['allowed'] is not None else set((resolved or {}).get('domains',[])))
+                if (resolved and resolved.get('domains') and re.search(r'\b(?:do not|don.t|never)\s+(?:read|query|consult|collect|retrieve)\s+(?:any\s+)?other\s+(?:sources|readers)\b',prompt,re.I)
+                        and set(route.network_domains)!=expected_exclusive):
+                    # The latest explicit exclusion controls an already resolved
+                    # read, even when a registry title uses a different inflection.
+                    # Reject the model proposal; reuse the ordinary resolved-read
+                    # fallback below rather than silently widening its scope.
+                    raise ValueError('Model workflow adds readers outside the explicitly resolved source restriction')
                 if resolved and resolved.get('interface_refs') and route.intent in {'answer','explain'} and route.network_domains:
                     # A structured model plan selects information needs, but
                     # must not discard an exact server-resolved port binding.

@@ -1,0 +1,3087 @@
+{
+  "version": 1,
+  "freeze_before_inference": true,
+  "fixtures": {
+    "SP-D1": {
+      "format_version": 1,
+      "id": "SP-D1",
+      "revision": 1,
+      "title": "Exposed supplementary-window diagnostic, not a replacement frozen score",
+      "logical_time": "2026-11-01T13:00:00Z",
+      "model_scope": "bounded_routed_path",
+      "inventory_complete": true,
+      "devices": [
+        {
+          "id": 631,
+          "hostname": "Alder",
+          "management_ip": "192.0.2.161",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 742,
+          "hostname": "Grit",
+          "management_ip": "192.0.2.162",
+          "vendor": "juniper",
+          "os_version": "23.4",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 853,
+          "hostname": "Opal",
+          "management_ip": "192.0.2.163",
+          "vendor": "huawei",
+          "os_version": "8",
+          "model": "isolated-recorded-profile",
+          "role": "core",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        },
+        {
+          "id": 964,
+          "hostname": "Prism",
+          "management_ip": "192.0.2.164",
+          "vendor": "cisco_xe",
+          "os_version": "17.9",
+          "model": "isolated-recorded-profile",
+          "role": "edge",
+          "site": "AF-independent-development",
+          "location": "",
+          "status": "active",
+          "aliases": [],
+          "engineering_facts": {}
+        }
+      ],
+      "interfaces": [
+        {
+          "id": 6311,
+          "device_id": 631,
+          "name": "GigabitEthernet2/0/4",
+          "interface_type": "routed",
+          "prefix": "10.216.11.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7421,
+          "device_id": 742,
+          "name": "ge-0/0/3.0",
+          "interface_type": "routed",
+          "prefix": "10.216.11.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 7422,
+          "device_id": 742,
+          "name": "ge-0/0/4.0",
+          "interface_type": "routed",
+          "prefix": "10.216.22.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 8531,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.22.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 8532,
+          "device_id": 853,
+          "name": "GigabitEthernet0/0/3",
+          "interface_type": "routed",
+          "prefix": "10.216.33.1/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9641,
+          "device_id": 964,
+          "name": "GigabitEthernet5/0/2",
+          "interface_type": "routed",
+          "prefix": "10.216.33.2/30",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 6310,
+          "device_id": 631,
+          "name": "Loopback61",
+          "interface_type": "routed",
+          "prefix": "198.18.216.1/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        },
+        {
+          "id": 9640,
+          "device_id": 964,
+          "name": "Loopback96",
+          "interface_type": "routed",
+          "prefix": "198.18.216.4/32",
+          "admin_status": "up",
+          "oper_status": "up",
+          "vrf": "default",
+          "speed_bps": null
+        }
+      ],
+      "planned_links": [
+        {
+          "id": 2161,
+          "src_device_id": 631,
+          "src_interface_id": 6311,
+          "dst_device_id": 742,
+          "dst_interface_id": 7421
+        },
+        {
+          "id": 2162,
+          "src_device_id": 742,
+          "src_interface_id": 7422,
+          "dst_device_id": 853,
+          "dst_interface_id": 8531
+        },
+        {
+          "id": 2163,
+          "src_device_id": 853,
+          "src_interface_id": 8532,
+          "dst_device_id": 964,
+          "dst_interface_id": 9641
+        }
+      ],
+      "records": {
+        "state": [
+          {
+            "id": "sp-03-observer-6311",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.11.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-7421",
+            "device_id": 742,
+            "interface_id": 7421,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.11.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-7422",
+            "device_id": 742,
+            "interface_id": 7422,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-8531",
+            "device_id": 853,
+            "interface_id": 8531,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.22.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-8532",
+            "device_id": 853,
+            "interface_id": 8532,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.1/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-9641",
+            "device_id": 964,
+            "interface_id": 9641,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "10.216.33.2/30",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-6310",
+            "device_id": 631,
+            "interface_id": 6310,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.1/32",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          },
+          {
+            "id": "sp-03-observer-9640",
+            "device_id": 964,
+            "interface_id": 9640,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "interface_state",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "prefix": "198.18.216.4/32",
+              "vrf": "default",
+              "admin_status": "up",
+              "oper_status": "up"
+            }
+          }
+        ],
+        "configuration": [
+          {
+            "id": "sp-03-saved-631",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Alder\ninterface GigabitEthernet2/0/4\n ip address 10.216.11.1 255.255.255.252\n no shutdown\n!\ninterface Loopback61\n ip address 198.18.216.1 255.255.255.255\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-03-saved-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-03-saved-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-03-saved-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "configuration_snapshot",
+            "source": "af-authored-recorder",
+            "current": false,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "running_configuration": [
+          {
+            "id": "SP03/current-label",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T10:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "interface GigabitEthernet2/0/4\n description OLD-TAG\n no shutdown\n",
+              "change_event_ref": "SP03/label-request"
+            }
+          },
+          {
+            "id": "sp-03-run-742",
+            "device_id": 742,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Grit\nset interfaces ge-0/0/3 unit 0 family inet address 10.216.11.2/30\nset interfaces ge-0/0/4 unit 0 family inet address 10.216.22.1/30\n"
+            }
+          },
+          {
+            "id": "sp-03-run-853",
+            "device_id": 853,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Opal\ninterface GigabitEthernet0/0/2\n ip address 10.216.22.2 255.255.255.252\n no shutdown\n!\ninterface GigabitEthernet0/0/3\n ip address 10.216.33.1 255.255.255.252\n no shutdown\n!\n"
+            }
+          },
+          {
+            "id": "sp-03-run-964",
+            "device_id": 964,
+            "interface_id": null,
+            "timestamp": "2026-11-01T13:00:00Z",
+            "kind": "running_configuration",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "config_text": "hostname Prism\ninterface GigabitEthernet5/0/2\n ip address 10.216.33.2 255.255.255.252\n no shutdown\n!\ninterface Loopback96\n ip address 198.18.216.4 255.255.255.255\n no shutdown\n!\n"
+            }
+          }
+        ],
+        "topology": [],
+        "telemetry": [],
+        "syslog": [
+          {
+            "id": "SP03/label-request",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T06:05:00Z",
+            "kind": "configuration_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [
+              "SP03/asset-ledger"
+            ],
+            "values": {
+              "message": "A label replacement is proposed to align circuit identifiers with asset-map release Q17. No command application, cable move or service restoration is measured."
+            }
+          },
+          {
+            "id": "SP03/asset-ledger",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T06:00:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Asset-map release Q17 assigns circuit tag METRO-712 to this recorded port; this is a registry assignment, not a packet or physical verification."
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-0",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:00:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 0"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-1",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:01:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 1"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-2",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:02:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 2"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-3",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:03:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 3"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-4",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:04:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 4"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-5",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:05:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 5"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-6",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:06:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 6"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-7",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:07:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 7"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-8",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:08:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 8"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-9",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:09:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 9"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-10",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:10:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 10"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-11",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:11:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 11"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-12",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:12:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 12"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-13",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:13:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 13"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-14",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:14:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 14"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-15",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:15:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 15"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-16",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:16:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 16"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-17",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:17:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 17"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-18",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:18:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 18"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-19",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:19:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 19"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-20",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:20:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 20"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-21",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:21:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 21"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-22",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:22:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 22"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-23",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:23:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 23"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-24",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:24:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 24"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-25",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:25:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 25"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-26",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:26:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 26"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-27",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:27:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 27"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-28",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:28:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 28"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-29",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:29:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 29"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-30",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:30:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 30"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-31",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:31:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 31"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-32",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:32:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 32"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-33",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:33:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 33"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-34",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:34:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 34"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-35",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:35:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 35"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-36",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:36:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 36"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-37",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:37:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 37"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-38",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:38:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 38"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-39",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:39:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 39"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-40",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:40:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 40"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-41",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:41:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 41"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-42",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:42:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 42"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-43",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:43:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 43"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-44",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:44:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 44"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-45",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:45:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 45"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-46",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:46:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 46"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-47",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:47:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 47"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-48",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:48:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 48"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-49",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:49:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 49"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-50",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:50:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 50"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-51",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:51:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 51"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-52",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:52:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 52"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-53",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:53:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 53"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-54",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:54:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 54"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-55",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:55:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 55"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-56",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:56:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 56"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-57",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:57:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 57"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-58",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:58:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 58"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-59",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:59:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 59"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-60",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:00:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 60"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-61",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:01:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 61"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-62",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:02:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 62"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-63",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:03:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 63"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-64",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:04:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 64"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-65",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:05:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 65"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-66",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:06:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 66"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-67",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:07:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 67"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-68",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:08:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 68"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-69",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:09:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 69"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-70",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:10:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 70"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-71",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:11:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 71"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-72",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:12:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 72"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-73",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:13:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 73"
+            }
+          },
+          {
+            "id": "SPD1/heartbeat-74",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:14:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "values": {
+              "message": "Recorder heartbeat 74"
+            }
+          }
+        ],
+        "incidents": []
+      },
+      "availability": {
+        "state": true,
+        "configuration": true,
+        "running_configuration": true,
+        "topology": true,
+        "telemetry": true,
+        "syslog": true,
+        "incidents": true
+      },
+      "network": null,
+      "source_statuses": {},
+      "source_manifest": {},
+      "unavailable_record_refs": {}
+    }
+  },
+  "cases": [
+    {
+      "id": "SP-D1",
+      "scenario": "SP-D1",
+      "prompt": "Investigate Alder current interface-description record and follow its source-owned change reference. Explain the proposed label purpose and exact assigned circuit tag. Does this establish command application, a physical cable move or restored forwarding? Use configuration and syslog only; do not read other sources or perform collection or engineering actions.",
+      "surface": "studio",
+      "profile": "enhanced",
+      "setup": null,
+      "source_validation_queries": [
+        {
+          "domain": "configuration",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ],
+            "source_scope": "current"
+          }
+        },
+        {
+          "domain": "syslog",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ],
+            "limit": 8
+          }
+        },
+        {
+          "domain": "syslog",
+          "parameters": {
+            "device_refs": [
+              "631"
+            ],
+            "limit": 100
+          }
+        }
+      ],
+      "expected_outcomes": [
+        "Initial8logs omit linked records; authorized larger read finds SP03/label-request and SP03/asset-ledger.",
+        "Proposed alignment with asset-map Q17, assigned tagMETRO-712; current config still OLD-TAG.",
+        "No command application, physical cable move or restored forwarding is established; exact linked records reach actual revised model input."
+      ],
+      "prohibited_outputs": [
+        "Source found only in graph not model input",
+        "Proposed tag called active",
+        "Physical/forwarding restoration asserted"
+      ],
+      "diagnostic": "EXPOSED_POST_COHORT_WINDOW_AUTHORING_CORRECTION_NOT_FRESH_GENERALIZATION"
+    }
+  ],
+  "original_SP03_preserved": true,
+  "oracle": [
+    {
+      "status": "success",
+      "data": {
+        "records": [
+          {
+            "message": "Recorder heartbeat 74",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-74",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:14:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 73",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-73",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:13:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 72",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-72",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:12:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 71",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-71",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:11:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 70",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-70",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:10:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 69",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-69",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:09:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 68",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-68",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:08:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 67",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-67",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:07:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 66",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-66",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:06:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 65",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-65",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:05:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 64",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-64",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:04:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 63",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-63",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:03:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 62",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-62",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:02:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 61",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-61",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:01:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 60",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-60",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:00:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 59",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-59",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:59:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 58",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-58",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:58:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 57",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-57",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:57:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 56",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-56",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:56:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 55",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-55",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:55:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 54",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-54",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:54:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 53",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-53",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:53:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 52",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-52",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:52:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 51",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-51",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:51:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 50",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-50",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:50:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 49",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-49",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:49:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 48",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-48",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:48:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 47",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-47",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:47:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 46",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-46",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:46:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 45",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-45",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:45:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          }
+        ],
+        "scenario": {
+          "id": "SP-D1",
+          "revision": 1,
+          "epoch": 2,
+          "source_revision": "2:ecbeb122399d17b34943b44c4f48246a0057623c32f81ac05cd7c0de696eb31a",
+          "logical_time": "2026-11-01T13:00:00Z",
+          "model_scope": "bounded_routed_path",
+          "authoritative_development": true,
+          "mode": "development_scenario",
+          "origin": "simulated",
+          "virtual_now": "2026-11-01T13:00:00Z"
+        },
+        "total": 77,
+        "truncated": true,
+        "source_available": true
+      },
+      "message": "",
+      "evidence": [
+        {
+          "id": "40bce2c02574436ead11f12ab2ce1dd4",
+          "source": "development.syslog",
+          "origin": "simulated",
+          "time_scope": "current",
+          "captured_at": "2026-11-01T11:14:00+00:00",
+          "retrieved_at": "2026-11-01T14:12:28.440510+00:00",
+          "requested_time_range": null,
+          "freshness": "stale",
+          "source_revision": "2:ecbeb122399d17b34943b44c4f48246a0057623c32f81ac05cd7c0de696eb31a",
+          "device_refs": [
+            "631"
+          ],
+          "page": null,
+          "start_line": null,
+          "end_line": null,
+          "authority": "development_scenario"
+        }
+      ]
+    },
+    {
+      "status": "success",
+      "data": {
+        "records": [
+          {
+            "message": "Recorder heartbeat 74",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-74",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:14:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 73",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-73",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:13:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 72",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-72",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:12:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 71",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-71",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:11:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 70",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-70",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:10:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 69",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-69",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:09:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 68",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-68",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:08:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 67",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-67",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:07:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 66",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-66",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:06:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 65",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-65",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:05:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 64",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-64",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:04:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 63",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-63",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:03:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 62",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-62",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:02:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 61",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-61",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:01:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 60",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-60",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T11:00:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 59",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-59",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:59:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 58",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-58",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:58:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 57",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-57",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:57:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 56",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-56",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:56:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 55",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-55",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:55:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 54",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-54",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:54:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 53",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-53",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:53:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 52",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-52",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:52:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 51",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-51",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:51:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 50",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-50",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:50:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 49",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-49",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:49:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 48",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-48",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:48:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 47",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-47",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:47:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 46",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-46",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:46:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 45",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-45",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:45:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 44",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-44",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:44:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 43",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-43",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:43:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 42",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-42",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:42:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 41",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-41",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:41:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 40",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-40",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:40:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 39",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-39",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:39:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 38",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-38",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:38:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 37",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-37",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:37:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 36",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-36",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:36:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 35",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-35",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:35:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 34",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-34",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:34:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 33",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-33",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:33:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 32",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-32",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:32:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 31",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-31",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:31:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 30",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-30",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:30:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 29",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-29",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:29:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 28",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-28",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:28:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 27",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-27",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:27:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 26",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-26",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:26:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 25",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-25",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:25:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 24",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-24",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:24:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 23",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-23",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:23:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 22",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-22",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:22:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 21",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-21",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:21:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 20",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-20",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:20:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 19",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-19",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:19:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 18",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-18",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:18:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 17",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-17",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:17:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 16",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-16",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:16:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 15",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-15",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:15:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 14",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-14",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:14:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 13",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-13",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:13:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 12",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-12",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:12:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 11",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-11",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:11:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 10",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-10",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:10:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 9",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-9",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:09:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 8",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-8",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:08:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 7",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-7",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:07:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 6",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-6",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:06:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 5",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-5",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:05:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 4",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-4",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:04:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 3",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-3",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:03:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 2",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-2",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:02:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 1",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-1",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:01:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "Recorder heartbeat 0",
+            "hostname": "Alder",
+            "interface": null,
+            "id": "SPD1/heartbeat-0",
+            "device_id": 631,
+            "interface_id": null,
+            "timestamp": "2026-11-01T10:00:00+00:00",
+            "kind": "log_event",
+            "source": "planning-window-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          },
+          {
+            "message": "A label replacement is proposed to align circuit identifiers with asset-map release Q17. No command application, cable move or service restoration is measured.",
+            "hostname": "Alder",
+            "interface": "GigabitEthernet2/0/4",
+            "id": "SP03/label-request",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T06:05:00Z",
+            "kind": "configuration_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [
+              "SP03/asset-ledger"
+            ],
+            "freshness": "stale"
+          },
+          {
+            "message": "Asset-map release Q17 assigns circuit tag METRO-712 to this recorded port; this is a registry assignment, not a packet or physical verification.",
+            "hostname": "Alder",
+            "interface": "GigabitEthernet2/0/4",
+            "id": "SP03/asset-ledger",
+            "device_id": 631,
+            "interface_id": 6311,
+            "timestamp": "2026-11-01T06:00:00Z",
+            "kind": "log_event",
+            "source": "af-authored-recorder",
+            "current": true,
+            "depends_on": [],
+            "freshness": "stale"
+          }
+        ],
+        "scenario": {
+          "id": "SP-D1",
+          "revision": 1,
+          "epoch": 2,
+          "source_revision": "2:ecbeb122399d17b34943b44c4f48246a0057623c32f81ac05cd7c0de696eb31a",
+          "logical_time": "2026-11-01T13:00:00Z",
+          "model_scope": "bounded_routed_path",
+          "authoritative_development": true,
+          "mode": "development_scenario",
+          "origin": "simulated",
+          "virtual_now": "2026-11-01T13:00:00Z"
+        },
+        "total": 77,
+        "truncated": false,
+        "source_available": true
+      },
+      "message": "",
+      "evidence": [
+        {
+          "id": "73c669e907b2438d8b37d06f766628ea",
+          "source": "development.syslog",
+          "origin": "simulated",
+          "time_scope": "current",
+          "captured_at": "2026-11-01T11:14:00+00:00",
+          "retrieved_at": "2026-11-01T14:12:28.447565+00:00",
+          "requested_time_range": null,
+          "freshness": "stale",
+          "source_revision": "2:ecbeb122399d17b34943b44c4f48246a0057623c32f81ac05cd7c0de696eb31a",
+          "device_refs": [
+            "631"
+          ],
+          "page": null,
+          "start_line": null,
+          "end_line": null,
+          "authority": "development_scenario"
+        }
+      ]
+    }
+  ]
+}

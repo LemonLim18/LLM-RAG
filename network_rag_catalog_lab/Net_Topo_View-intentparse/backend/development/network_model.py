@@ -318,6 +318,10 @@ def forwarding(scenario, flow, *, max_hops=32, max_branches=16):
     ifs = {i['id']: i for i in scenario['interfaces']}
     names = {d['id']: d['hostname'] for d in scenario['devices']}
     tables = {(t.device_id, t.vrf): t for t in model.tables}
+    def interface_location(interface, direction):
+        return {'device_id':interface['device_id'],'hostname':names[interface['device_id']],
+                'interface_id':interface['id'],'interface':interface['name'],'direction':direction,
+                'admin_status':interface['admin_status'],'oper_status':interface['oper_status']}
     if not 1 <= max_hops <= 32 or not 1 <= max_branches <= 16: raise ValueError('Traversal budget exceeds supported bounds')
     def lookup(device, vrf, address, seen=()):
         key = (device, vrf, address)
@@ -352,15 +356,21 @@ def forwarding(scenario, flow, *, max_hops=32, max_branches=16):
         device, vrf, ingress, steps, seen = queue.popleft()
         encountered.add(device)
         def finish(status, reason, trail=steps,location=None):
+            # A trail records completed egress steps, not necessarily the device
+            # where ingress/lookup stopped. Preserve that operand explicitly.
+            if location is None and status != 'delivered':
+                location={'device_id':device,'hostname':names[device],'vrf':vrf}
             outcomes.append({'status': status, 'reason': reason, 'hops': trail,
-                **({'failure_location':location} if location else {})})
+                **({'failure_location':location} if location else {}),
+                **({'destination_ingress':{**interface_location(ifs[ingress],'ingress'),'vrf':vrf}}
+                   if status=='delivered' and ingress is not None else {})})
         marker = (device, vrf, ingress)
         if marker in seen: finish('failed', 'forwarding loop'); continue
         if len(steps) >= max_hops: finish('unknown', 'hop budget reached'); continue
         if ingress is not None:
             state = ifs[ingress]
-            if state['admin_status'] == 'down' or state['oper_status'] == 'down': finish('failed', 'ingress interface down'); continue
-            if state['admin_status'] != 'up' or state['oper_status'] != 'up': finish('unknown', 'ingress interface state unknown'); continue
+            if state['admin_status'] == 'down' or state['oper_status'] == 'down': finish('failed', 'ingress interface down',location=interface_location(state,'ingress')); continue
+            if state['admin_status'] != 'up' or state['oper_status'] != 'up': finish('unknown', 'ingress interface state unknown',location=interface_location(state,'ingress')); continue
             action, rule = policy_decision(model, ingress, 'ingress', vrf, flow)
             if action != 'permit':
                 finish('failed' if action == 'deny' else 'unknown','ingress policy '+str(rule),location={
@@ -375,14 +385,16 @@ def forwarding(scenario, flow, *, max_hops=32, max_branches=16):
             if number and branches >= max_branches: finish('unknown', 'branch budget reached'); break
             if number: branches += 1
             step = {'device_id': device, 'hostname': names[device], 'vrf': vrf, 'route_id': route.id, 'prefix': route.prefix}
+            if ingress is not None:
+                step['ingress']={**interface_location(ifs[ingress],'ingress'),'vrf':vrf}
             if route.action == 'discard': finish('failed', 'discard route', steps + [step]); continue
             if route.action == 'leak':
                 queue.append((device, route.leak_to_vrf, None, steps + [step], seen | {marker})); continue
             interface = ifs[hop.interface_id]; step.update(interface=interface['name'], interface_id=interface['id'], next_hop=hop.address)
             trail = steps + [step]
             if interface.get('vrf', 'default') != vrf: finish('unknown', 'egress interface VRF mismatch', trail); continue
-            if interface['admin_status'] == 'down' or interface['oper_status'] == 'down': finish('failed', 'egress interface down', trail); continue
-            if interface['admin_status'] != 'up' or interface['oper_status'] != 'up': finish('unknown', 'egress interface state unknown', trail); continue
+            if interface['admin_status'] == 'down' or interface['oper_status'] == 'down': finish('failed', 'egress interface down', trail,interface_location(interface,'egress')); continue
+            if interface['admin_status'] != 'up' or interface['oper_status'] != 'up': finish('unknown', 'egress interface state unknown', trail,interface_location(interface,'egress')); continue
             action, rule = policy_decision(model, interface['id'], 'egress', vrf, flow)
             if action != 'permit':
                 finish('failed' if action == 'deny' else 'unknown','egress policy '+str(rule),trail,location={

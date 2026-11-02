@@ -8,6 +8,7 @@ from llm.gateway_routing import SemanticRoute
 class ToolStep(StrictModel):
     tool: str
     domain: Literal['inventory','topology','telemetry','syslog','incidents','configuration','knowledge','state']
+    parameters: dict | None = None
 
 
 class AgentState(StrictModel):
@@ -19,7 +20,7 @@ class AgentState(StrictModel):
     device_refs: list[str] = Field(default_factory=list)
     interface_refs: list[str] = Field(default_factory=list)
     context_references: dict = Field(default_factory=dict)
-    plan: list[ToolStep] = Field(default_factory=list,max_length=8)
+    plan: list[ToolStep] = Field(default_factory=list,max_length=32)
     results: list[dict] = Field(default_factory=list)
     evidence: list[Evidence] = Field(default_factory=list)
     observations: list[dict] = Field(default_factory=list)
@@ -28,7 +29,7 @@ class AgentState(StrictModel):
     outcome_results: list[dict] = Field(default_factory=list,max_length=8)
     answer: str = ''
     limitations: list[str] = Field(default_factory=list)
-    rounds: int = Field(default=0,ge=0,le=3)
+    rounds: int = Field(default=0,ge=0,le=4)
     memory: dict = Field(default_factory=dict)
     assessment: dict = Field(default_factory=dict)
     pending_domains: list[str] = Field(default_factory=list,max_length=8)
@@ -38,3 +39,5 @@ class AgentState(StrictModel):
     studio_evidence: list[Evidence] = Field(default_factory=list)
     studio_coverage: dict = Field(default_factory=dict)
     studio_answer: str = ''
+    role_decision: dict = Field(default_factory=dict)
+    investigation: dict = Field(default_factory=dict)

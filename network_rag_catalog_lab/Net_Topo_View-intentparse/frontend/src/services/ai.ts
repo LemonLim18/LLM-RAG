@@ -26,8 +26,15 @@ export interface AIConversation {
   messages: { id: string; role: string; content: string; timestamp: number; evidence?: AIEvidence[]; evidence_details?: string; gatewayReviewRequestId?:string }[];
 }
 export interface AITurnRequest { request_id:string;prompt:string;model?:string;editor?:EditorSnapshot|null;related_editors?:EditorSnapshot[];attachment_ids?:string[] }
+export interface CloudContext {enabled:boolean;eligible:boolean;model:string;source_revision?:string;scenario_id?:string;scenario_digest?:string;multi_model?:boolean;roles?:Record<string,{provider:string;model:string;schema_mode?:string}>;experiment?:{semantic_mode:string;supplementary_round:boolean;max_role_calls:number;investigation_profile?:{enabled:boolean;seconds:number;max_readers:number;max_rounds:number;max_role_calls:number}}}
+export function cloudConsentDescription(context:CloudContext|null){
+  if(!context?.multi_model)return 'Approve cloud interpretation of this exact synthetic message and owned history. Editor buffers and uploads excluded.';
+  const p=context.experiment?.investigation_profile;
+  const envelope=p?.enabled ? `completeness-first source coverage, up to ${p.max_readers} read operations in ${p.max_rounds} rounds, ${p.max_role_calls} model calls and ${p.seconds} seconds total; automatic post-draft evidence reads may occur` : 'at most one supplementary authorized read round';
+  return `Approve this exact synthetic message and owned history for ${context.roles?.complex_planner?.model} planning and ${context.roles?.evidence_reasoner?.model} interpretation, with ${envelope}. Output mode: ${context.roles?.complex_planner?.schema_mode} (application schema checked). Semantic mode: ${context.experiment?.semantic_mode}. Unverified AI interpretation; no engineering authority. Editor buffers and uploads excluded.`;
+}
 export const aiApi = {
-  hybridContext: () => request<{enabled:boolean;eligible:boolean;model:string;source_revision?:string;scenario_id?:string;scenario_digest?:string}>('/ai/hybrid-context'),
+  hybridContext: () => request<CloudContext>('/ai/hybrid-context'),
   approveSyntheticCloud: (id:string,turn:AITurnRequest,expected_source_revision:string) => request<{approved:boolean;model:string}>(`/ai/conversations/${encodeURIComponent(id)}/approve-synthetic-cloud`,{method:'POST',body:JSON.stringify({turn,expected_source_revision})}),
   handoffEligibility: (id:string,turn:string) => request<any>(`/ai/conversations/${encodeURIComponent(id)}/turns/${encodeURIComponent(turn)}/handoff-eligibility`),
   prepareHandoff: (id:string,source_turn:string,requested_action:string) => request<any>(`/ai/conversations/${encodeURIComponent(id)}/handoffs`, {method:'POST',body:JSON.stringify({source_turn,requested_action})}),

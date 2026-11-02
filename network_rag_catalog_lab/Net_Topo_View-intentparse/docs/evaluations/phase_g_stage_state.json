@@ -120,7 +120,9 @@
         "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-matched-review.json",
         "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-source-context-metrics.json",
         "docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md",
-        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md"
+        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md",
+        "docs/PHASE_G_HYBRID_G4_ADVISORY.md",
+        "docs/evaluations/phase_g_completeness_first_result.json"
       ],
       "notes": "Typed logical source filters now reach existing readers; bounded qwen source selection is evaluated separately. Plural list/provenance failure repaired. Full fresh routing and implicit/compound GoalSpec gates remain open.",
       "acceptance_gate": "FAILED_FRESH_ROUTING_86_OF_120_BELOW_90_PERCENT",
@@ -137,7 +139,14 @@
           "credited_as_completed_task": false,
           "retained_under": "G4 compound task completeness and G5 adequacy; not hidden or converted into a pass."
         }
-      ]
+      ],
+      "latest_bounded_hybrid_increment": "2026-10-26 advisory no-read and composition/verifier attribution repairs verified;282affectedtests;both-browser synthetic consent/advicePASS. No new stage acceptance. RemoteG4planning remains0 after local5/6vscloud4/6minimalplans; ApproachA0. Original benchmark scores retained.",
+      "latest_integrated_qualification": {
+        "report": "docs/PHASE_G_MULTI_MODEL_G4_G6_QUALIFICATION.md",
+        "result": "FAILED_EXISTING_FORMAL_GATE; cohort not a120/60replacement",
+        "new_stage_acceptance": false
+      },
+      "latest_bounded_experiment": "Completeness-firstA–Gtaskfinished; control4/8enhanced0/8diagnostic;69calls; automaticserverfollow-upLIVE but finaltaskFAIL.143affectedtests and bothnarrowbrowser/localcontrolsPASSafterbindingfix. FeaturedefaultOFF; no qualification or historical-score replacement."
     },
     "G5": {
       "status": "FAILED",
@@ -175,11 +184,14 @@
         "tmp/phase-g/iterations/20261023-G7-resume/G5-final-saved-critical-verifier.json",
         "tmp/phase-g/iterations/20261023-G7-resume/G5-G9-final-critical-regression.xml",
         "docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md",
-        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md"
+        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md",
+        "docs/PHASE_G_HYBRID_G4_ADVISORY.md",
+        "docs/PHASE_G_HYBRID_G5_G6_QUALITY_QUALIFICATION.md",
+        "docs/evaluations/phase_g_completeness_first_result.json"
       ],
-      "notes": "Manual review039\u00e2\u20ac\u201c050 exposed task-scope, temporal-inference, OSPF role/state/prerequisite, router-ID and unavailable-source errors despite tool-only scores. Original drafts retained; bounded corrections verified separately from fallback and general quality gates.",
+      "notes": "Manual review039â€“050 exposed task-scope, temporal-inference, OSPF role/state/prerequisite, router-ID and unavailable-source errors despite tool-only scores. Original drafts retained; bounded corrections verified separately from fallback and general quality gates.",
       "acceptance_gate": "FAILED_ALIGNMENT_FROZEN_V3_13_OF_30_BELOW_85_PERCENT",
-      "latest_increment": "Newfrozen30complete13adequate:3unrepairedmodel/1repairedmodel/8fallback/1exactproposal. Notmatchedimprovement;3criticaloriginalclaims. Finalexposedguardsdo notreplace originalscore.",
+      "latest_increment": "Fresh30pairedcohort: local1/30/hybrid7/30adequate, causal0/16vs5/16. Originalunsafe2local/1hybrid retained. Bounded evidence/release/advisory repairs:369tests and8exact-outputreplaysPASS; no freshmodelreasoningcredit. Actual source-only/no-read gates pass but answers remain incomplete. Acceptance FAILED; remoteG4/outcomes0.",
       "implementation_status": "IMPLEMENTED_WITH_INCOMPLETE_ACCEPTANCE",
       "acceptance_history": [
         {
@@ -192,7 +204,29 @@
           "previous_gate": "FAILED_FROZEN_V2_16_OF_30_BELOW_85_PERCENT",
           "preserved": true
         }
-      ]
+      ],
+      "latest_bounded_hybrid_increment": "2026-10-26 advisory no-read and composition/verifier attribution repairs verified;282affectedtests;both-browser synthetic consent/advicePASS. No new stage acceptance. RemoteG4planning remains0 after local5/6vscloud4/6minimalplans; ApproachA0. Original benchmark scores retained.",
+      "hybrid_qualification_20261026": {
+        "report": "docs/PHASE_G_HYBRID_G5_G6_QUALITY_QUALIFICATION.md",
+        "local_adequate": 1,
+        "hybrid_adequate": 7,
+        "total": 30,
+        "local_causal_adequate": 0,
+        "hybrid_causal_adequate": 5,
+        "causal_total": 16,
+        "original_unsafe_local": 2,
+        "original_unsafe_hybrid": 1,
+        "new_model_reasoning_credit_after_repair": 0,
+        "recovered_raw_explanations": 5,
+        "status": "IMPROVING_BUT_INCOMPLETE",
+        "postrepair_tests_passed": 369
+      },
+      "latest_integrated_qualification": {
+        "report": "docs/PHASE_G_MULTI_MODEL_G4_G6_QUALIFICATION.md",
+        "result": "FAILED_5_OF30_VS26_REQUIRED_PLUS_CRITICAL_FALSE_CLAIMS",
+        "new_stage_acceptance": false
+      },
+      "latest_bounded_experiment": "Completeness-firstA–Gtaskfinished; control4/8enhanced0/8diagnostic;69calls; automaticserverfollow-upLIVE but finaltaskFAIL.143affectedtests and bothnarrowbrowser/localcontrolsPASSafterbindingfix. FeaturedefaultOFF; no qualification or historical-score replacement."
     },
     "G6": {
       "status": "FAILED",
@@ -211,11 +245,36 @@
         "tmp/phase-g/iterations/20261023-G7-resume/G6-extended-full-answer-review.json",
         "tmp/phase-g/iterations/20261023-G7-resume/G6-metric-contract-full-answer-review.json",
         "docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md",
-        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md"
+        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md",
+        "docs/PHASE_G_HYBRID_G4_ADVISORY.md",
+        "docs/PHASE_G_HYBRID_G5_G6_QUALITY_QUALIFICATION.md",
+        "docs/evaluations/phase_g_completeness_first_result.json"
       ],
       "acceptance_gate": "FAILED_CAUSAL_EXPLANATION_GATE",
-      "latest_increment": "Exactfactsandcaseconformancepreserved; correctevidencecanstillproducewrong/incompletemodelexplanation. One limitedrepairedcomputedpathanswerdoesnotestablishindependentcausalreasoning.",
-      "implementation_status": "IMPLEMENTED_SOURCE_CONFORMANCE_VERIFIED_EXPLANATION_FAILED"
+      "latest_increment": "Fresh30pairedcohort: local1/30/hybrid7/30adequate, causal0/16vs5/16. Originalunsafe2local/1hybrid retained. Bounded evidence/release/advisory repairs:369tests and8exact-outputreplaysPASS; no freshmodelreasoningcredit. Actual source-only/no-read gates pass but answers remain incomplete. Acceptance FAILED; remoteG4/outcomes0.",
+      "implementation_status": "IMPLEMENTED_SOURCE_CONFORMANCE_VERIFIED_EXPLANATION_FAILED",
+      "latest_bounded_hybrid_increment": "2026-10-26 advisory no-read and composition/verifier attribution repairs verified;282affectedtests;both-browser synthetic consent/advicePASS. No new stage acceptance. RemoteG4planning remains0 after local5/6vscloud4/6minimalplans; ApproachA0. Original benchmark scores retained.",
+      "hybrid_qualification_20261026": {
+        "report": "docs/PHASE_G_HYBRID_G5_G6_QUALITY_QUALIFICATION.md",
+        "local_adequate": 1,
+        "hybrid_adequate": 7,
+        "total": 30,
+        "local_causal_adequate": 0,
+        "hybrid_causal_adequate": 5,
+        "causal_total": 16,
+        "original_unsafe_local": 2,
+        "original_unsafe_hybrid": 1,
+        "new_model_reasoning_credit_after_repair": 0,
+        "recovered_raw_explanations": 5,
+        "status": "IMPROVING_BUT_INCOMPLETE",
+        "postrepair_tests_passed": 369
+      },
+      "latest_integrated_qualification": {
+        "report": "docs/PHASE_G_MULTI_MODEL_G4_G6_QUALIFICATION.md",
+        "result": "FAILED_8_OF18_CAUSAL; sourceconformancepasses",
+        "new_stage_acceptance": false
+      },
+      "latest_bounded_experiment": "Completeness-firstA–Gtaskfinished; control4/8enhanced0/8diagnostic;69calls; automaticserverfollow-upLIVE but finaltaskFAIL.143affectedtests and bothnarrowbrowser/localcontrolsPASSafterbindingfix. FeaturedefaultOFF; no qualification or historical-score replacement."
     },
     "G7": {
       "status": "BLOCKED",
@@ -322,11 +381,15 @@
         "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh30-full-answer-review.json",
         "tmp/phase-g/iterations/20261023-G7-resume/G11-fresh120-matched-review.json",
         "docs/evaluations/PHASE_G_ARCHITECTURAL_RECONCILIATION_2026-10-24.md",
-        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md"
+        "docs/PHASE_G_INTENT_EVIDENCE_ALIGNMENT_2026-10-24.md",
+        "docs/PHASE_G_HYBRID_G4_ADVISORY.md",
+        "docs/evaluations/phase_g_completeness_first_result.json"
       ],
       "acceptance_gate": "FAILED_ROUTING_QUALITY_ENGINEERING_AND_CAUSAL_NONREGRESSION",
       "latest_increment": "Newfrozen30runtime/registryunchanged, independentlychecked literal/arithmeticexpectations, implementation-assistantgrade.13/30FAIL; advice-onlytooloracleambiguitydisclosed. No externalblindreview/finalpostpatchfull120/30pass.",
-      "implementation_status": "EVALUATIONS_IMPLEMENTED_ACCEPTANCE_FAILED"
+      "implementation_status": "EVALUATIONS_IMPLEMENTED_ACCEPTANCE_FAILED",
+      "latest_bounded_hybrid_increment": "2026-10-26 advisory no-read and composition/verifier attribution repairs verified;282affectedtests;both-browser synthetic consent/advicePASS. No new stage acceptance. RemoteG4planning remains0 after local5/6vscloud4/6minimalplans; ApproachA0. Original benchmark scores retained.",
+      "latest_bounded_experiment": "Completeness-firstA–Gtaskfinished; control4/8enhanced0/8diagnostic;69calls; automaticserverfollow-upLIVE but finaltaskFAIL.143affectedtests and bothnarrowbrowser/localcontrolsPASSafterbindingfix. FeaturedefaultOFF; no qualification or historical-score replacement."
     },
     "G12": {
       "status": "PASS",
@@ -346,7 +409,7 @@
   "model": "qwen2.5:1.5b",
   "quality_gate": "FAILED_ALIGNMENT_FROZEN_V3_13_OF_30_43_33_PERCENT",
   "phase_f_remaining": "Retained in existing Phase F tracker; no completion inferred.",
-  "updated_at": "2026-10-24T09:39:04.140448+00:00",
+  "updated_at": "2026-10-29T12:14:26.645341+00:00",
   "acceptance_gate_scope": "Full specified stage gate, not partial implementation or exposed regression outcomes; inspect evidence and notes for actual passes/failures.",
   "continuation_limits": {
     "browser": "Tool initialization now fails: kernel assets path missing(oserror3), before website access. Earlier G9/G10actualbrowserproofsreused; no settings-disabled claim. App5173/8000restoredlauncher79621/backend28856;Ollama20988untouched.",
@@ -386,7 +449,7 @@
     "G11",
     "G12"
   ],
-  "next_incomplete_milestone": "Advisory-versus-retrievalintent and source-backed semanticobligationcompletion; preserve allfrozenfailures. Finalfull120/30qualification remainsunaccepted.",
+  "next_incomplete_milestone": "STOP. Future authorized work should investigate model-quality/release limitations and provider structured-schema compatibility, not repeat prompt-specific repairs or rerun broad benchmarks.",
   "subsequent_priority": "G7 all141 nativeStudio journeys/genuine separately supported Ansible; G8 related files and coordinated exact-base proposals; then every remaining incompleteG0-G12 gate",
   "holdout_policy": "Reserve full unseen intelligence benchmark until source/Studio/integration foundations are ready; exposed corrections are not generalization",
   "model_correction_policy": {
@@ -445,7 +508,7 @@
       "tmp/phase-g/iterations/20261022-G3-source-acceptance-resume/jobs_audit-source-acceptance-review.json"
     ]
   },
-  "current_stage": "G4/G5/G6/G11",
+  "current_stage": "G4–G6 bounded state-scope repair closeout; reasoning qualification remains failed/open",
   "capability_acceptance": {
     "C1": {
       "status": "PARTIAL_FAILED",
@@ -476,6 +539,192 @@
       "evidence": "113/141actualnativejourneys;28upstreamHuaweiconflicts;0activeverifiedAnsiblevariants. G8source-boundworkspaceworkflowacceptedhistorically; notuniversalcompoundediting."
     }
   },
-  "current_work": "Bounded source/context/temporal architectural corrections verified; new frozen30failed13/30. No new fullstageclosed.",
-  "deprioritized_stage": "G0 historical baseline"
+  "current_work": "Bounded intelligence-improvement taskfinished; retainexperimentalcontracts,qualityunqualified,awaitnextauthorization.",
+  "deprioritized_stage": "G0 historical baseline",
+  "last_bounded_task": {
+    "status": "finished",
+    "scope": "hybrid G4 planning/advisory repair",
+    "report": "docs/PHASE_G_HYBRID_G4_ADVISORY.md",
+    "remote_planning": false,
+    "approach_a": false,
+    "further_implementation": "Await authorization; do not automatically resume a broad implementation cycle."
+  },
+  "model_neutral_experiment": {
+    "status": "IMPLEMENTED_ACCEPTANCE_PARTIAL",
+    "report": "docs/PHASE_G_MODEL_NEUTRAL_MULTI_MODEL_ARCHITECTURE.md",
+    "checklist": "docs/PHASE_G_MODEL_NEUTRAL_CONTINUATION.md",
+    "roles": {
+      "local_default": "qwen2.5:1.5b",
+      "complex_planner": "gemini-3.1-flash-lite",
+      "evidence_reasoner": "gemini-3.5-flash-lite"
+    },
+    "native_google_full_schema": "HTTP400; explicit validated_json with unchanged application validation",
+    "preview": "unverified synthetic only; no engineering authority",
+    "openai": "mocked only; full-graph/live compatibility unverified",
+    "live_supplementary_round": "NOT_VERIFIED; original0requests; diagnostic1unexecutedrequestnotpass",
+    "browser": "FreshbrowserPASS; approvedcloud503/timeoutBLOCKED;2ordinaryQwencontrolsPASS0cloud",
+    "quotas": {
+      "new_reservations": 37,
+      "shared24h": 121,
+      "peak_rpm": 8,
+      "peak_input_or_reservation_tpm": 97199
+    },
+    "original_G_statuses_unchanged": true,
+    "latest_qualification": "docs/PHASE_G_MULTI_MODEL_G4_G6_QUALIFICATION.md"
+  },
+  "multi_model_qualification": {
+    "timestamp": "2026-10-26T13:27:05.458791+00:00",
+    "decision": "IMPROVED_BUT_INCOMPLETE_FUNCTIONAL_EXECUTION; QUALITY_NOT_QUALIFIED",
+    "registry": "docs/evaluations/phase_g_multi_model_g4_g6_v1.json",
+    "registry_sha256": "ddda2d32eef56ee1ad2c89a7a8aa47f37dd363a3ef8fe1ca83c74aa1976b71ff",
+    "cases": 30,
+    "original_scores": {
+      "cases": 30,
+      "G5_full": 5,
+      "G5_required": 26,
+      "raw_model_adequate": 13,
+      "causal_cases": 18,
+      "causal_adequate": 8,
+      "G4_raw_fully_correct": 5,
+      "G4_source_set_exact": 9,
+      "required_reader_presence": 27,
+      "unnecessary_reader_conditions": 19,
+      "unnecessary_reader_calls": 31,
+      "complete_evidence_conditions": 24,
+      "critical_false_prose": [
+        "MMQ-20",
+        "MMQ-24",
+        "MMQ-29"
+      ],
+      "new_role_paths": 28,
+      "old_or_local_paths": [
+        "MMQ-20",
+        "MMQ-22"
+      ],
+      "cloud_attempts": 54,
+      "http_results": {
+        "200": 48,
+        "503": 5,
+        "TIMEOUT_NO_RESPONSE": 1
+      },
+      "need_more_evidence": 0,
+      "completed_new_role_decisions": 21,
+      "composition": {
+        "EXACT_PROSE": 22,
+        "NO_COMPLETED_REASONER_OUTPUT": 7,
+        "DIFFERENT_RELEASE": 1
+      },
+      "latency_seconds": {
+        "median": 16.629266449948773,
+        "p95": 42.72345669998322,
+        "max": 55.11086219991557
+      },
+      "g5_categories": {
+        "PARTIAL": 14,
+        "PROVIDER_FAILURE": 5,
+        "INCORRECT": 1,
+        "FULLY_ADEQUATE": 5,
+        "UNSAFE_UNSUPPORTED": 3,
+        "INCOMPLETE_GENERATION": 1,
+        "TIMEOUT": 1
+      },
+      "G4_formal": "NOT_QUALIFIED; original120/60routinggatesnotreplaced",
+      "G5_formal": "FAILED",
+      "G6_formal": "FAILED_CAUSAL_EXPLANATION;18sourceconformancepairsPASS",
+      "MN4": "LIVE_NOT_VERIFIED",
+      "grading": "Source-derived independently checkable, implementation-assistant full-answer review, not blinded/external"
+    },
+    "MN4": "LIVE_NOT_VERIFIED; original0need_more; postfix1request_only_no_executed_round",
+    "tests": {
+      "affected_backend": 134,
+      "source_conformance_cases": 18,
+      "both_surfaces_per_conformance_case": true,
+      "overlapping_reruns_not_summed": true
+    },
+    "browser": "Fresh capabilityPASS;2ordinaryQwencontrolsPASS;2approvedcloudUIrequestsBLOCKEDprovider503/timeout; no full cloud browser pass claimed",
+    "G4": "FAILED_EXISTING_FORMAL_GATE; cohort not a120/60replacement",
+    "G5": "FAILED_5_OF30_VS26_REQUIRED_PLUS_CRITICAL_FALSE_CLAIMS",
+    "G6": "FAILED_8_OF18_CAUSAL; sourceconformancepasses",
+    "G11": "UNCHANGED_FAILED_NOT_CERTIFIED",
+    "report": "docs/PHASE_G_MULTI_MODEL_G4_G6_QUALIFICATION.md"
+  },
+  "intelligence_improvement": {
+    "status": "IMPLEMENTED_FUNCTIONAL_CONTROLS_PASS_QUALITY_NOT_ESTABLISHED",
+    "report": "docs/PHASE_G_MULTI_MODEL_INTELLIGENCE_IMPROVEMENT.md",
+    "result": "docs/evaluations/phase_g_intelligence_improvement_result.json",
+    "holdout": {
+      "task_count": 12,
+      "fully_adequate": 2,
+      "adequate_raw_reasoning": 2,
+      "completed_interpretations": 5,
+      "partial_complete_tasks": 2,
+      "unsafe_unsupported_tasks": 1,
+      "provider503_conditions": 6,
+      "provider_timeout_conditions": 1,
+      "causal_conditions": 7,
+      "adequate_causal": 2,
+      "strictly_complete_raw_plans": 2,
+      "completed_plans": 5,
+      "unnecessary_executed_reader_conditions": 0,
+      "required_reader_presence": 6,
+      "required_reader_presence_note": "Includes vacuous zero-reader advisory; not six completed workflows. Five execution-bearing requests contain all initial requiredfamilies.",
+      "complete_evidence_conditions": 4,
+      "need_more_evidence": 0,
+      "live_MN4": false,
+      "all_completed_raw_prose_preserved": true,
+      "application_changed_during_holdout": false,
+      "not_formal_qualification": true
+    },
+    "tests": {
+      "affected": 165,
+      "source_cases": 12,
+      "both_surfaces": true
+    },
+    "browser": "2partialcloudflows,advisory503,2ordinarycontrolsPASS0cloud",
+    "MN4": "LIVE_NOT_VERIFIED",
+    "original_stage_acceptance_unchanged": true
+  },
+  "claim_verification_release_repair": {
+    "status": "BOUNDED_REPAIR_FINISHED_KEEP_DEFAULT_OFF",
+    "report": "docs/PHASE_G_CLAIM_VERIFICATION_RELEASE_REPAIR.md",
+    "result": "docs/evaluations/phase_g_claim_release_repair_result.json",
+    "historical_scores_unchanged": true,
+    "new_paired_adequacy": {
+      "baseline": "1/2",
+      "repaired": "1/2"
+    },
+    "new_stage_closure": false,
+    "browser": "COMPLETED_WITH_QUALITY_LIMITATIONS",
+    "cloud_attempts": 18,
+    "regression_tests": 159,
+    "protected_state": "PASS",
+    "active_cohort": false,
+    "source_replay_not_reasoning_credit": true
+  },
+  "reliable_investigation_closeout": {
+    "result": "docs/evaluations/phase_g_reliable_investigation_result.json",
+    "phase_stage_closed": false,
+    "decision": "RETAIN_TARGETED_REPAIRS_KEEP_DEFAULT_OFF",
+    "control": "4/8",
+    "enhanced": "4/8",
+    "next_authorized_task": "Targeted State-Reader Scope Repair and Remaining Quality Investigation",
+    "old_services_stopped": true
+  },
+  "state_scope_repair_closeout": {
+    "status": "RETAIN_SCOPE_AND_EXPLICIT_SOURCE_POLICY_REPAIRS_KEEP_COMPLETENESS_OFF",
+    "result": "docs/PHASE_G_STATE_SCOPE_AND_QUALITY_REPAIR.md",
+    "formal_stage_closed": false,
+    "matched": {
+      "reference": {
+        "adequate": 1,
+        "total": 4
+      },
+      "repaired": {
+        "adequate": 0,
+        "total": 4
+      }
+    },
+    "provider_json": "SAFE_INCOMPLETE_NATIVE_COMPATIBILITY_UNRESOLVED",
+    "browser": "BOTH_SCOPE_PASS;TEMPORAL_QUALIFIED;ADVISORY_PARTIAL_OR503"
+  }
 }
