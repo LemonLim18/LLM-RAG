@@ -1,2 +1,3 @@
 # Local test databases, pytest output, and temporary audit files
+/.pytest_cache/*
 /tmp/*

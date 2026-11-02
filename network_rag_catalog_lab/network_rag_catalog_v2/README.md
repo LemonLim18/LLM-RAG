@@ -1,307 +1,109 @@
-# Network RAG Catalog Lab v2
+# LLM-RAG
 
-This is the revised version of the original `network_rag_catalog` learning lab.
+**LLM, Retrieval-Augmented Generation (RAG), and AI-Assisted Network Engineering**
 
-**Current terminal mode: direct files (`data/`), not publication.** All 38 requested
-operation IDs are present; six pre-existing operations are retained (44 total).
-Run `python -m app.ingest` after editing catalog/schema/template files, then
-`python main.py --interactive`. See [direct runtime notes](docs/DIRECT_RUNTIME.md).
-No pack import, database edit, release or activation command is required.
-Requested-operation templates cover **Cisco 38/38, Huawei 37/38 and Juniper 37/38**.
-`modify_vlan` means VLAN state changes in every mode. Huawei/Juniper generation
-is blocked pending review of an equivalent implementation; description edits
-are a separate intent. Explicit parameters cannot be discarded by a vendor profile.
-Use SW1/SW2/SW3 and the [three-vendor examples](docs/THREE_VENDOR_PROMPTS.md).
-Schemas collect native vendor inputs; this is preview support, not hardware certification.
+This repository is a development and experimentation workspace exploring how Large Language Models (LLMs), Retrieval-Augmented Generation (RAG), structured intent processing, and network engineering tools can work together to support intelligent network automation and troubleshooting.
 
-Sessions and the CLI show `runtime_authority`. In `files` mode,
-`knowledge_snapshot_id` is intentionally empty; `source_revision` identifies the
-file/context content. Published requests carry the release ID. Before reconciling
-direct experiments into managed knowledge, run the read-only drift check:
+The goal is to move beyond simple chatbot responses toward systems that can understand network-related requests, retrieve relevant information from available sources, reason over technical evidence, and produce useful, traceable engineering explanations.
 
-```powershell
-python -m app.knowledge.runtime_audit --operation modify_vlan --check
-```
+## Project Overview
 
-Omit `--operation` to audit the entire catalog. Review reported differences before
-versioning/publishing changes; the command never synchronizes or publishes data.
+The repository brings together work across several related areas:
 
-Retained backend revision: [Phases 1-5 completion audit](docs/KNOWLEDGE_EVOLUTION_COMPLETION.md)
-and [Phase 5 management](docs/KNOWLEDGE_PHASE_5.md). The optional backend uses SQLite
-authoring and immutable published runtime releases. Fresh clones start from JSON
-seeds until explicitly migrated. The handoff covers migration, management,
-publication, compatibility checks, and remaining operational limits.
+- **LLM Integration and Orchestration** — Exploring language models, structured responses, planning workflows, and model-assisted engineering tasks.
+- **Retrieval-Augmented Generation (RAG)** — Retrieving relevant technical information and supplying source-grounded context to LLMs.
+- **Network Intelligence and Troubleshooting** — Investigating network state, configurations, topology, interfaces, VRFs, forwarding behavior, and historical events.
+- **Intent-Based Network Automation** — Translating natural-language requirements into structured network operations with parameter validation and disambiguation.
+- **Network Topology and Visualization** — Representing network relationships to support interpretation and troubleshooting.
+- **Experimentation and Evaluation** — Testing correctness, evidence completeness, model behavior, and reliability across different workflows.
 
-Previously published knowledge: **44 operations / 78 vendor bindings**. The default
-terminal path now uses their direct files. Start with the [prompt guide](docs/PROMPT_TESTING_GUIDE.md)
-and [activation results](docs/KNOWLEDGE_ACTIVATION_RESULTS.md).
-The [requested-operation coverage](docs/REQUESTED_OPERATION_COVERAGE.md) distinguishes
-RAG availability from implemented vendor templates. SQLite remains untouched for the optional backend;
-SW1/SW2/SW3 are explicitly synthetic demonstration inventory.
+These areas are developed and evaluated incrementally. The repository contains both experimental implementations and supporting infrastructure, rather than a single finished application.
 
-The original MVP proved this lower-level pipeline:
+## Network AI Assistant
 
-`prompt -> category -> ChromaDB operation retrieval -> operation selection -> schema -> parameter extraction -> validation -> vendor template -> rendered config`
+One of the major development directions is a source-grounded AI network engineering assistant.
 
-Version 2 adds the missing orchestration layer needed for realistic requests:
+Its intended workflow is:
 
-`one user request -> N operation intents -> N target sets -> vendor-aware rendering`
+1. **Understand the request** — Identify the network question, relevant devices, interfaces, scope, and requested outcomes.
+2. **Select information sources** — Determine which authorized sources are relevant, such as network state, configuration records, topology, or event logs.
+3. **Retrieve technical evidence** — Collect records while preserving their source, identity, ownership, and time context.
+4. **Perform evidence-grounded reasoning** — Use the LLM to compare records, explain network relationships, and distinguish observations from assumptions.
+5. **Retrieve additional evidence when necessary** — Perform bounded supplementary queries when important source-owned information is missing.
+6. **Produce an engineering explanation** — Explain what the available evidence supports, what remains uncertain, and which further checks may be appropriate.
 
-It also separates natural-language device references from authoritative inventory records.
+The architecture aims to separate **evidence acquisition and transport** from **LLM reasoning quality**, allowing both to be evaluated independently.
 
-## What changed
+### Development Status
 
-### 1. One request can contain many operations
+The current research includes bounded validation of source selection, historical configuration retrieval, device identity resolution, interface ownership, evidence delivery, and supplementary retrieval.
 
-Instead of:
+Reliable technical deduction, temporal reasoning, causal interpretation, and complete-answer quality remain active areas of evaluation and improvement.
 
-```python
-run(prompt, ["R1"])
-```
+The project is intended for development, experimentation, and validation. Its AI-generated conclusions should not be treated as automatically verified network diagnoses or production-safe configuration instructions.
 
-use:
+---
 
-```python
-run(prompt)
-```
+## Intent Schemas (Per-Operation YAML + JSON Types)
 
-The planner creates independent `OperationIntent` objects. Each intent then goes through the existing RAG/schema/template pipeline independently.
+Another important part of the repository is the structured intent-definition and validation system used for intent-based network operations.
 
-### 2. Targets are resolved against inventory
+The intent-schema directory holds **one YAML file per intent `action`** (e.g. `create_vlan.yml`, `configure_interface.yml`).
 
-The LLM is allowed to extract a human reference such as `core router 1`, but it is **not trusted to invent a canonical hostname**.
+The following documentation describes that subsystem. Paths such as `../intent_graph.yml` are relative to the intent-schema directory, rather than necessarily to the repository root.
 
-The target resolver maps:
+### Relationship to the Canonical Doc and Graph
 
-`core router 1 -> R1 -> Cisco IOS-XE 17.9`
+**Every operation is defined in these places (keep them aligned):**
 
-Inventory contains hostname, display name, aliases, role, site, location, vendor, platform, version and management IP.
+1. **`docs/intent_operation_reference.md`** — Narrative: when to use which `action`/`feature`, anti-patterns.
+2. **Intent-schema directory (`*.yml`)** — **Authoritative** `required` / `optional` / `resolution_order` / `questions` for `validate_completeness`, chat disambiguation, early `evaluate_intent_tree` checks (`build_params_disambiguation_fields_from_intent`), and LLM `get_required_params_hint_for_prompt()`.
+3. **`*.schema.json`** (when present) — JSON Schema for **type** validation after parameters are filled.
+4. **`../intent_graph.yml`** — Lists each **operation** under a **category**; run `python -m ansible.validate_intent_artifacts` after edits.
+5. **`../category_schemas/*.yml`** — Optional vocabulary-only descriptions per category for the LLM (not required/optional).
+6. **`../intent_keywords.yml`** — Editable rule-based classification keywords used by `llm/intent.py`.
 
-Descriptions such as `the Penang edge Juniper router` now resolve using those
-attributes together. `the KL core router` asks which device; `KL core routers`
-selects the explicitly requested group. Conflicting attributes block rendering.
-The terminal accepts refinements such as `the Huawei one` and shows the matching
-inventory facts. See [DEVICE_RESOLUTION.md](docs/DEVICE_RESOLUTION.md) for the
-data contract, centrally governed aliases, supported examples, and limits.
+If you change required/optional behavior, **update the YAML and the doc together** (see the “Source of truth” section at the top of `docs/intent_operation_reference.md`).
 
-The sample inventory is deliberately shaped like a future source-of-truth record. It includes stable device IDs, external source references, Ansible connection fields, monitoring labels, capabilities and interface records. It is still local JSON, but it can later be backed by NetBox, PostgreSQL, Redis cache, Ansible inventory or monitoring APIs without changing the pipeline contract.
+### File Roles
 
-### 3. Vendor selection is deterministic
-
-The target resolver returns canonical devices. Their inventory records determine vendor/platform/version. The template selector then selects:
-
-`vendor / category / operation_id / template.j2`
-
-The LLM does not choose the Jinja file.
-
-### 4. ChromaDB remains an operation-discovery layer
-
-One catalog operation is one retrieval document. ChromaDB helps map natural language to a logical operation. It is not the source of truth for inventory or live device state.
-
-### 5. This lab stops before execution
-
-The result is a validated configuration preview. No device is modified. Template
-rendering tests are not device/NOS certification.
-
-### Context-aware clarification revision
-
-All intents are collected before asking questions. Each resolved operation/device
-binding owns its parameters, evidence, questions and state. A complete binding
-becomes `validated`; no configurations are published until the whole request
-passes validation. Then tasks become `rendered` and the request becomes `ready`.
-
-Missing/invalid fields receive one structured question at a time, with scoped
-inventory or planned choices and custom input. Local planned data lives in
-`data/planned/parameters.json`; `data/catalog/context_rules.json` explicitly
-permits each operation's lookups. Sample records are candidates requiring
-confirmation, not live facts or automatically applied defaults.
-
-Exact catalog phrases bypass model/retrieval calls. Other phrasing uses the
-existing discovery stages and asks for confirmation of a model-proposed
-operation. Parsing/selection repairs are bounded. See
-[CONTEXT_AWARE_REVISION.md](docs/CONTEXT_AWARE_REVISION.md) for the API contract,
-examples, revision behavior and remaining limits.
-
-## Architecture
-
-```text
-USER REQUEST
-    |
-    v
-INTENT PLANNER
-    |
-    +---- Intent 1 ----+
-    |                  |
-    |             category classifier
-    |                  |
-    |             ChromaDB retrieval
-    |                  |
-    |             operation selector
-    |                  |
-    |             schema loader
-    |                  |
-    |             parameter extraction
-    |                  |
-    |             deterministic validation
-    |                  |
-    |             target resolver
-    |                  |
-    |             authoritative inventory
-    |                  |
-    |             vendor/platform/version
-    |                  |
-    |             deterministic template selector
-    |                  |
-    |             Jinja2 rendering
-    |                  |
-    +---- Intent 2 ----+  ...
-                         |
-                         v
-                 EXECUTION PLAN
-                         |
-                   approval gate
-                         |
-                      Ansible
-                         |
-                       devices
-```
-
-## Important responsibility split
-
-| Component | Responsibility |
+| File pattern | Contents |
 |---|---|
-| Intent planner | Split one request into independent logical intents and extract human target references |
-| Category classifier | Determine the broad operation category |
-| ChromaDB | Retrieve semantically relevant operation candidates |
-| Operation selector | Choose one operation only from retrieved candidates |
-| JSON Schema | Define the formal parameter contract |
-| Parameter extractor | Map natural language into structured parameters |
-| Validator | Deterministically reject invalid/missing values before rendering |
-| Target resolver | Map human device references to canonical inventory devices |
-| Inventory | Authoritative device, capability and interface metadata |
-| Context validator | Reject unsupported operations and device/interface mismatches |
-| Template selector | Select the exact known template |
-| Jinja2 | Render vendor-specific configuration |
-| Future approval/Ansible layer | Diff, approve and execute |
+| `<action>.yml` | `action`, `feature`, `required`, `optional`, `resolution_order`, `questions` |
+| `<action>.schema.json` | Typed shape for `validate_types()` in `intent_validation.py` |
 
-## Missing information behavior
+### Code Entry Points
 
-The LLM is treated as an untrusted parser. Parameter extraction may only keep values that are explicitly grounded in the user's request. If required values are missing, the task is returned as `needs_clarification` and no Jinja template is rendered.
+- **Loader:** `ansible.intent_validation.load_schema`, `get_schema_for_parsed_intent`
+- **LLM prompt text:** `get_intent_operation_reference_for_prompt()`, `get_required_params_hint_for_prompt()`, plus `ansible.intent_artifacts` (`get_category_vocabulary_for_prompt`, `get_intent_graph_summary_for_prompt`, `get_intent_keywords_digest_for_prompt`)
 
-For example:
+---
 
-```text
-Create VLAN 100 named STAFF on R1 and configure OSPF on R2
-```
+## Development Direction
 
-produces a validated VLAN binding and an incomplete OSPF binding. Neither renders
-until OSPF has validated interfaces, areas and its vendor-required process ID.
+The broader objective of this repository is to explore how structured network knowledge, authorized information retrieval, and language-model reasoning can be combined into dependable network engineering workflows.
 
-## Run
+Current priorities include:
 
-Use the existing Python environment with the project dependencies installed. In
-this Windows workspace, from the v2 folder, that is:
+- Improving the reliability of multi-source network investigations.
+- Preserving technical evidence, provenance, and historical context.
+- Strengthening model reasoning over configurations, topology, operational state, and events.
+- Evaluating technical accuracy and completeness independently from successful data retrieval.
+- Supporting modular components and model-neutral workflows where practical.
 
-```powershell
-..\..\.venv\Scripts\python.exe -m app.ingest
-```
+The long-term direction is an AI-assisted network engineering environment in which responses are grounded in available network evidence rather than unsupported model assumptions.
 
-Make sure Ollama has:
+---
 
-```text
-qwen2.5:1.5b
-nomic-embed-text
-```
+## Repository Scope
 
-Otherwise, rebuild the index whenever `data/catalog/operations.json` changes:
+This repository serves as a workspace for ongoing development, prototypes, research experiments, technical documentation, and evaluation artifacts.
 
-```bash
-python -m app.ingest
-```
+Individual components may have their own documentation, dependencies, execution procedures, and maturity levels. Refer to the relevant project directory for implementation-specific instructions.
 
-Run a single operation:
-
-```bash
-python main.py "Create VLAN 100 named STAFF on Core Router 1."
-```
-
-### Terminal clarification mode
-
-The terminal uses a persisted clarification session, so its state model can later
-be exposed by a web UI without changing the core pipeline.
-
-```bash
-python main.py "Configure OSPF on R2" --interactive
-```
-
-The system asks one field of one task at a time and does not render until its
-values are validated. For the interfaces question, reply:
-
-```text
-GigabitEthernet0/0/0 in area 0
-```
-
-For the subsequent process-ID question, reply `100`.
-
-Choose an offered option with `select 1`, or multiple interfaces with
-`select 1,2`. Bare numbers are literal values. Custom input is always available;
-`value 100` explicitly enters a literal. Use `more` or `filter TEXT` for large
-option lists. To leave and resume later:
-
-```bash
-python main.py --resume SESSION_ID --interactive
-```
-
-Correct an accepted field using `edit TASK_ID FIELD_PATH VALUE` during a pending
-conversation, or `--resume SESSION_ID --edit TASK_ID FIELD_PATH VALUE`. Nested
-paths include `interfaces[0].area`. Conflicting operations require correction or
-explicit `confirm order`. An edit invalidates old outputs and rechecks the request.
-
-Use `--no-interactive` to print the session JSON without waiting for input.
-The final output is structured session data; it is deliberately not sent to any
-network device.
-
-### Included operation catalog
-
-Each category now has at least two safe planning/rendering operations:
-
-| Category | Operations |
-|---|---|
-| VLAN | create, delete |
-| OSPF | configure, remove from interface |
-| BGP | configure, remove neighbor |
-| IS-IS | configure, disable interface |
-| Static routing | configure, remove route |
-| Interface IPv4 | configure, remove address |
-
-Catalog terminology uses these JSON seed/export shapes:
-
-- `data/catalog/categories.json`
-- `data/catalog/operations.json`
-- `data/catalog/parameters.json`
-
-Stable IDs are used in code and schemas. A senior engineer can change display
-names, aliases, and clarification wording through the management service without
-renaming internal IDs. After SQLite migration, editing seed files does not edit
-the active authoring catalog; validate and publish service changes explicitly.
-
-See `docs/CATALOG_GOVERNANCE.md` for the add/change/retire workflow and
-`docs/TEST_PROMPTS.md` for ready-made terminal tests.
-
-## Test target resolution without the LLM
-
-```bash
-python -c "from app.devices.inventory import resolve_targets; print(resolve_targets(['core router 1']))"
-```
-
-## Tests
-
-```bash
-python -m unittest discover -s tests -v
-```
+**Status:** Active development and research.
 
 ## Limitations of this lab
-
 - `qwen2.5:1.5b` is a small local model; its planning/extraction quality is intentionally not production-grade.
 - The Jinja templates are architecture/demo templates, not release-certified production templates for every NOS and Ansible collection.
 - The current inventory is a JSON file. A real platform would normally query NetBox or another authoritative inventory source.
