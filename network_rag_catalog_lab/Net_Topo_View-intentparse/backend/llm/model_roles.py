@@ -40,6 +40,33 @@ class InferenceResult:
 
 def experiment_enabled():return os.getenv('COGNISHIELD_AI_MULTI_MODEL_EXPERIMENT','0')=='1'
 
+def reasoner_interpretation_mode():
+    selected=os.getenv('COGNISHIELD_AI_REASONER_INTERPRETATION_EXPERIMENT','off')
+    if selected not in {'off','candidate'}:
+        raise HTTPException(422,'Invalid reasoner interpretation experiment mode')
+    return selected
+
+def sourceclaim_timestamp_mode():
+    selected=os.getenv('COGNISHIELD_AI_SOURCECLAIM_TIMESTAMP_EXPERIMENT','off')
+    if selected not in {'off','candidate'}:
+        raise HTTPException(422,'Invalid source-claim timestamp experiment mode')
+    return selected
+
+def answer_integrity_mode():
+    """Isolated instruction experiment, never a role or authorization grant."""
+    selected=os.getenv('COGNISHIELD_AI_REASONER_ANSWER_INTEGRITY','off')
+    if selected not in {'off','candidate'}:
+        raise HTTPException(422,'Invalid reasoner answer-integrity experiment mode')
+    if selected=='candidate':
+        config=role_config('evidence_reasoner')
+        if (config.provider,config.model)!=('google','gemini-3.5-flash-lite'):
+            raise HTTPException(422,'Answer-integrity candidate requires the Gemini 3.5 Flash-Lite reasoner')
+        from llm.orchestration.reasoning_contract import mode as reasoning_mode
+        if (reasoning_mode()!='off' or reasoner_interpretation_mode()!='off' or sourceclaim_timestamp_mode()!='off'
+                or os.getenv('COGNISHIELD_AI_OUTCOMES','0')=='1'):
+            raise HTTPException(422,'Answer-integrity candidate cannot be combined with earlier reasoning experiments')
+    return selected
+
 def investigation_profile():
     """Server-owned optional execution envelope, also bound into exact consent."""
     if os.getenv('COGNISHIELD_AI_COMPLETENESS','0')!='1':return {'enabled':False}
@@ -106,8 +133,31 @@ def provider_wire_mode():
 def consent_manifest():
     """Bind the execution envelope as well as model identities to owner consent."""
     from llm.orchestration.evidence_harness import settings
+    from llm.orchestration.reasoning_contract import mode as reasoning_mode,VERSION
     profile=investigation_profile()
+    interpretation={}
+    if reasoner_interpretation_mode()=='candidate':
+        from llm.orchestration.role_reasoning import TEMPORAL_INTERPRETATION_CANDIDATE
+        import hashlib
+        interpretation={'reasoner_interpretation_experiment':{'version':'temporal_evidence_v1','mode':'candidate',
+            'instruction_delta':TEMPORAL_INTERPRETATION_CANDIDATE,
+            'instruction_sha256':hashlib.sha256(TEMPORAL_INTERPRETATION_CANDIDATE.encode()).hexdigest()}}
+    if sourceclaim_timestamp_mode()=='candidate':
+        from llm.orchestration.role_reasoning import SOURCECLAIM_TIMESTAMP_DESCRIPTION
+        import hashlib
+        interpretation['sourceclaim_timestamp_experiment']={'version':'source_record_time_v1','mode':'candidate',
+            'schema_pointer':'/$defs/SourceClaim/properties/timestamp/description',
+            'description':SOURCECLAIM_TIMESTAMP_DESCRIPTION,
+            'description_sha256':hashlib.sha256(SOURCECLAIM_TIMESTAMP_DESCRIPTION.encode()).hexdigest()}
+    if answer_integrity_mode()=='candidate':
+        from llm.orchestration.role_reasoning import ANSWER_INTEGRITY_CANDIDATE
+        import hashlib
+        interpretation['reasoner_answer_integrity']={'version':'source_grounded_answer_integrity_v1','mode':'candidate',
+            'instruction_delta':ANSWER_INTEGRITY_CANDIDATE,
+            'instruction_sha256':hashlib.sha256(ANSWER_INTEGRITY_CANDIDATE.encode()).hexdigest()}
     return {'roles':role_manifest(),'semantic_mode':semantic_mode(),'reasoning_contract':'source_claims_v3' if profile['enabled'] else 'outcome_assessment_v1',
+        **interpretation,
+        **({'reasoning_enhancement':{'version':VERSION,'mode':reasoning_mode()}} if reasoning_mode()!='off' else {}),
         'investigation_profile':profile,'evidence_layout':evidence_layout(),
         **({'evidence_delivery':'dependency_view_v3'} if profile['enabled'] else {}),
         'provider_wire_schema':provider_wire_mode(),'google_native_schema_transport':'responseFormat_v1',

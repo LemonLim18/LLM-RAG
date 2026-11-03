@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "purpose": "Evaluation correction only, not an application verifier or replacement historical score",
+  "original_request": "Could the cooling warning explain CedarEdge Ethernet1/1 errors? Distinguish chronology from cause and say whether unavailable syslog rules out a reset. Recommend two different passive checks without executing them. Use recorded state, incidents and syslog only.",
+  "historical_oracle": {
+    "id": "RC-05",
+    "prompt": "Could the cooling warning explain CedarEdge Ethernet1/1 errors? Distinguish chronology from cause and say whether unavailable syslog rules out a reset. Recommend two different passive checks without executing them. Use recorded state, incidents and syslog only.",
+    "surface": "floating",
+    "queries": [
+      "state",
+      "incidents",
+      "syslog"
+    ],
+    "expected_outcomes": [
+      "Coolingfirstobserved12:30, counterssampled12:35; temporalassociationnotcause.",
+      "Coolingpossiblehypothesis; onecounterrecordnottrend; no reset conclusion from unavailablesyslog.",
+      "Two discriminatingpassivecheckswithlimits;no newexecution."
+    ],
+    "prohibited_claims": [
+      "Coolingestablishedcause",
+      "Noresetbecause logsunavailable",
+      "Countertrendinvented"
+    ]
+  },
+  "historical_freeze": {
+    "path": "tmp\\phase-g\\iterations\\20261102T153500Z-answer-integrity-live\\round-1\\freeze.json",
+    "sha256": "d1d27ee3c495c0fe6d2d6258cfa38df21f04b092178cc79fbeae97db8ca2f075"
+  },
+  "source_operands": {
+    "incident_record_id": "rc5-cooling",
+    "first_observed": "2026-11-02T12:30:00Z",
+    "record_written": "2026-11-02T12:31:00Z",
+    "sample_record_id": "rc5-crc",
+    "crc_sample": "2026-11-02T12:35:00Z",
+    "observation_to_sample_minutes": 5,
+    "record_to_sample_minutes": 4,
+    "actual_onset": "not established",
+    "CRC_onset_and_trend": "not established by one cumulative counter sample"
+  },
+  "original_question_requirements": {
+    "accurate_observation_chronology": true,
+    "material_first_observation_and_sample_roles": true,
+    "causality_not_established_by_proximity": true,
+    "unavailable_syslog_does_not_rule_out_reset": true,
+    "two_distinct_passive_checks_and_purposes": true,
+    "source_restrictions": [
+      "state",
+      "incidents",
+      "syslog"
+    ],
+    "no_new_execution": true,
+    "explicit_five_minute_number_required": false,
+    "explicit_unknown_onset_sentence_required": false
+  },
+  "conditional_correctness": [
+    "Any stated interval must identify compatible source-field endpoints; five minutes is observation-to-sample, four is record-to-sample.",
+    "An occurrence interval cannot be inferred by merging first_observed and record_written.",
+    "Any actual-onset assertion must be supported; first_observed alone does not establish onset.",
+    "Ordering observations does not establish ordering of real fault onsets; a cumulative counter is not a trend.",
+    "Omitting optional arithmetic cannot conceal a wrong stated time, false causation, denied reset, missing requested advice or source violation.",
+    "Missing explicit uncertainty is a genuine omission if onset is requested or needed to qualify an otherwise misleading conclusion."
+  ],
+  "explicit_question_control": {
+    "prompt": "Could the cooling warning explain CedarEdge Ethernet1/1 errors? Distinguish chronology from cause and say whether unavailable syslog rules out a reset. Recommend two different passive checks without executing them. Use recorded state, incidents and syslog only. Calculate the elapsed time from the warning's first observation to the CRC sample, separately calculate the record-writing-to-sample interval, and state whether these records establish the warning's actual onset.",
+    "required": {
+      "observation_to_sample_minutes": 5,
+      "record_to_sample_minutes": 4,
+      "actual_onset": "not established"
+    },
+    "rule": "The same qualitative-only answer is incomplete for this explicit variant. Do not apply this requirement retroactively to the original question."
+  },
+  "assessment_axes": [
+    "original_question_adequacy",
+    "statement_correctness",
+    "experimental_instruction_compliance",
+    "auxiliary_binding_consistency",
+    "advice_scope_and_utility",
+    "released_answer_safety"
+  ],
+  "forbidden_even_if_arithmetic_optional": [
+    "occurred at record-writing time",
+    "actual onset equals first_observed without occurrence evidence",
+    "4-to-5-minute occurrence range",
+    "18 CRC errors interpreted as18percentloss",
+    "no reset because syslog unavailable",
+    "a counter trend asserted from one sample"
+  ],
+  "grading_method": "Source-derived, implementation-assistant graded, nonblinded; no automated prose semantic classifier or hidden LLM grader",
+  "historical_scores": "Unchanged; new interpretation is a separately versioned question-alignment review"
+}

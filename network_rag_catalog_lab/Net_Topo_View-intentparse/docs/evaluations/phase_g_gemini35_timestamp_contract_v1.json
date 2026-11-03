@@ -1,0 +1,483 @@
+{
+  "version": 1,
+  "frozen_at": "2026-11-02T10:55:11.321335+00:00",
+  "status": "OFFLINE_FROZEN_LIVE_NOT_AUTHORIZED",
+  "candidate_description": "Timestamp of the cited source record used to bind that record (timestamp, or captured_at when timestamp is absent). This selector is not necessarily the event's occurrence, first-observed or application-effective time. State the asserted time using the corresponding source field and value where supported by the claim category; do not substitute that event-time value for the record-binding timestamp.",
+  "description_sha256": "e2f1f6a1eb5c93ef09d729e5dac5d9a195ef3a35781c143e095d432b152a5afb",
+  "schema_delta_pointer": "/$defs/SourceClaim/properties/timestamp/description",
+  "cases": [
+    {
+      "id": "H-01",
+      "surface": "studio",
+      "pair_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/frozen-v1/H-01/pair.json",
+      "pair_sha256": "48de44cfdc94c6c59c03216c273876fed555128694ef0b201431fcd68142a84a",
+      "case_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/fixtures/H-01/case.json",
+      "case_sha256": "c827b25551a6fe50b0869a87c4db32b2a443f212531b63e399a2346fcaf8893b",
+      "question_sha256": "4289406f7e5ad23c5cf3612c2cff4f9b3fc9e0eaecc2a16d824b753e1fc83930",
+      "source_records_sha256": "111591fe4861dda8ac26d6179516780d24407d766d5afee9e349bc97ffde116f",
+      "packet_characters": 6488,
+      "oracle": {
+        "required_components": [
+          "Verified effective MTU1500at08:04; event record08:17; follow-up configuration08:22.",
+          "Recording delay13minutes; capture18minutes after effective event.",
+          "Positive applied event established; no measured payload recovery time."
+        ],
+        "prohibited_conclusions": [
+          "Effective time replaced by08:17or08:22",
+          "Application denied despite verification",
+          "Physical packet-loss recovery inferred"
+        ],
+        "claim_bindings": [
+          {
+            "record_refs": [
+              "h01-mtu-ack"
+            ],
+            "device_id": "5101",
+            "interface_id": "51017",
+            "timestamp": "2026-10-28T08:17:00Z",
+            "field": "effective_at",
+            "value": "2026-10-28T08:04:00Z",
+            "category": "configuration_change_time"
+          }
+        ],
+        "positive_and_negative_controls": [
+          "Retain verified application.",
+          "Reject event time used as record selector; reject wrong effective scalar."
+        ],
+        "distinct_from_historical": "Delayed MTU audit plus separate confirming capture and two elapsed-time outcomes; not logging-buffer interpolation."
+      }
+    },
+    {
+      "id": "H-02",
+      "surface": "floating",
+      "pair_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/frozen-v1/H-02/pair.json",
+      "pair_sha256": "30ce6a36710d7db2cc3e49d25e177737916ec1b9f218e17738f1c557525ad058",
+      "case_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/fixtures/H-02/case.json",
+      "case_sha256": "1196e0e64288141bf48e79959c68162946e9e1a456a7ee080cb0a4d1029a34fc",
+      "question_sha256": "9b0129d95900449575776e20c5bd775068328de7b2297ab980a936960f0eb38f",
+      "source_records_sha256": "b1f19114a05cf7c3a8c7a805a6d22b4d1478a29ef3e1e9e870cd623eca0fff57",
+      "packet_characters": 5279,
+      "oracle": {
+        "required_components": [
+          "Ravine first observed21:04; Plateau21:08, four minutes later.",
+          "Ravine recorded21:19(delay15minutes), Plateau21:10(delay2minutes).",
+          "Reporting order reverses observation order; no cross-site causal or live protocol-state proof."
+        ],
+        "prohibited_conclusions": [
+          "Plateau first because record earlier",
+          "Record-writing time called onset",
+          "Cross-site cause or measured protocol health invented"
+        ],
+        "claim_bindings": [
+          {
+            "record_refs": [
+              "h02-ravine"
+            ],
+            "device_id": "5111",
+            "interface_id": null,
+            "timestamp": "2026-10-28T21:19:00Z",
+            "field": "first_observed",
+            "value": "2026-10-28T21:04:00Z",
+            "category": "incident_occurred"
+          },
+          {
+            "record_refs": [
+              "h02-plateau"
+            ],
+            "device_id": "5112",
+            "interface_id": null,
+            "timestamp": "2026-10-28T21:10:00Z",
+            "field": "first_observed",
+            "value": "2026-10-28T21:08:00Z",
+            "category": "incident_occurred"
+          }
+        ],
+        "positive_and_negative_controls": [
+          "Correct temporal prose may be retained while incident-time operands remain mechanically unverified.",
+          "Do not treat insufficient checkability as false event evidence."
+        ],
+        "distinct_from_historical": "Two incidents have reversed reporting order; compares source delays, no CRC/cooling coincidence."
+      }
+    },
+    {
+      "id": "H-03",
+      "surface": "studio",
+      "pair_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/frozen-v1/H-03/pair.json",
+      "pair_sha256": "f9c0a03989a0e472c5178588a6a76b7ef16eb627120df1a5fd67c40f731d1d0b",
+      "case_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/fixtures/H-03/case.json",
+      "case_sha256": "4d0701aacd6ce56b987d64ffa360d893337a7c4e470627fcdb7a0fe9d1328671",
+      "question_sha256": "a9fe33ce6e944491b4e7f19a0ce26941ea6525515e4a6385c68ec24aed9adcf2",
+      "source_records_sha256": "e45a2cd9aaa5fe1fdbed00137aa48996a8f51070b1f93a37d54ce00f58679c5f",
+      "packet_characters": 5184,
+      "oracle": {
+        "required_components": [
+          "Both effective2026-10-27T23:50Z.",
+          "Vale acknowledgement2026-10-28T00:03Z:13minutes; Brook2026-10-27T23:56Z:6minutes.",
+          "Equal values/effective times do not make the owner/record timestamps interchangeable; later acknowledgement not later activation."
+        ],
+        "prohibited_conclusions": [
+          "Swap owners or record timestamps",
+          "Treat midnight as negative or23hour delay",
+          "Infer later activation from acknowledgement order"
+        ],
+        "claim_bindings": [
+          {
+            "record_refs": [
+              "h03-vale"
+            ],
+            "device_id": "5201",
+            "interface_id": null,
+            "timestamp": "2026-10-28T00:03:00Z",
+            "field": "effective_at",
+            "value": "2026-10-27T23:50:00Z",
+            "category": "configuration_change_time"
+          },
+          {
+            "record_refs": [
+              "h03-brook"
+            ],
+            "device_id": "5202",
+            "interface_id": null,
+            "timestamp": "2026-10-27T23:56:00Z",
+            "field": "effective_at",
+            "value": "2026-10-27T23:50:00Z",
+            "category": "configuration_change_time"
+          }
+        ],
+        "positive_and_negative_controls": [
+          "Correct equal-valued claims require distinct owners and record bindings.",
+          "Wrong record/effective timestamp must not become authoritative."
+        ],
+        "distinct_from_historical": "Cross-device equal operands and a date rollover compete for source binding; original scenarios had one-device chronology."
+      }
+    },
+    {
+      "id": "H-04",
+      "surface": "floating",
+      "pair_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/frozen-v1/H-04/pair.json",
+      "pair_sha256": "b70bd7e505105cb3060d25b1d746234e38761a32de044fa7007170fe03b6576a",
+      "case_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/fixtures/H-04/case.json",
+      "case_sha256": "4f7254db1218fd22d5ef5f7c81c4800e5bb56b977191a556ce8c902ab68008cf",
+      "question_sha256": "29190299cc178c234677f415d5365cd92f58f6cb7c648aea568969d154f1dfb1",
+      "source_records_sha256": "a3904cdd5efe2cafc1deb8802625af7a0dfed8840c1e6f979cfc94b8a494258c",
+      "packet_characters": 5973,
+      "oracle": {
+        "required_components": [
+          "Same06:40observation time contains conflicting no shutdown/shutdown commands; retain both sources.",
+          "07:10capture records shutdown;06:55and exact transition remain unknown.",
+          "Recorded commands do not establish physical oper status."
+        ],
+        "prohibited_conclusions": [
+          "Invent continuity or exact activation",
+          "Resolve conflict from list order or majority",
+          "Treat administrative config as measured oper health"
+        ],
+        "claim_bindings": [],
+        "positive_and_negative_controls": [
+          "Retain known command at each capture.",
+          "Do not infer an interval from point observations or discard the conflict."
+        ],
+        "distinct_from_historical": "Same-time source conflict plus later observation, unlike original monotonic buffers/verified change event."
+      }
+    },
+    {
+      "id": "H-05",
+      "surface": "studio",
+      "pair_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/frozen-v1/H-05/pair.json",
+      "pair_sha256": "033cd0bd48f1c45df4265974a4e0e78f23727e916ed0f4fa331ae055a7e39205",
+      "case_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/fixtures/H-05/case.json",
+      "case_sha256": "0db59dc7099618e6c723118c97a5c650ac8b40e7041a4f58ee5c504c811b2018",
+      "question_sha256": "ab63bbe97b41fb64b2449d3c46dfa760c97f1c761448ca3b058c1276b268f5e3",
+      "source_records_sha256": "62e2731460998174fb3e70a1451af2c0a1de404d699c0d72b3ef7eea74e61239",
+      "packet_characters": 13278,
+      "oracle": {
+        "required_components": [
+          "Forward unknown due to unresolved/unknown next-hop resolution, despite route and port-up records; return modeled delivered.",
+          "Two distinct passive recommendations with discriminating purpose, e.g.recorded neighbor-resolution and packet/application response evidence; no execution.",
+          "Model delivery is not measured application response; do not recommend merely proving already-recorded port-up as the sole next step."
+        ],
+        "prohibited_conclusions": [
+          "Treat unknown next hop as failed or resolved",
+          "Omit requested advice",
+          "Guarantee service from route/up ports",
+          "Execute a recommendation"
+        ],
+        "claim_bindings": [],
+        "positive_and_negative_controls": [
+          "Retain reverse modeled delivery and known up states.",
+          "Unknown next-hop and application evidence remain limited."
+        ],
+        "distinct_from_historical": "Known-up interfaces with unresolved neighbor and asymmetric modeled results; recommendations must address a different gap than historical unknown-port case."
+      }
+    },
+    {
+      "id": "H-06",
+      "surface": "floating",
+      "pair_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/frozen-v1/H-06/pair.json",
+      "pair_sha256": "98bad6887539abdcf4e8031b9c3289b09a5d539188ce1cf948c550463e430500",
+      "case_path": "tmp/phase-g/iterations/20261102T104614Z-timestamp-contract-experiment/fixtures/H-06/case.json",
+      "case_sha256": "33be35da8cda5db186aafbdcb882f969dc79f98c0544d97a348ac0ef5faf0803",
+      "question_sha256": "83d77ee9553bee875dde4869be53d2abbb4a35452997d3dd42b92ece7ced9438",
+      "source_records_sha256": "df71173bf083314deb36f0be5447cff0b88d09f1b0ed85be77db8732dc697c5d",
+      "packet_characters": 11530,
+      "oracle": {
+        "required_components": [
+          "Trap forward fails atTransitHub5302Ethernet2/9egress53022hub-trap-filter/deny-traps; return delivered.",
+          "Log forward and return delivered. Transit forward ingressEthernet2/1(53021), egressEthernet2/9(53022), owned byTransitHub inmonitor.",
+          "Positive modeled policy consequence established; no real deployment/application-outage proof."
+        ],
+        "prohibited_conclusions": [
+          "Swap forward/return or flow results",
+          "Deny located atsource/destination/wrong port",
+          "Withhold supported modeled result as whollyunknown",
+          "Infer deployed outage cause"
+        ],
+        "claim_bindings": [],
+        "positive_and_negative_controls": [
+          "Preserve supported deny and successful other flow.",
+          "Reject wrong owner/direction/VRF or physical-authority claim."
+        ],
+        "distinct_from_historical": "Two simultaneous UDP service classes, transit egress denial and reverse delivery; not the original source-egress before/after or return-ingress TLS case."
+      }
+    }
+  ],
+  "call_order": [
+    {
+      "sequence": 1,
+      "case": "H-01",
+      "arm": "control"
+    },
+    {
+      "sequence": 2,
+      "case": "H-01",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 3,
+      "case": "H-02",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 4,
+      "case": "H-02",
+      "arm": "control"
+    },
+    {
+      "sequence": 5,
+      "case": "H-03",
+      "arm": "control"
+    },
+    {
+      "sequence": 6,
+      "case": "H-03",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 7,
+      "case": "H-04",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 8,
+      "case": "H-04",
+      "arm": "control"
+    },
+    {
+      "sequence": 9,
+      "case": "H-05",
+      "arm": "control"
+    },
+    {
+      "sequence": 10,
+      "case": "H-05",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 11,
+      "case": "H-06",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 12,
+      "case": "H-06",
+      "arm": "control"
+    }
+  ],
+  "maximum_dispatch_attempts": 12,
+  "calls_per_cell": 1,
+  "retries": 0,
+  "new_planner_or_reader_calls": 0,
+  "model": {
+    "role": "evidence_reasoner",
+    "provider": "google",
+    "model": "gemini-3.5-flash-lite",
+    "output_tokens": 8192,
+    "thinking": "low",
+    "structured": true,
+    "schema_mode": "validated_json"
+  },
+  "input_token_budget": {
+    "actual_tokens": "NOT_MEASURED_NO_TOKEN_COUNT_API_CALL",
+    "conservative_sum_of_body_byte_reservations": 210082,
+    "meaning": "Existing adapter reserves serialized body bytes conservatively before dispatch, then records actual provider tokens. This is not a tokenizer count."
+  },
+  "maximum_output_tokens_total": 98304,
+  "request_wide_seconds": 120,
+  "evidence_cap": 64000,
+  "grading": {
+    "method": "Source-derived independently checkable, implementation-assistant graded; no model grader, not blinded or external.",
+    "units": "Six fresh source arrangements,12pairedoutputs; one sample each, not statistical reliability.",
+    "separate_metrics": [
+      "raw_answer_correctness",
+      "structured_claim_binding_and_semantics",
+      "whole_response_consistency",
+      "released_answer_quality"
+    ],
+    "claim_gate": "All applicable temporal declarations bind the correct record/owner and record timestamp and separate event field/value. No temporal claims means NOT_DEMONSTRATED, not automatic success.",
+    "required_temporal_conditions": [
+      "H-01",
+      "H-02",
+      "H-03"
+    ],
+    "whole_response_gate": "No substantive prose/claim/assessment inconsistency; no paired-control adequacy regression.",
+    "positive_control": "H-06must retain supported directional/modelled results.",
+    "release_gate": "No incorrect verified claims, new false suppression, unauthorized reads, unsupported activation or causal assertions.",
+    "diagnostic_controls": [
+      "H-04continuity/conflict",
+      "H-05advice and task completion"
+    ],
+    "ambiguous_answers": "Record exact text, source pointer and reason; do not silently grant adequacy.",
+    "interface_clarity_not_reasoning": "Corrected binding alone is not raw reasoning improvement. No promotion from schema/JSON/citation success."
+  },
+  "consent": {
+    "user_authorization": "NOT_YET_GRANTED. Prior18and12callapprovals exhausted.",
+    "per_cell": "Existing exact owner/request/history/synthetic scenario revision and current model-role binding required.",
+    "fixture_provenance": "New authored evaluation fixtures, not newly collected or executed reader results.",
+    "ordinary_private_editor_data": "EXCLUDED",
+    "live_setup": "Seal each scenario with existing ScenarioManager/consent machinery only after new authorization; no ordinary source activation."
+  },
+  "quota": {
+    "path": "tmp/ai-cloud-usage.json",
+    "hash_at_freeze": "bdccde3e6ab311c8ca0b1740327cb9687c5040290b7b5e61657aa4465a482b15",
+    "rows_at_freeze": 99,
+    "preflight_before_live": true,
+    "rpm_ceiling": 15,
+    "input_tpm_ceiling": 150000,
+    "rpd_ceiling": 500,
+    "sequential": true
+  },
+  "runtime_sources": {
+    "backend/llm/advanced_differentiators.py": "3759e2405f59f9f2f11ae40479ba32c476bbfbeb652bc5eb9f1a3b8a96473e26",
+    "backend/llm/agent.py": "3bbf7ace25de51bd83dcc0a828f61ade5259db6a6c360379e8c0e0a553e7e7af",
+    "backend/llm/answer_grounding.py": "b67523d864cc28da894f6e33fdf4716c1e4c1586efc8d76d195c8bffbce03f0f",
+    "backend/llm/answer_policy.py": "b4eab5bf95b2a49bb4304abf9f19241174fe7333798416df4021fe4ee482042b",
+    "backend/llm/answer_release.py": "4677836aa975f6868a9b0b40b558d91530a638a04338d7ce79adf119a52c7aec",
+    "backend/llm/api.py": "f63c0036086702e4236e15645803ef336e266755a8b7fb5e4be52a5c33f82452",
+    "backend/llm/benchmark_suite.py": "436638461cdde4c1005a9a670835bd1752d1778387fa4160481f70053694cb85",
+    "backend/llm/change_intelligence.py": "786da3314c837fa344a150726be4bce1c3dc44ff88fe6fb7437eefdf823350f7",
+    "backend/llm/context.py": "39953af277678d027d660876d08c11a58da3edabf9a94bfaf8978d4c572cd62f",
+    "backend/llm/context_contract.py": "9bebe2dbd49cdbe00e0148d715aee237f6a0943e78220675e5478bea09dc0378",
+    "backend/llm/context_state.py": "80b40beaeb466b029ab6d53247f4cfeb2f44fcbcb4c92f1a077acc7f0d68a72b",
+    "backend/llm/controller_flow.py": "a42a33363a3baf4d51f6f860f25020c138d58f18c6df4afa85a90956b15169d9",
+    "backend/llm/controller_observability.py": "480d6bd55e4c6a79b54a5a8b5a79cae47da914eaa9d9454e1105b221ac33e3ac",
+    "backend/llm/controller_policy.py": "05ed298bc72f2a6d0f723b9b3ca7f2b491b04d6ac2a64722eb483aeb9fb7b44c",
+    "backend/llm/controller_scope.py": "92affcbc9a1836361796c9fb35051429fc365ffee19076e04b53b5c6ae036341",
+    "backend/llm/controller_self_correction.py": "c661321b5e9ea688e472b0c31b763c08452840d3c75e371ab0d14ad7d2aa449a",
+    "backend/llm/document_extract_worker.py": "7c0bc147d6ff6ffacb54b4af4eb355f9fac96d64034a5595e9fc8e0f0d5384a5",
+    "backend/llm/document_ocr.py": "9b144468425fbaf5f57debae5dd07acaa90fbd7b88e1d804519e09e8b7d384fd",
+    "backend/llm/embedder.py": "28499d95155884917b8bc95a08c74ead7aad85c5d842928ee4e578887adb20dd",
+    "backend/llm/gateway.py": "0c61dca9fbfeee2a103c4bed6e5c6c8b8b6594457152515b7623c62a43ab8cd5",
+    "backend/llm/gateway_api.py": "95512bddb5f597b8cd76a03bb7b8ed28612787e25caf3a821d0d7fe940d9b09c",
+    "backend/llm/gateway_diagnostics.py": "691f326146422eb1c1e2dde54391c8e3522f9bdc45a9f1fd9b7eed9ff7b8aee1",
+    "backend/llm/gateway_documents.py": "edae6a1dfe89f948cc6f53b5b1259d71f05ca49160152a1a47396883c79f9120",
+    "backend/llm/gateway_findings.py": "fb02ddfcf36086eac2b04bd2a2edae262ce4150144bf09712e5350f84438d4f7",
+    "backend/llm/gateway_handoff.py": "13a05eeb94a23d6ada10785bf0abffb4323bfc45328b564e16999ae2208d2bde",
+    "backend/llm/gateway_inventory.py": "cec072b5126658a7e6d2a1427373e64e94baeaac38565a719597ec8e5995f261",
+    "backend/llm/gateway_knowledge.py": "0cf038d8b9d3b28892ba17b67648f9571469b86bc7c8c9b39307bc9403b538e5",
+    "backend/llm/gateway_models.py": "33b02c8f4360f1549a0b51458c02983f6f65d94ce71ea9452094fa069358d79f",
+    "backend/llm/gateway_network.py": "1b2b13c767ee5e02c41e96204a53b0131debaca60c5cad4f710c4b0d48c7c7b2",
+    "backend/llm/gateway_playbooks.py": "c4c23ada834ff97539843948c8d810e2e633cd4be9bb8f5fd8a13d61527ab26d",
+    "backend/llm/gateway_references.py": "cdf1adde382b4920642d7111f650c12477462b3d16fb9eb129012d5437c68dc0",
+    "backend/llm/gateway_reference_drafts.py": "0cd804963febb615e61bc0ab297fd3d81ddb3e977dbed57d12f5d96346fff5c6",
+    "backend/llm/gateway_review.py": "d61b67d80d8c143d19b62b570613dbed9cf92b73c2dbc2ba2970d247594d0189",
+    "backend/llm/gateway_routing.py": "b6dcbe56e57a939de372ab578b602a50b6ab28d3a89b23734712dcf3ceec1b5c",
+    "backend/llm/gateway_semantics.py": "560112aa73e71a74804447770355ee5f6c6ce2dccee052d61004f3f31cf45770",
+    "backend/llm/gateway_services.py": "c4492108fc9c14f7844c539ad0a424161ab6343b5c00f4f68481b2c743189727",
+    "backend/llm/gateway_store.py": "5bb3588b6288a9d5d972ec4e075c9e1858a5b2573bb842090787dbc1e4b49995",
+    "backend/llm/gateway_v9.py": "4d4e8c8281d693e85fe72d1d18d71acd61c43bf2763c2cd8996c3b6201098b55",
+    "backend/llm/gateway_validation.py": "2aeaab23662b299f89cce9457bbf0b0b87f23914f9a1f53e107b2c85e3e665ba",
+    "backend/llm/gateway_vision.py": "83cbbfba4c96354e6f579c1fb49154b48bdaa7c980111aaf6dfcbe62d2bdf71f",
+    "backend/llm/gateway_workspace.py": "7d56e7316daf7341b60ab95bc8c8e9309b3c9a89ebc1888933f9625f24f2fa17",
+    "backend/llm/gemini_provider.py": "eeb89f6e8c96c82bb886c9c2401d03765f7a25dd03efdc3816f71762af4700f6",
+    "backend/llm/ingestion.py": "0bce1fb5852583e3492717c12ef6d876d74548aa17aed6a08599ed34849a81e5",
+    "backend/llm/intent.py": "9f0a9d8d8813f902441cdb9e09463e120c3bba4f1d7f286d2aa50f36c47c387d",
+    "backend/llm/intent_api.py": "465998285dc2915076c539da38f498a87afd90b883dad1d0bd2cac6455900b85",
+    "backend/llm/milestone_baseline.py": "380956f3aa802a859d0121e8735d099021d8d41c78c3cdf067e99c2efdefd927",
+    "backend/llm/model_roles.py": "c955fda14a95998346a35bea64db3d77f6876466d84062957e8e3176adfd994a",
+    "backend/llm/network_tools.py": "604a520ed71bec2b2bb7c2ab594476be71e1254b2b8c3e0713754864a8bfbf9b",
+    "backend/llm/ollama_provider.py": "92272499e0138f276603350bf7759723e0c60405f4aa91f152058f894a019424",
+    "backend/llm/policy.py": "0fb0693bbc6a302d72aa359ea11cccbcf8d1da81bc92841a70680b596875b942",
+    "backend/llm/post_change_verification.py": "5629317bc83d05f97f13ca563b93e9235ae5a18852a732b480570e8d49428c74",
+    "backend/llm/proposal.py": "c1b5c8f2071168109bccfc3d6f3ae23f9b86e10a08f5b0b4981659be709ac570",
+    "backend/llm/provider.py": "532d0b5b70bdf35b66c635c625dac84734c4543e94e0b2a4edac899bc6f0226c",
+    "backend/llm/refresh_fabric.py": "ee05e3d60f9c57a63faca0ba7d649eebc44af11de70bf02c4a86325e8d70a631",
+    "backend/llm/refresh_state.py": "4f5aa9298d29f07775cdb83abe9624a38114d5d123d3fac04f6d021437ad7dab",
+    "backend/llm/resilience_suite.py": "bd04ff82ec7b539e5557ced675820b76d49e825c769e02d204b6d8738c69d158",
+    "backend/llm/retriever.py": "7ec393d4af80266ce4257771c4d0d37fd812a954cd05fb60397a83af7fc22462",
+    "backend/llm/semantics.py": "f2350c14aa6ac7ce1c8adae283572f4ed9dc9c982b1c6ddd3fe75f2f216139bf",
+    "backend/llm/system_prompt.py": "09852b2ca195dacf3fb39c0cecfc8b98f3914cb69552b69a8427d4b932e362ae",
+    "backend/llm/tools.py": "2e055f70d3188bc0c97625475c66265c2674ad4850ad73efcf9f7838366120e5",
+    "backend/llm/validation_process.py": "671ec7b84b354960319642d3b2dab6f7aa258925b0f560808c2d70c7b9ed1848",
+    "backend/llm/vector_store.py": "bc5e0bd1b2781c24fbd7bf05ae01a20b8dc100bb92a3bd6f8886f68c68c5de6f",
+    "backend/llm/wsl_validation_worker.py": "c47eb52bd71ad0b5a2fcd25de945c14eaf4d2efaf6f6b550ed8950beda229654",
+    "backend/llm/__init__.py": "ce833dc3c3b55546f91c3a402687e913922db16683c339ba6b6bef44d5f7f55f",
+    "backend/llm/orchestration/adapters.py": "07d76ebefcfe57d5908006fda7db9caa67fa85d0983a7eade67ef956e9e7ddc4",
+    "backend/llm/orchestration/editor_facts.py": "919720a2c49ad50216ea872b720249dde9a18143645e84f2692c0ecdd4f8ea00",
+    "backend/llm/orchestration/engine.py": "85ed2e004454c28538c73a2adeede1500c30cb4c1d2b514a479a915d3c9a7548",
+    "backend/llm/orchestration/evidence_harness.py": "df24119e0c207569742fe47ed9e9af0651c4d4aca57736bec7f342977471a76b",
+    "backend/llm/orchestration/investigation.py": "c0c2a18a36b4a515762eadc4bfbd55d7f572657cdfc20eba2f972215e31c8b7f",
+    "backend/llm/orchestration/investigation_support.py": "df4f8e026df5fdcd3d144708f117d59536206958a68018daa67ff608e77800e2",
+    "backend/llm/orchestration/memory.py": "d3d94925139956ad8d66c5803ad30676eb145507d081430604cd453fef42c610",
+    "backend/llm/orchestration/metric_evidence.py": "4a20cb6049a3e85ccc7d68d230ab9c7dc5400efe7083ca36d3b0ff89b777720b",
+    "backend/llm/orchestration/model.py": "ce71a30f57cf3a7082d3725c5f4f4c946a6eea0adea813c737fa3382a0ce7db6",
+    "backend/llm/orchestration/planning.py": "b342140f6882e2a3d7d35f0e9666d4e0efddeda3fac17d9c0c02355590077ea8",
+    "backend/llm/orchestration/reasoning_contract.py": "20ea70f8e585555d40fff8a3defb2b4fe6798613146701c10891a925b17ec547",
+    "backend/llm/orchestration/record_relationships.py": "418f008b0acd83e36846626f5282cec3040b548965a07f28aea34a71ed41f68f",
+    "backend/llm/orchestration/request_contract.py": "74b48b30c4ebc1fa0e7b8589fe0ff5da21ccffa557eb7e0cbc1188835174c32d",
+    "backend/llm/orchestration/role_reasoning.py": "e89bd83ff26a9e705e9e866b9488c9c9d65dc2067233af8586d04b672b861a8f",
+    "backend/llm/orchestration/scenario_reasoning.py": "42dc5aa4bc087bd98eb8f6f1e081d140124d24bbcce9c2b8ff414aa57151216f",
+    "backend/llm/orchestration/state.py": "f9c19ed5f5e53141d3632b6d61a1b80f41e71808cd3926b1cafa8fae9afa14be",
+    "backend/llm/orchestration/studio.py": "4b91b079050da38189531751312978732d4e83c0c0056ec07bf670ca6dc5e628",
+    "backend/llm/orchestration/synthesis.py": "9f2a12de9d0a7bf4ec567d4fba1335ed91064bc128ae5a7648b12f452d341354",
+    "backend/llm/orchestration/verification.py": "3cc37a60bfb5e158b711d26293b84d54e1f21f9086d14155e8e80e8423501e0a",
+    "backend/llm/orchestration/__init__.py": "bd827fe18dcc8a2daa39fac36418c9244e76b89115140fa73b605c588697df54",
+    "backend/development/bundles.py": "792d71b8cd0a1996d6a711329f2310f7a0d728c5e2fc2e89dcab97cf12b5689b",
+    "backend/development/examples.py": "9afbec25cf8a0f35f0e51eb64f57cb86c900cdf948e45f78ae02e7529afe62fb",
+    "backend/development/network_model.py": "d295f7c308ac60059b061d696d881270bc44acc2fcc95ed5f16290ecd6fd1963",
+    "backend/development/seeded.py": "fcf95f1a7445f2c4cf6d7c91f569353fd66eaf01c7845ee8d51c6295eb70b88e",
+    "backend/development/source_registry.py": "ba914ed068b44f232827146643ca55b3723ba5d731c009001a0e7c347751dcf0",
+    "backend/development/starter.py": "6864fec903e6292a389babca1b0d766708299f1ddc5fadc82cbecefe3f8988e3",
+    "backend/local_providers/artifact_metadata.py": "66068f5776c20ccdbff1a3fca2b319835e70d35e33d4cbc76a040a14723133ca",
+    "backend/local_providers/authoring.py": "39605fa9430d5d3776ba3095401edd73520204402c545bc498ab2407d8ba8685",
+    "backend/local_providers/capabilities.py": "48a1fce9d77789d3045d688703d2d5cc19e38e328d2ec44266dbb5417de27bf9",
+    "backend/local_providers/chat.py": "9e125b2bb4cc9e29fa43df6a1a66b28a59261754f47d114ad8cc899fe871b17d",
+    "backend/local_providers/development.py": "be4ee29f0bcda4f9955467d351d57b312c7c5e1251d6b45564b805a4c4772776",
+    "backend/local_providers/development_api.py": "1dcc3f7c5644f82d3e9a6be717c96baefde5e6ad66811d142e5d0cc4bceb9aae",
+    "backend/local_providers/knowledge.py": "ecab5ae79f445a6235749035365236006e9ec1b432fd7eb6c496add53f1d852d",
+    "backend/local_providers/knowledge_lifecycle.py": "05ac310c347f0c476f7c5e9949da8ba7b179d4472453cabd15b32482f47ca1c7",
+    "backend/local_providers/knowledge_review.py": "797ad4f762009d70c4fe3c6c75539ab8cffe326c4ffcf87a1c99e8c2a54c997f",
+    "backend/local_providers/knowledge_worker.py": "0115ba6f983a9342d3ccd6e97414b6562137c3e1adfac741153863d85bc4312a",
+    "backend/local_providers/observations.py": "a9accf6a6e4b3f4970d20acb002bdd3e35e86c59215e3cdbedba0abc2380a6e4",
+    "backend/local_providers/original_workflows.py": "d6d6b83798a0674b08186bb0627026cbde94e4f96b155f07af81c1cd3f206da0",
+    "backend/local_providers/settings_api.py": "f5e148c24868995786aa2b31f37938831740e50248d3c9ef0f4f8eb9131c4514",
+    "backend/local_providers/studio.py": "06d04b0e38621d5c8f9f8209fa852690363ef72ebd5dc045f8de7aa7012654eb",
+    "backend/local_providers/templates.py": "2ca2bb5f35734c0995983ad8d6337f3132b9f28be4b0f468d655920ea7ba220f",
+    "backend/local_providers/v9_clarification.py": "fcf0ce7e11202f04d2f093a9192e0223baa8c39efcb263d3f52397889cb0f8b8",
+    "backend/local_providers/v9_studio.py": "9e3b135fd429e2f16ab213cf7f373c7d565865687155623ea6ba8ad159d67bd4",
+    "backend/local_providers/v9_worker.py": "1323016dd7dfebacb28630f7dd56a0ccb964c1ae0d45edbb6b5579031204af42",
+    "backend/local_providers/workflows.py": "4382f4d0b59befdc31e2651d064ddbad31c2ad0bff8efb0f109dffbfa06619cb",
+    "backend/local_providers/__init__.py": "2982b1474a7eced00f59be1978fb70075461e9f334a73daf13952db03030fdaa"
+  },
+  "no_default_activation": true,
+  "formal_stage_closed": false
+}

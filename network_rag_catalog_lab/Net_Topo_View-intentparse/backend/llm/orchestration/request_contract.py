@@ -133,8 +133,18 @@ def outcome_pilot_enabled():
     return os.getenv('COGNISHIELD_AI_OUTCOMES','0')=='1'
 
 
-def requested_clauses(prompt):
-    return response_obligations(prompt,include_actions=True) or [{'id':'request-1','text':prompt}]
+def requested_clauses(prompt,detailed=False):
+    clauses=response_obligations(prompt,include_actions=True) or [{'id':'request-1','text':prompt}]
+    if not detailed:return clauses
+    # Optional original-text segmentation only, not operation recognition. A
+    # question or explicit imperative can own an independent deliverable. Do
+    # not split decimals, interface names, lists or coordinated noun phrases.
+    starts=r'(?:please\s+)?(?:explain|compare|identify|show|quote|list|describe|assess|check|verify|distinguish|report|answer|clarify|read|retrieve|recommend|suggest|name|determine|state|does|do|did|is|are|was|were|can|could|what|which|why|how)\b'
+    parts=[]
+    for clause in clauses:
+        parts.extend(re.split(r'(?<=[.!?])\s+(?='+starts+r')|\s+and\s+(?=(?:name|determine|state)\b)',clause['text'],flags=re.I))
+    if len(parts)>8:return clauses  # Existing bounded schema; retain full text.
+    return [{'id':'request-'+str(i+1),'text':text.strip()} for i,text in enumerate(parts) if text.strip()]
 
 
 def advisory_contract(prompt):

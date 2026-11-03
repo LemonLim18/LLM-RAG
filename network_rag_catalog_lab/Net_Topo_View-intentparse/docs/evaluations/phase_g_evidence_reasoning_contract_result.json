@@ -1,0 +1,148 @@
+{
+  "at": "2026-11-02T12:44:13.646301+08:00",
+  "status": "OFFLINE_CONTRACT_VERIFIED_LIVE_PENDING_CONSENT",
+  "feature_default": "off",
+  "promotion": false,
+  "registry_sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+  "new_cloud_calls": 0,
+  "cloud_ceiling": 18,
+  "live_authorization": "PENDING_FRESH_EXPLICIT_CONFIRMATION",
+  "actual_model_raw_deductions": "NOT_RUN",
+  "actual_model_complete_outcomes": "NOT_RUN",
+  "actual_model_release_false_suppression": "NOT_RUN",
+  "cases": [
+    {
+      "id": "RC-01",
+      "arms": {
+        "off": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 6730
+        },
+        "obligations": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 8480
+        },
+        "relationships": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 11745
+        }
+      }
+    },
+    {
+      "id": "RC-02",
+      "arms": {
+        "off": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 10369
+        },
+        "obligations": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 12567
+        },
+        "relationships": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 17799
+        }
+      }
+    },
+    {
+      "id": "RC-03",
+      "arms": {
+        "off": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 15606
+        },
+        "obligations": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 16946
+        },
+        "relationships": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 40766
+        }
+      }
+    },
+    {
+      "id": "RC-04",
+      "arms": {
+        "off": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 14017
+        },
+        "obligations": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 16238
+        },
+        "relationships": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 29813
+        }
+      }
+    },
+    {
+      "id": "RC-05",
+      "arms": {
+        "off": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 11493
+        },
+        "obligations": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 13443
+        },
+        "relationships": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 16073
+        }
+      }
+    },
+    {
+      "id": "RC-06",
+      "arms": {
+        "off": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 11877
+        },
+        "obligations": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 13182
+        },
+        "relationships": {
+          "raw_answer_quality": "NOT_RUN",
+          "released_answer_quality": "NOT_RUN",
+          "characters": 44753
+        }
+      }
+    }
+  ],
+  "offline": {
+    "affected_tests": 171,
+    "final_focused_tests": 33,
+    "overlap_not_summed": true,
+    "same_admitted_sources": true,
+    "OFF_exact_preimage": true,
+    "synthetic_release_checks_pass": true,
+    "intelligence_credit": false
+  },
+  "report": "docs/PHASE_G_EVIDENCE_REASONING_CONTRACT_EXPERIMENT.md",
+  "preservation_sha256": "8d4daa0eb6e8f567fae17dd208c19a5cc11ccb7386f53f21dbfdb94adf36fa4b",
+  "formal_stage_closed": false,
+  "pending_next": "Freshly authorized existing-role inference on frozen V3 packets; no further architectural work or new readers justified before actual results."
+}

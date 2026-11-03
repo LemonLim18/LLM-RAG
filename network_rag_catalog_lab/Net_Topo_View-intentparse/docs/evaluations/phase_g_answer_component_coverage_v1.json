@@ -1,0 +1,3316 @@
+{
+  "version": "answer_component_coverage_v1",
+  "runtime_use": false,
+  "created_at": "2026-11-02",
+  "retrospective_not_preregistered": true,
+  "scope": "All 42 saved outputs in the completed reasoning-contract (18), interpretation (12), and timestamp-contract (12) cohorts named by the supplied research. Six RC conditions are repeated across 30 outputs; six H conditions are distinct. This is not all earlier project-wide Phase G benchmarks.",
+  "method": "Case-specific lexical mentions and linked-mention signals only. Semantic completion, uncertainty, negation, relationships and unsupported inference remain human reviewed; original scores unchanged.",
+  "frozen_artifacts": [
+    {
+      "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+      "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+      "pointer": ""
+    },
+    {
+      "path": "docs/evaluations/phase_g_gemini35_interpretation_v1.json",
+      "sha256": "9cab06b8723e8365dd01be39183324090719edf2a1245fab2adca6258d4a4249",
+      "pointer": ""
+    },
+    {
+      "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+      "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+      "pointer": ""
+    },
+    {
+      "path": "tmp/phase-g/iterations/20261102T094917Z-gemini35-offline-failure-diagnosis/30-output-inventory.json",
+      "sha256": "8062bc4252ab1713cb71c2b42d29e99be2cb533fa3a34d83ffa66cbc5681cd96",
+      "pointer": ""
+    },
+    {
+      "path": "tmp/phase-g/iterations/20261102T094917Z-gemini35-offline-failure-diagnosis/failure-classification-matrix.json",
+      "sha256": "1891c070002a197e5981abe250fe1eb071d8be04893198008899125295f18c0d",
+      "pointer": ""
+    },
+    {
+      "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+      "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+      "pointer": ""
+    }
+  ],
+  "cases": [
+    {
+      "id": "RC-01",
+      "question": "Compare CedarEdge recorded running route with the staged candidate. Which next hops are recorded, and can you establish which was active at15:10? Explain whether the candidate was definitely not applied. Use configuration only.",
+      "source_requirements": [
+        {
+          "record_id": "rc1-candidate",
+          "pointer": "/config_text",
+          "expected": "ip route 203.0.113.0 255.255.255.0 10.241.1.6"
+        },
+        {
+          "record_id": "rc1-candidate",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T15:00:00Z"
+        },
+        {
+          "record_id": "rc1-running",
+          "pointer": "/config_text",
+          "expected": "ip route 203.0.113.0 255.255.255.0 10.241.1.2"
+        },
+        {
+          "record_id": "rc1-running",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T14:15:00Z"
+        },
+        {
+          "record_id": "rc1-candidate",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc1-candidate",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc1-candidate",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        },
+        {
+          "record_id": "rc1-running",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc1-running",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc1-running",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        }
+      ],
+      "components": [
+        {
+          "id": "running-next-hop",
+          "description": "Running observed14:15 via10.241.1.2; candidate saved15:00 via10.241.1.6.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/0/case/expected_outcomes/0"
+          },
+          "probe": {
+            "kind": "literal",
+            "alternatives": [
+              [
+                "10.241.1.2"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "staged-next-hop",
+          "description": "Running observed14:15 via10.241.1.2; candidate saved15:00 via10.241.1.6.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/0/case/expected_outcomes/0"
+          },
+          "probe": {
+            "kind": "literal",
+            "alternatives": [
+              [
+                "10.241.1.6"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "activation-uncertainty",
+          "description": "No applied flag/effective timestamp; neither active15:10 nor definitely-unapplied is established.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/0/case/expected_outcomes/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/0/case/prohibited_claims/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/0/case/prohibited_claims/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/0/case/prohibited_claims/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RC-02",
+      "question": "Explain CedarEdge logging-buffer chronology from all captures and the verified change event. Can you infer the value at08:00 or the exact later reversion time? State what the08:25application establishes and what remains unknown. Use configuration and syslog only.",
+      "source_requirements": [
+        {
+          "record_id": "rc2-2",
+          "pointer": "/config_text",
+          "expected": "logging buffered 12000"
+        },
+        {
+          "record_id": "rc2-2",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T11:00:00Z"
+        },
+        {
+          "record_id": "rc2-1",
+          "pointer": "/config_text",
+          "expected": "logging buffered 24000"
+        },
+        {
+          "record_id": "rc2-1",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T09:00:00Z"
+        },
+        {
+          "record_id": "rc2-0",
+          "pointer": "/config_text",
+          "expected": "logging buffered 12000"
+        },
+        {
+          "record_id": "rc2-0",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T07:00:00Z"
+        },
+        {
+          "record_id": "rc2-applied",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T08:26:00Z"
+        },
+        {
+          "record_id": "rc2-applied",
+          "pointer": "/effective_at",
+          "expected": "2026-11-02T08:25:00Z"
+        },
+        {
+          "record_id": "rc2-applied",
+          "pointer": "/applied",
+          "expected": true
+        },
+        {
+          "record_id": "rc2-applied",
+          "pointer": "/verification_status",
+          "expected": "verified"
+        },
+        {
+          "record_id": "rc2-2",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc2-2",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc2-2",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        },
+        {
+          "record_id": "rc2-1",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc2-1",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc2-1",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        },
+        {
+          "record_id": "rc2-0",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc2-0",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc2-0",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        },
+        {
+          "record_id": "rc2-applied",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc2-applied",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc2-applied",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        }
+      ],
+      "components": [
+        {
+          "id": "snapshot-values",
+          "description": "12000at07:00;24000at09:00;12000at11:00.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/1/case/expected_outcomes/0"
+          },
+          "probe": {
+            "kind": "literal",
+            "alternatives": [
+              [
+                "12000",
+                "24000"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "verified-application",
+          "description": "Verified application24000effective08:25; preserve positive evidence.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/1/case/expected_outcomes/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "continuity-uncertainty",
+          "description": "08:00unknown and exact later reversion unknown; endpoints do not prove continuous state.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/1/case/expected_outcomes/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/1/case/prohibited_claims/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/1/case/prohibited_claims/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/1/case/prohibited_claims/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RC-03",
+      "question": "Assess CedarEdge-to-IrisExit modeled TLS delivery in violet. Identify both transit ingress and egress owners in each traversed direction. Where does return delivery stop, does the default-VRF discard matter, and is protocol or live connectivity established? Use state only.",
+      "source_requirements": [
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/assessment/forward/status",
+          "expected": "delivered"
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/assessment/return/status",
+          "expected": "failed"
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/flow/vrf",
+          "expected": "violet"
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/source",
+          "expected": "declared_ipv4_observation_model"
+        },
+        {
+          "record_id": "model-table-1101-violet",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "model-table-1101-violet",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "model-table-1101-violet",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-table-1101-violet",
+          "pointer": "/source",
+          "expected": "declared_routing_table"
+        },
+        {
+          "record_id": "model-table-3303-violet",
+          "pointer": "/device_id",
+          "expected": 3303
+        },
+        {
+          "record_id": "model-table-3303-violet",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "model-table-3303-violet",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-table-3303-violet",
+          "pointer": "/source",
+          "expected": "declared_routing_table"
+        },
+        {
+          "record_id": "model-table-3303-default",
+          "pointer": "/device_id",
+          "expected": 3303
+        },
+        {
+          "record_id": "model-table-3303-default",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "model-table-3303-default",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-table-3303-default",
+          "pointer": "/source",
+          "expected": "declared_routing_table"
+        },
+        {
+          "record_id": "model-interface-11011",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "model-interface-11011",
+          "pointer": "/interface_id",
+          "expected": 11011
+        },
+        {
+          "record_id": "model-interface-11011",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-interface-11011",
+          "pointer": "/source",
+          "expected": "declared_interface_observation"
+        },
+        {
+          "record_id": "model-interface-33031",
+          "pointer": "/device_id",
+          "expected": 3303
+        },
+        {
+          "record_id": "model-interface-33031",
+          "pointer": "/interface_id",
+          "expected": 33031
+        },
+        {
+          "record_id": "model-interface-33031",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-interface-33031",
+          "pointer": "/source",
+          "expected": "declared_interface_observation"
+        },
+        {
+          "record_id": "model-interface-11010",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "model-interface-11010",
+          "pointer": "/interface_id",
+          "expected": 11010
+        },
+        {
+          "record_id": "model-interface-11010",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-interface-11010",
+          "pointer": "/source",
+          "expected": "declared_interface_observation"
+        },
+        {
+          "record_id": "model-interface-33030",
+          "pointer": "/device_id",
+          "expected": 3303
+        },
+        {
+          "record_id": "model-interface-33030",
+          "pointer": "/interface_id",
+          "expected": 33030
+        },
+        {
+          "record_id": "model-interface-33030",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-interface-33030",
+          "pointer": "/source",
+          "expected": "declared_interface_observation"
+        }
+      ],
+      "components": [
+        {
+          "id": "directional-outcomes",
+          "description": "Forwarddelivered;returnfailed atMicaCore2202 ingress22022, not IrisExit or egress22021.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/2/case/expected_outcomes/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "owned-interfaces",
+          "description": "ForwardMica22021ingress22022egress;return reaches22022andisdeniedbeforeegress.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/2/case/expected_outcomes/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "vrf-and-protocol-limits",
+          "description": "Defaultdiscardisolatedfromviolet; modeledonly, no measuredprotocolhealth.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/2/case/expected_outcomes/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/2/case/prohibited_claims/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/2/case/prohibited_claims/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/2/case/prohibited_claims/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RC-04",
+      "question": "CedarEdge has a route toward IrisExit. Does that prove service on TCP8443 in violet is working in both directions? Explain the routing fact, modeled uncertainty and most useful passive evidence to request next. Read state only and do not collect or test anything.",
+      "source_requirements": [
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/assessment/forward/status",
+          "expected": "unknown"
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/assessment/return/status",
+          "expected": "unknown"
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/flow/vrf",
+          "expected": "violet"
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-flow-tls-report",
+          "pointer": "/source",
+          "expected": "declared_ipv4_observation_model"
+        },
+        {
+          "record_id": "model-table-1101-violet",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "model-table-1101-violet",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "model-table-1101-violet",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-table-1101-violet",
+          "pointer": "/source",
+          "expected": "declared_routing_table"
+        },
+        {
+          "record_id": "model-table-3303-violet",
+          "pointer": "/device_id",
+          "expected": 3303
+        },
+        {
+          "record_id": "model-table-3303-violet",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "model-table-3303-violet",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-table-3303-violet",
+          "pointer": "/source",
+          "expected": "declared_routing_table"
+        },
+        {
+          "record_id": "model-interface-11011",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "model-interface-11011",
+          "pointer": "/interface_id",
+          "expected": 11011
+        },
+        {
+          "record_id": "model-interface-11011",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-interface-11011",
+          "pointer": "/source",
+          "expected": "declared_interface_observation"
+        },
+        {
+          "record_id": "model-interface-33031",
+          "pointer": "/device_id",
+          "expected": 3303
+        },
+        {
+          "record_id": "model-interface-33031",
+          "pointer": "/interface_id",
+          "expected": 33031
+        },
+        {
+          "record_id": "model-interface-33031",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-interface-33031",
+          "pointer": "/source",
+          "expected": "declared_interface_observation"
+        },
+        {
+          "record_id": "model-interface-11010",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "model-interface-11010",
+          "pointer": "/interface_id",
+          "expected": 11010
+        },
+        {
+          "record_id": "model-interface-11010",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-interface-11010",
+          "pointer": "/source",
+          "expected": "declared_interface_observation"
+        },
+        {
+          "record_id": "model-interface-33030",
+          "pointer": "/device_id",
+          "expected": 3303
+        },
+        {
+          "record_id": "model-interface-33030",
+          "pointer": "/interface_id",
+          "expected": 33030
+        },
+        {
+          "record_id": "model-interface-33030",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T16:00:00Z"
+        },
+        {
+          "record_id": "model-interface-33030",
+          "pointer": "/source",
+          "expected": "declared_interface_observation"
+        }
+      ],
+      "components": [
+        {
+          "id": "route-versus-health",
+          "description": "Routepresence recorded; operationalinterfaceunknown makesmodeledoutcomeunknown, not confirmedfailure or delivery.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/3/case/expected_outcomes/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "passive-recommendation",
+          "description": "Recommend obtaininginterface/next-hopstate; no new collection, no physical conclusion.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/3/case/expected_outcomes/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/3/case/prohibited_claims/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/3/case/prohibited_claims/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/3/case/prohibited_claims/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RC-05",
+      "question": "Could the cooling warning explain CedarEdge Ethernet1/1 errors? Distinguish chronology from cause and say whether unavailable syslog rules out a reset. Recommend two different passive checks without executing them. Use recorded state, incidents and syslog only.",
+      "source_requirements": [
+        {
+          "record_id": "rc5-crc",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T12:35:00Z"
+        },
+        {
+          "record_id": "rc5-crc",
+          "pointer": "/crc_errors",
+          "expected": 18
+        },
+        {
+          "record_id": "rc5-cooling",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T12:31:00Z"
+        },
+        {
+          "record_id": "rc5-cooling",
+          "pointer": "/first_observed",
+          "expected": "2026-11-02T12:30:00Z"
+        },
+        {
+          "record_id": "rc5-crc",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc5-crc",
+          "pointer": "/interface_id",
+          "expected": 11011
+        },
+        {
+          "record_id": "rc5-crc",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        },
+        {
+          "record_id": "rc5-cooling",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc5-cooling",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc5-cooling",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        }
+      ],
+      "components": [
+        {
+          "id": "time-roles",
+          "description": "Coolingfirstobserved12:30, counterssampled12:35; temporalassociationnotcause.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/4/case/expected_outcomes/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "causality-reset-uncertainty",
+          "description": "Coolingpossiblehypothesis; onecounterrecordnottrend; no reset conclusion from unavailablesyslog.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/4/case/expected_outcomes/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "passive-checks",
+          "description": "Two discriminatingpassivecheckswithlimits;no newexecution.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/4/case/expected_outcomes/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/4/case/prohibited_claims/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/4/case/prohibited_claims/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/4/case/prohibited_claims/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RC-06",
+      "question": "Compare the two recorded calculation variants for TCP8443 from CedarEdge. What modeled consequence follows from attaching the egress deny policy, where is it localized, and does this prove a deployed policy caused a real outage? Use state only.",
+      "source_requirements": [
+        {
+          "record_id": "rc6-before",
+          "pointer": "/assessment/forward/status",
+          "expected": "delivered"
+        },
+        {
+          "record_id": "rc6-after",
+          "pointer": "/assessment/forward/status",
+          "expected": "failed"
+        },
+        {
+          "record_id": "rc6-before",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc6-before",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc6-before",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T13:00:00Z"
+        },
+        {
+          "record_id": "rc6-before",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        },
+        {
+          "record_id": "rc6-after",
+          "pointer": "/device_id",
+          "expected": 1101
+        },
+        {
+          "record_id": "rc6-after",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "rc6-after",
+          "pointer": "/timestamp",
+          "expected": "2026-11-02T13:00:00Z"
+        },
+        {
+          "record_id": "rc6-after",
+          "pointer": "/source",
+          "expected": "independent-synthetic-observer"
+        }
+      ],
+      "components": [
+        {
+          "id": "modeled-consequence",
+          "description": "Beforeforwarddelivered;afterforwardfailedatCedar1101egress11011.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/5/case/expected_outcomes/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "positive-result-retained",
+          "description": "Controlledmodeledconsequenceisjustified;do notweaken to whollyunknown.",
+          "basis": "frozen_interpretive_requirement",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/5/case/expected_outcomes/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "deployment-limitation",
+          "description": "Neitherdeploymentnorrealoutagecauseestablished.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/5/case/expected_outcomes/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/5/case/prohibited_claims/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/5/case/prohibited_claims/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+            "sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+            "pointer": "/cases/5/case/prohibited_claims/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H-01",
+      "question": "Explain the verified MTU restoration on NacreDist Ethernet2/7. Distinguish its effective time, the audit record time and the follow-up capture; calculate the recording and capture delays. Does this establish when real payload-loss recovery occurred? Use only the supplied configuration and event records.",
+      "source_requirements": [
+        {
+          "record_id": "h01-mtu-ack",
+          "pointer": "/message",
+          "expected": "Verified MTU restoration to 1500 on Ethernet2/7"
+        },
+        {
+          "record_id": "h01-mtu-ack",
+          "pointer": "/effective_at",
+          "expected": "2026-10-28T08:04:00Z"
+        },
+        {
+          "record_id": "h01-mtu-ack",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T08:17:00Z"
+        },
+        {
+          "record_id": "h01-mtu-ack",
+          "pointer": "/applied",
+          "expected": true
+        },
+        {
+          "record_id": "h01-mtu-ack",
+          "pointer": "/verification_status",
+          "expected": "verified"
+        },
+        {
+          "record_id": "h01-followup",
+          "pointer": "/config_text",
+          "expected": "interface Ethernet2/7\n mtu 1500"
+        },
+        {
+          "record_id": "h01-followup",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T08:22:00Z"
+        },
+        {
+          "record_id": "h01-mtu-ack",
+          "pointer": "/device_id",
+          "expected": 5101
+        },
+        {
+          "record_id": "h01-mtu-ack",
+          "pointer": "/interface_id",
+          "expected": 51017
+        },
+        {
+          "record_id": "h01-mtu-ack",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h01-followup",
+          "pointer": "/device_id",
+          "expected": 5101
+        },
+        {
+          "record_id": "h01-followup",
+          "pointer": "/interface_id",
+          "expected": 51017
+        },
+        {
+          "record_id": "h01-followup",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        }
+      ],
+      "components": [
+        {
+          "id": "restored-mtu",
+          "description": "Verified effective MTU1500at08:04; event record08:17; follow-up configuration08:22.",
+          "basis": "frozen_explanation_requirement_not_literal_quote_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/0/oracle/required_components/0"
+          },
+          "probe": {
+            "kind": "literal",
+            "alternatives": [
+              [
+                "1500"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "time-roles-and-delays",
+          "description": "Recording delay13minutes; capture18minutes after effective event.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/0/oracle/required_components/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "payload-recovery-limitation",
+          "description": "Positive applied event established; no measured payload recovery time.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/0/oracle/required_components/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/0/oracle/prohibited_conclusions/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/0/oracle/prohibited_conclusions/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/0/oracle/prohibited_conclusions/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H-02",
+      "question": "Which site first observed the control-channel interruption, RavineWAN or PlateauWAN? Compare their first-observed and record-writing times and reporting delays. Does the order the records were written establish the order of the interruptions or prove one caused the other? Use these incident records only.",
+      "source_requirements": [
+        {
+          "record_id": "h02-plateau",
+          "pointer": "/first_observed",
+          "expected": "2026-10-28T21:08:00Z"
+        },
+        {
+          "record_id": "h02-plateau",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T21:10:00Z"
+        },
+        {
+          "record_id": "h02-ravine",
+          "pointer": "/first_observed",
+          "expected": "2026-10-28T21:04:00Z"
+        },
+        {
+          "record_id": "h02-ravine",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T21:19:00Z"
+        },
+        {
+          "record_id": "h02-plateau",
+          "pointer": "/device_id",
+          "expected": 5112
+        },
+        {
+          "record_id": "h02-plateau",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "h02-plateau",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h02-ravine",
+          "pointer": "/device_id",
+          "expected": 5111
+        },
+        {
+          "record_id": "h02-ravine",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "h02-ravine",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        }
+      ],
+      "components": [
+        {
+          "id": "observation-order",
+          "description": "Ravine first observed21:04; Plateau21:08, four minutes later.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/1/oracle/required_components/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "record-delays",
+          "description": "Ravine recorded21:19(delay15minutes), Plateau21:10(delay2minutes).",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/1/oracle/required_components/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "onset-and-causality-limitation",
+          "description": "Reporting order reverses observation order; no cross-site causal or live protocol-state proof.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/1/oracle/required_components/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/1/oracle/prohibited_conclusions/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/1/oracle/prohibited_conclusions/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/1/oracle/prohibited_conclusions/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H-03",
+      "question": "Compare the acknowledgement delays for the verified 9000-byte MTU changes on ValeLeaf and BrookLeaf. Both events report the same effective time. Bind each record and delay to its device, including the midnight date boundary. Does the later acknowledgement prove later activation? Use the supplied event records only.",
+      "source_requirements": [
+        {
+          "record_id": "h03-brook",
+          "pointer": "/message",
+          "expected": "Verified interface MTU set to 9000"
+        },
+        {
+          "record_id": "h03-brook",
+          "pointer": "/effective_at",
+          "expected": "2026-10-27T23:50:00Z"
+        },
+        {
+          "record_id": "h03-brook",
+          "pointer": "/timestamp",
+          "expected": "2026-10-27T23:56:00Z"
+        },
+        {
+          "record_id": "h03-brook",
+          "pointer": "/device_id",
+          "expected": 5202
+        },
+        {
+          "record_id": "h03-vale",
+          "pointer": "/message",
+          "expected": "Verified interface MTU set to 9000"
+        },
+        {
+          "record_id": "h03-vale",
+          "pointer": "/effective_at",
+          "expected": "2026-10-27T23:50:00Z"
+        },
+        {
+          "record_id": "h03-vale",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T00:03:00Z"
+        },
+        {
+          "record_id": "h03-vale",
+          "pointer": "/device_id",
+          "expected": 5201
+        },
+        {
+          "record_id": "h03-brook",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "h03-brook",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h03-vale",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "h03-vale",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        }
+      ],
+      "components": [
+        {
+          "id": "equal-effective-time",
+          "description": "Both effective2026-10-27T23:50Z.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/2/oracle/required_components/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "owner-and-midnight-delay",
+          "description": "Vale acknowledgement2026-10-28T00:03Z:13minutes; Brook2026-10-27T23:56Z:6minutes.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/2/oracle/required_components/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "acknowledgement-not-activation",
+          "description": "Equal values/effective times do not make the owner/record timestamps interchangeable; later acknowledgement not later activation.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/2/oracle/required_components/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/2/oracle/prohibited_conclusions/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/2/oracle/prohibited_conclusions/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/2/oracle/prohibited_conclusions/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H-04",
+      "question": "Reconcile the two collectors running-configuration captures for MarshAccess Ethernet4/8 and the later capture. What is established at each observation, can you determine the configuration at 06:55 or an exact shutdown time, and do these commands establish measured link health? Use only these captures; do not resolve a conflict by assuming one collector is correct.",
+      "source_requirements": [
+        {
+          "record_id": "h04-observer-a",
+          "pointer": "/config_text",
+          "expected": "interface Ethernet4/8\n no shutdown"
+        },
+        {
+          "record_id": "h04-observer-a",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T06:40:00Z"
+        },
+        {
+          "record_id": "h04-observer-a",
+          "pointer": "/source",
+          "expected": "synthetic-collector-a"
+        },
+        {
+          "record_id": "h04-observer-b",
+          "pointer": "/config_text",
+          "expected": "interface Ethernet4/8\n shutdown"
+        },
+        {
+          "record_id": "h04-observer-b",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T06:40:00Z"
+        },
+        {
+          "record_id": "h04-observer-b",
+          "pointer": "/source",
+          "expected": "synthetic-collector-b"
+        },
+        {
+          "record_id": "h04-later",
+          "pointer": "/config_text",
+          "expected": "interface Ethernet4/8\n shutdown"
+        },
+        {
+          "record_id": "h04-later",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T07:10:00Z"
+        },
+        {
+          "record_id": "h04-later",
+          "pointer": "/source",
+          "expected": "synthetic-collector-a"
+        },
+        {
+          "record_id": "h04-observer-a",
+          "pointer": "/device_id",
+          "expected": 5211
+        },
+        {
+          "record_id": "h04-observer-a",
+          "pointer": "/interface_id",
+          "expected": 52118
+        },
+        {
+          "record_id": "h04-observer-b",
+          "pointer": "/device_id",
+          "expected": 5211
+        },
+        {
+          "record_id": "h04-observer-b",
+          "pointer": "/interface_id",
+          "expected": 52118
+        },
+        {
+          "record_id": "h04-later",
+          "pointer": "/device_id",
+          "expected": 5211
+        },
+        {
+          "record_id": "h04-later",
+          "pointer": "/interface_id",
+          "expected": 52118
+        }
+      ],
+      "components": [
+        {
+          "id": "conflicting-observations",
+          "description": "Same06:40observation time contains conflicting no shutdown/shutdown commands; retain both sources.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/3/oracle/required_components/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "later-shutdown",
+          "description": "07:10capture records shutdown;06:55and exact transition remain unknown.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/3/oracle/required_components/1"
+          },
+          "probe": {
+            "kind": "same_sentence",
+            "alternatives": [
+              [
+                "07:10",
+                "shutdown"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "unknown-interval",
+          "description": "07:10capture records shutdown;06:55and exact transition remain unknown.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/3/oracle/required_components/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "measured-health-limitation",
+          "description": "Recorded commands do not establish physical oper status.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/3/oracle/required_components/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/3/oracle/prohibited_conclusions/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/3/oracle/prohibited_conclusions/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/3/oracle/prohibited_conclusions/2"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H-05",
+      "question": "LumenProbe has a complete route toward ArchiveSink and every supplied port record is up. Explain whether the modeled UDP 161 poll and reverse path are established, identifying the remaining evidence gap. Recommend two distinct passive artifacts to request next and explain what each could resolve. Do not execute new reads, collection or tests; use only the supplied state.",
+      "source_requirements": [
+        {
+          "record_id": "h05-poll-model",
+          "pointer": "/assessment/forward/status",
+          "expected": "unknown"
+        },
+        {
+          "record_id": "h05-poll-model",
+          "pointer": "/assessment/return/status",
+          "expected": "delivered"
+        },
+        {
+          "record_id": "h05-poll-model",
+          "pointer": "/assessment/limitation",
+          "expected": "Declared IPv4 stateless forwarding only; no NAT, IPv6, dynamic protocol emulation or physical packet test."
+        },
+        {
+          "record_id": "h05-poll-model",
+          "pointer": "/flow/vrf",
+          "expected": "monitor"
+        },
+        {
+          "record_id": "h05-poll-model",
+          "pointer": "/device_id",
+          "expected": 5301
+        },
+        {
+          "record_id": "h05-poll-model",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "h05-poll-model",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h05-poll-model",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h05-route",
+          "pointer": "/device_id",
+          "expected": 5301
+        },
+        {
+          "record_id": "h05-route",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "h05-route",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h05-route",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h05-port-53010",
+          "pointer": "/device_id",
+          "expected": 5301
+        },
+        {
+          "record_id": "h05-port-53010",
+          "pointer": "/interface_id",
+          "expected": 53010
+        },
+        {
+          "record_id": "h05-port-53010",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h05-port-53010",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h05-port-53011",
+          "pointer": "/device_id",
+          "expected": 5301
+        },
+        {
+          "record_id": "h05-port-53011",
+          "pointer": "/interface_id",
+          "expected": 53011
+        },
+        {
+          "record_id": "h05-port-53011",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h05-port-53011",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h05-port-53021",
+          "pointer": "/device_id",
+          "expected": 5302
+        },
+        {
+          "record_id": "h05-port-53021",
+          "pointer": "/interface_id",
+          "expected": 53021
+        },
+        {
+          "record_id": "h05-port-53021",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h05-port-53021",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h05-port-53022",
+          "pointer": "/device_id",
+          "expected": 5302
+        },
+        {
+          "record_id": "h05-port-53022",
+          "pointer": "/interface_id",
+          "expected": 53022
+        },
+        {
+          "record_id": "h05-port-53022",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h05-port-53022",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h05-port-53031",
+          "pointer": "/device_id",
+          "expected": 5303
+        },
+        {
+          "record_id": "h05-port-53031",
+          "pointer": "/interface_id",
+          "expected": 53031
+        },
+        {
+          "record_id": "h05-port-53031",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h05-port-53031",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h05-port-53030",
+          "pointer": "/device_id",
+          "expected": 5303
+        },
+        {
+          "record_id": "h05-port-53030",
+          "pointer": "/interface_id",
+          "expected": 53030
+        },
+        {
+          "record_id": "h05-port-53030",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h05-port-53030",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        }
+      ],
+      "components": [
+        {
+          "id": "modeled-path-and-gap",
+          "description": "Forward unknown due to unresolved/unknown next-hop resolution, despite route and port-up records; return modeled delivered.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/4/oracle/required_components/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "passive-artifacts",
+          "description": "Two distinct passive recommendations with discriminating purpose, e.g.recorded neighbor-resolution and packet/application response evidence; no execution.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/4/oracle/required_components/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "artifact-purposes",
+          "description": "Two distinct passive recommendations with discriminating purpose, e.g.recorded neighbor-resolution and packet/application response evidence; no execution.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/4/oracle/required_components/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "model-versus-measured-response",
+          "description": "Model delivery is not measured application response; do not recommend merely proving already-recorded port-up as the sole next step.",
+          "basis": "frozen_safety_caveat_not_separate_literal_subquestion",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/4/oracle/required_components/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/4/oracle/prohibited_conclusions/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/4/oracle/prohibited_conclusions/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/4/oracle/prohibited_conclusions/2"
+          }
+        },
+        {
+          "id": "forbidden-4",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/4/oracle/prohibited_conclusions/3"
+          }
+        }
+      ]
+    },
+    {
+      "id": "H-06",
+      "question": "Compare the modeled UDP trap stream to port 162 and log stream to port 514 from LumenProbe to ArchiveSink in monitor. For each flow distinguish forward and return outcomes, identify TransitHub ingress and egress ownership and localize any deny. Does this prove a deployed filter caused a real monitoring outage? Use these state calculations only.",
+      "source_requirements": [
+        {
+          "record_id": "h06-trap-stream",
+          "pointer": "/assessment/forward/status",
+          "expected": "failed"
+        },
+        {
+          "record_id": "h06-trap-stream",
+          "pointer": "/assessment/return/status",
+          "expected": "delivered"
+        },
+        {
+          "record_id": "h06-trap-stream",
+          "pointer": "/flow/destination_port",
+          "expected": 162
+        },
+        {
+          "record_id": "h06-trap-stream",
+          "pointer": "/flow/vrf",
+          "expected": "monitor"
+        },
+        {
+          "record_id": "h06-log-stream",
+          "pointer": "/assessment/forward/status",
+          "expected": "delivered"
+        },
+        {
+          "record_id": "h06-log-stream",
+          "pointer": "/assessment/return/status",
+          "expected": "delivered"
+        },
+        {
+          "record_id": "h06-log-stream",
+          "pointer": "/flow/destination_port",
+          "expected": 514
+        },
+        {
+          "record_id": "h06-log-stream",
+          "pointer": "/flow/vrf",
+          "expected": "monitor"
+        },
+        {
+          "record_id": "h06-trap-stream",
+          "pointer": "/device_id",
+          "expected": 5301
+        },
+        {
+          "record_id": "h06-trap-stream",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "h06-trap-stream",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h06-trap-stream",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        },
+        {
+          "record_id": "h06-log-stream",
+          "pointer": "/device_id",
+          "expected": 5301
+        },
+        {
+          "record_id": "h06-log-stream",
+          "pointer": "/interface_id",
+          "expected": null
+        },
+        {
+          "record_id": "h06-log-stream",
+          "pointer": "/timestamp",
+          "expected": "2026-10-28T18:00:00Z"
+        },
+        {
+          "record_id": "h06-log-stream",
+          "pointer": "/source",
+          "expected": "authored-synthetic-audit"
+        }
+      ],
+      "components": [
+        {
+          "id": "trap-owner-direction",
+          "description": "Trap forward fails atTransitHub5302Ethernet2/9egress53022hub-trap-filter/deny-traps; return delivered.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/5/oracle/required_components/0"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "log-positive-outcomes",
+          "description": "Log forward and return delivered. Transit forward ingressEthernet2/1(53021), egressEthernet2/9(53022), owned byTransitHub inmonitor.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/5/oracle/required_components/1"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        },
+        {
+          "id": "modeled-not-deployed",
+          "description": "Positive modeled policy consequence established; no real deployment/application-outage proof.",
+          "basis": "explicit_request",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/5/oracle/required_components/2"
+          },
+          "probe": {
+            "kind": "human_only"
+          }
+        }
+      ],
+      "forbidden_inferences": [
+        {
+          "id": "forbidden-1",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/5/oracle/prohibited_conclusions/0"
+          }
+        },
+        {
+          "id": "forbidden-2",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/5/oracle/prohibited_conclusions/1"
+          }
+        },
+        {
+          "id": "forbidden-3",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/5/oracle/prohibited_conclusions/2"
+          }
+        },
+        {
+          "id": "forbidden-4",
+          "oracle": {
+            "path": "docs/evaluations/phase_g_gemini35_timestamp_contract_v1.json",
+            "sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+            "pointer": "/cases/5/oracle/prohibited_conclusions/3"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "identity": "reasoning_contract_18/RC-01/off",
+      "case": "RC-01",
+      "cohort": "reasoning_contract_18",
+      "arm": "off",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-01-off.json",
+        "sha256": "63f34d39dbcce123c950769934c50e4ce7079804bf146326645d3cadfd2ed5e9",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/0"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-01-off.json",
+        "sha256": "0ca842ab14b79fa88c0989680b358f1ef75da267470861b3a891e5933182f0a5",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-01/obligations",
+      "case": "RC-01",
+      "cohort": "reasoning_contract_18",
+      "arm": "obligations",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-01-obligations.json",
+        "sha256": "4d44e7a4392abaf9b27f80a12447000e230340b06353aefd23e07a0ccfaae012",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/1"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-01-obligations.json",
+        "sha256": "6ab55e577f58e364f12a6fad77477cde7111605555886fb180a5baf7b03c18ce",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-01/relationships",
+      "case": "RC-01",
+      "cohort": "reasoning_contract_18",
+      "arm": "relationships",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-01-relationships.json",
+        "sha256": "ad8978fe93471319c28b73c1ca4856b11fdea45d88039c9a2cc9e5169f9834ab",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/2"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-01-relationships.json",
+        "sha256": "43755bdd6dff06ceb97d396ccb1da95c8b5d14d84450680c7f6d90a3fb1356f1",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-02/off",
+      "case": "RC-02",
+      "cohort": "reasoning_contract_18",
+      "arm": "off",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-02-off.json",
+        "sha256": "8d2442c2882a4a7646af1e9deaa8164f73626d35b28c5e7b3e26698a08f21ac7",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/3"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-02-off.json",
+        "sha256": "0fc980a61dcfe0c6692a9a2afe46e27e37d4342f3d2ae4c863de8345adfe9e24",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-02/obligations",
+      "case": "RC-02",
+      "cohort": "reasoning_contract_18",
+      "arm": "obligations",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-02-obligations.json",
+        "sha256": "e1370f9bcf8abc26cff97c728654ca2be02a13d47ea31a64a3b4b6f1fe4e188d",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/4"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-02-obligations.json",
+        "sha256": "0c0868bd8609abaf859240795e792261e585a18a309b5092085bb8e424d0b4e3",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-02/relationships",
+      "case": "RC-02",
+      "cohort": "reasoning_contract_18",
+      "arm": "relationships",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-02-relationships.json",
+        "sha256": "ff4ad305c330e32805010a62ee1c1012de5d9cb5045eb08074d4101435a8fe86",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/5"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-02-relationships.json",
+        "sha256": "d8f73cc0c57c9adbba7bd53e45d47ebb8ac20e2fce38eadf9e9c1648af3cfd68",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-03/off",
+      "case": "RC-03",
+      "cohort": "reasoning_contract_18",
+      "arm": "off",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-03-off.json",
+        "sha256": "b09751c2a05c03d11c434f199a960ab151d59b3c8aaced1051d24d25e62e16c7",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/6"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-03-off.json",
+        "sha256": "d1d017fafcc4d053552a7faaf916b4f717ed53cfeb0eca242d21d74e13a3d2c5",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-03/obligations",
+      "case": "RC-03",
+      "cohort": "reasoning_contract_18",
+      "arm": "obligations",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-03-obligations.json",
+        "sha256": "e31c60f617ec9837568dabc32d5041b517a24be54598bce3e18266755df5cf12",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/7"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-03-obligations.json",
+        "sha256": "d73771d49b70be5a1de93674dcb2874bfa2123453c5005a3d9b55da6ba3c74ff",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-03/relationships",
+      "case": "RC-03",
+      "cohort": "reasoning_contract_18",
+      "arm": "relationships",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-03-relationships.json",
+        "sha256": "d04bfef070b67e7a3fde47db8486c096afebe121cff2871f09aa226ef9d60df0",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/8"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-03-relationships.json",
+        "sha256": "90547a296cc5942ab4e58cf7b7ce169cd3982745f48279217fdefc2ee63ca716",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-04/off",
+      "case": "RC-04",
+      "cohort": "reasoning_contract_18",
+      "arm": "off",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-04-off.json",
+        "sha256": "11b9ad5045010ba57cbbc6c41d7f83d0e00da00185222f8b8a3755dcb97e5fce",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/9"
+      },
+      "reviews": {
+        "passive-recommendation": {
+          "status": "COVERED",
+          "reason": "Prior saved prose contains qualified passive advice; this does not make every other component adequate.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T094917Z-gemini35-offline-failure-diagnosis/failure-classification-matrix.json",
+            "sha256": "1891c070002a197e5981abe250fe1eb071d8be04893198008899125295f18c0d",
+            "pointer": "/cells/9/separate_current_diagnosis_not_a_regrade"
+          }
+        }
+      },
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-04-off.json",
+        "sha256": "86c6cb7c08fd806dfa9d840dfc5df3f598329f90f37a63b0f8f716f3689592f3",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-04/obligations",
+      "case": "RC-04",
+      "cohort": "reasoning_contract_18",
+      "arm": "obligations",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-04-obligations.json",
+        "sha256": "50fc8f5247bbf464515f3ee5a90b88dda1b5b4151c2db6f6ab0a50b9b6851043",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/10"
+      },
+      "reviews": {
+        "passive-recommendation": {
+          "status": "COVERED",
+          "reason": "Prior saved prose contains qualified passive advice; this does not make every other component adequate.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T094917Z-gemini35-offline-failure-diagnosis/failure-classification-matrix.json",
+            "sha256": "1891c070002a197e5981abe250fe1eb071d8be04893198008899125295f18c0d",
+            "pointer": "/cells/10/separate_current_diagnosis_not_a_regrade"
+          }
+        }
+      },
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-04-obligations.json",
+        "sha256": "d87a9f502f9df9e91cc636cbf3de899771d52df11b79ca558959b35134a29e48",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-04/relationships",
+      "case": "RC-04",
+      "cohort": "reasoning_contract_18",
+      "arm": "relationships",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-04-relationships.json",
+        "sha256": "837f323fc14774bdb8e3d57095f344c815b9fc31990fd5c6ff477813caa9ac88",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/11"
+      },
+      "reviews": {
+        "passive-recommendation": {
+          "status": "COVERED",
+          "reason": "Prior saved prose contains qualified passive advice; this does not make every other component adequate.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T094917Z-gemini35-offline-failure-diagnosis/failure-classification-matrix.json",
+            "sha256": "1891c070002a197e5981abe250fe1eb071d8be04893198008899125295f18c0d",
+            "pointer": "/cells/11/separate_current_diagnosis_not_a_regrade"
+          }
+        }
+      },
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-04-relationships.json",
+        "sha256": "6ab0d25ad4cb269b13ad23c2ab258e999c97df0088bbf708bcbb4955d5b5ba7a",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-05/off",
+      "case": "RC-05",
+      "cohort": "reasoning_contract_18",
+      "arm": "off",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-05-off.json",
+        "sha256": "663daf8ab5ec8503c19c6b7c9e0d2544ba4421c03f015ebf3521d7eed9cd3a85",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/12"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-05-off.json",
+        "sha256": "60ab0c550f026bd4d7ed69ddaa1533a5ef511b1d1c15afa44ec946e2118b15ee",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-05/obligations",
+      "case": "RC-05",
+      "cohort": "reasoning_contract_18",
+      "arm": "obligations",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-05-obligations.json",
+        "sha256": "36b6b1d8c93b0c08278879a823afcb0f990795661da693d1f5bfeefc2d37b2fa",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/13"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-05-obligations.json",
+        "sha256": "66e9bd866efd7e3b34aa2db1155ff91da79796508b025035dfa1895c91c2fd63",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-05/relationships",
+      "case": "RC-05",
+      "cohort": "reasoning_contract_18",
+      "arm": "relationships",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-05-relationships.json",
+        "sha256": "1361d91a98dd171e48ddbeca1832a4ae26aa2e4d4cd51bb0d7208207456bc675",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/14"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-05-relationships.json",
+        "sha256": "090291260fb71dcc2d3ac6ee720833152caca7e4d32a5923d5dfc50369f88d8e",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-06/off",
+      "case": "RC-06",
+      "cohort": "reasoning_contract_18",
+      "arm": "off",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-06-off.json",
+        "sha256": "d13240f61f945a4b1ec947445557090e027e5d9f3bc7bbae73c8aefa427d49c1",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/15"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-06-off.json",
+        "sha256": "93cec59062aa5d5c82b1000c6c473ac379e22011663bae380e0d456f085b7153",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-06/obligations",
+      "case": "RC-06",
+      "cohort": "reasoning_contract_18",
+      "arm": "obligations",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-06-obligations.json",
+        "sha256": "542300b09f0e3b9a3528e242e8342ef92dcad3e1bedfcd2ab160589a92875ac2",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/16"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-06-obligations.json",
+        "sha256": "1f95bd60769d69dbc7107fdf9b5389fa2c96af4f097fa4a8b08f1d086c1d5236",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "reasoning_contract_18/RC-06/relationships",
+      "case": "RC-06",
+      "cohort": "reasoning_contract_18",
+      "arm": "relationships",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-results/RC-06-relationships.json",
+        "sha256": "ac7d510ed8d5a3889750d6db5bae050162d6715d1e440a1f1ba9d9f54090bb88",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/live-full-answer-review.json",
+        "sha256": "fbbb4a9e79de5901cc64f2ae55548f1775c0b59013d504101276394b2475dc4c",
+        "pointer": "/cells/17"
+      },
+      "reviews": {},
+      "current_release": {
+        "path": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair/replay-cells/RC-06-relationships.json",
+        "sha256": "85d7a0d47411ace8d88d2e855ceb2f8b07c1bf082608eeb5e4df25302db69620",
+        "pointer": "/repaired_final_answer"
+      }
+    },
+    {
+      "identity": "temporal_instruction_12/RC-01/control",
+      "case": "RC-01",
+      "cohort": "temporal_instruction_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-01-control.json",
+        "sha256": "1aa4a20cb5739e632daa56fbb792e8c5428cd72dd417366348be2e41ebbb21a7",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/0"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-01/candidate",
+      "case": "RC-01",
+      "cohort": "temporal_instruction_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-01-candidate.json",
+        "sha256": "be13db6c032e15e05ffc58fb2f40b2df67dddc96439adf5a9d6be740b8aa148d",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/1"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-02/control",
+      "case": "RC-02",
+      "cohort": "temporal_instruction_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-02-control.json",
+        "sha256": "e90833cd7bc5ab6f888616765ab4c6b889faf72ab33321565c0fda254eb20b32",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/2"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-02/candidate",
+      "case": "RC-02",
+      "cohort": "temporal_instruction_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-02-candidate.json",
+        "sha256": "8b4f0cb200c0a06147e448e2c05fc883b06124b4a6a722df9571a2814443bda3",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/3"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-03/control",
+      "case": "RC-03",
+      "cohort": "temporal_instruction_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-03-control.json",
+        "sha256": "87dec73398844b542585df94e15099bf15ccf6f147bc79fbf0349ba0314117ac",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/4"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-03/candidate",
+      "case": "RC-03",
+      "cohort": "temporal_instruction_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-03-candidate.json",
+        "sha256": "5bd1df38432ba7063431206eea8a81b50af070bd9e302dd381a2e5c9b1e09e03",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/5"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-04/control",
+      "case": "RC-04",
+      "cohort": "temporal_instruction_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-04-control.json",
+        "sha256": "f32623e5f326d5de354063aed9df83ac766b2cbb0a226b411b1d665dc716677e",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/6"
+      },
+      "reviews": {
+        "passive-recommendation": {
+          "status": "OMITTED",
+          "reason": "Original saved answer omits requested advice despite explicit request and supported assessment.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T094917Z-gemini35-offline-failure-diagnosis/failure-classification-matrix.json",
+            "sha256": "1891c070002a197e5981abe250fe1eb071d8be04893198008899125295f18c0d",
+            "pointer": "/cells/24/separate_current_diagnosis_not_a_regrade"
+          }
+        }
+      }
+    },
+    {
+      "identity": "temporal_instruction_12/RC-04/candidate",
+      "case": "RC-04",
+      "cohort": "temporal_instruction_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-04-candidate.json",
+        "sha256": "4a958683f806f9b5a6d944ab00da699e737224222947ffca5716229f7c8ddc79",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/7"
+      },
+      "reviews": {
+        "passive-recommendation": {
+          "status": "OMITTED",
+          "reason": "Original saved answer omits requested advice despite explicit request and supported assessment.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T094917Z-gemini35-offline-failure-diagnosis/failure-classification-matrix.json",
+            "sha256": "1891c070002a197e5981abe250fe1eb071d8be04893198008899125295f18c0d",
+            "pointer": "/cells/25/separate_current_diagnosis_not_a_regrade"
+          }
+        }
+      }
+    },
+    {
+      "identity": "temporal_instruction_12/RC-05/control",
+      "case": "RC-05",
+      "cohort": "temporal_instruction_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-05-control.json",
+        "sha256": "5b74eea50be2bf94f209ccdd698023fe20e2597cf6b996d489ee4c4c55302700",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/8"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-05/candidate",
+      "case": "RC-05",
+      "cohort": "temporal_instruction_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-05-candidate.json",
+        "sha256": "db5137b6ad4af6fd0f86f38d27c5088538ff4c9a91bf8fa107a082013c33a246",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/9"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-06/control",
+      "case": "RC-06",
+      "cohort": "temporal_instruction_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-06-control.json",
+        "sha256": "e2e644648f9444e98b35925dcb476b2f85f43f2c3244f0d2ad876d89892c02d5",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/10"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "temporal_instruction_12/RC-06/candidate",
+      "case": "RC-06",
+      "cohort": "temporal_instruction_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-results/RC-06-candidate.json",
+        "sha256": "03dd9dd2f7d3773474d71b41779e777cb1e9e720ad49c6f890c87faad3318b8f",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+        "sha256": "d5bf7abebb0cc1fcfd66a9691cee614eca1f39322c175c5390bcf703af24feb1",
+        "pointer": "/cells/11"
+      },
+      "reviews": {}
+    },
+    {
+      "identity": "timestamp_contract_12/H-01/control",
+      "case": "H-01",
+      "cohort": "timestamp_contract_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-01-control.json",
+        "sha256": "1946e2823ceeb2b9879b8153e0b09560c302fe91a93f9fbbc1dbe1ba09368ad7",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/0"
+      },
+      "reviews": {
+        "restored-mtu": {
+          "status": "COVERED",
+          "reason": "MTU1500, effective08:04, record08:17, capture08:22, delays13/18minutes and no payload-recovery proof all present. Auxiliary statements true, but configured_commandcategory on an event and multiline CLI scalar are not mechanically supported.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/0"
+          }
+        },
+        "time-roles-and-delays": {
+          "status": "COVERED",
+          "reason": "MTU1500, effective08:04, record08:17, capture08:22, delays13/18minutes and no payload-recovery proof all present. Auxiliary statements true, but configured_commandcategory on an event and multiline CLI scalar are not mechanically supported.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/0"
+          }
+        },
+        "payload-recovery-limitation": {
+          "status": "COVERED",
+          "reason": "MTU1500, effective08:04, record08:17, capture08:22, delays13/18minutes and no payload-recovery proof all present. Auxiliary statements true, but configured_commandcategory on an event and multiline CLI scalar are not mechanically supported.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/0"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-01/candidate",
+      "case": "H-01",
+      "cohort": "timestamp_contract_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-01-candidate.json",
+        "sha256": "040b3ce62da1b65e324f723f1dabd13e6803de034a44919ab726cf978b913a2c",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/1"
+      },
+      "reviews": {
+        "restored-mtu": {
+          "status": "OMITTED",
+          "reason": "Answer gives all three times and13/18minute delays but never states1500. Claims/assessment contain it, proving composition did not remove it: Gemini omitted it from answer field. Integer device/interfaceIDs invalidate both auxiliary declarations; configured_commandcategory also mismatches effective_at.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/1"
+          }
+        },
+        "time-roles-and-delays": {
+          "status": "COVERED",
+          "reason": "Answer gives all three times and13/18minute delays but never states1500. Claims/assessment contain it, proving composition did not remove it: Gemini omitted it from answer field. Integer device/interfaceIDs invalidate both auxiliary declarations; configured_commandcategory also mismatches effective_at.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/1"
+          }
+        },
+        "payload-recovery-limitation": {
+          "status": "COVERED",
+          "reason": "Answer gives all three times and13/18minute delays but never states1500. Claims/assessment contain it, proving composition did not remove it: Gemini omitted it from answer field. Integer device/interfaceIDs invalidate both auxiliary declarations; configured_commandcategory also mismatches effective_at.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/1"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-02/control",
+      "case": "H-02",
+      "cohort": "timestamp_contract_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-02-control.json",
+        "sha256": "b46cbcb5ece8fc6ea22e494a403eecf386ce794d5e5dba3d951c407f353887e9",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/2"
+      },
+      "reviews": {
+        "observation-order": {
+          "status": "COVERED",
+          "reason": "Correct Ravine21:04beforePlateau21:08, reporting order inverted21:19/21:10, delays15/2minutes; does not infer interruption order/cause from writing order. Numeric auxiliary IDs violate shape, not source ownership or time facts. Strict original grade retained; informal-first-observed sensitivity remains visible.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/2"
+          }
+        },
+        "record-delays": {
+          "status": "COVERED",
+          "reason": "Correct Ravine21:04beforePlateau21:08, reporting order inverted21:19/21:10, delays15/2minutes; does not infer interruption order/cause from writing order. Numeric auxiliary IDs violate shape, not source ownership or time facts. Strict original grade retained; informal-first-observed sensitivity remains visible.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/2"
+          }
+        },
+        "onset-and-causality-limitation": {
+          "status": "COVERED",
+          "reason": "Correct Ravine21:04beforePlateau21:08, reporting order inverted21:19/21:10, delays15/2minutes; does not infer interruption order/cause from writing order. Numeric auxiliary IDs violate shape, not source ownership or time facts. Strict original grade retained; informal-first-observed sensitivity remains visible.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/2"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-02/candidate",
+      "case": "H-02",
+      "cohort": "timestamp_contract_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-02-candidate.json",
+        "sha256": "89242556e27df8f8aa229778c78e9f2a5dd5342cc26de9b797d1498b16bdc833",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/3"
+      },
+      "reviews": {
+        "observation-order": {
+          "status": "COVERED",
+          "reason": "Correct dates, reversed reporting order and15/2minute arithmetic, but answer says interruptions actually occurred earlier atRavine. First_observedrecords do not establish actual relative onset across sites. Auxiliary assessments stay with observation order; no cross-site causal claim is made. Numeric IDs and broad receipt refs also differ from intended exact-record declarations. Strict original grade retained; informal-first-observed sensitivity remains visible.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/3"
+          }
+        },
+        "record-delays": {
+          "status": "COVERED",
+          "reason": "Correct dates, reversed reporting order and15/2minute arithmetic, but answer says interruptions actually occurred earlier atRavine. First_observedrecords do not establish actual relative onset across sites. Auxiliary assessments stay with observation order; no cross-site causal claim is made. Numeric IDs and broad receipt refs also differ from intended exact-record declarations. Strict original grade retained; informal-first-observed sensitivity remains visible.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/3"
+          }
+        },
+        "onset-and-causality-limitation": {
+          "status": "AMBIGUOUS",
+          "reason": "Correct dates, reversed reporting order and15/2minute arithmetic, but answer says interruptions actually occurred earlier atRavine. First_observedrecords do not establish actual relative onset across sites. Auxiliary assessments stay with observation order; no cross-site causal claim is made. Numeric IDs and broad receipt refs also differ from intended exact-record declarations. Strict original grade retained; informal-first-observed sensitivity remains visible.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/3"
+          }
+        }
+      },
+      "forbidden_reviews": {
+        "forbidden-1": {
+          "status": "AMBIGUOUS",
+          "reason": "Actually occurred earlier can assert onset order or colloquially refer to the correctly stated first-observed order. Preserve strict failed grade and permissive sensitivity.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/3"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-03/control",
+      "case": "H-03",
+      "cohort": "timestamp_contract_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-03-control.json",
+        "sha256": "b6956164f3d6240a8ff959fc256f47a0443f7bd0487afde078e8dfbd720fc046",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/4"
+      },
+      "reviews": {
+        "equal-effective-time": {
+          "status": "COVERED",
+          "reason": "Correct equal effective23:50time, Brook23:56record/6minute delay, Vale00:03next-day record/13minute delay and acknowledgement-not-activation distinction. Claims valid and truthful, checking recordtimestampoperands only.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/4"
+          }
+        },
+        "owner-and-midnight-delay": {
+          "status": "COVERED",
+          "reason": "Correct equal effective23:50time, Brook23:56record/6minute delay, Vale00:03next-day record/13minute delay and acknowledgement-not-activation distinction. Claims valid and truthful, checking recordtimestampoperands only.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/4"
+          }
+        },
+        "acknowledgement-not-activation": {
+          "status": "COVERED",
+          "reason": "Correct equal effective23:50time, Brook23:56record/6minute delay, Vale00:03next-day record/13minute delay and acknowledgement-not-activation distinction. Claims valid and truthful, checking recordtimestampoperands only.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/4"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-03/candidate",
+      "case": "H-03",
+      "cohort": "timestamp_contract_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-03-candidate.json",
+        "sha256": "cec9fcd2f1a016f48519a117d4e1815a01393ba84abb56f74b462efd3d672b38",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/5"
+      },
+      "reviews": {
+        "equal-effective-time": {
+          "status": "COVERED",
+          "reason": "Same correct date rollover, ownership,6/13minute delays and no later-activation inference as control. No raw or whole-answer improvement on this case.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/5"
+          }
+        },
+        "owner-and-midnight-delay": {
+          "status": "COVERED",
+          "reason": "Same correct date rollover, ownership,6/13minute delays and no later-activation inference as control. No raw or whole-answer improvement on this case.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/5"
+          }
+        },
+        "acknowledgement-not-activation": {
+          "status": "COVERED",
+          "reason": "Same correct date rollover, ownership,6/13minute delays and no later-activation inference as control. No raw or whole-answer improvement on this case.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/5"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-04/control",
+      "case": "H-04",
+      "cohort": "timestamp_contract_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-04-control.json",
+        "sha256": "9184784ea09a45865d5eb119d9c6350185f36ad2016e8643bb0a41a855a201bb",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/6"
+      },
+      "reviews": {
+        "conflicting-observations": {
+          "status": "COVERED",
+          "reason": "Preserves two conflicting06:40captures, explicitly states07:10shutdown, leaves06:55/exact transition unknown and separates commands from measured health. Multiline CLI declarations remain source-true but outside exact-line checking representation.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/6"
+          }
+        },
+        "later-shutdown": {
+          "status": "COVERED",
+          "reason": "Preserves two conflicting06:40captures, explicitly states07:10shutdown, leaves06:55/exact transition unknown and separates commands from measured health. Multiline CLI declarations remain source-true but outside exact-line checking representation.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/6"
+          }
+        },
+        "unknown-interval": {
+          "status": "COVERED",
+          "reason": "Preserves two conflicting06:40captures, explicitly states07:10shutdown, leaves06:55/exact transition unknown and separates commands from measured health. Multiline CLI declarations remain source-true but outside exact-line checking representation.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/6"
+          }
+        },
+        "measured-health-limitation": {
+          "status": "COVERED",
+          "reason": "Preserves two conflicting06:40captures, explicitly states07:10shutdown, leaves06:55/exact transition unknown and separates commands from measured health. Multiline CLI declarations remain source-true but outside exact-line checking representation.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/6"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-04/candidate",
+      "case": "H-04",
+      "cohort": "timestamp_contract_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-04-candidate.json",
+        "sha256": "1aacf163a15cbd4c62e4163627977132b4a07840fabb09e732641836ba02929a",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/7"
+      },
+      "reviews": {
+        "conflicting-observations": {
+          "status": "COVERED",
+          "reason": "Retains conflicting06:40commands and unknown06:55/transition/live health, but only mentions a later state at07:10without stating its shutdowncommand. Auxiliary claims do include the later command; released answer does not. Duplicated timestamp formatting is cosmetic, not the decisive failure.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/7"
+          }
+        },
+        "later-shutdown": {
+          "status": "OMITTED",
+          "reason": "Retains conflicting06:40commands and unknown06:55/transition/live health, but only mentions a later state at07:10without stating its shutdowncommand. Auxiliary claims do include the later command; released answer does not. Duplicated timestamp formatting is cosmetic, not the decisive failure.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/7"
+          }
+        },
+        "unknown-interval": {
+          "status": "COVERED",
+          "reason": "Retains conflicting06:40commands and unknown06:55/transition/live health, but only mentions a later state at07:10without stating its shutdowncommand. Auxiliary claims do include the later command; released answer does not. Duplicated timestamp formatting is cosmetic, not the decisive failure.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/7"
+          }
+        },
+        "measured-health-limitation": {
+          "status": "COVERED",
+          "reason": "Retains conflicting06:40commands and unknown06:55/transition/live health, but only mentions a later state at07:10without stating its shutdowncommand. Auxiliary claims do include the later command; released answer does not. Duplicated timestamp formatting is cosmetic, not the decisive failure.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/7"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-05/control",
+      "case": "H-05",
+      "cohort": "timestamp_contract_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-05-control.json",
+        "sha256": "5f7b42f82d02f415531c2bedc1a91ee9417d8713806e65972a223a3d1d4dad31",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/8"
+      },
+      "reviews": {
+        "modeled-path-and-gap": {
+          "status": "COVERED",
+          "reason": "Correct route/upports, forwardunknownneighbor resolution, returnmodeleddelivered; recommends ARP/neighbor records and traffic counters or flowtelemetry with purposes, no execution. Does not explicitly state that modeled reverse delivery is not measured application response, required by frozen oracle. Counter-only evidence would not isolate the poll; flowtelemetry alternative makes that advice qualified rather than a definite false claim. This frozen caveat is not a separate verbatim user subquestion; permissive reading is retained.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/8"
+          }
+        },
+        "passive-artifacts": {
+          "status": "COVERED",
+          "reason": "Correct route/upports, forwardunknownneighbor resolution, returnmodeleddelivered; recommends ARP/neighbor records and traffic counters or flowtelemetry with purposes, no execution. Does not explicitly state that modeled reverse delivery is not measured application response, required by frozen oracle. Counter-only evidence would not isolate the poll; flowtelemetry alternative makes that advice qualified rather than a definite false claim. This frozen caveat is not a separate verbatim user subquestion; permissive reading is retained.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/8"
+          }
+        },
+        "artifact-purposes": {
+          "status": "COVERED",
+          "reason": "Correct route/upports, forwardunknownneighbor resolution, returnmodeleddelivered; recommends ARP/neighbor records and traffic counters or flowtelemetry with purposes, no execution. Does not explicitly state that modeled reverse delivery is not measured application response, required by frozen oracle. Counter-only evidence would not isolate the poll; flowtelemetry alternative makes that advice qualified rather than a definite false claim. This frozen caveat is not a separate verbatim user subquestion; permissive reading is retained.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/8"
+          }
+        },
+        "model-versus-measured-response": {
+          "status": "OMITTED",
+          "reason": "Correct route/upports, forwardunknownneighbor resolution, returnmodeleddelivered; recommends ARP/neighbor records and traffic counters or flowtelemetry with purposes, no execution. Does not explicitly state that modeled reverse delivery is not measured application response, required by frozen oracle. Counter-only evidence would not isolate the poll; flowtelemetry alternative makes that advice qualified rather than a definite false claim. This frozen caveat is not a separate verbatim user subquestion; permissive reading is retained.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/8"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-05/candidate",
+      "case": "H-05",
+      "cohort": "timestamp_contract_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-05-candidate.json",
+        "sha256": "de992763713eb9ff400bcab6af0a8d317f4f897273613e2c8a91d879785e78e7",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/9"
+      },
+      "reviews": {
+        "modeled-path-and-gap": {
+          "status": "COVERED",
+          "reason": "Correct route/upports and asymmetric modeled results; proposes two passive artifacts, so no advice omission. Still omits the frozen application-response caveat. ARP/ND wording includes an irrelevant IPv6alternative for these IPv4facts; aggregate counters alone do not establish per-flow service, so advice usefulness is limited. Six interface IDtypes improve versus this sampled control, not proof of a timestamp-description effect. This frozen caveat is not a separate verbatim user subquestion; permissive reading is retained.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/9"
+          }
+        },
+        "passive-artifacts": {
+          "status": "COVERED",
+          "reason": "Correct route/upports and asymmetric modeled results; proposes two passive artifacts, so no advice omission. Still omits the frozen application-response caveat. ARP/ND wording includes an irrelevant IPv6alternative for these IPv4facts; aggregate counters alone do not establish per-flow service, so advice usefulness is limited. Six interface IDtypes improve versus this sampled control, not proof of a timestamp-description effect. This frozen caveat is not a separate verbatim user subquestion; permissive reading is retained.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/9"
+          }
+        },
+        "artifact-purposes": {
+          "status": "COVERED",
+          "reason": "Correct route/upports and asymmetric modeled results; proposes two passive artifacts, so no advice omission. Still omits the frozen application-response caveat. ARP/ND wording includes an irrelevant IPv6alternative for these IPv4facts; aggregate counters alone do not establish per-flow service, so advice usefulness is limited. Six interface IDtypes improve versus this sampled control, not proof of a timestamp-description effect. This frozen caveat is not a separate verbatim user subquestion; permissive reading is retained.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/9"
+          }
+        },
+        "model-versus-measured-response": {
+          "status": "OMITTED",
+          "reason": "Correct route/upports and asymmetric modeled results; proposes two passive artifacts, so no advice omission. Still omits the frozen application-response caveat. ARP/ND wording includes an irrelevant IPv6alternative for these IPv4facts; aggregate counters alone do not establish per-flow service, so advice usefulness is limited. Six interface IDtypes improve versus this sampled control, not proof of a timestamp-description effect. This frozen caveat is not a separate verbatim user subquestion; permissive reading is retained.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/9"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-06/control",
+      "case": "H-06",
+      "cohort": "timestamp_contract_12",
+      "arm": "control",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-06-control.json",
+        "sha256": "cf4d3894af05c739f6b5efc52a3d733ebe04782d3f5c7352463a4aa63a0cadf3",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/10"
+      },
+      "reviews": {
+        "trap-owner-direction": {
+          "status": "COVERED",
+          "reason": "The well-formed answerstring inside the malformed raw JSON correctly states both flows/directions, TransitHub53021/53022ownership, trap egressdeny and no deployed-outage proof. Whole JSON contains unquoted -timestamp:and is rejected. Diagnostic prose is inspected without repairing or releasing the response; not an executable task success.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/10"
+          }
+        },
+        "log-positive-outcomes": {
+          "status": "COVERED",
+          "reason": "The well-formed answerstring inside the malformed raw JSON correctly states both flows/directions, TransitHub53021/53022ownership, trap egressdeny and no deployed-outage proof. Whole JSON contains unquoted -timestamp:and is rejected. Diagnostic prose is inspected without repairing or releasing the response; not an executable task success.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/10"
+          }
+        },
+        "modeled-not-deployed": {
+          "status": "COVERED",
+          "reason": "The well-formed answerstring inside the malformed raw JSON correctly states both flows/directions, TransitHub53021/53022ownership, trap egressdeny and no deployed-outage proof. Whole JSON contains unquoted -timestamp:and is rejected. Diagnostic prose is inspected without repairing or releasing the response; not an executable task success.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/10"
+          }
+        }
+      }
+    },
+    {
+      "identity": "timestamp_contract_12/H-06/candidate",
+      "case": "H-06",
+      "cohort": "timestamp_contract_12",
+      "arm": "candidate",
+      "trace": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/cells/H-06-candidate.json",
+        "sha256": "f8e90c74cdd01eea7c667718ea231a209fd336fe3dec10aba6581a586f7216b7",
+        "pointer": ""
+      },
+      "historical_grade": {
+        "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+        "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+        "pointer": "/cells/11"
+      },
+      "reviews": {
+        "trap-owner-direction": {
+          "status": "COVERED",
+          "reason": "Valid core response correctly retains trap forwarddeny atTransitHubEthernet2/9egress53022, return delivery, log bidirectional delivery, ingress53021/egress53022inmonitor and no deployed outage proof. Policy-ruleprose is correct but only partially mechanically checkable; no false suppression.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/11"
+          }
+        },
+        "log-positive-outcomes": {
+          "status": "COVERED",
+          "reason": "Valid core response correctly retains trap forwarddeny atTransitHubEthernet2/9egress53022, return delivery, log bidirectional delivery, ingress53021/egress53022inmonitor and no deployed outage proof. Policy-ruleprose is correct but only partially mechanically checkable; no false suppression.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/11"
+          }
+        },
+        "modeled-not-deployed": {
+          "status": "COVERED",
+          "reason": "Valid core response correctly retains trap forwarddeny atTransitHubEthernet2/9egress53022, return delivery, log bidirectional delivery, ingress53021/egress53022inmonitor and no deployed outage proof. Policy-ruleprose is correct but only partially mechanically checkable; no false suppression.",
+          "basis": {
+            "path": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live/full-answer-grading.json",
+            "sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+            "pointer": "/cells/11"
+          }
+        }
+      }
+    }
+  ],
+  "no_cloud_calls": true,
+  "no_production_release_use": true,
+  "no_new_adequacy_score": true
+}

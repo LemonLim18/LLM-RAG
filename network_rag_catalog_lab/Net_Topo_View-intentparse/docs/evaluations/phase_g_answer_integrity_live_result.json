@@ -1,0 +1,139 @@
+{
+  "decision": "LIVE-TESTED — FAILED; KEEP OFF",
+  "audit": "tmp/phase-g/iterations/20261102T153500Z-answer-integrity-live",
+  "round1": {
+    "control": {
+      "strict_final_answer_pass": 4,
+      "ambiguous": 1,
+      "whole_consistency_pass": 4,
+      "valid_json": 10,
+      "valid_core": 10,
+      "input_tokens": 57746,
+      "output_tokens": 12522,
+      "max_seconds": 6.658441300038248,
+      "median_seconds": 4.047047849977389
+    },
+    "candidate": {
+      "strict_final_answer_pass": 10,
+      "ambiguous": 0,
+      "whole_consistency_pass": 9,
+      "valid_json": 12,
+      "valid_core": 12,
+      "input_tokens": 64214,
+      "output_tokens": 12989,
+      "max_seconds": 5.463760800193995,
+      "median_seconds": 4.185533049982041
+    }
+  },
+  "round2_partial": {
+    "control": {
+      "attempted": 9,
+      "provider_completed": 9,
+      "strict_final_answer_pass": 6,
+      "ambiguous": 0,
+      "whole_consistency_pass": 6,
+      "valid_json": 8,
+      "valid_core": 8,
+      "input_tokens_reported": 43108,
+      "output_tokens_reported": 8522,
+      "max_seconds": 9.942153400043026,
+      "median_seconds": 4.100348700070754
+    },
+    "candidate": {
+      "attempted": 10,
+      "provider_completed": 9,
+      "strict_final_answer_pass": 4,
+      "ambiguous": 2,
+      "whole_consistency_pass": 3,
+      "valid_json": 9,
+      "valid_core": 9,
+      "input_tokens_reported": 48886,
+      "output_tokens_reported": 8566,
+      "max_seconds": 5.048045299947262,
+      "median_seconds": 3.5810341499745846
+    }
+  },
+  "usage": {
+    "dispatches": 43,
+    "round1": 24,
+    "round2": 19,
+    "unused_authorized_calls": 5,
+    "http_counts": {
+      "200": 42,
+      "503": 1
+    },
+    "valid_json_objects": 39,
+    "valid_cores": 39,
+    "valid_strict_auxiliary_shapes": 36,
+    "valid_core_answers_prose_retained": 39,
+    "provider_reported_tokens": {
+      "input": 213954,
+      "output": 42599
+    },
+    "provider_503_usage": "NOT_REPORTED; conservative ledger reservation retained",
+    "failure_classes": [
+      {
+        "round": 1,
+        "case": "RC-03",
+        "arm": "control",
+        "provider_http": 200,
+        "category": "INVALID_STRUCTURED_OUTPUT",
+        "finish": "STOP"
+      },
+      {
+        "round": 1,
+        "case": "RC-06",
+        "arm": "control",
+        "provider_http": 200,
+        "category": "INVALID_STRUCTURED_OUTPUT",
+        "finish": "STOP"
+      },
+      {
+        "round": 2,
+        "case": "RC-06",
+        "arm": "control",
+        "provider_http": 200,
+        "category": "INVALID_STRUCTURED_OUTPUT",
+        "finish": "STOP"
+      },
+      {
+        "round": 2,
+        "case": "H-04",
+        "arm": "candidate",
+        "provider_http": 503,
+        "category": "UNAVAILABLE",
+        "finish": null
+      }
+    ],
+    "quota": {
+      "retained_before": 62,
+      "retained_after": 85,
+      "new_rows": 43,
+      "expired_prior_rows": 20,
+      "expired_prior_rows_all_over24h_beforefirstsend": true,
+      "surviving_prior_rows_exact": true,
+      "peak_rolling61second_dispatches": 15,
+      "peak_finalized_input_plus_error_reservation": 84442,
+      "peak_reconstructed_conservative_admission": 93037,
+      "rpd_after": 85,
+      "ceilings": {
+        "rpm": 15,
+        "input_tpm": 150000,
+        "rpd": 500
+      }
+    },
+    "all_wire_bodies_frozen_exact": true,
+    "no_retries": true,
+    "model": "gemini-3.5-flash-lite",
+    "thinking": "low",
+    "output_allowance": 8192,
+    "max_wire_seconds": 9.449825799791142,
+    "new_planner_reader_calls": 0
+  },
+  "no_stage_promotion": true,
+  "no_further_calls": true,
+  "grading_files": {
+    "round-1/grading.json": "06e800ea552764a65e917f9a627a5615d22c3175f7c20aa9af509e74b0034172",
+    "round-2/grading.json": "e3a2a27a17f4f3158c6fd6e4e87c6a6329cb744b32ca4029f437477fad7eafd2"
+  }
+}

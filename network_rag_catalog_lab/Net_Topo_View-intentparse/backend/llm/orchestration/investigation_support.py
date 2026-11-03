@@ -290,6 +290,13 @@ def _compatible_operands(decision,results,inventory):
                     # hop belongs to its nested directional branch, not that
                     # top-level device. Never flatten forward/return identities.
                     candidates=[]
+                    path_field=claim.get('field') or 'status'
+                    path_role={'ingress.status':'ingress','egress.status':'egress'}.get(path_field)
+                    # Unqualified legacy failed-at-interface declarations keep
+                    # their stopping-location semantics. Qualified role fields
+                    # explicitly describe traversal, not the cause/location of
+                    # an eventual failure elsewhere on that branch.
+                    failure_only=path_field=='failure_location.status' or path_field=='status' and claim.get('value')=='failed'
                     directions=[claim['direction']] if claim.get('direction') else ['forward','return']
                     for direction in directions:
                         part=r.get('assessment',{}).get(direction,{})
@@ -301,7 +308,17 @@ def _compatible_operands(decision,results,inventory):
                                 candidates.append({**r,'device_id':scope['source_device_id'],'vrf':scope.get('vrf'),'_claim_status':part.get('status')})
                             for branch in branches:
                                 location=branch.get('failure_location')
-                                if location:candidates.append({**r,**location,'vrf':part.get('scope',{}).get('vrf'),'_claim_status':branch.get('status')})
+                                if location and (path_role is None or location.get('direction',location.get('interface_role'))==path_role):
+                                    candidates.append({**r,**location,'vrf':location.get('vrf',scope.get('vrf')),'_claim_status':branch.get('status')})
+                                if not failure_only and (claim.get('interface_id') or path_role):
+                                    locations=[]
+                                    for hop in branch.get('hops',[]):
+                                        if hop.get('interface_id') is not None:locations.append((hop,'egress'))
+                                        if isinstance(hop.get('ingress'),dict):locations.append((hop['ingress'],'ingress'))
+                                    if isinstance(branch.get('destination_ingress'),dict):locations.append((branch['destination_ingress'],'ingress'))
+                                    for place,role in locations:
+                                        if path_role is not None and role!=path_role:continue
+                                        candidates.append({**r,**place,'vrf':place.get('vrf',scope.get('vrf')),'_claim_status':branch.get('status')})
                         else:candidates.append({**r,'_claim_status':part.get('status')})
                 for candidate in candidates:
                     if claim.get('timestamp'):
@@ -320,7 +337,13 @@ def _compatible_operands(decision,results,inventory):
                      (claim.get('interface_id') and r.get('interface_id') is not None and str(r['interface_id'])!=interface) or
                      (claim.get('vrf') and r.get('vrf') is not None and r['vrf']!=claim['vrf']))]
                 # Directional modeled locations were already resolved above.
-                if kind=='simulated_forwarding':definite=[r for _,r in compatible if r.get('assessment',{}).get(claim.get('direction'),{}).get('branches')]
+                if kind=='simulated_forwarding':
+                    definite=[]
+                    for _,record in compatible:
+                        directions=[claim['direction']] if claim.get('direction') else ['forward','return']
+                        branches=[b for d in directions for b in record.get('assessment',{}).get(d,{}).get('branches',[])
+                            if not claim.get('branch_id') or str(b.get('id'))==str(claim['branch_id'])]
+                        if branches and all(b.get('status') in {'delivered','failed'} for b in branches):definite.append(record)
                 status='CONTRADICTED_IDENTITY' if definite else 'UNKNOWN_BINDING_SCOPE'
                 reason='Explicit source ownership conflicts with the declaration' if definite else 'No unambiguous source-owned operand at the declared scope'
             for tool,r in scoped:
@@ -340,13 +363,19 @@ def _compatible_operands(decision,results,inventory):
                         lines=[x for x in lines if any(re.search(r'(?<![\w/])'+re.escape(n)+r'(?![\w/])',x['context']) for n in names)]
                     value=claim['value'] if any(str(claim['value']).strip()==x['text'].strip() for x in lines) else None
                 elif kind=='simulated_forwarding':
-                    value=r.get('_claim_status') if field in {None,'status'} else None
+                    value=r.get('_claim_status') if field in {None,'status','ingress.status','egress.status','failure_location.status'} else None
                 elif kind=='measured_loss_percent':
                     value=r.get('loss_percent')
                     if value is None and isinstance(r.get('lost_packets'),(int,float)) and isinstance(r.get('sent_packets'),(int,float)) and r['sent_packets']>0 and 0<=r['lost_packets']<=r['sent_packets']:value=100*r['lost_packets']/r['sent_packets']
                     if value is not None and not 0<=value<=100:value=None
                 elif kind=='configuration_change_time':
-                    if r.get('verification_status')=='verified' and r.get('applied') is True:value=r.get('timestamp',r.get('captured_at'))
+                    if r.get('verification_status')=='verified' and r.get('applied') is True:
+                        from llm.gateway_network import timestamp
+                        # An explicit source field is never substituted with a
+                        # different temporal role. Preserve the legacy default
+                        # only when the declaration did not request a field.
+                        recorded=r.get(field) if field else r.get('timestamp',r.get('captured_at'))
+                        if timestamp(recorded) is not None:value=recorded
                 elif kind=='incident_occurred':
                     value=r.get('message') if field=='message' else True if field in {None,'verification_status'} and r.get('verification_status')=='verified' else None
                 elif kind=='no_incident':value=False if r.get('coverage_complete') is True and r.get('matching_event_count')==0 else None

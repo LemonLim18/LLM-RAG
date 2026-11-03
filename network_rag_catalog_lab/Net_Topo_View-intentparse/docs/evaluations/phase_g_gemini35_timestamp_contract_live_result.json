@@ -1,0 +1,93 @@
+{
+  "registry_sha256": "d8dbe4f0d70c5dce1d5ec182b71b216b87cc066b9003f5ff18330d6f941a62a4",
+  "audit": "tmp/phase-g/iterations/20261102T123607Z-timestamp-contract-live",
+  "grading_sha256": "dc719bc396ceffc367db849687e502edb17435e653778146b072c402f44a2d95",
+  "attempts": 12,
+  "summaries": {
+    "control": {
+      "cases": 6,
+      "provider_stop_completions": 6,
+      "valid_core_json": 5,
+      "raw_prose_adequate_including_diagnostic_string": 5,
+      "adequate_prose_in_valid_response": 4,
+      "whole_response_adequate": 4,
+      "released_answer_adequate": 4,
+      "parsed_claim_record_clocks_matching": 18,
+      "parsed_claims_with_clock_selector": 18,
+      "shape_valid_claims": 10,
+      "shape_invalid_claims": 8,
+      "invalid_auxiliary_cells": 2,
+      "semantically_false_material_auxiliary_assertions_identified": 0,
+      "missing_outcome_cases": [
+        "H-05"
+      ],
+      "passive_recommendation_omissions": 0,
+      "unsupported_continuity": 0,
+      "unsupported_physical_causal_or_activation": 0,
+      "other_unsupported_temporal_inferences": [],
+      "malformed_json": 1,
+      "false_suppression": 0,
+      "incorrect_verification_found": 0,
+      "factual_fallbacks": 0,
+      "seconds": {
+        "median": 4.0375018999911845,
+        "maximum": 6.269685399951413,
+        "sum": 26.57800929970108
+      },
+      "input_tokens": 24502,
+      "output_tokens": 6842
+    },
+    "candidate": {
+      "cases": 6,
+      "provider_stop_completions": 6,
+      "valid_core_json": 6,
+      "raw_prose_adequate_including_diagnostic_string": 2,
+      "adequate_prose_in_valid_response": 2,
+      "whole_response_adequate": 2,
+      "released_answer_adequate": 2,
+      "parsed_claim_record_clocks_matching": 22,
+      "parsed_claims_with_clock_selector": 22,
+      "shape_valid_claims": 16,
+      "shape_invalid_claims": 6,
+      "invalid_auxiliary_cells": 2,
+      "semantically_false_material_auxiliary_assertions_identified": 0,
+      "missing_outcome_cases": [
+        "H-01",
+        "H-04",
+        "H-05"
+      ],
+      "passive_recommendation_omissions": 0,
+      "unsupported_continuity": 0,
+      "unsupported_physical_causal_or_activation": 0,
+      "other_unsupported_temporal_inferences": [
+        "H-02"
+      ],
+      "malformed_json": 0,
+      "false_suppression": 0,
+      "incorrect_verification_found": 0,
+      "factual_fallbacks": 0,
+      "seconds": {
+        "median": 3.961512500070967,
+        "maximum": 6.6921440998557955,
+        "sum": 25.420217800186947
+      },
+      "input_tokens": 24982,
+      "output_tokens": 7111
+    }
+  },
+  "recommendation": "KEEP OFF — candidate failed",
+  "decision_gates": {
+    "all_primary_candidate_temporal_bindings_valid_and_complete": false,
+    "no_whole_response_regression": false,
+    "regressions": [
+      "H-01",
+      "H-02",
+      "H-04"
+    ],
+    "positive_H06_preserved": true,
+    "no_new_unsupported_activation_or_physical_causal_assertion": true,
+    "no_incorrect_verified_claim_found": true,
+    "no_new_false_suppression": true
+  },
+  "formal_phase_gate_closed": false
+}

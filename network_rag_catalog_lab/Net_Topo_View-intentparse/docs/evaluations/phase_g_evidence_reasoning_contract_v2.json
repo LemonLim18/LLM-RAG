@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "frozen_at": "2026-11-02T04:30:04.431373+00:00",
+  "cloud_attempt_ceiling": 18,
+  "cloud_calls": 0,
+  "grading": "Source-derived independently checkable, implementation-assistant graded; not blinded. Raw and released full answers graded separately.",
+  "model": "gemini-3.5-flash-lite",
+  "thinking": "low",
+  "output_tokens": 8192,
+  "no_additional_reads_between_arms": true,
+  "promotion_gate": "B improves raw full-answer correctness on >=2/6; positive RC06 retained; no new unsupported causal/scope/evidence/JSON/false-suppression regression.",
+  "cases": [
+    {
+      "id": "RC-01",
+      "packet_sha256": "a1739725b26db75d2cc73a39cad07cf5c469fb7f05ea2f29cc50a10599cca69f",
+      "scenario_sha256": "a038e52ccebb7758ff71881d03365b479a100afcd8c04ddfecc4ee505adea38b",
+      "characters": {
+        "off": 6730,
+        "obligations": 8480,
+        "relationships": 11340
+      },
+      "source_operands_identical": true,
+      "case": {
+        "id": "RC-01",
+        "prompt": "Compare CedarEdge recorded running route with the staged candidate. Which next hops are recorded, and can you establish which was active at15:10? Explain whether the candidate was definitely not applied. Use configuration only.",
+        "surface": "floating",
+        "queries": [
+          "configuration"
+        ],
+        "expected_outcomes": [
+          "Running observed14:15 via10.241.1.2; candidate saved15:00 via10.241.1.6.",
+          "No applied flag/effective timestamp; neither active15:10 nor definitely-unapplied is established."
+        ],
+        "prohibited_claims": [
+          "Candidate definitely applied",
+          "Candidate definitely not applied",
+          "Continuous running through15:10"
+        ]
+      }
+    },
+    {
+      "id": "RC-02",
+      "packet_sha256": "7e3e673ecee82cd1d2f754cd50a4c69e5463ac2350d482144f4fb78640da0037",
+      "scenario_sha256": "730480424f46f491b2dc94209573b26e019ab00452e6dc92edcd117931e72df0",
+      "characters": {
+        "off": 10369,
+        "obligations": 12567,
+        "relationships": 17191
+      },
+      "source_operands_identical": true,
+      "case": {
+        "id": "RC-02",
+        "prompt": "Explain CedarEdge logging-buffer chronology from all captures and the verified change event. Can you infer the value at08:00 or the exact later reversion time? State what the08:25application establishes and what remains unknown. Use configuration and syslog only.",
+        "surface": "studio",
+        "queries": [
+          "configuration",
+          "syslog"
+        ],
+        "expected_outcomes": [
+          "12000at07:00;24000at09:00;12000at11:00.",
+          "Verified application24000effective08:25; preserve positive evidence.",
+          "08:00unknown and exact later reversion unknown; endpoints do not prove continuous state."
+        ],
+        "prohibited_claims": [
+          "08:00value asserted",
+          "Exact reversion inferred from capture",
+          "Verified application denied"
+        ]
+      }
+    },
+    {
+      "id": "RC-03",
+      "packet_sha256": "b0d84e7b25d0437ced5041b47f937c3ebb9d3e56e307e0a03539e11d49fc7897",
+      "scenario_sha256": "eae4a63beebc91a6a72d223cc6e075f8fbd4e646e3fd4471292dc10941ce6ca5",
+      "characters": {
+        "off": 15606,
+        "obligations": 16946,
+        "relationships": 37800
+      },
+      "source_operands_identical": true,
+      "case": {
+        "id": "RC-03",
+        "prompt": "Assess CedarEdge-to-IrisExit modeled TLS delivery in violet. Identify both transit ingress and egress owners in each traversed direction. Where does return delivery stop, does the default-VRF discard matter, and is protocol or live connectivity established? Use state only.",
+        "surface": "floating",
+        "queries": [
+          "state"
+        ],
+        "expected_outcomes": [
+          "Forwarddelivered;returnfailed atMicaCore2202 ingress22022, not IrisExit or egress22021.",
+          "ForwardMica22021ingress22022egress;return reaches22022andisdeniedbeforeegress.",
+          "Defaultdiscardisolatedfromviolet; modeledonly, no measuredprotocolhealth."
+        ],
+        "prohibited_claims": [
+          "Forwardfailed",
+          "Returnegresstraversedafterdenial",
+          "Live/protocol health asserted"
+        ]
+      }
+    },
+    {
+      "id": "RC-04",
+      "packet_sha256": "40b9f3fce05921a6fa61062e1800fd1682d782db317a1d25ae4cb815e58750d1",
+      "scenario_sha256": "911a5852f359e66e1c1dc29e3532a36e7336f777d8f26d2041a9afe7e60ed53e",
+      "characters": {
+        "off": 14017,
+        "obligations": 16238,
+        "relationships": 27946
+      },
+      "source_operands_identical": true,
+      "case": {
+        "id": "RC-04",
+        "prompt": "CedarEdge has a route toward IrisExit. Does that prove service on TCP8443 in violet is working in both directions? Explain the routing fact, modeled uncertainty and most useful passive evidence to request next. Read state only and do not collect or test anything.",
+        "surface": "studio",
+        "queries": [
+          "state"
+        ],
+        "expected_outcomes": [
+          "Routepresence recorded; operationalinterfaceunknown makesmodeledoutcomeunknown, not confirmedfailure or delivery.",
+          "Recommend obtaininginterface/next-hopstate; no new collection, no physical conclusion."
+        ],
+        "prohibited_claims": [
+          "Connectivityguaranteed",
+          "Unknown state declared shutdown",
+          "Probeexecuted"
+        ]
+      }
+    },
+    {
+      "id": "RC-05",
+      "packet_sha256": "7e5989a5776fd5ad37284498c80258ef22b1d16b7aed053f550a89b01dea0d01",
+      "scenario_sha256": "f2a07f7bba6a7bdc69bc6c54e0b39beeb0acb5141cb4a42d23d689deaee34f87",
+      "characters": {
+        "off": 11493,
+        "obligations": 13443,
+        "relationships": 15755
+      },
+      "source_operands_identical": true,
+      "case": {
+        "id": "RC-05",
+        "prompt": "Could the cooling warning explain CedarEdge Ethernet1/1 errors? Distinguish chronology from cause and say whether unavailable syslog rules out a reset. Recommend two different passive checks without executing them. Use recorded state, incidents and syslog only.",
+        "surface": "floating",
+        "queries": [
+          "state",
+          "incidents",
+          "syslog"
+        ],
+        "expected_outcomes": [
+          "Coolingfirstobserved12:30, counterssampled12:35; temporalassociationnotcause.",
+          "Coolingpossiblehypothesis; onecounterrecordnottrend; no reset conclusion from unavailablesyslog.",
+          "Two discriminatingpassivecheckswithlimits;no newexecution."
+        ],
+        "prohibited_claims": [
+          "Coolingestablishedcause",
+          "Noresetbecause logsunavailable",
+          "Countertrendinvented"
+        ]
+      }
+    },
+    {
+      "id": "RC-06",
+      "packet_sha256": "7b863abaa635d04304b6e12066876fb7a004e1b77bdfc99c26a62e2745091636",
+      "scenario_sha256": "72e9e2303460a73eefc51fca16192f3be64a068267522110e49e77ed99c88731",
+      "characters": {
+        "off": 11877,
+        "obligations": 13182,
+        "relationships": 41284
+      },
+      "source_operands_identical": true,
+      "case": {
+        "id": "RC-06",
+        "prompt": "Compare the two recorded calculation variants for TCP8443 from CedarEdge. What modeled consequence follows from attaching the egress deny policy, where is it localized, and does this prove a deployed policy caused a real outage? Use state only.",
+        "surface": "studio",
+        "queries": [
+          "state"
+        ],
+        "expected_outcomes": [
+          "Beforeforwarddelivered;afterforwardfailedatCedar1101egress11011.",
+          "Controlledmodeledconsequenceisjustified;do notweaken to whollyunknown.",
+          "Neitherdeploymentnorrealoutagecauseestablished."
+        ],
+        "prohibited_claims": [
+          "Physicalcauseasserted",
+          "Modeledblockdenieddespitecalculation",
+          "Wrongfailedowner"
+        ]
+      }
+    }
+  ]
+}

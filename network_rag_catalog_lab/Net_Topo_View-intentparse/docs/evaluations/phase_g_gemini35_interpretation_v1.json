@@ -1,0 +1,420 @@
+{
+  "version": 1,
+  "frozen_at": "2026-11-02T07:08:01.034851+00:00",
+  "status": "OFFLINE_FROZEN_LIVE_NOT_AUTHORIZED",
+  "original_registry": "docs/evaluations/phase_g_evidence_reasoning_contract_v3.json",
+  "original_registry_sha256": "47bb09ae0a78f86a868df78143b0de109a7f10f789716d03f09e277e7c233e47",
+  "original_oracles_unchanged": true,
+  "distinct_conditions": 6,
+  "exposed_diagnostic_not_unseen": true,
+  "instruction_delta": "Use the source field whose meaning supports each temporal claim, distinguishing event/observation/effective times from record-writing or capture metadata when they differ. Do not extend point observations through unobserved intervals merely because no change is recorded; an explicit verified application remains supported at its stated effective time.",
+  "instruction_delta_sha256": "9afd454f0b9a4d1a040aaebf0947c2a5b08825b4288fbd9c40ec82a285e983a4",
+  "cases": [
+    {
+      "id": "RC-01",
+      "surface": "floating",
+      "pair_path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/frozen-v1/RC-01/pair.json",
+      "pair_sha256": "a99716e7dded4c3cfbb6be72fce3271c48c046d52c5ac5bceffc03eb0821d4bc",
+      "packet_sha256": "3d26376f50d07f32b12e467fddeda84e533aeccc11611522bcb9bcbe62a1cfec",
+      "packet_characters": 6730,
+      "expected_outcomes": [
+        "Running observed14:15 via10.241.1.2; candidate saved15:00 via10.241.1.6.",
+        "No applied flag/effective timestamp; neither active15:10 nor definitely-unapplied is established."
+      ],
+      "prohibited_claims": [
+        "Candidate definitely applied",
+        "Candidate definitely not applied",
+        "Continuous running through15:10"
+      ]
+    },
+    {
+      "id": "RC-02",
+      "surface": "studio",
+      "pair_path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/frozen-v1/RC-02/pair.json",
+      "pair_sha256": "58a1321a26d3aa28d7a5bc9d44ce3400c48f2946a8912977bc1e9774ab3227f9",
+      "packet_sha256": "7e51aa26b5f9222ca3b3a9e42dd8126bbe76595b39591d0534cf4812fc0f16bd",
+      "packet_characters": 10369,
+      "expected_outcomes": [
+        "12000at07:00;24000at09:00;12000at11:00.",
+        "Verified application24000effective08:25; preserve positive evidence.",
+        "08:00unknown and exact later reversion unknown; endpoints do not prove continuous state."
+      ],
+      "prohibited_claims": [
+        "08:00value asserted",
+        "Exact reversion inferred from capture",
+        "Verified application denied"
+      ]
+    },
+    {
+      "id": "RC-03",
+      "surface": "floating",
+      "pair_path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/frozen-v1/RC-03/pair.json",
+      "pair_sha256": "12a0bed95cafb21b0b3dc4de8ac9b3f8bd2db5896c0c8ceca65a6d82ce7d5bc9",
+      "packet_sha256": "26b0dd6ac972d6ff0767e868b627fa4090118bd54828db960fa6b6f870bb83c9",
+      "packet_characters": 15606,
+      "expected_outcomes": [
+        "Forwarddelivered;returnfailed atMicaCore2202 ingress22022, not IrisExit or egress22021.",
+        "ForwardMica22021ingress22022egress;return reaches22022andisdeniedbeforeegress.",
+        "Defaultdiscardisolatedfromviolet; modeledonly, no measuredprotocolhealth."
+      ],
+      "prohibited_claims": [
+        "Forwardfailed",
+        "Returnegresstraversedafterdenial",
+        "Live/protocol health asserted"
+      ]
+    },
+    {
+      "id": "RC-04",
+      "surface": "studio",
+      "pair_path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/frozen-v1/RC-04/pair.json",
+      "pair_sha256": "624904a1a4a3c5499f48c441eaecff2e19c46976f70e4956c6826b17389f8dc5",
+      "packet_sha256": "262c6003b679a2f8216a4fa6909f371c8f46ab015f11d6c6d305efd5588fb884",
+      "packet_characters": 14017,
+      "expected_outcomes": [
+        "Routepresence recorded; operationalinterfaceunknown makesmodeledoutcomeunknown, not confirmedfailure or delivery.",
+        "Recommend obtaininginterface/next-hopstate; no new collection, no physical conclusion."
+      ],
+      "prohibited_claims": [
+        "Connectivityguaranteed",
+        "Unknown state declared shutdown",
+        "Probeexecuted"
+      ]
+    },
+    {
+      "id": "RC-05",
+      "surface": "floating",
+      "pair_path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/frozen-v1/RC-05/pair.json",
+      "pair_sha256": "1a10ab83ab641d1764eb6df7d25cf441e7245eb80d1fae8f52e8a5ecdb3bd3cc",
+      "packet_sha256": "ecf3c3a118b08e5cfdf0844e1f56db7cc63a828f585023dad9e4fa567208bebd",
+      "packet_characters": 11493,
+      "expected_outcomes": [
+        "Coolingfirstobserved12:30, counterssampled12:35; temporalassociationnotcause.",
+        "Coolingpossiblehypothesis; onecounterrecordnottrend; no reset conclusion from unavailablesyslog.",
+        "Two discriminatingpassivecheckswithlimits;no newexecution."
+      ],
+      "prohibited_claims": [
+        "Coolingestablishedcause",
+        "Noresetbecause logsunavailable",
+        "Countertrendinvented"
+      ]
+    },
+    {
+      "id": "RC-06",
+      "surface": "studio",
+      "pair_path": "tmp/phase-g/iterations/20261102-gemini35-interpretation/frozen-v1/RC-06/pair.json",
+      "pair_sha256": "d2f6b062a133e9cdee34672c7dffe47e3b6a9f822978fe424aeedcb1c75182bf",
+      "packet_sha256": "d76ccb3276b7709d01d781c98b280eff6e1e353445412d24de3b535640e1fbf4",
+      "packet_characters": 11877,
+      "expected_outcomes": [
+        "Beforeforwarddelivered;afterforwardfailedatCedar1101egress11011.",
+        "Controlledmodeledconsequenceisjustified;do notweaken to whollyunknown.",
+        "Neitherdeploymentnorrealoutagecauseestablished."
+      ],
+      "prohibited_claims": [
+        "Physicalcauseasserted",
+        "Modeledblockdenieddespitecalculation",
+        "Wrongfailedowner"
+      ]
+    }
+  ],
+  "call_order": [
+    {
+      "sequence": 1,
+      "case": "RC-01",
+      "arm": "control"
+    },
+    {
+      "sequence": 2,
+      "case": "RC-01",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 3,
+      "case": "RC-02",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 4,
+      "case": "RC-02",
+      "arm": "control"
+    },
+    {
+      "sequence": 5,
+      "case": "RC-03",
+      "arm": "control"
+    },
+    {
+      "sequence": 6,
+      "case": "RC-03",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 7,
+      "case": "RC-04",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 8,
+      "case": "RC-04",
+      "arm": "control"
+    },
+    {
+      "sequence": 9,
+      "case": "RC-05",
+      "arm": "control"
+    },
+    {
+      "sequence": 10,
+      "case": "RC-05",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 11,
+      "case": "RC-06",
+      "arm": "candidate"
+    },
+    {
+      "sequence": 12,
+      "case": "RC-06",
+      "arm": "control"
+    }
+  ],
+  "maximum_dispatch_attempts": 12,
+  "retries": 0,
+  "new_planner_calls": 0,
+  "new_reader_calls": 0,
+  "extra_model_calls": 0,
+  "calls_per_cell": 1,
+  "model_settings": {
+    "role": "evidence_reasoner",
+    "provider": "google",
+    "model": "gemini-3.5-flash-lite",
+    "output_tokens": 8192,
+    "thinking": "low",
+    "structured": true,
+    "schema_mode": "validated_json"
+  },
+  "control_consent_manifest": {
+    "roles": {
+      "local_default": {
+        "role": "local_default",
+        "provider": "ollama",
+        "model": "qwen2.5:1.5b",
+        "output_tokens": 512,
+        "thinking": null,
+        "structured": true,
+        "schema_mode": "json_schema"
+      },
+      "complex_planner": {
+        "role": "complex_planner",
+        "provider": "google",
+        "model": "gemini-3.1-flash-lite",
+        "output_tokens": 2048,
+        "thinking": "low",
+        "structured": true,
+        "schema_mode": "validated_json"
+      },
+      "evidence_reasoner": {
+        "role": "evidence_reasoner",
+        "provider": "google",
+        "model": "gemini-3.5-flash-lite",
+        "output_tokens": 8192,
+        "thinking": "low",
+        "structured": true,
+        "schema_mode": "validated_json"
+      }
+    },
+    "semantic_mode": "off",
+    "reasoning_contract": "source_claims_v3",
+    "investigation_profile": {
+      "enabled": true,
+      "version": 3,
+      "seconds": 120.0,
+      "planner_seconds": 90.0,
+      "reasoner_seconds": 120.0,
+      "initial_read_seconds": 90.0,
+      "supplement_read_seconds": 60.0,
+      "adequacy_seconds": 5.0,
+      "max_readers": 24,
+      "max_rounds": 3,
+      "max_role_calls": 5
+    },
+    "evidence_layout": "current",
+    "evidence_delivery": "dependency_view_v3",
+    "provider_wire_schema": "full",
+    "google_native_schema_transport": "responseFormat_v1",
+    "evidence_harness": {
+      "version": 1,
+      "ledger": true,
+      "guidance": true,
+      "provenance": true
+    },
+    "supplementary_round": true,
+    "max_role_calls": 5
+  },
+  "request_budget_seconds": 120,
+  "evidence_character_limit": 64000,
+  "shared_quota": {
+    "path": "tmp/ai-cloud-usage.json",
+    "preflight_required_before_live": true,
+    "rpm_ceiling": 15,
+    "input_tpm_ceiling": 150000,
+    "rpd_ceiling": 500,
+    "hash_at_freeze": "ab88cf95b1b9de97ea2a8afcde345caeea4339ad3a13f46e106ce0087b3ba2fb",
+    "rows_at_freeze": 87
+  },
+  "runtime_sources": {
+    "backend/llm/advanced_differentiators.py": "3759e2405f59f9f2f11ae40479ba32c476bbfbeb652bc5eb9f1a3b8a96473e26",
+    "backend/llm/agent.py": "3bbf7ace25de51bd83dcc0a828f61ade5259db6a6c360379e8c0e0a553e7e7af",
+    "backend/llm/answer_grounding.py": "b67523d864cc28da894f6e33fdf4716c1e4c1586efc8d76d195c8bffbce03f0f",
+    "backend/llm/answer_policy.py": "b4eab5bf95b2a49bb4304abf9f19241174fe7333798416df4021fe4ee482042b",
+    "backend/llm/answer_release.py": "4677836aa975f6868a9b0b40b558d91530a638a04338d7ce79adf119a52c7aec",
+    "backend/llm/api.py": "f63c0036086702e4236e15645803ef336e266755a8b7fb5e4be52a5c33f82452",
+    "backend/llm/benchmark_suite.py": "436638461cdde4c1005a9a670835bd1752d1778387fa4160481f70053694cb85",
+    "backend/llm/change_intelligence.py": "786da3314c837fa344a150726be4bce1c3dc44ff88fe6fb7437eefdf823350f7",
+    "backend/llm/context.py": "39953af277678d027d660876d08c11a58da3edabf9a94bfaf8978d4c572cd62f",
+    "backend/llm/context_contract.py": "9bebe2dbd49cdbe00e0148d715aee237f6a0943e78220675e5478bea09dc0378",
+    "backend/llm/context_state.py": "80b40beaeb466b029ab6d53247f4cfeb2f44fcbcb4c92f1a077acc7f0d68a72b",
+    "backend/llm/controller_flow.py": "a42a33363a3baf4d51f6f860f25020c138d58f18c6df4afa85a90956b15169d9",
+    "backend/llm/controller_observability.py": "480d6bd55e4c6a79b54a5a8b5a79cae47da914eaa9d9454e1105b221ac33e3ac",
+    "backend/llm/controller_policy.py": "05ed298bc72f2a6d0f723b9b3ca7f2b491b04d6ac2a64722eb483aeb9fb7b44c",
+    "backend/llm/controller_scope.py": "92affcbc9a1836361796c9fb35051429fc365ffee19076e04b53b5c6ae036341",
+    "backend/llm/controller_self_correction.py": "c661321b5e9ea688e472b0c31b763c08452840d3c75e371ab0d14ad7d2aa449a",
+    "backend/llm/document_extract_worker.py": "7c0bc147d6ff6ffacb54b4af4eb355f9fac96d64034a5595e9fc8e0f0d5384a5",
+    "backend/llm/document_ocr.py": "9b144468425fbaf5f57debae5dd07acaa90fbd7b88e1d804519e09e8b7d384fd",
+    "backend/llm/embedder.py": "28499d95155884917b8bc95a08c74ead7aad85c5d842928ee4e578887adb20dd",
+    "backend/llm/gateway.py": "0c61dca9fbfeee2a103c4bed6e5c6c8b8b6594457152515b7623c62a43ab8cd5",
+    "backend/llm/gateway_api.py": "95512bddb5f597b8cd76a03bb7b8ed28612787e25caf3a821d0d7fe940d9b09c",
+    "backend/llm/gateway_diagnostics.py": "691f326146422eb1c1e2dde54391c8e3522f9bdc45a9f1fd9b7eed9ff7b8aee1",
+    "backend/llm/gateway_documents.py": "edae6a1dfe89f948cc6f53b5b1259d71f05ca49160152a1a47396883c79f9120",
+    "backend/llm/gateway_findings.py": "fb02ddfcf36086eac2b04bd2a2edae262ce4150144bf09712e5350f84438d4f7",
+    "backend/llm/gateway_handoff.py": "13a05eeb94a23d6ada10785bf0abffb4323bfc45328b564e16999ae2208d2bde",
+    "backend/llm/gateway_inventory.py": "cec072b5126658a7e6d2a1427373e64e94baeaac38565a719597ec8e5995f261",
+    "backend/llm/gateway_knowledge.py": "0cf038d8b9d3b28892ba17b67648f9571469b86bc7c8c9b39307bc9403b538e5",
+    "backend/llm/gateway_models.py": "33b02c8f4360f1549a0b51458c02983f6f65d94ce71ea9452094fa069358d79f",
+    "backend/llm/gateway_network.py": "1b2b13c767ee5e02c41e96204a53b0131debaca60c5cad4f710c4b0d48c7c7b2",
+    "backend/llm/gateway_playbooks.py": "c4c23ada834ff97539843948c8d810e2e633cd4be9bb8f5fd8a13d61527ab26d",
+    "backend/llm/gateway_references.py": "cdf1adde382b4920642d7111f650c12477462b3d16fb9eb129012d5437c68dc0",
+    "backend/llm/gateway_reference_drafts.py": "0cd804963febb615e61bc0ab297fd3d81ddb3e977dbed57d12f5d96346fff5c6",
+    "backend/llm/gateway_review.py": "d61b67d80d8c143d19b62b570613dbed9cf92b73c2dbc2ba2970d247594d0189",
+    "backend/llm/gateway_routing.py": "b6dcbe56e57a939de372ab578b602a50b6ab28d3a89b23734712dcf3ceec1b5c",
+    "backend/llm/gateway_semantics.py": "560112aa73e71a74804447770355ee5f6c6ce2dccee052d61004f3f31cf45770",
+    "backend/llm/gateway_services.py": "c4492108fc9c14f7844c539ad0a424161ab6343b5c00f4f68481b2c743189727",
+    "backend/llm/gateway_store.py": "5bb3588b6288a9d5d972ec4e075c9e1858a5b2573bb842090787dbc1e4b49995",
+    "backend/llm/gateway_v9.py": "4d4e8c8281d693e85fe72d1d18d71acd61c43bf2763c2cd8996c3b6201098b55",
+    "backend/llm/gateway_validation.py": "2aeaab23662b299f89cce9457bbf0b0b87f23914f9a1f53e107b2c85e3e665ba",
+    "backend/llm/gateway_vision.py": "83cbbfba4c96354e6f579c1fb49154b48bdaa7c980111aaf6dfcbe62d2bdf71f",
+    "backend/llm/gateway_workspace.py": "7d56e7316daf7341b60ab95bc8c8e9309b3c9a89ebc1888933f9625f24f2fa17",
+    "backend/llm/gemini_provider.py": "eeb89f6e8c96c82bb886c9c2401d03765f7a25dd03efdc3816f71762af4700f6",
+    "backend/llm/ingestion.py": "0bce1fb5852583e3492717c12ef6d876d74548aa17aed6a08599ed34849a81e5",
+    "backend/llm/intent.py": "9f0a9d8d8813f902441cdb9e09463e120c3bba4f1d7f286d2aa50f36c47c387d",
+    "backend/llm/intent_api.py": "465998285dc2915076c539da38f498a87afd90b883dad1d0bd2cac6455900b85",
+    "backend/llm/milestone_baseline.py": "380956f3aa802a859d0121e8735d099021d8d41c78c3cdf067e99c2efdefd927",
+    "backend/llm/model_roles.py": "bbaea1c93f32930d43924ce511745057fd93ca80acb6ec44d90927f743f6a468",
+    "backend/llm/network_tools.py": "604a520ed71bec2b2bb7c2ab594476be71e1254b2b8c3e0713754864a8bfbf9b",
+    "backend/llm/ollama_provider.py": "92272499e0138f276603350bf7759723e0c60405f4aa91f152058f894a019424",
+    "backend/llm/policy.py": "0fb0693bbc6a302d72aa359ea11cccbcf8d1da81bc92841a70680b596875b942",
+    "backend/llm/post_change_verification.py": "5629317bc83d05f97f13ca563b93e9235ae5a18852a732b480570e8d49428c74",
+    "backend/llm/proposal.py": "c1b5c8f2071168109bccfc3d6f3ae23f9b86e10a08f5b0b4981659be709ac570",
+    "backend/llm/provider.py": "532d0b5b70bdf35b66c635c625dac84734c4543e94e0b2a4edac899bc6f0226c",
+    "backend/llm/refresh_fabric.py": "ee05e3d60f9c57a63faca0ba7d649eebc44af11de70bf02c4a86325e8d70a631",
+    "backend/llm/refresh_state.py": "4f5aa9298d29f07775cdb83abe9624a38114d5d123d3fac04f6d021437ad7dab",
+    "backend/llm/resilience_suite.py": "bd04ff82ec7b539e5557ced675820b76d49e825c769e02d204b6d8738c69d158",
+    "backend/llm/retriever.py": "7ec393d4af80266ce4257771c4d0d37fd812a954cd05fb60397a83af7fc22462",
+    "backend/llm/semantics.py": "f2350c14aa6ac7ce1c8adae283572f4ed9dc9c982b1c6ddd3fe75f2f216139bf",
+    "backend/llm/system_prompt.py": "09852b2ca195dacf3fb39c0cecfc8b98f3914cb69552b69a8427d4b932e362ae",
+    "backend/llm/tools.py": "2e055f70d3188bc0c97625475c66265c2674ad4850ad73efcf9f7838366120e5",
+    "backend/llm/validation_process.py": "671ec7b84b354960319642d3b2dab6f7aa258925b0f560808c2d70c7b9ed1848",
+    "backend/llm/vector_store.py": "bc5e0bd1b2781c24fbd7bf05ae01a20b8dc100bb92a3bd6f8886f68c68c5de6f",
+    "backend/llm/wsl_validation_worker.py": "c47eb52bd71ad0b5a2fcd25de945c14eaf4d2efaf6f6b550ed8950beda229654",
+    "backend/llm/__init__.py": "ce833dc3c3b55546f91c3a402687e913922db16683c339ba6b6bef44d5f7f55f",
+    "backend/llm/orchestration/adapters.py": "07d76ebefcfe57d5908006fda7db9caa67fa85d0983a7eade67ef956e9e7ddc4",
+    "backend/llm/orchestration/editor_facts.py": "919720a2c49ad50216ea872b720249dde9a18143645e84f2692c0ecdd4f8ea00",
+    "backend/llm/orchestration/engine.py": "85ed2e004454c28538c73a2adeede1500c30cb4c1d2b514a479a915d3c9a7548",
+    "backend/llm/orchestration/evidence_harness.py": "df24119e0c207569742fe47ed9e9af0651c4d4aca57736bec7f342977471a76b",
+    "backend/llm/orchestration/investigation.py": "c0c2a18a36b4a515762eadc4bfbd55d7f572657cdfc20eba2f972215e31c8b7f",
+    "backend/llm/orchestration/investigation_support.py": "df4f8e026df5fdcd3d144708f117d59536206958a68018daa67ff608e77800e2",
+    "backend/llm/orchestration/memory.py": "d3d94925139956ad8d66c5803ad30676eb145507d081430604cd453fef42c610",
+    "backend/llm/orchestration/metric_evidence.py": "4a20cb6049a3e85ccc7d68d230ab9c7dc5400efe7083ca36d3b0ff89b777720b",
+    "backend/llm/orchestration/model.py": "ce71a30f57cf3a7082d3725c5f4f4c946a6eea0adea813c737fa3382a0ce7db6",
+    "backend/llm/orchestration/planning.py": "b342140f6882e2a3d7d35f0e9666d4e0efddeda3fac17d9c0c02355590077ea8",
+    "backend/llm/orchestration/reasoning_contract.py": "20ea70f8e585555d40fff8a3defb2b4fe6798613146701c10891a925b17ec547",
+    "backend/llm/orchestration/record_relationships.py": "418f008b0acd83e36846626f5282cec3040b548965a07f28aea34a71ed41f68f",
+    "backend/llm/orchestration/request_contract.py": "74b48b30c4ebc1fa0e7b8589fe0ff5da21ccffa557eb7e0cbc1188835174c32d",
+    "backend/llm/orchestration/role_reasoning.py": "9094130dd40d72a3d0d40902ba7253f491e4f3a68a634be7890b7e401b7d23fb",
+    "backend/llm/orchestration/scenario_reasoning.py": "42dc5aa4bc087bd98eb8f6f1e081d140124d24bbcce9c2b8ff414aa57151216f",
+    "backend/llm/orchestration/state.py": "f9c19ed5f5e53141d3632b6d61a1b80f41e71808cd3926b1cafa8fae9afa14be",
+    "backend/llm/orchestration/studio.py": "4b91b079050da38189531751312978732d4e83c0c0056ec07bf670ca6dc5e628",
+    "backend/llm/orchestration/synthesis.py": "9f2a12de9d0a7bf4ec567d4fba1335ed91064bc128ae5a7648b12f452d341354",
+    "backend/llm/orchestration/verification.py": "3cc37a60bfb5e158b711d26293b84d54e1f21f9086d14155e8e80e8423501e0a",
+    "backend/llm/orchestration/__init__.py": "bd827fe18dcc8a2daa39fac36418c9244e76b89115140fa73b605c588697df54",
+    "backend/development/bundles.py": "792d71b8cd0a1996d6a711329f2310f7a0d728c5e2fc2e89dcab97cf12b5689b",
+    "backend/development/examples.py": "9afbec25cf8a0f35f0e51eb64f57cb86c900cdf948e45f78ae02e7529afe62fb",
+    "backend/development/network_model.py": "d295f7c308ac60059b061d696d881270bc44acc2fcc95ed5f16290ecd6fd1963",
+    "backend/development/seeded.py": "fcf95f1a7445f2c4cf6d7c91f569353fd66eaf01c7845ee8d51c6295eb70b88e",
+    "backend/development/source_registry.py": "ba914ed068b44f232827146643ca55b3723ba5d731c009001a0e7c347751dcf0",
+    "backend/development/starter.py": "6864fec903e6292a389babca1b0d766708299f1ddc5fadc82cbecefe3f8988e3",
+    "backend/local_providers/artifact_metadata.py": "66068f5776c20ccdbff1a3fca2b319835e70d35e33d4cbc76a040a14723133ca",
+    "backend/local_providers/authoring.py": "39605fa9430d5d3776ba3095401edd73520204402c545bc498ab2407d8ba8685",
+    "backend/local_providers/capabilities.py": "48a1fce9d77789d3045d688703d2d5cc19e38e328d2ec44266dbb5417de27bf9",
+    "backend/local_providers/chat.py": "9e125b2bb4cc9e29fa43df6a1a66b28a59261754f47d114ad8cc899fe871b17d",
+    "backend/local_providers/development.py": "be4ee29f0bcda4f9955467d351d57b312c7c5e1251d6b45564b805a4c4772776",
+    "backend/local_providers/development_api.py": "1dcc3f7c5644f82d3e9a6be717c96baefde5e6ad66811d142e5d0cc4bceb9aae",
+    "backend/local_providers/knowledge.py": "ecab5ae79f445a6235749035365236006e9ec1b432fd7eb6c496add53f1d852d",
+    "backend/local_providers/knowledge_lifecycle.py": "05ac310c347f0c476f7c5e9949da8ba7b179d4472453cabd15b32482f47ca1c7",
+    "backend/local_providers/knowledge_review.py": "797ad4f762009d70c4fe3c6c75539ab8cffe326c4ffcf87a1c99e8c2a54c997f",
+    "backend/local_providers/knowledge_worker.py": "0115ba6f983a9342d3ccd6e97414b6562137c3e1adfac741153863d85bc4312a",
+    "backend/local_providers/observations.py": "a9accf6a6e4b3f4970d20acb002bdd3e35e86c59215e3cdbedba0abc2380a6e4",
+    "backend/local_providers/original_workflows.py": "d6d6b83798a0674b08186bb0627026cbde94e4f96b155f07af81c1cd3f206da0",
+    "backend/local_providers/settings_api.py": "f5e148c24868995786aa2b31f37938831740e50248d3c9ef0f4f8eb9131c4514",
+    "backend/local_providers/studio.py": "06d04b0e38621d5c8f9f8209fa852690363ef72ebd5dc045f8de7aa7012654eb",
+    "backend/local_providers/templates.py": "2ca2bb5f35734c0995983ad8d6337f3132b9f28be4b0f468d655920ea7ba220f",
+    "backend/local_providers/v9_clarification.py": "fcf0ce7e11202f04d2f093a9192e0223baa8c39efcb263d3f52397889cb0f8b8",
+    "backend/local_providers/v9_studio.py": "9e3b135fd429e2f16ab213cf7f373c7d565865687155623ea6ba8ad159d67bd4",
+    "backend/local_providers/v9_worker.py": "1323016dd7dfebacb28630f7dd56a0ccb964c1ae0d45edbb6b5579031204af42",
+    "backend/local_providers/workflows.py": "4382f4d0b59befdc31e2651d064ddbad31c2ad0bff8efb0f109dffbfa06619cb",
+    "backend/local_providers/__init__.py": "2982b1474a7eced00f59be1978fb70075461e9f334a73daf13952db03030fdaa"
+  },
+  "grading": {
+    "method": "Source-derived independently checkable, implementation-assistant graded; not blinded.",
+    "raw_and_released_scored_separately": true,
+    "no_retrieval_or_schema_credit": true,
+    "dimensions": [
+      "full_answer_correctness",
+      "temporal_correctness",
+      "directional_correctness",
+      "causal_correctness",
+      "evidence_utilization",
+      "uncertainty_correctness",
+      "obligation_completeness",
+      "release_safety",
+      "false_suppression",
+      "operational_cost"
+    ],
+    "classification": [
+      "adequate",
+      "partial",
+      "incorrect",
+      "unsupported",
+      "provider_noncompletion"
+    ],
+    "raw_candidate_minimum_adequate": 5,
+    "nonregression_cases": [
+      "RC-01",
+      "RC-03",
+      "RC-04",
+      "RC-06"
+    ],
+    "new_unsupported_causal_claims_allowed": 0,
+    "fallback_is_not_model_reasoning": true,
+    "holdout_and_promotion_require_separate_authorization": true
+  },
+  "stop_conditions": [
+    "First provider unavailable/quota/authentication error; no retry or model switch.",
+    "Source/settings/runtime hash or exact consent mismatch; no dispatch.",
+    "Twelve attempts including failures; never spend unused calls automatically."
+  ],
+  "authorization": "NOT AUTHORIZED. Existing exhausted18call permission does not apply.",
+  "automatic_promotion": false,
+  "formal_phase_gate_closed": false
+}

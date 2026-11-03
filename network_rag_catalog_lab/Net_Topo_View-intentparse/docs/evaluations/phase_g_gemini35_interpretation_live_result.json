@@ -1,0 +1,50 @@
+{
+  "registry_sha256": "9cab06b8723e8365dd01be39183324090719edf2a1245fab2adca6258d4a4249",
+  "status": "COMPLETED_NOT_PROMOTED",
+  "report": "docs/PHASE_G_GEMINI35_INTERPRETATION_ITERATION.md",
+  "review": "tmp/phase-g/iterations/20261102-gemini35-interpretation/live-full-answer-review.json",
+  "summaries": {
+    "control": {
+      "conditions": 6,
+      "raw_answer_field_adequate": 3,
+      "released_answer_adequate": 3,
+      "adequate_and_semantically_consistent_whole_response": 3,
+      "provider_completions": 6,
+      "valid_json_and_core": 6,
+      "auxiliary_contract_errors": 1,
+      "adequate_raw_answer_suppressed": 0,
+      "factual_fallbacks": 0,
+      "new_tool_or_planner_calls": 0,
+      "seconds": {
+        "median": 3.5963545500999317,
+        "maximum": 4.466421999968588,
+        "sum": 22.296185100451112
+      },
+      "input_tokens": 33244,
+      "final_output_tokens": 5847
+    },
+    "candidate": {
+      "conditions": 6,
+      "raw_answer_field_adequate": 4,
+      "released_answer_adequate": 4,
+      "adequate_and_semantically_consistent_whole_response": 3,
+      "provider_completions": 6,
+      "valid_json_and_core": 6,
+      "auxiliary_contract_errors": 1,
+      "adequate_raw_answer_suppressed": 0,
+      "factual_fallbacks": 0,
+      "new_tool_or_planner_calls": 0,
+      "seconds": {
+        "median": 3.3400426500011235,
+        "maximum": 4.307911199983209,
+        "sum": 20.562787599861622
+      },
+      "input_tokens": 33586,
+      "final_output_tokens": 5480
+    }
+  },
+  "dispatches": 12,
+  "distinct_conditions": 6,
+  "decision": "DO_NOT_PROMOTE_KEEP_OFF",
+  "formal_phase_gate_closed": false
+}

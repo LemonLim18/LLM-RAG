@@ -1,0 +1,664 @@
+{
+  "method": "Offline replay under updated verification; original raw prose/oracles/grades immutable. Source-derived independently checkable but implementation-assistant graded, not blinded.",
+  "scores": {
+    "off": {
+      "conditions": 6,
+      "raw_frozen": 4,
+      "original_released_frozen": 3,
+      "updated_verification_released_adequate": 4
+    },
+    "obligations": {
+      "conditions": 6,
+      "raw_frozen": 2,
+      "original_released_frozen": 1,
+      "updated_verification_released_adequate": 2
+    },
+    "relationships": {
+      "conditions": 6,
+      "raw_frozen": 3,
+      "original_released_frozen": 0,
+      "updated_verification_released_adequate": 3
+    }
+  },
+  "cells": [
+    {
+      "case": "RC-01",
+      "arm": "off",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "ADEQUATE",
+      "original_reason_frozen": "Correct two artifacts/next hops, capture/save times and both activation/non-application uncertainties.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "3d26376f50d07f32b12e467fddeda84e533aeccc11611522bcb9bcbe62a1cfec",
+      "original_trace_sha256": "63f34d39dbcce123c950769934c50e4ce7079804bf146326645d3cadfd2ed5e9",
+      "raw_output_sha256": "10d505af5352651c1dc5730e162c7e37d812d29196b3736fc9629606108d15ca",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-01",
+      "arm": "obligations",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "PARTIAL",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Prose suggests definitely not applied at an unspecified capture time; later limitation does not resolve that scope. Invented relationship IDs; staged artifact does not prove non-application.",
+      "repaired_release_adequacy": "PARTIAL_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": true,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "running_next_hop",
+          "assertion": {
+            "relationship_id": "running_next_hop",
+            "value": "10.241.1.2",
+            "authority": "recorded"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        },
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "candidate_next_hop",
+          "assertion": {
+            "relationship_id": "candidate_next_hop",
+            "value": "10.241.1.6",
+            "authority": "recorded"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        }
+      ],
+      "source_packet_sha256": "4a4d475a0476baa533e5c376d3d4f997ff6f06a160cd8c058d015547cf5eac3c",
+      "original_trace_sha256": "4d44e7a4392abaf9b27f80a12447000e230340b06353aefd23e07a0ccfaae012",
+      "raw_output_sha256": "ca62651dc0bb0c180c57a42ab19d9d44bfe294c9f8bfb673b9bd5b60f373930a",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-01",
+      "arm": "relationships",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "INCORRECT",
+      "original_released_adequacy_frozen": "INCORRECT_RELEASED",
+      "original_reason_frozen": "Both prose dates change2026to2016; structured outcome also asserts not applied despite absent applied status. Correct declared command values do not check those assertions.",
+      "repaired_release_adequacy": "INCORRECT_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "2d1153667a879664d0a6610ce9c31a00f26a0ac77a6be90fa3eb1c87921c9a3e",
+      "original_trace_sha256": "ad8978fe93471319c28b73c1ca4856b11fdea45d88039c9a2cc9e5169f9834ab",
+      "raw_output_sha256": "9f8bb9a22b6d3109f112f038a6cf08518be76645ba91453e60b13e4c435cbe39",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-02",
+      "arm": "off",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "INCORRECT",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Infers08:00value12000 from07:00capture and absent changes. Existing checker also falsely compares effective08:25 with record08:26 and withholds for that different reason.",
+      "repaired_release_adequacy": "INCORRECT_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": true,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "7e51aa26b5f9222ca3b3a9e42dd8126bbe76595b39591d0534cf4812fc0f16bd",
+      "original_trace_sha256": "8d2442c2882a4a7646af1e9deaa8164f73626d35b28c5e7b3e26698a08f21ac7",
+      "raw_output_sha256": "b773ebf795a3b5e13f88d38a03309a7111b3bfc47a6b0a865e803cb53fc653df",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-02",
+      "arm": "obligations",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "PARTIAL_AMBIGUOUS",
+      "original_released_adequacy_frozen": "PARTIAL_RELEASED",
+      "original_reason_frozen": "Prose hedges direct observation but suggests07:00value for08:00; structured outcome explicitly infers12000at08:00. Correct later application/reversion limits do not cure the missing required uncertainty.",
+      "repaired_release_adequacy": "PARTIAL_AMBIGUOUS_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "486d07279ea07ce06f8d5e0af786de581e361ba77e5250a585b01d93bc6baaa7",
+      "original_trace_sha256": "e1370f9bcf8abc26cff97c728654ca2be02a13d47ea31a64a3b4b6f1fe4e188d",
+      "raw_output_sha256": "4bc3c004576ea00bc2aa5b204b2180a57345d1b1df5aa7ebd2c60fadbda13d85",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-02",
+      "arm": "relationships",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Correct discrete chronology,08:00unknown, positive08:25application and unknown reversion. New contract withholds for invented relationship identifiers, not a false natural-language conclusion.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": true,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "rc2-0_buffer",
+          "assertion": {
+            "relationship_id": "rc2-0_buffer",
+            "value": "12000",
+            "authority": "recorded"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        },
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "rc2-applied_value",
+          "assertion": {
+            "relationship_id": "rc2-applied_value",
+            "value": "24000",
+            "authority": "recorded"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        },
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-3",
+          "reference": "rc2-applied_effective",
+          "assertion": {
+            "relationship_id": "rc2-applied_effective",
+            "value": "2026-11-02T08:25:00Z",
+            "authority": "recorded"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        }
+      ],
+      "source_packet_sha256": "db22bcf542c53066b4ef8b522f4dd4b17d6866775a6b5e18961dac2c53290581",
+      "original_trace_sha256": "ff4ad305c330e32805010a62ee1c1012de5d9cb5045eb08074d4101435a8fe86",
+      "raw_output_sha256": "e34a977463819fbb6ae4a42ba5fda4bc004c7b3382a9ee5331e2c3b24ed579e3",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-03",
+      "arm": "off",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "ADEQUATE",
+      "original_reason_frozen": "Correct forward delivery/return ingress denial, actual MicaCoreports, VRF and protocol/live limitations. Invalid auxiliary declaration does not discard valid core.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "26b0dd6ac972d6ff0767e868b627fa4090118bd54828db960fa6b6f870bb83c9",
+      "original_trace_sha256": "b09751c2a05c03d11c434f199a960ab151d59b3c8aaced1051d24d25e62e16c7",
+      "raw_output_sha256": "0eb8032172fc555f5b0fe361271b603d383e2b96806ff0e640bfe8456efe05fe",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-03",
+      "arm": "obligations",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "PARTIAL",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Omits actual ingress/egress interface names and substitutes broad device lists, despite populated outcome IDs. New relationship IDs invented.",
+      "repaired_release_adequacy": "PARTIAL_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": true,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "forward_delivery_status",
+          "assertion": {
+            "relationship_id": "forward_delivery_status",
+            "value": "delivered",
+            "authority": "modeled"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        },
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "return_delivery_status",
+          "assertion": {
+            "relationship_id": "return_delivery_status",
+            "value": "failed",
+            "authority": "modeled"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        },
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-2",
+          "reference": "return_failure_device",
+          "assertion": {
+            "relationship_id": "return_failure_device",
+            "value": 2202.0,
+            "authority": "modeled"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        }
+      ],
+      "source_packet_sha256": "0c23b3d8adcb64856d0763af0ea8e8457ab628f50ccd4c4ea648019810135f92",
+      "original_trace_sha256": "e31c60f617ec9837568dabc32d5041b517a24be54598bce3e18266755df5cf12",
+      "raw_output_sha256": "af29a33c85438f09f666bd1a6037c10b8ca6975e86cb1eda0c67cbb08bb9e1fc",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-03",
+      "arm": "relationships",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Correct forward/transit owners and ports, return ingress stop, VRF and modeled-only limits. Relationship type names are used instead of admitted R-identifiers; correct prose suppressed.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": true,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "disposition_or_recorded_status",
+          "assertion": {
+            "relationship_id": "disposition_or_recorded_status",
+            "value": "partial",
+            "authority": "modeled"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        },
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-2",
+          "reference": "route_or_policy_action",
+          "assertion": {
+            "relationship_id": "route_or_policy_action",
+            "value": "deny",
+            "authority": "modeled"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        }
+      ],
+      "source_packet_sha256": "0088cb2de0a27ca0deed8a15153457bd7f0a1ed42918d7ce1e5a3f9acb41ff35",
+      "original_trace_sha256": "d04bfef070b67e7a3fde47db8486c096afebe121cff2871f09aa226ef9d60df0",
+      "raw_output_sha256": "757287f33fd5f861e79c37e6740258d9e3180b3052781d298b00d74eb45b71d9",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-04",
+      "arm": "off",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "ADEQUATE",
+      "original_reason_frozen": "Route facts do not prove service; unknown endpoint state preserved, passive next evidence recommended without collection.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "262c6003b679a2f8216a4fa6909f371c8f46ab015f11d6c6d305efd5588fb884",
+      "original_trace_sha256": "11b9ad5045010ba57cbbc6c41d7f83d0e00da00185222f8b8a3755dcb97e5fce",
+      "raw_output_sha256": "8f691a69c24d68a675b2b26eac7db37b5a8c0cc043bbbf9f7cb85071e685e708",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-04",
+      "arm": "obligations",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Answer field correctly withholds service verdict and recommends passive state. Invented relationship IDs suppress it; structured conclusion separately overstates that the table confirms a path.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": true,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "cedar-to-iris-route",
+          "assertion": {
+            "relationship_id": "cedar-to-iris-route",
+            "value": true,
+            "authority": "recorded"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        },
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-2",
+          "reference": "flow-status-tls-report",
+          "assertion": {
+            "relationship_id": "flow-status-tls-report",
+            "value": "unknown",
+            "authority": "modeled"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        }
+      ],
+      "source_packet_sha256": "7a1daecae6c1d7fca39b37b0d7b12cf7636913f3d27c8666754bbd03331d3931",
+      "original_trace_sha256": "50fc8f5247bbf464515f3ee5a90b88dda1b5b4151c2db6f6ab0a50b9b6851043",
+      "raw_output_sha256": "fe609bf6eea761080bb1045c7db8e115e62eee21589f8d5611bf2d2195517e82",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-04",
+      "arm": "relationships",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "QUALIFIED_BORDERLINE",
+      "original_released_adequacy_frozen": "QUALIFIED_BORDERLINE",
+      "original_reason_frozen": "Correct no-service-proof and unknown-state conclusion, but says route presence establishes layer3forwarding paths in control plane. Conservatively not strict full adequacy; generous reading as RIB presence is separately reported.",
+      "repaired_release_adequacy": "QUALIFIED_BORDERLINE_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "c60604d143491e4227572a5a7ed2ca06b7729f60a686f51c7dac2bf7c8b0237f",
+      "original_trace_sha256": "837f323fc14774bdb8e3d57095f344c815b9fc31990fd5c6ff477813caa9ac88",
+      "raw_output_sha256": "6a69a6e39a03654b16456129153a2d69d8210535d2c99be438fe30ff76506c33",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-05",
+      "arm": "off",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "INCORRECT",
+      "original_released_adequacy_frozen": "INCORRECT_RELEASED",
+      "original_reason_frozen": "First observed12:30 is present, record timestamp12:31; answer calls occurrence four minutes before12:35instead of distinguishing the timestamps. Causal uncertainty/reset limitation and recommendations otherwise useful.",
+      "repaired_release_adequacy": "INCORRECT_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "ecf3c3a118b08e5cfdf0844e1f56db7cc63a828f585023dad9e4fa567208bebd",
+      "original_trace_sha256": "663daf8ab5ec8503c19c6b7c9e0d2544ba4421c03f015ebf3521d7eed9cd3a85",
+      "raw_output_sha256": "e02676040c2dac7288e60a9bd2b6b38ceac52427dfe8d40ed328667e347f603e",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-05",
+      "arm": "obligations",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "INCORRECT",
+      "original_released_adequacy_frozen": "INCORRECT_RELEASED",
+      "original_reason_frozen": "Same first-observed versus record-time confusion; cooling is not falsely declared cause, unavailable syslog not no-reset, but chronology is wrong.",
+      "repaired_release_adequacy": "INCORRECT_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "b4fb123ceec9265faf5a78ec46a6096389a833ddbeb192c7112c3aa683a0ca6c",
+      "original_trace_sha256": "36b6b1d8c93b0c08278879a823afcb0f990795661da693d1f5bfeefc2d37b2fa",
+      "raw_output_sha256": "3e7a7730666f4b1d3ecb7a31e7f8648708018acad9da0b0b47022615e9d767c2",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-05",
+      "arm": "relationships",
+      "surface": "floating",
+      "raw_answer_adequacy_frozen": "INCORRECT",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Same first-observed versus record-time confusion persists with complete raw evidence. New index does not expose first_observed separately; model uses generic timestamp. Relationship type names cause withholding.",
+      "repaired_release_adequacy": "INCORRECT_RELEASED",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": true,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "source_timestamp",
+          "assertion": {
+            "relationship_id": "source_timestamp",
+            "value": "2026-11-02T12:31:00Z",
+            "authority": "recorded"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        },
+        {
+          "kind": "INVALID_RELATIONSHIP_REFERENCE",
+          "obligation_id": "request-1",
+          "reference": "source_timestamp",
+          "assertion": {
+            "relationship_id": "source_timestamp",
+            "value": "2026-11-02T12:35:00Z",
+            "authority": "recorded"
+          },
+          "verification": "UNVERIFIED_OPTIONAL_METADATA",
+          "substantive_verdict": "NOT_MECHANICALLY_CHECKABLE",
+          "reason": "No admitted relationship resolves this hint. No factual credit; independent authoritative typed-claim checks still apply."
+        }
+      ],
+      "source_packet_sha256": "418283405e45e1ad6b49a21a42c5a5db23bfe6fbac14ad80ec0a87e6cf4e9851",
+      "original_trace_sha256": "1361d91a98dd171e48ddbeca1832a4ae26aa2e4d4cd51bb0d7208207456bc675",
+      "raw_output_sha256": "eb7953b4e8885b719eca5dda17ab464371bbfe05f3c7468fee5b34fbd80311c8",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-06",
+      "arm": "off",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Correct supported modeled policy consequence, exact CedarEdgeegress and no physical/deployment inference. Existing checker falsely searches successful flow interface scope only in failure locations.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": true,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "d76ccb3276b7709d01d781c98b280eff6e1e353445412d24de3b535640e1fbf4",
+      "original_trace_sha256": "d13240f61f945a4b1ec947445557090e027e5d9f3bc7bbae73c8aefa427d49c1",
+      "raw_output_sha256": "f7d8d98b7e678a9966f8c306143f95f95927e88f34819de8f9a3fc1c4872221e",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-06",
+      "arm": "obligations",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "ADEQUATE",
+      "original_reason_frozen": "Correct before/after forward and return results, denied CedarEdgeegress and explicitly modeled-only consequence; useful positive conclusion retained.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": false,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "c3a4cbf8023459e6de9e012448efe218297b7bf55399ee2d4b64021fb467f3b8",
+      "original_trace_sha256": "542300b09f0e3b9a3528e242e8342ef92dcad3e1bedfcd2ab160589a92875ac2",
+      "raw_output_sha256": "26047c6f92e7c12d575f56e6b641b2e20a3fcf1f3717620f4e3346226fe0d93a",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    },
+    {
+      "case": "RC-06",
+      "arm": "relationships",
+      "surface": "studio",
+      "raw_answer_adequacy_frozen": "ADEQUATE",
+      "original_released_adequacy_frozen": "WITHHELD",
+      "original_reason_frozen": "Correct modeled consequence and scope; new operand checks have no findings, but existing successful-interface claim checker falsely declares identity contradiction and suppresses prose.",
+      "repaired_release_adequacy": "ADEQUATE",
+      "raw_prose_preserved": true,
+      "correct_answer_recovered": true,
+      "newly_released_inadequate_prose": false,
+      "newly_suppressed_adequate_answer": false,
+      "invalid_optional_references": [],
+      "source_packet_sha256": "853f3fc95997bf28b253f16c562cf0b971bd16c877f756011aabef6e4428d9bc",
+      "original_trace_sha256": "ac7d510ed8d5a3889750d6db5bae050162d6715d1e440a1f1ba9d9f54090bb88",
+      "raw_output_sha256": "09a323599af1bc105c65900ab6f4d0df469dbb6b3eaffd6b88753b222d16db02",
+      "raw_output_unchanged": true,
+      "evidence_unchanged": true,
+      "source_question_oracle_unchanged": true,
+      "generation": "Offline replay under updated verification, not a new model evaluation",
+      "semantic_certified": false
+    }
+  ],
+  "correct_answers_recovered": [
+    "RC-02-relationships",
+    "RC-03-relationships",
+    "RC-04-obligations",
+    "RC-06-off",
+    "RC-06-relationships"
+  ],
+  "newly_released_inadequate_prose": [
+    "RC-01-obligations",
+    "RC-02-off",
+    "RC-03-obligations",
+    "RC-05-relationships"
+  ],
+  "correct_answers_newly_suppressed": [],
+  "guards": {
+    "cloud_dispatches": 0,
+    "model_calls": 0,
+    "reader_calls": 0
+  },
+  "historical_raw_scores_unchanged": true,
+  "no_model_quality_improvement_claim": true,
+  "reasoning_contract_default": "off",
+  "promote": false,
+  "formal_stage_closed": false,
+  "status": "OFFLINE_CHECKER_REPAIR_VERIFIED_SEMANTIC_RELEASE_INCOMPLETE",
+  "at": "2026-11-02T14:22:51.224747+08:00",
+  "actual_tests": {
+    "before.xml": {
+      "tests": 3,
+      "failures": 3,
+      "errors": 0,
+      "skipped": 0
+    },
+    "focused-accepted.xml": {
+      "tests": 108,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "affected.xml": {
+      "tests": 297,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "final-focused.xml": {
+      "tests": 46,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "audit_report": "tmp/phase-g/iterations/20261102-evidence-reasoning-contract/release-checker-offline-repair-report.md",
+  "preservation_sha256": "4fde068be810fb054f4348b605bc8b8dc8184fcbee9cb98d26cea68deab94a28",
+  "recommendation": "Retain narrow repairs; contract defaultOFF; no model reasoning improvement claim; stop."
+}
