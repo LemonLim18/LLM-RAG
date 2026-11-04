@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "purpose": "Offline contrasts for evidence-proportionate passive diagnostic advice; not model generations or a new runtime contract",
+  "authorship": "Synthetic facts and source-derived expectations, implementation-assistant authored/reviewed; not blinded or externally graded",
+  "historical_scores": "Unchanged; applying these criteria is a separate diagnostic review",
+  "common_rules": [
+    "Accept technically equivalent wording and useful qualified recommendations; do not require an exact artifact name.",
+    "Counters are valid for their aggregate metric. Reject unsupported attribution to a specific exchange or drop cause, not the mere recommendation of counters.",
+    "Inspect a flow record's keys, observation point, time window, sampling and correlation granularity; a flow record is not automatically evidence for one particular packet.",
+    "A proposed artifact is not supplied evidence. Request it conditionally if available/authorized; never claim it was read or collected.",
+    "Preserve supported positive observations and modeled results while limiting conclusions to their actual scope.",
+    "No fixed requirement for application-response evidence when the question asks only for a modeled path or aggregate activity. Any claim actually made must be justified."
+  ],
+  "primary_references": {
+    "interface_mib": "https://www.rfc-editor.org/rfc/rfc2863.html#section-6",
+    "ipfix": "https://www.rfc-editor.org/rfc/rfc7011.html#section-2",
+    "arp": "https://www.rfc-editor.org/rfc/rfc826.html",
+    "ipv6_nd": "https://www.rfc-editor.org/rfc/rfc4861.html#section-7.3.2",
+    "sampling": "https://www.rfc-editor.org/rfc/rfc5477.html"
+  },
+  "cases": [
+    {
+      "id": "PD-01",
+      "title": "Useful aggregate counters without exchange attribution",
+      "question": "Explain what these two interface samples establish about activity and transmission errors. Can they identify whether a particular DNS request was sent? Suggest one relevant passive artifact, without collecting anything.",
+      "source_records": [
+        {"id": "pd1-before", "kind": "interface_counters", "device_id": 7101, "interface_id": 71011, "interface": "uplink0", "vrf": "services", "timestamp": "2026-11-01T09:00:00Z", "ifHCOutOctets": 8000000, "ifHCOutUcastPkts": 10000, "ifOutErrors": 2, "ifCounterDiscontinuityTime": 100},
+        {"id": "pd1-after", "kind": "interface_counters", "device_id": 7101, "interface_id": 71011, "interface": "uplink0", "vrf": "services", "timestamp": "2026-11-01T09:01:00Z", "ifHCOutOctets": 8480000, "ifHCOutUcastPkts": 10120, "ifOutErrors": 6, "ifCounterDiscontinuityTime": 100, "counter_reset_or_wrap": false, "other_traffic_present": true}
+      ],
+      "establishes": ["Same-epoch deltas are 480000 output octets, 120 unicast transmission requests and 4 output errors over 60 seconds.", "The interface counters show aggregate activity and errors; this is a valid diagnostic use."],
+      "unknown": ["Which traffic contributed each delta, whether the named DNS request appeared on the wire, and the cause of the errors."],
+      "passive_artifacts": [{"artifact": "Existing egress trace correlated with the DNS transaction and time", "availability": "Not supplied; request only if available and authorized", "can": "Show the matched packet at the trace's documented observation point", "cannot": "By itself establish remote application processing or make other interface errors specific to that exchange"}],
+      "incorrect_example": "The 120 additional output packets prove the DNS request left successfully, and the 4 errors prove ARP caused its loss.",
+      "minimum_criteria": ["Retain useful aggregate deltas without attributing them to one exchange.", "Do not call ifHCOutUcastPkts an unconditional count of successful wire transmissions.", "Keep the artifact a recommendation, not execution."],
+      "principle_refs": ["interface_mib"]
+    },
+    {
+      "id": "PD-02",
+      "title": "Sampled ingress flow versus a positively matched egress trace",
+      "question": "For diagnostic datagram seq-214, compare what the interface counters, sampled ingress flow record and existing post-egress TAP trace actually establish. Which supports this specific datagram appearing on the outgoing link? Do any establish server processing or a reply? Recommend one passive artifact for the remaining gap. Use only the supplied records; do not execute reads, captures or tests.",
+      "source_records": [
+        {"id": "pd2-counters", "kind": "interface_counters", "device_id": 7201, "interface_id": 72011, "interface": "uplink2", "vrf": "analytics", "timestamp": "2026-11-01T11:02:00Z", "interval_start": "2026-11-01T11:00:00Z", "ifHCOutOctets_delta": 960000, "ifHCOutUcastPkts_delta": 400, "counter_reset_or_wrap": false, "other_traffic_present": true},
+        {"id": "pd2-ingress-flow", "kind": "flow_observation", "device_id": 7201, "interface_id": 72010, "interface": "access2", "vrf": "analytics", "timestamp": "2026-11-01T11:02:00Z", "interval_start": "2026-11-01T11:00:00Z", "observation_point": "router ingress before forwarding", "sampling": "one packet in 100", "observed_selected_packets": 1, "source_address": "192.0.2.40", "destination_address": "198.51.100.80", "protocol": "udp", "source_port": 55000, "destination_port": 8125, "same_tuple_used_by_multiple_datagrams": true, "transaction_id_exported": false, "payload_exported": false},
+        {"id": "pd2-egress-tap", "kind": "packet_observation", "device_id": 7201, "interface_id": 72011, "interface": "uplink2", "vrf": "analytics", "timestamp": "2026-11-01T11:01:05Z", "observation_point": "passive TAP on link after router egress", "direction": "outbound", "source_address": "192.0.2.40", "destination_address": "198.51.100.80", "protocol": "udp", "source_port": 55000, "destination_port": 8125, "payload_transaction_id": "seq-214", "frame_present": true, "application_receipt_or_response_supplied": false}
+      ],
+      "establishes": ["Counters show aggregate interface activity. The sampled flow records a selected matching-flow observation at ingress, without datagram identity.", "The supplied TAP trace matches seq-214 and positively establishes that datagram's presence on the documented post-egress link in this synthetic scenario."],
+      "unknown": ["Server application acceptance, response generation and response arrival at the client; no such record is supplied."],
+      "passive_artifacts": [{"artifact": "Existing server request/response audit correlated by seq-214 and time", "availability": "Not supplied; request conditionally", "can": "Distinguish documented application acceptance and response generation", "cannot": "Alone establish that a generated response reached the client's application"}, {"artifact": "Existing reverse-direction trace or client receipt log with the transaction identifier", "availability": "Alternative request, not a required second artifact", "can": "Establish a matching response at its own observation point", "cannot": "Certify unrelated requests or future service health"}],
+      "incorrect_example": "The interface counters or sampled ingress flow prove seq-214 was transmitted successfully and answered by the server; alternatively, no actual egress conclusion is possible despite the matched TAP frame.",
+      "minimum_criteria": ["Differentiate all three artifacts rather than treating counters and flow records as interchangeable.", "Accept the positively matched post-egress trace; do not suppress a justified conclusion.", "Keep server processing and reply unresolved.", "Give one useful permitted passive recommendation without execution; no exact wording required."],
+      "principle_refs": ["interface_mib", "ipfix", "sampling"]
+    },
+    {
+      "id": "PD-03",
+      "title": "A route and unrelated peering do not resolve the intended neighbor",
+      "question": "Does the supplied route, up port and established BGP peer settle next-hop address resolution in the services VRF? Identify the most relevant existing passive artifact to request; do not retrieve it.",
+      "source_records": [
+        {"id": "pd3-route", "kind": "routing_table", "device_id": 7301, "timestamp": "2026-11-01T12:00:00Z", "vrf": "services", "prefix": "203.0.113.77/32", "origin": "static", "interface_id": 73011, "next_hop": "198.51.100.2", "neighbor_resolution": "unavailable"},
+        {"id": "pd3-port", "kind": "interface_state", "device_id": 7301, "interface_id": 73011, "timestamp": "2026-11-01T12:00:00Z", "vrf": "services", "admin_status": "up", "oper_status": "up"},
+        {"id": "pd3-peer", "kind": "protocol_observation", "device_id": 7301, "interface_id": 73012, "timestamp": "2026-11-01T12:00:00Z", "vrf": "underlay", "protocol": "bgp", "peer": "192.0.2.9", "state": "Established"},
+        {"id": "pd3-other-vrf", "kind": "neighbor_observation", "device_id": 7301, "interface_id": 73013, "timestamp": "2026-11-01T12:00:00Z", "vrf": "guest", "address": "198.51.100.2", "mac": "02:00:00:00:73:02", "state": "reachable"}
+      ],
+      "establishes": ["A static route is selected and its recorded port is up.", "The BGP session and guest-VRF neighbor are facts in different scopes."],
+      "unknown": ["The required services-VRF/interface neighbor binding and any particular packet's traversal."],
+      "passive_artifacts": [{"artifact": "Existing ARP/neighbor cache or recorded ARP exchange for the intended device, services VRF, interface and next hop", "availability": "Not supplied", "can": "Establish a recorded binding/resolution exchange at its stated time", "cannot": "An installed static mapping alone does not demonstrate current reachability or application response"}],
+      "incorrect_example": "BGP Established, or a same-address neighbor in another VRF, proves the static route's Ethernet next hop is reachable.",
+      "minimum_criteria": ["Keep routing, protocol peering and link-layer resolution separate.", "Preserve VRF/interface ownership; unavailable resolution is not proof of failed resolution.", "Do not dismiss the valid route or invent a BGP fault."],
+      "principle_refs": ["arp"]
+    },
+    {
+      "id": "PD-04",
+      "title": "IPv6 STALE is not a missing mapping or a proven failure",
+      "question": "What does this IPv6 neighbor state establish, and what remains uncertain? Suggest one passive follow-up artifact without running a probe.",
+      "source_records": [
+        {"id": "pd4-neighbor", "kind": "neighbor_observation", "device_id": 7401, "interface_id": 74011, "interface": "Vlan77", "vrf": "tenant", "timestamp": "2026-11-01T12:30:00Z", "address": "fe80::22", "link_layer_address": "02:00:00:00:74:22", "protocol": "ipv6_nd", "state": "STALE", "last_reachability_confirmation": "not supplied"}
+      ],
+      "establishes": ["A recorded IPv6 link-layer mapping exists; STALE lacks recent positive reachability confirmation."],
+      "unknown": ["Current neighbor reachability, a specific packet's delivery and application response."],
+      "passive_artifacts": [{"artifact": "Existing scoped neighbor-state transitions or timestamped Neighbor Solicitation/Advertisement trace", "availability": "Not supplied; no new probe or capture authorized", "can": "Show a recorded later confirmation or transition and its time", "cannot": "Automatically establish application receipt, continuous health or the result of unobserved traffic"}],
+      "incorrect_example": "STALE proves the peer is down, so obtain an IPv4 ARP dump or run an active ping to repair it.",
+      "minimum_criteria": ["Retain the known mapping without relabeling STALE as failed or recently confirmed.", "Use IPv6 ND semantics, not an IPv4 ARP remedy.", "Recommend a passive record, not collection or repair."],
+      "principle_refs": ["ipv6_nd"],
+      "scope_note": "Reasoning-only synthetic contrast; not a claim of new IPv6 simulator or reader support"
+    },
+    {
+      "id": "PD-05",
+      "title": "Healthy declared model versus unobserved application exchange",
+      "question": "The declared model delivers both directions. Does that establish an actual application reply? Recommend two distinct passive artifacts that could separate traversal from application behavior. Do not execute anything.",
+      "source_records": [
+        {"id": "pd5-model", "kind": "forwarding_assessment", "device_id": 7501, "timestamp": "2026-11-01T13:00:00Z", "derived": true, "vrf": "telemetry", "forward": "delivered", "return": "delivered", "modeled_only": true, "transaction": "query-602", "observed_packet_or_application_records": []}
+      ],
+      "establishes": ["Both directions are supported under the declared modeled inputs; retain that positive result."],
+      "unknown": ["Whether query-602 traversed the real path, reached an application, produced a reply or was consumed by the client."],
+      "passive_artifacts": [{"artifact": "Existing scoped packet observation with query-602 identity and documented capture point", "availability": "Not supplied", "can": "Distinguish presence of the matching traffic at that point", "cannot": "By itself prove application processing or observations beyond that point"}, {"artifact": "Existing server request/response or client transaction audit for query-602", "availability": "Not supplied", "can": "Document processing/generation or client acceptance as explicitly recorded", "cannot": "A server response-generation log alone proves neither network delivery nor client consumption"}],
+      "incorrect_example": "Both modeled directions delivered, so the application definitely replied; two generic counter snapshots prove the same thing.",
+      "minimum_criteria": ["Keep modeled delivery positive and scoped.", "Separate traversal and application questions with two useful purposes.", "Do not assume a proposed artifact already exists or was collected."],
+      "principle_refs": []
+    },
+    {
+      "id": "PD-06",
+      "title": "Retain a positively recorded exchange without claiming universal health",
+      "question": "What parts of request req-312 and its response are established? What one passive artifact could address the remaining client-side gap? Use the supplied evidence without new execution.",
+      "source_records": [
+        {"id": "pd6-request", "kind": "packet_observation", "device_id": 7601, "interface_id": 76011, "timestamp": "2026-11-01T14:50:05Z", "observation_point": "passive TAP after client egress", "transaction": "req-312", "packet": "request"},
+        {"id": "pd6-server", "kind": "application_observation", "device_id": 7602, "timestamp": "2026-11-01T14:50:05.005Z", "transaction": "req-312", "request_accepted": true, "response_generated": true, "source_scope": "explicit server application audit in this synthetic scenario"},
+        {"id": "pd6-response", "kind": "packet_observation", "device_id": 7601, "interface_id": 76011, "timestamp": "2026-11-01T14:50:05.009Z", "observation_point": "client ingress TAP", "transaction": "req-312", "packet": "matching response", "client_application_consumption_record": "not supplied"}
+      ],
+      "establishes": ["The request is recorded on the outgoing link, server processing and response generation are explicitly audited, and a matching reply is observed at client ingress."],
+      "unknown": ["Whether the client application consumed the reply, other transactions and future service health."],
+      "passive_artifacts": [{"artifact": "Existing client application receipt/processing log correlated with req-312", "availability": "Not supplied", "can": "Document consumption or a client-side error for this transaction", "cannot": "Certify all transactions or continuous service health"}],
+      "incorrect_example": "No delivery conclusion is possible because the whole exchange was merely modeled; or ingress arrival proves every client operation is healthy.",
+      "minimum_criteria": ["Preserve each explicitly supported positive recorded conclusion within the synthetic scenario.", "Do not equate link observation with application consumption.", "Use one relevant permitted passive recommendation; do not repeat proof already supplied."],
+      "principle_refs": ["ipfix"]
+    }
+  ]
+}
